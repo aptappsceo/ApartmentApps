@@ -31,7 +31,12 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MyClass.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="Services\ApplicationContext.cs" />
+    <Compile Include="ViewModels\HomeMenuItemViewModel.cs" />
+    <Compile Include="ViewModels\HomeMenuViewModel.cs" />
+    <Compile Include="IQueryHomeMenuItems.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,5 +60,6 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

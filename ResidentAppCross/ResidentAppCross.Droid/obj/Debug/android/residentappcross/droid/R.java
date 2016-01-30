@@ -61,39 +61,42 @@ containing a value of this type.
     public static final class drawable {
         public static final int action_menu=0x7f020000;
         public static final int background=0x7f020001;
-        public static final int icon=0x7f020002;
-        public static final int icon1=0x7f020003;
-        public static final int iconelse=0x7f020004;
-        public static final int login=0x7f020005;
-        public static final int logo_03=0x7f020006;
-        public static final int monoandroidsplash=0x7f020007;
+        public static final int border1=0x7f020002;
+        public static final int icon=0x7f020003;
+        public static final int icon1=0x7f020004;
+        public static final int iconelse=0x7f020005;
+        public static final int login=0x7f020006;
+        public static final int logo_03=0x7f020007;
+        public static final int monoandroidsplash=0x7f020008;
     }
     public static final class id {
-        public static final int FlyOutContainer=0x7f04000f;
         public static final int FlyOutContent=0x7f040001;
-        public static final int FlyOutMenu=0x7f040011;
+        public static final int FlyOutMenu=0x7f040009;
         public static final int MenuButton=0x7f040005;
         public static final int MvxBindingTagUnique=0x7f040000;
-        public static final int buttonLogin=0x7f04000e;
+        public static final int PasswordInput=0x7f040011;
+        public static final int UsernameInput=0x7f040010;
+        public static final int buttonLogin=0x7f040012;
         public static final int frameLayout1=0x7f040003;
-        public static final int horizontalScrollView1=0x7f04000a;
-        public static final int imageView1=0x7f04000b;
-        public static final int inputPassword=0x7f04000d;
-        public static final int inputUsername=0x7f04000c;
+        public static final int horizontalScrollView1=0x7f04000c;
+        public static final int imageView1=0x7f04000a;
+        public static final int imageView2=0x7f04000f;
         public static final int linearLayout1=0x7f040004;
-        public static final int linearLayout2=0x7f040010;
-        public static final int relativeLayout1=0x7f040009;
+        public static final int linearLayout2=0x7f04000d;
+        public static final int linearLayout3=0x7f04000e;
+        public static final int relativeLayout1=0x7f04000b;
         public static final int textView1=0x7f040008;
         public static final int textView2=0x7f040006;
+        public static final int textView3=0x7f040013;
         public static final int view1=0x7f040002;
         public static final int view2=0x7f040007;
     }
     public static final class layout {
         public static final int contentlayout=0x7f030000;
-        public static final int main=0x7f030001;
-        public static final int main2=0x7f030002;
+        public static final int homemenuviewlayout=0x7f030001;
+        public static final int loginviewlayout=0x7f030002;
         public static final int menuitem=0x7f030003;
-        public static final int menulayout=0x7f030004;
+        public static final int menuviewlayout=0x7f030004;
     }
     public static final class string {
         public static final int app_name=0x7f050001;

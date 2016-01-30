@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    p1:minWidth="25px"
+    p1:minHeight="25px"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/relativeLayout1">
+    <ScrollView
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="match_parent"
+        p1:layout_height="match_parent"
+        p1:background="@drawable/background"
+        p1:id="@+id/horizontalScrollView1">
+        <LinearLayout
+            p1:orientation="vertical"
+            p1:layout_width="match_parent"
+            p1:layout_height="match_parent"
+            p1:id="@+id/linearLayout1"
+            p1:gravity="center">
+            <ImageView
+                p1:src="@drawable/logo_03"
+                p1:layout_width="match_parent"
+                p1:layout_height="343.0dp"
+                p1:id="@+id/imageView1"
+                p1:layout_marginTop="63.0dp"
+                p1:layout_marginBottom="25.0dp" />
+            <LinearLayout
+                p1:orientation="vertical"
+                p1:layout_width="match_parent"
+                p1:layout_height="wrap_content"
+                p1:id="@+id/linearLayout2"
+                p1:background="@drawable/border1"
+                p1:layout_marginTop="29.0dp"
+                p1:layout_marginBottom="35.0dp"
+                p1:layout_marginLeft="35dp"
+                p1:layout_marginRight="35dp">
+                <LinearLayout
+                    p1:orientation="horizontal"
+                    p1:minWidth="25px"
+                    p1:minHeight="25px"
+                    p1:layout_width="match_parent"
+                    p1:layout_height="wrap_content"
+                    p1:id="@+id/linearLayout3"
+                    p1:layout_marginLeft="10dp">
+                    <ImageView
+                        p1:src="@drawable/icon"
+                        p1:layout_width="60.0dp"
+                        p1:layout_height="match_parent"
+                        p1:id="@+id/imageView2"
+                        p1:foregroundTint="#b22222ff"
+                        p1:tint="#000000ff" />
+                    <EditText
+                        p1:inputType="textEmailAddress"
+                        p1:layout_width="match_parent"
+                        p1:layout_height="wrap_content"
+                        p1:id="@+id/UsernameInput"
+                        p1:hint="Username"
+                        local:MvxBind="Text Username"
+                        p1:textSize="40dp"
+                        p1:textAlignment="center"
+                        p1:textColor="#000000" />
+                </LinearLayout>
+                <View
+                    p1:layout_width="match_parent"
+                    p1:layout_height="1dp"
+                    p1:background="@android:color/darker_gray" />
+                <LinearLayout
+                    p1:orientation="horizontal"
+                    p1:minWidth="25px"
+                    p1:minHeight="25px"
+                    p1:layout_width="match_parent"
+                    p1:layout_height="wrap_content"
+                    p1:id="@+id/linearLayout3"
+                    p1:layout_marginLeft="10dp">
+                    <ImageView
+                        p1:src="@drawable/icon"
+                        p1:layout_height="match_parent"
+                        p1:id="@+id/imageView2"
+                        p1:foregroundTint="#b22222ff"
+                        p1:tint="#000000ff"
+                        p1:layout_width="60.0dp" />
+                    <EditText
+                        p1:inputType="textPassword"
+                        p1:layout_width="match_parent"
+                        p1:layout_height="wrap_content"
+                        p1:id="@+id/PasswordInput"
+                        p1:hint="Password"
+                        local:MvxBind="Text Password"
+                        p1:textAlignment="center"
+                        p1:textColor="#000000"
+                        p1:textSize="40dp" />
+                </LinearLayout>
+            </LinearLayout>
+            <Button
+                p1:text="Login"
+                p1:layout_width="match_parent"
+                p1:layout_height="wrap_content"
+                p1:id="@+id/buttonLogin"
+                p1:layout_marginLeft="35dip"
+                p1:layout_marginRight="35dip"
+                local:MvxBind="Click LoginCommand"
+                p1:minHeight="100dp"
+                p1:textColor="#FFFFFF"
+                p1:textAlignment="center"
+                p1:background="@drawable/border1"
+                p1:backgroundTint="#a0522dff"
+                p1:textAllCaps="true"
+                p1:textSize="40dp" />
+            <TextView
+                p1:text="Forgot Password?"
+                p1:textAppearance="?android:attr/textAppearanceMedium"
+                p1:layout_width="match_parent"
+                p1:layout_height="wrap_content"
+                p1:id="@+id/textView3"
+                p1:textAlignment="center"
+                p1:textSize="40dp"
+                p1:textColor="#FFFFFF" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

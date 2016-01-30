@@ -69,22 +69,25 @@ namespace ResidentAppCross.Droid
 			public const int background = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int Icon = 2130837506;
+			public const int Border1 = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int icon1 = 2130837507;
+			public const int Icon = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int iconelse = 2130837508;
+			public const int icon1 = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int LOGIN = 2130837509;
+			public const int iconelse = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int logo_03 = 2130837510;
+			public const int LOGIN = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int monoandroidsplash = 2130837511;
+			public const int logo_03 = 2130837511;
+			
+			// aapt resource value: 0x7f020008
+			public const int monoandroidsplash = 2130837512;
 			
 			static Drawable()
 			{
@@ -99,14 +102,11 @@ namespace ResidentAppCross.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f04000f
-			public const int FlyOutContainer = 2130968591;
-			
 			// aapt resource value: 0x7f040001
 			public const int FlyOutContent = 2130968577;
 			
-			// aapt resource value: 0x7f040011
-			public const int FlyOutMenu = 2130968593;
+			// aapt resource value: 0x7f040009
+			public const int FlyOutMenu = 2130968585;
 			
 			// aapt resource value: 0x7f040005
 			public const int MenuButton = 2130968581;
@@ -114,38 +114,47 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f040000
 			public const int MvxBindingTagUnique = 2130968576;
 			
-			// aapt resource value: 0x7f04000e
-			public const int buttonLogin = 2130968590;
+			// aapt resource value: 0x7f040011
+			public const int PasswordInput = 2130968593;
+			
+			// aapt resource value: 0x7f040010
+			public const int UsernameInput = 2130968592;
+			
+			// aapt resource value: 0x7f040012
+			public const int buttonLogin = 2130968594;
 			
 			// aapt resource value: 0x7f040003
 			public const int frameLayout1 = 2130968579;
 			
-			// aapt resource value: 0x7f04000a
-			public const int horizontalScrollView1 = 2130968586;
-			
-			// aapt resource value: 0x7f04000b
-			public const int imageView1 = 2130968587;
-			
-			// aapt resource value: 0x7f04000d
-			public const int inputPassword = 2130968589;
-			
 			// aapt resource value: 0x7f04000c
-			public const int inputUsername = 2130968588;
+			public const int horizontalScrollView1 = 2130968588;
+			
+			// aapt resource value: 0x7f04000a
+			public const int imageView1 = 2130968586;
+			
+			// aapt resource value: 0x7f04000f
+			public const int imageView2 = 2130968591;
 			
 			// aapt resource value: 0x7f040004
 			public const int linearLayout1 = 2130968580;
 			
-			// aapt resource value: 0x7f040010
-			public const int linearLayout2 = 2130968592;
+			// aapt resource value: 0x7f04000d
+			public const int linearLayout2 = 2130968589;
 			
-			// aapt resource value: 0x7f040009
-			public const int relativeLayout1 = 2130968585;
+			// aapt resource value: 0x7f04000e
+			public const int linearLayout3 = 2130968590;
+			
+			// aapt resource value: 0x7f04000b
+			public const int relativeLayout1 = 2130968587;
 			
 			// aapt resource value: 0x7f040008
 			public const int textView1 = 2130968584;
 			
 			// aapt resource value: 0x7f040006
 			public const int textView2 = 2130968582;
+			
+			// aapt resource value: 0x7f040013
+			public const int textView3 = 2130968595;
 			
 			// aapt resource value: 0x7f040002
 			public const int view1 = 2130968578;
@@ -170,16 +179,16 @@ namespace ResidentAppCross.Droid
 			public const int ContentLayout = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int Main = 2130903041;
+			public const int HomeMenuViewLayout = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int Main2 = 2130903042;
+			public const int LoginViewLayout = 2130903042;
 			
 			// aapt resource value: 0x7f030003
 			public const int MenuItem = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int MenuLayout = 2130903044;
+			public const int MenuViewLayout = 2130903044;
 			
 			static Layout()
 			{
