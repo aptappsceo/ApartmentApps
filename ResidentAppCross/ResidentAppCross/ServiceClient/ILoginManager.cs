@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using ApartmentApps.Client;
 using MvvmCross.Plugins.Network.Rest;
 using Newtonsoft.Json.Linq;
 
@@ -55,31 +56,31 @@ namespace ResidentAppCross.ServiceClient
 
         public string BaseUrl { get; set; } = "http://apartmentappsapiservice.azurewebsites.net";
 
-        public async Task<bool> LoginAsync(string username, string password)
-        {
-            var result = await PostForm("Token", new Dictionary<string, string>()
+            public async Task<bool> LoginAsync(string username, string password)
             {
-                {"Username", username},
-                {"password", password},
-                {"grant_type", "password"},
-            });
-            try
-            {
-                var obj = JObject.Parse(result);
-                JToken token;
-                if (obj.TryGetValue("access_token", out token))
+                var result = await PostForm("Token", new Dictionary<string, string>()
                 {
-                    BearerToken = token.Value<string>();
-                    return true;
+                    {"Username", username},
+                    {"password", password},
+                    {"grant_type", "password"},
+                });
+                try
+                {
+                    var obj = JObject.Parse(result);
+                    JToken token;
+                    if (obj.TryGetValue("access_token", out token))
+                    {
+                        BearerToken = token.Value<string>();
+                        return true;
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
+                catch (Exception ex)
+                {
+                    return false;
+                }
                 return false;
-            }
-            return false;
 
-        }
+            }
         public async Task<string> PostForm(string url, Dictionary<string,string> formContent )
         {
             var client = CreateClient();
@@ -98,53 +99,38 @@ namespace ResidentAppCross.ServiceClient
     {
         bool IsLoggedIn { get; }
         void Logout();
-        Task<string> Login(string username, string password);
+        Task<bool> LoginAsync(string username, string password);
     }
 
     public class LoginService : ILoginManager
     {
-        public IRestClient RestClient { get; set; }
-
-        public LoginService(IRestClient restClient)
+        public App.ApartmentAppsClient Data { get; set; }
+        
+        public LoginService(IApartmentAppsAPIService data)
         {
-            RestClient = restClient;
+            Data = data as App.ApartmentAppsClient;
         }
 
-
-        public bool IsLoggedIn => RestClient.BearerToken != null;
+        public bool IsLoggedIn { get { return App.ApartmentAppsClient.AparmentAppsDelegating.AuthorizationKey != null; } }
 
         public void Logout()
         {
-            RestClient.BearerToken = null;
+            Data.Logout();
         }
 
-        public async Task<string> Login(string username, string password)
+        public async Task<bool> LoginAsync(string username, string password)
         {
-            if (await RestClient.LoginAsync(username, password))
+            try
             {
-                return null;
+                var result = await Data.LoginAsync(username, password);
+                return result;
             }
-            return "Error logging in.";
-            //var x = new WebClient();
+            catch (Exception ex)
+            {
+                return false;
+            }
 
-            //var webClient = new WebClient();
-
-            //var nameValueCollection = new NameValueCollection()
-            //{
-
-            //};
-            //nameValueCollection.Add("username", "micahosborne@gmail.com");
-            //nameValueCollection.Add("password", "Asdf1234!");
-            //nameValueCollection.Add("grant_type", "password");
-
-            //var response = new UTF8Encoding().GetString(webClient.UploadValues(url + "/Token", "POST", nameValueCollection));
-            //Console.WriteLine(response);
-
-
-
-            //var obj = JObject.Parse(response);
-            //var accessToken = (string)obj["access_token"];
-            //Console.WriteLine("ACCESS TOKEN = " + accessToken);
         }
+
     }
 }

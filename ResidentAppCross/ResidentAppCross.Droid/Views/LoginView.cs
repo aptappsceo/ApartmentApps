@@ -17,7 +17,6 @@ namespace ResidentAppCross.Droid.Views
     public class LoginView : MvxActivity
     {
 
-
         public new LoginViewModel ViewModel
         {
             get { return (LoginViewModel)base.ViewModel; }
@@ -26,7 +25,7 @@ namespace ResidentAppCross.Droid.Views
         protected override void OnViewModelSet()
         {
             base.OnViewModelSet();
-            SetContentView(Resource.Layout.Main);
+            SetContentView(Resource.Layout.LoginViewLayout);
         }
     }
 }

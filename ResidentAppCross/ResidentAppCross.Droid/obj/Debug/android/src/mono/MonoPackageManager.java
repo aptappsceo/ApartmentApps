@@ -139,6 +139,8 @@ class MonoPackageManager_Resources {
 		"System.Xml.XmlSerializer.dll",
 		"System.ServiceModel.Internals.dll",
 		"Newtonsoft.Json.dll",
+		"Microsoft.Rest.ClientRuntime.dll",
+		"Microsoft.Threading.Tasks.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};
