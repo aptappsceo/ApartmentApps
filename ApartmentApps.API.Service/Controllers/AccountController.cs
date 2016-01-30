@@ -57,9 +57,10 @@ namespace ApartmentApps.API.Service.Controllers
         public UserInfoViewModel GetUserInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
+            
             return new UserInfoViewModel
             {
+                //Role = UserManager.User
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null

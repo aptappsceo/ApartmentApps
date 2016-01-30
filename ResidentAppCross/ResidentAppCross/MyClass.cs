@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Cirrious.CrossCore;
 using Cirrious.MvvmCross.Plugins.Messenger;
 using Cirrious.MvvmCross.ViewModels;
+using ResidentAppCross.ServiceClient;
 
 namespace ResidentAppCross
 {
@@ -15,7 +16,8 @@ namespace ResidentAppCross
             //Mvx.RegisterType<ICalculation, Calculation>();
             Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginViewModel>());
             Mvx.RegisterSingleton(new ApplicationContext());
-
+            Mvx.RegisterSingleton<IRestClient>(new RestClient());
+            Mvx.RegisterType<ILoginManager,LoginService>();
         }
     }
 
@@ -31,6 +33,7 @@ namespace ResidentAppCross
     }
     public class LoginViewModel : MvxViewModel
     {
+        public ILoginManager LoginManager { get; }
         private string _username;
         public string Username
         {
@@ -46,13 +49,35 @@ namespace ResidentAppCross
             get { return _password; }
             set { SetProperty(ref _password, value, "Password"); }
         }
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set { SetProperty(ref _errorMessage, value, "ErrorMessage"); }
+        }
 
-        
+        public LoginViewModel(ILoginManager loginManager)
+        {
+            LoginManager = loginManager;
+        }
+
         public ICommand LoginCommand
         {
             get
             {
-                return new MvxCommand(() => ShowViewModel<HomeViewModel>(), () => true);
+                return new MvxCommand(async () =>
+                {
+                    var result = await LoginManager.Login(Username, Password);
+                    if (result == null)
+                    {
+                        ShowViewModel<HomeViewModel>();
+                    }
+                    else
+                    {
+                        ErrorMessage = result;
+                    }
+                    //ShowViewModel<HomeViewModel>()
+                }, () => true);
             }
         }
     }
@@ -98,4 +123,6 @@ namespace ResidentAppCross
         public string Name { get; set; }
     }
 }
+
+
 

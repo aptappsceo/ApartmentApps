@@ -40,6 +40,8 @@ D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Dro
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\drawable-hdpi\icon1.png
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\drawable-hdpi\action_menu.png
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\layout\menuitem.xml
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\Newtonsoft.Json.dll
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\Newtonsoft.Json.xml
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\ResidentAppCross.dll.mdb
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\ResidentAppCross.Droid.dll.mdb
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\ResidentAppCross.Droid.dll.mdb

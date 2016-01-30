@@ -1,0 +1,10 @@
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\PlaygroundConsole.exe.config
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\obj\Debug\PlaygroundConsole.csprojResolveAssemblyReference.cache
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\PlaygroundConsole.exe
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\PlaygroundConsole.pdb
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\Microsoft.Rest.ClientRuntime.dll
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\Newtonsoft.Json.dll
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\Microsoft.Rest.ClientRuntime.xml
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\Newtonsoft.Json.xml
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\obj\Debug\PlaygroundConsole.exe
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\obj\Debug\PlaygroundConsole.pdb

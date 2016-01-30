@@ -63,6 +63,8 @@ D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Dro
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\System.Xml.XmlSerializer.dll
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\System.Runtime.Serialization.dll
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\System.ServiceModel.Internals.dll
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\System.Net.Http.dll
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\Newtonsoft.Json.dll
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\System.ComponentModel.DataAnnotations.dll
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\System.ComponentModel.Composition.dll
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\System.Numerics.dll

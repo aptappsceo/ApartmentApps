@@ -17,7 +17,7 @@ namespace ApartmentApps.API.Service.Controllers
         }
 
         // GET api/values/5
-        public string Get(int id)
+        public string GetById(int id)
         {
             return "value";
         }
