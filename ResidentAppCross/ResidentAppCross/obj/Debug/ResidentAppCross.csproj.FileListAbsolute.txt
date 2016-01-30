@@ -1,0 +1,15 @@
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.pdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\Cirrious.CrossCore.dll
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\Cirrious.MvvmCross.dll
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\Cirrious.MvvmCross.Localization.dll
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.pdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\Cirrious.MvvmCross.Plugins.Messenger.dll
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.csprojResolveAssemblyReference.cache
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <DbDacFx path="D:\ApartmentApps\Projects\ResidentAppCross\ApartmentApps.Portal\obj\Release\AutoScripts\DefaultConnection_IncrementalSchemaOnly.dacpac" dacpacAction="Deploy" />
+  <IisApp path="D:\ApartmentApps\Projects\ResidentAppCross\ApartmentApps.Portal\obj\Release\Package\PackageTmp" />
+  <setAcl path="D:\ApartmentApps\Projects\ResidentAppCross\ApartmentApps.Portal\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="D:\ApartmentApps\Projects\ResidentAppCross\ApartmentApps.Portal\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+</sitemanifest>

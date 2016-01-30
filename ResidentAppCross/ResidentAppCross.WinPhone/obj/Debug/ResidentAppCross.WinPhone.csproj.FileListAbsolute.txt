@@ -1,0 +1,11 @@
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\ResidentAppCross.WinPhone.csprojResolveAssemblyReference.cache
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\App.g.i.cs
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\App.g.cs
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\MainPage.g.i.cs
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\MainPage.g.cs
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\XamlTypeInfo.g.cs
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\App.xaml
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\MainPage.xaml
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\App.xbf
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\MainPage.xbf
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross.WinPhone\obj\Debug\XamlSaveStateFile.xml
