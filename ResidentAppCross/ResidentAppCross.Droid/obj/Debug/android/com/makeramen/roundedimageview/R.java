@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package residentappcross.droid;
+package com.makeramen.roundedimageview;
 
 public final class R {
     public static final class attr {
