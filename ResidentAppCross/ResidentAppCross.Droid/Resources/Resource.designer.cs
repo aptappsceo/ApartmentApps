@@ -124,49 +124,43 @@ namespace ResidentAppCross.Droid
 			public const int AppartmentAppsIcon = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int AvatarBackground = 2130837506;
+			public const int AvatarPlaceholder = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int AvatarBackgroundSource = 2130837507;
+			public const int background = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int AvatarPlaceholder = 2130837508;
+			public const int Border1 = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int background = 2130837509;
+			public const int ic_login_50893_0013_forma = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int Border1 = 2130837510;
+			public const int Icon = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int ic_login_50893_0013_forma = 2130837511;
+			public const int icon1 = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int Icon = 2130837512;
+			public const int iconelse = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int icon1 = 2130837513;
+			public const int LOGIN = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int iconelse = 2130837514;
+			public const int LoginButton = 2130837514;
 			
 			// aapt resource value: 0x7f02000b
-			public const int LOGIN = 2130837515;
+			public const int logo_03 = 2130837515;
 			
 			// aapt resource value: 0x7f02000c
-			public const int LoginButton = 2130837516;
+			public const int monoandroidsplash = 2130837516;
 			
 			// aapt resource value: 0x7f02000d
-			public const int logo_03 = 2130837517;
+			public const int SecurityIcon = 2130837517;
 			
 			// aapt resource value: 0x7f02000e
-			public const int monoandroidsplash = 2130837518;
-			
-			// aapt resource value: 0x7f02000f
-			public const int SecurityIcon = 2130837519;
-			
-			// aapt resource value: 0x7f020010
-			public const int UsernameIcon = 2130837520;
+			public const int UsernameIcon = 2130837518;
 			
 			static Drawable()
 			{
