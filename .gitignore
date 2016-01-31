@@ -1,1 +1,12 @@
 _ReSharper.Caches/
+bin
+/ApartmentApps.API.Service/obj
+obj
+/ResidentAppCross/ResidentAppCross.iOS/obj
+/ResidentAppCross/ResidentAppCross.Droid/obj
+/ResidentAppCross/ResidentAppCross.WinPhone/obj
+/ResidentAppCross/ResidentAppCross.iOS/bin
+/ResidentAppCross/ResidentAppCross.Droid/bin
+/ResidentAppCross/ResidentAppCross.WinPhone/bin
+
+

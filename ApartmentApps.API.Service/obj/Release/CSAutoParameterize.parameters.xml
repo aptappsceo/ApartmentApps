@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Server=aptapps.database.windows.net,1433;Database=ApartmentApps;User ID=aptapps;Password=asdf1234!;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="D:\\ApartmentApps\\Projects\\ResidentAppCross\\ApartmentApps\.API\.Service\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
-  </parameter>
-  <parameter name="ApplicationDbContext-Web.config Connection String" description="ApplicationDbContext Connection String used in web.config by the application to access the database." defaultValue="Server=aptapps.database.windows.net,1433;Database=ApartmentApps;User ID=aptapps;Password=asdf1234!;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="D:\\ApartmentApps\\Projects\\ResidentAppCross\\ApartmentApps\.API\.Service\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ApplicationDbContext']/@connectionString" />
-  </parameter>
-</parameters>
