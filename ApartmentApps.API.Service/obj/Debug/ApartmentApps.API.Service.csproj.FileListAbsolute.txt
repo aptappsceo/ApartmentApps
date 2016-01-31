@@ -159,4 +159,3 @@ C:\Invert\ApartmentApps\ApartmentApps.API.Service\bin\Microsoft.Owin.Security.Mi
 C:\Invert\ApartmentApps\ApartmentApps.API.Service\bin\System.Web.Http.Owin.xml
 C:\Invert\ApartmentApps\ApartmentApps.API.Service\obj\Debug\ApartmentApps.API.Service.dll
 C:\Invert\ApartmentApps\ApartmentApps.API.Service\obj\Debug\ApartmentApps.API.Service.pdb
-C:\Invert\ApartmentApps\ApartmentApps.API.Service\obj\Debug\ApartmentApps.API.Service.csprojResolveAssemblyReference.cache

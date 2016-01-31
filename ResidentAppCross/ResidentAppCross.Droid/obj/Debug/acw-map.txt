@@ -2,10 +2,10 @@ ResidentAppCross.Droid.Views.LoginView, ResidentAppCross.Droid;md5fcfe391f7df0d2
 ResidentAppCross.Droid.Views.LoginView, ResidentAppCross.Droid, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5fcfe391f7df0d252b93928f04044156a.LoginView
 ResidentAppCross.Droid.Views.LoginView;md5fcfe391f7df0d252b93928f04044156a.LoginView
 residentappcross.droid.views.LoginView;md5fcfe391f7df0d252b93928f04044156a.LoginView
-ResidentAppCross.Droid.Views.MainView, ResidentAppCross.Droid;md5fcfe391f7df0d252b93928f04044156a.MainView
-ResidentAppCross.Droid.Views.MainView, ResidentAppCross.Droid, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5fcfe391f7df0d252b93928f04044156a.MainView
-ResidentAppCross.Droid.Views.MainView;md5fcfe391f7df0d252b93928f04044156a.MainView
-residentappcross.droid.views.MainView;md5fcfe391f7df0d252b93928f04044156a.MainView
+ResidentAppCross.Droid.Views.HomeMenuView, ResidentAppCross.Droid;md5fcfe391f7df0d252b93928f04044156a.HomeMenuView
+ResidentAppCross.Droid.Views.HomeMenuView, ResidentAppCross.Droid, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5fcfe391f7df0d252b93928f04044156a.HomeMenuView
+ResidentAppCross.Droid.Views.HomeMenuView;md5fcfe391f7df0d252b93928f04044156a.HomeMenuView
+residentappcross.droid.views.HomeMenuView;md5fcfe391f7df0d252b93928f04044156a.HomeMenuView
 FlyOutMenu.FlyOutContainer, ResidentAppCross.Droid;md5f0ea61f4c9bbda850b480a1db4d8f9f6.FlyOutContainer
 FlyOutMenu.FlyOutContainer, ResidentAppCross.Droid, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5f0ea61f4c9bbda850b480a1db4d8f9f6.FlyOutContainer
 FlyOutMenu.FlyOutContainer;md5f0ea61f4c9bbda850b480a1db4d8f9f6.FlyOutContainer
@@ -150,3 +150,11 @@ Cirrious.MvvmCross.Droid.Views.MvxActivity`1, Cirrious.MvvmCross.Droid;md57b8dd3
 Cirrious.MvvmCross.Droid.Views.MvxActivity`1, Cirrious.MvvmCross.Droid, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md57b8dd31b26d57b878589ceca204f3b49.MvxActivity_1
 Cirrious.MvvmCross.Droid.Views.MvxActivity`1;md57b8dd31b26d57b878589ceca204f3b49.MvxActivity_1
 cirrious.mvvmcross.droid.views.MvxActivity_1;md57b8dd31b26d57b878589ceca204f3b49.MvxActivity_1
+Square.Picasso.RequestCreator/ActionCallback, Square.Picasso;com.squareup.picasso.RequestCreator_ActionCallback
+Square.Picasso.RequestCreator+ActionCallback, Square.Picasso, Version=2.5.2.0, Culture=neutral, PublicKeyToken=null;com.squareup.picasso.RequestCreator_ActionCallback
+Square.Picasso.RequestCreator.ActionCallback;com.squareup.picasso.RequestCreator_ActionCallback
+com.squareup.picasso.RequestCreator_ActionCallback;com.squareup.picasso.RequestCreator_ActionCallback
+Square.Picasso.Picasso/IListenerImplementor, Square.Picasso;mono.com.squareup.picasso.Picasso_ListenerImplementor
+Square.Picasso.Picasso+IListenerImplementor, Square.Picasso, Version=2.5.2.0, Culture=neutral, PublicKeyToken=null;mono.com.squareup.picasso.Picasso_ListenerImplementor
+Square.Picasso.Picasso.IListenerImplementor;mono.com.squareup.picasso.Picasso_ListenerImplementor
+mono.com.squareup.picasso.Picasso_ListenerImplementor;mono.com.squareup.picasso.Picasso_ListenerImplementor

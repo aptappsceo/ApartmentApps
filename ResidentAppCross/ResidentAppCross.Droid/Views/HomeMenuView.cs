@@ -14,8 +14,8 @@ using FlyOutMenu;
 
 namespace ResidentAppCross.Droid.Views
 {
-    [Activity()]
-    public class MainView : MvxActivity
+    [Activity(Label = "Home")]
+    public class HomeMenuView : MvxActivity
 
     {
         public new HomeMenuViewModel ViewModel
@@ -23,6 +23,7 @@ namespace ResidentAppCross.Droid.Views
             get { return (HomeMenuViewModel)base.ViewModel; }
             set { base.ViewModel = value; }
         }
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);

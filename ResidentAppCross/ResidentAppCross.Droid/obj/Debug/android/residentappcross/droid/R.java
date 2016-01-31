@@ -16,7 +16,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int MvxBind=0x7f010000;
+        public static final int MvxBind=0x7f01000c;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -24,7 +24,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int MvxDropDownItemTemplate=0x7f010004;
+        public static final int MvxDropDownItemTemplate=0x7f010010;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -32,7 +32,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int MvxItemTemplate=0x7f010003;
+        public static final int MvxItemTemplate=0x7f01000f;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -40,7 +40,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int MvxLang=0x7f010001;
+        public static final int MvxLang=0x7f01000d;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -48,7 +48,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int MvxSource=0x7f010005;
+        public static final int MvxSource=0x7f010011;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -56,40 +56,190 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int MvxTemplate=0x7f010002;
+        public static final int MvxTemplate=0x7f01000e;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int riv_border_color=0x7f010006;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int riv_border_width=0x7f010005;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int riv_corner_radius=0x7f010000;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int riv_corner_radius_bottom_left=0x7f010003;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int riv_corner_radius_bottom_right=0x7f010004;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int riv_corner_radius_top_left=0x7f010001;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int riv_corner_radius_top_right=0x7f010002;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int riv_mutate_background=0x7f010007;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int riv_oval=0x7f010008;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>clamp</code></td><td>0</td><td></td></tr>
+<tr><td><code>repeat</code></td><td>1</td><td></td></tr>
+<tr><td><code>mirror</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int riv_tile_mode=0x7f010009;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>clamp</code></td><td>0</td><td></td></tr>
+<tr><td><code>repeat</code></td><td>1</td><td></td></tr>
+<tr><td><code>mirror</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int riv_tile_mode_x=0x7f01000a;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>clamp</code></td><td>0</td><td></td></tr>
+<tr><td><code>repeat</code></td><td>1</td><td></td></tr>
+<tr><td><code>mirror</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int riv_tile_mode_y=0x7f01000b;
+    }
+    public static final class dimen {
+        public static final int LoginScreenFormIconSize=0x7f070001;
+        public static final int LoginScreenFormTextSize=0x7f070000;
     }
     public static final class drawable {
         public static final int action_menu=0x7f020000;
-        public static final int background=0x7f020001;
-        public static final int border1=0x7f020002;
-        public static final int icon=0x7f020003;
-        public static final int icon1=0x7f020004;
-        public static final int iconelse=0x7f020005;
-        public static final int login=0x7f020006;
-        public static final int logo_03=0x7f020007;
-        public static final int monoandroidsplash=0x7f020008;
+        public static final int appartmentappsicon=0x7f020001;
+        public static final int avatarbackground=0x7f020002;
+        public static final int avatarbackgroundsource=0x7f020003;
+        public static final int avatarplaceholder=0x7f020004;
+        public static final int background=0x7f020005;
+        public static final int border1=0x7f020006;
+        public static final int ic_login_50893_0013_forma=0x7f020007;
+        public static final int icon=0x7f020008;
+        public static final int icon1=0x7f020009;
+        public static final int iconelse=0x7f02000a;
+        public static final int login=0x7f02000b;
+        public static final int loginbutton=0x7f02000c;
+        public static final int logo_03=0x7f02000d;
+        public static final int monoandroidsplash=0x7f02000e;
+        public static final int securityicon=0x7f02000f;
+        public static final int usernameicon=0x7f020010;
     }
     public static final class id {
-        public static final int FlyOutContent=0x7f040001;
-        public static final int FlyOutMenu=0x7f040009;
-        public static final int MenuButton=0x7f040005;
-        public static final int MvxBindingTagUnique=0x7f040000;
-        public static final int PasswordInput=0x7f040011;
-        public static final int UsernameInput=0x7f040010;
-        public static final int buttonLogin=0x7f040012;
-        public static final int frameLayout1=0x7f040003;
-        public static final int horizontalScrollView1=0x7f04000c;
-        public static final int imageView1=0x7f04000a;
-        public static final int imageView2=0x7f04000f;
-        public static final int linearLayout1=0x7f040004;
-        public static final int linearLayout2=0x7f04000d;
-        public static final int linearLayout3=0x7f04000e;
-        public static final int relativeLayout1=0x7f04000b;
-        public static final int textView1=0x7f040008;
-        public static final int textView2=0x7f040006;
-        public static final int textView3=0x7f040013;
-        public static final int view1=0x7f040002;
-        public static final int view2=0x7f040007;
+        public static final int ApartmentsAppIconView=0x7f050019;
+        public static final int ContentContainer=0x7f050018;
+        public static final int ContentScrollContainer=0x7f050017;
+        public static final int FlyOutContent=0x7f050004;
+        public static final int FlyOutMenu=0x7f050024;
+        public static final int ForgotPasswordButton=0x7f050020;
+        public static final int LoginForm=0x7f05001a;
+        public static final int MainContainer=0x7f050016;
+        public static final int MenuButton=0x7f050008;
+        public static final int MvxBindingTagUnique=0x7f050000;
+        public static final int NewHereLabel=0x7f050021;
+        public static final int PasswordInput=0x7f05001f;
+        public static final int PasswordLoginFormGroup=0x7f05001e;
+        public static final int SignUpButton=0x7f050022;
+        public static final int UsernameInput=0x7f05001d;
+        public static final int UsernameLoginFormGroup=0x7f05001b;
+        public static final int VersionLabel=0x7f050023;
+        public static final int button1=0x7f050011;
+        public static final int button2=0x7f050012;
+        public static final int clamp=0x7f050001;
+        public static final int frameLayout1=0x7f050006;
+        public static final int imageView1=0x7f05000c;
+        public static final int imageView2=0x7f05001c;
+        public static final int linearLayout1=0x7f050007;
+        public static final int linearLayout2=0x7f05000d;
+        public static final int linearLayout3=0x7f05000e;
+        public static final int linearLayout4=0x7f050010;
+        public static final int linearLayout5=0x7f050013;
+        public static final int mirror=0x7f050002;
+        public static final int mvx_MvxListView1=0x7f05000f;
+        public static final int repeat=0x7f050003;
+        public static final int textView1=0x7f05000b;
+        public static final int textView2=0x7f050009;
+        public static final int textView3=0x7f050014;
+        public static final int textView4=0x7f050015;
+        public static final int view1=0x7f050005;
+        public static final int view2=0x7f05000a;
     }
     public static final class layout {
         public static final int contentlayout=0x7f030000;
@@ -99,11 +249,22 @@ containing a value of this type.
         public static final int menuviewlayout=0x7f030004;
     }
     public static final class string {
-        public static final int app_name=0x7f050001;
-        public static final int hello=0x7f050000;
+        public static final int app_name=0x7f04000b;
+        public static final int define_roundedimageview=0x7f040000;
+        public static final int hello=0x7f04000a;
+        public static final int library_roundedimageview_author=0x7f040001;
+        public static final int library_roundedimageview_authorWebsite=0x7f040002;
+        public static final int library_roundedimageview_isOpenSource=0x7f040003;
+        public static final int library_roundedimageview_libraryDescription=0x7f040004;
+        public static final int library_roundedimageview_libraryName=0x7f040005;
+        public static final int library_roundedimageview_libraryVersion=0x7f040006;
+        public static final int library_roundedimageview_libraryWebsite=0x7f040007;
+        public static final int library_roundedimageview_licenseId=0x7f040008;
+        public static final int library_roundedimageview_repositoryLink=0x7f040009;
     }
     public static final class style {
-        public static final int Mono_Android_Theme_Splash=0x7f060000;
+        public static final int Mono_Android_Theme_Splash=0x7f060001;
+        public static final int button_text=0x7f060000;
     }
     public static final class styleable {
         /** Attributes that can be used with a MvxBinding.
@@ -119,7 +280,7 @@ containing a value of this type.
            @see #MvxBinding_MvxLang
          */
         public static final int[] MvxBinding = {
-            0x7f010000, 0x7f010001
+            0x7f01000c, 0x7f01000d
         };
         /**
           <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#MvxBind}
@@ -160,7 +321,7 @@ containing a value of this type.
            @see #MvxControl_MvxTemplate
          */
         public static final int[] MvxControl = {
-            0x7f010002
+            0x7f01000e
         };
         /**
           <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#MvxTemplate}
@@ -187,7 +348,7 @@ containing a value of this type.
            @see #MvxImageView_MvxSource
          */
         public static final int[] MvxImageView = {
-            0x7f010005
+            0x7f010011
         };
         /**
           <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#MvxSource}
@@ -216,7 +377,7 @@ containing a value of this type.
            @see #MvxListView_MvxItemTemplate
          */
         public static final int[] MvxListView = {
-            0x7f010003, 0x7f010004
+            0x7f01000f, 0x7f010010
         };
         /**
           <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#MvxDropDownItemTemplate}
@@ -246,5 +407,244 @@ containing a value of this type.
           @attr name ResidentAppCross.Droid:MvxItemTemplate
         */
         public static final int MvxListView_MvxItemTemplate = 0;
+        /** Attributes that can be used with a RoundedImageView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #RoundedImageView_android_scaleType android:scaleType}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_border_color ResidentAppCross.Droid:riv_border_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_border_width ResidentAppCross.Droid:riv_border_width}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_corner_radius ResidentAppCross.Droid:riv_corner_radius}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_corner_radius_bottom_left ResidentAppCross.Droid:riv_corner_radius_bottom_left}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_corner_radius_bottom_right ResidentAppCross.Droid:riv_corner_radius_bottom_right}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_corner_radius_top_left ResidentAppCross.Droid:riv_corner_radius_top_left}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_corner_radius_top_right ResidentAppCross.Droid:riv_corner_radius_top_right}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_mutate_background ResidentAppCross.Droid:riv_mutate_background}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_oval ResidentAppCross.Droid:riv_oval}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_tile_mode ResidentAppCross.Droid:riv_tile_mode}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_tile_mode_x ResidentAppCross.Droid:riv_tile_mode_x}</code></td><td></td></tr>
+           <tr><td><code>{@link #RoundedImageView_riv_tile_mode_y ResidentAppCross.Droid:riv_tile_mode_y}</code></td><td></td></tr>
+           </table>
+           @see #RoundedImageView_android_scaleType
+           @see #RoundedImageView_riv_border_color
+           @see #RoundedImageView_riv_border_width
+           @see #RoundedImageView_riv_corner_radius
+           @see #RoundedImageView_riv_corner_radius_bottom_left
+           @see #RoundedImageView_riv_corner_radius_bottom_right
+           @see #RoundedImageView_riv_corner_radius_top_left
+           @see #RoundedImageView_riv_corner_radius_top_right
+           @see #RoundedImageView_riv_mutate_background
+           @see #RoundedImageView_riv_oval
+           @see #RoundedImageView_riv_tile_mode
+           @see #RoundedImageView_riv_tile_mode_x
+           @see #RoundedImageView_riv_tile_mode_y
+         */
+        public static final int[] RoundedImageView = {
+            0x0101011d, 0x7f010000, 0x7f010001, 0x7f010002,
+            0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006,
+            0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a,
+            0x7f01000b
+        };
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#scaleType}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+          @attr name android:scaleType
+        */
+        public static final int RoundedImageView_android_scaleType = 0;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_border_color}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name ResidentAppCross.Droid:riv_border_color
+        */
+        public static final int RoundedImageView_riv_border_color = 7;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_border_width}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name ResidentAppCross.Droid:riv_border_width
+        */
+        public static final int RoundedImageView_riv_border_width = 6;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_corner_radius}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name ResidentAppCross.Droid:riv_corner_radius
+        */
+        public static final int RoundedImageView_riv_corner_radius = 1;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_corner_radius_bottom_left}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name ResidentAppCross.Droid:riv_corner_radius_bottom_left
+        */
+        public static final int RoundedImageView_riv_corner_radius_bottom_left = 4;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_corner_radius_bottom_right}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name ResidentAppCross.Droid:riv_corner_radius_bottom_right
+        */
+        public static final int RoundedImageView_riv_corner_radius_bottom_right = 5;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_corner_radius_top_left}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name ResidentAppCross.Droid:riv_corner_radius_top_left
+        */
+        public static final int RoundedImageView_riv_corner_radius_top_left = 2;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_corner_radius_top_right}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name ResidentAppCross.Droid:riv_corner_radius_top_right
+        */
+        public static final int RoundedImageView_riv_corner_radius_top_right = 3;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_mutate_background}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name ResidentAppCross.Droid:riv_mutate_background
+        */
+        public static final int RoundedImageView_riv_mutate_background = 8;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_oval}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name ResidentAppCross.Droid:riv_oval
+        */
+        public static final int RoundedImageView_riv_oval = 9;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_tile_mode}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>clamp</code></td><td>0</td><td></td></tr>
+<tr><td><code>repeat</code></td><td>1</td><td></td></tr>
+<tr><td><code>mirror</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name ResidentAppCross.Droid:riv_tile_mode
+        */
+        public static final int RoundedImageView_riv_tile_mode = 10;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_tile_mode_x}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>clamp</code></td><td>0</td><td></td></tr>
+<tr><td><code>repeat</code></td><td>1</td><td></td></tr>
+<tr><td><code>mirror</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name ResidentAppCross.Droid:riv_tile_mode_x
+        */
+        public static final int RoundedImageView_riv_tile_mode_x = 11;
+        /**
+          <p>This symbol is the offset where the {@link ResidentAppCross.Droid.R.attr#riv_tile_mode_y}
+          attribute's value can be found in the {@link #RoundedImageView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>clamp</code></td><td>0</td><td></td></tr>
+<tr><td><code>repeat</code></td><td>1</td><td></td></tr>
+<tr><td><code>mirror</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name ResidentAppCross.Droid:riv_tile_mode_y
+        */
+        public static final int RoundedImageView_riv_tile_mode_y = 12;
     };
 }

@@ -31,23 +31,59 @@ namespace ResidentAppCross.Droid
 		public partial class Attribute
 		{
 			
-			// aapt resource value: 0x7f010000
-			public const int MvxBind = 2130771968;
+			// aapt resource value: 0x7f01000c
+			public const int MvxBind = 2130771980;
 			
-			// aapt resource value: 0x7f010004
-			public const int MvxDropDownItemTemplate = 2130771972;
+			// aapt resource value: 0x7f010010
+			public const int MvxDropDownItemTemplate = 2130771984;
 			
-			// aapt resource value: 0x7f010003
-			public const int MvxItemTemplate = 2130771971;
+			// aapt resource value: 0x7f01000f
+			public const int MvxItemTemplate = 2130771983;
 			
-			// aapt resource value: 0x7f010001
-			public const int MvxLang = 2130771969;
+			// aapt resource value: 0x7f01000d
+			public const int MvxLang = 2130771981;
+			
+			// aapt resource value: 0x7f010011
+			public const int MvxSource = 2130771985;
+			
+			// aapt resource value: 0x7f01000e
+			public const int MvxTemplate = 2130771982;
+			
+			// aapt resource value: 0x7f010006
+			public const int riv_border_color = 2130771974;
 			
 			// aapt resource value: 0x7f010005
-			public const int MvxSource = 2130771973;
+			public const int riv_border_width = 2130771973;
+			
+			// aapt resource value: 0x7f010000
+			public const int riv_corner_radius = 2130771968;
+			
+			// aapt resource value: 0x7f010003
+			public const int riv_corner_radius_bottom_left = 2130771971;
+			
+			// aapt resource value: 0x7f010004
+			public const int riv_corner_radius_bottom_right = 2130771972;
+			
+			// aapt resource value: 0x7f010001
+			public const int riv_corner_radius_top_left = 2130771969;
 			
 			// aapt resource value: 0x7f010002
-			public const int MvxTemplate = 2130771970;
+			public const int riv_corner_radius_top_right = 2130771970;
+			
+			// aapt resource value: 0x7f010007
+			public const int riv_mutate_background = 2130771975;
+			
+			// aapt resource value: 0x7f010008
+			public const int riv_oval = 2130771976;
+			
+			// aapt resource value: 0x7f010009
+			public const int riv_tile_mode = 2130771977;
+			
+			// aapt resource value: 0x7f01000a
+			public const int riv_tile_mode_x = 2130771978;
+			
+			// aapt resource value: 0x7f01000b
+			public const int riv_tile_mode_y = 2130771979;
 			
 			static Attribute()
 			{
@@ -59,6 +95,25 @@ namespace ResidentAppCross.Droid
 			}
 		}
 		
+		public partial class Dimension
+		{
+			
+			// aapt resource value: 0x7f070001
+			public const int LoginScreenFormIconSize = 2131165185;
+			
+			// aapt resource value: 0x7f070000
+			public const int LoginScreenFormTextSize = 2131165184;
+			
+			static Dimension()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Dimension()
+			{
+			}
+		}
+		
 		public partial class Drawable
 		{
 			
@@ -66,28 +121,52 @@ namespace ResidentAppCross.Droid
 			public const int action_menu = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int background = 2130837505;
+			public const int AppartmentAppsIcon = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int Border1 = 2130837506;
+			public const int AvatarBackground = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int Icon = 2130837507;
+			public const int AvatarBackgroundSource = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int icon1 = 2130837508;
+			public const int AvatarPlaceholder = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int iconelse = 2130837509;
+			public const int background = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int LOGIN = 2130837510;
+			public const int Border1 = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int logo_03 = 2130837511;
+			public const int ic_login_50893_0013_forma = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int monoandroidsplash = 2130837512;
+			public const int Icon = 2130837512;
+			
+			// aapt resource value: 0x7f020009
+			public const int icon1 = 2130837513;
+			
+			// aapt resource value: 0x7f02000a
+			public const int iconelse = 2130837514;
+			
+			// aapt resource value: 0x7f02000b
+			public const int LOGIN = 2130837515;
+			
+			// aapt resource value: 0x7f02000c
+			public const int LoginButton = 2130837516;
+			
+			// aapt resource value: 0x7f02000d
+			public const int logo_03 = 2130837517;
+			
+			// aapt resource value: 0x7f02000e
+			public const int monoandroidsplash = 2130837518;
+			
+			// aapt resource value: 0x7f02000f
+			public const int SecurityIcon = 2130837519;
+			
+			// aapt resource value: 0x7f020010
+			public const int UsernameIcon = 2130837520;
 			
 			static Drawable()
 			{
@@ -102,65 +181,116 @@ namespace ResidentAppCross.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f040001
-			public const int FlyOutContent = 2130968577;
+			// aapt resource value: 0x7f050019
+			public const int ApartmentsAppIconView = 2131034137;
 			
-			// aapt resource value: 0x7f040009
-			public const int FlyOutMenu = 2130968585;
+			// aapt resource value: 0x7f050018
+			public const int ContentContainer = 2131034136;
 			
-			// aapt resource value: 0x7f040005
-			public const int MenuButton = 2130968581;
+			// aapt resource value: 0x7f050017
+			public const int ContentScrollContainer = 2131034135;
 			
-			// aapt resource value: 0x7f040000
-			public const int MvxBindingTagUnique = 2130968576;
+			// aapt resource value: 0x7f050004
+			public const int FlyOutContent = 2131034116;
 			
-			// aapt resource value: 0x7f040011
-			public const int PasswordInput = 2130968593;
+			// aapt resource value: 0x7f050024
+			public const int FlyOutMenu = 2131034148;
 			
-			// aapt resource value: 0x7f040010
-			public const int UsernameInput = 2130968592;
+			// aapt resource value: 0x7f050020
+			public const int ForgotPasswordButton = 2131034144;
 			
-			// aapt resource value: 0x7f040012
-			public const int buttonLogin = 2130968594;
+			// aapt resource value: 0x7f05001a
+			public const int LoginForm = 2131034138;
 			
-			// aapt resource value: 0x7f040003
-			public const int frameLayout1 = 2130968579;
+			// aapt resource value: 0x7f050016
+			public const int MainContainer = 2131034134;
 			
-			// aapt resource value: 0x7f04000c
-			public const int horizontalScrollView1 = 2130968588;
+			// aapt resource value: 0x7f050008
+			public const int MenuButton = 2131034120;
 			
-			// aapt resource value: 0x7f04000a
-			public const int imageView1 = 2130968586;
+			// aapt resource value: 0x7f050000
+			public const int MvxBindingTagUnique = 2131034112;
 			
-			// aapt resource value: 0x7f04000f
-			public const int imageView2 = 2130968591;
+			// aapt resource value: 0x7f050021
+			public const int NewHereLabel = 2131034145;
 			
-			// aapt resource value: 0x7f040004
-			public const int linearLayout1 = 2130968580;
+			// aapt resource value: 0x7f05001f
+			public const int PasswordInput = 2131034143;
 			
-			// aapt resource value: 0x7f04000d
-			public const int linearLayout2 = 2130968589;
+			// aapt resource value: 0x7f05001e
+			public const int PasswordLoginFormGroup = 2131034142;
 			
-			// aapt resource value: 0x7f04000e
-			public const int linearLayout3 = 2130968590;
+			// aapt resource value: 0x7f050022
+			public const int SignUpButton = 2131034146;
 			
-			// aapt resource value: 0x7f04000b
-			public const int relativeLayout1 = 2130968587;
+			// aapt resource value: 0x7f05001d
+			public const int UsernameInput = 2131034141;
 			
-			// aapt resource value: 0x7f040008
-			public const int textView1 = 2130968584;
+			// aapt resource value: 0x7f05001b
+			public const int UsernameLoginFormGroup = 2131034139;
 			
-			// aapt resource value: 0x7f040006
-			public const int textView2 = 2130968582;
+			// aapt resource value: 0x7f050023
+			public const int VersionLabel = 2131034147;
 			
-			// aapt resource value: 0x7f040013
-			public const int textView3 = 2130968595;
+			// aapt resource value: 0x7f050011
+			public const int button1 = 2131034129;
 			
-			// aapt resource value: 0x7f040002
-			public const int view1 = 2130968578;
+			// aapt resource value: 0x7f050012
+			public const int button2 = 2131034130;
 			
-			// aapt resource value: 0x7f040007
-			public const int view2 = 2130968583;
+			// aapt resource value: 0x7f050001
+			public const int clamp = 2131034113;
+			
+			// aapt resource value: 0x7f050006
+			public const int frameLayout1 = 2131034118;
+			
+			// aapt resource value: 0x7f05000c
+			public const int imageView1 = 2131034124;
+			
+			// aapt resource value: 0x7f05001c
+			public const int imageView2 = 2131034140;
+			
+			// aapt resource value: 0x7f050007
+			public const int linearLayout1 = 2131034119;
+			
+			// aapt resource value: 0x7f05000d
+			public const int linearLayout2 = 2131034125;
+			
+			// aapt resource value: 0x7f05000e
+			public const int linearLayout3 = 2131034126;
+			
+			// aapt resource value: 0x7f050010
+			public const int linearLayout4 = 2131034128;
+			
+			// aapt resource value: 0x7f050013
+			public const int linearLayout5 = 2131034131;
+			
+			// aapt resource value: 0x7f050002
+			public const int mirror = 2131034114;
+			
+			// aapt resource value: 0x7f05000f
+			public const int mvx_MvxListView1 = 2131034127;
+			
+			// aapt resource value: 0x7f050003
+			public const int repeat = 2131034115;
+			
+			// aapt resource value: 0x7f05000b
+			public const int textView1 = 2131034123;
+			
+			// aapt resource value: 0x7f050009
+			public const int textView2 = 2131034121;
+			
+			// aapt resource value: 0x7f050014
+			public const int textView3 = 2131034132;
+			
+			// aapt resource value: 0x7f050015
+			public const int textView4 = 2131034133;
+			
+			// aapt resource value: 0x7f050005
+			public const int view1 = 2131034117;
+			
+			// aapt resource value: 0x7f05000a
+			public const int view2 = 2131034122;
 			
 			static Id()
 			{
@@ -203,11 +333,41 @@ namespace ResidentAppCross.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f050001
-			public const int app_name = 2131034113;
+			// aapt resource value: 0x7f04000b
+			public const int app_name = 2130968587;
 			
-			// aapt resource value: 0x7f050000
-			public const int hello = 2131034112;
+			// aapt resource value: 0x7f040000
+			public const int define_roundedimageview = 2130968576;
+			
+			// aapt resource value: 0x7f04000a
+			public const int hello = 2130968586;
+			
+			// aapt resource value: 0x7f040001
+			public const int library_roundedimageview_author = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public const int library_roundedimageview_authorWebsite = 2130968578;
+			
+			// aapt resource value: 0x7f040003
+			public const int library_roundedimageview_isOpenSource = 2130968579;
+			
+			// aapt resource value: 0x7f040004
+			public const int library_roundedimageview_libraryDescription = 2130968580;
+			
+			// aapt resource value: 0x7f040005
+			public const int library_roundedimageview_libraryName = 2130968581;
+			
+			// aapt resource value: 0x7f040006
+			public const int library_roundedimageview_libraryVersion = 2130968582;
+			
+			// aapt resource value: 0x7f040007
+			public const int library_roundedimageview_libraryWebsite = 2130968583;
+			
+			// aapt resource value: 0x7f040008
+			public const int library_roundedimageview_licenseId = 2130968584;
+			
+			// aapt resource value: 0x7f040009
+			public const int library_roundedimageview_repositoryLink = 2130968585;
 			
 			static String()
 			{
@@ -222,8 +382,11 @@ namespace ResidentAppCross.Droid
 		public partial class Style
 		{
 			
+			// aapt resource value: 0x7f060001
+			public const int Mono_Android_Theme_Splash = 2131099649;
+			
 			// aapt resource value: 0x7f060000
-			public const int Mono_Android_Theme_Splash = 2131099648;
+			public const int button_text = 2131099648;
 			
 			static Style()
 			{
@@ -239,8 +402,8 @@ namespace ResidentAppCross.Droid
 		{
 			
 			public static int[] MvxBinding = new int[] {
-					2130771968,
-					2130771969};
+					2130771980,
+					2130771981};
 			
 			// aapt resource value: 0
 			public const int MvxBinding_MvxBind = 0;
@@ -249,26 +412,80 @@ namespace ResidentAppCross.Droid
 			public const int MvxBinding_MvxLang = 1;
 			
 			public static int[] MvxControl = new int[] {
-					2130771970};
+					2130771982};
 			
 			// aapt resource value: 0
 			public const int MvxControl_MvxTemplate = 0;
 			
 			public static int[] MvxImageView = new int[] {
-					2130771973};
+					2130771985};
 			
 			// aapt resource value: 0
 			public const int MvxImageView_MvxSource = 0;
 			
 			public static int[] MvxListView = new int[] {
-					2130771971,
-					2130771972};
+					2130771983,
+					2130771984};
 			
 			// aapt resource value: 1
 			public const int MvxListView_MvxDropDownItemTemplate = 1;
 			
 			// aapt resource value: 0
 			public const int MvxListView_MvxItemTemplate = 0;
+			
+			public static int[] RoundedImageView = new int[] {
+					16843037,
+					2130771968,
+					2130771969,
+					2130771970,
+					2130771971,
+					2130771972,
+					2130771973,
+					2130771974,
+					2130771975,
+					2130771976,
+					2130771977,
+					2130771978,
+					2130771979};
+			
+			// aapt resource value: 0
+			public const int RoundedImageView_android_scaleType = 0;
+			
+			// aapt resource value: 7
+			public const int RoundedImageView_riv_border_color = 7;
+			
+			// aapt resource value: 6
+			public const int RoundedImageView_riv_border_width = 6;
+			
+			// aapt resource value: 1
+			public const int RoundedImageView_riv_corner_radius = 1;
+			
+			// aapt resource value: 4
+			public const int RoundedImageView_riv_corner_radius_bottom_left = 4;
+			
+			// aapt resource value: 5
+			public const int RoundedImageView_riv_corner_radius_bottom_right = 5;
+			
+			// aapt resource value: 2
+			public const int RoundedImageView_riv_corner_radius_top_left = 2;
+			
+			// aapt resource value: 3
+			public const int RoundedImageView_riv_corner_radius_top_right = 3;
+			
+			// aapt resource value: 8
+			public const int RoundedImageView_riv_mutate_background = 8;
+			
+			// aapt resource value: 9
+			public const int RoundedImageView_riv_oval = 9;
+			
+			// aapt resource value: 10
+			public const int RoundedImageView_riv_tile_mode = 10;
+			
+			// aapt resource value: 11
+			public const int RoundedImageView_riv_tile_mode_x = 11;
+			
+			// aapt resource value: 12
+			public const int RoundedImageView_riv_tile_mode_y = 12;
 			
 			static Styleable()
 			{
