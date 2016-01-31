@@ -11,14 +11,14 @@ namespace ResidentAppCross
         public HomeMenuViewModel(IApartmentAppsAPIService data)
         {
             Data = data;
-            var values = Data.Values.Get();
-            foreach (var item in values)
-            {
-                MenuItems.Add(new MenuItemViewModel()
-                {
-                    Name = item
-                });
-            }
+//            var values = Data.Values.Get();
+//            foreach (var item in values)
+//            {
+//                MenuItems.Add(new MenuItemViewModel()
+//                {
+//                    Name = item
+//                });
+//            }
             MenuItems.Add(new MenuItemViewModel()
             {
                 Name = "Home"

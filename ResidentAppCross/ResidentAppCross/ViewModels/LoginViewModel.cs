@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows.Input;
 using Cirrious.CrossCore;
 using Cirrious.MvvmCross.ViewModels;
@@ -44,6 +45,29 @@ namespace ResidentAppCross
                     
                 }
                     , () => true);
+            }
+        }
+
+        public ICommand RemindPasswordCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    ShowViewModel<HomeMenuViewModel>();
+                    Debug.WriteLine("Please implement \"RemindPasswordCommand\" @ LoginViewModel");
+                });
+            }
+        }
+
+        public ICommand SignUpCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    Debug.WriteLine("Please implement \"SignUpCommand\" @ LoginViewModel");
+                });
             }
         }
     }

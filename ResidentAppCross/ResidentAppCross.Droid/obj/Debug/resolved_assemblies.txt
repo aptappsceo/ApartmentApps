@@ -9,6 +9,10 @@ C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemb
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\Mono.Android.dll
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\mscorlib.dll
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\ResidentAppCross.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\RoundedImageView.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\Square.OkHttp.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\Square.OkIO.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\Square.Picasso.dll
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\System.Core.dll
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\System.dll
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\assemblies\System.Xml.dll

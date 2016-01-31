@@ -100,7 +100,6 @@ C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\Micros
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\Newtonsoft.Json.xml
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\Microsoft.Rest.ClientRuntime.xml
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\Microsoft.Threading.Tasks.xml
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\ResidentAppCross.dll.mdb
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\values\styling.xml
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\drawable\loginbutton.xml
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\drawable-hdpi\appartmentappsicon.png
@@ -118,5 +117,11 @@ C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\dr
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\drawable-xhdpi\securityicon.png
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\drawable-mdpi\securityicon.png
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\drawable-hdpi\securityicon.png
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\RoundedImageView.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\Square.OkHttp.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\Square.OkIO.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\Square.Picasso.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\res\drawable\avatarplaceholder.jpg
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\ResidentAppCross.dll.mdb
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\obj\Debug\ResidentAppCross.Droid.dll.mdb
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross.Droid\bin\Debug\ResidentAppCross.Droid.dll.mdb
