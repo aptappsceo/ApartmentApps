@@ -32,6 +32,7 @@ namespace ApartmentApps.API.Service.Models
         public bool HasRegistered { get; set; }
 
         public string LoginProvider { get; set; }
+        public IList<string> Roles { get; set; }
     }
 
     public class UserLoginInfoViewModel

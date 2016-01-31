@@ -5,8 +5,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ApartmentApps.Client;
+using ApartmentApps.Client.Models;
 using MvvmCross.Plugins.Network.Rest;
 using Newtonsoft.Json.Linq;
 
@@ -97,6 +99,7 @@ namespace ResidentAppCross.ServiceClient
 
     public interface ILoginManager
     {
+        UserInfoViewModel UserInfo { get; }
         bool IsLoggedIn { get; }
         void Logout();
         Task<bool> LoginAsync(string username, string password);
@@ -113,6 +116,8 @@ namespace ResidentAppCross.ServiceClient
 
         public bool IsLoggedIn { get { return App.ApartmentAppsClient.AparmentAppsDelegating.AuthorizationKey != null; } }
 
+        
+
         public void Logout()
         {
             Data.Logout();
@@ -123,6 +128,10 @@ namespace ResidentAppCross.ServiceClient
             try
             {
                 var result = await Data.LoginAsync(username, password);
+                if (result)
+                {
+                    UserInfo = Data.Account.GetUserInfo();
+                }
                 return result;
             }
             catch (Exception ex)
@@ -132,5 +141,6 @@ namespace ResidentAppCross.ServiceClient
 
         }
 
+        public UserInfoViewModel UserInfo { get; set; }
     }
 }

@@ -1,3 +1,6 @@
+using ApartmentApps.API.Service.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace ApartmentApps.API.Service.Migrations
 {
     using System;
@@ -9,7 +12,8 @@ namespace ApartmentApps.API.Service.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(ApartmentApps.API.Service.Models.ApplicationDbContext context)
@@ -19,13 +23,12 @@ namespace ApartmentApps.API.Service.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.Roles.AddOrUpdate(
+                  new IdentityRole { Id = "Maintenance",Name = "Maintenance" },
+                  new IdentityRole { Id = "Resident",Name = "Resident" },
+                  new IdentityRole { Id = "Officer" ,Name = "Officer" },
+                  new IdentityRole { Id = "PropertyAdmin",Name = "PropertyAdmin" }
+            );
         }
     }
 }

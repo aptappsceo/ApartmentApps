@@ -2,7 +2,9 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
@@ -42,11 +44,23 @@ namespace ApartmentApps.Client.Models
             set { this._loginProvider = value; }
         }
         
+        private IList<string> _role;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Role
+        {
+            get { return this._role; }
+            set { this._role = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the UserInfoViewModel class.
         /// </summary>
         public UserInfoViewModel()
         {
+            this.Role = new LazyList<string>();
         }
         
         /// <summary>
@@ -70,6 +84,14 @@ namespace ApartmentApps.Client.Models
                 if (loginProviderValue != null && loginProviderValue.Type != JTokenType.Null)
                 {
                     this.LoginProvider = ((string)loginProviderValue);
+                }
+                JToken roleSequence = ((JToken)inputObject["Role"]);
+                if (roleSequence != null && roleSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken roleValue in ((JArray)roleSequence))
+                    {
+                        this.Role.Add(((string)roleValue));
+                    }
                 }
             }
         }
