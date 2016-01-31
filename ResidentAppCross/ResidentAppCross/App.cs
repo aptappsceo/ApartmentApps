@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ApartmentApps.Client;
+using ApartmentApps.Client.Models;
 using Cirrious.CrossCore;
 using Cirrious.MvvmCross.ViewModels;
 using Newtonsoft.Json.Linq;
@@ -18,8 +19,9 @@ public class App : MvxApplication
     {
         //Mvx.RegisterType<ICalculation, Calculation>();
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginViewModel>());
-        Mvx.RegisterSingleton<IApartmentAppsAPIService>(new ApartmentAppsClient());
-        Mvx.RegisterType<ILoginManager, LoginService>();
+        var client = new ApartmentAppsClient();
+        Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);
+        Mvx.RegisterSingleton<ILoginManager>(new LoginService(client));
 
     }
 
@@ -54,6 +56,7 @@ public class App : MvxApplication
                 if (obj.TryGetValue("access_token", out token))
                 {
                     AparmentAppsDelegating.AuthorizationKey = token.Value<string>();
+                   
                     return true;
                 }
             }
@@ -64,6 +67,8 @@ public class App : MvxApplication
             return false;
 
         }
+
+     
 
         public class AparmentAppsDelegating : DelegatingHandler
         {
