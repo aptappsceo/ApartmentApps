@@ -59,6 +59,25 @@ namespace ResidentAppCross.Droid
 			}
 		}
 		
+		public partial class Dimension
+		{
+			
+			// aapt resource value: 0x7f070001
+			public const int LoginScreenFormIconSize = 2131165185;
+			
+			// aapt resource value: 0x7f070000
+			public const int LoginScreenFormTextSize = 2131165184;
+			
+			static Dimension()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Dimension()
+			{
+			}
+		}
+		
 		public partial class Drawable
 		{
 			
@@ -66,28 +85,43 @@ namespace ResidentAppCross.Droid
 			public const int action_menu = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int background = 2130837505;
+			public const int AppartmentAppsIcon = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int Border1 = 2130837506;
+			public const int background = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int Icon = 2130837507;
+			public const int Border1 = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int icon1 = 2130837508;
+			public const int ic_login_50893_0013_forma = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int iconelse = 2130837509;
+			public const int Icon = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int LOGIN = 2130837510;
+			public const int icon1 = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int logo_03 = 2130837511;
+			public const int iconelse = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int monoandroidsplash = 2130837512;
+			public const int LOGIN = 2130837512;
+			
+			// aapt resource value: 0x7f020009
+			public const int LoginButton = 2130837513;
+			
+			// aapt resource value: 0x7f02000a
+			public const int logo_03 = 2130837514;
+			
+			// aapt resource value: 0x7f02000b
+			public const int monoandroidsplash = 2130837515;
+			
+			// aapt resource value: 0x7f02000c
+			public const int SecurityIcon = 2130837516;
+			
+			// aapt resource value: 0x7f02000d
+			public const int UsernameIcon = 2130837517;
 			
 			static Drawable()
 			{
@@ -121,7 +155,7 @@ namespace ResidentAppCross.Droid
 			public const int UsernameInput = 2130968592;
 			
 			// aapt resource value: 0x7f040012
-			public const int buttonLogin = 2130968594;
+			public const int button1 = 2130968594;
 			
 			// aapt resource value: 0x7f040003
 			public const int frameLayout1 = 2130968579;
@@ -155,6 +189,9 @@ namespace ResidentAppCross.Droid
 			
 			// aapt resource value: 0x7f040013
 			public const int textView3 = 2130968595;
+			
+			// aapt resource value: 0x7f040014
+			public const int textView4 = 2130968596;
 			
 			// aapt resource value: 0x7f040002
 			public const int view1 = 2130968578;
@@ -222,8 +259,11 @@ namespace ResidentAppCross.Droid
 		public partial class Style
 		{
 			
+			// aapt resource value: 0x7f060001
+			public const int Mono_Android_Theme_Splash = 2131099649;
+			
 			// aapt resource value: 0x7f060000
-			public const int Mono_Android_Theme_Splash = 2131099648;
+			public const int button_text = 2131099648;
 			
 			static Style()
 			{

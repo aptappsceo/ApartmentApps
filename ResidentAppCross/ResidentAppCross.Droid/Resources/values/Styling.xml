@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+
+  <dimen name="LoginScreenFormTextSize">35dp</dimen>
+  <dimen name="LoginScreenFormIconSize">89dp</dimen>
+  
+</resources>

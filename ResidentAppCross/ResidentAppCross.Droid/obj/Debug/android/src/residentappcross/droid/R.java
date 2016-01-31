@@ -58,16 +58,25 @@ containing a value of this type.
          */
         public static final int MvxTemplate=0x7f010002;
     }
+    public static final class dimen {
+        public static final int LoginScreenFormIconSize=0x7f070001;
+        public static final int LoginScreenFormTextSize=0x7f070000;
+    }
     public static final class drawable {
         public static final int action_menu=0x7f020000;
-        public static final int background=0x7f020001;
-        public static final int border1=0x7f020002;
-        public static final int icon=0x7f020003;
-        public static final int icon1=0x7f020004;
-        public static final int iconelse=0x7f020005;
-        public static final int login=0x7f020006;
-        public static final int logo_03=0x7f020007;
-        public static final int monoandroidsplash=0x7f020008;
+        public static final int appartmentappsicon=0x7f020001;
+        public static final int background=0x7f020002;
+        public static final int border1=0x7f020003;
+        public static final int ic_login_50893_0013_forma=0x7f020004;
+        public static final int icon=0x7f020005;
+        public static final int icon1=0x7f020006;
+        public static final int iconelse=0x7f020007;
+        public static final int login=0x7f020008;
+        public static final int loginbutton=0x7f020009;
+        public static final int logo_03=0x7f02000a;
+        public static final int monoandroidsplash=0x7f02000b;
+        public static final int securityicon=0x7f02000c;
+        public static final int usernameicon=0x7f02000d;
     }
     public static final class id {
         public static final int FlyOutContent=0x7f040001;
@@ -76,7 +85,7 @@ containing a value of this type.
         public static final int MvxBindingTagUnique=0x7f040000;
         public static final int PasswordInput=0x7f040011;
         public static final int UsernameInput=0x7f040010;
-        public static final int buttonLogin=0x7f040012;
+        public static final int button1=0x7f040012;
         public static final int frameLayout1=0x7f040003;
         public static final int horizontalScrollView1=0x7f04000c;
         public static final int imageView1=0x7f04000a;
@@ -88,6 +97,7 @@ containing a value of this type.
         public static final int textView1=0x7f040008;
         public static final int textView2=0x7f040006;
         public static final int textView3=0x7f040013;
+        public static final int textView4=0x7f040014;
         public static final int view1=0x7f040002;
         public static final int view2=0x7f040007;
     }
@@ -103,7 +113,8 @@ containing a value of this type.
         public static final int hello=0x7f050000;
     }
     public static final class style {
-        public static final int Mono_Android_Theme_Splash=0x7f060000;
+        public static final int Mono_Android_Theme_Splash=0x7f060001;
+        public static final int button_text=0x7f060000;
     }
     public static final class styleable {
         /** Attributes that can be used with a MvxBinding.
