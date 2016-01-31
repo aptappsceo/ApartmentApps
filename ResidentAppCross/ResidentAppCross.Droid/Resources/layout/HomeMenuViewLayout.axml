@@ -9,14 +9,14 @@
     android:id="@+id/linearLayout1"
     android:background="#145b99">
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout6"
         android:gravity="center"
-        android:layout_marginTop="19.5dp"
+        android:layout_marginTop="26.0dp"
         android:background="@drawable/AvatarBackground">
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imageView1"
@@ -35,49 +35,50 @@
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2">
-        <TextView
-            android:text="Micah Osborne"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView1"
-            android:foreground="@android:color/primary_text_dark"
-            android:gravity="center"
-            android:layout_marginTop="27.5dp"
-            android:textSize="50dp" />
-        <TextView
-            android:text="Edit Profile"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:foreground="@android:color/primary_text_dark"
-            android:gravity="center"
-            android:layout_marginTop="11.5dp" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout3" />
+        android:id="@+id/linearLayout7"
+        android:background="#ffffff"
+        android:gravity="center">
+        <TextView
+            android:text="Micah Osborne"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView1"
+            android:foreground="@android:color/primary_text_dark"
+            android:gravity="center"
+            android:textSize="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#4f4f4f" />
+        <TextView
+            android:text="Edit Profile"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView2"
+            android:foreground="@android:color/primary_text_dark"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#125c9d"
+            android:layout_marginBottom="21.5dp"
+            android:layout_marginTop="17.5dp" />
+    </LinearLayout>
     <Mvx.MvxListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="40dp"
         local:MvxBind="ItemsSource MenuItems"
         local:MvxItemTemplate="@layout/menuitem"
-        android:id="@+id/mvx.MvxListView1" />
+        android:id="@+id/mvx.MvxListView1"
+        android:background="#ffffff" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout4"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="#ffffff">
         <Button
             android:text="Settings"
             android:layout_width="wrap_content"

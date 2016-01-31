@@ -12,36 +12,36 @@ namespace ResidentAppCross
         public HomeMenuViewModel(IApartmentAppsAPIService data, ILoginManager loginManager)
         {
             Data = data;
-            if (loginManager.UserInfo.Role.Contains("Maitenance"))
-            {
-                MenuItems.Add(new MenuItemViewModel()
-                {
-                    Name = "Maitenance Request"
-                });
-            }
-            if (loginManager.UserInfo.Role.Contains("Officer"))
-            {
-                MenuItems.Add(new MenuItemViewModel()
-                {
-                    Name = "Report Incedent"
-                });
-                MenuItems.Add(new MenuItemViewModel()
-                {
-                    Name = "Check-Ins"
-                });
-                MenuItems.Add(new MenuItemViewModel()
-                {
-                    Name = "Daily Report"
-                });
-            }
-            if (loginManager.UserInfo.Role.Contains("PropertyAdmin"))
-            {
-                MenuItems.Add(new MenuItemViewModel()
-                {
-                    Name = "Maitenance Request"
-                });
-
-            }
+//            if (loginManager.UserInfo.Role.Contains("Maitenance"))
+//            {
+//                MenuItems.Add(new MenuItemViewModel()
+//                {
+//                    Name = "Maitenance Request"
+//                });
+//            }
+//            if (loginManager.UserInfo.Role.Contains("Officer"))
+//            {
+//                MenuItems.Add(new MenuItemViewModel()
+//                {
+//                    Name = "Report Incedent"
+//                });
+//                MenuItems.Add(new MenuItemViewModel()
+//                {
+//                    Name = "Check-Ins"
+//                });
+//                MenuItems.Add(new MenuItemViewModel()
+//                {
+//                    Name = "Daily Report"
+//                });
+//            }
+//            if (loginManager.UserInfo.Role.Contains("PropertyAdmin"))
+//            {
+//                MenuItems.Add(new MenuItemViewModel()
+//                {
+//                    Name = "Maitenance Request"
+//                });
+//
+//            }
             //MenuItems.Add(new MenuItemViewModel()
             //{
             //    Name = "Home"

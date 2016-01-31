@@ -220,5 +220,11 @@
       <Version>2.2.0</Version>
     </XamarinComponentReference>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\AvatarBackgroundSource.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\AvatarBackground.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

@@ -124,43 +124,49 @@ namespace ResidentAppCross.Droid
 			public const int AppartmentAppsIcon = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int AvatarPlaceholder = 2130837506;
+			public const int AvatarBackground = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int background = 2130837507;
+			public const int AvatarBackgroundSource = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int Border1 = 2130837508;
+			public const int AvatarPlaceholder = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int ic_login_50893_0013_forma = 2130837509;
+			public const int background = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int Icon = 2130837510;
+			public const int Border1 = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int icon1 = 2130837511;
+			public const int ic_login_50893_0013_forma = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int iconelse = 2130837512;
+			public const int Icon = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int LOGIN = 2130837513;
+			public const int icon1 = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int LoginButton = 2130837514;
+			public const int iconelse = 2130837514;
 			
 			// aapt resource value: 0x7f02000b
-			public const int logo_03 = 2130837515;
+			public const int LOGIN = 2130837515;
 			
 			// aapt resource value: 0x7f02000c
-			public const int monoandroidsplash = 2130837516;
+			public const int LoginButton = 2130837516;
 			
 			// aapt resource value: 0x7f02000d
-			public const int SecurityIcon = 2130837517;
+			public const int logo_03 = 2130837517;
 			
 			// aapt resource value: 0x7f02000e
-			public const int UsernameIcon = 2130837518;
+			public const int monoandroidsplash = 2130837518;
+			
+			// aapt resource value: 0x7f02000f
+			public const int SecurityIcon = 2130837519;
+			
+			// aapt resource value: 0x7f020010
+			public const int UsernameIcon = 2130837520;
 			
 			static Drawable()
 			{
@@ -187,8 +193,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f050004
 			public const int FlyOutContent = 2131034116;
 			
-			// aapt resource value: 0x7f050024
-			public const int FlyOutMenu = 2131034148;
+			// aapt resource value: 0x7f050025
+			public const int FlyOutMenu = 2131034149;
 			
 			// aapt resource value: 0x7f050020
 			public const int ForgotPasswordButton = 2131034144;
@@ -238,8 +244,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f050006
 			public const int frameLayout1 = 2131034118;
 			
-			// aapt resource value: 0x7f05000c
-			public const int imageView1 = 2131034124;
+			// aapt resource value: 0x7f05000d
+			public const int imageView1 = 2131034125;
 			
 			// aapt resource value: 0x7f05001c
 			public const int imageView2 = 2131034140;
@@ -247,17 +253,20 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f050007
 			public const int linearLayout1 = 2131034119;
 			
-			// aapt resource value: 0x7f05000d
-			public const int linearLayout2 = 2131034125;
-			
-			// aapt resource value: 0x7f05000e
-			public const int linearLayout3 = 2131034126;
+			// aapt resource value: 0x7f050024
+			public const int linearLayout2 = 2131034148;
 			
 			// aapt resource value: 0x7f050010
 			public const int linearLayout4 = 2131034128;
 			
 			// aapt resource value: 0x7f050013
 			public const int linearLayout5 = 2131034131;
+			
+			// aapt resource value: 0x7f05000c
+			public const int linearLayout6 = 2131034124;
+			
+			// aapt resource value: 0x7f05000e
+			public const int linearLayout7 = 2131034126;
 			
 			// aapt resource value: 0x7f050002
 			public const int mirror = 2131034114;
