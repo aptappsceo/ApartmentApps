@@ -8,21 +8,31 @@
     android:layout_height="match_parent"
     android:id="@+id/linearLayout1"
     android:background="#145b99">
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/imageView1"
-        android:src="@drawable/AvatarPlaceholder"
-        android:scaleType="centerInside"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout6"
         android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        local:riv_corner_radius="30dip"
-        local:riv_border_width="10dip"
-        local:riv_border_color="#ffffff"
-        local:riv_mutate_background="true"
-        local:riv_tile_mode="clamp"
-        local:riv_oval="true"
-        android:layout_marginTop="30.5dp" />
+        android:layout_marginTop="19.5dp"
+        android:background="@drawable/AvatarBackground">
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imageView1"
+            android:src="@drawable/AvatarPlaceholder"
+            android:scaleType="centerInside"
+            android:gravity="center"
+            local:riv_corner_radius="30dip"
+            local:riv_border_width="10dip"
+            local:riv_border_color="#ffffff"
+            local:riv_mutate_background="true"
+            local:riv_tile_mode="clamp"
+            local:riv_oval="true"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

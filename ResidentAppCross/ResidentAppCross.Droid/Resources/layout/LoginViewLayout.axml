@@ -112,8 +112,7 @@
                 style="@style/button_text"
                 p1:layout_marginLeft="42dp"
                 p1:layout_marginRight="42dp"
-                p1:textAllCaps="false"
-                p1:minHeight="@dimen/LoginScreenFormIconSize" />
+                local:MvxBind="Click LoginCommand" />
             <TextView
                 p1:text="Forgot Password?"
                 p1:layout_width="match_parent"
