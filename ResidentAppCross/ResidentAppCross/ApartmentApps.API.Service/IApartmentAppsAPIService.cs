@@ -31,6 +31,11 @@ namespace ApartmentApps.Client
             get; 
         }
         
+        IMaitenance Maitenance
+        {
+            get; 
+        }
+        
         IValues Values
         {
             get; 
