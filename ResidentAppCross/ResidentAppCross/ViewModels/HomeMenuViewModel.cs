@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Input;
 using ApartmentApps.Client;
 using Cirrious.MvvmCross.ViewModels;
 using ResidentAppCross.Resources;
@@ -46,62 +48,90 @@ namespace ResidentAppCross
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Home",
-                Icon = SharedResources.Icons.HouseIcon
+                Icon = SharedResources.Icons.HouseIcon,
+                Command = HomeCommand
             });
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Maitenance Request",
-                Icon = SharedResources.Icons.MaintenaceIcon
+                Icon = SharedResources.Icons.MaintenaceIcon,
+                BadgeLabel = "6",
+                Command = MaintenaceRequestCommand
             });
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Request Courtesy Officer",
-                Icon = SharedResources.Icons.OfficerIcon
+                Icon = SharedResources.Icons.OfficerIcon,
+                BadgeLabel = "12",
+                Command = RequestCourtesyOfficerCommand
             });
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Pay Rent",
-                Icon = SharedResources.Icons.PayIcon
+                Icon = SharedResources.Icons.PayIcon,
+                Command = PayRentCommand
             });
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Community Partners",
-                Icon = SharedResources.Icons.PartnersIcon
-            });
-            MenuItems.Add(new HomeMenuItemViewModel()
-            {
-                Name = "Home",
-                Icon = SharedResources.Icons.HouseIcon
-            });
-            MenuItems.Add(new HomeMenuItemViewModel()
-            {
-                Name = "Maitenance Request",
-                Icon = SharedResources.Icons.MaintenaceIcon
-            });
-            MenuItems.Add(new HomeMenuItemViewModel()
-            {
-                Name = "Request Courtesy Officer",
-                Icon = SharedResources.Icons.OfficerIcon
-            });
-            MenuItems.Add(new HomeMenuItemViewModel()
-            {
-                Name = "Pay Rent",
-                Icon = SharedResources.Icons.PayIcon
-            });
-            MenuItems.Add(new HomeMenuItemViewModel()
-            {
-                Name = "Community Partners",
-                Icon = SharedResources.Icons.PartnersIcon
+                Icon = SharedResources.Icons.PartnersIcon,
+                Command = CommunityPartnersCommand
             });
         }
 
-        private ObservableCollection<HomeMenuItemViewModel> _menuItems = new ObservableCollection<HomeMenuItemViewModel>();
+        private ObservableCollection<HomeMenuItemViewModel> _menuItems =
+            new ObservableCollection<HomeMenuItemViewModel>();
 
         public ObservableCollection<HomeMenuItemViewModel> MenuItems
         {
             get { return _menuItems; }
-            set { _menuItems = value; RaisePropertyChanged("MenuItems"); }
+            set
+            {
+                _menuItems = value;
+                RaisePropertyChanged("MenuItems");
+            }
         }
-      
+
+
+        public ICommand EditProfileCommand
+        {
+            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute EditProfileCommand"); }); }
+        }
+
+        public ICommand OpenSettingsCommand
+        {
+            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute OpenSettingsCommand"); }); }
+        }
+
+        public ICommand SignOutCommand
+        {
+            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute SignOutCommand"); }); }
+        }
+
+        public ICommand HomeCommand
+        {
+            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute HomeCommand"); }); }
+        }
+
+        public ICommand MaintenaceRequestCommand
+        {
+            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute MaintenaceRequestCommand"); }); }
+        }
+
+        public ICommand RequestCourtesyOfficerCommand
+        {
+            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute RequestCourtesyOfficerCommand"); }); }
+        }
+
+        public ICommand PayRentCommand
+        {
+            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute PayRentCommand"); }); }
+        }
+
+        public ICommand CommunityPartnersCommand
+        {
+            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute CommunityPartnersCommand"); }); }
+        }
+
     }
 }

@@ -5,26 +5,27 @@
     p1:layout_width="match_parent"
     p1:layout_height="80dp"
     p1:background="#ffffff"
-    p1:id="@+id/linearLayout1"
+    p1:id="@+id/main_container"
+    local:MvxBind="Click Command"
     p1:minHeight="90dp">
     <ImageView
         p1:src="@drawable/securityicon"
         p1:layout_height="match_parent"
         p1:layout_width="80dp"
         local:MvxBind="DrawableName SharedIconsConverter(Icon)"
-        p1:id="@+id/imageView1"
+        p1:id="@+id/icon"
         p1:layout_marginRight="24.5dp" />
     <LinearLayout
         p1:orientation="horizontal"
         p1:weightSum="1"
         p1:layout_width="match_parent"
         p1:layout_height="match_parent"
-        p1:id="@+id/linearLayout2">
+        p1:id="@+id/container1">
         <TextView
             p1:textSize="36dp"
             p1:text="My Text"
             local:MvxBind="Text Name"
-            p1:id="@+id/textView1"
+            p1:id="@+id/title_text"
             p1:layout_width="0dp"
             p1:layout_height="match_parent"
             p1:gravity="center_vertical"
@@ -32,24 +33,27 @@
             p1:textColor="#525252" />
         <LinearLayout
             p1:orientation="horizontal"
+            local:MvxBind="Visible ShowBadge"
             p1:layout_width="0dp"
             p1:layout_height="match_parent"
             p1:layout_weight="0.2"
-            p1:id="@+id/linearLayout2"
+            p1:id="@+id/container2"
             p1:gravity="center">
             <TextView
                 p1:textSize="24dp"
                 p1:text="20"
-                p1:id="@+id/textView1"
+                p1:id="@+id/badge_text"
                 p1:layout_width="wrap_content"
                 p1:layout_height="wrap_content"
                 p1:gravity="center"
+                local:MvxBind="Text BadgeLabel"
                 p1:textColor="#ffffff"
                 p1:background="@drawable/badgebackground"
-                p1:paddingBottom="10dp"
-                p1:paddingTop="10dp"
+                p1:paddingBottom="6dp"
+                p1:paddingTop="6dp"
                 p1:paddingLeft="20dp"
-                p1:paddingRight="20dp" />
+                p1:paddingRight="20dp"
+                p1:minWidth="67dp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
