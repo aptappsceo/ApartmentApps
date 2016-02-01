@@ -40,6 +40,13 @@ namespace ApartmentApps.Client
             get { return this._account; }
         }
         
+        private IMaitenance _maitenance;
+        
+        public virtual IMaitenance Maitenance
+        {
+            get { return this._maitenance; }
+        }
+        
         private IValues _values;
         
         public virtual IValues Values
@@ -54,6 +61,7 @@ namespace ApartmentApps.Client
             : base()
         {
             this._account = new Account(this);
+            this._maitenance = new Maitenance(this);
             this._values = new Values(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
@@ -69,6 +77,7 @@ namespace ApartmentApps.Client
             : base(handlers)
         {
             this._account = new Account(this);
+            this._maitenance = new Maitenance(this);
             this._values = new Values(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
@@ -87,6 +96,7 @@ namespace ApartmentApps.Client
             : base(rootHandler, handlers)
         {
             this._account = new Account(this);
+            this._maitenance = new Maitenance(this);
             this._values = new Values(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }

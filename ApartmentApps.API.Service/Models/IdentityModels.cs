@@ -118,6 +118,7 @@ namespace ApartmentApps.API.Service.Models
         public string UserId { get; set; }
 
         public string WorkerId { get; set; }
+        public int MaitenanceRequestTypeId { get; set; }
 
         [ForeignKey("WorkerId")]
         public ApplicationUser Worker { get; set; }
@@ -125,8 +126,12 @@ namespace ApartmentApps.API.Service.Models
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
 
+        [ForeignKey("MaitenanceRequestTypeId")]
+        public MaitenanceRequestType MaitenanceRequestType { get; set; }
 
         public ICollection<MaitenanceAction> Actions { get; set; }
+        public DateTime Date { get; set; }
+        public string Message { get; set; }
     }
 
     public class MaitenanceAction

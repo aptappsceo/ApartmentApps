@@ -44,15 +44,15 @@ namespace ApartmentApps.Client.Models
             set { this._loginProvider = value; }
         }
         
-        private IList<string> _role;
+        private IList<string> _roles;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public IList<string> Role
+        public IList<string> Roles
         {
-            get { return this._role; }
-            set { this._role = value; }
+            get { return this._roles; }
+            set { this._roles = value; }
         }
         
         /// <summary>
@@ -60,7 +60,7 @@ namespace ApartmentApps.Client.Models
         /// </summary>
         public UserInfoViewModel()
         {
-            this.Role = new LazyList<string>();
+            this.Roles = new LazyList<string>();
         }
         
         /// <summary>
@@ -85,12 +85,12 @@ namespace ApartmentApps.Client.Models
                 {
                     this.LoginProvider = ((string)loginProviderValue);
                 }
-                JToken roleSequence = ((JToken)inputObject["Role"]);
-                if (roleSequence != null && roleSequence.Type != JTokenType.Null)
+                JToken rolesSequence = ((JToken)inputObject["Roles"]);
+                if (rolesSequence != null && rolesSequence.Type != JTokenType.Null)
                 {
-                    foreach (JToken roleValue in ((JArray)roleSequence))
+                    foreach (JToken rolesValue in ((JArray)rolesSequence))
                     {
-                        this.Role.Add(((string)roleValue));
+                        this.Roles.Add(((string)rolesValue));
                     }
                 }
             }
