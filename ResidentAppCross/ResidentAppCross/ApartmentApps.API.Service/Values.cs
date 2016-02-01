@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ApartmentApps.Client;
+using ApartmentApps.Client.Models;
 using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
