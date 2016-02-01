@@ -53,7 +53,9 @@
     <Compile Include="ApartmentApps.API.Service\Values.cs" />
     <Compile Include="ApartmentApps.API.Service\ValuesExtensions.cs" />
     <Compile Include="App.cs" />
+    <Compile Include="Resources\SharedResources.cs" />
     <Compile Include="Services\ApplicationContext.cs" />
+    <Compile Include="ViewModels\BadgeType.cs" />
     <Compile Include="ViewModels\HomeMenuItemViewModel.cs" />
     <Compile Include="ViewModels\HomeMenuViewModel.cs" />
     <Compile Include="IQueryHomeMenuItems.cs" />

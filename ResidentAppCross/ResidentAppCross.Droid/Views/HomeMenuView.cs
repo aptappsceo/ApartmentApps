@@ -28,6 +28,8 @@ namespace ResidentAppCross.Droid.Views
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.HomeMenuViewLayout);
+        
+            
             //var menu = FindViewById<FlyOutContainer>(Resource.Id.FlyOutContainer);
             //var menuButton = FindViewById(Resource.Id.MenuButton);
             //menuButton.Click += (sender, e) => {

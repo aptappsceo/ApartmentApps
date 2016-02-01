@@ -29,8 +29,8 @@
             local:riv_mutate_background="true"
             local:riv_tile_mode="clamp"
             local:riv_oval="true"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="275dp"
+            android:layout_height="275dp"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
     <LinearLayout
@@ -51,47 +51,115 @@
             android:textSize="50dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="#4f4f4f" />
-        <TextView
-            android:text="Edit Profile"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/textView2"
-            android:foreground="@android:color/primary_text_dark"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textColor="#125c9d"
-            android:layout_marginBottom="21.5dp"
+            android:textColor="#4f4f4f"
             android:layout_marginTop="17.5dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:gravity="center"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout10"
+            android:layout_marginTop="8.0dp"
+            android:layout_marginBottom="6.0dp">
+            <ImageView
+                android:src="@drawable/accounticon"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView2" />
+            <TextView
+                android:text="Edit Profile"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/textView2"
+                android:foreground="@android:color/primary_text_dark"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#125c9d"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
     <Mvx.MvxListView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="460dp"
         android:textSize="40dp"
         local:MvxBind="ItemsSource MenuItems"
-        local:MvxItemTemplate="@layout/menuitem"
+        local:MvxItemTemplate="@layout/homemenuitemlayout"
         android:id="@+id/mvx.MvxListView1"
+        android:background="#ffffff"
+        android:paddingLeft="45dp"
+        android:paddingRight="45dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minHeight="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout11"
         android:background="#ffffff" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout4"
-        android:gravity="center"
-        android:background="#ffffff">
-        <Button
-            android:text="Settings"
-            android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:weightSum="1"
+        android:id="@+id/linearLayout8"
+        android:background="#ffffff"
+        android:paddingLeft="45dp"
+        android:paddingRight="45dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/button1"
-            android:textSize="30dp" />
-        <Button
-            android:text="Sign Out"
-            android:layout_width="wrap_content"
+            android:id="@+id/linearLayout9"
+            android:layout_weight="0.5"
+            android:gravity="left"
+            android:background="#ffffff">
+            <ImageView
+                android:src="@drawable/settingsicon"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView2" />
+            <TextView
+                android:text="Settings"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textView5"
+                android:textColor="#4f4f4f"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="4.5dp"
+                android:textSize="31dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/button2"
-            android:textSize="30dp" />
+            android:id="@+id/linearLayout9"
+            android:layout_weight="0.5"
+            android:gravity="right"
+            android:background="#ffffff">
+            <TextView
+                android:text="Sign Out"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textView5"
+                android:textColor="#4f4f4f"
+                android:gravity="center_vertical"
+                android:layout_marginRight="4.5dp"
+                android:textSize="31dp" />
+            <ImageView
+                android:src="@drawable/signouticon"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView2" />
+        </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minHeight="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout11"
+        android:background="#ffffff" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
