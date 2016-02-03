@@ -74,6 +74,7 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceClient\ILoginManager.cs" />
+    <Compile Include="ViewModels\MaintenanceRequestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

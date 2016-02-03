@@ -5,6 +5,7 @@ using ApartmentApps.Client;
 using Cirrious.MvvmCross.ViewModels;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ServiceClient;
+using ResidentAppCross.ViewModels;
 
 namespace ResidentAppCross
 {
@@ -115,7 +116,7 @@ namespace ResidentAppCross
 
         public ICommand MaintenaceRequestCommand
         {
-            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute MaintenaceRequestCommand"); }); }
+            get { return new MvxCommand(() => { ShowViewModel<MaintenanceRequestViewModel>(); }); }
         }
 
         public ICommand RequestCourtesyOfficerCommand
