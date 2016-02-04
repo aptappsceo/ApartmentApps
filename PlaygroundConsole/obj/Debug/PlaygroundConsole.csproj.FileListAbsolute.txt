@@ -26,3 +26,5 @@ D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\ko\System
 D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\ru\System.Windows.Interactivity.resources.dll
 D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
 D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\Entrata.Client.dll
+D:\ApartmentApps\Projects\ResidentAppCross\PlaygroundConsole\bin\Debug\Entrata.Client.pdb

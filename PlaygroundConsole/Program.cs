@@ -9,13 +9,31 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ApartmentApps.Client;
+using Entrata.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace PlaygroundConsole
 {
+   
     class Program
     {
+        static async void Main3()
+        {
+            var client = new EntrataClient()
+            {
+                Username = "apartmentappsinc",
+                Password = "Password1",
+
+            };
+            var result = await client.GetCustomers("162896");
+            var customers = result.Response.Result.Customers.Customer;
+            foreach (var item in customers)
+            {
+                Console.WriteLine(item.FirstName);
+            }
+
+        }
         static async void Main2()
         {
             var client = new App.ApartmentAppsClient();
@@ -49,7 +67,7 @@ namespace PlaygroundConsole
         }
         static void Main(string[] args)
         {
-            Main2();
+            Main3();
             Console.ReadLine();
 
             //var webClient = new WebClient();

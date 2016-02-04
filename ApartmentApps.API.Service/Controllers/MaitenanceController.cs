@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace ApartmentApps.API.Service.Controllers
 {
+    [RoutePrefix("api/Maitenance")]
     [Authorize]
     public class MaitenanceController : ApiController
     {
@@ -22,6 +23,7 @@ namespace ApartmentApps.API.Service.Controllers
         //}
 
         [HttpPost]
+        [Route("SubmitRequest")]
         public MaitenanceRequest SubmitRequest(MaitenanceRequestModel request)
         {
             using (Context = new ApplicationDbContext())
@@ -42,6 +44,7 @@ namespace ApartmentApps.API.Service.Controllers
         }
 
         [HttpGet]
+        [Route("GetMaitenanceRequestTypes")]
         public IEnumerable<LookupPairModel> GetMaitenanceRequestTypes()
         {
             using (Context = new ApplicationDbContext())
@@ -51,6 +54,7 @@ namespace ApartmentApps.API.Service.Controllers
         }
 
         [HttpGet]
+        [Route("GetByWorker")]
         public IEnumerable<MaitenanceRequest> GetByWorker(string workerId)
         {
             using (Context = new ApplicationDbContext())
@@ -60,6 +64,7 @@ namespace ApartmentApps.API.Service.Controllers
         }
 
         [HttpGet]
+        [Route("GetByResident")]
         public IEnumerable<MaitenanceRequest> GetByResident(string workerId)
         {
             using (Context = new ApplicationDbContext())

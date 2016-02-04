@@ -100,6 +100,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Entrata.Client\Entrata.Client.csproj">
+      <Project>{A8CD4A6F-7D69-49A6-A4A8-D199DDC6E490}</Project>
+      <Name>Entrata.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ResidentAppCross\ResidentAppCross\ResidentAppCross.csproj">
       <Project>{84E46F6D-1424-48B7-8966-B6FD6153FEE3}</Project>
       <Name>ResidentAppCross</Name>

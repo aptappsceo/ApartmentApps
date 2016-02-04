@@ -237,6 +237,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Integrations\Entrata.cs" />
+    <Compile Include="Integrations\EntrataRequest.cs" />
     <Compile Include="Migrations\201601292238244_Initial.cs" />
     <Compile Include="Migrations\201601292238244_Initial.Designer.cs">
       <DependentUpon>201601292238244_Initial.cs</DependentUpon>
