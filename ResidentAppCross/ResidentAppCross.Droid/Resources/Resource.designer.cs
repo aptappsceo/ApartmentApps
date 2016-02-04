@@ -118,55 +118,97 @@ namespace ResidentAppCross.Droid
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int action_menu = 2130837504;
+			public const int AccountIcon = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int AppartmentAppsIcon = 2130837505;
+			public const int action_menu = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int AvatarBackground = 2130837506;
+			public const int AddIcon = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int AvatarBackgroundSource = 2130837507;
+			public const int AppartmentAppsIcon = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int AvatarPlaceholder = 2130837508;
+			public const int AvatarBackground = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int background = 2130837509;
+			public const int AvatarBackgroundSource = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int Border1 = 2130837510;
+			public const int AvatarPlaceholder = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int ic_login_50893_0013_forma = 2130837511;
+			public const int background = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int Icon = 2130837512;
+			public const int BadgeBackground = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int icon1 = 2130837513;
+			public const int BadgeBackgroundSource = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int iconelse = 2130837514;
+			public const int Border1 = 2130837514;
 			
 			// aapt resource value: 0x7f02000b
-			public const int LOGIN = 2130837515;
+			public const int Border2 = 2130837515;
 			
 			// aapt resource value: 0x7f02000c
-			public const int LoginButton = 2130837516;
+			public const int HouseIcon = 2130837516;
 			
 			// aapt resource value: 0x7f02000d
-			public const int logo_03 = 2130837517;
+			public const int ic_login_50893_0013_forma = 2130837517;
 			
 			// aapt resource value: 0x7f02000e
-			public const int monoandroidsplash = 2130837518;
+			public const int Icon = 2130837518;
 			
 			// aapt resource value: 0x7f02000f
-			public const int SecurityIcon = 2130837519;
+			public const int icon1 = 2130837519;
 			
 			// aapt resource value: 0x7f020010
-			public const int UsernameIcon = 2130837520;
+			public const int iconelse = 2130837520;
+			
+			// aapt resource value: 0x7f020011
+			public const int LOGIN = 2130837521;
+			
+			// aapt resource value: 0x7f020012
+			public const int LoginButton = 2130837522;
+			
+			// aapt resource value: 0x7f020013
+			public const int logo_03 = 2130837523;
+			
+			// aapt resource value: 0x7f020014
+			public const int MaintenaceIcon = 2130837524;
+			
+			// aapt resource value: 0x7f020015
+			public const int MaintenanceRequestMainIcon = 2130837525;
+			
+			// aapt resource value: 0x7f020016
+			public const int monoandroidsplash = 2130837526;
+			
+			// aapt resource value: 0x7f020017
+			public const int OfficerIcon = 2130837527;
+			
+			// aapt resource value: 0x7f020018
+			public const int PartnersIcon = 2130837528;
+			
+			// aapt resource value: 0x7f020019
+			public const int PayIcon = 2130837529;
+			
+			// aapt resource value: 0x7f02001a
+			public const int SecurityIcon = 2130837530;
+			
+			// aapt resource value: 0x7f02001b
+			public const int SettingsIcon = 2130837531;
+			
+			// aapt resource value: 0x7f02001c
+			public const int SignOutIcon = 2130837532;
+			
+			// aapt resource value: 0x7f02001d
+			public const int UsernameIcon = 2130837533;
+			
+			// aapt resource value: 0x7f02001e
+			public const int WhiteHomeIcon = 2130837534;
 			
 			static Drawable()
 			{
@@ -181,119 +223,161 @@ namespace ResidentAppCross.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050019
-			public const int ApartmentsAppIconView = 2131034137;
-			
-			// aapt resource value: 0x7f050018
-			public const int ContentContainer = 2131034136;
-			
-			// aapt resource value: 0x7f050017
-			public const int ContentScrollContainer = 2131034135;
-			
-			// aapt resource value: 0x7f050004
-			public const int FlyOutContent = 2131034116;
-			
-			// aapt resource value: 0x7f050025
-			public const int FlyOutMenu = 2131034149;
+			// aapt resource value: 0x7f050021
+			public const int ApartmentsAppIconView = 2131034145;
 			
 			// aapt resource value: 0x7f050020
-			public const int ForgotPasswordButton = 2131034144;
+			public const int ContentContainer = 2131034144;
 			
-			// aapt resource value: 0x7f05001a
-			public const int LoginForm = 2131034138;
+			// aapt resource value: 0x7f05001f
+			public const int ContentScrollContainer = 2131034143;
 			
-			// aapt resource value: 0x7f050016
-			public const int MainContainer = 2131034134;
+			// aapt resource value: 0x7f050029
+			public const int ForgotPasswordButton = 2131034153;
 			
-			// aapt resource value: 0x7f050008
-			public const int MenuButton = 2131034120;
+			// aapt resource value: 0x7f050022
+			public const int LoginForm = 2131034146;
+			
+			// aapt resource value: 0x7f05001e
+			public const int MainContainer = 2131034142;
 			
 			// aapt resource value: 0x7f050000
 			public const int MvxBindingTagUnique = 2131034112;
 			
-			// aapt resource value: 0x7f050021
-			public const int NewHereLabel = 2131034145;
+			// aapt resource value: 0x7f05002a
+			public const int NewHereLabel = 2131034154;
 			
-			// aapt resource value: 0x7f05001f
-			public const int PasswordInput = 2131034143;
+			// aapt resource value: 0x7f050027
+			public const int PasswordInput = 2131034151;
 			
-			// aapt resource value: 0x7f05001e
-			public const int PasswordLoginFormGroup = 2131034142;
+			// aapt resource value: 0x7f050026
+			public const int PasswordLoginFormGroup = 2131034150;
 			
-			// aapt resource value: 0x7f050022
-			public const int SignUpButton = 2131034146;
+			// aapt resource value: 0x7f05002b
+			public const int SignUpButton = 2131034155;
 			
-			// aapt resource value: 0x7f05001d
-			public const int UsernameInput = 2131034141;
-			
-			// aapt resource value: 0x7f05001b
-			public const int UsernameLoginFormGroup = 2131034139;
+			// aapt resource value: 0x7f050025
+			public const int UsernameInput = 2131034149;
 			
 			// aapt resource value: 0x7f050023
-			public const int VersionLabel = 2131034147;
+			public const int UsernameLoginFormGroup = 2131034147;
 			
-			// aapt resource value: 0x7f050011
-			public const int button1 = 2131034129;
+			// aapt resource value: 0x7f05002c
+			public const int VersionLabel = 2131034156;
 			
-			// aapt resource value: 0x7f050012
-			public const int button2 = 2131034130;
+			// aapt resource value: 0x7f05000a
+			public const int avatar_container = 2131034122;
+			
+			// aapt resource value: 0x7f05000b
+			public const int avatar_image = 2131034123;
+			
+			// aapt resource value: 0x7f050009
+			public const int badge_text = 2131034121;
+			
+			// aapt resource value: 0x7f050028
+			public const int button1 = 2131034152;
 			
 			// aapt resource value: 0x7f050001
 			public const int clamp = 2131034113;
 			
 			// aapt resource value: 0x7f050006
-			public const int frameLayout1 = 2131034118;
+			public const int container1 = 2131034118;
 			
-			// aapt resource value: 0x7f05000d
-			public const int imageView1 = 2131034125;
-			
-			// aapt resource value: 0x7f05001c
-			public const int imageView2 = 2131034140;
-			
-			// aapt resource value: 0x7f050007
-			public const int linearLayout1 = 2131034119;
-			
-			// aapt resource value: 0x7f050024
-			public const int linearLayout2 = 2131034148;
-			
-			// aapt resource value: 0x7f050010
-			public const int linearLayout4 = 2131034128;
+			// aapt resource value: 0x7f050008
+			public const int container2 = 2131034120;
 			
 			// aapt resource value: 0x7f050013
-			public const int linearLayout5 = 2131034131;
+			public const int controls_container = 2131034131;
 			
-			// aapt resource value: 0x7f05000c
-			public const int linearLayout6 = 2131034124;
+			// aapt resource value: 0x7f05001c
+			public const int copyright_text = 2131034140;
+			
+			// aapt resource value: 0x7f050033
+			public const int editText1 = 2131034163;
+			
+			// aapt resource value: 0x7f05000f
+			public const int edit_account_icon_image = 2131034127;
 			
 			// aapt resource value: 0x7f05000e
-			public const int linearLayout7 = 2131034126;
+			public const int edit_profile_button = 2131034126;
+			
+			// aapt resource value: 0x7f050010
+			public const int edit_profile_text = 2131034128;
+			
+			// aapt resource value: 0x7f05001b
+			public const int footer_container = 2131034139;
+			
+			// aapt resource value: 0x7f050005
+			public const int icon = 2131034117;
+			
+			// aapt resource value: 0x7f05002f
+			public const int imageView1 = 2131034159;
+			
+			// aapt resource value: 0x7f050024
+			public const int imageView2 = 2131034148;
+			
+			// aapt resource value: 0x7f05002e
+			public const int linearLayout1 = 2131034158;
+			
+			// aapt resource value: 0x7f050031
+			public const int linearLayout3 = 2131034161;
+			
+			// aapt resource value: 0x7f050004
+			public const int main_container = 2131034116;
+			
+			// aapt resource value: 0x7f05002d
+			public const int maintenance_request_view_container = 2131034157;
 			
 			// aapt resource value: 0x7f050002
 			public const int mirror = 2131034114;
 			
-			// aapt resource value: 0x7f05000f
-			public const int mvx_MvxListView1 = 2131034127;
+			// aapt resource value: 0x7f050011
+			public const int mvx_home_menu_item_list = 2131034129;
+			
+			// aapt resource value: 0x7f05000c
+			public const int profile_details_container = 2131034124;
+			
+			// aapt resource value: 0x7f05000d
+			public const int profile_name_text = 2131034125;
 			
 			// aapt resource value: 0x7f050003
 			public const int repeat = 2131034115;
 			
-			// aapt resource value: 0x7f05000b
-			public const int textView1 = 2131034123;
-			
-			// aapt resource value: 0x7f050009
-			public const int textView2 = 2131034121;
-			
 			// aapt resource value: 0x7f050014
-			public const int textView3 = 2131034132;
+			public const int settings_button_container = 2131034132;
 			
 			// aapt resource value: 0x7f050015
-			public const int textView4 = 2131034133;
+			public const int settings_button_icon_image = 2131034133;
 			
-			// aapt resource value: 0x7f050005
-			public const int view1 = 2131034117;
+			// aapt resource value: 0x7f050016
+			public const int settings_button_text = 2131034134;
 			
-			// aapt resource value: 0x7f05000a
-			public const int view2 = 2131034122;
+			// aapt resource value: 0x7f050017
+			public const int signout_button_container = 2131034135;
+			
+			// aapt resource value: 0x7f050019
+			public const int signout_button_icon_image = 2131034137;
+			
+			// aapt resource value: 0x7f050018
+			public const int signout_button_text = 2131034136;
+			
+			// aapt resource value: 0x7f050012
+			public const int space1 = 2131034130;
+			
+			// aapt resource value: 0x7f05001a
+			public const int space2 = 2131034138;
+			
+			// aapt resource value: 0x7f050030
+			public const int textView1 = 2131034160;
+			
+			// aapt resource value: 0x7f050032
+			public const int textView2 = 2131034162;
+			
+			// aapt resource value: 0x7f050007
+			public const int title_text = 2131034119;
+			
+			// aapt resource value: 0x7f05001d
+			public const int vestion_text = 2131034141;
 			
 			static Id()
 			{
@@ -309,7 +393,7 @@ namespace ResidentAppCross.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int ContentLayout = 2130903040;
+			public const int HomeMenuItemLayout = 2130903040;
 			
 			// aapt resource value: 0x7f030001
 			public const int HomeMenuViewLayout = 2130903041;
@@ -318,10 +402,10 @@ namespace ResidentAppCross.Droid
 			public const int LoginViewLayout = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int MenuItem = 2130903043;
+			public const int MaintenanceRequestViewLayout = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int MenuViewLayout = 2130903044;
+			public const int UpperDialogBarLayout = 2130903044;
 			
 			static Layout()
 			{
@@ -385,8 +469,11 @@ namespace ResidentAppCross.Droid
 		public partial class Style
 		{
 			
+			// aapt resource value: 0x7f060002
+			public const int Mono_Android_Theme_Splash = 2131099650;
+			
 			// aapt resource value: 0x7f060001
-			public const int Mono_Android_Theme_Splash = 2131099649;
+			public const int badge_danger = 2131099649;
 			
 			// aapt resource value: 0x7f060000
 			public const int button_text = 2131099648;

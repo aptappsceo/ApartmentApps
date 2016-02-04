@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/linearLayout1"
+        android:background="#145b99">
+        <ImageView
+            android:src="@drawable/whitehomeicon"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageView1"
+            local:MvxBind="Click HomeCommand"
+            android:layout_weight="0.2"
+            android:scaleType="fitCenter" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/space1"
+            android:layout_weight="0.15" />
+        <TextView
+            android:text="Maintenance Request"
+            local:MvxBind="Text Title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView1"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:singleLine="false" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/space2"
+            android:layout_weight="0.15" />
+        <TextView
+            local:MvxBind="Click DoneCommand"
+            android:text="Done"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView2"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:textSize="35dp"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+</LinearLayout>

@@ -82,13 +82,15 @@ namespace FlyOutMenu
 
 		View ContentView {
 			get {
-				return FindViewById (Resource.Id.FlyOutContent);
+                //return FindViewById (Resource.Id.FlyOutContent);
+			    return null;
 			}
 		}
 
 		View MenuView {
 			get {
-				return FindViewById (Resource.Id.FlyOutMenu);
+                //return FindViewById (Resource.Id.FlyOutMenu);
+			    return null;
 			}
 		}
 

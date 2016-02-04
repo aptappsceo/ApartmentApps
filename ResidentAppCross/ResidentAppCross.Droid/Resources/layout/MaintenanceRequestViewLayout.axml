@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/maintenance_request_view_container">
+    <include
+        layout="@layout/upperdialogbarlayout" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1"
+        android:background="#FFFFFF">
+        <ImageView
+            android:src="@drawable/maintenancerequestmainicon"
+            android:layout_width="270dp"
+            android:layout_height="270dp"
+            android:id="@+id/imageView1" />
+        <TextView
+            android:text="Please, fill out the information below"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/textView1"
+            android:textColor="#515151"
+            android:gravity="center_vertical"
+            android:textSize="45dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout3"
+        android:background="#FFFFFF">
+        <ImageView
+            android:src="#e4e4e4"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/imageView1" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/linearLayout1"
+        android:background="#FFFFFF">
+        <TextView
+            android:text="Request Type *"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView2"
+            android:layout_weight="0.5"
+            android:textColor="#515151"
+            android:gravity="center_vertical"
+            android:textSize="35dp"
+            android:paddingLeft="25dp" />
+        <TextView
+            android:text="Lock/Key &gt;"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView2"
+            android:layout_weight="0.5"
+            android:textColor="#438ecf"
+            android:gravity="right|center_vertical"
+            android:textSize="35dp"
+            android:paddingRight="25dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout3"
+        android:background="#FFFFFF">
+        <ImageView
+            android:src="#e4e4e4"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/imageView1" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1"
+        android:background="#FFFFFF">
+        <TextView
+            android:text="Details &amp; Comments"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/textView2"
+            android:textColor="#515151"
+            android:gravity="center_vertical"
+            android:textSize="35dp"
+            android:paddingLeft="25dp" />
+        <EditText
+            android:inputType="textMultiLine"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/editText1"
+            android:background="@drawable/border2"
+            android:layout_margin="25dp"
+            android:text="Welp, no comments so far. The cool part is that textwrap works."
+            android:textColor="#000000"
+            android:padding="20dp"
+            android:textSize="40dp"
+            android:gravity="start" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout3"
+        android:background="#FFFFFF">
+        <ImageView
+            android:src="#e4e4e4"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/imageView1" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/linearLayout1"
+        android:background="#FFFFFF">
+        <TextView
+            android:text="Photos"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView2"
+            android:layout_weight="0.5"
+            android:textColor="#515151"
+            android:gravity="center_vertical"
+            android:textSize="35dp"
+            android:paddingLeft="25dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView2"
+            android:layout_weight="0.5"
+            android:layout_gravity="right|center_vertical"
+            android:paddingRight="25dp">
+            <TextView
+                android:text="Add photo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/textView2"
+                android:layout_weight="0.5"
+                android:textColor="#515151"
+                android:gravity="center_vertical|right"
+                android:textSize="35dp" />
+            <ImageView
+                android:src="@drawable/addicon"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView2" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

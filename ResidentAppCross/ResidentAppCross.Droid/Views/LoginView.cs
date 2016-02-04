@@ -22,6 +22,7 @@ namespace ResidentAppCross.Droid.Views
             get { return (LoginViewModel)base.ViewModel; }
             set { base.ViewModel = value; }
         }
+
         protected override void OnViewModelSet()
         {
             base.OnViewModelSet();

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.API.Service.Models;
 using Microsoft.Owin;
-using Microsoft.Practices.Unity;
 using Owin;
 
 [assembly: OwinStartup(typeof(ApartmentApps.API.Service.Startup))]
