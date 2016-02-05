@@ -1,16 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Android.Content;
-using Cirrious.CrossCore;
+using Android.Util;
 using Cirrious.CrossCore.Converters;
-using Cirrious.CrossCore.Exceptions;
 using Cirrious.MvvmCross.Droid.Platform;
-using Cirrious.MvvmCross.Droid.Views;
 using Cirrious.MvvmCross.ViewModels;
-using Cirrious.MvvmCross.Views;
-using FlyOutMenu;
-using ResidentAppCross;
 
 namespace ResidentAppCross.Droid
 {
@@ -19,7 +12,18 @@ namespace ResidentAppCross.Droid
         public Setup(Context applicationContext)
             : base(applicationContext)
         {
-         
+
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            currentDomain.UnhandledException += HandleExceptions;
+
+        }
+
+        private void HandleExceptions(object sender, UnhandledExceptionEventArgs e)
+        {
+
+            Android.Util.Log.WriteLine(LogPriority.Error, "Holy shit", string.Format("EXCEPTION: {0} {1} {2}", sender, sender.GetType().Name,
+                e.ExceptionObject));
+
         }
 
         protected override IMvxApplication CreateApp()

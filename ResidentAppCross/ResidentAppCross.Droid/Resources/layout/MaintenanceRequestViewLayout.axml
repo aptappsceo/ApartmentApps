@@ -64,6 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/textView2"
+            local:MvxBind="Click SelectRequestTypeCommand"
             android:layout_weight="0.5"
             android:textColor="#438ecf"
             android:gravity="right|center_vertical"

@@ -1,39 +1,123 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ApartmentApps.Client;
+using ApartmentApps.Client.Models;
 using Cirrious.MvvmCross.ViewModels;
+using ResidentAppCross.Extensions;
 
 namespace ResidentAppCross.ViewModels
 {
 
-    public abstract class DialogScreenViewModel : MvxViewModel
+    public class MaintenanceRequestViewModel : MvxViewModel
     {
-        public virtual ICommand HomeCommand
+
+        private IApartmentAppsAPIService _service;
+
+        private ObservableCollection<MaitenanceRequestType> _requestTypes =
+            new ObservableCollection<MaitenanceRequestType>();
+
+        private ObservableCollection<MaitenanceRequestType> _photosToUpload = new ObservableCollection<MaitenanceRequestType>();
+        private string _title;
+
+        public MaintenanceRequestViewModel(IApartmentAppsAPIService service)
         {
-            get
+            _service = service;
+
+            RequestTypes.Add(new MaitenanceRequestType()
             {
-                return new MvxCommand(()=>ShowViewModel<HomeMenuViewModel>());
+                Name = "Request Type 1"
+            });
+
+            RequestTypes.Add(new MaitenanceRequestType()
+            {
+                Name = "Request Type 2"
+            });
+
+            RequestTypes.Add(new MaitenanceRequestType()
+            {
+                Name = "Request Type 3"
+            });
+
+            RequestTypes.Add(new MaitenanceRequestType()
+            {
+                Name = "Request Type 4"
+            });
+
+        }
+
+        public override void Start()
+        {
+            base.Start();
+//            _service.Maitenance.GetMaitenanceRequestTypesWithOperationResponseAsync().ContinueWith(t =>
+//            {
+//                RequestTypes.AddRange(t.Result.Body);
+//            });
+        }
+
+        public ObservableCollection<MaitenanceRequestType> RequestTypes
+        {
+            get { return _requestTypes; }
+            set
+            {
+                _requestTypes = value;
+                RaisePropertyChanged();
             }
         }
 
-        public abstract ICommand DoneCommand { get; }
+        public ObservableCollection<MaitenanceRequestType> PhotosToUpload
+        {
+            get { return _photosToUpload; }
+            set
+            {
+                _photosToUpload = value;
+                RaisePropertyChanged();
+            }
+        }
 
-    }
+        public string Title => "Maintenance Request";
 
-
-    public class MaintenanceRequestViewModel : DialogScreenViewModel
-    {
-        public override ICommand DoneCommand
+        public ICommand DoneCommand
         {
             get
             {
                 return new MvxCommand(() =>
                 {
                     Debug.WriteLine("Should Send Maintenance Request");
+                });
+            }
+        }
+
+        public ICommand HomeCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    Debug.WriteLine("Should Send Maintenance Request");
+                });
+            }
+        }
+
+        public void OnRequestTypeSelected(MaitenanceRequestType type)
+        {
+            
+        }
+
+        public ICommand SelectRequestTypeCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    MaintenanceRequestTypeSelectionViewModel.OnSelect = OnRequestTypeSelected;
+                    MaintenanceRequestTypeSelectionViewModel.Options = RequestTypes.ToList();
+                    ShowViewModel<MaintenanceRequestTypeSelectionViewModel>();
                 });
             }
         }

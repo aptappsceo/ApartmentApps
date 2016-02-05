@@ -26,6 +26,12 @@ namespace ResidentAppCross
             set { SetProperty(ref _password, value, "Password"); }
         }
 
+        public override void Start()
+        {
+            base.Start();
+
+        }
+
         public LoginViewModel(ILoginManager loginManager)
         {
             LoginManager = loginManager;

@@ -23,6 +23,7 @@ public class App : MvxApplication
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);
         Mvx.RegisterSingleton<ILoginManager>(new LoginService(client));
 
+
     }
 
     public class ApartmentAppsClient : ApartmentAppsAPIService 

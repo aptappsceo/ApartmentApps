@@ -95,12 +95,14 @@
     <Compile Include="Converters\SharedIconsConverter.cs" />
     <Compile Include="FlyOutContainer.cs" />
     <Compile Include="MainActivity.cs" />
+    <AndroidResource Include="Resources\layout\MaintenanceRequestTypeSelectionViewLayout.axml" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="Views\HomeMenuItemView.cs" />
     <Compile Include="Views\LoginView.cs" />
     <Compile Include="Views\HomeMenuView.cs" />
+    <Compile Include="Views\MaintenanceRequestTypeSelectionView.cs" />
     <Compile Include="Views\MaintenanceRequestView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +116,12 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\UpperDialogBarLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <None Include="Resources\layout\ListSelectionViewLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </None>
+    <AndroidResource Include="Resources\layout\MaintenanceRequestTypeSelectionItemLayout.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -405,7 +413,9 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\WhiteHomeIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Border2.xml" />
+    <AndroidResource Include="Resources\drawable\Border2.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
