@@ -23,21 +23,22 @@ namespace ResidentAppCross.ViewModels
             OnSelect = onSelect;
         }
 
-        private ObservableCollection<MaintenanceRequestTypeViewModel> _types = new ObservableCollection<MaintenanceRequestTypeViewModel>();
+        private ObservableCollection<MaitenanceRequestType> _types = new ObservableCollection<MaitenanceRequestType>();
 
         public override void Start()
         {
             base.Start();
             Types.Clear();
-            Types.AddRange(Options.Select(_=>new MaintenanceRequestTypeViewModel(_)));
+            Types.AddRange(Options);
         }
 
-        public void SelectRequestType(MaintenanceRequestTypeViewModel type)
+        public void SelectRequestType(MaitenanceRequestType type)
         {
-            Debug.WriteLine("Selected: {0}", type.Title);
+            Close(this);
+            OnSelect(type);
         }
 
-        public ObservableCollection<MaintenanceRequestTypeViewModel> Types
+        public ObservableCollection<MaitenanceRequestType> Types
         {
             get { return _types; }
             set

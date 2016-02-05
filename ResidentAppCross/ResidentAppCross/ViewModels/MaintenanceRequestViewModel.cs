@@ -24,15 +24,17 @@ namespace ResidentAppCross.ViewModels
 
         private ObservableCollection<MaitenanceRequestType> _photosToUpload = new ObservableCollection<MaitenanceRequestType>();
         private string _title;
+        private MaitenanceRequestType _selectedRequestType;
 
         public MaintenanceRequestViewModel(IApartmentAppsAPIService service)
         {
             _service = service;
 
-            RequestTypes.Add(new MaitenanceRequestType()
+            var maitenanceRequestType = new MaitenanceRequestType()
             {
                 Name = "Request Type 1"
-            });
+            };
+            RequestTypes.Add(maitenanceRequestType);
 
             RequestTypes.Add(new MaitenanceRequestType()
             {
@@ -48,7 +50,7 @@ namespace ResidentAppCross.ViewModels
             {
                 Name = "Request Type 4"
             });
-
+            SelectedRequestType = maitenanceRequestType;
         }
 
         public override void Start()
@@ -104,9 +106,23 @@ namespace ResidentAppCross.ViewModels
             }
         }
 
+        public void SelectImage()
+        {
+        }
+        
+        public MaitenanceRequestType SelectedRequestType
+        {
+            get { return _selectedRequestType; }
+            set
+            {
+                _selectedRequestType = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public void OnRequestTypeSelected(MaitenanceRequestType type)
         {
-            
+            SelectedRequestType = type;
         }
 
         public ICommand SelectRequestTypeCommand

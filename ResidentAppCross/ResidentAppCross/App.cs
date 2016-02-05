@@ -22,8 +22,6 @@ public class App : MvxApplication
         var client = new ApartmentAppsClient();
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);
         Mvx.RegisterSingleton<ILoginManager>(new LoginService(client));
-
-
     }
 
     public class ApartmentAppsClient : ApartmentAppsAPIService 
