@@ -95,7 +95,6 @@ namespace ResidentAppCross
             }
         }
 
-
         public ICommand EditProfileCommand
         {
             get { return new MvxCommand(() => { Debug.WriteLine("Should Execute EditProfileCommand"); }); }

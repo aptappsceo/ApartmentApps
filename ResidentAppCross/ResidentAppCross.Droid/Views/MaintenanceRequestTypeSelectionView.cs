@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.OS;
-using Android.Util;
 using Cirrious.MvvmCross.Droid.Views;
 using ResidentAppCross;
 using ResidentAppCross.Droid;
@@ -10,25 +9,19 @@ namespace ResidentAppCross.Droid.Views
 {
 
     [Activity(Label = "ResidentAppCross.Droid", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MaintenanceRequestView : MvxActivity
+    public class MaintenanceRequestTypeSelectionView : MvxActivity
     {
 
-        public new MaintenanceRequestViewModel ViewModel
+        public new MaintenanceRequestTypeSelectionViewModel ViewModel
         {
-            get { return (MaintenanceRequestViewModel) base.ViewModel; }
+            get { return (MaintenanceRequestTypeSelectionViewModel)base.ViewModel; }
             set { base.ViewModel = value; }
         }
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            SetContentView(Resource.Layout.MaintenanceRequestViewLayout);
-        }
-
-        public override void OnAttachedToWindow()
-        {
-            base.OnAttachedToWindow();
-            Log.WriteLine(LogPriority.Info, "View Attached", "Maintenance Request View Attached");
+            SetContentView(Resource.Layout.MaintenanceRequestTypeSelectionViewLayout);
         }
     }
 }

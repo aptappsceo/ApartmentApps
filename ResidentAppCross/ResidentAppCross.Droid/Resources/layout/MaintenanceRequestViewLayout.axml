@@ -64,6 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/textView2"
+            local:MvxBind="Click SelectRequestTypeCommand; Text SelectedRequestType.Name"
             android:layout_weight="0.5"
             android:textColor="#438ecf"
             android:gravity="right|center_vertical"
@@ -151,6 +152,7 @@
             android:layout_height="match_parent"
             android:id="@+id/textView2"
             android:layout_weight="0.5"
+            local:MvxBind="Click AddPhotoCommand"
             android:layout_gravity="right|center_vertical"
             android:paddingRight="25dp">
             <TextView
@@ -169,4 +171,9 @@
                 android:id="@+id/imageView2" />
         </LinearLayout>
     </LinearLayout>
+    <MvxFrameControl
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        local:MvxBind="DataContext ImagesToUpload"
+        local:MvxTemplate="@layout/imagebundlewidgetlayout" />
 </LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    p1:orientation="vertical"
+    p1:minWidth="25px"
+    p1:minHeight="25px"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/linearLayout1">
+    <TextView
+        p1:text="Select Type"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/textView1"
+        p1:gravity="center"
+        p1:textSize="30dp" />
+    <Mvx.MvxListView
+        p1:layout_width="fill_parent"
+        p1:layout_height="460dp"
+        p1:textSize="40dp"
+        local:MvxBind="ItemsSource Types; ItemClick SelectRequestType"
+        local:MvxItemTemplate="@layout/maintenancerequesttypeselectionitemlayout"
+        p1:id="@+id/mvx.maintenance_request_type_selection_list"
+        p1:background="#ffffff"
+        p1:paddingLeft="45dp"
+        p1:paddingRight="45dp" />
+</LinearLayout>
