@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -8,10 +9,12 @@ using System.Threading.Tasks;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using Cirrious.CrossCore;
+using Cirrious.MvvmCross.Plugins.PictureChooser;
 using Cirrious.MvvmCross.ViewModels;
 using Newtonsoft.Json.Linq;
 using ResidentAppCross;
 using ResidentAppCross.ServiceClient;
+using ResidentAppCross.Services;
 
 public class App : MvxApplication
 {
@@ -22,6 +25,8 @@ public class App : MvxApplication
         var client = new ApartmentAppsClient();
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);
         Mvx.RegisterSingleton<ILoginManager>(new LoginService(client));
+        Mvx.ConstructAndRegisterSingleton<IImageService,ImageService>();
+
     }
 
     public class ApartmentAppsClient : ApartmentAppsAPIService 

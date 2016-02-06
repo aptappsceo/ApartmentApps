@@ -35,6 +35,7 @@ namespace ResidentAppCross.Droid
         {
             base.FillValueConverters(registry);
             registry.AddOrOverwrite("SharedIconsConverter",new SharedIconsConverter());
+            registry.AddOrOverwrite("ByteArrayToImage", new ByteArrayToImage());
         }
     }
 

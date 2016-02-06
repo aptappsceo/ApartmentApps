@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -10,6 +11,7 @@ using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using Cirrious.MvvmCross.ViewModels;
 using ResidentAppCross.Extensions;
+using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels
 {
@@ -18,17 +20,18 @@ namespace ResidentAppCross.ViewModels
     {
 
         private IApartmentAppsAPIService _service;
+        private IImageService _imageService;
 
         private ObservableCollection<MaitenanceRequestType> _requestTypes =
             new ObservableCollection<MaitenanceRequestType>();
 
-        private ObservableCollection<MaitenanceRequestType> _photosToUpload = new ObservableCollection<MaitenanceRequestType>();
         private string _title;
         private MaitenanceRequestType _selectedRequestType;
 
-        public MaintenanceRequestViewModel(IApartmentAppsAPIService service)
+        public MaintenanceRequestViewModel(IApartmentAppsAPIService service, IImageService imageService)
         {
             _service = service;
+            _imageService = imageService;
 
             var maitenanceRequestType = new MaitenanceRequestType()
             {
@@ -72,16 +75,6 @@ namespace ResidentAppCross.ViewModels
             }
         }
 
-        public ObservableCollection<MaitenanceRequestType> PhotosToUpload
-        {
-            get { return _photosToUpload; }
-            set
-            {
-                _photosToUpload = value;
-                RaisePropertyChanged();
-            }
-        }
-
         public string Title => "Maintenance Request";
 
         public ICommand DoneCommand
@@ -90,10 +83,24 @@ namespace ResidentAppCross.ViewModels
             {
                 return new MvxCommand(() =>
                 {
-                    Debug.WriteLine("Should Send Maintenance Request");
+                    //TODO : Implement dialog complete
+                    Close(this);
                 });
             }
         }
+
+        public ICommand AddPhotoCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    _imageService.SelectImage(s=> ImagesToUpload.RawImages.Add(s) , ()=> {});
+                });
+            }
+        }
+
+        public ImageBundleViewModel ImagesToUpload { get; set; } = new ImageBundleViewModel() { Title = "Halo?" };
 
         public ICommand HomeCommand
         {
@@ -101,15 +108,11 @@ namespace ResidentAppCross.ViewModels
             {
                 return new MvxCommand(() =>
                 {
-                    Debug.WriteLine("Should Send Maintenance Request");
+                    Close(this);
                 });
             }
         }
 
-        public void SelectImage()
-        {
-        }
-        
         public MaitenanceRequestType SelectedRequestType
         {
             get { return _selectedRequestType; }

@@ -51,6 +51,8 @@ C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\System.Net.H
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.csproj.App.config
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.pdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.csprojResolveAssemblyReference.cache
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\Cirrious.MvvmCross.Plugins.PictureChooser.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
