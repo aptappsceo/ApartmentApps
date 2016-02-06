@@ -24,7 +24,6 @@ D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\Microsoft.Rest.ClientRuntime.xml
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\Microsoft.Threading.Tasks.xml
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\Microsoft.Threading.Tasks.Extensions.xml
-D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.csprojResolveAssemblyReference.cache
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.config
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.pdb
@@ -49,10 +48,13 @@ C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\Newtonsoft.J
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\System.Net.Http.Extensions.xml
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\System.Net.Http.Primitives.xml
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.csproj.App.config
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.csprojResolveAssemblyReference.cache
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.pdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\Cirrious.MvvmCross.Plugins.PictureChooser.dll
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.csprojResolveAssemblyReference.cache
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
