@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
 using ApartmentApps.Client;
+using ApartmentApps.Client.Models;
 using Cirrious.MvvmCross.ViewModels;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ServiceClient;
@@ -16,6 +17,7 @@ namespace ResidentAppCross
         public HomeMenuViewModel(IApartmentAppsAPIService data, ILoginManager loginManager)
         {
             Data = data;
+            
 //            if (loginManager.UserInfo.Role.Contains("Maitenance"))
 //            {
 //                MenuItems.Add(new HomeMenuItemViewModel()

@@ -15,6 +15,7 @@ namespace ApartmentApps.API.Service
         {
             //var a = new UnityContainer();
             //a.RegisterType<ApplicationDbContext>()
+            //UnityConfig.RegisterComponents();
             ConfigureAuth(app);
             //app.
         }
