@@ -27,6 +27,7 @@ namespace ResidentAppCross.ViewModels
 
         private string _title;
         private MaitenanceRequestType _selectedRequestType;
+        private string _details;
 
         public MaintenanceRequestViewModel(IApartmentAppsAPIService service, IImageService imageService)
         {
@@ -119,6 +120,16 @@ namespace ResidentAppCross.ViewModels
             set
             {
                 _selectedRequestType = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string Details
+        {
+            get { return _details; }
+            set
+            {
+                _details = value; 
                 RaisePropertyChanged();
             }
         }
