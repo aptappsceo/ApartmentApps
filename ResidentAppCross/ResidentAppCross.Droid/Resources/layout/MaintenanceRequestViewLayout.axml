@@ -107,6 +107,7 @@
             android:layout_height="200dp"
             android:minWidth="25px"
             android:minHeight="25px"
+            local:MvxBind="Text Details"
             android:id="@+id/editText1"
             android:background="@drawable/border2"
             android:layout_margin="25dp"
