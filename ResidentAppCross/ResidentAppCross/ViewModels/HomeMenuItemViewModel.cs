@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using Cirrious.MvvmCross.ViewModels;
+using MvvmCross.Core.ViewModels;
 using ResidentAppCross.ViewModels;
 using static ResidentAppCross.Resources.SharedResources;
 

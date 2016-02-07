@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Util;
-using Cirrious.MvvmCross.Droid.Views;
+using MvvmCross.Droid.Views;
 using ResidentAppCross;
 using ResidentAppCross.Droid;
 using ResidentAppCross.ViewModels;

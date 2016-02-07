@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
-using Cirrious.MvvmCross.ViewModels;
+using MvvmCross.Core.ViewModels;
 using ResidentAppCross.Extensions;
 using ResidentAppCross.Services;
 
@@ -22,11 +22,11 @@ namespace ResidentAppCross.ViewModels
         private IApartmentAppsAPIService _service;
         private IImageService _imageService;
 
-        private ObservableCollection<MaitenanceRequestType> _requestTypes =
-            new ObservableCollection<MaitenanceRequestType>();
+        private ObservableCollection<LookupPairModel> _requestTypes =
+            new ObservableCollection<LookupPairModel>();
 
         private string _title;
-        private MaitenanceRequestType _selectedRequestType;
+        private LookupPairModel _selectedRequestType;
 
         public MaintenanceRequestViewModel(IApartmentAppsAPIService service, IImageService imageService)
         {
@@ -37,23 +37,8 @@ namespace ResidentAppCross.ViewModels
             {
                 Name = "Request Type 1"
             };
-            RequestTypes.Add(maitenanceRequestType);
-
-            RequestTypes.Add(new MaitenanceRequestType()
-            {
-                Name = "Request Type 2"
-            });
-
-            RequestTypes.Add(new MaitenanceRequestType()
-            {
-                Name = "Request Type 3"
-            });
-
-            RequestTypes.Add(new MaitenanceRequestType()
-            {
-                Name = "Request Type 4"
-            });
-            SelectedRequestType = maitenanceRequestType;
+            RequestTypes.AddRange(service.Maitenance.GetMaitenanceRequestTypes());
+            SelectedRequestType = RequestTypes.FirstOrDefault();
         }
 
         public override void Start()
@@ -65,7 +50,7 @@ namespace ResidentAppCross.ViewModels
 //            });
         }
 
-        public ObservableCollection<MaitenanceRequestType> RequestTypes
+        public ObservableCollection<LookupPairModel> RequestTypes
         {
             get { return _requestTypes; }
             set
@@ -113,7 +98,7 @@ namespace ResidentAppCross.ViewModels
             }
         }
 
-        public MaitenanceRequestType SelectedRequestType
+        public LookupPairModel SelectedRequestType
         {
             get { return _selectedRequestType; }
             set
@@ -123,7 +108,7 @@ namespace ResidentAppCross.ViewModels
             }
         }
 
-        public void OnRequestTypeSelected(MaitenanceRequestType type)
+        public void OnRequestTypeSelected(LookupPairModel type)
         {
             SelectedRequestType = type;
         }

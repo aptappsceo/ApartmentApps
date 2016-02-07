@@ -9,6 +9,7 @@ namespace ApartmentApps.API.Service.Models.VMS
     {
         public int MaitenanceRequestTypeId { get; set; }
         public string Comments { get; set; }
+        public List<Byte[]> Images { get; set; }
     }
 
     public class Response

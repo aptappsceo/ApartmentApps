@@ -11,7 +11,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Cirrious.CrossCore.Converters;
+using MvvmCross.Platform.Converters;
 using ResidentAppCross.Resources;
 
 public class SharedIconsConverter : MvxValueConverter<SharedResources.Icons, string>

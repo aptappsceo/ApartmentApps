@@ -9,19 +9,27 @@ using Microsoft.Practices.Unity;
 
 namespace ApartmentApps.Api
 {
-    public static class Addons
+    public interface IService
     {
-        public static List<IApartmentAppsAddon> All { get; set; }
-        public static void Init(IEnumerable<IApartmentAppsAddon> all)
+        
+    }
+
+    public static class ServiceExtensions
+    {
+        public static Func<IEnumerable<IService>> GetServices { get; set; }
+
+
+        public static void InvokeEvent<TEventInterface>(ApplicationDbContext ctx, ApplicationUser user, Action<TEventInterface> evt ) where TEventInterface : class
         {
-            All = all.ToList();
+            InvokeEvent<TEventInterface>(null, ctx, user, evt);
         }
 
-        public static void InvokeEvent<TEventInterface>(this IEnumerable<TEventInterface> services, Action<TEventInterface> evt, ApplicationDbContext ctx, ApplicationUser user )
+        public static void InvokeEvent<TEventInterface>(this IService service, ApplicationDbContext ctx, ApplicationUser user, Action<TEventInterface> evt ) where TEventInterface : class
         {
-            foreach (var item in services)
+            foreach (var item in GetServices())
             {
-                var item1 = item;
+                var item1 = item as TEventInterface;
+                if (item1 == null) continue;
                 var filter = item as IAddonFilter;
                 if (filter != null)
                 {
@@ -33,10 +41,34 @@ namespace ApartmentApps.Api
                 evt(item1);
             }
         }
+
     }
-    public interface IMaintenanceService
+    public interface IMaintenanceService : IService
     {
-        void SubmitRequest();
+        int SubmitRequest(ApplicationUser user, string comments, int requestTypeId);
+    }
+
+    public class MaintenanceService : IMaintenanceService
+    {
+        public int SubmitRequest(ApplicationUser user, string comments, int requestTypeId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var maitenanceRequest = new MaitenanceRequest()
+                {
+                    UserId = user.Id,
+                    WorkerId = null,
+                    Date = DateTime.UtcNow,
+                    Message = comments,
+                    MaitenanceRequestTypeId = requestTypeId
+                };
+                ctx.MaitenanceRequests.Add(maitenanceRequest);
+                ctx.SaveChanges();
+                this.InvokeEvent<IMaintenanceSubmissionEvent>(ctx, user, _=>_.MaintenanceRequestSubmited(maitenanceRequest));
+                return maitenanceRequest.Id;
+            }
+        }
+
     }
 
     public interface IApartmentAppsAddon
@@ -54,7 +86,7 @@ namespace ApartmentApps.Api
         bool Filter(ApplicationUser user);
     }
 
-    public class PropertyIntegrationAddon : IApartmentAppsAddon, IAddonFilter
+    public class PropertyIntegrationAddon : IService, IApartmentAppsAddon, IAddonFilter
     {
         public string PropertyAddonName { get; set; }
 
@@ -64,5 +96,6 @@ namespace ApartmentApps.Api
         }
     }
 
+    
 
 }

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/textView1"
-        local:MvxBind="Text Name"
+        local:MvxBind="Text Value"
         android:gravity="fill_vertical"
         android:textColor="#000000"
         android:textSize="60dp" />

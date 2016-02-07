@@ -17,7 +17,37 @@ namespace ApartmentApps.Client
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IMaitenance.
         /// </param>
-        public static IList<MaitenanceRequestType> GetMaitenanceRequestTypes(this IMaitenance operations)
+        /// <param name='workerId'>
+        /// Required.
+        /// </param>
+        public static IList<MaitenanceRequest> GetByResident(this IMaitenance operations, string workerId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IMaitenance)s).GetByResidentAsync(workerId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IMaitenance.
+        /// </param>
+        /// <param name='workerId'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<IList<MaitenanceRequest>> GetByResidentAsync(this IMaitenance operations, string workerId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.MaitenanceRequest>> result = await operations.GetByResidentWithOperationResponseAsync(workerId, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IMaitenance.
+        /// </param>
+        public static IList<LookupPairModel> GetMaitenanceRequestTypes(this IMaitenance operations)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -32,9 +62,39 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<IList<MaitenanceRequestType>> GetMaitenanceRequestTypesAsync(this IMaitenance operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<IList<LookupPairModel>> GetMaitenanceRequestTypesAsync(this IMaitenance operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.MaitenanceRequestType>> result = await operations.GetMaitenanceRequestTypesWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.LookupPairModel>> result = await operations.GetMaitenanceRequestTypesWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IMaitenance.
+        /// </param>
+        /// <param name='workerId'>
+        /// Required.
+        /// </param>
+        public static IList<MaitenanceRequest> GetWorkOrders(this IMaitenance operations, string workerId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IMaitenance)s).GetWorkOrdersAsync(workerId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IMaitenance.
+        /// </param>
+        /// <param name='workerId'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<IList<MaitenanceRequest>> GetWorkOrdersAsync(this IMaitenance operations, string workerId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.MaitenanceRequest>> result = await operations.GetWorkOrdersWithOperationResponseAsync(workerId, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         
@@ -44,7 +104,7 @@ namespace ApartmentApps.Client
         /// <param name='request'>
         /// Required.
         /// </param>
-        public static MaitenanceRequest SubmitRequest(this IMaitenance operations, MaitenanceRequestFormModel request)
+        public static object SubmitRequest(this IMaitenance operations, MaitenanceRequestModel request)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -62,9 +122,9 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<MaitenanceRequest> SubmitRequestAsync(this IMaitenance operations, MaitenanceRequestFormModel request, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<object> SubmitRequestAsync(this IMaitenance operations, MaitenanceRequestModel request, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.MaitenanceRequest> result = await operations.SubmitRequestWithOperationResponseAsync(request, cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<object> result = await operations.SubmitRequestWithOperationResponseAsync(request, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
     }

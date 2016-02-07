@@ -41,11 +41,20 @@ namespace ApartmentApps.Client
             get { return this._client; }
         }
         
+        /// <param name='workerId'>
+        /// Required.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<IList<MaitenanceRequestType>>> GetMaitenanceRequestTypesWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<IList<MaitenanceRequest>>> GetByResidentWithOperationResponseAsync(string workerId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
+            // Validate
+            if (workerId == null)
+            {
+                throw new ArgumentNullException("workerId");
+            }
+            
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
             string invocationId = null;
@@ -53,12 +62,19 @@ namespace ApartmentApps.Client
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                ServiceClientTracing.Enter(invocationId, this, "GetMaitenanceRequestTypesAsync", tracingParameters);
+                tracingParameters.Add("workerId", workerId);
+                ServiceClientTracing.Enter(invocationId, this, "GetByResidentAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/api/Maitenance";
+            url = url + "/api/Maitenance/GetByResident";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("workerId=" + Uri.EscapeDataString(workerId));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -112,14 +128,14 @@ namespace ApartmentApps.Client
             }
             
             // Create Result
-            HttpOperationResponse<IList<MaitenanceRequestType>> result = new HttpOperationResponse<IList<MaitenanceRequestType>>();
+            HttpOperationResponse<IList<MaitenanceRequest>> result = new HttpOperationResponse<IList<MaitenanceRequest>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                IList<MaitenanceRequestType> resultModel = new List<MaitenanceRequestType>();
+                IList<MaitenanceRequest> resultModel = new List<MaitenanceRequest>();
                 JToken responseDoc = null;
                 if (string.IsNullOrEmpty(responseContent) == false)
                 {
@@ -127,7 +143,219 @@ namespace ApartmentApps.Client
                 }
                 if (responseDoc != null)
                 {
-                    resultModel = MaitenanceRequestTypeCollection.DeserializeJson(responseDoc);
+                    resultModel = MaitenanceRequestCollection.DeserializeJson(responseDoc);
+                }
+                result.Body = resultModel;
+            }
+            
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+        
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<HttpOperationResponse<IList<LookupPairModel>>> GetMaitenanceRequestTypesWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                ServiceClientTracing.Enter(invocationId, this, "GetMaitenanceRequestTypesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/api/Maitenance/GetMaitenanceRequestTypes";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = HttpMethod.Get;
+            httpRequest.RequestUri = new Uri(url);
+            
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (statusCode != HttpStatusCode.OK)
+            {
+                HttpOperationException<object> ex = new HttpOperationException<object>();
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                ex.Body = null;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            
+            // Create Result
+            HttpOperationResponse<IList<LookupPairModel>> result = new HttpOperationResponse<IList<LookupPairModel>>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            
+            // Deserialize Response
+            if (statusCode == HttpStatusCode.OK)
+            {
+                IList<LookupPairModel> resultModel = new List<LookupPairModel>();
+                JToken responseDoc = null;
+                if (string.IsNullOrEmpty(responseContent) == false)
+                {
+                    responseDoc = JToken.Parse(responseContent);
+                }
+                if (responseDoc != null)
+                {
+                    resultModel = LookupPairModelCollection.DeserializeJson(responseDoc);
+                }
+                result.Body = resultModel;
+            }
+            
+            if (shouldTrace)
+            {
+                ServiceClientTracing.Exit(invocationId, result);
+            }
+            return result;
+        }
+        
+        /// <param name='workerId'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public async Task<HttpOperationResponse<IList<MaitenanceRequest>>> GetWorkOrdersWithOperationResponseAsync(string workerId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // Validate
+            if (workerId == null)
+            {
+                throw new ArgumentNullException("workerId");
+            }
+            
+            // Tracing
+            bool shouldTrace = ServiceClientTracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("workerId", workerId);
+                ServiceClientTracing.Enter(invocationId, this, "GetWorkOrdersAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/api/Maitenance/GetWorkOrders";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("workerId=" + Uri.EscapeDataString(workerId));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = new HttpRequestMessage();
+            httpRequest.Method = HttpMethod.Get;
+            httpRequest.RequestUri = new Uri(url);
+            
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            
+            // Send Request
+            if (shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(invocationId, httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            HttpResponseMessage httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            if (shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(invocationId, httpResponse);
+            }
+            HttpStatusCode statusCode = httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (statusCode != HttpStatusCode.OK)
+            {
+                HttpOperationException<object> ex = new HttpOperationException<object>();
+                ex.Request = httpRequest;
+                ex.Response = httpResponse;
+                ex.Body = null;
+                if (shouldTrace)
+                {
+                    ServiceClientTracing.Error(invocationId, ex);
+                }
+                throw ex;
+            }
+            
+            // Create Result
+            HttpOperationResponse<IList<MaitenanceRequest>> result = new HttpOperationResponse<IList<MaitenanceRequest>>();
+            result.Request = httpRequest;
+            result.Response = httpResponse;
+            
+            // Deserialize Response
+            if (statusCode == HttpStatusCode.OK)
+            {
+                IList<MaitenanceRequest> resultModel = new List<MaitenanceRequest>();
+                JToken responseDoc = null;
+                if (string.IsNullOrEmpty(responseContent) == false)
+                {
+                    responseDoc = JToken.Parse(responseContent);
+                }
+                if (responseDoc != null)
+                {
+                    resultModel = MaitenanceRequestCollection.DeserializeJson(responseDoc);
                 }
                 result.Body = resultModel;
             }
@@ -145,7 +373,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<MaitenanceRequest>> SubmitRequestWithOperationResponseAsync(MaitenanceRequestFormModel request, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<object>> SubmitRequestWithOperationResponseAsync(MaitenanceRequestModel request, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Validate
             if (request == null)
@@ -166,7 +394,7 @@ namespace ApartmentApps.Client
             
             // Construct URL
             string url = "";
-            url = url + "/api/Maitenance";
+            url = url + "/api/Maitenance/SubmitRequest";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -215,7 +443,7 @@ namespace ApartmentApps.Client
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (statusCode != HttpStatusCode.OK)
+            if (statusCode != HttpStatusCode.NoContent)
             {
                 HttpOperationException<object> ex = new HttpOperationException<object>();
                 ex.Request = httpRequest;
@@ -229,25 +457,13 @@ namespace ApartmentApps.Client
             }
             
             // Create Result
-            HttpOperationResponse<MaitenanceRequest> result = new HttpOperationResponse<MaitenanceRequest>();
+            HttpOperationResponse<object> result = new HttpOperationResponse<object>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             
             // Deserialize Response
-            if (statusCode == HttpStatusCode.OK)
-            {
-                MaitenanceRequest resultModel = new MaitenanceRequest();
-                JToken responseDoc = null;
-                if (string.IsNullOrEmpty(responseContent) == false)
-                {
-                    responseDoc = JToken.Parse(responseContent);
-                }
-                if (responseDoc != null)
-                {
-                    resultModel.DeserializeJson(responseDoc);
-                }
-                result.Body = resultModel;
-            }
+            object resultModel = default(object);
+            result.Body = resultModel;
             
             if (shouldTrace)
             {

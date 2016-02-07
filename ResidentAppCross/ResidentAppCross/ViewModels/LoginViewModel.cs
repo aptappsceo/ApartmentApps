@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Input;
-using Cirrious.CrossCore;
-using Cirrious.MvvmCross.ViewModels;
+using MvvmCross.Core.ViewModels;
 using ResidentAppCross.ServiceClient;
 
 namespace ResidentAppCross

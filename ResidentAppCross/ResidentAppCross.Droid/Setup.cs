@@ -1,9 +1,9 @@
 using System;
 using Android.Content;
 using Android.Util;
-using Cirrious.CrossCore.Converters;
-using Cirrious.MvvmCross.Droid.Platform;
-using Cirrious.MvvmCross.ViewModels;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Droid.Platform;
+using MvvmCross.Platform.Converters;
 
 namespace ResidentAppCross.Droid
 {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Client.Models;
-using Cirrious.MvvmCross.ViewModels;
+using MvvmCross.Core.ViewModels;
 using ResidentAppCross.Extensions;
 
 namespace ResidentAppCross.ViewModels
@@ -14,16 +14,16 @@ namespace ResidentAppCross.ViewModels
     public class MaintenanceRequestTypeSelectionViewModel : MvxViewModel
     {
 
-        public static Action<MaitenanceRequestType> OnSelect { get; set; }
-        public static List<MaitenanceRequestType>   Options { get; set; }
+        public static Action<LookupPairModel> OnSelect { get; set; }
+        public static List<LookupPairModel>   Options { get; set; }
 
-        public static void Setup(List<MaitenanceRequestType> options, Action<MaitenanceRequestType> onSelect)
+        public static void Setup(List<LookupPairModel> options, Action<LookupPairModel> onSelect)
         {
             Options = options;
             OnSelect = onSelect;
         }
 
-        private ObservableCollection<MaitenanceRequestType> _types = new ObservableCollection<MaitenanceRequestType>();
+        private ObservableCollection<LookupPairModel> _types = new ObservableCollection<LookupPairModel>();
 
         public override void Start()
         {
@@ -32,13 +32,13 @@ namespace ResidentAppCross.ViewModels
             Types.AddRange(Options);
         }
 
-        public void SelectRequestType(MaitenanceRequestType type)
+        public void SelectRequestType(LookupPairModel type)
         {
             Close(this);
             OnSelect(type);
         }
 
-        public ObservableCollection<MaitenanceRequestType> Types
+        public ObservableCollection<LookupPairModel> Types
         {
             get { return _types; }
             set

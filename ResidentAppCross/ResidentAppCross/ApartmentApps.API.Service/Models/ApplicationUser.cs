@@ -155,6 +155,28 @@ namespace ApartmentApps.Client.Models
             set { this._securityStamp = value; }
         }
         
+        private Tenant _tenant;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public Tenant Tenant
+        {
+            get { return this._tenant; }
+            set { this._tenant = value; }
+        }
+        
+        private int? _tenantId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? TenantId
+        {
+            get { return this._tenantId; }
+            set { this._tenantId = value; }
+        }
+        
         private bool? _twoFactorEnabled;
         
         /// <summary>
@@ -273,6 +295,18 @@ namespace ApartmentApps.Client.Models
                 if (securityStampValue != null && securityStampValue.Type != JTokenType.Null)
                 {
                     this.SecurityStamp = ((string)securityStampValue);
+                }
+                JToken tenantValue = inputObject["Tenant"];
+                if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                {
+                    Tenant tenant = new Tenant();
+                    tenant.DeserializeJson(tenantValue);
+                    this.Tenant = tenant;
+                }
+                JToken tenantIdValue = inputObject["TenantId"];
+                if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                {
+                    this.TenantId = ((int)tenantIdValue);
                 }
                 JToken twoFactorEnabledValue = inputObject["TwoFactorEnabled"];
                 if (twoFactorEnabledValue != null && twoFactorEnabledValue.Type != JTokenType.Null)

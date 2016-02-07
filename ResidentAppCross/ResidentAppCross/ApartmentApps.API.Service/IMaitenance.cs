@@ -13,10 +13,26 @@ namespace ApartmentApps.Client
 {
     public partial interface IMaitenance
     {
+        /// <param name='workerId'>
+        /// Required.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<MaitenanceRequestType>>> GetMaitenanceRequestTypesWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<IList<MaitenanceRequest>>> GetByResidentWithOperationResponseAsync(string workerId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<LookupPairModel>>> GetMaitenanceRequestTypesWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='workerId'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<MaitenanceRequest>>> GetWorkOrdersWithOperationResponseAsync(string workerId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='request'>
         /// Required.
@@ -24,6 +40,6 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<MaitenanceRequest>> SubmitRequestWithOperationResponseAsync(MaitenanceRequestFormModel request, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<object>> SubmitRequestWithOperationResponseAsync(MaitenanceRequestModel request, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

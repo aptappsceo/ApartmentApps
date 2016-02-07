@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <declare-styleable name="MvxBinding">
+  <!--<declare-styleable name="MvxBinding">
     <attr name="MvxBind" format="string"/>
     <attr name="MvxLang" format="string"/>
   </declare-styleable>
@@ -14,5 +14,5 @@
   <item type="id" name="MvxBindingTagUnique"/>
   <declare-styleable name="MvxImageView">
     <attr name="MvxSource" format="string"/>
-  </declare-styleable>
+  </declare-styleable>-->
 </resources>

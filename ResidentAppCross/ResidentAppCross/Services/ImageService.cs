@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Cirrious.MvvmCross.Plugins.PictureChooser;
+using MvvmCross.Plugins.PictureChooser;
 
 namespace ResidentAppCross.Services
 {

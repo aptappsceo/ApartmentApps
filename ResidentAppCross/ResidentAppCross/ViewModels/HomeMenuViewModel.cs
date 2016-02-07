@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
-using Cirrious.MvvmCross.ViewModels;
+using MvvmCross.Core.ViewModels;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ServiceClient;
 using ResidentAppCross.ViewModels;

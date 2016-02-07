@@ -134,7 +134,7 @@ namespace ResidentAppCross.ServiceClient
                 }
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception ex) { }
             {
                 return false;
             }

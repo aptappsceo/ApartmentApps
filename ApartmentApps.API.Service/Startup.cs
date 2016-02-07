@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ApartmentApps.Api;
 using ApartmentApps.API.Service.Models;
 using Microsoft.Owin;
 using Owin;
@@ -16,7 +17,9 @@ namespace ApartmentApps.API.Service
             //var a = new UnityContainer();
             //a.RegisterType<ApplicationDbContext>()
             //UnityConfig.RegisterComponents();
+            
             ConfigureAuth(app);
+        
             //app.
         }
     }

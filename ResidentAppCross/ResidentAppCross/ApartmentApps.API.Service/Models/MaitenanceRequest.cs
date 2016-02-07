@@ -67,6 +67,17 @@ namespace ApartmentApps.Client.Models
             set { this._maitenanceRequestTypeId = value; }
         }
         
+        private string _message;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Message
+        {
+            get { return this._message; }
+            set { this._message = value; }
+        }
+        
         private ApplicationUser _user;
         
         /// <summary>
@@ -157,6 +168,11 @@ namespace ApartmentApps.Client.Models
                 if (maitenanceRequestTypeIdValue != null && maitenanceRequestTypeIdValue.Type != JTokenType.Null)
                 {
                     this.MaitenanceRequestTypeId = ((int)maitenanceRequestTypeIdValue);
+                }
+                JToken messageValue = inputObject["Message"];
+                if (messageValue != null && messageValue.Type != JTokenType.Null)
+                {
+                    this.Message = ((string)messageValue);
                 }
                 JToken userValue = inputObject["User"];
                 if (userValue != null && userValue.Type != JTokenType.Null)

@@ -5,7 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using ApartmentApps.API.Service.Addons;
+using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.API.Service.Providers;
@@ -26,44 +27,30 @@ namespace ApartmentApps.API.Service.Controllers
             this._userManager = userManager;
         }
 
-       
+        public ApplicationUser AppUser => _userManager.FindById(User.Identity.GetUserId());
     }
 
-    [RoutePrefix("api/Maitenance")]
-    [Authorize]
+    [System.Web.Http.RoutePrefix("api/Maitenance")]
+    [System.Web.Http.Authorize]
     public class MaitenanceController : ApartmentAppsApiController
     {
+        public IMaintenanceService MaintenanceService { get; set; }
         public ApplicationDbContext Context { get; set; }
 
-        //public MaitenanceController(ApplicationDbContext context)
-        //{
-
-        //}
-
-        [HttpPost]
-        [Route("SubmitRequest")]
-        public MaitenanceRequest SubmitRequest(MaitenanceRequestModel request)
+        public MaitenanceController(IMaintenanceService maintenanceService)
         {
-            using (Context = new ApplicationDbContext())
-            {
-                var maitenanceRequest = new MaitenanceRequest()
-                {
-                    UserId = User.Identity.GetUserId(),
-                    WorkerId = null,
-                    Date = DateTime.UtcNow,
-                    Message = request.Comments,
-                    MaitenanceRequestTypeId = request.MaitenanceRequestTypeId
-                };
-
-                Context.MaitenanceRequests.Add(maitenanceRequest);
-                Context.SaveChanges();
-                HandleIntegration(x=>x.MaintenanceRequestSubmited(maitenanceRequest));
-                return maitenanceRequest;
-            }
+            MaintenanceService = maintenanceService;
         }
 
-        [HttpGet]
-        [Route("GetMaitenanceRequestTypes")]
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("SubmitRequest")]
+        public void SubmitRequest(MaitenanceRequestModel request)
+        {
+            MaintenanceService.SubmitRequest(AppUser, request.Comments, request.MaitenanceRequestTypeId);
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetMaitenanceRequestTypes")]
         public IEnumerable<LookupPairModel> GetMaitenanceRequestTypes()
         {
             using (Context = new ApplicationDbContext())
@@ -72,8 +59,8 @@ namespace ApartmentApps.API.Service.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetWorkOrders")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWorkOrders")]
         public IEnumerable<MaitenanceRequest> GetWorkOrders(string workerId)
         {
             using (Context = new ApplicationDbContext())
@@ -82,8 +69,8 @@ namespace ApartmentApps.API.Service.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetByResident")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetByResident")]
         public IEnumerable<MaitenanceRequest> GetByResident(string workerId)
         {
             using (Context = new ApplicationDbContext())

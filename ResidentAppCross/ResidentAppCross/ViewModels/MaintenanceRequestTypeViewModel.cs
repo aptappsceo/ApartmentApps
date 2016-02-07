@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ApartmentApps.Client.Models;
-using Cirrious.MvvmCross.ViewModels;
 using ResidentAppCross.Commands;
 
 namespace ResidentAppCross.ViewModels
