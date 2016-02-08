@@ -13,22 +13,22 @@ namespace ResidentAppCross
         public string Username
         {
             get { return _username; }
-            set { _username = value;
-                SetProperty(ref _username, value, "Username");
-            }
+            set { SetProperty(ref _username, value); }
         }
 
         private string _password;
+        private bool _isOperating;
+
         public string Password
         {
             get { return _password; }
-            set { SetProperty(ref _password, value, "Password"); }
+            set { SetProperty(ref _password, value); }
         }
 
-        public override void Start()
+        public bool IsOperating
         {
-            base.Start();
-
+            get { return _isOperating; }
+            set { SetProperty(ref _isOperating, value); }
         }
 
         public LoginViewModel(ILoginManager loginManager)
@@ -42,14 +42,13 @@ namespace ResidentAppCross
             {
                 return new MvxCommand(async () =>
                 {
-                    Debug.WriteLine(string.Format("Should login {0}:{1}", Username, Password));
+                    IsOperating = true;
                     if (await LoginManager.LoginAsync(Username, Password))
                     {
                         ShowViewModel<HomeMenuViewModel>();
                     }
-                    
-                }
-                    , () => true);
+                    IsOperating = false; //This is where I fell in love with async/await <3
+                }, () => true);
             }
         }
 

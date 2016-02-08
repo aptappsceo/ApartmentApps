@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -9,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AndroidHUD;
 using MvvmCross.Droid.Views;
 
 
@@ -27,7 +29,25 @@ namespace ResidentAppCross.Droid.Views
         protected override void OnViewModelSet()
         {
             base.OnViewModelSet();
+            ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
             SetContentView(Resource.Layout.LoginViewLayout);
+        }
+
+        private void ViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            if (propertyChangedEventArgs.PropertyName == nameof(ViewModel.IsOperating))
+            {
+                if (ViewModel.IsOperating)
+                {
+                    Console.WriteLine("Should show");
+                    AndHUD.Shared.Show(this, "Connecting...", -1, MaskType.Black, centered: true);
+                }
+                else
+                {
+                    Console.WriteLine("Should hide");
+                    AndHUD.Shared.Dismiss(this);
+                }
+            }
         }
     }
 }
