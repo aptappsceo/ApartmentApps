@@ -1,0 +1,4 @@
+Database:
+	Drop and recreate command on nuget console
+	update-database -TargetMigration:0 | update-database -force | update-database -force
+

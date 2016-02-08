@@ -31,11 +31,10 @@ namespace ApartmentApps.API.Service.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+        public AccountController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
-            AccessTokenFormat = accessTokenFormat;
+           
         }
 
         public ApplicationUserManager UserManager

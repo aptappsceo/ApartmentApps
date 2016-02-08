@@ -45,18 +45,18 @@ namespace ApartmentApps.Api
     }
     public interface IMaintenanceService : IService
     {
-        int SubmitRequest(ApplicationUser user, string comments, int requestTypeId);
+        int SubmitRequest(string user, string comments, int requestTypeId);
     }
 
     public class MaintenanceService : IMaintenanceService
     {
-        public int SubmitRequest(ApplicationUser user, string comments, int requestTypeId)
+        public int SubmitRequest(string user, string comments, int requestTypeId)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var maitenanceRequest = new MaitenanceRequest()
                 {
-                    UserId = user.Id,
+                    UserId = user,
                     WorkerId = null,
                     Date = DateTime.UtcNow,
                     Message = comments,
@@ -64,7 +64,7 @@ namespace ApartmentApps.Api
                 };
                 ctx.MaitenanceRequests.Add(maitenanceRequest);
                 ctx.SaveChanges();
-                this.InvokeEvent<IMaintenanceSubmissionEvent>(ctx, user, _=>_.MaintenanceRequestSubmited(maitenanceRequest));
+                this.InvokeEvent<IMaintenanceSubmissionEvent>(ctx, ctx.Users.First(p=>p.Id == user), _=>_.MaintenanceRequestSubmited(maitenanceRequest));
                 return maitenanceRequest.Id;
             }
         }

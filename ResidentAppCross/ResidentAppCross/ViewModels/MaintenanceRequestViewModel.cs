@@ -27,6 +27,7 @@ namespace ResidentAppCross.ViewModels
 
         private string _title;
         private LookupPairModel _selectedRequestType;
+        private string _comments;
 
         public MaintenanceRequestViewModel(IApartmentAppsAPIService service, IImageService imageService)
         {
@@ -66,8 +67,17 @@ namespace ResidentAppCross.ViewModels
         {
             get
             {
-                return new MvxCommand(() =>
+                return new MvxCommand(async () =>
                 {
+                    var c = Comments;
+                    Comments = "Submitting";
+                    var result = await _service.Maitenance.SubmitRequestAsync(new MaitenanceRequestModel()
+                    {
+                        Comments = c,
+                        MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
+                        Images = ImagesToUpload.RawImages.Select(p=>Encoding.UTF8.GetString(p,0,p.Length)).ToList()
+                    });
+                 
                     //TODO : Implement dialog complete
                     Close(this);
                 });
@@ -106,6 +116,12 @@ namespace ResidentAppCross.ViewModels
                 _selectedRequestType = value;
                 RaisePropertyChanged();
             }
+        }
+
+        public string Comments
+        {
+            get { return _comments; }
+            set { _comments = value; RaisePropertyChanged(); }
         }
 
         public void OnRequestTypeSelected(LookupPairModel type)

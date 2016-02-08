@@ -8,7 +8,9 @@ using ApartmentApps.API.Service.Controllers;
 using ApartmentApps.API.Service.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataHandler;
 using Unity.WebApi;
 
 namespace ApartmentApps.API.Service
@@ -27,11 +29,16 @@ namespace ApartmentApps.API.Service
 
             container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
+          
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new HierarchicalLifetimeManager());
             container.RegisterType<IAuthenticationManager>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().Authentication));
-            container.RegisterType<MaitenanceController>(new InjectionConstructor());
-            container.RegisterType<AccountController>(new InjectionConstructor());
-            container.RegisterType<HelpController>(new InjectionConstructor());
+            container.RegisterType<ISecureDataFormat<AuthenticationTicket>, SecureDataFormat<AuthenticationTicket>>();
+            container.RegisterType<ApplicationUserManager>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>()));
+            //container.RegisterType<UserManager<ApplicationUser>>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>()));
+
+            //container.RegisterType<MaitenanceController>(new InjectionConstructor());
+            //container.RegisterType<AccountController>(new InjectionConstructor());
+            //container.RegisterType<HelpController>(new InjectionConstructor());
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
             ServiceExtensions.GetServices = () => container.ResolveAll<IService>();
         }
