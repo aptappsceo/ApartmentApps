@@ -25,10 +25,5 @@ namespace ResidentAppCross.Droid.Views
             SetContentView(Resource.Layout.MaintenanceRequestViewLayout);
         }
 
-        public override void OnAttachedToWindow()
-        {
-            base.OnAttachedToWindow();
-            Log.WriteLine(LogPriority.Info, "View Attached", "Maintenance Request View Attached");
-        }
     }
 }

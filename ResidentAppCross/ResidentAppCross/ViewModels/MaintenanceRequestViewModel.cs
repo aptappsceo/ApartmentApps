@@ -113,15 +113,14 @@ namespace ResidentAppCross.ViewModels
             get { return _selectedRequestType; }
             set
             {
-                _selectedRequestType = value;
-                RaisePropertyChanged();
+                SetProperty(ref _selectedRequestType, value);
             }
         }
 
         public string Comments
         {
             get { return _comments; }
-            set { _comments = value; RaisePropertyChanged(); }
+            set { SetProperty(ref _comments, value); }
         }
 
         public void OnRequestTypeSelected(LookupPairModel type)

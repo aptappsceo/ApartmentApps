@@ -16,7 +16,7 @@ using MvvmCross.Droid.Views;
 
 namespace ResidentAppCross.Droid.Views
 {
-    [Activity(Label = "ResidentAppCross.Droid", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "Authentication", MainLauncher = true, Icon = "@drawable/accounticon")]
     public class LoginView : MvxActivity
     {
 
@@ -39,12 +39,10 @@ namespace ResidentAppCross.Droid.Views
             {
                 if (ViewModel.IsOperating)
                 {
-                    Console.WriteLine("Should show");
                     AndHUD.Shared.Show(this, "Connecting...", -1, MaskType.Black, centered: true);
                 }
                 else
                 {
-                    Console.WriteLine("Should hide");
                     AndHUD.Shared.Dismiss(this);
                 }
             }
