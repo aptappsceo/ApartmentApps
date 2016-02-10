@@ -1,14 +1,9 @@
-using ApartmentApps.API.Service.Models;
+using System.Data.Entity.Migrations;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace ApartmentApps.API.Service.Migrations
+namespace ApartmentApps.Data.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<ApartmentApps.API.Service.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
@@ -16,7 +11,7 @@ namespace ApartmentApps.API.Service.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(ApartmentApps.API.Service.Models.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

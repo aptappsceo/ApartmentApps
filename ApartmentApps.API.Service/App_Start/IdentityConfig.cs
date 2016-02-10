@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using ApartmentApps.API.Service.Models;
+using ApartmentApps.Data;
 
 namespace ApartmentApps.API.Service
 {

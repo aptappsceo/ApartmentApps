@@ -198,7 +198,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\MaitenanceRequestController.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\MaitenanceRequestMetadata.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -310,6 +312,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\MaitenanceRequest\MaitenanceRequestIndex.cshtml" />
+    <Content Include="Views\MaitenanceRequest\MaitenanceRequestCreate.cshtml" />
+    <Content Include="Views\MaitenanceRequest\MaitenanceRequestEdit.cshtml" />
+    <Content Include="Views\MaitenanceRequest\MaitenanceRequestEditForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

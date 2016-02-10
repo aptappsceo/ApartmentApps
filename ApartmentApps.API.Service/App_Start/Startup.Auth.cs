@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.API.Service.Models;
+using ApartmentApps.Data;
 
 namespace ApartmentApps.API.Service
 {

@@ -1,4 +1,4 @@
-namespace ApartmentApps.API.Service.Models
+namespace ApartmentApps.Data
 {
     public enum MaitenanceActionType
     {

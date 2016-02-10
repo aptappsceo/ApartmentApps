@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ApartmentApps.API.Service.Models;
+using ApartmentApps.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.Practices.Unity;
 

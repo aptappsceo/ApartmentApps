@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ApartmentApps.API.Service.Models
+namespace ApartmentApps.Data
 {
     public class Corporation
     {

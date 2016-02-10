@@ -1,7 +1,7 @@
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace ApartmentApps.API.Service.Models
+namespace ApartmentApps.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
