@@ -200,16 +200,23 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BuildingController.cs" />
+    <Compile Include="Controllers\BuildingsController.cs" />
     <Compile Include="Controllers\CorporationController.cs" />
+    <Compile Include="Controllers\CorporationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaitenanceRequestsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\PropertyService.cs" />
     <Compile Include="Controllers\TenantController.cs" />
+    <Compile Include="Controllers\TenantsController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
+    <Compile Include="Controllers\UnitsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\MaitenanceRequestController.cs" />
+    <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -488,6 +495,39 @@
     <Content Include="Views\Tenant\TenantEdit.cshtml" />
     <Content Include="Views\Tenant\TenantEditForm.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\Shared\_TopNavbar.cshtml" />
+    <Content Include="Views\Buildings\Create.cshtml" />
+    <Content Include="Views\Buildings\Delete.cshtml" />
+    <Content Include="Views\Buildings\Details.cshtml" />
+    <Content Include="Views\Buildings\Edit.cshtml" />
+    <Content Include="Views\Buildings\Index.cshtml" />
+    <Content Include="Views\MaitenanceRequests\Create.cshtml" />
+    <Content Include="Views\MaitenanceRequests\Delete.cshtml" />
+    <Content Include="Views\MaitenanceRequests\Details.cshtml" />
+    <Content Include="Views\MaitenanceRequests\Edit.cshtml" />
+    <Content Include="Views\MaitenanceRequests\Index.cshtml" />
+    <Content Include="Views\Corporations\Create.cshtml" />
+    <Content Include="Views\Corporations\Delete.cshtml" />
+    <Content Include="Views\Corporations\Details.cshtml" />
+    <Content Include="Views\Corporations\Edit.cshtml" />
+    <Content Include="Views\Corporations\Index.cshtml" />
+    <Content Include="Views\Properties\Create.cshtml" />
+    <Content Include="Views\Properties\Delete.cshtml" />
+    <Content Include="Views\Properties\Details.cshtml" />
+    <Content Include="Views\Properties\Edit.cshtml" />
+    <Content Include="Views\Properties\Index.cshtml" />
+    <Content Include="Views\Tenants\Create.cshtml" />
+    <Content Include="Views\Tenants\Delete.cshtml" />
+    <Content Include="Views\Tenants\Details.cshtml" />
+    <Content Include="Views\Tenants\Edit.cshtml" />
+    <Content Include="Views\Tenants\Index.cshtml" />
+    <Content Include="Views\Units\Create.cshtml" />
+    <Content Include="Views\Units\Delete.cshtml" />
+    <Content Include="Views\Units\Details.cshtml" />
+    <Content Include="Views\Units\Edit.cshtml" />
+    <Content Include="Views\Units\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

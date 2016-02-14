@@ -18,9 +18,9 @@ namespace ApartmentApps.Data
         [ForeignKey("CorporationId")]
         public Corporation Corporation { get; set; }
 
-        public ICollection<Tenant> Tenants { get; set; } 
+        public virtual ICollection<Tenant> Tenants { get; set; } 
 
-        public virtual ICollection<PropertyAddon> PropertyAddons { get; set; } 
+        public virtual ICollection<PropertyAddon> PropertyAddons { get; set; }
 
         public virtual PropertyEntrataInfo EntrataInfo { get; set; }
         public virtual PropertyYardiInfo YardiInfo { get; set; }
