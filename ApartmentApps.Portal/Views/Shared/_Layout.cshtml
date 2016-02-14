@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -40,12 +41,12 @@
             <div class=" border-bottom">
                 <div class="full-left">
                     @*<section class="full-top">
-                        <button id="toggle"><i class="fa fa-arrows-alt"></i></button>
-                    </section>
-                    <form class=" navbar-left-right">
-                        <input type="text" value="Search..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search...';}">
-                        <input type="submit" value="" class="fa fa-search">
-                    </form>*@
+                            <button id="toggle"><i class="fa fa-arrows-alt"></i></button>
+                        </section>
+                        <form class=" navbar-left-right">
+                            <input type="text" value="Search..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search...';}">
+                            <input type="submit" value="" class="fa fa-search">
+                        </form>*@
                     <div class="clearfix"> </div>
                 </div>
 
@@ -128,16 +129,34 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span class=" name-caret">Rackham<i class="caret"></i></span><img src="images/wo.jpg"></a>
+                            <a href="#" class="dropdown-toggle dropdown-at" data-toggle="dropdown"><span class=" name-caret">@User.Identity.GetUserName()<i class="caret"></i></span></a>
                             <ul class="dropdown-menu " role="menu">
-                                <li>@Html.ActionLink("Home", "Index", "Home", new {area = ""}, null)</li>
-                                <li>@Html.ActionLink("API", "Index", "Help", new {area = ""}, null)</li>
 
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                
+                                            <li>
+                                                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                            </li>
+                                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                                   
+                                    }
+                                }
+                                else
+                                {
+                               
+                                        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                              
+                                }
                             </ul>
                         </li>
 
                     </ul>
-                    @Html.Partial("_LoginPartial")
                 </div><!-- /.navbar-collapse -->
                 <div class="clearfix">
 
@@ -154,7 +173,25 @@
                             <li>
                                 <a href="@Url.Action("MaitenanceRequestIndex", "MaitenanceRequest")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Maintenance</span> </a>
                             </li>
-                            
+
+                            @if (true || User.IsInRole("SalesRep"))
+                            {
+                                <li>
+                                    <a href="@Url.Action("CorporationIndex", "Corporation")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Corporations</span> </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("PropertyIndex", "Property")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Properties</span> </a>
+                                </li>
+                            }
+                            <li>
+                                <a href="@Url.Action("BuildingIndex", "Building")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Buildings</span> </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("UnitIndex", "Unit")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Units</span> </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("TenantIndex", "Tenant")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Residents</span> </a>
+                            </li>
                             @*<li>
                                     <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Menu Levels</span><span class="fa arrow"></span></a>
                                     <ul class="nav nav-second-level">
@@ -222,7 +259,7 @@
                     @RenderBody()
                     <div class="clearfix"> </div>
                 </div>
-            
+
                 <!---->
                 <!--//content-->
                 <!---->

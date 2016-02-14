@@ -9,10 +9,12 @@ namespace ApartmentApps.Data.Migrations
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
+
         }
 
         protected override void Seed(ApplicationDbContext context)
         {
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -24,7 +26,12 @@ namespace ApartmentApps.Data.Migrations
                   new IdentityRole { Id = "Officer", Name = "Officer" },
                   new IdentityRole { Id = "PropertyAdmin", Name = "PropertyAdmin" }
             );
-
+            context.MaintenanceRequestStatuses.AddOrUpdate(
+                new MaintenanceRequestStatus { Name = "Submitted" },
+                new MaintenanceRequestStatus { Name = "Scheduled" },
+                new MaintenanceRequestStatus { Name = "Paused" },
+                new MaintenanceRequestStatus { Name = "Complete" }
+            );
             context.MaitenanceRequestTypes.AddOrUpdate(
                 new MaitenanceRequestType() { Name = "Alarm" },
                 new MaitenanceRequestType() { Name = "APEX Meter" },

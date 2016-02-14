@@ -2,7 +2,6 @@ using System.Data.Entity;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ApartmentApps.API.Service.Models;
 using ApartmentApps.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

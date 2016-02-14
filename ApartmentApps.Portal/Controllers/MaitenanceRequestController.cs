@@ -8,8 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Data;
 
-namespace ApartmentApps.Portal
+namespace ApartmentApps.Portal.Controllers
 {
+    [Authorize]
     public class MaitenanceRequestController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,7 +18,7 @@ namespace ApartmentApps.Portal
         // GET: MaitenanceRequest/MaitenanceRequestIndex
         public ActionResult MaitenanceRequestIndex()
         {
-            var maitenanceRequest = db.MaitenanceRequests.Include(m => m.MaitenanceRequestType).Include(m => m.User).Include(m => m.Worker);
+            var maitenanceRequest = db.MaitenanceRequests.Include(m => m.MaitenanceRequestType).Include(m => m.Status).Include(m => m.Unit).Include(m => m.User).Include(m => m.Worker);
             return View(maitenanceRequest.ToList());
         }
 
@@ -42,6 +43,8 @@ namespace ApartmentApps.Portal
         public ActionResult MaitenanceRequestCreate()
         {
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name");
+            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name");
+            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name");
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
             ViewBag.WorkerId = new SelectList(db.Users, "Id", "Email");
             return View();
@@ -51,9 +54,7 @@ namespace ApartmentApps.Portal
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MaitenanceRequestCreate(
-            [Bind(Include = "Actions,MaitenanceRequestType,User,Worker,Id,UserId,WorkerId,MaitenanceRequestTypeId,Date,Message")]
-        MaitenanceRequest maitenanceRequest)
+        public ActionResult MaitenanceRequestCreate([Bind(Include = "Actions,MaitenanceRequestType,Status,Unit,User,Worker,Id,UserId,WorkerId,MaitenanceRequestTypeId,UnitId,SubmissionDate,ScheduleDate,CloseDate,StatusId,Message")] MaitenanceRequest maitenanceRequest)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +65,8 @@ namespace ApartmentApps.Portal
             }
 
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
+            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name", maitenanceRequest.UnitId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.UserId);
             ViewBag.WorkerId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.WorkerId);
             DisplayErrorMessage();
@@ -83,6 +86,8 @@ namespace ApartmentApps.Portal
                 return HttpNotFound();
             }
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
+            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name", maitenanceRequest.UnitId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.UserId);
             ViewBag.WorkerId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.WorkerId);
             return View(maitenanceRequest);
@@ -92,7 +97,7 @@ namespace ApartmentApps.Portal
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MaitenanceRequestEdit([Bind(Include = "Actions,MaitenanceRequestType,User,Worker,Id,UserId,WorkerId,MaitenanceRequestTypeId,Date,Message")] MaitenanceRequest maitenanceRequest)
+        public ActionResult MaitenanceRequestEdit([Bind(Include = "Actions,MaitenanceRequestType,Status,Unit,User,Worker,Id,UserId,WorkerId,MaitenanceRequestTypeId,UnitId,SubmissionDate,ScheduleDate,CloseDate,StatusId,Message")] MaitenanceRequest maitenanceRequest)
         {
             if (ModelState.IsValid)
             {
@@ -102,6 +107,8 @@ namespace ApartmentApps.Portal
                 return RedirectToAction("MaitenanceRequestIndex");
             }
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
+            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name", maitenanceRequest.UnitId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.UserId);
             ViewBag.WorkerId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.WorkerId);
             DisplayErrorMessage();

@@ -208,31 +208,28 @@ namespace ResidentAppCross.Droid
 			public const int MaintenanceRequestMainIcon = 2130837525;
 			
 			// aapt resource value: 0x7f020016
-			public const int monoandroidsplash = 2130837526;
+			public const int OfficerIcon = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int OfficerIcon = 2130837527;
+			public const int PartnersIcon = 2130837527;
 			
 			// aapt resource value: 0x7f020018
-			public const int PartnersIcon = 2130837528;
+			public const int PayIcon = 2130837528;
 			
 			// aapt resource value: 0x7f020019
-			public const int PayIcon = 2130837529;
+			public const int SecurityIcon = 2130837529;
 			
 			// aapt resource value: 0x7f02001a
-			public const int SecurityIcon = 2130837530;
+			public const int SettingsIcon = 2130837530;
 			
 			// aapt resource value: 0x7f02001b
-			public const int SettingsIcon = 2130837531;
+			public const int SignOutIcon = 2130837531;
 			
 			// aapt resource value: 0x7f02001c
-			public const int SignOutIcon = 2130837532;
+			public const int UsernameIcon = 2130837532;
 			
 			// aapt resource value: 0x7f02001d
-			public const int UsernameIcon = 2130837533;
-			
-			// aapt resource value: 0x7f02001e
-			public const int WhiteHomeIcon = 2130837534;
+			public const int WhiteHomeIcon = 2130837533;
 			
 			static Drawable()
 			{
@@ -510,9 +507,6 @@ namespace ResidentAppCross.Droid
 		
 		public partial class Style
 		{
-			
-			// aapt resource value: 0x7f060002
-			public const int Mono_Android_Theme_Splash = 2131099650;
 			
 			// aapt resource value: 0x7f060001
 			public const int badge_danger = 2131099649;

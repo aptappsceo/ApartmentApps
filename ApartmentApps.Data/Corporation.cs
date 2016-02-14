@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ApartmentApps.Data
 {
-    public class Corporation
+    public partial class Corporation
     {
    
         [Key]

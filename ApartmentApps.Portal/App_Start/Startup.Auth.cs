@@ -1,5 +1,4 @@
 ﻿using System;
-using ApartmentApps.API.Service.Models;
 using ApartmentApps.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;

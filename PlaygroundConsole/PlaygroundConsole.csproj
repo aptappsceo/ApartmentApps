@@ -100,6 +100,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ApartmentApps.Data\ApartmentApps.Data.csproj">
+      <Project>{69a819d5-3037-4e56-90e4-a9edff41b88a}</Project>
+      <Name>ApartmentApps.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entrata.Client\Entrata.Client.csproj">
       <Project>{A8CD4A6F-7D69-49A6-A4A8-D199DDC6E490}</Project>
       <Name>Entrata.Client</Name>

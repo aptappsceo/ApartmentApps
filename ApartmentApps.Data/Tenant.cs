@@ -3,18 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApartmentApps.Data
 {
-    public class Tenant
+    public partial class Tenant
     {
-
-        [Key]
-        public int Id { get; set; }
-
+        [Key, ForeignKey("User")]
         public string UserId { get; set; }
 
-        public int PropertyId { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
-        [ForeignKey("PropertyId")]
-        public virtual Property Property { get; set; }
+        public int? UnitId { get; set; }
+
+        [ForeignKey("UnitId")]
+        public virtual Unit Unit { get; set; }
 
         public string ThirdPartyId { get; set; }
 
@@ -33,7 +32,7 @@ namespace ApartmentApps.Data
         public string State { get; set; }
 
         public string PostalCode { get; set; }
-
+        
         public string Email { get; set; }
 
         public string Gender { get; set; }

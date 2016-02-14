@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApartmentApps.Data
 {
-    public class MaitenanceRequest
+    public partial class MaitenanceRequest
     {
         [Key]
         public int Id { get; set; }
@@ -14,6 +14,11 @@ namespace ApartmentApps.Data
 
         public string WorkerId { get; set; }
         public int MaitenanceRequestTypeId { get; set; }
+
+        public int UnitId { get; set; }
+
+        [ForeignKey("UnitId")]
+        public Unit Unit { get; set; }
 
         [ForeignKey("WorkerId")]
         public ApplicationUser Worker { get; set; }
@@ -25,7 +30,20 @@ namespace ApartmentApps.Data
         public MaitenanceRequestType MaitenanceRequestType { get; set; }
 
         public ICollection<MaitenanceAction> Actions { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime SubmissionDate { get; set; }
+        public DateTime? ScheduleDate { get; set; }
+        public DateTime? CloseDate { get; set; }
+
+        public string StatusId { get; set; }
+        [ForeignKey("StatusId")]
+        public MaintenanceRequestStatus Status { get; set; }
+
         public string Message { get; set; }
+    }
+
+    public class MaintenanceRequestStatus
+    {
+        [Key]
+        public string Name { get; set; }
     }
 }

@@ -46,6 +46,8 @@ namespace ApartmentApps.Api
     public interface IMaintenanceService : IService
     {
         int SubmitRequest(string user, string comments, int requestTypeId);
+        bool PauseRequest( int requestId, string comments);
+        bool CompleteRequest( int requestId, string comments);
     }
 
     public class MaintenanceService : IMaintenanceService
@@ -58,7 +60,8 @@ namespace ApartmentApps.Api
                 {
                     UserId = user,
                     WorkerId = null,
-                    Date = DateTime.UtcNow,
+                    SubmissionDate = DateTime.UtcNow,
+                    StatusId = "Scheduled",
                     Message = comments,
                     MaitenanceRequestTypeId = requestTypeId
                 };
@@ -69,6 +72,37 @@ namespace ApartmentApps.Api
             }
         }
 
+        public bool PauseRequest( int requestId, string comments)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var request = ctx.MaitenanceRequests.FirstOrDefault(p => p.Id == requestId);
+                if (request != null)
+                {
+                    request.StatusId = "Paused";
+                    ctx.SaveChanges();
+                    this.InvokeEvent<IMaintenanceRequestPausedEvent>(ctx, request.Worker, _ => _.MaintenanceRequestPaused(requestId));
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool CompleteRequest( int requestId, string comments)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var request = ctx.MaitenanceRequests.FirstOrDefault(p => p.Id == requestId);
+                if (request != null)
+                {
+                    request.StatusId = "Complete";
+                    ctx.SaveChanges();
+                    this.InvokeEvent<IMaintenanceRequestCompletedEvent>(ctx, request.Worker, _ => _.MaintenanceRequestCompleted(requestId));
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 
     public interface IApartmentAppsAddon
@@ -81,19 +115,23 @@ namespace ApartmentApps.Api
         void MaintenanceRequestSubmited(MaitenanceRequest maitenanceRequest);
     }
 
+    public interface IMaintenanceRequestPausedEvent
+    {
+        void MaintenanceRequestPaused(object maitenanceRequest);
+    }
+    public interface IMaintenanceRequestCompletedEvent
+    {
+        void MaintenanceRequestCompleted(object maitenanceRequest);
+    }
     public interface IAddonFilter
     {
         bool Filter(ApplicationUser user);
     }
 
-    public class PropertyIntegrationAddon : IService, IApartmentAppsAddon, IAddonFilter
+    public abstract class PropertyIntegrationAddon : IService, IApartmentAppsAddon, IAddonFilter
     {
-        public string PropertyAddonName { get; set; }
+        public abstract bool Filter(ApplicationUser user);
 
-        public bool Filter(ApplicationUser user)
-        {
-            return user.Tenant.Property.PropertyAddons.Any(p=>p.AddonType.Name == PropertyAddonName);
-        }
     }
 
     
