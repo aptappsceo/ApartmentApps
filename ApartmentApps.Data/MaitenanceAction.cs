@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ApartmentApps.API.Service.Models
+namespace ApartmentApps.Data
 {
     public class MaitenanceAction
     {

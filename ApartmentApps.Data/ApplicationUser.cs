@@ -1,22 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 
-namespace ApartmentApps.API.Service.Models
+namespace ApartmentApps.Data
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        
-        public int? TenantId { get; set; }
-
-        [ForeignKey("TenantId")]
+        [Key]
+        public override string Id { get; set; }
         public virtual Tenant Tenant { get; set; }
 
-        
+        public int? PropertyId { get; set; }
+
+        [ForeignKey("PropertyId")]
+        public virtual Property Property { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
@@ -34,29 +35,4 @@ namespace ApartmentApps.API.Service.Models
         }
     }
 
-
-    //public class Building
-    //{
-    //    [Key]
-    //    public int Id { get; set; }
-    //    public int PropertyId { get; set; }
-
-    //    [ForeignKey("PropertyId")]
-    //    public Property Property { get; set; }
-
-    //    public ICollection<Unit> Units { get; set; }
-    //}
-
-    //public class Unit
-    //{
-    //    [Key]
-    //    public int Id { get; set; }
-
-    //    public int BuildingId { get; set; }
-
-    //    [ForeignKey("BuildingId")]
-    //    public Building Building { get; set; }
-
-    //    public ICollection<Tenant> Tenants { get; set; } 
-    //}
 }

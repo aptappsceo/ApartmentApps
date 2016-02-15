@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ApartmentApps.Data.MaitenanceRequest>
+
+@{
+    ViewBag.Title = "Index";
+}
+<style type='text/css'>
+    /*設定 數字靠右*/
+    td:nth-child(7){text-align: right;}
+    td:nth-child(10){text-align: right;}
+    td:nth-child(11){text-align: right;}
+</style>
+<h2>Index</h2>
+<h4>MaitenanceRequest</h4>
+<p>
+    @Html.ActionLink("Create New", "MaitenanceRequestCreate")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaitenanceRequestType.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unit.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Worker.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubmissionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScheduleDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CloseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "MaitenanceRequestEdit", new { id=item.Id })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaitenanceRequestType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unit.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Worker.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubmissionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ScheduleDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CloseDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Message)
+        </td>
+
+    </tr>
+}
+
+</table>

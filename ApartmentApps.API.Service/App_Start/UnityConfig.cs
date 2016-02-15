@@ -6,6 +6,7 @@ using ApartmentApps.Api;
 using ApartmentApps.API.Service.Areas.HelpPage.Controllers;
 using ApartmentApps.API.Service.Controllers;
 using ApartmentApps.API.Service.Models;
+using ApartmentApps.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;

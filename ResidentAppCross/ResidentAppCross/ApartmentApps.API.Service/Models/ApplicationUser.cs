@@ -12,6 +12,7 @@ namespace ApartmentApps.Client.Models
 {
     public partial class ApplicationUser
     {
+       
         private int? _accessFailedCount;
         
         /// <summary>

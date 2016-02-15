@@ -17,6 +17,7 @@ using Microsoft.Owin.Security.OAuth;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.API.Service.Results;
+using ApartmentApps.Data;
 
 namespace ApartmentApps.API.Service.Controllers
 {

@@ -1,0 +1,131 @@
+﻿@model ApartmentApps.Data.MaitenanceRequest
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Details</h2>
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("List", "Index")
+            </li>
+            <li class="active">
+                <strong>Details</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Details MaitenanceRequest</h5>
+                </div>
+                <div class="ibox-content">
+
+
+				    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaitenanceRequestType.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaitenanceRequestType.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Worker.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Worker.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubmissionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubmissionDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduleDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScheduleDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CloseDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CloseDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+
+    </dl>
+
+
+	    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

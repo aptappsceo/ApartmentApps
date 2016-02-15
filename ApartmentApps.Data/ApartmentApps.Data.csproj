@@ -85,39 +85,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="Building.cs" />
+    <Compile Include="BuildingMetadata.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Corporation.cs" />
     <Compile Include="ApplicationUser.cs" />
+    <Compile Include="CorporationMetadata.cs" />
     <Compile Include="MaitenanceAction.cs" />
     <Compile Include="MaitenanceActionType.cs" />
     <Compile Include="MaitenanceRequest.cs" />
+    <Compile Include="MaitenanceRequestMetadata.cs" />
     <Compile Include="MaitenanceRequestType.cs" />
-    <Compile Include="Migrations\201601292238244_Initial.cs" />
-    <Compile Include="Migrations\201601292238244_Initial.Designer.cs">
-      <DependentUpon>201601292238244_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602060345380_RefChanges.cs" />
-    <Compile Include="Migrations\201602060345380_RefChanges.Designer.cs">
-      <DependentUpon>201602060345380_RefChanges.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="PropertyAddon.cs" />
     <Compile Include="PropertyAddonType.cs" />
+    <Compile Include="PropertyMetadata.cs" />
     <Compile Include="Tenant.cs" />
+    <Compile Include="TenantMetadata.cs" />
+    <Compile Include="Unit.cs" />
+    <Compile Include="UnitMetadata.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201601292238244_Initial.resx">
-      <DependentUpon>201601292238244_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602060345380_RefChanges.resx">
-      <DependentUpon>201602060345380_RefChanges.cs</DependentUpon>
-    </EmbeddedResource>
+    <Content Include="InstallationDummyFile.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
