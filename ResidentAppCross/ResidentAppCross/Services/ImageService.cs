@@ -11,6 +11,7 @@ namespace ResidentAppCross.Services
     public interface IImageService
     {
         void SelectImage(Action<byte[]> selected , Action cancelled);
+
     }
 
     public class ImageService : IImageService
@@ -24,7 +25,7 @@ namespace ResidentAppCross.Services
 
         public void SelectImage(Action<byte[]> selected, Action cancelled)
         {
-            _pictureChooser.ChoosePictureFromLibrary(2048, 100, data =>
+            _pictureChooser.ChoosePictureFromLibrary(1024, 92, data =>
             {
                 byte[] result;
                 using (var memoryStream = new MemoryStream())
@@ -35,5 +36,6 @@ namespace ResidentAppCross.Services
                 selected(result);
             }, cancelled);
         }
+
     }
 }

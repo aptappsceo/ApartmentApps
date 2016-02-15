@@ -75,11 +75,15 @@
     <Compile Include="ApartmentApps.API.Service\ValuesExtensions.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\StubCommands.cs" />
+    <Compile Include="Events\ViewProgressEvents.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
+    <Compile Include="Interfaces\IDisposableContainer.cs" />
     <Compile Include="Resources\SharedResources.cs" />
     <Compile Include="Services\ApplicationContext.cs" />
     <Compile Include="Services\ImageService.cs" />
+    <Compile Include="Services\IQRService.cs" />
     <Compile Include="ViewModels\BadgeType.cs" />
+    <Compile Include="ViewModels\GenericWebViewModel.cs" />
     <Compile Include="ViewModels\HomeMenuItemViewModel.cs" />
     <Compile Include="ViewModels\HomeMenuViewModel.cs" />
     <Compile Include="IQueryHomeMenuItems.cs" />
@@ -90,6 +94,8 @@
     <Compile Include="ViewModels\MaintenanceRequestTypeSelectionViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceRequestTypeViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceRequestViewModel.cs" />
+    <Compile Include="ViewModels\QRScannerViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

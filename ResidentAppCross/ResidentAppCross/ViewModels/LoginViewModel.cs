@@ -2,11 +2,14 @@
 using System.Diagnostics;
 using System.Windows.Input;
 using MvvmCross.Core.ViewModels;
+using ResidentAppCross.Commands;
+using ResidentAppCross.Events;
 using ResidentAppCross.ServiceClient;
+using ResidentAppCross.ViewModels;
 
 namespace ResidentAppCross
 {
-    public class LoginViewModel : MvxViewModel
+    public class LoginViewModel : ViewModelBase
     {
         public ILoginManager LoginManager { get; set; }
         private string _username;
@@ -42,12 +45,17 @@ namespace ResidentAppCross
             {
                 return new MvxCommand(async () =>
                 {
-                    IsOperating = true;
+                    this.Publish(new TaskStarted(this) { Label = "Connecting..."});
                     if (await LoginManager.LoginAsync(Username, Password))
                     {
+                        this.Publish(new TaskComplete(this) {Label = "Logged In"});
+                            //This is where I fell in love with async/await <3
                         ShowViewModel<HomeMenuViewModel>();
                     }
-                    IsOperating = false; //This is where I fell in love with async/await <3
+                    else
+                    {
+                        this.Publish(new TaskFailed(this) { Label = "Failed to Log In", ShouldPrompt = true});
+                    }
                 }, () => true);
             }
         }
@@ -58,21 +66,13 @@ namespace ResidentAppCross
             {
                 return new MvxCommand(() =>
                 {
-                    ShowViewModel<HomeMenuViewModel>();
+                    var httpLocalhostGeneralviews = "http://82.151.208.56:54683/generalviews";
+                    ShowViewModel<GenericWebViewModel>(new { url = httpLocalhostGeneralviews });
                     Debug.WriteLine("Please implement \"RemindPasswordCommand\" @ LoginViewModel");
                 });
             }
         }
 
-        public ICommand SignUpCommand
-        {
-            get
-            {
-                return new MvxCommand(() =>
-                {
-                    Debug.WriteLine("Please implement \"SignUpCommand\" @ LoginViewModel");
-                });
-            }
-        }
+        public ICommand SignUpCommand => StubCommands.NoActionSpecifiedCommand(this);
     }
 }

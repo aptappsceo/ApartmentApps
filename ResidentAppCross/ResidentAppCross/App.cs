@@ -13,13 +13,15 @@ using Newtonsoft.Json.Linq;
 using ResidentAppCross;
 using ResidentAppCross.ServiceClient;
 using ResidentAppCross.Services;
+using ResidentAppCross.ViewModels;
 
 public class App : MvxApplication
 {
     public App()
     {
         //Mvx.RegisterType<ICalculation, Calculation>();
-        Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginViewModel>());
+        //Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginViewModel>());
+        Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<QRScannerViewModel>());
         var client = new ApartmentAppsClient();
         //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);
@@ -36,7 +38,6 @@ public class App : MvxApplication
 
         public ApartmentAppsClient(Uri baseUri) : base(baseUri, new AparmentAppsDelegating())
         {
-            
         }
 
         public void Logout()

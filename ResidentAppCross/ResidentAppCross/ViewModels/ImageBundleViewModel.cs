@@ -22,7 +22,12 @@ namespace ResidentAppCross.ViewModels
             }
         }
 
-        public ObservableCollection<byte[]> RawImages { get; set; } = new ObservableCollection<byte[]>();
-        public ObservableCollection<string> RemoteImages { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<ImageBundleItemViewModel> RawImages { get; set; } = new ObservableCollection<ImageBundleItemViewModel>();
+    }
+
+    public class ImageBundleItemViewModel
+    {
+        public Uri Uri { get; set; } = new Uri("file:///tmp/"+Guid.NewGuid().ToString());
+        public byte[] Data { get; set; }
     }
 }

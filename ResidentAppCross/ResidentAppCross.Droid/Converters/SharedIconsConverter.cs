@@ -26,7 +26,8 @@ public class ByteArrayToImage : MvxValueConverter<byte[], Bitmap>
 {
     protected override Bitmap Convert(byte[] value, Type targetType, object parameter, CultureInfo culture)
     {
-        return BitmapFactory.DecodeByteArray(value, 0, value.Length);
+        var decodeByteArray = BitmapFactory.DecodeByteArray(value, 0, value.Length);
+        return decodeByteArray;
     }
 }
 

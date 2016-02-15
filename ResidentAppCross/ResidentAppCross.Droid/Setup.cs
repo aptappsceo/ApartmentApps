@@ -1,9 +1,15 @@
 using System;
+using Android.App;
 using Android.Content;
 using Android.Util;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Droid.Platform;
+using MvvmCross.Platform;
 using MvvmCross.Platform.Converters;
+using MvvmCross.Platform.Plugins;
+using ResidentAppCross.Droid.Services;
+using ResidentAppCross.Services;
+using ZXing.Mobile;
 
 namespace ResidentAppCross.Droid
 {
@@ -24,6 +30,12 @@ namespace ResidentAppCross.Droid
             Android.Util.Log.WriteLine(LogPriority.Error, "Holy shit", string.Format("EXCEPTION: {0} {1} {2}", sender, sender.GetType().Name,
                 e.ExceptionObject));
 
+        }
+
+        protected override void InitializeIoC()
+        {
+            base.InitializeIoC();
+            Mvx.ConstructAndRegisterSingleton<IQRService,AndroidQRService>();
         }
 
         protected override IMvxApplication CreateApp()
