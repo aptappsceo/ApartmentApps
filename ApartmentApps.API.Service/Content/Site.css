@@ -15,3 +15,48 @@ select,
 textarea {
     max-width: 280px;
 }
+
+@media (min-width:320px) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
+    
+    .request-list-photo {
+        
+    }
+
+    .request-list-icon {
+        width: 4em;
+        margin: 10px;
+    }
+
+    .request-list-item-gallery img{
+        display: inline;
+        max-height: 60px
+    }
+
+    .request-list-item hr {
+        margin: 5px
+    }
+
+    .request-list {
+        
+    }
+
+    .request-header-text {
+        font-size: 2em;
+    }  
+    
+    .request-list-text {
+        
+    }
+    
+    .request-list-text-small {
+        
+    }
+
+    
+}
+
+@media (min-width:480px) { /* smartphones, Android phones, landscape iPhone */ }
+@media (min-width:600px) { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ }
+@media (min-width:801px) { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
+@media (min-width:1281px) { /* hi-res laptops and desktops */ }
