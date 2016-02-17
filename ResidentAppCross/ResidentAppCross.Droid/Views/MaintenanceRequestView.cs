@@ -9,8 +9,8 @@ using ResidentAppCross.ViewModels;
 namespace ResidentAppCross.Droid.Views
 {
 
-    [Activity(Label = "ResidentAppCross.Droid", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MaintenanceRequestView : MvxActivity
+    [Activity(Label = "ResidentAppCross.Droid", Icon = "@drawable/icon")]
+    public class MaintenanceRequestView : ViewBase
     {
 
         public new MaintenanceRequestViewModel ViewModel
@@ -25,10 +25,5 @@ namespace ResidentAppCross.Droid.Views
             SetContentView(Resource.Layout.MaintenanceRequestViewLayout);
         }
 
-        public override void OnAttachedToWindow()
-        {
-            base.OnAttachedToWindow();
-            Log.WriteLine(LogPriority.Info, "View Attached", "Maintenance Request View Attached");
-        }
     }
 }

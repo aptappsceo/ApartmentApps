@@ -135,5 +135,6 @@ namespace ResidentAppCross
             get { return new MvxCommand(() => { Debug.WriteLine("Should Execute CommunityPartnersCommand"); }); }
         }
 
+
     }
 }

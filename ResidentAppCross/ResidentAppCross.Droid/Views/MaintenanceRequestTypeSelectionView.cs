@@ -8,7 +8,7 @@ using ResidentAppCross.ViewModels;
 namespace ResidentAppCross.Droid.Views
 {
 
-    [Activity(Label = "ResidentAppCross.Droid", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "Maintenance Request", Icon = "@drawable/maintenaceicon")]
     public class MaintenanceRequestTypeSelectionView : MvxActivity
     {
 

@@ -5,5 +5,5 @@
     android:layout_width="100dp"
     android:layout_height="100dp"
     android:layout_weight="0.33"
-    local:MvxBind="Bitmap ByteArrayToImage(.)"
+    local:MvxBind="Bitmap ByteArrayToImage(Data);"
     android:id="@+id/imageView1" />

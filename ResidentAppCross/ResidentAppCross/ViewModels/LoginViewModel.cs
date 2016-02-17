@@ -2,33 +2,36 @@
 using System.Diagnostics;
 using System.Windows.Input;
 using MvvmCross.Core.ViewModels;
+using ResidentAppCross.Commands;
+using ResidentAppCross.Events;
 using ResidentAppCross.ServiceClient;
+using ResidentAppCross.ViewModels;
 
 namespace ResidentAppCross
 {
-    public class LoginViewModel : MvxViewModel
+    public class LoginViewModel : ViewModelBase
     {
         public ILoginManager LoginManager { get; set; }
         private string _username;
         public string Username
         {
             get { return _username; }
-            set { _username = value;
-                SetProperty(ref _username, value, "Username");
-            }
+            set { SetProperty(ref _username, value); }
         }
 
         private string _password;
+        private bool _isOperating;
+
         public string Password
         {
             get { return _password; }
-            set { SetProperty(ref _password, value, "Password"); }
+            set { SetProperty(ref _password, value); }
         }
 
-        public override void Start()
+        public bool IsOperating
         {
-            base.Start();
-
+            get { return _isOperating; }
+            set { SetProperty(ref _isOperating, value); }
         }
 
         public LoginViewModel(ILoginManager loginManager)
@@ -42,14 +45,18 @@ namespace ResidentAppCross
             {
                 return new MvxCommand(async () =>
                 {
-                    Debug.WriteLine(string.Format("Should login {0}:{1}", Username, Password));
+                    this.Publish(new TaskStarted(this) { Label = "Connecting..."});
                     if (await LoginManager.LoginAsync(Username, Password))
                     {
+                        this.Publish(new TaskComplete(this) {Label = "Logged In"});
+                            //This is where I fell in love with async/await <3
                         ShowViewModel<HomeMenuViewModel>();
                     }
-                    
-                }
-                    , () => true);
+                    else
+                    {
+                        this.Publish(new TaskFailed(this) { Label = "Failed to Log In", ShouldPrompt = true});
+                    }
+                }, () => true);
             }
         }
 
@@ -59,21 +66,13 @@ namespace ResidentAppCross
             {
                 return new MvxCommand(() =>
                 {
-                    ShowViewModel<HomeMenuViewModel>();
+                    var httpLocalhostGeneralviews = "http://82.151.208.56:54683/generalviews";
+                    ShowViewModel<GenericWebViewModel>(new { url = httpLocalhostGeneralviews });
                     Debug.WriteLine("Please implement \"RemindPasswordCommand\" @ LoginViewModel");
                 });
             }
         }
 
-        public ICommand SignUpCommand
-        {
-            get
-            {
-                return new MvxCommand(() =>
-                {
-                    Debug.WriteLine("Please implement \"SignUpCommand\" @ LoginViewModel");
-                });
-            }
-        }
+        public ICommand SignUpCommand => StubCommands.NoActionSpecifiedCommand(this);
     }
 }
