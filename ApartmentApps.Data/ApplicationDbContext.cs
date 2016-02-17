@@ -37,6 +37,10 @@ namespace ApartmentApps.Data
         public System.Data.Entity.DbSet<ApartmentApps.Data.ApplicationUser> ApplicationUsers { get; set; }
 
         public System.Data.Entity.DbSet<ApartmentApps.Data.MaintenanceRequestStatus> MaintenanceRequestStatus { get; set; }
+
+        public System.Data.Entity.DbSet<ApartmentApps.Data.PropertyEntrataInfo> PropertyEntrataInfoes { get; set; }
+
+        public System.Data.Entity.DbSet<ApartmentApps.Data.PropertyYardiInfo> PropertyYardiInfoes { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

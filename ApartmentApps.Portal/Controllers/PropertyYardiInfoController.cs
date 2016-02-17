@@ -4,142 +4,118 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using ApartmentApps.Api;
 using ApartmentApps.Data;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    [RoutePrefix("Property")]
-    [Authorize]
-    public class PropertiesController : Controller
+    public class PropertyYardiInfoController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private ApplicationUserManager _userManager;
 
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
-        // GET: /Properties/
+        // GET: /PropertyYardiInfo/
         public ActionResult Index()
         {
-            
-            var properties = db.Properties.Include(p => p.Corporation);
-            return View(properties.ToList());
+            var propertyyardiinfoes = db.PropertyYardiInfos.Include(p => p.Property);
+            return View(propertyyardiinfoes.ToList());
         }
 
-        public async Task<ActionResult> ImportEntrata(int id)
-        {
-            var result = await EntrataIntegration.ImportData(UserManager,db, db.Properties.Find(id));
-            return RedirectToAction("Index");
-        }
-        // GET: /Properties/Details/5
+        // GET: /PropertyYardiInfo/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = db.Properties.Find(id);
-            if (property == null)
+            PropertyYardiInfo propertyYardiInfo = db.PropertyYardiInfos.Find(id);
+            if (propertyYardiInfo == null)
             {
                 return HttpNotFound();
             }
-            return View(property);
+            return View(propertyYardiInfo);
         }
 
-        // GET: /Properties/Create
+        // GET: /PropertyYardiInfo/Create
         public ActionResult Create()
         {
-            ViewBag.CorporationId = new SelectList(db.Corporations, "Id", "Name");
+            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name");
             return View();
         }
 
-        // POST: /Properties/Create
+        // POST: /PropertyYardiInfo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Name,CorporationId")] Property property)
+        public ActionResult Create([Bind(Include="PropertyId,Endpoint,Username,Password,YardiPropertyId")] PropertyYardiInfo propertyYardiInfo)
         {
             if (ModelState.IsValid)
             {
-                db.Properties.Add(property);
+                db.PropertyYardiInfos.Add(propertyYardiInfo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CorporationId = new SelectList(db.Corporations, "Id", "Name", property.CorporationId);
-            return View(property);
+            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", propertyYardiInfo.PropertyId);
+            return View(propertyYardiInfo);
         }
 
-        // GET: /Properties/Edit/5
+        // GET: /PropertyYardiInfo/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = db.Properties.Find(id);
-            if (property == null)
+            PropertyYardiInfo propertyYardiInfo = db.PropertyYardiInfos.Find(id);
+            if (propertyYardiInfo == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CorporationId = new SelectList(db.Corporations, "Id", "Name", property.CorporationId);
-            return View(property);
+            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", propertyYardiInfo.PropertyId);
+            return View(propertyYardiInfo);
         }
 
-        // POST: /Properties/Edit/5
+        // POST: /PropertyYardiInfo/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,Name,CorporationId")] Property property)
+        public ActionResult Edit([Bind(Include="PropertyId,Endpoint,Username,Password,YardiPropertyId")] PropertyYardiInfo propertyYardiInfo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(property).State = EntityState.Modified;
+                db.Entry(propertyYardiInfo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CorporationId = new SelectList(db.Corporations, "Id", "Name", property.CorporationId);
-            return View(property);
+            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", propertyYardiInfo.PropertyId);
+            return View(propertyYardiInfo);
         }
 
-        // GET: /Properties/Delete/5
+        // GET: /PropertyYardiInfo/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = db.Properties.Find(id);
-            if (property == null)
+            PropertyYardiInfo propertyYardiInfo = db.PropertyYardiInfos.Find(id);
+            if (propertyYardiInfo == null)
             {
                 return HttpNotFound();
             }
-            return View(property);
+            return View(propertyYardiInfo);
         }
 
-        // POST: /Properties/Delete/5
+        // POST: /PropertyYardiInfo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Property property = db.Properties.Find(id);
-            db.Properties.Remove(property);
+            PropertyYardiInfo propertyYardiInfo = db.PropertyYardiInfos.Find(id);
+            db.PropertyYardiInfos.Remove(propertyYardiInfo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
