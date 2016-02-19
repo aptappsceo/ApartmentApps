@@ -21,7 +21,7 @@ public class App : MvxApplication
     {
         //Mvx.RegisterType<ICalculation, Calculation>();
         //Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginViewModel>());
-        Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<QRScannerViewModel>());
+        Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginViewModel>());
         var client = new ApartmentAppsClient();
         //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);

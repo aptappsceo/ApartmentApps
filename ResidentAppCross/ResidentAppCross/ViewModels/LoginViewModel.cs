@@ -19,7 +19,7 @@ namespace ResidentAppCross
             set { SetProperty(ref _username, value); }
         }
 
-        private string _password;
+        private string _password = "Kokoko";
         private bool _isOperating;
 
         public string Password
