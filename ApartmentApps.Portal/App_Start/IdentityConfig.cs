@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -34,7 +35,7 @@ namespace ApartmentApps.Portal
     }
 
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
-    public class ApplicationUserManager : UserManager<ApplicationUser>
+    public class ApplicationUserManager : UserManager<ApplicationUser>, ICreateUser
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
@@ -54,11 +55,11 @@ namespace ApartmentApps.Portal
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequiredLength = 4,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             // Configure user lockout defaults
@@ -86,6 +87,17 @@ namespace ApartmentApps.Portal
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+
+        public async Task<ApplicationUser> CreateUser(string email, string password)
+        {
+            var user = new ApplicationUser() {UserName = email, Email = email};
+            var result = await CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                return user;
+            }
+            return null;
         }
     }
 

@@ -81,6 +81,10 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -151,9 +155,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -199,28 +200,22 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BuildingController.cs" />
     <Compile Include="Controllers\BuildingsController.cs" />
-    <Compile Include="Controllers\CorporationController.cs" />
     <Compile Include="Controllers\CorporationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaitenanceRequestsController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PropertiesController.cs" />
-    <Compile Include="Controllers\PropertyService.cs" />
-    <Compile Include="Controllers\TenantController.cs" />
+    <Compile Include="Controllers\PropertyEntrataInfoController.cs" />
+    <Compile Include="Controllers\PropertyYardiInfoController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
-    <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Controllers\UnitsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\MaitenanceRequestController.cs" />
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -470,30 +465,6 @@
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
-    <Content Include="Views\MaitenanceRequest\MaitenanceRequestIndex.cshtml" />
-    <Content Include="Views\MaitenanceRequest\MaitenanceRequestCreate.cshtml" />
-    <Content Include="Views\MaitenanceRequest\MaitenanceRequestEdit.cshtml" />
-    <Content Include="Views\MaitenanceRequest\MaitenanceRequestEditForm.cshtml" />
-    <Content Include="Views\Property\PropertyIndex.cshtml" />
-    <Content Include="Views\Property\PropertyCreate.cshtml" />
-    <Content Include="Views\Property\PropertyEdit.cshtml" />
-    <Content Include="Views\Property\PropertyEditForm.cshtml" />
-    <Content Include="Views\Corporation\CorporationIndex.cshtml" />
-    <Content Include="Views\Corporation\CorporationCreate.cshtml" />
-    <Content Include="Views\Corporation\CorporationEdit.cshtml" />
-    <Content Include="Views\Corporation\CorporationEditForm.cshtml" />
-    <Content Include="Views\Unit\UnitIndex.cshtml" />
-    <Content Include="Views\Unit\UnitCreate.cshtml" />
-    <Content Include="Views\Unit\UnitEdit.cshtml" />
-    <Content Include="Views\Unit\UnitEditForm.cshtml" />
-    <Content Include="Views\Building\BuildingIndex.cshtml" />
-    <Content Include="Views\Building\BuildingCreate.cshtml" />
-    <Content Include="Views\Building\BuildingEdit.cshtml" />
-    <Content Include="Views\Building\BuildingEditForm.cshtml" />
-    <Content Include="Views\Tenant\TenantIndex.cshtml" />
-    <Content Include="Views\Tenant\TenantCreate.cshtml" />
-    <Content Include="Views\Tenant\TenantEdit.cshtml" />
-    <Content Include="Views\Tenant\TenantEditForm.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Navigation.cshtml" />
@@ -528,6 +499,16 @@
     <Content Include="Views\Units\Details.cshtml" />
     <Content Include="Views\Units\Edit.cshtml" />
     <Content Include="Views\Units\Index.cshtml" />
+    <Content Include="Views\PropertyEntrataInfo\Create.cshtml" />
+    <Content Include="Views\PropertyEntrataInfo\Delete.cshtml" />
+    <Content Include="Views\PropertyEntrataInfo\Details.cshtml" />
+    <Content Include="Views\PropertyEntrataInfo\Edit.cshtml" />
+    <Content Include="Views\PropertyEntrataInfo\Index.cshtml" />
+    <Content Include="Views\PropertyYardiInfo\Create.cshtml" />
+    <Content Include="Views\PropertyYardiInfo\Delete.cshtml" />
+    <Content Include="Views\PropertyYardiInfo\Details.cshtml" />
+    <Content Include="Views\PropertyYardiInfo\Edit.cshtml" />
+    <Content Include="Views\PropertyYardiInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -541,6 +522,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ApartmentApps.Api\ApartmentApps.Api.csproj">
+      <Project>{81C38E8C-036A-43FA-92C5-446BBCE6E656}</Project>
+      <Name>ApartmentApps.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Data\ApartmentApps.Data.csproj">
       <Project>{69A819D5-3037-4E56-90E4-A9EDFF41B88A}</Project>
       <Name>ApartmentApps.Data</Name>

@@ -11,10 +11,10 @@ namespace Entrata.Client
 {
     public class EntrataClient
     {
-        public string BaseUrl = "https://rampartnersllc.entrata.com/api/";
+        public string BaseUrl => $"https://{EndPoint}.entrata.com/api/";
         public string Username { get; set; }
         public string Password { get; set; }
-
+        public string  EndPoint { get; set; }
         public EntrataRequest BuildRequest(string name, Dictionary<string,string> parameters )
         {
             var request = new EntrataRequest
