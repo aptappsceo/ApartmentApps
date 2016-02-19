@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,12 +13,28 @@ using ApartmentApps.Client;
 using Entrata.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PushSharp;
+using PushSharp.Apple;
 
 namespace PlaygroundConsole
 {
    
     class Program
     {
+        static void Main4()
+        {
+            var push = new PushBroker();
+
+            //Registering the Apple Service and sending an iOS Notification
+            var appleCert = File.ReadAllBytes(@"C:\Users\micah\Dropbox\APT APP FILES\push\Certificates.p12");
+            push.RegisterAppleService(new ApplePushChannelSettings(true, appleCert, "asdf1234!"));
+            push.QueueNotification(new AppleNotification()
+                                       .ForDeviceToken("3ce99f796433009e2daeca69d1dc4ee3a0af993cfff2274d2debf2cc6415ae22")
+                                       .WithAlert("Hello World!")
+                                       .WithBadge(7)
+                                       .WithSound("sound.caf"));
+
+        }
         static async void Main3()
         {
             var client = new EntrataClient()
@@ -67,7 +84,7 @@ namespace PlaygroundConsole
         }
         static void Main(string[] args)
         {
-            Main3();
+            Main4();
             Console.ReadLine();
 
             //var webClient = new WebClient();

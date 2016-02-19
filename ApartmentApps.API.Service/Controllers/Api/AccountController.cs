@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -35,7 +36,7 @@ namespace ApartmentApps.API.Service.Controllers
         public AccountController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
-           
+
         }
 
         public ApplicationUserManager UserManager
@@ -55,8 +56,24 @@ namespace ApartmentApps.API.Service.Controllers
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
-        public async Task<UserInfoViewModel> GetUserInfo()
+        public async Task<UserInfoViewModel> GetUserInfo(string devicePlatform = null, string devicePushToken = null)
         {
+            // Store the device information for push notifications.
+            if (devicePlatform != null && devicePushToken != null)
+            {
+                using (var context = new ApplicationDbContext())
+                {
+                    var user = context.Users.FirstOrDefault(p => p.Email == User.Identity.GetUserName());
+                    if (user == null)
+                    {
+                        user.DevicePlatform = devicePlatform;
+                        user.DeviceToken = devicePushToken;
+                        await context.SaveChangesAsync();
+                    }
+                }
+
+            }
+
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
             //var rp = (RolePrincipal) User;
             return new UserInfoViewModel
@@ -127,7 +144,7 @@ namespace ApartmentApps.API.Service.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -260,9 +277,9 @@ namespace ApartmentApps.API.Service.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -370,7 +387,7 @@ namespace ApartmentApps.API.Service.Controllers
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }
