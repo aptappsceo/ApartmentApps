@@ -4,15 +4,36 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Data;
+using Microsoft.AspNet.Identity;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class TenantsController : Controller
+    public class AAController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        protected ApplicationDbContext db = new ApplicationDbContext();
+        public ApplicationUser CurrentUser
+        {
+            get { return db.Users.FirstOrDefault(p => p.Email == User.Identity.GetUserName()); }
+        }
+
+        public Property Property
+        {
+            get { return CurrentUser.Property; }
+        }
+    }
+
+    public class TenantsController : AAController
+    {
+        public ApplicationUserManager UserManager { get; set; }
+       
+        public TenantsController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
 
         // GET: /Tenants/
         public ActionResult Index()
@@ -49,8 +70,15 @@ namespace ApartmentApps.Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="UserId,UnitId,ThirdPartyId,FirstName,LastName,UnitNumber,BuildingName,Address,City,State,PostalCode,Email,Gender,MiddleName")] Tenant tenant)
+        public async Task<ActionResult> Create([Bind(Include="UserId,UnitId,ThirdPartyId,FirstName,LastName,UnitNumber,BuildingName,Address,City,State,PostalCode,Email,Gender,MiddleName")] Tenant tenant)
         {
+            if (tenant.UserId == null)
+            {
+
+                var user = await UserManager.CreateUser(tenant.Email, tenant.FirstName[0].ToString().ToLower() + tenant.LastName.ToLower());
+                user.PropertyId = Property.Id;
+                tenant.UserId = user.Id;
+            }
             if (ModelState.IsValid)
             {
                 db.Tenants.Add(tenant);

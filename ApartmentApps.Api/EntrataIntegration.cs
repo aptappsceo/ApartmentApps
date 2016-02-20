@@ -79,6 +79,7 @@ namespace ApartmentApps.Api
                 tenantInfo.BuildingName = item.BuildingName;
                 tenantInfo.City = item.City;
                 tenantInfo.Email = item.Email;
+                tenantInfo.UnitNumber = item.UnitNumber;
                 tenantInfo.FirstName = item.FirstName;
                 tenantInfo.LastName = item.LastName;
                 tenantInfo.Gender = item.Gender;

@@ -32,6 +32,14 @@ namespace ApartmentApps.API.Service.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class SetDeviceTokenBindingModel
+    {
+        [Required]
+        public string Platform { get; set; }
+        [Required]
+        public string DeviceToken { get; set; }
+    }
+
     public class RegisterBindingModel
     {
         [Required]

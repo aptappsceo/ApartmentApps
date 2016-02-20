@@ -32,15 +32,13 @@ namespace ApartmentApps.Data
             modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
+
+            modelBuilder.Entity<ApplicationUser>().HasMany<IdentityUserRole>((ApplicationUser u) => u.Roles);
+            //modelBuilder.Entity<IdentityUserRole>().HasKey((IdentityUserRole r) =>
+            //    new { UserId = r.UserId, RoleId = r.RoleId }).ToTable("AspNetUserRoles");
         }
 
         public System.Data.Entity.DbSet<ApartmentApps.Data.ApplicationUser> ApplicationUsers { get; set; }
-
-        public System.Data.Entity.DbSet<ApartmentApps.Data.MaintenanceRequestStatus> MaintenanceRequestStatus { get; set; }
-
-        public System.Data.Entity.DbSet<ApartmentApps.Data.PropertyEntrataInfo> PropertyEntrataInfoes { get; set; }
-
-        public System.Data.Entity.DbSet<ApartmentApps.Data.PropertyYardiInfo> PropertyYardiInfoes { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
