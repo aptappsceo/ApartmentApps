@@ -26,6 +26,43 @@ namespace ResidentAppCross.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::AndroidHUD.Resource.Attribute.ahBarColor = global::ResidentAppCross.Droid.Resource.Attribute.ahBarColor;
+			global::AndroidHUD.Resource.Attribute.ahBarLength = global::ResidentAppCross.Droid.Resource.Attribute.ahBarLength;
+			global::AndroidHUD.Resource.Attribute.ahBarWidth = global::ResidentAppCross.Droid.Resource.Attribute.ahBarWidth;
+			global::AndroidHUD.Resource.Attribute.ahCircleColor = global::ResidentAppCross.Droid.Resource.Attribute.ahCircleColor;
+			global::AndroidHUD.Resource.Attribute.ahDelayMillis = global::ResidentAppCross.Droid.Resource.Attribute.ahDelayMillis;
+			global::AndroidHUD.Resource.Attribute.ahRadius = global::ResidentAppCross.Droid.Resource.Attribute.ahRadius;
+			global::AndroidHUD.Resource.Attribute.ahRimColor = global::ResidentAppCross.Droid.Resource.Attribute.ahRimColor;
+			global::AndroidHUD.Resource.Attribute.ahRimWidth = global::ResidentAppCross.Droid.Resource.Attribute.ahRimWidth;
+			global::AndroidHUD.Resource.Attribute.ahSpinSpeed = global::ResidentAppCross.Droid.Resource.Attribute.ahSpinSpeed;
+			global::AndroidHUD.Resource.Attribute.ahText = global::ResidentAppCross.Droid.Resource.Attribute.ahText;
+			global::AndroidHUD.Resource.Attribute.ahTextColor = global::ResidentAppCross.Droid.Resource.Attribute.ahTextColor;
+			global::AndroidHUD.Resource.Attribute.ahTextSize = global::ResidentAppCross.Droid.Resource.Attribute.ahTextSize;
+			global::AndroidHUD.Resource.Drawable.ic_errorstatus = global::ResidentAppCross.Droid.Resource.Drawable.ic_errorstatus;
+			global::AndroidHUD.Resource.Drawable.ic_successstatus = global::ResidentAppCross.Droid.Resource.Drawable.ic_successstatus;
+			global::AndroidHUD.Resource.Drawable.roundedbg = global::ResidentAppCross.Droid.Resource.Drawable.roundedbg;
+			global::AndroidHUD.Resource.Drawable.roundedbgdark = global::ResidentAppCross.Droid.Resource.Drawable.roundedbgdark;
+			global::AndroidHUD.Resource.Id.loadingImage = global::ResidentAppCross.Droid.Resource.Id.loadingImage;
+			global::AndroidHUD.Resource.Id.loadingProgressBar = global::ResidentAppCross.Droid.Resource.Id.loadingProgressBar;
+			global::AndroidHUD.Resource.Id.loadingProgressWheel = global::ResidentAppCross.Droid.Resource.Id.loadingProgressWheel;
+			global::AndroidHUD.Resource.Id.textViewStatus = global::ResidentAppCross.Droid.Resource.Id.textViewStatus;
+			global::AndroidHUD.Resource.Layout.loading = global::ResidentAppCross.Droid.Resource.Layout.loading;
+			global::AndroidHUD.Resource.Layout.loadingimage = global::ResidentAppCross.Droid.Resource.Layout.loadingimage;
+			global::AndroidHUD.Resource.Layout.loadingprogress = global::ResidentAppCross.Droid.Resource.Layout.loadingprogress;
+			global::AndroidHUD.Resource.String.library_name = global::ResidentAppCross.Droid.Resource.String.library_name;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahBarColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarLength = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahBarLength;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarWidth = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahBarWidth;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahCircleColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahCircleColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahDelayMillis = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahDelayMillis;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRadius = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahRadius;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRimColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahRimColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRimWidth = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahRimWidth;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahSpinSpeed = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahSpinSpeed;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahText;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
 			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxBind = global::ResidentAppCross.Droid.Resource.Attribute.MvxBind;
 			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxDropDownItemTemplate;
 			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxGroupItemTemplate;
@@ -76,6 +113,48 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f01000e
 			public const int MvxTemplate = 2130771982;
 			
+			// aapt resource value: 0x7f010019
+			public const int ahBarColor = 2130771993;
+			
+			// aapt resource value: 0x7f010021
+			public const int ahBarLength = 2130772001;
+			
+			// aapt resource value: 0x7f010020
+			public const int ahBarWidth = 2130772000;
+			
+			// aapt resource value: 0x7f01001e
+			public const int ahCircleColor = 2130771998;
+			
+			// aapt resource value: 0x7f01001d
+			public const int ahDelayMillis = 2130771997;
+			
+			// aapt resource value: 0x7f01001f
+			public const int ahRadius = 2130771999;
+			
+			// aapt resource value: 0x7f01001a
+			public const int ahRimColor = 2130771994;
+			
+			// aapt resource value: 0x7f01001b
+			public const int ahRimWidth = 2130771995;
+			
+			// aapt resource value: 0x7f01001c
+			public const int ahSpinSpeed = 2130771996;
+			
+			// aapt resource value: 0x7f010016
+			public const int ahText = 2130771990;
+			
+			// aapt resource value: 0x7f010017
+			public const int ahTextColor = 2130771991;
+			
+			// aapt resource value: 0x7f010018
+			public const int ahTextSize = 2130771992;
+			
+			// aapt resource value: 0x7f010013
+			public const int minTextSize = 2130771987;
+			
+			// aapt resource value: 0x7f010014
+			public const int precision = 2130771988;
+			
 			// aapt resource value: 0x7f010006
 			public const int riv_border_color = 2130771974;
 			
@@ -111,6 +190,9 @@ namespace ResidentAppCross.Droid
 			
 			// aapt resource value: 0x7f01000b
 			public const int riv_tile_mode_y = 2130771979;
+			
+			// aapt resource value: 0x7f010015
+			public const int sizeToFit = 2130771989;
 			
 			static Attribute()
 			{
@@ -184,55 +266,67 @@ namespace ResidentAppCross.Droid
 			public const int HouseIcon = 2130837516;
 			
 			// aapt resource value: 0x7f02000d
-			public const int ic_login_50893_0013_forma = 2130837517;
+			public const int ic_errorstatus = 2130837517;
 			
 			// aapt resource value: 0x7f02000e
-			public const int Icon = 2130837518;
+			public const int ic_login_50893_0013_forma = 2130837518;
 			
 			// aapt resource value: 0x7f02000f
-			public const int icon1 = 2130837519;
+			public const int ic_successstatus = 2130837519;
 			
 			// aapt resource value: 0x7f020010
-			public const int iconelse = 2130837520;
+			public const int Icon = 2130837520;
 			
 			// aapt resource value: 0x7f020011
-			public const int LOGIN = 2130837521;
+			public const int icon1 = 2130837521;
 			
 			// aapt resource value: 0x7f020012
-			public const int LoginButton = 2130837522;
+			public const int iconelse = 2130837522;
 			
 			// aapt resource value: 0x7f020013
-			public const int logo_03 = 2130837523;
+			public const int LOGIN = 2130837523;
 			
 			// aapt resource value: 0x7f020014
-			public const int MaintenaceIcon = 2130837524;
+			public const int LoginButton = 2130837524;
 			
 			// aapt resource value: 0x7f020015
-			public const int MaintenanceRequestMainIcon = 2130837525;
+			public const int logo_03 = 2130837525;
 			
 			// aapt resource value: 0x7f020016
-			public const int OfficerIcon = 2130837526;
+			public const int MaintenaceIcon = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int PartnersIcon = 2130837527;
+			public const int MaintenanceRequestMainIcon = 2130837527;
 			
 			// aapt resource value: 0x7f020018
-			public const int PayIcon = 2130837528;
+			public const int OfficerIcon = 2130837528;
 			
 			// aapt resource value: 0x7f020019
-			public const int SecurityIcon = 2130837529;
+			public const int PartnersIcon = 2130837529;
 			
 			// aapt resource value: 0x7f02001a
-			public const int SettingsIcon = 2130837530;
+			public const int PayIcon = 2130837530;
 			
 			// aapt resource value: 0x7f02001b
-			public const int SignOutIcon = 2130837531;
+			public const int roundedbg = 2130837531;
 			
 			// aapt resource value: 0x7f02001c
-			public const int UsernameIcon = 2130837532;
+			public const int roundedbgdark = 2130837532;
 			
 			// aapt resource value: 0x7f02001d
-			public const int WhiteHomeIcon = 2130837533;
+			public const int SecurityIcon = 2130837533;
+			
+			// aapt resource value: 0x7f02001e
+			public const int SettingsIcon = 2130837534;
+			
+			// aapt resource value: 0x7f02001f
+			public const int SignOutIcon = 2130837535;
+			
+			// aapt resource value: 0x7f020020
+			public const int UsernameIcon = 2130837536;
+			
+			// aapt resource value: 0x7f020021
+			public const int WhiteHomeIcon = 2130837537;
 			
 			static Drawable()
 			{
@@ -247,17 +341,17 @@ namespace ResidentAppCross.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050022
-			public const int ApartmentsAppIconView = 2131034146;
+			// aapt resource value: 0x7f050026
+			public const int ApartmentsAppIconView = 2131034150;
 			
-			// aapt resource value: 0x7f05002a
-			public const int ForgotPasswordButton = 2131034154;
+			// aapt resource value: 0x7f05002e
+			public const int ForgotPasswordButton = 2131034158;
 			
-			// aapt resource value: 0x7f050023
-			public const int LoginForm = 2131034147;
+			// aapt resource value: 0x7f050027
+			public const int LoginForm = 2131034151;
 			
-			// aapt resource value: 0x7f050021
-			public const int MainContainer = 2131034145;
+			// aapt resource value: 0x7f050025
+			public const int MainContainer = 2131034149;
 			
 			// aapt resource value: 0x7f050000
 			public const int MvvmCrossTagId = 2131034112;
@@ -265,26 +359,26 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f050001
 			public const int MvxBindingTagUnique = 2131034113;
 			
-			// aapt resource value: 0x7f05002b
-			public const int NewHereLabel = 2131034155;
-			
-			// aapt resource value: 0x7f050028
-			public const int PasswordInput = 2131034152;
-			
-			// aapt resource value: 0x7f050027
-			public const int PasswordLoginFormGroup = 2131034151;
+			// aapt resource value: 0x7f05002f
+			public const int NewHereLabel = 2131034159;
 			
 			// aapt resource value: 0x7f05002c
-			public const int SignUpButton = 2131034156;
+			public const int PasswordInput = 2131034156;
 			
-			// aapt resource value: 0x7f050026
-			public const int UsernameInput = 2131034150;
+			// aapt resource value: 0x7f05002b
+			public const int PasswordLoginFormGroup = 2131034155;
 			
-			// aapt resource value: 0x7f050024
-			public const int UsernameLoginFormGroup = 2131034148;
+			// aapt resource value: 0x7f050030
+			public const int SignUpButton = 2131034160;
 			
-			// aapt resource value: 0x7f05002d
-			public const int VersionLabel = 2131034157;
+			// aapt resource value: 0x7f05002a
+			public const int UsernameInput = 2131034154;
+			
+			// aapt resource value: 0x7f050028
+			public const int UsernameLoginFormGroup = 2131034152;
+			
+			// aapt resource value: 0x7f050031
+			public const int VersionLabel = 2131034161;
 			
 			// aapt resource value: 0x7f05000c
 			public const int avatar_container = 2131034124;
@@ -295,8 +389,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f05000b
 			public const int badge_text = 2131034123;
 			
-			// aapt resource value: 0x7f050029
-			public const int button1 = 2131034153;
+			// aapt resource value: 0x7f05002d
+			public const int button1 = 2131034157;
 			
 			// aapt resource value: 0x7f050002
 			public const int clamp = 2131034114;
@@ -307,8 +401,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f05000a
 			public const int container2 = 2131034122;
 			
-			// aapt resource value: 0x7f050036
-			public const int contentFrame = 2131034166;
+			// aapt resource value: 0x7f05003a
+			public const int contentFrame = 2131034170;
 			
 			// aapt resource value: 0x7f050015
 			public const int controls_container = 2131034133;
@@ -316,8 +410,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f05001e
 			public const int copyright_text = 2131034142;
 			
-			// aapt resource value: 0x7f050035
-			public const int editText1 = 2131034165;
+			// aapt resource value: 0x7f050039
+			public const int editText1 = 2131034169;
 			
 			// aapt resource value: 0x7f050011
 			public const int edit_account_icon_image = 2131034129;
@@ -337,23 +431,32 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f050020
 			public const int imageView1 = 2131034144;
 			
-			// aapt resource value: 0x7f050025
-			public const int imageView2 = 2131034149;
-			
-			// aapt resource value: 0x7f05002f
-			public const int linearLayout1 = 2131034159;
-			
-			// aapt resource value: 0x7f050030
-			public const int linearLayout2 = 2131034160;
+			// aapt resource value: 0x7f050029
+			public const int imageView2 = 2131034153;
 			
 			// aapt resource value: 0x7f050033
-			public const int linearLayout3 = 2131034163;
+			public const int linearLayout1 = 2131034163;
+			
+			// aapt resource value: 0x7f050034
+			public const int linearLayout2 = 2131034164;
+			
+			// aapt resource value: 0x7f050037
+			public const int linearLayout3 = 2131034167;
+			
+			// aapt resource value: 0x7f050023
+			public const int loadingImage = 2131034147;
+			
+			// aapt resource value: 0x7f050021
+			public const int loadingProgressBar = 2131034145;
+			
+			// aapt resource value: 0x7f050024
+			public const int loadingProgressWheel = 2131034148;
 			
 			// aapt resource value: 0x7f050006
 			public const int main_container = 2131034118;
 			
-			// aapt resource value: 0x7f050032
-			public const int maintenance_request_view_container = 2131034162;
+			// aapt resource value: 0x7f050036
+			public const int maintenance_request_view_container = 2131034166;
 			
 			// aapt resource value: 0x7f050003
 			public const int mirror = 2131034115;
@@ -361,8 +464,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f050013
 			public const int mvx_home_menu_item_list = 2131034131;
 			
-			// aapt resource value: 0x7f050031
-			public const int mvx_maintenance_request_type_selection_list = 2131034161;
+			// aapt resource value: 0x7f050035
+			public const int mvx_maintenance_request_type_selection_list = 2131034165;
 			
 			// aapt resource value: 0x7f05000e
 			public const int profile_details_container = 2131034126;
@@ -397,11 +500,14 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f05001c
 			public const int space2 = 2131034140;
 			
-			// aapt resource value: 0x7f05002e
-			public const int textView1 = 2131034158;
+			// aapt resource value: 0x7f050032
+			public const int textView1 = 2131034162;
 			
-			// aapt resource value: 0x7f050034
-			public const int textView2 = 2131034164;
+			// aapt resource value: 0x7f050038
+			public const int textView2 = 2131034168;
+			
+			// aapt resource value: 0x7f050022
+			public const int textViewStatus = 2131034146;
 			
 			// aapt resource value: 0x7f050009
 			public const int title_text = 2131034121;
@@ -441,28 +547,37 @@ namespace ResidentAppCross.Droid
 			public const int ImageBundleWidgetLayout = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int LoginViewLayout = 2130903045;
+			public const int loading = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int MaintenanceRequestTypeSelectionItemLayout = 2130903046;
+			public const int loadingimage = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int MaintenanceRequestTypeSelectionViewLayout = 2130903047;
+			public const int loadingprogress = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int MaintenanceRequestViewLayout = 2130903048;
+			public const int LoginViewLayout = 2130903048;
 			
 			// aapt resource value: 0x7f030009
-			public const int QRScannerViewLayout = 2130903049;
+			public const int MaintenanceRequestTypeSelectionItemLayout = 2130903049;
 			
 			// aapt resource value: 0x7f03000a
-			public const int UpperDialogBarLayout = 2130903050;
+			public const int MaintenanceRequestTypeSelectionViewLayout = 2130903050;
 			
 			// aapt resource value: 0x7f03000b
-			public const int zxingscanneractivitylayout = 2130903051;
+			public const int MaintenanceRequestViewLayout = 2130903051;
 			
 			// aapt resource value: 0x7f03000c
-			public const int zxingscannerfragmentlayout = 2130903052;
+			public const int QRScannerViewLayout = 2130903052;
+			
+			// aapt resource value: 0x7f03000d
+			public const int UpperDialogBarLayout = 2130903053;
+			
+			// aapt resource value: 0x7f03000e
+			public const int zxingscanneractivitylayout = 2130903054;
+			
+			// aapt resource value: 0x7f03000f
+			public const int zxingscannerfragmentlayout = 2130903055;
 			
 			static Layout()
 			{
@@ -477,14 +592,17 @@ namespace ResidentAppCross.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f04000b
-			public const int app_name = 2130968587;
+			// aapt resource value: 0x7f04000c
+			public const int app_name = 2130968588;
 			
 			// aapt resource value: 0x7f040000
 			public const int define_roundedimageview = 2130968576;
 			
+			// aapt resource value: 0x7f04000b
+			public const int hello = 2130968587;
+			
 			// aapt resource value: 0x7f04000a
-			public const int hello = 2130968586;
+			public const int library_name = 2130968586;
 			
 			// aapt resource value: 0x7f040001
 			public const int library_roundedimageview_author = 2130968577;
@@ -545,6 +663,20 @@ namespace ResidentAppCross.Droid
 		public partial class Styleable
 		{
 			
+			public static int[] AutofitTextView = new int[] {
+					2130771987,
+					2130771988,
+					2130771989};
+			
+			// aapt resource value: 0
+			public const int AutofitTextView_minTextSize = 0;
+			
+			// aapt resource value: 1
+			public const int AutofitTextView_precision = 1;
+			
+			// aapt resource value: 2
+			public const int AutofitTextView_sizeToFit = 2;
+			
 			public static int[] MvxBinding = new int[] {
 					2130771980,
 					2130771981};
@@ -582,6 +714,56 @@ namespace ResidentAppCross.Droid
 			
 			// aapt resource value: 0
 			public const int MvxListView_MvxItemTemplate = 0;
+			
+			public static int[] ProgressWheel = new int[] {
+					2130771990,
+					2130771991,
+					2130771992,
+					2130771993,
+					2130771994,
+					2130771995,
+					2130771996,
+					2130771997,
+					2130771998,
+					2130771999,
+					2130772000,
+					2130772001};
+			
+			// aapt resource value: 3
+			public const int ProgressWheel_ahBarColor = 3;
+			
+			// aapt resource value: 11
+			public const int ProgressWheel_ahBarLength = 11;
+			
+			// aapt resource value: 10
+			public const int ProgressWheel_ahBarWidth = 10;
+			
+			// aapt resource value: 8
+			public const int ProgressWheel_ahCircleColor = 8;
+			
+			// aapt resource value: 7
+			public const int ProgressWheel_ahDelayMillis = 7;
+			
+			// aapt resource value: 9
+			public const int ProgressWheel_ahRadius = 9;
+			
+			// aapt resource value: 4
+			public const int ProgressWheel_ahRimColor = 4;
+			
+			// aapt resource value: 5
+			public const int ProgressWheel_ahRimWidth = 5;
+			
+			// aapt resource value: 6
+			public const int ProgressWheel_ahSpinSpeed = 6;
+			
+			// aapt resource value: 0
+			public const int ProgressWheel_ahText = 0;
+			
+			// aapt resource value: 1
+			public const int ProgressWheel_ahTextColor = 1;
+			
+			// aapt resource value: 2
+			public const int ProgressWheel_ahTextSize = 2;
 			
 			public static int[] RoundedImageView = new int[] {
 					16843037,
