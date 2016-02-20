@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResidentAppCross.iOS", "ResidentAppCross.iOS.csproj", "{D8277430-A582-4E04-B474-A48C4A90A313}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8277430-A582-4E04-B474-A48C4A90A313}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{D8277430-A582-4E04-B474-A48C4A90A313}.Debug|iPhone.Build.0 = Debug|iPhone
+		{D8277430-A582-4E04-B474-A48C4A90A313}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{D8277430-A582-4E04-B474-A48C4A90A313}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{D8277430-A582-4E04-B474-A48C4A90A313}.Release|iPhone.ActiveCfg = Release|iPhone
+		{D8277430-A582-4E04-B474-A48C4A90A313}.Release|iPhone.Build.0 = Release|iPhone
+		{D8277430-A582-4E04-B474-A48C4A90A313}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{D8277430-A582-4E04-B474-A48C4A90A313}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+EndGlobal

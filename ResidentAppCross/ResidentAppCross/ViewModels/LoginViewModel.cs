@@ -48,9 +48,13 @@ namespace ResidentAppCross
                     this.Publish(new TaskStarted(this) { Label = "Connecting..."});
                     if (await LoginManager.LoginAsync(Username, Password))
                     {
-                        this.Publish(new TaskComplete(this) {Label = "Logged In"});
+                        this.Publish(new TaskComplete(this) {Label = "Logged In", ShouldPrompt = true, OnPrompted =
+                            () =>
+                            {
+                                Debug.WriteLine("Werks");      
+                            } });
                             //This is where I fell in love with async/await <3
-                        ShowViewModel<HomeMenuViewModel>();
+                        //ShowViewModel<HomeMenuViewModel>();
                     }
                     else
                     {

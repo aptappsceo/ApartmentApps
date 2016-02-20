@@ -16,29 +16,29 @@ namespace ResidentAppCross.iOS.Views
 	{
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton ChangePassword { get; set; }
+		UIButton LoginButton { get; set; }
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UITextField UsernameInput { get; set; }
+		UITextField PasswordTextField { get; set; }
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UILabel UsernameLabel { get; set; }
+		UITextField UsernameTextField { get; set; }
 
 		void ReleaseDesignerOutlets ()
 		{
-			if (ChangePassword != null) {
-				ChangePassword.Dispose ();
-				ChangePassword = null;
+			if (LoginButton != null) {
+				LoginButton.Dispose ();
+				LoginButton = null;
 			}
-			if (UsernameInput != null) {
-				UsernameInput.Dispose ();
-				UsernameInput = null;
+			if (PasswordTextField != null) {
+				PasswordTextField.Dispose ();
+				PasswordTextField = null;
 			}
-			if (UsernameLabel != null) {
-				UsernameLabel.Dispose ();
-				UsernameLabel = null;
+			if (UsernameTextField != null) {
+				UsernameTextField.Dispose ();
+				UsernameTextField = null;
 			}
 		}
 	}

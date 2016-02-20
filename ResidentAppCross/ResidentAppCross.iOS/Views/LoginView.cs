@@ -6,17 +6,13 @@ using UIKit;
 
 namespace ResidentAppCross.iOS.Views
 {
-    public partial class LoginView : MvxViewController
+    public partial class LoginView : ViewBase
     {
         public LoginView() : base("LoginView", null)
         {
         }
 
-        protected LoginView(string nibName, NSBundle bundle) : base(nibName, bundle)
-        {
-        }
-
-        public new LoginViewModel ViewModel
+        public new LoginViewModel ViewModel 
         {
             get { return (LoginViewModel)base.ViewModel; }
             set { base.ViewModel = value; }
@@ -25,14 +21,19 @@ namespace ResidentAppCross.iOS.Views
         public override void DidReceiveMemoryWarning()
         {
             base.DidReceiveMemoryWarning();
-
             // Release any cached data, images, etc that aren't in use.
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            this.CreateBinding(UsernameLabel).For(v=> v.Text ).To((LoginViewModel vm) => vm.Password).Apply();
+            var b = this.CreateBindingSet<LoginView, LoginViewModel>();
+
+            b.Bind(UsernameTextField).TwoWay().For(v=> v.Text).To(vm => vm.Username);
+            b.Bind(PasswordTextField).TwoWay().For(v=> v.Text).To(vm => vm.Password);
+            b.Bind(LoginButton).To(vm => vm.LoginCommand);
+
+            b.Apply();
             // Perform any additional setup after loading the view, typically from a nib.
         }
         
