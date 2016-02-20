@@ -1,4 +1,5 @@
 using System.Data.Entity.Migrations;
+using System.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data.Migrations
@@ -20,15 +21,27 @@ namespace ApartmentApps.Data.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
+            
             context.Roles.AddOrUpdate(
                   new IdentityRole { Id = "Maintenance", Name = "Maintenance" },
                   new IdentityRole { Id = "Resident", Name = "Resident" },
                   new IdentityRole { Id = "Officer", Name = "Officer" },
-                  new IdentityRole { Id = "PropertyAdmin", Name = "PropertyAdmin" }
+                  new IdentityRole { Id = "PropertyAdmin", Name = "PropertyAdmin" },
+                  new IdentityRole { Id = "Admin", Name = "Admin" }
             );
+            var user = context.Users.FirstOrDefault(p => p.Email == "micahosborne@gmail.com");
+            if (user != null)
+            {
+               user.Roles.Add(new IdentityUserRole() {RoleId = "Admin",UserId = user.Id});
+               user.Roles.Add(new IdentityUserRole() {RoleId = "PropertyAdmin",UserId = user.Id});
+               user.Roles.Add(new IdentityUserRole() {RoleId = "Officer",UserId = user.Id});
+               user.Roles.Add(new IdentityUserRole() {RoleId = "Resident",UserId = user.Id});
+               user.Roles.Add(new IdentityUserRole() {RoleId = "Maintenance",UserId = user.Id});
+            }
             context.MaintenanceRequestStatuses.AddOrUpdate(
                 new MaintenanceRequestStatus { Name = "Submitted" },
                 new MaintenanceRequestStatus { Name = "Scheduled" },
+                new MaintenanceRequestStatus { Name = "Started" },
                 new MaintenanceRequestStatus { Name = "Paused" },
                 new MaintenanceRequestStatus { Name = "Complete" }
             );

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace ApartmentApps.Data
 {
@@ -22,6 +23,14 @@ namespace ApartmentApps.Data
 
         public virtual ICollection<PropertyAddon> PropertyAddons { get; set; }
 
+        public virtual ICollection<Building> Buildings { get; set; } 
+      
+        [NotMapped]
+        public virtual IEnumerable<MaitenanceRequest> MaitenanceRequests {
+            get { return Users.SelectMany(p=>p.MaitenanceRequests); }
+        } 
+        public virtual ICollection<ApplicationUser> Users { get; set; }
+         
         public virtual PropertyEntrataInfo EntrataInfo { get; set; }
         public virtual PropertyYardiInfo YardiInfo { get; set; }
     }

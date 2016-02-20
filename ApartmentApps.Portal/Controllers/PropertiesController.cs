@@ -14,10 +14,10 @@ using Microsoft.AspNet.Identity.Owin;
 namespace ApartmentApps.Portal.Controllers
 {
     [RoutePrefix("Property")]
-    [Authorize]
-    public class PropertiesController : Controller
+    [Authorize(Roles = "Admin")]
+    public class PropertiesController : AAController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
         private ApplicationUserManager _userManager;
 
         public ApplicationUserManager UserManager

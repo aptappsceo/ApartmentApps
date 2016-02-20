@@ -10,9 +10,9 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class PropertyYardiInfoController : Controller
+    [Authorize(Roles = "Admin")]
+    public class PropertyYardiInfoController : AAController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /PropertyYardiInfo/
         public ActionResult Index()

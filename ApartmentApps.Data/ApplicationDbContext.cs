@@ -1,8 +1,30 @@
 using System.Data.Entity;
+using System.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data
 {
+    public class PropertyContext
+    {
+        public ApplicationDbContext Db { get; set; } = new ApplicationDbContext();
+        public int PropertyId { get; set; }
+
+        public IQueryable<Building> Buildings { get { if (PropertyId == 0) return Db.Buildings; return Db.Buildings.Where(p => p.PropertyId == PropertyId); } } 
+
+        public IQueryable<Unit> Units { get
+        {
+            if (PropertyId == 0) return Db.Units; return Db.Units.Where(p => p.Building.PropertyId == PropertyId); } }
+
+        public IQueryable<MaitenanceRequest> MaitenanceRequests
+        {
+            get
+            {
+                if (PropertyId == 0) return Db.MaitenanceRequests;
+                return Db.MaitenanceRequests.Where(p => p.User.PropertyId == PropertyId);
+            }
+        } 
+
+    }
     public class ApplicationDbContext2 : DbContext
     {
         public virtual IDbSet<MaintenanceRequestStatus> MaintenanceRequestStatuses { get; set; }

@@ -17,15 +17,30 @@ namespace ApartmentApps.Portal.Controllers
         protected ApplicationDbContext db = new ApplicationDbContext();
         public ApplicationUser CurrentUser
         {
-            get { return db.Users.FirstOrDefault(p => p.Email == User.Identity.GetUserName()); }
+            get
+            {
+                var uName = User.Identity.GetUserName();
+                return db.Users.FirstOrDefault(p => p.Email == uName);
+            }
         }
 
         public Property Property
         {
             get { return CurrentUser.Property; }
         }
-    }
 
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            ViewBag.Property = Property;
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.Properties = db.Properties.ToArray();
+                
+            }
+        }
+    }
+    [Authorize(Roles = "PropertyAdmin")]
     public class TenantsController : AAController
     {
         public ApplicationUserManager UserManager { get; set; }
@@ -38,7 +53,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /Tenants/
         public ActionResult Index()
         {
-            var tenants = db.Tenants.Include(t => t.Unit).Include(t => t.User);
+            var tenants = db.Tenants.Include(t => t.Unit).Include(t => t.User).Where(p=>p.User.PropertyId == Property.Id);
             return View(tenants.ToList());
         }
 
@@ -49,7 +64,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tenant tenant = db.Tenants.Find(id);
+            Tenant tenant = Property.Tenants.FirstOrDefault(p=>p.User.PropertyId == Property.Id);
             if (tenant == null)
             {
                 return HttpNotFound();
@@ -60,8 +75,8 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /Tenants/Create
         public ActionResult Create()
         {
-            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name");
+            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email");
             return View();
         }
 
@@ -86,8 +101,8 @@ namespace ApartmentApps.Portal.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name", tenant.UnitId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", tenant.UserId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id).Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", tenant.UnitId);
+            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", tenant.UserId);
             return View(tenant);
         }
 
@@ -98,13 +113,13 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tenant tenant = db.Tenants.Find(id);
+            Tenant tenant = Property.Tenants.FirstOrDefault(p => p.User.PropertyId == Property.Id && p.UserId == id);
             if (tenant == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name", tenant.UnitId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", tenant.UserId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", tenant.UnitId);
+            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", tenant.UserId);
             return View(tenant);
         }
 
@@ -121,8 +136,8 @@ namespace ApartmentApps.Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name", tenant.UnitId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", tenant.UserId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", tenant.UnitId);
+            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", tenant.UserId);
             return View(tenant);
         }
 
@@ -146,7 +161,7 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Tenant tenant = db.Tenants.Find(id);
+            Tenant tenant = Property.Tenants.FirstOrDefault(p => p.User.PropertyId == Property.Id && p.UserId == id);
             db.Tenants.Remove(tenant);
             db.SaveChanges();
             return RedirectToAction("Index");

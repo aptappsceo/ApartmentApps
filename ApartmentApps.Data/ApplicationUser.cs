@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace ApartmentApps.Data
 
         [ForeignKey("PropertyId")]
         public virtual Property Property { get; set; }
+
+        public virtual ICollection<MaitenanceRequest> MaitenanceRequests { get; set; }
 
         public string DevicePlatform { get; set; }
 

@@ -10,14 +10,15 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class BuildingsController : Controller
+    [Authorize(Roles = "PropertyAdmin")]
+    public class BuildingsController : AAController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+       
 
         // GET: /Buildings/
         public ActionResult Index()
         {
-            var buildings = db.Buildings.Include(b => b.Property);
+            var buildings = Property.Buildings;
             return View(buildings.ToList());
         }
 
@@ -28,7 +29,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Building building = db.Buildings.Find(id);
+            Building building = Property.Buildings.FirstOrDefault(p=>p.Id == id);
             if (building == null)
             {
                 return HttpNotFound();
@@ -39,7 +40,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /Buildings/Create
         public ActionResult Create()
         {
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name");
+            //ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name");
             return View();
         }
 
@@ -50,6 +51,7 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="Id,Name,PropertyId")] Building building)
         {
+            building.PropertyId = Property.Id;
             if (ModelState.IsValid)
             {
                 db.Buildings.Add(building);
@@ -57,7 +59,7 @@ namespace ApartmentApps.Portal.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", building.PropertyId);
+           // ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", building.PropertyId);
             return View(building);
         }
 
@@ -68,12 +70,12 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Building building = db.Buildings.Find(id);
+            Building building = Property.Buildings.FirstOrDefault(p=>p.Id == id);
             if (building == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", building.PropertyId);
+            //ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", building.PropertyId);
             return View(building);
         }
 
@@ -84,13 +86,14 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="Id,Name,PropertyId")] Building building)
         {
+            building.PropertyId = Property.Id;
             if (ModelState.IsValid)
             {
                 db.Entry(building).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", building.PropertyId);
+            //ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", building.PropertyId);
             return View(building);
         }
 
@@ -101,7 +104,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Building building = db.Buildings.Find(id);
+            Building building = Property.Buildings.FirstOrDefault(p=>p.Id == id);
             if (building == null)
             {
                 return HttpNotFound();
@@ -114,7 +117,8 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Building building = db.Buildings.Find(id);
+            Building building = Property.Buildings.FirstOrDefault(p => p.Id == id);
+            
             db.Buildings.Remove(building);
             db.SaveChanges();
             return RedirectToAction("Index");

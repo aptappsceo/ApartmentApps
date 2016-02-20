@@ -10,9 +10,9 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class ApplicationUsersController : Controller
+    public class ApplicationUsersController : AAController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+    
 
         // GET: /ApplicationUsers/
         public ActionResult Index()

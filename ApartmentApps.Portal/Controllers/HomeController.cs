@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace ApartmentApps.Portal.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : AAController
     {
         public ActionResult Index()
         {

@@ -10,14 +10,15 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class UnitsController : Controller
+    [Authorize(Roles = "PropertyAdmin")]
+    public class UnitsController : AAController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+      
 
         // GET: /Units/
         public ActionResult Index()
         {
-            var units = db.Units.Include(u => u.Building);
+            var units = db.Units.Include(u => u.Building).Where(p=>p.Building.PropertyId == Property.Id);
             return View(units.ToList());
         }
 
@@ -39,7 +40,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /Units/Create
         public ActionResult Create()
         {
-            ViewBag.BuildingId = new SelectList(db.Buildings, "Id", "Name");
+            ViewBag.BuildingId = new SelectList(db.Buildings.Where(p=>p.PropertyId == Property.Id), "Id", "Name");
             return View();
         }
 

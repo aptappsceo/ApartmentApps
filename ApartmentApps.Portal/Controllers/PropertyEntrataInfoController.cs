@@ -10,9 +10,10 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class PropertyEntrataInfoController : Controller
+    [Authorize(Roles = "Admin")]
+    public class PropertyEntrataInfoController : AAController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
 
         // GET: /PropertyEntrataInfo/
         public ActionResult Index()

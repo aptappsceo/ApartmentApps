@@ -130,7 +130,7 @@ namespace <#= Namespace #>
 <# } #>
             return View();
         }
-
+		public void PopuplateDropDowns() {
         // POST: <#= routePrefix #>Create
 <# if (IsOverpostingProtectionRequired) {
     foreach (var line in OverpostingWarningMessage.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)) { 

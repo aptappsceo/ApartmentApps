@@ -13,7 +13,7 @@ namespace ApartmentApps.Data
 
         [ForeignKey("BuildingId")]
         public Building Building { get; set; }
-
+        public virtual ICollection<MaitenanceRequest> MaitenanceRequests { get; set; } 
         public virtual ICollection<Tenant> Tenants { get; set; }
 
         public string Name { get; set; }

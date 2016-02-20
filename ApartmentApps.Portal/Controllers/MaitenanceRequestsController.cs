@@ -10,14 +10,22 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class MaitenanceRequestsController : Controller
+    [Authorize(Roles = "PropertyAdmin")]
+    public class MaitenanceRequestsController : AAController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
 
         // GET: /MaitenanceRequests/
         public ActionResult Index()
         {
-            var maitenancerequests = db.MaitenanceRequests.Include(m => m.MaitenanceRequestType).Include(m => m.Status).Include(m => m.Unit).Include(m => m.User).Include(m => m.Worker);
+            var maitenancerequests = db
+                .MaitenanceRequests.Where(p=>p.User.PropertyId == Property.Id)
+                .Include(m => m.MaitenanceRequestType)
+                .Include(m => m.Status)
+                .Include(m => m.Unit)
+                .Include(m => m.User)
+                .Include(m => m.Worker);
+
             return View(maitenancerequests.ToList());
         }
 
@@ -28,7 +36,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MaitenanceRequest maitenanceRequest = db.MaitenanceRequests.Find(id);
+            MaitenanceRequest maitenanceRequest = Property.MaitenanceRequests.FirstOrDefault(p=>p.Id == id);
             if (maitenanceRequest == null)
             {
                 return HttpNotFound();
@@ -41,9 +49,9 @@ namespace ApartmentApps.Portal.Controllers
         {
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name");
             ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name");
-            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
-            ViewBag.WorkerId = new SelectList(db.Users, "Id", "Email");
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name");
+            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email");
+            ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email");
             return View();
         }
 
@@ -63,9 +71,9 @@ namespace ApartmentApps.Portal.Controllers
 
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
             ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.UserId);
-            ViewBag.WorkerId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.WorkerId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.UserId);
+            ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
             return View(maitenanceRequest);
         }
 
@@ -76,16 +84,16 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MaitenanceRequest maitenanceRequest = db.MaitenanceRequests.Find(id);
+            MaitenanceRequest maitenanceRequest = Property.MaitenanceRequests.FirstOrDefault(p => p.Id == id);
             if (maitenanceRequest == null)
             {
                 return HttpNotFound();
             }
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
             ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.UserId);
-            ViewBag.WorkerId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.WorkerId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.UserId);
+            ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
             return View(maitenanceRequest);
         }
 
@@ -104,9 +112,9 @@ namespace ApartmentApps.Portal.Controllers
             }
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
             ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(db.Units, "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.UserId);
-            ViewBag.WorkerId = new SelectList(db.Users, "Id", "Email", maitenanceRequest.WorkerId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.UserId);
+            ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
             return View(maitenanceRequest);
         }
 
@@ -130,7 +138,7 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            MaitenanceRequest maitenanceRequest = db.MaitenanceRequests.Find(id);
+            MaitenanceRequest maitenanceRequest = Property.MaitenanceRequests.FirstOrDefault(p => p.Id == id);
             db.MaitenanceRequests.Remove(maitenanceRequest);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -14,7 +14,7 @@ using ApartmentApps.Portal.Models;
 namespace ApartmentApps.Portal.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : AAController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -236,6 +236,15 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult ChangeProperty(int id)
+        {
+            CurrentUser.PropertyId = id;
+            db.SaveChanges();
+            ViewBag.Property = Property;
+            return RedirectToAction("Index", "Home");
         }
 
         //
