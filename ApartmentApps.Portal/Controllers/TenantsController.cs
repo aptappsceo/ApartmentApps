@@ -26,18 +26,25 @@ namespace ApartmentApps.Portal.Controllers
 
         public Property Property
         {
-            get { return CurrentUser.Property; }
+            get
+            {
+                return CurrentUser?.Property;
+            }
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
-            ViewBag.Property = Property;
-            if (User.IsInRole("Admin"))
+            if (Property != null)
             {
-                ViewBag.Properties = db.Properties.ToArray();
-                
+                ViewBag.Property = Property;
+                if (User.IsInRole("Admin"))
+                {
+                    ViewBag.Properties = db.Properties.ToArray();
+
+                }
             }
+           
         }
     }
     [Authorize(Roles = "PropertyAdmin")]
