@@ -1,6 +1,14 @@
 ﻿<Properties StartupItem="ResidentAppCross.iOS.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone6s.9.2" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Views/MaintenanceRequestTypeSelectionItemVIew.cs">
+    <Files>
+      <File FileName="Views/HomeMenuItemView.cs" Line="1" Column="1" />
+      <File FileName="Views/HomeMenuView.cs" Line="1" Column="1" />
+      <File FileName="Views/MaintenanceRequestView.cs" Line="1" Column="1" />
+      <File FileName="Views/MaintenanceRequestTypeSelectionView.cs" Line="1" Column="1" />
+      <File FileName="Views/MaintenanceRequestTypeSelectionItemVIew.cs" Line="15" Column="79" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

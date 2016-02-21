@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginView">
@@ -19,70 +19,85 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Views/LOGIN.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Xn-RA-lmY">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
-                    </variation>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Yox-UZ-E8Y">
-                    <rect key="frame" x="180" y="184" width="240" height="297"/>
+                    <rect key="frame" x="20" y="20" width="240" height="360"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HRO-Ht-Dvv">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="177"/>
-                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="HRO-Ht-Dvv" secondAttribute="height" multiplier="10:10" id="eNI-ju-lBc"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="eNI-ju-lBc"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="eNI-ju-lBc"/>
+                                </mask>
                             </variation>
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vLD-ts-zbK">
                             <rect key="frame" x="0.0" y="177" width="240" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
-                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                <rect key="frame" x="0.0" y="128" width="240" height="30"/>
-                            </variation>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xdT-3P-guT">
                             <rect key="frame" x="0.0" y="207" width="240" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
-                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                <rect key="frame" x="0.0" y="158" width="240" height="30"/>
-                            </variation>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-ft-MlE">
                             <rect key="frame" x="0.0" y="237" width="240" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="31"/>
                             <state key="normal" title="LOG IN"/>
-                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                <rect key="frame" x="0.0" y="188" width="240" height="30"/>
+                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                <rect key="frame" x="0.0" y="460" width="400" height="49"/>
                             </variation>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yP9-35-CHJ">
                             <rect key="frame" x="0.0" y="267" width="240" height="30"/>
                             <state key="normal" title="Forgot your password?"/>
-                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                <rect key="frame" x="0.0" y="218" width="240" height="30"/>
+                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                <rect key="frame" x="0.0" y="509" width="400" height="30"/>
                             </variation>
                         </button>
                     </subviews>
-                    <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="80" y="276" width="240" height="248"/>
+                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="539"/>
                     </variation>
                 </stackView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="Yox-UZ-E8Y" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="0uB-m5-xKk"/>
+                <constraint firstAttribute="top" secondItem="Yox-UZ-E8Y" secondAttribute="top" id="Hdg-Kj-q3K"/>
+                <constraint firstAttribute="trailing" secondItem="Yox-UZ-E8Y" secondAttribute="trailing" id="Zrz-zd-6XF"/>
                 <constraint firstItem="9Xn-RA-lmY" firstAttribute="centerY" secondItem="2" secondAttribute="centerY" id="fqd-eN-V1x"/>
                 <constraint firstItem="9Xn-RA-lmY" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="sUV-L2-BdN"/>
             </constraints>
             <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="Yox-UZ-E8Y"/>
+                </mask>
                 <mask key="constraints">
-                    <exclude reference="fqd-eN-V1x"/>
-                    <exclude reference="sUV-L2-BdN"/>
+                    <exclude reference="0uB-m5-xKk"/>
+                    <exclude reference="Hdg-Kj-q3K"/>
+                    <exclude reference="Zrz-zd-6XF"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="Yox-UZ-E8Y"/>
+                </mask>
                 <mask key="constraints">
                     <include reference="fqd-eN-V1x"/>
                     <include reference="sUV-L2-BdN"/>
+                    <include reference="0uB-m5-xKk"/>
+                    <include reference="Hdg-Kj-q3K"/>
+                    <include reference="Zrz-zd-6XF"/>
                 </mask>
             </variation>
         </view>
