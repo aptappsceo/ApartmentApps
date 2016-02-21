@@ -30,16 +30,15 @@ namespace ApartmentApps.Data
         public virtual IDbSet<MaintenanceRequestStatus> MaintenanceRequestStatuses { get; set; }
         public virtual IDbSet<Corporation> Corporations { get; set; }
         public virtual IDbSet<Property> Properties { get; set; }
-        public virtual IDbSet<Building> Buildings { get; set; }
+        public virtual DbSet<Building> Buildings { get; set; }
         public virtual IDbSet<Unit> Units { get; set; }
         public virtual IDbSet<Tenant> Tenants { get; set; }
         public virtual IDbSet<MaitenanceRequest> MaitenanceRequests { get; set; }
-        public virtual IDbSet<MaitenanceAction> MaitenanceActions { get; set; }
+        public virtual IDbSet<MaintenanceRequestCheckin> MaintenanceRequestCheckins { get; set; }
         public virtual IDbSet<MaitenanceRequestType> MaitenanceRequestTypes { get; set; }
-        public virtual IDbSet<PropertyAddon> PropertyAddons { get; set; }
-        public virtual IDbSet<PropertyAddonType> PropertyAddonTypes { get; set; }
         public virtual IDbSet<PropertyEntrataInfo> PropertyEntrataInfos { get; set; }
         public virtual IDbSet<PropertyYardiInfo> PropertyYardiInfos { get; set; }
+
         public virtual IDbSet<ApplicationUser> Users { get; set; }
         public virtual IDbSet<IdentityRole> Roles { get; set; }
 
@@ -72,12 +71,11 @@ namespace ApartmentApps.Data
         public virtual IDbSet<Unit> Units { get; set; }
         public virtual IDbSet<Tenant> Tenants { get; set; }
         public virtual IDbSet<MaitenanceRequest> MaitenanceRequests { get; set; }
-        public virtual IDbSet<MaitenanceAction> MaitenanceActions { get; set; }
+        public virtual IDbSet<MaintenanceRequestCheckin> MaintenanceRequestCheckins { get; set; }
         public virtual IDbSet<MaitenanceRequestType> MaitenanceRequestTypes { get; set; }
-        public virtual IDbSet<PropertyAddon> PropertyAddons { get; set; }
-        public virtual IDbSet<PropertyAddonType> PropertyAddonTypes { get; set; }
         public virtual IDbSet<PropertyEntrataInfo> PropertyEntrataInfos { get; set; }
         public virtual IDbSet<PropertyYardiInfo> PropertyYardiInfos { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

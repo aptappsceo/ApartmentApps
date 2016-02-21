@@ -7,6 +7,8 @@ namespace ApartmentApps.API.Service.Models.VMS
 {
     public class MaitenanceRequestModel
     {
+        
+        public int UnitId { get; set; }
         public int MaitenanceRequestTypeId { get; set; }
         public string Comments { get; set; }
         public List<Byte[]> Images { get; set; }

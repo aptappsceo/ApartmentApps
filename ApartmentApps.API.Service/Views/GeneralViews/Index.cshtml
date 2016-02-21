@@ -1,76 +1,41 @@
-﻿@model dynamic
+﻿@model IQueryable<ApartmentApps.Data.MaitenanceRequest>
 
 @{
     ViewBag.Title = "Mobile View";
     Layout = "~/Views/Shared/_MobileClientViewLayout.cshtml";
 }
+@foreach (var item in Model.GroupBy(p => p.StatusId))
+{
+    <div class="row">
+        <h2>@item.Key</h2>
+    </div>
+    foreach (var request in item)
+    {
+        <div class="row">
+            <div class="col-md-6 request-list-item" style="float: none; margin: 0 auto;">
+                <div class="media">
+                    <img class="request-list-icon pull-left" style="" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSFeON1utbyA3AOgrwDIyUnQAzeQCAr20mpKWNZhLH1PMTPrMKh" />
+                    <div class="media-body">
+                        <h2 class="request-header-text">@request.MaitenanceRequestType.Name</h2>
 
-<div class="row">
-    <div class="col-md-6 request-list-item" style="float: none; margin: 0 auto;">
-        <div class="media">
-            <img class="request-list-icon pull-left" style="" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSFeON1utbyA3AOgrwDIyUnQAzeQCAr20mpKWNZhLH1PMTPrMKh"/>
-            <div class="media-body">
-                <h2 class="request-header-text">Header</h2>
-
-                <div>
-                    <hr/>
-                    <p>Adress</p>
-                    <hr/>
-                    <p>Comments</p>
-                    <div class="request-list-item-gallery">
-                        <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRXKAZFrCJ4bggQKi_22x3S5vXaTFL7MCXRpjkuyMiZaElFXKC"/>
-                        <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRXKAZFrCJ4bggQKi_22x3S5vXaTFL7MCXRpjkuyMiZaElFXKC"/>
+                        <div>
+                            <hr />
+                            <p>Building: @request.Unit.Building.Name Unit: @request.Unit.Name </p>
+                            <hr />
+                            <p>Comments: @request.Message</p>
+                            
+                            <div class="request-list-item-gallery">
+                                <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRXKAZFrCJ4bggQKi_22x3S5vXaTFL7MCXRpjkuyMiZaElFXKC" />
+                                <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRXKAZFrCJ4bggQKi_22x3S5vXaTFL7MCXRpjkuyMiZaElFXKC" />
+                            </div>
+                            <hr />
+                            <small>Date</small>
+                        </div>
                     </div>
-                    <hr/>
-                    <small>Date</small>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 request-list-item" style="float: none; margin: 0 auto;">
-        <div class="media">
-            <img class="request-list-icon pull-left" style="" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSFeON1utbyA3AOgrwDIyUnQAzeQCAr20mpKWNZhLH1PMTPrMKh"/>
-            <div class="media-body">
-                <h2 class="request-header-text">Header</h2>
+    }
 
-                <div>
-                    <hr/>
-                    <p>Adress</p>
-                    <hr/>
-                    <p>Comments</p>
-                    <div class="request-list-item-gallery">
-                        <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRXKAZFrCJ4bggQKi_22x3S5vXaTFL7MCXRpjkuyMiZaElFXKC"/>
-                        <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRXKAZFrCJ4bggQKi_22x3S5vXaTFL7MCXRpjkuyMiZaElFXKC"/>
-                    </div>
-                    <hr/>
-                    <small>Date</small>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 request-list-item" style="float: none; margin: 0 auto;">
-        <div class="media">
-            <img class="request-list-icon pull-left" style="" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSFeON1utbyA3AOgrwDIyUnQAzeQCAr20mpKWNZhLH1PMTPrMKh"/>
-            <div class="media-body">
-                <h2 class="request-header-text">Header</h2>
+}
 
-                <div>
-                    <hr/>
-                    <p>Adress</p>
-                    <hr/>
-                    <p>Comments</p>
-                    <div class="request-list-item-gallery">
-                        <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRXKAZFrCJ4bggQKi_22x3S5vXaTFL7MCXRpjkuyMiZaElFXKC"/>
-                        <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRXKAZFrCJ4bggQKi_22x3S5vXaTFL7MCXRpjkuyMiZaElFXKC"/>
-                    </div>
-                    <hr/>
-                    <small>Date</small>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

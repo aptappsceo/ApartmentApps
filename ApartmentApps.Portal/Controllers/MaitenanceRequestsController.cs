@@ -19,12 +19,11 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult Index()
         {
             var maitenancerequests = db
-                .MaitenanceRequests.Where(p=>p.User.PropertyId == Property.Id)
+                .MaitenanceRequests.Where(p => p.User.PropertyId == Property.Id)
                 .Include(m => m.MaitenanceRequestType)
-                .Include(m => m.Status)
                 .Include(m => m.Unit)
-                .Include(m => m.User)
-                .Include(m => m.Worker);
+                .Include(m => m.User);
+            
 
             return View(maitenancerequests.ToList());
         }
@@ -70,10 +69,10 @@ namespace ApartmentApps.Portal.Controllers
             }
 
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
+            //ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
             ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", maitenanceRequest.UnitId);
             ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.UserId);
-            ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
+            //ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
             return View(maitenanceRequest);
         }
 
@@ -90,10 +89,10 @@ namespace ApartmentApps.Portal.Controllers
                 return HttpNotFound();
             }
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
+          //  ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
             ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", maitenanceRequest.UnitId);
             ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.UserId);
-            ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
+            //ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
             return View(maitenanceRequest);
         }
 
@@ -111,10 +110,10 @@ namespace ApartmentApps.Portal.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
+            //ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
             ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", maitenanceRequest.UnitId);
             ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.UserId);
-            ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
+            //ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
             return View(maitenanceRequest);
         }
 

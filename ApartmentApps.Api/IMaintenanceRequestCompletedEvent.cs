@@ -6,4 +6,8 @@ namespace ApartmentApps.Api
     {
         void MaintenanceRequestCompleted(MaitenanceRequest maitenanceRequest);
     }
+    public interface IMaintenanceRequestStartedEvent
+    {
+        void MaintenanceRequestStarted(MaitenanceRequest maitenanceRequest);
+    }
 }

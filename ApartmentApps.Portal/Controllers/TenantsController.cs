@@ -101,7 +101,7 @@ namespace ApartmentApps.Portal.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id).Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", tenant.UnitId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id).Where(p=>p.Building.PropertyId == Property.Id).OrderBy(p=>p.Name), "Id", "Name", tenant.UnitId);
             ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", tenant.UserId);
             return View(tenant);
         }
@@ -113,12 +113,12 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tenant tenant = Property.Tenants.FirstOrDefault(p => p.User.PropertyId == Property.Id && p.UserId == id);
+            Tenant tenant = Property.Users.FirstOrDefault(p => p.Id == id).Tenant;
             if (tenant == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", tenant.UnitId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id).OrderBy(p => p.Name), "Id", "Name", tenant.UnitId);
             ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", tenant.UserId);
             return View(tenant);
         }
@@ -136,7 +136,7 @@ namespace ApartmentApps.Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", tenant.UnitId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id).OrderBy(p => p.Name), "Id", "Name", tenant.UnitId);
             ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", tenant.UserId);
             return View(tenant);
         }

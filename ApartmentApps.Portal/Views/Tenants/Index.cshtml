@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ApartmentApps.Data.Tenant>
+﻿@using GridMvc.Html
+@model IEnumerable<ApartmentApps.Data.Tenant>
 
 @{
     ViewBag.Title = "Index";
@@ -23,118 +24,125 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>List of Tenant</h5>
-					<div class="ibox-tools">
-						@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-xs"})
-					</div>
+                    <div class="ibox-tools">
+                        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-xs" })
+                    </div>
                 </div>
                 <div class="ibox-content">
+                    @Html.Grid(Model).Columns(columns =>
+               {
+                   columns.Add(foo => foo.Unit.Name).Titled("Unit Name").SetWidth(110);
+                   //columns.Add(foo => foo.Unit.Building.Name).Titled("Building Name").SetWidth(110);
+                   columns.Add(foo => foo.User.Email).Sortable(true).Filterable(true);
+                   columns.Add(foo => foo.FirstName).Sortable(true).Filterable(true);
+                   columns.Add(foo => foo.LastName).Sortable(true).Filterable(true);
+                   columns.Add().Encoded(false).Sanitized(false).RenderValueAs(item => @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "" }));
 
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Unit.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThirdPartyId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UnitNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BuildingName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostalCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MiddleName)
-        </th>
-        <th></th>
-    </tr>
+               }).WithPaging(10)
+                    @*<table class="table table-striped">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Unit.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.User.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ThirdPartyId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.LastName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UnitNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BuildingName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Address)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.City)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.State)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PostalCode)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Gender)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MiddleName)
+                            </th>
+                            <th></th>
+                        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Unit.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThirdPartyId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BuildingName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostalCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MiddleName)
-        </td>
-        <td>
-			@Html.ActionLink("Details", "Details", new { id=item.UserId }, new { @class = "btn btn-primary btn-sm"})
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }, new { @class = "btn btn-white btn-sm"})
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserId }, new { @class = "btn btn-white btn-sm"})
-        </td>
-    </tr>
-}
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Unit.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ThirdPartyId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnitNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BuildingName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.City)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.State)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PostalCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Gender)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MiddleName)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", new { id = item.UserId }, new { @class = "btn btn-primary btn-sm" })
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "btn btn-white btn-sm" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "btn btn-white btn-sm" })
+                                </td>
+                            </tr>
+                        }
 
-</table>
+                    </table>*@
 
                 </div>
             </div>
         </div>
     </div>
- </div>
-
-
-
+</div>

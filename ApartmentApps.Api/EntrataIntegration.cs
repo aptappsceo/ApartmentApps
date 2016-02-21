@@ -8,7 +8,7 @@ namespace ApartmentApps.Api
     /// <summary>
     /// Handles the synchronization of entrata and apartment apps.
     /// </summary>
-    public class EntrataIntegration : PropertyIntegrationAddon, IMaintenanceRequestCompletedEvent, IMaintenanceRequestPausedEvent, IMaintenanceSubmissionEvent
+    public class EntrataIntegration : PropertyIntegrationAddon, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent
     {
         public override bool Filter(ApplicationUser user)
         {
@@ -97,19 +97,14 @@ namespace ApartmentApps.Api
             return true;
         }
 
-        public void MaintenanceRequestCompleted(MaitenanceRequest maitenanceRequest)
-        {
-            // Sync with entrata on work order
-        }
-
-        public void MaintenanceRequestPaused(MaitenanceRequest maitenanceRequest)
-        {
-            // Sync with entrata on work order
-        }
-
         public void MaintenanceRequestSubmited(MaitenanceRequest maitenanceRequest)
         {
             // Sync with entrata on work order
+        }
+
+        public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest)
+        {
+            
         }
     }
 }

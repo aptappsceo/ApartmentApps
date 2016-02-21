@@ -2,8 +2,9 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Api
 {
-    public interface IMaintenanceRequestPausedEvent
+    public interface IMaintenanceRequestCheckinEvent
     {
-        void MaintenanceRequestPaused(MaitenanceRequest maitenanceRequest);
+        void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest);
     }
+ 
 }

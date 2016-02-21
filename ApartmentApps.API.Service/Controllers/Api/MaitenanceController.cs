@@ -24,12 +24,12 @@ namespace ApartmentApps.API.Service.Controllers
         {
             get { return HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
         }
-        public string UserId
+        public ApplicationUser CurrentUser
         {
             get
             {
                 var user = UserManager.FindByName(User.Identity.Name);
-                return user.Id;//user.Email
+                return user;//user.Email
             }
         }
     }
@@ -43,14 +43,30 @@ namespace ApartmentApps.API.Service.Controllers
         public IMaintenanceService MaintenanceService { get; set; }
         public ApplicationDbContext Context { get; set; }
 
-    
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("SubmitRequest")]
         public void SubmitRequest(MaitenanceRequestModel request)
         {
-            MaintenanceService.SubmitRequest(UserId, request.Comments, request.MaitenanceRequestTypeId);
+            MaintenanceService.SubmitRequest(CurrentUser, request.Comments, request.MaitenanceRequestTypeId);
         }
-
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("CompleteRequest")]
+        public void CompleteRequest(int id, string comments, List<Byte[]> images)
+        {
+            MaintenanceService.CompleteRequest(CurrentUser, id, comments);
+        }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("PauseRequest")]
+        public void PauseRequest(int id, string comments, List<Byte[]> images)
+        {
+            MaintenanceService.PauseRequest(CurrentUser, id, comments, images);
+        }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("PauseRequest")]
+        public void StartRequest(int id, string comments, List<Byte[]> images)
+        {
+            MaintenanceService.StartRequest(CurrentUser, id, comments, images);
+        }
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetMaitenanceRequestTypes")]
         public IEnumerable<LookupPairModel> GetMaitenanceRequestTypes()
@@ -65,20 +81,14 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("GetWorkOrders")]
         public IEnumerable<MaitenanceRequest> GetWorkOrders(string workerId)
         {
-            using (Context = new ApplicationDbContext())
-            {
-                return Context.MaitenanceRequests.Where(p => p.WorkerId == workerId).ToArray();
-            }
+            return null;
         }
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetByResident")]
         public IEnumerable<MaitenanceRequest> GetByResident(string workerId)
         {
-            using (Context = new ApplicationDbContext())
-            {
-                return Context.MaitenanceRequests.Where(p => p.WorkerId == workerId);
-            }
+            return null;
         }
 
         public MaitenanceController()

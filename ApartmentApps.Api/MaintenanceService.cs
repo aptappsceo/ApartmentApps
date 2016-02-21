@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Data;
 
@@ -6,56 +7,60 @@ namespace ApartmentApps.Api
 {
     public class MaintenanceService : IMaintenanceService
     {
-        public int SubmitRequest(string user, string comments, int requestTypeId)
+        public int SubmitRequest(ApplicationUser user, string comments, int requestTypeId, int unitId = 0)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var maitenanceRequest = new MaitenanceRequest()
                 {
-                    UserId = user,
-                    WorkerId = null,
-                    SubmissionDate = DateTime.UtcNow,
-                    StatusId = "Scheduled",
+                    UserId = user.Id,
                     Message = comments,
-                    MaitenanceRequestTypeId = requestTypeId
+                    MaitenanceRequestTypeId = requestTypeId,
+                    StatusId = "Started"
                 };
                 ctx.MaitenanceRequests.Add(maitenanceRequest);
                 ctx.SaveChanges();
-                this.InvokeEvent<IMaintenanceSubmissionEvent>(ctx, ctx.Users.First(p => p.Id == user), _ => _.MaintenanceRequestSubmited(maitenanceRequest));
+                this.InvokeEvent<IMaintenanceSubmissionEvent>(ctx, user, _ => _.MaintenanceRequestSubmited(maitenanceRequest));
                 return maitenanceRequest.Id;
             }
         }
 
-        public bool PauseRequest(int requestId, string comments)
+        public bool PauseRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images)
+        {
+            return Checkin(worker, requestId, comments, "Paused");
+        }
+
+        private bool Checkin(ApplicationUser worker, int requestId, string comments, string status)
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var request = ctx.MaitenanceRequests.FirstOrDefault(p => p.Id == requestId);
-                if (request != null)
+                var checkin = new MaintenanceRequestCheckin
                 {
-                    request.StatusId = "Paused";
-                    ctx.SaveChanges();
-                    this.InvokeEvent<IMaintenanceRequestPausedEvent>(ctx, request.Worker, _ => _.MaintenanceRequestPaused(request));
-                    return true;
-                }
-                return false;
+                    MaitenanceRequestId = requestId,
+                    Comments = comments,
+                    StatusId = status,
+                    WorkerId = worker.Id,
+                    Date = DateTime.UtcNow,
+                };
+                
+                ctx.SaveChanges();
+                checkin.MaitenanceRequest.StatusId = status;
+                ctx.SaveChanges();
+                this.InvokeEvent<IMaintenanceRequestCheckinEvent>(ctx, worker, _ => _.MaintenanceRequestCheckin(checkin));
+                return true;
             }
         }
 
-        public bool CompleteRequest(int requestId, string comments)
+        public bool CompleteRequest(ApplicationUser worker, int requestId, string comments)
         {
-            using (var ctx = new ApplicationDbContext())
-            {
-                var request = ctx.MaitenanceRequests.FirstOrDefault(p => p.Id == requestId);
-                if (request != null)
-                {
-                    request.StatusId = "Complete";
-                    ctx.SaveChanges();
-                    this.InvokeEvent<IMaintenanceRequestCompletedEvent>(ctx, request.Worker, _ => _.MaintenanceRequestCompleted(request));
-                    return true;
-                }
-                return false;
-            }
+            Checkin(worker, requestId, comments, "Complete");
+            return true;
+        }
+
+     
+        public void StartRequest(ApplicationUser worker, int id, string comments, List<byte[]> images)
+        {
+            Checkin(worker, id, comments, "Started");
         }
     }
 }
