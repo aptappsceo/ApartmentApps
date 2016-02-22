@@ -30,7 +30,6 @@ namespace ResidentAppCross.iOS.Views
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            base.RowSelected(tableView, indexPath);
             tableView.DeselectRow(indexPath, true);
             var item = Items[indexPath.Row];
             item.Command.Execute(null);

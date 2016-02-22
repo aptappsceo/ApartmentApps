@@ -78,6 +78,7 @@
     <Compile Include="Events\ViewProgressEvents.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Interfaces\IDisposableContainer.cs" />
+    <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Resources\SharedResources.cs" />
     <Compile Include="Services\ApplicationContext.cs" />
     <Compile Include="Services\ImageService.cs" />
