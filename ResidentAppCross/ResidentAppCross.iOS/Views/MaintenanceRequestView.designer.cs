@@ -1,13 +1,11 @@
 // WARNING
 //
-// This file has been generated automatically by Xamarin Studio from the outlets and
-// actions declared in your storyboard file.
-// Manual changes to this file will not be maintained.
+// This file has been generated automatically by Xamarin Studio to store outlets and
+// actions made in the UI designer. If it is removed, they will be lost.
+// Manual changes to this file may not be handled correctly.
 //
 using Foundation;
-using System;
 using System.CodeDom.Compiler;
-using UIKit;
 
 namespace ResidentAppCross.iOS
 {
@@ -15,38 +13,53 @@ namespace ResidentAppCross.iOS
 	partial class MaintenanceRequestView
 	{
 		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton AddPhotoButton { get; set; }
+		UIKit.UIButton AddPhotoButton { get; set; }
 
 		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UITextField CommentsTextField { get; set; }
+		UIKit.UITextField CommentsTextField { get; set; }
 
 		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UISegmentedControl PetTypeSelector { get; set; }
+		UIKit.UITextView CommentsTextView { get; set; }
 
 		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton RequestTypeSelectionButton { get; set; }
+		UIKit.UISegmentedControl PetTypeSelector { get; set; }
 
+		[Outlet]
+		UIKit.UIStackView PhotosContainer { get; set; }
+
+		[Outlet]
+		UIKit.UIButton RequestTypeSelectionButton { get; set; }
+		
 		void ReleaseDesignerOutlets ()
 		{
 			if (AddPhotoButton != null) {
 				AddPhotoButton.Dispose ();
 				AddPhotoButton = null;
 			}
+
 			if (CommentsTextField != null) {
 				CommentsTextField.Dispose ();
 				CommentsTextField = null;
 			}
+
 			if (PetTypeSelector != null) {
 				PetTypeSelector.Dispose ();
 				PetTypeSelector = null;
 			}
+
 			if (RequestTypeSelectionButton != null) {
 				RequestTypeSelectionButton.Dispose ();
 				RequestTypeSelectionButton = null;
+			}
+
+			if (PhotosContainer != null) {
+				PhotosContainer.Dispose ();
+				PhotosContainer = null;
+			}
+
+			if (CommentsTextView != null) {
+				CommentsTextView.Dispose ();
+				CommentsTextView = null;
 			}
 		}
 	}
