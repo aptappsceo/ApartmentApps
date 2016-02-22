@@ -87,9 +87,20 @@
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="height" constant="190" id="837-bL-DbO"/>
+                                <constraint firstItem="sl1-uu-N7k" firstAttribute="top" secondItem="Pex-bG-iVR" secondAttribute="bottom" id="R1v-Ot-Fkr"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="R1v-Ot-Fkr"/>
+                                </mask>
+                            </variation>
                             <variation key="widthClass=compact" misplaced="YES">
                                 <rect key="frame" x="0.0" y="209" width="350" height="30"/>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=regular">
+                                <mask key="constraints">
+                                    <include reference="R1v-Ot-Fkr"/>
+                                </mask>
                             </variation>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Gnt-zI-lOm" userLabel="PetsBlock">
