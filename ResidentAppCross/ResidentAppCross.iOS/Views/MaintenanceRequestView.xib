@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
@@ -60,20 +61,15 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="128" id="nw2-oL-I0P"/>
                                     </constraints>
-                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    <variation key="heightClass=regular-widthClass=compact">
-                                        <mask key="constraints">
-                                            <include reference="nw2-oL-I0P"/>
-                                        </mask>
+                                    <variation key="widthClass=compact" misplaced="YES">
+                                        <rect key="frame" x="0.0" y="21" width="350" height="128"/>
                                     </variation>
                                 </textView>
                             </subviews>
-                            <variation key="default">
-                                <mask key="subviews">
-                                    <exclude reference="ebV-Ah-yc3"/>
-                                </mask>
+                            <variation key="widthClass=compact" misplaced="YES">
+                                <rect key="frame" x="0.0" y="45" width="350" height="149"/>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
                                 <mask key="subviews">
@@ -90,9 +86,6 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pex-bG-iVR">
                                     <rect key="frame" x="0.0" y="0.0" width="550" height="30"/>
                                     <state key="normal" title="Add Photo"/>
-                                    <variation key="widthClass=compact" misplaced="YES">
-                                        <rect key="frame" x="0.0" y="0.0" width="350" height="30"/>
-                                    </variation>
                                     <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="750" height="330"/>
                                     </variation>
@@ -115,7 +108,7 @@
                                 </mask>
                             </variation>
                             <variation key="widthClass=compact" misplaced="YES">
-                                <rect key="frame" x="0.0" y="81" width="350" height="30"/>
+                                <rect key="frame" x="0.0" y="209" width="350" height="30"/>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
                                 <mask key="subviews">
@@ -150,7 +143,7 @@
                                 </segmentedControl>
                             </subviews>
                             <variation key="widthClass=compact" misplaced="YES">
-                                <rect key="frame" x="0.0" y="126" width="350" height="49"/>
+                                <rect key="frame" x="0.0" y="254" width="350" height="49"/>
                             </variation>
                             <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
                                 <rect key="frame" x="0.0" y="426" width="750" height="49"/>
@@ -158,7 +151,7 @@
                         </stackView>
                     </subviews>
                     <variation key="widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="25" y="25" width="350" height="175"/>
+                        <rect key="frame" x="25" y="25" width="350" height="303"/>
                     </variation>
                     <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
                         <rect key="frame" x="25" y="25" width="750" height="475"/>
@@ -167,21 +160,10 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="l7f-VY-tOW" firstAttribute="top" secondItem="2" secondAttribute="top" constant="25" id="79L-hS-WCe"/>
-                <constraint firstAttribute="bottom" secondItem="l7f-VY-tOW" secondAttribute="bottom" constant="322" id="rXf-qB-GgT"/>
+                <constraint firstItem="l7f-VY-tOW" firstAttribute="top" secondItem="2" secondAttribute="top" constant="70" id="79L-hS-WCe"/>
                 <constraint firstAttribute="trailing" secondItem="l7f-VY-tOW" secondAttribute="trailing" constant="25" id="uw0-n6-bIw"/>
                 <constraint firstItem="l7f-VY-tOW" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="25" id="vNp-v9-35N"/>
             </constraints>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="rXf-qB-GgT"/>
-                </mask>
-            </variation>
-            <variation key="heightClass=regular-widthClass=compact">
-                <mask key="constraints">
-                    <include reference="rXf-qB-GgT"/>
-                </mask>
-            </variation>
         </view>
     </objects>
 </document>
