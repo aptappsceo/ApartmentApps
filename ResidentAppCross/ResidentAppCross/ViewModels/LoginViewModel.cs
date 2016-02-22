@@ -19,7 +19,7 @@ namespace ResidentAppCross
             set { SetProperty(ref _username, value); }
         }
 
-        private string _password = "Kokoko";
+        private string _password;
         private bool _isOperating;
 
         public string Password
@@ -46,7 +46,11 @@ namespace ResidentAppCross
                 return new MvxCommand(async () =>
                 {
                     this.Publish(new TaskStarted(this) { Label = "Connecting..."});
-                    if (await LoginManager.LoginAsync(Username, Password))
+
+                    var username = string.IsNullOrEmpty(Username) ? "micahosborne@gmail.com" : Username;
+                    var password = string.IsNullOrEmpty(Password) ? "Asdf1234!" : Password;
+
+                    if (await LoginManager.LoginAsync(username, password))
                     {
                         this.Publish(new TaskComplete(this) {Label = "Logged In", ShouldPrompt = true, OnPrompted =
                             () =>

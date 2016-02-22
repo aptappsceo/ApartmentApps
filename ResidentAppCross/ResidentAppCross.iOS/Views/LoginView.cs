@@ -27,13 +27,25 @@ namespace ResidentAppCross.iOS.Views
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            var b = this.CreateBindingSet<LoginView, LoginViewModel>();
 
+            this.NavigationItem.SetHidesBackButton(true, false);
+
+            var b = this.CreateBindingSet<LoginView, LoginViewModel>();
             b.Bind(UsernameTextField).TwoWay().For(v=> v.Text).To(vm => vm.Username);
             b.Bind(PasswordTextField).TwoWay().For(v=> v.Text).To(vm => vm.Password);
             b.Bind(LoginButton).To(vm => vm.LoginCommand);
-
             b.Apply();
+
+            UsernameTextField.ShouldReturn += (textField) => {
+                PasswordTextField.BecomeFirstResponder();
+                return true;
+            };
+
+            PasswordTextField.ShouldReturn += (textField) => {
+                PasswordTextField.ResignFirstResponder();
+                return true;
+            };
+
             // Perform any additional setup after loading the view, typically from a nib.
         }
         

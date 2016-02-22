@@ -14,6 +14,9 @@ namespace ResidentAppCross.iOS.Views.TableSources
         public LookupPairModel[] Items { get; set; }
         public Action<LookupPairModel> OnItemSelected { get; set; }
 
+
+
+
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             UITableViewCell cell = tableView.DequeueReusableCell(CellIdentifier) ?? new UITableViewCell(UITableViewCellStyle.Default, CellIdentifier);

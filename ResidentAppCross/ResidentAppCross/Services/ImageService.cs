@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MvvmCross.Platform;
 using MvvmCross.Plugins.PictureChooser;
 
 namespace ResidentAppCross.Services
@@ -16,12 +17,8 @@ namespace ResidentAppCross.Services
 
     public class ImageService : IImageService
     {
-        private IMvxPictureChooserTask _pictureChooser;
+        private IMvxPictureChooserTask _pictureChooser => Mvx.Resolve<IMvxPictureChooserTask>();
 
-        public ImageService(IMvxPictureChooserTask pictureChooser)
-        {
-            _pictureChooser = pictureChooser;
-        }
 
         public void SelectImage(Action<byte[]> selected, Action cancelled)
         {
