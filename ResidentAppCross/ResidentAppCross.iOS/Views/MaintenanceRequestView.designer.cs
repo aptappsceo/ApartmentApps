@@ -14,8 +14,40 @@ namespace ResidentAppCross.iOS
 	[Register ("MaintenanceRequestView")]
 	partial class MaintenanceRequestView
 	{
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UIButton AddPhotoButton { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UITextField CommentsTextField { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UISegmentedControl PetTypeSelector { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UIButton RequestTypeSelectionButton { get; set; }
+
 		void ReleaseDesignerOutlets ()
 		{
+			if (AddPhotoButton != null) {
+				AddPhotoButton.Dispose ();
+				AddPhotoButton = null;
+			}
+			if (CommentsTextField != null) {
+				CommentsTextField.Dispose ();
+				CommentsTextField = null;
+			}
+			if (PetTypeSelector != null) {
+				PetTypeSelector.Dispose ();
+				PetTypeSelector = null;
+			}
+			if (RequestTypeSelectionButton != null) {
+				RequestTypeSelectionButton.Dispose ();
+				RequestTypeSelectionButton = null;
+			}
 		}
 	}
 }
