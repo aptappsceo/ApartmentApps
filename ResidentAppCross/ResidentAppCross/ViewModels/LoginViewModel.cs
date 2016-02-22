@@ -51,10 +51,10 @@ namespace ResidentAppCross
                         this.Publish(new TaskComplete(this) {Label = "Logged In", ShouldPrompt = true, OnPrompted =
                             () =>
                             {
-                                Debug.WriteLine("Werks");      
-                            } });
+                                ShowViewModel<HomeMenuViewModel>();
+                            }
+                        });
                             //This is where I fell in love with async/await <3
-                        //ShowViewModel<HomeMenuViewModel>();
                     }
                     else
                     {

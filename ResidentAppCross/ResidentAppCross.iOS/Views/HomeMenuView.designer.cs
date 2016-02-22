@@ -14,8 +14,16 @@ namespace ResidentAppCross.iOS
 	[Register ("HomeMenuView")]
 	partial class HomeMenuView
 	{
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UITableView HomeMenuTable { get; set; }
+
 		void ReleaseDesignerOutlets ()
 		{
+			if (HomeMenuTable != null) {
+				HomeMenuTable.Dispose ();
+				HomeMenuTable = null;
+			}
 		}
 	}
 }
