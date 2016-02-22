@@ -19,8 +19,8 @@
         <view contentMode="scaleToFill" id="2">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="l7f-VY-tOW" userLabel="MainVerticalStack">
-                    <rect key="frame" x="25" y="25" width="550" height="303"/>
+                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="l7f-VY-tOW" userLabel="MainVerticalStack">
+                    <rect key="frame" x="25" y="25" width="550" height="353"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PYy-fy-gwN" userLabel="RequestTypeSelectionBlock">
                             <rect key="frame" x="0.0" y="0.0" width="550" height="30"/>
@@ -40,7 +40,7 @@
                                 <constraint firstAttribute="height" constant="30" id="vQ8-hZ-Pkv"/>
                             </constraints>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8OR-bf-4vv" userLabel="CommentsBlock">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8OR-bf-4vv" userLabel="CommentsBlock">
                             <rect key="frame" x="0.0" y="45" width="550" height="149"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8P-tX-R7z" userLabel="CommentsLabel">
@@ -49,7 +49,7 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ebV-Ah-yc3">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ebV-Ah-yc3">
                                     <rect key="frame" x="0.0" y="21" width="550" height="128"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -74,48 +74,39 @@
                                 </mask>
                             </variation>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="m6x-Gg-lIn" userLabel="PhotosBlock">
-                            <rect key="frame" x="0.0" y="209" width="550" height="30"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="m6x-Gg-lIn" userLabel="PhotosBlock">
+                            <rect key="frame" x="0.0" y="209" width="550" height="80"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pex-bG-iVR">
                                     <rect key="frame" x="0.0" y="0.0" width="550" height="30"/>
                                     <state key="normal" title="Add Photo"/>
                                 </button>
-                                <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sl1-uu-N7k" userLabel="PhotosContainer">
-                                    <rect key="frame" x="0.0" y="30" width="200" height="0.0"/>
-                                    <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                        <rect key="frame" x="0.0" y="30" width="350" height="160"/>
-                                    </variation>
+                                <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="sl1-uu-N7k" userLabel="PhotosContainer">
+                                    <rect key="frame" x="0.0" y="30" width="550" height="50"/>
                                 </stackView>
                             </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="190" id="837-bL-DbO"/>
+                            </constraints>
                             <variation key="widthClass=compact" misplaced="YES">
                                 <rect key="frame" x="0.0" y="209" width="350" height="30"/>
                             </variation>
-                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                <rect key="frame" x="0.0" y="209" width="350" height="190"/>
-                            </variation>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Gnt-zI-lOm" userLabel="PetsBlock">
-                            <rect key="frame" x="0.0" y="254" width="550" height="49"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Gnt-zI-lOm" userLabel="PetsBlock">
+                            <rect key="frame" x="0.0" y="304" width="550" height="49"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePf-6l-XRV">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePf-6l-XRV">
                                     <rect key="frame" x="0.0" y="0.0" width="550" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
-                                    <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                                        <rect key="frame" x="0.0" y="0.0" width="350" height="21"/>
-                                    </variation>
                                 </label>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dcZ-9n-D0J">
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dcZ-9n-D0J">
                                     <rect key="frame" x="0.0" y="21" width="550" height="29"/>
                                     <segments>
                                         <segment title="First"/>
                                         <segment title="Second"/>
                                     </segments>
-                                    <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                                        <rect key="frame" x="0.0" y="21" width="350" height="29"/>
-                                    </variation>
                                 </segmentedControl>
                             </subviews>
                             <constraints>
@@ -124,16 +115,10 @@
                             <variation key="widthClass=compact" misplaced="YES">
                                 <rect key="frame" x="0.0" y="254" width="350" height="49"/>
                             </variation>
-                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                <rect key="frame" x="0.0" y="414" width="350" height="49"/>
-                            </variation>
                         </stackView>
                     </subviews>
                     <variation key="widthClass=compact" misplaced="YES">
                         <rect key="frame" x="25" y="25" width="350" height="303"/>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                        <rect key="frame" x="25" y="70" width="350" height="463"/>
                     </variation>
                 </stackView>
             </subviews>
