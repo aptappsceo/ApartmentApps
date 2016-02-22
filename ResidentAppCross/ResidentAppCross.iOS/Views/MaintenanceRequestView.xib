@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
@@ -19,10 +18,10 @@
         <view contentMode="scaleToFill" id="2">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="l7f-VY-tOW" userLabel="MainVerticalStack">
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="l7f-VY-tOW" userLabel="MainVerticalStack">
                     <rect key="frame" x="25" y="25" width="550" height="175"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PYy-fy-gwN" userLabel="RequestTypeSelectionBlock">
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PYy-fy-gwN" userLabel="RequestTypeSelectionBlock">
                             <rect key="frame" x="0.0" y="0.0" width="550" height="30"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request Type*" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uHr-2P-NGd" userLabel="RequestTypeLabel">
@@ -31,7 +30,7 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4na-IH-Q8t" userLabel="RequestTypeSelectButton">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4na-IH-Q8t" userLabel="RequestTypeSelectButton">
                                     <rect key="frame" x="114" y="0.0" width="436" height="30"/>
                                     <state key="normal" title="Select &gt;"/>
                                     <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
@@ -43,10 +42,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="750" height="30"/>
                             </variation>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8OR-bf-4vv" userLabel="CommentsBlock">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8OR-bf-4vv" userLabel="CommentsBlock">
                             <rect key="frame" x="0.0" y="45" width="550" height="21"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8P-tX-R7z" userLabel="CommentsLabel">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8P-tX-R7z" userLabel="CommentsLabel">
                                     <rect key="frame" x="0.0" y="0.0" width="550" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -85,10 +84,10 @@
                                 <rect key="frame" x="0.0" y="45" width="750" height="21"/>
                             </variation>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="m6x-Gg-lIn" userLabel="PhotosBlock">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="m6x-Gg-lIn" userLabel="PhotosBlock">
                             <rect key="frame" x="0.0" y="81" width="550" height="30"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pex-bG-iVR">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pex-bG-iVR">
                                     <rect key="frame" x="0.0" y="0.0" width="550" height="30"/>
                                     <state key="normal" title="Add Photo"/>
                                     <variation key="widthClass=compact" misplaced="YES">
@@ -127,10 +126,10 @@
                                 <rect key="frame" x="0.0" y="81" width="750" height="330"/>
                             </variation>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Gnt-zI-lOm" userLabel="PetsBlock">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Gnt-zI-lOm" userLabel="PetsBlock">
                             <rect key="frame" x="0.0" y="126" width="550" height="49"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePf-6l-XRV">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePf-6l-XRV">
                                     <rect key="frame" x="0.0" y="0.0" width="550" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -139,7 +138,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="750" height="21"/>
                                     </variation>
                                 </label>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dcZ-9n-D0J">
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dcZ-9n-D0J">
                                     <rect key="frame" x="0.0" y="21" width="550" height="29"/>
                                     <segments>
                                         <segment title="First"/>
@@ -169,9 +168,20 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="l7f-VY-tOW" firstAttribute="top" secondItem="2" secondAttribute="top" constant="25" id="79L-hS-WCe"/>
+                <constraint firstAttribute="bottom" secondItem="l7f-VY-tOW" secondAttribute="bottom" constant="322" id="rXf-qB-GgT"/>
                 <constraint firstAttribute="trailing" secondItem="l7f-VY-tOW" secondAttribute="trailing" constant="25" id="uw0-n6-bIw"/>
                 <constraint firstItem="l7f-VY-tOW" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="25" id="vNp-v9-35N"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="rXf-qB-GgT"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="constraints">
+                    <include reference="rXf-qB-GgT"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

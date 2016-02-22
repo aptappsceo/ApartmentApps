@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
@@ -17,13 +18,13 @@
         <view contentMode="scaleToFill" id="2">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Views/LOGIN.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Xn-RA-lmY">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Views/LOGIN.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Xn-RA-lmY">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Yox-UZ-E8Y">
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Yox-UZ-E8Y">
                     <rect key="frame" x="20" y="20" width="240" height="360"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HRO-Ht-Dvv">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HRO-Ht-Dvv">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="177"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="HRO-Ht-Dvv" secondAttribute="height" multiplier="10:10" id="eNI-ju-lBc"/>
@@ -53,21 +54,12 @@
                             <rect key="frame" x="0.0" y="237" width="240" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="31"/>
                             <state key="normal" title="LOG IN"/>
-                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                <rect key="frame" x="0.0" y="460" width="400" height="49"/>
-                            </variation>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yP9-35-CHJ">
                             <rect key="frame" x="0.0" y="267" width="240" height="30"/>
                             <state key="normal" title="Forgot your password?"/>
-                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                <rect key="frame" x="0.0" y="509" width="400" height="30"/>
-                            </variation>
                         </button>
                     </subviews>
-                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="539"/>
-                    </variation>
                 </stackView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -93,11 +85,11 @@
                     <include reference="Yox-UZ-E8Y"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="fqd-eN-V1x"/>
-                    <include reference="sUV-L2-BdN"/>
                     <include reference="0uB-m5-xKk"/>
                     <include reference="Hdg-Kj-q3K"/>
                     <include reference="Zrz-zd-6XF"/>
+                    <include reference="fqd-eN-V1x"/>
+                    <include reference="sUV-L2-BdN"/>
                 </mask>
             </variation>
         </view>
