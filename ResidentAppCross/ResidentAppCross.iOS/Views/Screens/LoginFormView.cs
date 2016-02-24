@@ -6,15 +6,15 @@ using UIKit;
 
 namespace ResidentAppCross.iOS.Views
 {
-    public partial class LoginView : ViewBase
+    public partial class LoginFormView : ViewBase
     {
-        public LoginView() : base("LoginView", null)
+        public LoginFormView() : base("LoginFormView", null)
         {
         }
 
-        public new LoginViewModel ViewModel 
+        public new LoginFormViewModel ViewModel 
         {
-            get { return (LoginViewModel)base.ViewModel; }
+            get { return (LoginFormViewModel)base.ViewModel; }
             set { base.ViewModel = value; }
         }
 
@@ -28,9 +28,11 @@ namespace ResidentAppCross.iOS.Views
         {
             base.ViewDidLoad();
 
-            this.NavigationItem.SetHidesBackButton(true, false);
 
-            var b = this.CreateBindingSet<LoginView, LoginViewModel>();
+            //Hide nav bar
+            this.NavigationController.SetNavigationBarHidden(true, false);
+
+            var b = this.CreateBindingSet<LoginFormView, LoginFormViewModel>();
             b.Bind(UsernameTextField).TwoWay().For(v=> v.Text).To(vm => vm.Username);
             b.Bind(PasswordTextField).TwoWay().For(v=> v.Text).To(vm => vm.Password);
             b.Bind(LoginButton).To(vm => vm.LoginCommand);

@@ -9,7 +9,7 @@ using ResidentAppCross.ViewModels;
 
 namespace ResidentAppCross
 {
-    public class LoginViewModel : ViewModelBase
+    public class LoginFormViewModel : ViewModelBase
     {
         public ILoginManager LoginManager { get; set; }
         private string _username;
@@ -34,7 +34,7 @@ namespace ResidentAppCross
             set { SetProperty(ref _isOperating, value); }
         }
 
-        public LoginViewModel(ILoginManager loginManager)
+        public LoginFormViewModel(ILoginManager loginManager)
         {
             LoginManager = loginManager;
         }
@@ -76,7 +76,7 @@ namespace ResidentAppCross
                 {
                     var httpLocalhostGeneralviews = "http://82.151.208.56:54683/generalviews";
                     ShowViewModel<GenericWebViewModel>(new { url = httpLocalhostGeneralviews });
-                    Debug.WriteLine("Please implement \"RemindPasswordCommand\" @ LoginViewModel");
+                    Debug.WriteLine("Please implement \"RemindPasswordCommand\" @ LoginFormViewModel");
                 });
             }
         }

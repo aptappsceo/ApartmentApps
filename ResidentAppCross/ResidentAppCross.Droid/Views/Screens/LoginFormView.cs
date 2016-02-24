@@ -14,9 +14,9 @@ namespace ResidentAppCross.Droid.Views
     public class LoginView : ViewBase
     {
 
-        public new LoginViewModel ViewModel
+        public new LoginFormViewModel ViewModel
         {
-            get { return (LoginViewModel)base.ViewModel; }
+            get { return (LoginFormViewModel)base.ViewModel; }
             set { base.ViewModel = value; }
         }
 

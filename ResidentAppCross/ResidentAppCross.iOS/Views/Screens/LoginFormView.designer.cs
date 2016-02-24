@@ -12,7 +12,7 @@ using UIKit;
 namespace ResidentAppCross.iOS.Views
 {
 	[Register ("LoginView")]
-	partial class LoginView
+	partial class LoginFormView
 	{
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]

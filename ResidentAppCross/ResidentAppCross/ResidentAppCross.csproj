@@ -83,18 +83,18 @@
     <Compile Include="Services\ApplicationContext.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\IQRService.cs" />
-    <Compile Include="ViewModels\BadgeType.cs" />
+    <Compile Include="ViewModels\Data\BadgeType.cs" />
     <Compile Include="ViewModels\GenericWebViewModel.cs" />
-    <Compile Include="ViewModels\HomeMenuItemViewModel.cs" />
-    <Compile Include="ViewModels\HomeMenuViewModel.cs" />
+    <Compile Include="ViewModels\Screens\HomeMenuItemViewModel.cs" />
+    <Compile Include="ViewModels\Screens\HomeMenuViewModel.cs" />
     <Compile Include="IQueryHomeMenuItems.cs" />
-    <Compile Include="ViewModels\ImageBundleViewModel.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Data\ImageBundleViewModel.cs" />
+    <Compile Include="ViewModels\Forms\LoginFormViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceClient\ILoginManager.cs" />
-    <Compile Include="ViewModels\MaintenanceRequestTypeSelectionViewModel.cs" />
-    <Compile Include="ViewModels\MaintenanceRequestTypeViewModel.cs" />
-    <Compile Include="ViewModels\MaintenanceRequestViewModel.cs" />
+    <Compile Include="ViewModels\Forms\MaintenanceStartFormViewModel.cs" />
+    <Compile Include="ViewModels\Selectors\MaintenanceRequestTypeSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Forms\MaintenanceRequestFormViewModel.cs" />
     <Compile Include="ViewModels\QRScannerViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>

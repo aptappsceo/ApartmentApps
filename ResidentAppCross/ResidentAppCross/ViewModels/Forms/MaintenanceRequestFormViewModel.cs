@@ -19,7 +19,7 @@ using ResidentAppCross.Services;
 namespace ResidentAppCross.ViewModels
 {
 
-    public class MaintenanceRequestViewModel : ViewModelBase
+    public class MaintenanceRequestFormViewModel : ViewModelBase
     {
 
         private IApartmentAppsAPIService _service;
@@ -32,7 +32,7 @@ namespace ResidentAppCross.ViewModels
         private LookupPairModel _selectedRequestType;
         private string _comments;
 
-        public MaintenanceRequestViewModel(IApartmentAppsAPIService service, IImageService imageService)
+        public MaintenanceRequestFormViewModel(IApartmentAppsAPIService service, IImageService imageService)
         {
             _service = service;
             _imageService = imageService;

@@ -1,32 +1,35 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Linq;
+using Foundation;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
 using ResidentAppCross.iOS.Extensions;
 using ResidentAppCross.iOS.Views;
+using ResidentAppCross.iOS.Views.PhotoGallery;
 using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.ViewModels;
 using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	public partial class MaintenanceRequestView : ViewBase
+	public partial class MaintenanceRequestFormView : ViewBase
 	{
-		public MaintenanceRequestView () : base ("MaintenanceRequestView", null)
+		public MaintenanceRequestFormView () : base ("MaintenanceRequestFormView", null)
 		{
 
             this.DelayBind(() =>
             {
-                var b = this.CreateBindingSet<MaintenanceRequestView, MaintenanceRequestViewModel>();
+                var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
 
-                // b.Bind(CommentsTextField).TwoWay().For(v => v.Text).To(vm => vm.Comments);
-                PhotosContainer.HeightAnchor.ConstraintEqualTo(150);
 
+                b.Bind(CommentsTextView).TwoWay().For(v => v.Text).To(vm => vm.Comments);
+             
                 ViewModel.ImagesToUpload.RawImages.CollectionChanged += ImagesChanged;
 
                 b.Bind(RequestTypeSelectionButton.TitleLabel).For(v => v.Text).To(vm => vm.SelectedRequestType.Value);
                 b.Bind(AddPhotoButton).To(vm => vm.AddPhotoCommand);
+
 
                 RequestTypeSelectionButton.TouchUpInside += (sender, ea) =>
                 {
@@ -36,30 +39,24 @@ namespace ResidentAppCross.iOS
                 b.Apply();
 
 
+                PetTypeSelector.RemoveAllSegments();
+
+                PetTypeSelector.InsertSegment("No Pet",0,false);
+                PetTypeSelector.InsertSegment("Yes, Contained",1,false);
+                PetTypeSelector.InsertSegment("Yes, Free",2,false);
+
             });
 
 		}
 
         private void ImagesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                ImageAdded(e.NewItems[0] as ImageBundleItemViewModel);
-            }
+            PhotoGrid.ReloadData();
         }
 
-	    private void ImageAdded(ImageBundleItemViewModel newItem)
+        public new MaintenanceRequestFormViewModel ViewModel
 	    {
-            var imageView = new UIImageView();
-            imageView.Image = newItem.Data.ToImage();
-            PhotosContainer.AddArrangedSubview(imageView);
-            View.LayoutIfNeeded();
-            View.LayoutSubviews();
-	    }
-
-	    public new MaintenanceRequestViewModel ViewModel
-	    {
-	        get { return (MaintenanceRequestViewModel) base.ViewModel; }
+	        get { return (MaintenanceRequestFormViewModel) base.ViewModel; }
 	        set { base.ViewModel = value; }
 	    }
 
@@ -99,11 +96,32 @@ namespace ResidentAppCross.iOS
 		{
 			base.ViewDidLoad ();
 
+            this.NavigationController.SetNavigationBarHidden(false, true);
+            this.NavigationController.NavigationBar.BarTintColor = new UIColor(20f/255,92f/255,153f/255,1f);
+            this.Title = "Maintenance Request";
 
+            this.NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem(
+                UIImage.FromBundle("HomeIcon"), UIBarButtonItemStyle.Plain, (sender, args) => {
+                NavigationController.PopViewController(true);
+            }), true);
+
+
+	        this.NavigationItem.SetRightBarButtonItem(
+	            new UIBarButtonItem("Done"
+	                , UIBarButtonItemStyle.Plain
+	                , (sender, args) => {
+                        ViewModel.DoneCommand.Execute(null);
+	                })
+	            , true);
+
+
+            PhotoGrid.RegisterClassForCell(typeof(ImageCell), (NSString)ImageCell.CellIdentifier);
+            PhotoGrid.Source = new PhotoGallerySource(ViewModel.ImagesToUpload);
+            PhotoGrid.ReloadData();
             // Perform any additional setup after loading the view, typically from a nib.
         }
 
-		public override void DidReceiveMemoryWarning ()
+        public override void DidReceiveMemoryWarning ()
 		{
 			base.DidReceiveMemoryWarning ();
 			// Release any cached data, images, etc that aren't in use.

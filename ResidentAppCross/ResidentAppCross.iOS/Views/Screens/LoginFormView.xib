@@ -6,7 +6,7 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginView">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginFormView">
             <connections>
                 <outlet property="LoginButton" destination="U5q-ft-MlE" id="name-outlet-U5q-ft-MlE"/>
                 <outlet property="PasswordTextField" destination="xdT-3P-guT" id="name-outlet-xdT-3P-guT"/>
@@ -22,7 +22,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Yox-UZ-E8Y">
-                    <rect key="frame" x="20" y="20" width="240" height="360"/>
+                    <rect key="frame" x="20" y="20" width="240" height="316"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HRO-Ht-Dvv">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="177"/>
@@ -40,23 +40,23 @@
                                 </mask>
                             </variation>
                         </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vLD-ts-zbK">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vLD-ts-zbK" fixedFrame="YES">
                             <rect key="frame" x="0.0" y="177" width="240" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xdT-3P-guT">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xdT-3P-guT" fixedFrame="YES">
                             <rect key="frame" x="0.0" y="207" width="240" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-ft-MlE">
-                            <rect key="frame" x="0.0" y="237" width="240" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-ft-MlE" fixedFrame="YES">
+                            <rect key="frame" x="0.0" y="237" width="240" height="49"/>
                             <fontDescription key="fontDescription" type="system" pointSize="31"/>
                             <state key="normal" title="LOG IN"/>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yP9-35-CHJ">
-                            <rect key="frame" x="0.0" y="267" width="240" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yP9-35-CHJ" fixedFrame="YES">
+                            <rect key="frame" x="0.0" y="286" width="240" height="30"/>
                             <state key="normal" title="Forgot your password?"/>
                         </button>
                     </subviews>
@@ -96,5 +96,23 @@
     </objects>
     <resources>
         <image name="Views/LOGIN.png" width="640" height="1136"/>
+        <image name="AccountIcon.png" width="160" height="160"/>
+        <image name="AddIcon.png" width="160" height="160"/>
+        <image name="AppartmentAppsIcon.png" width="160" height="160"/>
+        <image name="background.png" width="640" height="1136"/>
+        <image name="HouseIcon.png" width="160" height="160"/>
+        <image name="Icon.png" width="96" height="96"/>
+        <image name="LOGIN.png" width="640" height="1136"/>
+        <image name="logo_03.png" width="375" height="273"/>
+        <image name="MaintenaceIcon.png" width="160" height="160"/>
+        <image name="MaintenanceRequestMainIcon.png" width="160" height="160"/>
+        <image name="OfficerIcon.png" width="160" height="160"/>
+        <image name="PartnersIcon.png" width="160" height="160"/>
+        <image name="PayIcon.png" width="160" height="160"/>
+        <image name="SecurityIcon.png" width="128" height="128"/>
+        <image name="SettingsIcon.png" width="160" height="160"/>
+        <image name="SignOutIcon.png" width="160" height="160"/>
+        <image name="UsernameIcon.png" width="128" height="128"/>
+        <image name="WhiteHomeIcon.png" width="160" height="160"/>
     </resources>
 </document>

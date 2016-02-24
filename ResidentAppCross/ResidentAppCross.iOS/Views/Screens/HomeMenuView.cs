@@ -22,13 +22,18 @@ namespace ResidentAppCross.iOS
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-            this.NavigationItem.SetHidesBackButton(true, false);
+
+
+            //Hide navbars
+            this.NavigationController.SetNavigationBarHidden(true, false);
+
             HomeMenuTable.Source = new HomeMenuTableSource() { Items = ViewModel.MenuItems.ToArray() };
 
-			// Perform any additional setup after loading the view, typically from a nib.
-		}
 
-		public override void DidReceiveMemoryWarning ()
+            // Perform any additional setup after loading the view, typically from a nib.
+        }
+
+        public override void DidReceiveMemoryWarning ()
 		{
 			base.DidReceiveMemoryWarning ();
 			// Release any cached data, images, etc that aren't in use.

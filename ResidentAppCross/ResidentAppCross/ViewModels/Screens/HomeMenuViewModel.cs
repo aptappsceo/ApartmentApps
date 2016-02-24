@@ -117,7 +117,7 @@ namespace ResidentAppCross
 
         public ICommand MaintenaceRequestCommand
         {
-            get { return new MvxCommand(() => { ShowViewModel<MaintenanceRequestViewModel>(); }); }
+            get { return new MvxCommand(() => { ShowViewModel<MaintenanceRequestFormViewModel>(); }); }
         }
 
         public ICommand RequestCourtesyOfficerCommand

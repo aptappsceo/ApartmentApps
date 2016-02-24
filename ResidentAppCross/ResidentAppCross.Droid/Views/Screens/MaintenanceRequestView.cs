@@ -13,9 +13,9 @@ namespace ResidentAppCross.Droid.Views
     public class MaintenanceRequestView : ViewBase
     {
 
-        public new MaintenanceRequestViewModel ViewModel
+        public new MaintenanceRequestFormViewModel ViewModel
         {
-            get { return (MaintenanceRequestViewModel) base.ViewModel; }
+            get { return (MaintenanceRequestFormViewModel) base.ViewModel; }
             set { base.ViewModel = value; }
         }
 

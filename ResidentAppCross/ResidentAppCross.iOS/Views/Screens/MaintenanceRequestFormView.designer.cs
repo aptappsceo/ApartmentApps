@@ -11,9 +11,27 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("MaintenanceRequestView")]
-	partial class MaintenanceRequestView
+	[Register ("MaintenanceRequestFormView")]
+	partial class MaintenanceRequestFormView
 	{
+		[Outlet]
+		UIKit.UIButton AddPhotoButton { get; set; }
+
+		[Outlet]
+		UIKit.UITextField CommentsTextField { get; set; }
+
+		[Outlet]
+		UIKit.UITextView CommentsTextView { get; set; }
+
+		[Outlet]
+		UIKit.UISegmentedControl PetTypeSelector { get; set; }
+
+		[Outlet]
+		UIKit.UIStackView PhotosContainer { get; set; }
+
+		[Outlet]
+		UIKit.UIButton RequestTypeSelectionButton { get; set; }
+
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
 		UICollectionView PhotoGrid { get; set; }
@@ -35,10 +53,6 @@ namespace ResidentAppCross.iOS
 			if (PhotoGrid != null) {
 				PhotoGrid.Dispose ();
 				PhotoGrid = null;
-			}
-			if (PhotosContainer != null) {
-				PhotosContainer.Dispose ();
-				PhotosContainer = null;
 			}
 			if (RequestTypeSelectionButton != null) {
 				RequestTypeSelectionButton.Dispose ();
