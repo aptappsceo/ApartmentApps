@@ -14,12 +14,33 @@ namespace ResidentAppCross.ViewModels
     public class ViewModelBase : MvxViewModel
     {
         private IMvxMessenger _eventAggregator;
+        private static Stack<Action<object>> _configurationStack;
 
         public IMvxMessenger EventAggregator
         {
             get { return _eventAggregator ?? (_eventAggregator = Mvx.Resolve<IMvxMessenger>()); }
             set { _eventAggregator = value; }
         }
+
+        public void ShowViewModel<T>(Action<T> configuration) where T : ViewModelBase
+        {
+            ConfigurationStack.Push(obj => { configuration((T) obj); });
+            ShowViewModel<T>(new { requiresInit = true });
+        }
+
+        private static Stack<Action<object>> ConfigurationStack
+        {
+            get { return _configurationStack ?? (_configurationStack = new Stack<Action<object>>()); }
+            set { _configurationStack = value; }
+        }
+
+        public void Init(bool requiresInit = false)
+        {
+            if (!requiresInit) return;
+            var config = ConfigurationStack.Pop();
+            config(this);
+        }
+        
     }
 
     public static class ViewModelExtensions

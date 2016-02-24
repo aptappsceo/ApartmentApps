@@ -10,7 +10,7 @@ using ResidentAppCross.ViewModels;
 
 namespace ResidentAppCross
 {
-    public class HomeMenuViewModel : MvxViewModel
+    public class HomeMenuViewModel : ViewModelBase
     {
         public IApartmentAppsAPIService Data { get; set; }
 
@@ -82,8 +82,16 @@ namespace ResidentAppCross
             });
         }
 
+        public string Username
+        {
+            get { return _username; }
+            set { SetProperty(ref _username, value); }
+        }
+
         private ObservableCollection<HomeMenuItemViewModel> _menuItems =
             new ObservableCollection<HomeMenuItemViewModel>();
+
+        private string _username;
 
         public ObservableCollection<HomeMenuItemViewModel> MenuItems
         {

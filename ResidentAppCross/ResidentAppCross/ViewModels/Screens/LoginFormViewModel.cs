@@ -53,7 +53,10 @@ namespace ResidentAppCross
                     }
                 })
                 .OnStart("Logging In... :)")
-                .OnComplete("Logged In!", () => ShowViewModel<HomeMenuViewModel>());
+                .OnComplete("Logged In!", () => ShowViewModel<HomeMenuViewModel>(homeViewModel =>
+                {
+                    homeViewModel.Username = Username;
+                }));
             }
         }
 

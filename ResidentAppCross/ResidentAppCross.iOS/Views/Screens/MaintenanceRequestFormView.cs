@@ -30,14 +30,12 @@ namespace ResidentAppCross.iOS
                 b.Bind(RequestTypeSelectionButton.TitleLabel).For(v => v.Text).To(vm => vm.SelectedRequestType.Value);
                 b.Bind(AddPhotoButton).To(vm => vm.AddPhotoCommand);
 
-
                 RequestTypeSelectionButton.TouchUpInside += (sender, ea) =>
                 {
                     ShowRequestSelection();
                 };
 
                 b.Apply();
-
 
                 PetTypeSelector.RemoveAllSegments();
 

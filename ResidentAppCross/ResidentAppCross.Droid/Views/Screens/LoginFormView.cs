@@ -20,8 +20,6 @@ namespace ResidentAppCross.Droid.Views
             set { base.ViewModel = value; }
         }
 
-       
-
         protected override void OnViewModelSet()
         {
 

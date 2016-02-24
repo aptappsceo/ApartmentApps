@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
 using ResidentAppCross.Commands;
-using ResidentAppCross.Events;
 using ResidentAppCross.Services;
-using ResidentAppCross.ViewModels.Data;
 
 namespace ResidentAppCross.ViewModels
 {
@@ -44,7 +34,6 @@ namespace ResidentAppCross.ViewModels
         {
             throw new NotImplementedException();
             //TODO: Implement Maintenance Pause Get Maintenance Request By ID
-
         }
 
         public int MaintenanceRequestId

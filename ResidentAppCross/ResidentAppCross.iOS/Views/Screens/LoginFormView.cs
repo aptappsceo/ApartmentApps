@@ -27,8 +27,6 @@ namespace ResidentAppCross.iOS.Views
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-
             //Hide nav bar
             this.NavigationController.SetNavigationBarHidden(true, false);
 
