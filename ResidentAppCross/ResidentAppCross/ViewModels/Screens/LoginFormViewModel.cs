@@ -43,28 +43,17 @@ namespace ResidentAppCross
         {
             get
             {
-                return new MvxCommand(async () =>
+                return this.TaskCommand(async context =>
                 {
-                    this.Publish(new TaskStarted(this) { Label = "Connecting..."});
-
                     var username = string.IsNullOrEmpty(Username) ? "micahosborne@gmail.com" : Username;
                     var password = string.IsNullOrEmpty(Password) ? "Asdf1234!" : Password;
-
-                    if (await LoginManager.LoginAsync(username, password))
+                    if (!await LoginManager.LoginAsync(username, password))
                     {
-                        this.Publish(new TaskComplete(this) {Label = "Logged In", ShouldPrompt = true, OnPrompted =
-                            () =>
-                            {
-                                ShowViewModel<HomeMenuViewModel>();
-                            }
-                        });
-                            //This is where I fell in love with async/await <3
+                        context.FailTask("Invalid login or password!");
                     }
-                    else
-                    {
-                        this.Publish(new TaskFailed(this) { Label = "Failed to Log In", ShouldPrompt = true});
-                    }
-                }, () => true);
+                })
+                .OnStart("Logging In... :)")
+                .OnComplete("Logged In!", () => ShowViewModel<HomeMenuViewModel>());
             }
         }
 

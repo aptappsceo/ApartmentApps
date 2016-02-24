@@ -252,34 +252,27 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <InterfaceDefinition Include="Main.storyboard" />
     <InterfaceDefinition Include="Views\Screens\HomeMenuView.xib" />
-    <InterfaceDefinition Include="Views\Forms\MaintenanceRequestFormView.xib" />
+    <InterfaceDefinition Include="Views\Screens\MaintenanceRequestFormView.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
-    <InterfaceDefinition Include="Views\Forms\LoginFormView.xib" />
+    <InterfaceDefinition Include="Views\Screens\LoginFormView.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\MessengerPluginBootstrap.cs" />
     <Compile Include="Bootstrap\PictureChooserPluginBootstrap.cs" />
     <Compile Include="Extensions\UIImageExtensions.cs" />
-    <Compile Include="LoginFormView.cs" />
-    <Compile Include="LoginFormView.designer.cs">
-      <DependentUpon>LoginFormView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Setup.cs" />
-    <Compile Include="ViewController.cs" />
-    <Compile Include="ViewController.designer.cs">
-      <DependentUpon>ViewController.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Views\PhotoGallery\PhotoGalleryCells.cs" />
     <Compile Include="Views\PhotoGallery\PhotoGallerySource.cs" />
     <Compile Include="Views\TableSources\HomeMenuTableSource.cs" />
-    <Compile Include="Views\Forms\LoginFormView.cs" />
-    <Compile Include="Views\Forms\LoginFormView.designer.cs">
+    <Compile Include="Views\Screens\LoginFormView.cs" />
+    <Compile Include="Views\Screens\LoginFormView.designer.cs">
       <DependentUpon>LoginFormView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TableSources\LookUpPairSelectionTableSource.cs" />
@@ -288,8 +281,8 @@
     <Compile Include="Views\Screens\HomeMenuView.designer.cs">
       <DependentUpon>HomeMenuView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Forms\MaintenanceRequestFormView.cs" />
-    <Compile Include="Views\Forms\MaintenanceRequestFormView.designer.cs">
+    <Compile Include="Views\Screens\MaintenanceRequestFormView.cs" />
+    <Compile Include="Views\Screens\MaintenanceRequestFormView.designer.cs">
       <DependentUpon>MaintenanceRequestFormView.cs</DependentUpon>
     </Compile>
   </ItemGroup>

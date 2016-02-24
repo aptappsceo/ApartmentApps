@@ -3,12 +3,12 @@ using UIKit;
 
 namespace ResidentAppCross.iOS.Views.PhotoGallery
 {
-    public class ImageCell : UICollectionViewCell
+    public class PhotoGalleryCells : UICollectionViewCell
     {
         public const string CellIdentifier = "PhotoGalleryImageCell";
 
         [Export("initWithFrame:")]
-        public ImageCell(System.Drawing.RectangleF frame) : base(frame)
+        public PhotoGalleryCells(System.Drawing.RectangleF frame) : base(frame)
         {
             this.Initialize();
         }

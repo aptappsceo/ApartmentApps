@@ -40,9 +40,17 @@ namespace ResidentAppCross.Events
 
     public class TaskFailed : MvxMessage
     {
-        public string Label { get; set; }
+        private string _label;
+
+        public string Label
+        {
+            get { return _label ?? (Reason?.Message); }
+            set { _label = value; }
+        }
+
         public bool ShouldPrompt { get; set; }
-        public Action OnPrompted { get; set; }
+        public Exception Reason { get; set; }
+        public Action<Exception> OnPrompted { get; set; }
 
         public TaskFailed(object sender) : base(sender)
         {

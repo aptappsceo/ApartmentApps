@@ -48,32 +48,21 @@ namespace ResidentAppCross.ViewModels
             //            });
             Task.Run(async () =>
             {
-                this.Publish(new TaskStarted(this)
-                {
-                    Label = "Loading Request Types..."
-                });
-
+                this.StartTask("Loading Request Types...");
+               
                 HttpOperationResponse<IList<LookupPairModel>> op;
                 try
                 {
                     op = await _service.Maitenance.GetMaitenanceRequestTypesWithOperationResponseAsync();
                     RequestTypes.AddRange(op.Body);
                     SelectedRequestType = RequestTypes.FirstOrDefault();
-                    this.Publish(new TaskComplete(this));
+                    this.CompleteTask();
                 }
                 catch(Exception ex)
                 {
-                    this.Publish(new TaskFailed(this)
-                    {
-                        Label = "Loading Request Types...",
-                        ShouldPrompt = true,
-                        OnPrompted = () => Close(this)
-                    });
+                    this.FailTaskWithPrompt("Loading Request Types...", exp=>Close(this));
                     return;
                 }
-
-             
-
             });
             
         }
@@ -94,46 +83,18 @@ namespace ResidentAppCross.ViewModels
         {
             get
             {
-                return new MvxCommand(async () =>
+                return this.TaskCommand(async context =>
                 {
-                    var c = Comments;
-                    this.Publish(new TaskStarted(this) { Label = "Sending Request..."});
-                    object result;
-                    try
+                    await _service.Maitenance.SubmitRequestAsync(new MaitenanceRequestModel()
                     {
-                        result = await _service.Maitenance.SubmitRequestAsync(new MaitenanceRequestModel()
-                        {
-                            Comments = c,
-                            MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
-                            Images =
-                                ImagesToUpload.RawImages.Select(p => Encoding.UTF8.GetString(p.Data, 0, p.Data.Length))
-                                    .ToList()
-                        });
-                    }
-                    catch (Exception ex)
-                    {
-                        this.Publish(new TaskFailed(this)
-                        {
-                            Label = string.Format("Failed to send request: {0}", ex.Message),
-                            ShouldPrompt = true,
-                            OnPrompted = () =>
-                            {
-                             Close(this);
-                            }
-                        });
-                        return;
-                    }
-
-                    this.Publish(new TaskComplete(this)
-                    {
-                        Label = "Request Sent",
-                        ShouldPrompt = true,
-                        OnPrompted = () =>
-                        {
-                            Close(this);
-                        }
+                        Comments = Comments,
+                        MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
+                        Images =
+                            ImagesToUpload.RawImages.Select(p => Encoding.UTF8.GetString(p.Data, 0, p.Data.Length))
+                                .ToList()
                     });
-                });
+                }).OnStart("Sending Request...")
+                .OnComplete("Request Sent", ()=>Close(this));
             }
         }
 

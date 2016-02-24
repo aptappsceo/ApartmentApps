@@ -75,6 +75,7 @@
     <Compile Include="ApartmentApps.API.Service\ValuesExtensions.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\StubCommands.cs" />
+    <Compile Include="Commands\TaskCommand.cs" />
     <Compile Include="Events\ViewProgressEvents.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Interfaces\IDisposableContainer.cs" />
@@ -84,17 +85,19 @@
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\IQRService.cs" />
     <Compile Include="ViewModels\Data\BadgeType.cs" />
+    <Compile Include="ViewModels\Data\ChangeViewModel.cs" />
     <Compile Include="ViewModels\GenericWebViewModel.cs" />
     <Compile Include="ViewModels\Screens\HomeMenuItemViewModel.cs" />
     <Compile Include="ViewModels\Screens\HomeMenuViewModel.cs" />
     <Compile Include="IQueryHomeMenuItems.cs" />
     <Compile Include="ViewModels\Data\ImageBundleViewModel.cs" />
-    <Compile Include="ViewModels\Forms\LoginFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\LoginFormViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceClient\ILoginManager.cs" />
-    <Compile Include="ViewModels\Forms\MaintenanceStartFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\MaintenancePauseFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\MaintenanceStartFormViewModel.cs" />
     <Compile Include="ViewModels\Selectors\MaintenanceRequestTypeSelectionViewModel.cs" />
-    <Compile Include="ViewModels\Forms\MaintenanceRequestFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\MaintenanceRequestFormViewModel.cs" />
     <Compile Include="ViewModels\QRScannerViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>

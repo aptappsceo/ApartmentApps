@@ -115,7 +115,7 @@ namespace ResidentAppCross.iOS
 	            , true);
 
 
-            PhotoGrid.RegisterClassForCell(typeof(ImageCell), (NSString)ImageCell.CellIdentifier);
+            PhotoGrid.RegisterClassForCell(typeof(PhotoGalleryCells), (NSString)PhotoGalleryCells.CellIdentifier);
             PhotoGrid.Source = new PhotoGallerySource(ViewModel.ImagesToUpload);
             PhotoGrid.ReloadData();
             // Perform any additional setup after loading the view, typically from a nib.

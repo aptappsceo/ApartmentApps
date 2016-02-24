@@ -46,7 +46,7 @@ namespace ResidentAppCross.iOS.Views
 
             this.OnViewModelEvent<TaskFailed>(evt =>
             {
-                this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.OnPrompted);
+                this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted);
             });
         }
 
@@ -79,14 +79,14 @@ namespace ResidentAppCross.iOS.Views
             }
         }
 
-        public static void SetTaskFailed(this ViewBase view, bool prompt, string label = null, Action onPrompted = null) 
+        public static void SetTaskFailed(this ViewBase view, bool prompt, string label = null, Exception reson = null, Action<Exception> onPrompted = null) 
     {
             BTProgressHUD.Dismiss();
             if (prompt)
             {
                 var alertWithBody = MBAlertView.AlertWithBody(label, "Ok", () =>
                 {
-                    onPrompted?.Invoke();
+                    onPrompted?.Invoke(reson);
                 });
                 alertWithBody.BackgroundAlpha = 0.7f;
                 alertWithBody.AddToDisplayQueue();

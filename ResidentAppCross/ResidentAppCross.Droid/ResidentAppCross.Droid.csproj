@@ -155,12 +155,12 @@
     <Compile Include="Services\QRService.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="Ui\BindableWebView.cs" />
-    <Compile Include="Views\GenericWebView.cs" />
-    <Compile Include="Views\LoginView.cs" />
-    <Compile Include="Views\HomeMenuView.cs" />
-    <Compile Include="Views\MaintenanceRequestTypeSelectionView.cs" />
-    <Compile Include="Views\MaintenanceRequestView.cs" />
-    <Compile Include="Views\QRScannerView.cs" />
+    <Compile Include="Views\Screens\GenericWebView.cs" />
+    <Compile Include="Views\Screens\LoginFormView.cs" />
+    <Compile Include="Views\Screens\HomeMenuView.cs" />
+    <Compile Include="Views\Screens\MaintenanceRequestTypeSelectionView.cs" />
+    <Compile Include="Views\Screens\MaintenanceRequestView.cs" />
+    <Compile Include="Views\Screens\QRScannerView.cs" />
     <Compile Include="Views\ViewBase.cs" />
   </ItemGroup>
   <ItemGroup>

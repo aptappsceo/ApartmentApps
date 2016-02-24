@@ -11,7 +11,7 @@ namespace ResidentAppCross.Droid.Views
         MainLauncher = true, 
         Icon = "@drawable/accounticon",
         NoHistory = true)]
-    public class LoginView : ViewBase
+    public class LoginFormView : ViewBase
     {
 
         public new LoginFormViewModel ViewModel

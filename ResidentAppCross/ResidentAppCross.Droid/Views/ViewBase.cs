@@ -41,7 +41,7 @@ namespace ResidentAppCross.Droid.Views
 
             this.OnViewModelEvent<TaskFailed>(evt =>
             {
-                this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.OnPrompted);
+                this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted);
             });
         }
 
@@ -82,7 +82,7 @@ namespace ResidentAppCross.Droid.Views
             });
         }
 
-        public static void SetTaskFailed(this ViewBase view, bool prompt, string label = null, Action onPrompted = null)
+        public static void SetTaskFailed(this ViewBase view, bool prompt, string label = null,Exception reason = null,  Action<Exception> onPrompted = null)
         {
             if (!prompt)
             {
@@ -92,7 +92,7 @@ namespace ResidentAppCross.Droid.Views
             AndHUD.Shared.ShowError(view, label, MaskType.Black, clickCallback: () =>
             {
                 AndHUD.Shared.Dismiss(view);
-                onPrompted?.Invoke();
+                onPrompted?.Invoke(reason);
             });
         }
 
