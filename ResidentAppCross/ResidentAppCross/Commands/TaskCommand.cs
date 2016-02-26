@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
+using MvvmCross.Platform.Core;
 using ResidentAppCross.ViewModels;
 
 namespace ResidentAppCross.Commands
@@ -12,9 +15,12 @@ namespace ResidentAppCross.Commands
     public class TaskCommand : MvxCommandBase, IMvxCommand, ICommand, ITaskCommandContext
     {
 
+        //public static IMvxMainThreadDispatcher Dispatcher => _dispatcher ?? (_dispatcher = Mvx.Resolve<IMvxMainThreadDispatcher>());
+
         private readonly Func<bool> _canExecute;
         private readonly Func<ITaskCommandContext, Task> _execute;
         private readonly ViewModelBase _owner;
+        private static IMvxMainThreadDispatcher _dispatcher;
 
         public TaskCommand(ViewModelBase owner, Func<ITaskCommandContext, Task> execute) : this(owner, execute, (Func<bool>) null)
         {
@@ -44,21 +50,26 @@ namespace ResidentAppCross.Commands
             if (!this.CanExecute(parameter))
                 return;
 
+            var act = _execute;
+            Task.Run(ExecuteTask);
+        }
 
-            Task.Run(async () =>
+        private async Task ExecuteTask()
+        {
+            Dispatcher.RequestMainThreadAction(ProcessStart);
+            Debug.WriteLine("Invoked outside of try");
+            try
             {
-                ProcessStart();
-                try
-                {
-                    await this._execute(this);
-                    ProcessComplete();
-                }
-                catch (Exception ex)
-                {
-                    ProcessFail(ex);
-                }
+                Debug.WriteLine("Invoked inside of try");
 
-            });
+                await _execute(this);
+            }
+            catch (Exception ex)
+            {
+                Dispatcher.RequestMainThreadAction(()=> { ProcessFail(ex); });
+                return;
+            }
+            Dispatcher.RequestMainThreadAction(ProcessComplete);
         }
 
         private void ProcessFail(Exception exception)

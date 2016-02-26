@@ -177,16 +177,36 @@
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png">
       <InProject>false</InProject>
     </ImageAsset>
-    <ImageAsset Include="Resources\Icons.xcassets\HouseIcon.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Icons.xcassets\HouseIcon.imageset\HouseIcon.png" />
-    <ImageAsset Include="Resources\Icons.xcassets\MaintenaceIcon.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Icons.xcassets\MaintenaceIcon.imageset\MaintenaceIcon.png" />
-    <ImageAsset Include="Resources\Icons.xcassets\OfficerIcon.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Icons.xcassets\OfficerIcon.imageset\OfficerIcon.png" />
-    <ImageAsset Include="Resources\Icons.xcassets\PartnersIcon.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Icons.xcassets\PartnersIcon.imageset\PartnersIcon.png" />
-    <ImageAsset Include="Resources\Icons.xcassets\PayIcon.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Icons.xcassets\PayIcon.imageset\PayIcon.png" />
+    <ImageAsset Include="Resources\Icons.xcassets\HouseIcon.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Icons.xcassets\HouseIcon.imageset\HouseIcon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Icons.xcassets\MaintenaceIcon.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Icons.xcassets\MaintenaceIcon.imageset\MaintenaceIcon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Icons.xcassets\OfficerIcon.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Icons.xcassets\OfficerIcon.imageset\OfficerIcon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Icons.xcassets\PartnersIcon.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Icons.xcassets\PartnersIcon.imageset\PartnersIcon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Icons.xcassets\PayIcon.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Icons.xcassets\PayIcon.imageset\PayIcon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="Resources\ITunesArtwork" />
@@ -302,6 +322,11 @@
   <ItemGroup>
     <BundleResource Include="Resources\HouseIcon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ResidentAppCross\ResidentAppCross.csproj">
+      <Project>{84E46F6D-1424-48B7-8966-B6FD6153FEE3}</Project>
+      <Name>ResidentAppCross</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

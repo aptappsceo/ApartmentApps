@@ -50,9 +50,3 @@ D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.csprojResolveAssemblyReference.cache
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
