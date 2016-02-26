@@ -1,44 +1,65 @@
-// WARNING
+﻿// WARNING
 //
-// This file has been generated automatically by Xamarin Studio from the outlets and
-// actions declared in your storyboard file.
-// Manual changes to this file will not be maintained.
+// This file has been generated automatically by Xamarin Studio to store outlets and
+// actions made in the UI designer. If it is removed, they will be lost.
+// Manual changes to this file may not be handled correctly.
 //
 using Foundation;
-using System;
 using System.CodeDom.Compiler;
-using UIKit;
 
-namespace ResidentAppCross.iOS.Views
+namespace ResidentAppCross.iOS
 {
-	[Register ("LoginView")]
+	[Register ("LoginFormView")]
 	partial class LoginFormView
 	{
 		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton LoginButton { get; set; }
+		UIKit.UIButton ForgotPasswordButton { get; set; }
 
 		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UITextField PasswordTextField { get; set; }
+		UIKit.UIButton LoginButton { get; set; }
 
 		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UITextField UsernameTextField { get; set; }
+		UIKit.UITextField LoginTextField { get; set; }
 
+		[Outlet]
+		UIKit.UITextField PasswordTextField { get; set; }
+
+		[Outlet]
+		UIKit.UIButton SignUpButton { get; set; }
+
+		[Outlet]
+		UIKit.UILabel VersionLabel { get; set; }
+		
 		void ReleaseDesignerOutlets ()
 		{
-			if (LoginButton != null) {
-				LoginButton.Dispose ();
-				LoginButton = null;
+			if (LoginTextField != null) {
+				LoginTextField.Dispose ();
+				LoginTextField = null;
 			}
+
 			if (PasswordTextField != null) {
 				PasswordTextField.Dispose ();
 				PasswordTextField = null;
 			}
-			if (UsernameTextField != null) {
-				UsernameTextField.Dispose ();
-				UsernameTextField = null;
+
+			if (LoginButton != null) {
+				LoginButton.Dispose ();
+				LoginButton = null;
+			}
+
+			if (ForgotPasswordButton != null) {
+				ForgotPasswordButton.Dispose ();
+				ForgotPasswordButton = null;
+			}
+
+			if (VersionLabel != null) {
+				VersionLabel.Dispose ();
+				VersionLabel = null;
+			}
+
+			if (SignUpButton != null) {
+				SignUpButton.Dispose ();
+				SignUpButton = null;
 			}
 		}
 	}

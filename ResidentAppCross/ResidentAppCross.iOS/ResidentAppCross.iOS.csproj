@@ -126,72 +126,6 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Resources/Icons.xcassets/HouseIcon.imageset/Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Icons.xcassets/HouseIcon.imageset/HouseIcon.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Icons.xcassets/MaintenaceIcon.imageset/Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Icons.xcassets/MaintenaceIcon.imageset/MaintenaceIcon.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Icons.xcassets/OfficerIcon.imageset/Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Icons.xcassets/OfficerIcon.imageset/OfficerIcon.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Icons.xcassets/PartnersIcon.imageset/Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Icons.xcassets/PartnersIcon.imageset/PartnersIcon.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Icons.xcassets/PayIcon.imageset/Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Icons.xcassets/PayIcon.imageset/PayIcon.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Icon-60@2x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Icon-60@3x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Icon-Small-40@2x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Icon-Small-40@3x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Icon-Small.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Icon-Small@2x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Icon-Small@3x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/LaunchImage.launchimage/Default-568h@2x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/LaunchImage.launchimage/Default-Portrait.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/LaunchImage.launchimage/Default-Portrait@2x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/LaunchImage.launchimage/Default.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources/Images.xcassets/LaunchImage.launchimage/Default@2x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json">
       <InProject>false</InProject>
     </ImageAsset>
@@ -243,6 +177,16 @@
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png">
       <InProject>false</InProject>
     </ImageAsset>
+    <ImageAsset Include="Resources\Icons.xcassets\HouseIcon.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Icons.xcassets\HouseIcon.imageset\HouseIcon.png" />
+    <ImageAsset Include="Resources\Icons.xcassets\MaintenaceIcon.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Icons.xcassets\MaintenaceIcon.imageset\MaintenaceIcon.png" />
+    <ImageAsset Include="Resources\Icons.xcassets\OfficerIcon.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Icons.xcassets\OfficerIcon.imageset\OfficerIcon.png" />
+    <ImageAsset Include="Resources\Icons.xcassets\PartnersIcon.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Icons.xcassets\PartnersIcon.imageset\PartnersIcon.png" />
+    <ImageAsset Include="Resources\Icons.xcassets\PayIcon.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Icons.xcassets\PayIcon.imageset\PayIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="Resources\ITunesArtwork" />
@@ -251,6 +195,7 @@
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <InterfaceDefinition Include="Main.storyboard" />
+    <InterfaceDefinition Include="Views\Screens\LoginFormView.xib" />
     <InterfaceDefinition Include="Views\Screens\HomeMenuView.xib" />
     <InterfaceDefinition Include="Views\Screens\MaintenanceRequestFormView.xib" />
   </ItemGroup>
@@ -259,7 +204,6 @@
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
-    <InterfaceDefinition Include="Views\Screens\LoginFormView.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\MessengerPluginBootstrap.cs" />
@@ -271,12 +215,12 @@
     <Compile Include="Views\PhotoGallery\PhotoGalleryCells.cs" />
     <Compile Include="Views\PhotoGallery\PhotoGallerySource.cs" />
     <Compile Include="Views\TableSources\HomeMenuTableSource.cs" />
+    <Compile Include="Views\TableSources\LookUpPairSelectionTableSource.cs" />
+    <Compile Include="Views\ViewBase.cs" />
     <Compile Include="Views\Screens\LoginFormView.cs" />
     <Compile Include="Views\Screens\LoginFormView.designer.cs">
       <DependentUpon>LoginFormView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TableSources\LookUpPairSelectionTableSource.cs" />
-    <Compile Include="Views\ViewBase.cs" />
     <Compile Include="Views\Screens\HomeMenuView.cs" />
     <Compile Include="Views\Screens\HomeMenuView.designer.cs">
       <DependentUpon>HomeMenuView.cs</DependentUpon>
@@ -302,12 +246,6 @@
       <Version>0.9.2.0</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ResidentAppCross\ResidentAppCross.csproj">
-      <Project>{84e46f6d-1424-48b7-8966-b6fd6153fee3}</Project>
-      <Name>ResidentAppCross</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\WhiteHomeIcon.png" />
@@ -365,4 +303,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Views\Screens\" />
+  </ItemGroup>
 </Project>

@@ -3,116 +3,139 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginFormView">
             <connections>
-                <outlet property="LoginButton" destination="U5q-ft-MlE" id="name-outlet-U5q-ft-MlE"/>
-                <outlet property="PasswordTextField" destination="xdT-3P-guT" id="name-outlet-xdT-3P-guT"/>
-                <outlet property="UsernameTextField" destination="vLD-ts-zbK" id="name-outlet-vLD-ts-zbK"/>
-                <outlet property="view" destination="2" id="FiX-G8-OaC"/>
+                <outlet property="ForgotPasswordButton" destination="cfE-GS-deO" id="G3N-lu-dIf"/>
+                <outlet property="LoginButton" destination="SaO-tQ-VWE" id="qIw-60-Gp6"/>
+                <outlet property="LoginTextField" destination="Rqt-ck-dtw" id="xaP-tt-8Ke"/>
+                <outlet property="PasswordTextField" destination="ry3-Mk-iFd" id="W5s-m9-ENW"/>
+                <outlet property="SignUpButton" destination="ncu-pN-avQ" id="2K2-84-wfE"/>
+                <outlet property="VersionLabel" destination="GjW-Dk-Kzx" id="9TS-NG-gV1"/>
+                <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="2">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Views/LOGIN.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Xn-RA-lmY">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="YqR-ES-lRD" userLabel="Background">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Yox-UZ-E8Y">
-                    <rect key="frame" x="20" y="20" width="240" height="316"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppartmentAppsIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="bku-V8-BkZ" userLabel="Logo">
+                    <rect key="frame" x="200" y="30" width="200" height="200"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="1cm-PC-x0g"/>
+                        <constraint firstAttribute="height" constant="200" id="4m9-ud-6cO"/>
+                    </constraints>
+                </imageView>
+                <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TWT-WM-gIx">
+                    <rect key="frame" x="175" y="235" width="250" height="110"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HRO-Ht-Dvv">
-                            <rect key="frame" x="0.0" y="0.0" width="240" height="177"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="HRO-Ht-Dvv" secondAttribute="height" multiplier="10:10" id="eNI-ju-lBc"/>
-                            </constraints>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="eNI-ju-lBc"/>
-                                </mask>
-                            </variation>
-                            <variation key="heightClass=regular-widthClass=compact">
-                                <mask key="constraints">
-                                    <include reference="eNI-ju-lBc"/>
-                                </mask>
-                            </variation>
-                        </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vLD-ts-zbK" fixedFrame="YES">
-                            <rect key="frame" x="0.0" y="177" width="240" height="30"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xdT-3P-guT" fixedFrame="YES">
-                            <rect key="frame" x="0.0" y="207" width="240" height="30"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
-                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5q-ft-MlE" fixedFrame="YES">
-                            <rect key="frame" x="0.0" y="237" width="240" height="49"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                            <state key="normal" title="LOG IN"/>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yP9-35-CHJ" fixedFrame="YES">
-                            <rect key="frame" x="0.0" y="286" width="240" height="30"/>
-                            <state key="normal" title="Forgot your password?"/>
-                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="M1z-CL-2xK">
+                            <rect key="frame" x="15" y="15" width="220" height="80"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username..." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Rqt-ck-dtw" userLabel="LoginTextField">
+                                    <rect key="frame" x="0.0" y="0.0" width="220" height="40"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
+                                </textField>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password..." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ry3-Mk-iFd" userLabel="PasswordTextField">
+                                    <rect key="frame" x="0.0" y="40" width="220" height="40"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="go" secureTextEntry="YES"/>
+                                </textField>
+                            </subviews>
+                        </stackView>
                     </subviews>
-                </stackView>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="M1z-CL-2xK" secondAttribute="bottom" constant="15" id="Ty8-r2-J6s"/>
+                        <constraint firstAttribute="width" constant="250" id="XWE-JH-fpW"/>
+                        <constraint firstAttribute="height" constant="110" id="hq3-R3-iYW"/>
+                        <constraint firstAttribute="trailing" secondItem="M1z-CL-2xK" secondAttribute="trailing" constant="15" id="lqh-eS-O0q"/>
+                        <constraint firstItem="M1z-CL-2xK" firstAttribute="top" secondItem="TWT-WM-gIx" secondAttribute="top" constant="15" id="mfr-zX-m54"/>
+                        <constraint firstItem="M1z-CL-2xK" firstAttribute="leading" secondItem="TWT-WM-gIx" secondAttribute="leading" constant="15" id="wcW-w4-RGV"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SaO-tQ-VWE" userLabel="LoginButton">
+                    <rect key="frame" x="175" y="350" width="250" height="55"/>
+                    <color key="backgroundColor" red="0.078431372549019607" green="0.35686274509803922" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="55" id="eDv-nc-hkJ"/>
+                        <constraint firstAttribute="width" constant="250" id="wFU-c0-b7H"/>
+                    </constraints>
+                    <state key="normal" title="Log In">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfE-GS-deO" userLabel="ForgotPasswordButton">
+                    <rect key="frame" x="0.0" y="443" width="600" height="30"/>
+                    <state key="normal" title="Forgot Password?">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.3 @ 2016" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GjW-Dk-Kzx" userLabel="VersionLabel">
+                    <rect key="frame" x="0.0" y="576" width="600" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncu-pN-avQ" userLabel="SignUpButton">
+                    <rect key="frame" x="0.0" y="518" width="600" height="36"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <state key="normal" title="Sign Up for Apartment Apps">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New here?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PWc-Bt-Hr2" userLabel="NewHereLabel">
+                    <rect key="frame" x="0.0" y="499" width="600" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Yox-UZ-E8Y" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="0uB-m5-xKk"/>
-                <constraint firstAttribute="top" secondItem="Yox-UZ-E8Y" secondAttribute="top" id="Hdg-Kj-q3K"/>
-                <constraint firstAttribute="trailing" secondItem="Yox-UZ-E8Y" secondAttribute="trailing" id="Zrz-zd-6XF"/>
-                <constraint firstItem="9Xn-RA-lmY" firstAttribute="centerY" secondItem="2" secondAttribute="centerY" id="fqd-eN-V1x"/>
-                <constraint firstItem="9Xn-RA-lmY" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="sUV-L2-BdN"/>
+                <constraint firstItem="YqR-ES-lRD" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="0FY-gK-GqG"/>
+                <constraint firstItem="YqR-ES-lRD" firstAttribute="top" secondItem="2" secondAttribute="top" id="3fQ-by-zfe"/>
+                <constraint firstAttribute="trailing" secondItem="GjW-Dk-Kzx" secondAttribute="trailing" id="6r8-4N-boh"/>
+                <constraint firstItem="ncu-pN-avQ" firstAttribute="top" secondItem="PWc-Bt-Hr2" secondAttribute="bottom" constant="2" id="9th-ne-hxA"/>
+                <constraint firstItem="cfE-GS-deO" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="Cz2-MO-fgC"/>
+                <constraint firstItem="TWT-WM-gIx" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="Gks-QX-lCv"/>
+                <constraint firstItem="SaO-tQ-VWE" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="Ib9-dp-x2i"/>
+                <constraint firstItem="ncu-pN-avQ" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="LS7-Pu-xlc"/>
+                <constraint firstItem="TWT-WM-gIx" firstAttribute="top" secondItem="bku-V8-BkZ" secondAttribute="bottom" constant="5" id="RQB-Lq-Nqx"/>
+                <constraint firstAttribute="trailing" secondItem="cfE-GS-deO" secondAttribute="trailing" id="RmD-Bl-7Rr"/>
+                <constraint firstItem="SaO-tQ-VWE" firstAttribute="top" secondItem="TWT-WM-gIx" secondAttribute="bottom" constant="5" id="SAn-ao-f2h"/>
+                <constraint firstAttribute="bottom" secondItem="GjW-Dk-Kzx" secondAttribute="bottom" constant="8" id="bEI-Oc-Ldn"/>
+                <constraint firstItem="PWc-Bt-Hr2" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="iaw-Nf-UTa"/>
+                <constraint firstAttribute="trailing" secondItem="PWc-Bt-Hr2" secondAttribute="trailing" id="mFI-Dt-wMW"/>
+                <constraint firstAttribute="trailing" secondItem="YqR-ES-lRD" secondAttribute="trailing" id="qEU-5e-1cA"/>
+                <constraint firstItem="GjW-Dk-Kzx" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="qRe-hU-e13"/>
+                <constraint firstItem="cfE-GS-deO" firstAttribute="top" secondItem="SaO-tQ-VWE" secondAttribute="bottom" constant="38" id="qs6-yD-ENf"/>
+                <constraint firstAttribute="trailing" secondItem="ncu-pN-avQ" secondAttribute="trailing" id="rEw-0n-b0e"/>
+                <constraint firstItem="PWc-Bt-Hr2" firstAttribute="top" secondItem="cfE-GS-deO" secondAttribute="bottom" constant="80" id="teg-6Y-A2r"/>
+                <constraint firstItem="PWc-Bt-Hr2" firstAttribute="top" secondItem="cfE-GS-deO" secondAttribute="bottom" priority="980" constant="26" id="wi3-Tz-C1V"/>
+                <constraint firstItem="bku-V8-BkZ" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="xEy-TQ-6ye"/>
+                <constraint firstItem="bku-V8-BkZ" firstAttribute="top" secondItem="2" secondAttribute="top" constant="30" id="yKL-uH-p9l"/>
+                <constraint firstAttribute="bottom" secondItem="YqR-ES-lRD" secondAttribute="bottom" id="zR0-cA-N2b"/>
             </constraints>
             <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="Yox-UZ-E8Y"/>
-                </mask>
                 <mask key="constraints">
-                    <exclude reference="0uB-m5-xKk"/>
-                    <exclude reference="Hdg-Kj-q3K"/>
-                    <exclude reference="Zrz-zd-6XF"/>
+                    <exclude reference="teg-6Y-A2r"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
-                <mask key="subviews">
-                    <include reference="Yox-UZ-E8Y"/>
-                </mask>
                 <mask key="constraints">
-                    <include reference="0uB-m5-xKk"/>
-                    <include reference="Hdg-Kj-q3K"/>
-                    <include reference="Zrz-zd-6XF"/>
-                    <include reference="fqd-eN-V1x"/>
-                    <include reference="sUV-L2-BdN"/>
+                    <include reference="teg-6Y-A2r"/>
                 </mask>
             </variation>
         </view>
     </objects>
     <resources>
-        <image name="Views/LOGIN.png" width="640" height="1136"/>
-        <image name="AccountIcon.png" width="160" height="160"/>
-        <image name="AddIcon.png" width="160" height="160"/>
         <image name="AppartmentAppsIcon.png" width="160" height="160"/>
         <image name="background.png" width="640" height="1136"/>
-        <image name="HouseIcon.png" width="160" height="160"/>
-        <image name="Icon.png" width="96" height="96"/>
-        <image name="LOGIN.png" width="640" height="1136"/>
-        <image name="logo_03.png" width="375" height="273"/>
-        <image name="MaintenaceIcon.png" width="160" height="160"/>
-        <image name="MaintenanceRequestMainIcon.png" width="160" height="160"/>
-        <image name="OfficerIcon.png" width="160" height="160"/>
-        <image name="PartnersIcon.png" width="160" height="160"/>
-        <image name="PayIcon.png" width="160" height="160"/>
-        <image name="SecurityIcon.png" width="128" height="128"/>
-        <image name="SettingsIcon.png" width="160" height="160"/>
-        <image name="SignOutIcon.png" width="160" height="160"/>
-        <image name="UsernameIcon.png" width="128" height="128"/>
-        <image name="WhiteHomeIcon.png" width="160" height="160"/>
     </resources>
 </document>

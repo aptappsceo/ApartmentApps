@@ -1,13 +1,11 @@
 // WARNING
 //
-// This file has been generated automatically by Xamarin Studio from the outlets and
-// actions declared in your storyboard file.
-// Manual changes to this file will not be maintained.
+// This file has been generated automatically by Xamarin Studio to store outlets and
+// actions made in the UI designer. If it is removed, they will be lost.
+// Manual changes to this file may not be handled correctly.
 //
 using Foundation;
-using System;
 using System.CodeDom.Compiler;
-using UIKit;
 
 namespace ResidentAppCross.iOS
 {
@@ -15,14 +13,69 @@ namespace ResidentAppCross.iOS
 	partial class HomeMenuView
 	{
 		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UITableView HomeMenuTable { get; set; }
+		UIKit.UILabel CopyrightLabel { get; set; }
 
+		[Outlet]
+		UIKit.UIButton EditProfileButton { get; set; }
+
+		[Outlet]
+		UIKit.UITableView MenuTable { get; set; }
+
+		[Outlet]
+		UIKit.UIButton SettingsButton { get; set; }
+
+		[Outlet]
+		UIKit.UIButton SignOutButton { get; set; }
+
+		[Outlet]
+		UIKit.UIImageView UsernameAvatarImage { get; set; }
+
+		[Outlet]
+		UIKit.UILabel UsernameLabel { get; set; }
+
+		[Outlet]
+		UIKit.UILabel VersionLabel { get; set; }
+		
 		void ReleaseDesignerOutlets ()
 		{
-			if (HomeMenuTable != null) {
-				HomeMenuTable.Dispose ();
-				HomeMenuTable = null;
+			if (UsernameLabel != null) {
+				UsernameLabel.Dispose ();
+				UsernameLabel = null;
+			}
+
+			if (EditProfileButton != null) {
+				EditProfileButton.Dispose ();
+				EditProfileButton = null;
+			}
+
+			if (MenuTable != null) {
+				MenuTable.Dispose ();
+				MenuTable = null;
+			}
+
+			if (SettingsButton != null) {
+				SettingsButton.Dispose ();
+				SettingsButton = null;
+			}
+
+			if (SignOutButton != null) {
+				SignOutButton.Dispose ();
+				SignOutButton = null;
+			}
+
+			if (CopyrightLabel != null) {
+				CopyrightLabel.Dispose ();
+				CopyrightLabel = null;
+			}
+
+			if (VersionLabel != null) {
+				VersionLabel.Dispose ();
+				VersionLabel = null;
+			}
+
+			if (UsernameAvatarImage != null) {
+				UsernameAvatarImage.Dispose ();
+				UsernameAvatarImage = null;
 			}
 		}
 	}
