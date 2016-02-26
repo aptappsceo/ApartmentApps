@@ -25,7 +25,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="429" height="1168"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pgT-Od-qFX" userLabel="ContentView">
-                            <rect key="frame" x="0.0" y="20" width="429" height="1168"/>
+                            <rect key="frame" x="0.0" y="0.0" width="429" height="1168"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qh-1n-UCQ" userLabel="TitleSection">
                                     <rect key="frame" x="0.0" y="0.0" width="429" height="130"/>
@@ -230,7 +230,7 @@
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="pgT-Od-qFX" secondAttribute="bottom" id="4Hl-cE-KoG"/>
-                        <constraint firstItem="pgT-Od-qFX" firstAttribute="top" secondItem="r7a-Qo-3D4" secondAttribute="top" constant="20" symbolic="YES" id="Afq-Jp-FWt"/>
+                        <constraint firstItem="pgT-Od-qFX" firstAttribute="top" secondItem="r7a-Qo-3D4" secondAttribute="top" id="Afq-Jp-FWt"/>
                         <constraint firstItem="pgT-Od-qFX" firstAttribute="leading" secondItem="r7a-Qo-3D4" secondAttribute="leading" id="KtQ-E5-Tfy"/>
                         <constraint firstItem="pgT-Od-qFX" firstAttribute="height" secondItem="r7a-Qo-3D4" secondAttribute="height" id="eFE-Yp-Sbl"/>
                         <constraint firstItem="pgT-Od-qFX" firstAttribute="width" secondItem="r7a-Qo-3D4" secondAttribute="width" id="gYZ-Lw-LQW"/>

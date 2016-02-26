@@ -7,7 +7,7 @@
 using Foundation;
 using System.CodeDom.Compiler;
 
-namespace ResidentAppCross.iOS
+namespace ResidentAppCross.iOS.Views
 {
 	[Register ("MaintenanceRequestFormView")]
 	partial class MaintenanceRequestFormView

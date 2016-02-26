@@ -195,9 +195,9 @@
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <InterfaceDefinition Include="Main.storyboard" />
-    <InterfaceDefinition Include="Views\Screens\LoginFormView.xib" />
-    <InterfaceDefinition Include="Views\Screens\HomeMenuView.xib" />
-    <InterfaceDefinition Include="Views\Screens\MaintenanceRequestFormView.xib" />
+    <InterfaceDefinition Include="Views\HomeMenuView.xib" />
+    <InterfaceDefinition Include="Views\LoginFormView.xib" />
+    <InterfaceDefinition Include="Views\MaintenanceRequestFormView.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -217,21 +217,22 @@
     <Compile Include="Views\TableSources\HomeMenuTableSource.cs" />
     <Compile Include="Views\TableSources\LookUpPairSelectionTableSource.cs" />
     <Compile Include="Views\ViewBase.cs" />
-    <Compile Include="Views\Screens\LoginFormView.cs" />
-    <Compile Include="Views\Screens\LoginFormView.designer.cs">
-      <DependentUpon>LoginFormView.cs</DependentUpon>
+    <Compile Include="ViewController.cs" />
+    <Compile Include="ViewController.designer.cs">
+      <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Screens\HomeMenuView.cs" />
-    <Compile Include="Views\Screens\HomeMenuView.designer.cs">
+    <Compile Include="Views\HomeMenuView.cs" />
+    <Compile Include="Views\HomeMenuView.designer.cs">
       <DependentUpon>HomeMenuView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Screens\MaintenanceRequestFormView.cs" />
-    <Compile Include="Views\Screens\MaintenanceRequestFormView.designer.cs">
+    <Compile Include="Views\LoginFormView.cs" />
+    <Compile Include="Views\LoginFormView.designer.cs">
+      <DependentUpon>LoginFormView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MaintenanceRequestFormView.cs" />
+    <Compile Include="Views\MaintenanceRequestFormView.designer.cs">
       <DependentUpon>MaintenanceRequestFormView.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Views\LOGIN.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="btprogresshud">
@@ -303,7 +304,4 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Views\Screens\" />
-  </ItemGroup>
 </Project>
