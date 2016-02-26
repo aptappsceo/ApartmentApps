@@ -12,6 +12,7 @@ namespace ResidentAppCross.iOS
 	[Register ("LoginFormView")]
 	partial class LoginFormView
 	{
+
 		[Outlet]
 		UIKit.UIButton ForgotPasswordButton { get; set; }
 
