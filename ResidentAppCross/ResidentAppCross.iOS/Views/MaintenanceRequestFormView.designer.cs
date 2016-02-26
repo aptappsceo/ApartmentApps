@@ -9,7 +9,7 @@ using System;
 using System.CodeDom.Compiler;
 using UIKit;
 
-namespace ResidentAppCross.iOS
+namespace ResidentAppCross.iOS.Views
 {
 	[Register ("MaintenanceRequestFormView")]
 	partial class MaintenanceRequestFormView
