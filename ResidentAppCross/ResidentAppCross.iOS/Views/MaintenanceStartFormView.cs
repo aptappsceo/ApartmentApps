@@ -1,14 +1,21 @@
 ﻿using System;
-
+using ResidentAppCross.iOS.Views;
+using ResidentAppCross.ViewModels;
 using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	public partial class MaintenanceStartFormView : UIViewController
+	public partial class MaintenanceStartFormView : ViewBase
 	{
 		public MaintenanceStartFormView () : base ("MaintenanceStartFormView", null)
 		{
 		}
+
+	    public new MaintenanceStartFormViewModel ViewModel
+	    {
+	        get { return (MaintenanceStartFormViewModel) base.ViewModel; }
+            set { base.ViewModel = value; }
+	    }
 
 		public override void ViewDidLoad ()
 		{
