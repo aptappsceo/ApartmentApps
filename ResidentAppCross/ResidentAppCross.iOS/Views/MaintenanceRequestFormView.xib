@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -18,16 +19,16 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="2">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r7a-Qo-3D4" userLabel="ScrollableContainer">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pgT-Od-qFX" userLabel="ContentView">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="959"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="959"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qh-1n-UCQ" userLabel="TitleSection">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="130"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MaintenanceRequestMainIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Wqr-ae-SY2" userLabel="PageIcon">
                                             <rect key="frame" x="20" y="0.0" width="130" height="130"/>
@@ -57,15 +58,15 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9gn-bT-jzr" userLabel="RequestTypeSection">
-                                    <rect key="frame" x="0.0" y="150" width="600" height="80"/>
+                                    <rect key="frame" x="0.0" y="150" width="320" height="80"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="heE-ZU-mhE" userLabel="SelectRequestTypeButton">
-                                            <rect key="frame" x="484" y="0.0" width="96" height="80"/>
+                                            <rect key="frame" x="204" y="0.0" width="96" height="80"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                             <state key="normal" title="Lock/Key &gt;"/>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request Type *" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hyl-Kf-sxJ" userLabel="RequestTypeLabel">
-                                            <rect key="frame" x="20" y="0.0" width="300" height="80"/>
+                                            <rect key="frame" x="20" y="0.0" width="160" height="80"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -84,10 +85,10 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hfq-0C-WdR" userLabel="CommentsSection">
-                                    <rect key="frame" x="0.0" y="250" width="600" height="250"/>
+                                    <rect key="frame" x="0.0" y="250" width="320" height="250"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details &amp; Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zV-wA-ePs" userLabel="CommentsTitle">
-                                            <rect key="frame" x="20" y="0.0" width="560" height="80"/>
+                                            <rect key="frame" x="20" y="0.0" width="280" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="rF8-pB-TSV"/>
                                             </constraints>
@@ -96,10 +97,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ea2-KN-PfJ">
-                                            <rect key="frame" x="20" y="80" width="560" height="150"/>
+                                            <rect key="frame" x="20" y="80" width="280" height="150"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Umi-KU-Pm9">
-                                                    <rect key="frame" x="1" y="1" width="558" height="148"/>
+                                                    <rect key="frame" x="1" y="1" width="278" height="148"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
@@ -128,7 +129,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gR3-HD-yIs" userLabel="PhotosSection">
-                                    <rect key="frame" x="-1" y="519" width="601" height="280"/>
+                                    <rect key="frame" x="-1" y="519" width="321" height="280"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4p-Uu-N7c" userLabel="PhotosTitle">
                                             <rect key="frame" x="21" y="0.0" width="65" height="80"/>
@@ -140,7 +141,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnH-lE-22V" userLabel="AddPhotoButton">
-                                            <rect key="frame" x="490" y="0.0" width="91" height="80"/>
+                                            <rect key="frame" x="210" y="0.0" width="91" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="oLf-eB-SOE"/>
                                             </constraints>
@@ -148,7 +149,7 @@
                                             <state key="normal" title="Add Photo"/>
                                         </button>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="NiJ-H5-uSx" userLabel="PhotosContainer">
-                                            <rect key="frame" x="21" y="80" width="560" height="180"/>
+                                            <rect key="frame" x="21" y="80" width="280" height="180"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KKJ-Tf-ETQ">
                                                 <size key="itemSize" width="150" height="150"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -171,10 +172,10 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ER-hq-ScP" userLabel="PetsSection">
-                                    <rect key="frame" x="0.0" y="819" width="600" height="140"/>
+                                    <rect key="frame" x="0.0" y="819" width="320" height="140"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you have a pet?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GON-Z2-aIz" userLabel="PetsTitle">
-                                            <rect key="frame" x="20" y="0.0" width="560" height="80"/>
+                                            <rect key="frame" x="20" y="0.0" width="280" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="1Wq-z0-edU"/>
                                             </constraints>
@@ -183,7 +184,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="TJ9-Le-Krf" userLabel="PetTypeSelection">
-                                            <rect key="frame" x="20" y="80" width="560" height="41"/>
+                                            <rect key="frame" x="20" y="80" width="280" height="41"/>
                                             <segments>
                                                 <segment title="No Pet"/>
                                                 <segment title="Yes, Contained"/>
