@@ -15,7 +15,7 @@ using MvvmCross.Droid.Views;
 namespace ResidentAppCross.Droid.Views
 {
     [Activity(Label = "Home")]
-    public class HomeMenuView : MvxActivity
+    public class HomeMenuView : ViewBase
 
     {
         public new HomeMenuViewModel ViewModel
@@ -29,7 +29,6 @@ namespace ResidentAppCross.Droid.Views
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.HomeMenuViewLayout);
         
-            
             //var menu = FindViewById<FlyOutContainer>(Resource.Id.FlyOutContainer);
             //var menuButton = FindViewById(Resource.Id.MenuButton);
             //menuButton.Click += (sender, e) => {
