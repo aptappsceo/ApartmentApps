@@ -641,10 +641,16 @@ namespace ApartmentApps.Client
             return result;
         }
         
+        /// <param name='devicePlatform'>
+        /// Optional.
+        /// </param>
+        /// <param name='devicePushToken'>
+        /// Optional.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<UserInfoViewModel>> GetUserInfoWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<UserInfoViewModel>> GetUserInfoWithOperationResponseAsync(string devicePlatform = null, string devicePushToken = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -653,12 +659,27 @@ namespace ApartmentApps.Client
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("devicePlatform", devicePlatform);
+                tracingParameters.Add("devicePushToken", devicePushToken);
                 ServiceClientTracing.Enter(invocationId, this, "GetUserInfoAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
             url = url + "/api/Account/UserInfo";
+            List<string> queryParameters = new List<string>();
+            if (devicePlatform != null)
+            {
+                queryParameters.Add("devicePlatform=" + Uri.EscapeDataString(devicePlatform));
+            }
+            if (devicePushToken != null)
+            {
+                queryParameters.Add("devicePushToken=" + Uri.EscapeDataString(devicePushToken));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

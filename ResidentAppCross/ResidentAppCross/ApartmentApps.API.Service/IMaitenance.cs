@@ -13,6 +13,28 @@ namespace ApartmentApps.Client
 {
     public partial interface IMaitenance
     {
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='comments'>
+        /// Required.
+        /// </param>
+        /// <param name='images'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> CompleteRequestWithOperationResponseAsync(int id, string comments, IList<string> images, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<MaitenanceRequest>> GetWithOperationResponseAsync(int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
         /// <param name='workerId'>
         /// Required.
         /// </param>
@@ -33,6 +55,20 @@ namespace ApartmentApps.Client
         /// Cancellation token.
         /// </param>
         Task<HttpOperationResponse<IList<MaitenanceRequest>>> GetWorkOrdersWithOperationResponseAsync(string workerId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='comments'>
+        /// Required.
+        /// </param>
+        /// <param name='images'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> PauseRequestWithOperationResponseAsync(int id, string comments, IList<string> images, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='request'>
         /// Required.

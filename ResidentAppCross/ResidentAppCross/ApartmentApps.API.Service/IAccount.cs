@@ -62,10 +62,16 @@ namespace ApartmentApps.Client
         /// </param>
         Task<HttpOperationResponse<ManageInfoViewModel>> GetManageInfoWithOperationResponseAsync(string returnUrl, bool? generateState = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
+        /// <param name='devicePlatform'>
+        /// Optional.
+        /// </param>
+        /// <param name='devicePushToken'>
+        /// Optional.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<UserInfoViewModel>> GetUserInfoWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<UserInfoViewModel>> GetUserInfoWithOperationResponseAsync(string devicePlatform = null, string devicePushToken = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='cancellationToken'>
         /// Cancellation token.

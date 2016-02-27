@@ -8,19 +8,8 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class MaitenanceAction
+    public partial class MaintenanceRequestCheckin
     {
-        private int? _actionType;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public int? ActionType
-        {
-            get { return this._actionType; }
-            set { this._actionType = value; }
-        }
-        
         private string _comments;
         
         /// <summary>
@@ -54,6 +43,17 @@ namespace ApartmentApps.Client.Models
             set { this._id = value; }
         }
         
+        private string _imageDirectoryId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ImageDirectoryId
+        {
+            get { return this._imageDirectoryId; }
+            set { this._imageDirectoryId = value; }
+        }
+        
         private MaitenanceRequest _maitenanceRequest;
         
         /// <summary>
@@ -76,10 +76,54 @@ namespace ApartmentApps.Client.Models
             set { this._maitenanceRequestId = value; }
         }
         
+        private MaintenanceRequestStatus _status;
+        
         /// <summary>
-        /// Initializes a new instance of the MaitenanceAction class.
+        /// Optional.
         /// </summary>
-        public MaitenanceAction()
+        public MaintenanceRequestStatus Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
+        private string _statusId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string StatusId
+        {
+            get { return this._statusId; }
+            set { this._statusId = value; }
+        }
+        
+        private ApplicationUser _worker;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public ApplicationUser Worker
+        {
+            get { return this._worker; }
+            set { this._worker = value; }
+        }
+        
+        private string _workerId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string WorkerId
+        {
+            get { return this._workerId; }
+            set { this._workerId = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MaintenanceRequestCheckin class.
+        /// </summary>
+        public MaintenanceRequestCheckin()
         {
         }
         
@@ -90,11 +134,6 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
-                JToken actionTypeValue = inputObject["ActionType"];
-                if (actionTypeValue != null && actionTypeValue.Type != JTokenType.Null)
-                {
-                    this.ActionType = ((int)actionTypeValue);
-                }
                 JToken commentsValue = inputObject["Comments"];
                 if (commentsValue != null && commentsValue.Type != JTokenType.Null)
                 {
@@ -110,6 +149,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Id = ((int)idValue);
                 }
+                JToken imageDirectoryIdValue = inputObject["ImageDirectoryId"];
+                if (imageDirectoryIdValue != null && imageDirectoryIdValue.Type != JTokenType.Null)
+                {
+                    this.ImageDirectoryId = ((string)imageDirectoryIdValue);
+                }
                 JToken maitenanceRequestValue = inputObject["MaitenanceRequest"];
                 if (maitenanceRequestValue != null && maitenanceRequestValue.Type != JTokenType.Null)
                 {
@@ -121,6 +165,30 @@ namespace ApartmentApps.Client.Models
                 if (maitenanceRequestIdValue != null && maitenanceRequestIdValue.Type != JTokenType.Null)
                 {
                     this.MaitenanceRequestId = ((int)maitenanceRequestIdValue);
+                }
+                JToken statusValue = inputObject["Status"];
+                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                {
+                    MaintenanceRequestStatus maintenanceRequestStatus = new MaintenanceRequestStatus();
+                    maintenanceRequestStatus.DeserializeJson(statusValue);
+                    this.Status = maintenanceRequestStatus;
+                }
+                JToken statusIdValue = inputObject["StatusId"];
+                if (statusIdValue != null && statusIdValue.Type != JTokenType.Null)
+                {
+                    this.StatusId = ((string)statusIdValue);
+                }
+                JToken workerValue = inputObject["Worker"];
+                if (workerValue != null && workerValue.Type != JTokenType.Null)
+                {
+                    ApplicationUser applicationUser = new ApplicationUser();
+                    applicationUser.DeserializeJson(workerValue);
+                    this.Worker = applicationUser;
+                }
+                JToken workerIdValue = inputObject["WorkerId"];
+                if (workerIdValue != null && workerIdValue.Type != JTokenType.Null)
+                {
+                    this.WorkerId = ((string)workerIdValue);
                 }
             }
         }

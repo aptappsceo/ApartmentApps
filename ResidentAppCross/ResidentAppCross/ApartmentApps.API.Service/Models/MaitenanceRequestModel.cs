@@ -44,6 +44,17 @@ namespace ApartmentApps.Client.Models
             set { this._maitenanceRequestTypeId = value; }
         }
         
+        private int? _unitId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? UnitId
+        {
+            get { return this._unitId; }
+            set { this._unitId = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the MaitenanceRequestModel class.
         /// </summary>
@@ -87,6 +98,10 @@ namespace ApartmentApps.Client.Models
             if (this.MaitenanceRequestTypeId != null)
             {
                 outputObject["MaitenanceRequestTypeId"] = this.MaitenanceRequestTypeId.Value;
+            }
+            if (this.UnitId != null)
+            {
+                outputObject["UnitId"] = this.UnitId.Value;
             }
             return outputObject;
         }

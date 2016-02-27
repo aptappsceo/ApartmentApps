@@ -76,17 +76,6 @@ namespace ApartmentApps.Client.Models
             set { this._gender = value; }
         }
         
-        private int? _id;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public int? Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
         private string _lastName;
         
         /// <summary>
@@ -120,28 +109,6 @@ namespace ApartmentApps.Client.Models
             set { this._postalCode = value; }
         }
         
-        private Property _property;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public Property Property
-        {
-            get { return this._property; }
-            set { this._property = value; }
-        }
-        
-        private int? _propertyId;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public int? PropertyId
-        {
-            get { return this._propertyId; }
-            set { this._propertyId = value; }
-        }
-        
         private string _state;
         
         /// <summary>
@@ -164,6 +131,28 @@ namespace ApartmentApps.Client.Models
             set { this._thirdPartyId = value; }
         }
         
+        private Unit _unit;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public Unit Unit
+        {
+            get { return this._unit; }
+            set { this._unit = value; }
+        }
+        
+        private int? _unitId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? UnitId
+        {
+            get { return this._unitId; }
+            set { this._unitId = value; }
+        }
+        
         private string _unitNumber;
         
         /// <summary>
@@ -173,6 +162,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._unitNumber; }
             set { this._unitNumber = value; }
+        }
+        
+        private ApplicationUser _user;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public ApplicationUser User
+        {
+            get { return this._user; }
+            set { this._user = value; }
         }
         
         private string _userId;
@@ -230,11 +230,6 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Gender = ((string)genderValue);
                 }
-                JToken idValue = inputObject["Id"];
-                if (idValue != null && idValue.Type != JTokenType.Null)
-                {
-                    this.Id = ((int)idValue);
-                }
                 JToken lastNameValue = inputObject["LastName"];
                 if (lastNameValue != null && lastNameValue.Type != JTokenType.Null)
                 {
@@ -250,18 +245,6 @@ namespace ApartmentApps.Client.Models
                 {
                     this.PostalCode = ((string)postalCodeValue);
                 }
-                JToken propertyValue = inputObject["Property"];
-                if (propertyValue != null && propertyValue.Type != JTokenType.Null)
-                {
-                    Property property = new Property();
-                    property.DeserializeJson(propertyValue);
-                    this.Property = property;
-                }
-                JToken propertyIdValue = inputObject["PropertyId"];
-                if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
-                {
-                    this.PropertyId = ((int)propertyIdValue);
-                }
                 JToken stateValue = inputObject["State"];
                 if (stateValue != null && stateValue.Type != JTokenType.Null)
                 {
@@ -272,10 +255,29 @@ namespace ApartmentApps.Client.Models
                 {
                     this.ThirdPartyId = ((string)thirdPartyIdValue);
                 }
+                JToken unitValue = inputObject["Unit"];
+                if (unitValue != null && unitValue.Type != JTokenType.Null)
+                {
+                    Unit unit = new Unit();
+                    unit.DeserializeJson(unitValue);
+                    this.Unit = unit;
+                }
+                JToken unitIdValue = inputObject["UnitId"];
+                if (unitIdValue != null && unitIdValue.Type != JTokenType.Null)
+                {
+                    this.UnitId = ((int)unitIdValue);
+                }
                 JToken unitNumberValue = inputObject["UnitNumber"];
                 if (unitNumberValue != null && unitNumberValue.Type != JTokenType.Null)
                 {
                     this.UnitNumber = ((string)unitNumberValue);
+                }
+                JToken userValue = inputObject["User"];
+                if (userValue != null && userValue.Type != JTokenType.Null)
+                {
+                    ApplicationUser applicationUser = new ApplicationUser();
+                    applicationUser.DeserializeJson(userValue);
+                    this.User = applicationUser;
                 }
                 JToken userIdValue = inputObject["UserId"];
                 if (userIdValue != null && userIdValue.Type != JTokenType.Null)
