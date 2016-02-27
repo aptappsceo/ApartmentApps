@@ -37,11 +37,11 @@ namespace ResidentAppCross.iOS.Views
 
 					b.Apply();
 
-					PetTypeSelection.RemoveAllSegments();
-
-                    PetTypeSelection.InsertSegment("No Pet",0,false);
-                    PetTypeSelection.InsertSegment("Yes, Contained",1,false);
-                    PetTypeSelection.InsertSegment("Yes, Free",2,false);
+//					PetTypeSelection.RemoveAllSegments();
+//
+//                    PetTypeSelection.InsertSegment("No Pet",0,false);
+//                    PetTypeSelection.InsertSegment("Yes, Contained",1,false);
+//                    PetTypeSelection.InsertSegment("Yes, Free",2,false);
 
 				});
 

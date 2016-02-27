@@ -40,7 +40,7 @@ namespace ResidentAppCross.ViewModels.Screens
             set
             {
                 SetProperty(ref _maintenanceRequestId, value);
-                UpdateMaintenanceRequest.Execute(null);
+                UpdateMaintenanceRequest.Execute(null); //Start loading maintenance request as soon as id changes
             }
         }
 
@@ -78,7 +78,6 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 //TODO: Fix it here.
             }
-            Debug.WriteLine("Request Updated");
         }).OnStart("Loading Request...").OnFail(ex=> { Close(this); });
 
         private void AddPhoto()

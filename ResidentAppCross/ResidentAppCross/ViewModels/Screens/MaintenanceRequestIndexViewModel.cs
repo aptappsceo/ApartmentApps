@@ -20,19 +20,11 @@ namespace ResidentAppCross.ViewModels.Screens
         //Will make it a command later. 
         public void RequestAction(string url)
         {
-            Debug.WriteLine("Shit should happen");
-            //TODO: Parse and Own
-            try
+            //TODO: Parse ID from URL
+            ShowViewModel<MaintenanceRequestStatusViewModel>(vm =>
             {
-                ShowViewModel<MaintenanceRequestStatusViewModel>(vm =>
-                {
-                    vm.MaintenanceRequestId = 12;
-                });
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("shit");
-            }
+                vm.MaintenanceRequestId = 12;
+            });
         }
     }
 }
