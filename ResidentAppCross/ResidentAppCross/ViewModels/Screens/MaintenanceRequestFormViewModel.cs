@@ -34,6 +34,7 @@ namespace ResidentAppCross.ViewModels
 
         public MaintenanceRequestFormViewModel(IApartmentAppsAPIService service, IImageService imageService)
         {
+           
             _service = service;
             _imageService = imageService;
 

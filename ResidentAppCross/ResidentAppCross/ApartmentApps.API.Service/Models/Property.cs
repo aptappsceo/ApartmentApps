@@ -12,6 +12,17 @@ namespace ApartmentApps.Client.Models
 {
     public partial class Property
     {
+        private IList<Building> _buildings;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<Building> Buildings
+        {
+            get { return this._buildings; }
+            set { this._buildings = value; }
+        }
+        
         private Corporation _corporation;
         
         /// <summary>
@@ -34,6 +45,17 @@ namespace ApartmentApps.Client.Models
             set { this._corporationId = value; }
         }
         
+        private PropertyEntrataInfo _entrataInfo;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public PropertyEntrataInfo EntrataInfo
+        {
+            get { return this._entrataInfo; }
+            set { this._entrataInfo = value; }
+        }
+        
         private int? _id;
         
         /// <summary>
@@ -43,6 +65,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._id; }
             set { this._id = value; }
+        }
+        
+        private IList<MaitenanceRequest> _maitenanceRequests;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<MaitenanceRequest> MaitenanceRequests
+        {
+            get { return this._maitenanceRequests; }
+            set { this._maitenanceRequests = value; }
         }
         
         private string _name;
@@ -78,13 +111,38 @@ namespace ApartmentApps.Client.Models
             set { this._tenants = value; }
         }
         
+        private IList<ApplicationUser> _users;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<ApplicationUser> Users
+        {
+            get { return this._users; }
+            set { this._users = value; }
+        }
+        
+        private PropertyYardiInfo _yardiInfo;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public PropertyYardiInfo YardiInfo
+        {
+            get { return this._yardiInfo; }
+            set { this._yardiInfo = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the Property class.
         /// </summary>
         public Property()
         {
+            this.Buildings = new LazyList<Building>();
+            this.MaitenanceRequests = new LazyList<MaitenanceRequest>();
             this.PropertyAddons = new LazyList<PropertyAddon>();
             this.Tenants = new LazyList<Tenant>();
+            this.Users = new LazyList<ApplicationUser>();
         }
         
         /// <summary>
@@ -94,6 +152,16 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken buildingsSequence = ((JToken)inputObject["Buildings"]);
+                if (buildingsSequence != null && buildingsSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken buildingsValue in ((JArray)buildingsSequence))
+                    {
+                        Building building = new Building();
+                        building.DeserializeJson(buildingsValue);
+                        this.Buildings.Add(building);
+                    }
+                }
                 JToken corporationValue = inputObject["Corporation"];
                 if (corporationValue != null && corporationValue.Type != JTokenType.Null)
                 {
@@ -106,10 +174,27 @@ namespace ApartmentApps.Client.Models
                 {
                     this.CorporationId = ((int)corporationIdValue);
                 }
+                JToken entrataInfoValue = inputObject["EntrataInfo"];
+                if (entrataInfoValue != null && entrataInfoValue.Type != JTokenType.Null)
+                {
+                    PropertyEntrataInfo propertyEntrataInfo = new PropertyEntrataInfo();
+                    propertyEntrataInfo.DeserializeJson(entrataInfoValue);
+                    this.EntrataInfo = propertyEntrataInfo;
+                }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((int)idValue);
+                }
+                JToken maitenanceRequestsSequence = ((JToken)inputObject["MaitenanceRequests"]);
+                if (maitenanceRequestsSequence != null && maitenanceRequestsSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken maitenanceRequestsValue in ((JArray)maitenanceRequestsSequence))
+                    {
+                        MaitenanceRequest maitenanceRequest = new MaitenanceRequest();
+                        maitenanceRequest.DeserializeJson(maitenanceRequestsValue);
+                        this.MaitenanceRequests.Add(maitenanceRequest);
+                    }
                 }
                 JToken nameValue = inputObject["Name"];
                 if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -135,6 +220,23 @@ namespace ApartmentApps.Client.Models
                         tenant.DeserializeJson(tenantsValue);
                         this.Tenants.Add(tenant);
                     }
+                }
+                JToken usersSequence = ((JToken)inputObject["Users"]);
+                if (usersSequence != null && usersSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken usersValue in ((JArray)usersSequence))
+                    {
+                        ApplicationUser applicationUser = new ApplicationUser();
+                        applicationUser.DeserializeJson(usersValue);
+                        this.Users.Add(applicationUser);
+                    }
+                }
+                JToken yardiInfoValue = inputObject["YardiInfo"];
+                if (yardiInfoValue != null && yardiInfoValue.Type != JTokenType.Null)
+                {
+                    PropertyYardiInfo propertyYardiInfo = new PropertyYardiInfo();
+                    propertyYardiInfo.DeserializeJson(yardiInfoValue);
+                    this.YardiInfo = propertyYardiInfo;
                 }
             }
         }

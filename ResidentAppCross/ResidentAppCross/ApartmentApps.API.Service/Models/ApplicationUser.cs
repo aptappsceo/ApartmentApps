@@ -12,7 +12,6 @@ namespace ApartmentApps.Client.Models
 {
     public partial class ApplicationUser
     {
-       
         private int? _accessFailedCount;
         
         /// <summary>
@@ -33,6 +32,28 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._claims; }
             set { this._claims = value; }
+        }
+        
+        private string _devicePlatform;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string DevicePlatform
+        {
+            get { return this._devicePlatform; }
+            set { this._devicePlatform = value; }
+        }
+        
+        private string _deviceToken;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string DeviceToken
+        {
+            get { return this._deviceToken; }
+            set { this._deviceToken = value; }
         }
         
         private string _email;
@@ -101,6 +122,17 @@ namespace ApartmentApps.Client.Models
             set { this._logins = value; }
         }
         
+        private IList<MaitenanceRequest> _maitenanceRequests;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<MaitenanceRequest> MaitenanceRequests
+        {
+            get { return this._maitenanceRequests; }
+            set { this._maitenanceRequests = value; }
+        }
+        
         private string _passwordHash;
         
         /// <summary>
@@ -132,6 +164,28 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._phoneNumberConfirmed; }
             set { this._phoneNumberConfirmed = value; }
+        }
+        
+        private Property _property;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public Property Property
+        {
+            get { return this._property; }
+            set { this._property = value; }
+        }
+        
+        private int? _propertyId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? PropertyId
+        {
+            get { return this._propertyId; }
+            set { this._propertyId = value; }
         }
         
         private IList<IdentityUserRole> _roles;
@@ -167,17 +221,6 @@ namespace ApartmentApps.Client.Models
             set { this._tenant = value; }
         }
         
-        private int? _tenantId;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public int? TenantId
-        {
-            get { return this._tenantId; }
-            set { this._tenantId = value; }
-        }
-        
         private bool? _twoFactorEnabled;
         
         /// <summary>
@@ -207,6 +250,7 @@ namespace ApartmentApps.Client.Models
         {
             this.Claims = new LazyList<IdentityUserClaim>();
             this.Logins = new LazyList<IdentityUserLogin>();
+            this.MaitenanceRequests = new LazyList<MaitenanceRequest>();
             this.Roles = new LazyList<IdentityUserRole>();
         }
         
@@ -231,6 +275,16 @@ namespace ApartmentApps.Client.Models
                         identityUserClaim.DeserializeJson(claimsValue);
                         this.Claims.Add(identityUserClaim);
                     }
+                }
+                JToken devicePlatformValue = inputObject["DevicePlatform"];
+                if (devicePlatformValue != null && devicePlatformValue.Type != JTokenType.Null)
+                {
+                    this.DevicePlatform = ((string)devicePlatformValue);
+                }
+                JToken deviceTokenValue = inputObject["DeviceToken"];
+                if (deviceTokenValue != null && deviceTokenValue.Type != JTokenType.Null)
+                {
+                    this.DeviceToken = ((string)deviceTokenValue);
                 }
                 JToken emailValue = inputObject["Email"];
                 if (emailValue != null && emailValue.Type != JTokenType.Null)
@@ -267,6 +321,16 @@ namespace ApartmentApps.Client.Models
                         this.Logins.Add(identityUserLogin);
                     }
                 }
+                JToken maitenanceRequestsSequence = ((JToken)inputObject["MaitenanceRequests"]);
+                if (maitenanceRequestsSequence != null && maitenanceRequestsSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken maitenanceRequestsValue in ((JArray)maitenanceRequestsSequence))
+                    {
+                        MaitenanceRequest maitenanceRequest = new MaitenanceRequest();
+                        maitenanceRequest.DeserializeJson(maitenanceRequestsValue);
+                        this.MaitenanceRequests.Add(maitenanceRequest);
+                    }
+                }
                 JToken passwordHashValue = inputObject["PasswordHash"];
                 if (passwordHashValue != null && passwordHashValue.Type != JTokenType.Null)
                 {
@@ -281,6 +345,18 @@ namespace ApartmentApps.Client.Models
                 if (phoneNumberConfirmedValue != null && phoneNumberConfirmedValue.Type != JTokenType.Null)
                 {
                     this.PhoneNumberConfirmed = ((bool)phoneNumberConfirmedValue);
+                }
+                JToken propertyValue = inputObject["Property"];
+                if (propertyValue != null && propertyValue.Type != JTokenType.Null)
+                {
+                    Property property = new Property();
+                    property.DeserializeJson(propertyValue);
+                    this.Property = property;
+                }
+                JToken propertyIdValue = inputObject["PropertyId"];
+                if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
+                {
+                    this.PropertyId = ((int)propertyIdValue);
                 }
                 JToken rolesSequence = ((JToken)inputObject["Roles"]);
                 if (rolesSequence != null && rolesSequence.Type != JTokenType.Null)
@@ -303,11 +379,6 @@ namespace ApartmentApps.Client.Models
                     Tenant tenant = new Tenant();
                     tenant.DeserializeJson(tenantValue);
                     this.Tenant = tenant;
-                }
-                JToken tenantIdValue = inputObject["TenantId"];
-                if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
-                {
-                    this.TenantId = ((int)tenantIdValue);
                 }
                 JToken twoFactorEnabledValue = inputObject["TwoFactorEnabled"];
                 if (twoFactorEnabledValue != null && twoFactorEnabledValue.Type != JTokenType.Null)

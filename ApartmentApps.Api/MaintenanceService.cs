@@ -15,12 +15,24 @@ namespace ApartmentApps.Api
                 {
                     UserId = user.Id,
                     Message = comments,
+                    UnitId = unitId,
                     MaitenanceRequestTypeId = requestTypeId,
                     StatusId = "Started"
                 };
+                var localCtxUser = ctx.Users.Find(user.Id);
+                if (maitenanceRequest.UnitId == 0)
+                {
+                    if (user.Tenant?.UnitId != null)
+                        maitenanceRequest.UnitId = user.Tenant.UnitId.Value;
+                }
+                if (maitenanceRequest.UnitId == 0)
+                    maitenanceRequest.UnitId = null;
+                //if (maitenanceRequest.UnitId == 0)
+                //    throw new Exception("Unit Id Required.");
+
                 ctx.MaitenanceRequests.Add(maitenanceRequest);
                 ctx.SaveChanges();
-                this.InvokeEvent<IMaintenanceSubmissionEvent>(ctx, user, _ => _.MaintenanceRequestSubmited(maitenanceRequest));
+                this.InvokeEvent<IMaintenanceSubmissionEvent>(ctx, localCtxUser, _ => _.MaintenanceRequestSubmited(maitenanceRequest));
                 return maitenanceRequest.Id;
             }
         }

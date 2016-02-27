@@ -45,6 +45,7 @@
     <Compile Include="ApartmentApps.API.Service\MaitenanceExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AddExternalLoginBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ApplicationUser.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\Building.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ChangePasswordBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Corporation.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModel.cs" />
@@ -54,7 +55,8 @@
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserRole.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LookupPairModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LookupPairModelCollection.cs" />
-    <Compile Include="ApartmentApps.API.Service\Models\MaitenanceAction.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\MaintenanceRequestCheckin.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\MaintenanceRequestStatus.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaitenanceRequest.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaitenanceRequestCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaitenanceRequestModel.cs" />
@@ -63,12 +65,15 @@
     <Compile Include="ApartmentApps.API.Service\Models\Property.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PropertyAddon.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PropertyAddonType.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\PropertyEntrataInfo.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\PropertyYardiInfo.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\RegisterBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\RegisterExternalBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\RemoveLoginBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\SetPasswordBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\StringCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Tenant.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\Unit.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\UserInfoViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\UserLoginInfoViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Values.cs" />

@@ -59,15 +59,17 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>True</MtouchProfiling>
-    <CodesignKey>iPhone Developer: Nikita Silin (37N7JC5UMN)</CodesignKey>
+    <CodesignKey>iPhone Developer: Josh Brewer (B5LK3679EV)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
-    <CodesignProvision>113a64cd-b4bc-4c76-a0fc-05fafb1cca81</CodesignProvision>
+    <CodesignProvision>
+    </CodesignProvision>
     <CodesignExtraArgs>
     </CodesignExtraArgs>
     <MtouchSdkVersion>9.2</MtouchSdkVersion>
     <MtouchLink>None</MtouchLink>
     <MtouchI18n>
     </MtouchI18n>
+    <CodesignResourceRules />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AlertView">

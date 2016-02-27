@@ -11,6 +11,34 @@ namespace ApartmentApps.Client.Models
     public static partial class StringCollection
     {
         /// <summary>
+        /// Serialize the object
+        /// </summary>
+        /// <returns>
+        /// Returns the json model for the type IList
+        /// </returns>
+        public static JToken SerializeJson(IList<string> images, JToken outputObject)
+        {
+            if (outputObject == null)
+            {
+                outputObject = new JObject();
+            }
+            JArray iListSequence = null;
+            if (images != null)
+            {
+                iListSequence = new JArray();
+                outputObject = iListSequence;
+                foreach (string iListItem in images)
+                {
+                    if (iListItem != null)
+                    {
+                        iListSequence.Add(iListItem);
+                    }
+                }
+            }
+            return outputObject;
+        }
+        
+        /// <summary>
         /// Deserialize the object
         /// </summary>
         public static IList<string> DeserializeJson(JToken inputObject)

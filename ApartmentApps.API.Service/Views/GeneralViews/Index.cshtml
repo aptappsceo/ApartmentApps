@@ -4,7 +4,8 @@
     ViewBag.Title = "Mobile View";
     Layout = "~/Views/Shared/_MobileClientViewLayout.cshtml";
 }
-@foreach (var item in Model.GroupBy(p => p.StatusId))
+<h2>Requests</h2>
+@foreach (var item in Model.GroupBy(p => p.StatusId).ToArray())
 {
     <div class="row">
         <h2>@item.Key</h2>
@@ -19,9 +20,13 @@
                         <h2 class="request-header-text">@request.MaitenanceRequestType.Name</h2>
 
                         <div>
-                            <hr />
-                            <p>Building: @request.Unit.Building.Name Unit: @request.Unit.Name </p>
-                            <hr />
+                            <hr/>
+                            @if (request.Unit != null)
+                            {
+                                <p>Building: @request.Unit.Building.Name Unit: @request.Unit.Name </p>
+                                <hr />
+                            }
+                          
                             <p>Comments: @request.Message</p>
                             
                             <div class="request-list-item-gallery">

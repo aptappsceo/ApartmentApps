@@ -42,7 +42,12 @@ namespace ApartmentApps.API.Service.Controllers
 
         public IMaintenanceService MaintenanceService { get; set; }
         public ApplicationDbContext Context { get; set; }
-
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetRequest")]
+        public MaitenanceRequest Get(int id)
+        {
+            return this.CurrentUser.Property.MaitenanceRequests.FirstOrDefault(p => p.Id == id);
+        }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("SubmitRequest")]
         public void SubmitRequest(MaitenanceRequestModel request)

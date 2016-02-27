@@ -185,11 +185,17 @@ namespace ApartmentApps.Client
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IAccount.
         /// </param>
-        public static UserInfoViewModel GetUserInfo(this IAccount operations)
+        /// <param name='devicePlatform'>
+        /// Optional.
+        /// </param>
+        /// <param name='devicePushToken'>
+        /// Optional.
+        /// </param>
+        public static UserInfoViewModel GetUserInfo(this IAccount operations, string devicePlatform = null, string devicePushToken = null)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAccount)s).GetUserInfoAsync();
+                return ((IAccount)s).GetUserInfoAsync(devicePlatform, devicePushToken);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -197,12 +203,18 @@ namespace ApartmentApps.Client
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IAccount.
         /// </param>
+        /// <param name='devicePlatform'>
+        /// Optional.
+        /// </param>
+        /// <param name='devicePushToken'>
+        /// Optional.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<UserInfoViewModel> GetUserInfoAsync(this IAccount operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<UserInfoViewModel> GetUserInfoAsync(this IAccount operations, string devicePlatform = null, string devicePushToken = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.UserInfoViewModel> result = await operations.GetUserInfoWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.UserInfoViewModel> result = await operations.GetUserInfoWithOperationResponseAsync(devicePlatform, devicePushToken, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         

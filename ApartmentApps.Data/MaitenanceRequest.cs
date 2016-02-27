@@ -15,16 +15,16 @@ namespace ApartmentApps.Data
 
         public int MaitenanceRequestTypeId { get; set; }
 
-        public int UnitId { get; set; }
+        public int? UnitId { get; set; }
 
         [ForeignKey("UnitId")]
-        public Unit Unit { get; set; }
+        public virtual Unit Unit { get; set; }
 
         [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         [ForeignKey("MaitenanceRequestTypeId")]
-        public MaitenanceRequestType MaitenanceRequestType { get; set; }
+        public virtual MaitenanceRequestType MaitenanceRequestType { get; set; }
 
         public ICollection<MaintenanceRequestCheckin> Checkins { get; set; }
 

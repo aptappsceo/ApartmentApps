@@ -12,26 +12,15 @@ namespace ApartmentApps.Client.Models
 {
     public partial class MaitenanceRequest
     {
-        private IList<MaitenanceAction> _actions;
+        private IList<MaintenanceRequestCheckin> _checkins;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public IList<MaitenanceAction> Actions
+        public IList<MaintenanceRequestCheckin> Checkins
         {
-            get { return this._actions; }
-            set { this._actions = value; }
-        }
-        
-        private DateTimeOffset? _date;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public DateTimeOffset? Date
-        {
-            get { return this._date; }
-            set { this._date = value; }
+            get { return this._checkins; }
+            set { this._checkins = value; }
         }
         
         private int? _id;
@@ -43,6 +32,28 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._id; }
             set { this._id = value; }
+        }
+        
+        private string _imageDirectoryId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ImageDirectoryId
+        {
+            get { return this._imageDirectoryId; }
+            set { this._imageDirectoryId = value; }
+        }
+        
+        private MaintenanceRequestCheckin _latestCheckin;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public MaintenanceRequestCheckin LatestCheckin
+        {
+            get { return this._latestCheckin; }
+            set { this._latestCheckin = value; }
         }
         
         private MaitenanceRequestType _maitenanceRequestType;
@@ -78,6 +89,50 @@ namespace ApartmentApps.Client.Models
             set { this._message = value; }
         }
         
+        private MaintenanceRequestStatus _status;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public MaintenanceRequestStatus Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
+        private string _statusId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string StatusId
+        {
+            get { return this._statusId; }
+            set { this._statusId = value; }
+        }
+        
+        private Unit _unit;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public Unit Unit
+        {
+            get { return this._unit; }
+            set { this._unit = value; }
+        }
+        
+        private int? _unitId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? UnitId
+        {
+            get { return this._unitId; }
+            set { this._unitId = value; }
+        }
+        
         private ApplicationUser _user;
         
         /// <summary>
@@ -100,34 +155,12 @@ namespace ApartmentApps.Client.Models
             set { this._userId = value; }
         }
         
-        private ApplicationUser _worker;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public ApplicationUser Worker
-        {
-            get { return this._worker; }
-            set { this._worker = value; }
-        }
-        
-        private string _workerId;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string WorkerId
-        {
-            get { return this._workerId; }
-            set { this._workerId = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the MaitenanceRequest class.
         /// </summary>
         public MaitenanceRequest()
         {
-            this.Actions = new LazyList<MaitenanceAction>();
+            this.Checkins = new LazyList<MaintenanceRequestCheckin>();
         }
         
         /// <summary>
@@ -137,25 +170,32 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
-                JToken actionsSequence = ((JToken)inputObject["Actions"]);
-                if (actionsSequence != null && actionsSequence.Type != JTokenType.Null)
+                JToken checkinsSequence = ((JToken)inputObject["Checkins"]);
+                if (checkinsSequence != null && checkinsSequence.Type != JTokenType.Null)
                 {
-                    foreach (JToken actionsValue in ((JArray)actionsSequence))
+                    foreach (JToken checkinsValue in ((JArray)checkinsSequence))
                     {
-                        MaitenanceAction maitenanceAction = new MaitenanceAction();
-                        maitenanceAction.DeserializeJson(actionsValue);
-                        this.Actions.Add(maitenanceAction);
+                        MaintenanceRequestCheckin maintenanceRequestCheckin = new MaintenanceRequestCheckin();
+                        maintenanceRequestCheckin.DeserializeJson(checkinsValue);
+                        this.Checkins.Add(maintenanceRequestCheckin);
                     }
-                }
-                JToken dateValue = inputObject["Date"];
-                if (dateValue != null && dateValue.Type != JTokenType.Null)
-                {
-                    this.Date = ((DateTimeOffset)dateValue);
                 }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((int)idValue);
+                }
+                JToken imageDirectoryIdValue = inputObject["ImageDirectoryId"];
+                if (imageDirectoryIdValue != null && imageDirectoryIdValue.Type != JTokenType.Null)
+                {
+                    this.ImageDirectoryId = ((string)imageDirectoryIdValue);
+                }
+                JToken latestCheckinValue = inputObject["LatestCheckin"];
+                if (latestCheckinValue != null && latestCheckinValue.Type != JTokenType.Null)
+                {
+                    MaintenanceRequestCheckin maintenanceRequestCheckin2 = new MaintenanceRequestCheckin();
+                    maintenanceRequestCheckin2.DeserializeJson(latestCheckinValue);
+                    this.LatestCheckin = maintenanceRequestCheckin2;
                 }
                 JToken maitenanceRequestTypeValue = inputObject["MaitenanceRequestType"];
                 if (maitenanceRequestTypeValue != null && maitenanceRequestTypeValue.Type != JTokenType.Null)
@@ -174,6 +214,30 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Message = ((string)messageValue);
                 }
+                JToken statusValue = inputObject["Status"];
+                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                {
+                    MaintenanceRequestStatus maintenanceRequestStatus = new MaintenanceRequestStatus();
+                    maintenanceRequestStatus.DeserializeJson(statusValue);
+                    this.Status = maintenanceRequestStatus;
+                }
+                JToken statusIdValue = inputObject["StatusId"];
+                if (statusIdValue != null && statusIdValue.Type != JTokenType.Null)
+                {
+                    this.StatusId = ((string)statusIdValue);
+                }
+                JToken unitValue = inputObject["Unit"];
+                if (unitValue != null && unitValue.Type != JTokenType.Null)
+                {
+                    Unit unit = new Unit();
+                    unit.DeserializeJson(unitValue);
+                    this.Unit = unit;
+                }
+                JToken unitIdValue = inputObject["UnitId"];
+                if (unitIdValue != null && unitIdValue.Type != JTokenType.Null)
+                {
+                    this.UnitId = ((int)unitIdValue);
+                }
                 JToken userValue = inputObject["User"];
                 if (userValue != null && userValue.Type != JTokenType.Null)
                 {
@@ -185,18 +249,6 @@ namespace ApartmentApps.Client.Models
                 if (userIdValue != null && userIdValue.Type != JTokenType.Null)
                 {
                     this.UserId = ((string)userIdValue);
-                }
-                JToken workerValue = inputObject["Worker"];
-                if (workerValue != null && workerValue.Type != JTokenType.Null)
-                {
-                    ApplicationUser applicationUser2 = new ApplicationUser();
-                    applicationUser2.DeserializeJson(workerValue);
-                    this.Worker = applicationUser2;
-                }
-                JToken workerIdValue = inputObject["WorkerId"];
-                if (workerIdValue != null && workerIdValue.Type != JTokenType.Null)
-                {
-                    this.WorkerId = ((string)workerIdValue);
                 }
             }
         }
