@@ -1,11 +1,13 @@
 // WARNING
 //
-// This file has been generated automatically by Xamarin Studio to store outlets and
-// actions made in the UI designer. If it is removed, they will be lost.
-// Manual changes to this file may not be handled correctly.
+// This file has been generated automatically by Xamarin Studio from the outlets and
+// actions declared in your storyboard file.
+// Manual changes to this file will not be maintained.
 //
 using Foundation;
+using System;
 using System.CodeDom.Compiler;
+using UIKit;
 
 namespace ResidentAppCross.iOS
 {
@@ -35,47 +37,40 @@ namespace ResidentAppCross.iOS
 
 		[Outlet]
 		UIKit.UILabel VersionLabel { get; set; }
-		
+
 		void ReleaseDesignerOutlets ()
 		{
-			if (UsernameLabel != null) {
-				UsernameLabel.Dispose ();
-				UsernameLabel = null;
-			}
-
-			if (EditProfileButton != null) {
-				EditProfileButton.Dispose ();
-				EditProfileButton = null;
-			}
-
-			if (MenuTable != null) {
-				MenuTable.Dispose ();
-				MenuTable = null;
-			}
-
-			if (SettingsButton != null) {
-				SettingsButton.Dispose ();
-				SettingsButton = null;
-			}
-
-			if (SignOutButton != null) {
-				SignOutButton.Dispose ();
-				SignOutButton = null;
-			}
-
 			if (CopyrightLabel != null) {
 				CopyrightLabel.Dispose ();
 				CopyrightLabel = null;
 			}
-
-			if (VersionLabel != null) {
-				VersionLabel.Dispose ();
-				VersionLabel = null;
+			if (EditProfileButton != null) {
+				EditProfileButton.Dispose ();
+				EditProfileButton = null;
 			}
-
+			if (MenuTable != null) {
+				MenuTable.Dispose ();
+				MenuTable = null;
+			}
+			if (SettingsButton != null) {
+				SettingsButton.Dispose ();
+				SettingsButton = null;
+			}
+			if (SignOutButton != null) {
+				SignOutButton.Dispose ();
+				SignOutButton = null;
+			}
 			if (UsernameAvatarImage != null) {
 				UsernameAvatarImage.Dispose ();
 				UsernameAvatarImage = null;
+			}
+			if (UsernameLabel != null) {
+				UsernameLabel.Dispose ();
+				UsernameLabel = null;
+			}
+			if (VersionLabel != null) {
+				VersionLabel.Dispose ();
+				VersionLabel = null;
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Android.Content;
 using Android.Util;
 using Android.Webkit;
@@ -22,6 +23,7 @@ namespace MyApp.Droid.Ui.Controls
             this.SetWebChromeClient(new WebChromeClient());
             this.SetWebViewClient(new WebViewClient());
         }
+        
 
         public string Text
         {
@@ -42,7 +44,19 @@ namespace MyApp.Droid.Ui.Controls
             {
                 if (string.IsNullOrEmpty(value)) return;
                 _contentUrl = value;
-                LoadUrl(_contentUrl);
+
+                var authorizationKey = App.ApartmentAppsClient.AparmentAppsDelegating.AuthorizationKey;
+                if (!string.IsNullOrEmpty(authorizationKey))
+                {
+                    LoadUrl(_contentUrl, new Dictionary<string, string>()
+                    {
+                        {"Authorization", "Bearer " + authorizationKey}
+                    });
+                }
+                else
+                {
+                    LoadUrl(_contentUrl);
+                }
                 UpdatedHtmlContent();
             }
         }
