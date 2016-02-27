@@ -462,7 +462,7 @@
                             <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.9137254901960784" green="0.92549019607843142" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="9ED-BL-tIg" firstAttribute="leading" secondItem="dei-1t-hiT" secondAttribute="leading" id="1Yf-pz-Bmg"/>
                         <constraint firstItem="9ED-BL-tIg" firstAttribute="top" secondItem="dei-1t-hiT" secondAttribute="top" id="6yb-A0-rfg"/>

@@ -208,6 +208,7 @@
     <InterfaceDefinition Include="Views\MaintenanceRequestFormView.xib" />
     <InterfaceDefinition Include="Views\MaintenancePauseFormView.xib" />
     <InterfaceDefinition Include="Views\MaintenanceStartFormView.xib" />
+    <InterfaceDefinition Include="Views\MaintenanceRequestStatusView.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -247,6 +248,10 @@
     <Compile Include="Views\MaintenancePauseFormView.designer.cs" />
     <Compile Include="Views\MaintenanceStartFormView.cs" />
     <Compile Include="Views\MaintenanceStartFormView.designer.cs" />
+    <Compile Include="Views\MaintenanceRequestStatusView.cs" />
+    <Compile Include="Views\MaintenanceRequestStatusView.designer.cs">
+      <DependentUpon>MaintenanceRequestStatusView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="btprogresshud">
