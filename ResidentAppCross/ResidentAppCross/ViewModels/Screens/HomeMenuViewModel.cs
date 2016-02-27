@@ -8,6 +8,7 @@ using ResidentAppCross.Commands;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ServiceClient;
 using ResidentAppCross.ViewModels;
+using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross
 {
@@ -49,18 +50,27 @@ namespace ResidentAppCross
 //                });
 //
 //            }
+          
+
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "(Test) Requests Index",
+                Icon = SharedResources.Icons.MaintenaceIcon,
+                Command = RequestsIndexCommand
+            });
+
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "(Test) Request Status",
+                Icon = SharedResources.Icons.MaintenaceIcon,
+                Command = RequestStatusCommand
+            });
+
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Home",
                 Icon = SharedResources.Icons.HouseIcon,
                 Command = HomeCommand
-            });
-
-            MenuItems.Add(new HomeMenuItemViewModel()
-            {
-                Name = "(Test) Start Maintenance",
-                Icon = SharedResources.Icons.MaintenaceIcon,
-                Command = StartMaintenanceCommand
             });
 
             MenuItems.Add(new HomeMenuItemViewModel()
@@ -118,9 +128,17 @@ namespace ResidentAppCross
 
         public ICommand SignOutCommand => StubCommands.NoActionSpecifiedCommand(this);
 
-        public ICommand StartMaintenanceCommand => new MvxCommand(() =>
+        public ICommand RequestStatusCommand => new MvxCommand(() =>
         {
             ShowViewModel<MaintenanceStartFormViewModel>();
+        });
+
+        public ICommand RequestsIndexCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<MaintenanceRequestIndexViewModel>(vm =>
+            {
+                vm.Url = "http://apartmentappsapiservice.azurewebsites.net/generalviews/index";
+            });
         });
 
         public ICommand HomeCommand

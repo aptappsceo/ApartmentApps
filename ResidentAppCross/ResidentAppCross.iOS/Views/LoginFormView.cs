@@ -26,11 +26,18 @@ namespace ResidentAppCross.iOS
             // Release any cached data, images, etc that aren't in use.
         }
 
+
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            this.NavigationController.SetNavigationBarHidden(true, false);
+
+        }
+
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
             //Hide nav bar
-            this.NavigationController.SetNavigationBarHidden(true, false);
 
             var b = this.CreateBindingSet<LoginFormView, LoginFormViewModel>();
             b.Bind(LoginTextField).TwoWay().For(v => v.Text).To(vm => vm.Username);

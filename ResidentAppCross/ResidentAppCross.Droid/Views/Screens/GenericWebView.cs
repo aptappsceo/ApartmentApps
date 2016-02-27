@@ -23,7 +23,6 @@ namespace ResidentAppCross.Droid.Views
             get { return (GenericWebViewModel)base.ViewModel; }
             set { base.ViewModel = value; }
         }
-
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
