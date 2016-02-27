@@ -209,6 +209,7 @@
     <InterfaceDefinition Include="Views\MaintenancePauseFormView.xib" />
     <InterfaceDefinition Include="Views\MaintenanceStartFormView.xib" />
     <InterfaceDefinition Include="Views\MaintenanceRequestStatusView.xib" />
+    <InterfaceDefinition Include="Views\MaintenaceRequestIndexView.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -251,6 +252,10 @@
     <Compile Include="Views\MaintenanceRequestStatusView.cs" />
     <Compile Include="Views\MaintenanceRequestStatusView.designer.cs">
       <DependentUpon>MaintenanceRequestStatusView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MaintenaceRequestIndexView.cs" />
+    <Compile Include="Views\MaintenaceRequestIndexView.designer.cs">
+      <DependentUpon>MaintenaceRequestIndexView.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
