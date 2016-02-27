@@ -1,0 +1,19 @@
+﻿<Properties StartupItem="ApartmentApps.API.Service/ApartmentApps.API.Service.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenanceStartFormView.cs">
+    <Files>
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Bootstrap/MessengerPluginBootstrap.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Setup.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Values.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Account.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Maitenance.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ServiceClient/ILoginManager.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenancePauseFormView.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenanceStartFormView.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
