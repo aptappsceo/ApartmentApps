@@ -55,6 +55,14 @@ namespace ResidentAppCross
                 Icon = SharedResources.Icons.HouseIcon,
                 Command = HomeCommand
             });
+
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "(Test) Start Maintenance",
+                Icon = SharedResources.Icons.MaintenaceIcon,
+                Command = StartMaintenanceCommand
+            });
+
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Maitenance Request",
@@ -109,6 +117,11 @@ namespace ResidentAppCross
         public ICommand OpenSettingsCommand => StubCommands.NoActionSpecifiedCommand(this);
 
         public ICommand SignOutCommand => StubCommands.NoActionSpecifiedCommand(this);
+
+        public ICommand StartMaintenanceCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<MaintenanceStartFormViewModel>();
+        });
 
         public ICommand HomeCommand
         {
