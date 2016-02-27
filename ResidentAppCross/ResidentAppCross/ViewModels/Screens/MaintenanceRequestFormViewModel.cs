@@ -24,7 +24,7 @@ namespace ResidentAppCross.ViewModels
 
         private IApartmentAppsAPIService _service;
         private IImageService _imageService;
-
+        
         private ObservableCollection<LookupPairModel> _requestTypes =
             new ObservableCollection<LookupPairModel>();
 
@@ -61,7 +61,7 @@ namespace ResidentAppCross.ViewModels
                 }
                 catch(Exception ex)
                 {
-                    this.FailTaskWithPrompt("Loading Request Types...", exp=>Close(this));
+                    this.FailTaskWithPrompt("Failed to load request types.", exp=>Close(this));
                     return;
                 }
             });

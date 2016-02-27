@@ -4,6 +4,7 @@ using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
+using ResidentAppCross.Commands;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ServiceClient;
 using ResidentAppCross.ViewModels;
@@ -103,45 +104,31 @@ namespace ResidentAppCross
             }
         }
 
-        public ICommand EditProfileCommand
-        {
-            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute EditProfileCommand"); }); }
-        }
+        public ICommand EditProfileCommand => StubCommands.NoActionSpecifiedCommand(this);
 
-        public ICommand OpenSettingsCommand
-        {
-            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute OpenSettingsCommand"); }); }
-        }
+        public ICommand OpenSettingsCommand => StubCommands.NoActionSpecifiedCommand(this);
 
-        public ICommand SignOutCommand
-        {
-            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute SignOutCommand"); }); }
-        }
+        public ICommand SignOutCommand => StubCommands.NoActionSpecifiedCommand(this);
 
         public ICommand HomeCommand
         {
-            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute HomeCommand"); }); }
+            get { return new MvxCommand(() =>
+            {
+                var httpLocalhostGeneralviews = "http://apartmentappsapiservice.azurewebsites.net/generalviews/index";
+                ShowViewModel<GenericWebViewModel>(new { url = httpLocalhostGeneralviews });
+            }); }
         }
 
-        public ICommand MaintenaceRequestCommand
+        public ICommand MaintenaceRequestCommand => new MvxCommand(() =>
         {
-            get { return new MvxCommand(() => { ShowViewModel<MaintenanceRequestFormViewModel>(); }); }
-        }
+            ShowViewModel<MaintenanceRequestFormViewModel>();
+        });
 
-        public ICommand RequestCourtesyOfficerCommand
-        {
-            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute RequestCourtesyOfficerCommand"); }); }
-        }
+        public ICommand RequestCourtesyOfficerCommand => StubCommands.NoActionSpecifiedCommand(this);
 
-        public ICommand PayRentCommand
-        {
-            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute PayRentCommand"); }); }
-        }
+        public ICommand PayRentCommand => StubCommands.NoActionSpecifiedCommand(this);
 
-        public ICommand CommunityPartnersCommand
-        {
-            get { return new MvxCommand(() => { Debug.WriteLine("Should Execute CommunityPartnersCommand"); }); }
-        }
+        public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);
 
 
     }
