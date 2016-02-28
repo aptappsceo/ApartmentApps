@@ -122,6 +122,11 @@ namespace ResidentAppCross.ServiceClient
         {
             Data.Logout();
         }
+        public static Action<string> SetRegistrationId { get; set; }
+        public static Func<string> GetRegistrationId { get; set; } 
+
+        public static string DeviceHandle { get; set; }
+        public static string DevicePlatform { get; set; }
 
         public async Task<bool> LoginAsync(string username, string password)
         {
@@ -131,6 +136,18 @@ namespace ResidentAppCross.ServiceClient
                 if (result)
                 {
                     UserInfo = Data.Account.GetUserInfo();
+                    if (GetRegistrationId != null)
+                    {
+                        var registerResult = await Data.Register.PutAsync(GetRegistrationId().Replace("\"",""), new DeviceRegistration()
+                        {
+                            Handle = DeviceHandle.Replace("<","").Replace(">","").Replace(" ",""),
+                            Platform = DevicePlatform,
+                            Tags = new List<string>()
+                        });
+                        if (registerResult != null)
+                        SetRegistrationId(registerResult);
+                    }
+                   
                 }
                 return result;
             }

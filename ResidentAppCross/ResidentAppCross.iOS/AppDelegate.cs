@@ -1,11 +1,13 @@
 ﻿using System;
 using WindowsAzure.Messaging;
+using ApartmentApps.Client;
 using Foundation;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Platform;
 using MvvmCross.iOS.Views.Presenters;
 using MvvmCross.Platform;
 using ObjCRuntime;
+using ResidentAppCross.ServiceClient;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -25,6 +27,11 @@ namespace ResidentAppCross.iOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
+            // For push notifiations
+            LoginService.DevicePlatform = "apns";
+            LoginService.DeviceHandle = DeviceToken;
+            LoginService.GetRegistrationId = () => HandleId;
+            LoginService.SetRegistrationId = (v) => HandleId = v;
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
 
@@ -94,23 +101,48 @@ namespace ResidentAppCross.iOS
                 }
             }
         }
+
+        public static string DeviceToken
+        {
+            get { return NSUserDefaults.StandardUserDefaults.StringForKey("AA_DEVICE_TOKEN"); }
+            set
+            {
+                NSUserDefaults.StandardUserDefaults.SetString(value,"AA_DEVICE_TOKEN");
+            }
+        }
+        public static string HandleId
+        {
+            get { return NSUserDefaults.StandardUserDefaults.StringForKey("AA_HANDLE"); }
+            set
+            {
+                NSUserDefaults.StandardUserDefaults.SetString(value, "AA_HANDLE");
+            }
+        }
         public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
-            Hub = new SBNotificationHub(Constants.ConnectionString, Constants.NotificationHubPath);
+            //Hub = new SBNotificationHub(Constants.ConnectionString, Constants.NotificationHubPath);
+           
+            var client = new App.ApartmentAppsClient();
+            if (HandleId == null)
+            {
+                HandleId = client.Register.Post(HandleId);
+            }
+            
+            DeviceToken = deviceToken.ToString();
+            LoginService.DeviceHandle = DeviceToken;
+            //Hub.UnregisterAllAsync(deviceToken, (error) => {
+            //    if (error != null)
+            //    {
+            //        Console.WriteLine("Error calling Unregister: {0}", error.ToString());
+            //        return;
+            //    }
 
-            Hub.UnregisterAllAsync(deviceToken, (error) => {
-                if (error != null)
-                {
-                    Console.WriteLine("Error calling Unregister: {0}", error.ToString());
-                    return;
-                }
-
-                NSSet tags = new NSSet("all"); // create tags if you want
-                Hub.RegisterNativeAsync(deviceToken, tags, (errorCallback) => {
-                    if (errorCallback != null)
-                        Console.WriteLine("RegisterNativeAsync error: " + errorCallback.ToString());
-                });
-            });
+            //    NSSet tags = new NSSet("all"); // create tags if you want
+            //    Hub.RegisterNativeAsync(deviceToken, tags, (errorCallback) => {
+            //        if (errorCallback != null)
+            //            Console.WriteLine("RegisterNativeAsync error: " + errorCallback.ToString());
+            //    });
+            //});
         }
         public override void OnResignActivation(UIApplication application)
         {

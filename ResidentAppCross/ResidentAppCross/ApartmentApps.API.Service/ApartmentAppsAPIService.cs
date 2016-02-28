@@ -47,6 +47,20 @@ namespace ApartmentApps.Client
             get { return this._maitenance; }
         }
         
+        private INotifiations _notifiations;
+        
+        public virtual INotifiations Notifiations
+        {
+            get { return this._notifiations; }
+        }
+        
+        private IRegister _register;
+        
+        public virtual IRegister Register
+        {
+            get { return this._register; }
+        }
+        
         private IValues _values;
         
         public virtual IValues Values
@@ -62,6 +76,8 @@ namespace ApartmentApps.Client
         {
             this._account = new Account(this);
             this._maitenance = new Maitenance(this);
+            this._notifiations = new Notifiations(this);
+            this._register = new Register(this);
             this._values = new Values(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
@@ -78,6 +94,8 @@ namespace ApartmentApps.Client
         {
             this._account = new Account(this);
             this._maitenance = new Maitenance(this);
+            this._notifiations = new Notifiations(this);
+            this._register = new Register(this);
             this._values = new Values(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
@@ -97,6 +115,8 @@ namespace ApartmentApps.Client
         {
             this._account = new Account(this);
             this._maitenance = new Maitenance(this);
+            this._notifiations = new Notifiations(this);
+            this._register = new Register(this);
             this._values = new Values(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }

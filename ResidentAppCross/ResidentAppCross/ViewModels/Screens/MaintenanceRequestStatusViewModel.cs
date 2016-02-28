@@ -21,7 +21,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private string _comments;
         private DateTime _newRepairDate;
         private int _maintenanceRequestId;
-        private MaitenanceRequest _request;
+        private MaintenanceBindingModel _request;
 
         public MaintenanceRequestStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService)
         {
@@ -29,7 +29,7 @@ namespace ResidentAppCross.ViewModels.Screens
             _imageService = imageService;
         }
 
-        private Task<MaitenanceRequest> GetMaintenanceRequestById(int id)
+        private Task<MaintenanceBindingModel> GetMaintenanceRequestById(int id)
         {
             return _appService.Maitenance.GetAsync(MaintenanceRequestId);
         }
@@ -44,7 +44,7 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        public MaitenanceRequest Request
+        public MaintenanceBindingModel Request
         {
             get { return _request; }
             set { SetProperty(ref _request, value); }

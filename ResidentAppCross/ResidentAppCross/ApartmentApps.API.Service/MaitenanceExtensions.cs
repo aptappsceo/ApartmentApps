@@ -62,7 +62,7 @@ namespace ApartmentApps.Client
         /// <param name='id'>
         /// Required.
         /// </param>
-        public static MaitenanceRequest Get(this IMaitenance operations, int id)
+        public static MaintenanceBindingModel Get(this IMaitenance operations, int id)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -80,9 +80,9 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<MaitenanceRequest> GetAsync(this IMaitenance operations, int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<MaintenanceBindingModel> GetAsync(this IMaitenance operations, int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.MaitenanceRequest> result = await operations.GetWithOperationResponseAsync(id, cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.MaintenanceBindingModel> result = await operations.GetWithOperationResponseAsync(id, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         

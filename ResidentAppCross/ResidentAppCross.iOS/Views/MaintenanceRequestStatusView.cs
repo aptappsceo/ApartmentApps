@@ -22,7 +22,7 @@ namespace ResidentAppCross.iOS
         // to update all kinds of labels.
         */
 
-        private void OnRequestChanged(MaitenanceRequest request)
+        private void OnRequestChanged(MaintenanceBindingModel request)
         {
 
             //How to show photos
@@ -45,8 +45,9 @@ namespace ResidentAppCross.iOS
 
             //Hide/Show those depending on the state of the request;
 
-
-
+            this.CommentsTextView.Text = request.Message;
+            this.TenantFullNameLabel.Text = request.UserName;
+            //this.EntrancePermissionSwitch.On = request.PermissionToEnter;
         }
 
 

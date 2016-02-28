@@ -33,7 +33,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<MaitenanceRequest>> GetWithOperationResponseAsync(int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<MaintenanceBindingModel>> GetWithOperationResponseAsync(int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='workerId'>
         /// Required.

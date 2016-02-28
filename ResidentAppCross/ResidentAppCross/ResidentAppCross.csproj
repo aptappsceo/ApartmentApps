@@ -40,6 +40,8 @@
     <Compile Include="ApartmentApps.API.Service\IAccount.cs" />
     <Compile Include="ApartmentApps.API.Service\IApartmentAppsAPIService.cs" />
     <Compile Include="ApartmentApps.API.Service\IMaitenance.cs" />
+    <Compile Include="ApartmentApps.API.Service\INotifiations.cs" />
+    <Compile Include="ApartmentApps.API.Service\IRegister.cs" />
     <Compile Include="ApartmentApps.API.Service\IValues.cs" />
     <Compile Include="ApartmentApps.API.Service\Maitenance.cs" />
     <Compile Include="ApartmentApps.API.Service\MaitenanceExtensions.cs" />
@@ -48,6 +50,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\Building.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ChangePasswordBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Corporation.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\DeviceRegistration.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserClaim.cs" />
@@ -55,6 +58,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserRole.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LookupPairModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LookupPairModelCollection.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\MaintenanceBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaintenanceRequestCheckin.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaintenanceRequestStatus.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaitenanceRequest.cs" />
@@ -76,6 +80,10 @@
     <Compile Include="ApartmentApps.API.Service\Models\Unit.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\UserInfoViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\UserLoginInfoViewModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Notifiations.cs" />
+    <Compile Include="ApartmentApps.API.Service\NotifiationsExtensions.cs" />
+    <Compile Include="ApartmentApps.API.Service\Register.cs" />
+    <Compile Include="ApartmentApps.API.Service\RegisterExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Values.cs" />
     <Compile Include="ApartmentApps.API.Service\ValuesExtensions.cs" />
     <Compile Include="App.cs" />

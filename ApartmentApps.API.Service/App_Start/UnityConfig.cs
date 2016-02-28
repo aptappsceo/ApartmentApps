@@ -10,6 +10,7 @@ using ApartmentApps.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Azure.NotificationHubs;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler;
 using Unity.WebApi;
@@ -21,11 +22,16 @@ namespace ApartmentApps.API.Service
         public static void RegisterComponents()
         {
 			var container = new UnityContainer();
-            
+
             // register all your components with the container here
             // it is NOT necessary to register your controllers
-            
+
             // e.g. container.RegisterType<ITestService, TestService>();
+
+            // Push notifications
+            container.RegisterType<IPushNotifiationHandler, AzurePushNotificationHandler>();
+            container.RegisterType<IService, PushNotificationsService>("PushNotifications");
+          
             container.RegisterType<IMaintenanceService, MaintenanceService>();
 
             container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
@@ -36,7 +42,8 @@ namespace ApartmentApps.API.Service
             container.RegisterType<ISecureDataFormat<AuthenticationTicket>, SecureDataFormat<AuthenticationTicket>>();
             container.RegisterType<ApplicationUserManager>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>()));
             //container.RegisterType<UserManager<ApplicationUser>>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>()));
-
+            
+            
             //container.RegisterType<MaitenanceController>(new InjectionConstructor());
             //container.RegisterType<AccountController>(new InjectionConstructor());
             //container.RegisterType<HelpController>(new InjectionConstructor());

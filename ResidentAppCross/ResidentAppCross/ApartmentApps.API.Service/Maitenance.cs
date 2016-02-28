@@ -171,7 +171,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<MaitenanceRequest>> GetWithOperationResponseAsync(int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<MaintenanceBindingModel>> GetWithOperationResponseAsync(int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -246,14 +246,14 @@ namespace ApartmentApps.Client
             }
             
             // Create Result
-            HttpOperationResponse<MaitenanceRequest> result = new HttpOperationResponse<MaitenanceRequest>();
+            HttpOperationResponse<MaintenanceBindingModel> result = new HttpOperationResponse<MaintenanceBindingModel>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                MaitenanceRequest resultModel = new MaitenanceRequest();
+                MaintenanceBindingModel resultModel = new MaintenanceBindingModel();
                 JToken responseDoc = null;
                 if (string.IsNullOrEmpty(responseContent) == false)
                 {

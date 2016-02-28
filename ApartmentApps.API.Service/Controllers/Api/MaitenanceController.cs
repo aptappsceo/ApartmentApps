@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -42,11 +44,39 @@ namespace ApartmentApps.API.Service.Controllers
 
         public IMaintenanceService MaintenanceService { get; set; }
         public ApplicationDbContext Context { get; set; }
+
+
+        public class MaintenanceBindingModel
+        {
+            public string UserName { get; set; }
+            public string UserId { get; set; }
+            public string Name { get; set; }
+            public string Message { get; set; }
+            public string BuildingName { get; set; }
+            public string UnitName { get; set; }
+        }
+
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetRequest")]
-        public MaitenanceRequest Get(int id)
+        public async Task<MaintenanceBindingModel> Get(int id)
         {
-            return this.CurrentUser.Property.MaitenanceRequests.FirstOrDefault(p => p.Id == id);
+            using (Context = new ApplicationDbContext())
+            {
+                //var userId = CurrentUser.UserName;
+                //var user = Context.Users.FirstOrDefault(p => p.UserName == userId);
+
+                var result = await Context.MaitenanceRequests
+                    
+                    .FirstOrDefaultAsync(p=>p.Id == id);
+                return new MaintenanceBindingModel
+                {
+                    UserName = result.User.UserName,
+                    UserId = result.UserId,
+                    Name = result.MaitenanceRequestType.Name,
+                    Message = result.Message, BuildingName = result.Unit?.Building?.Name, UnitName = result.Unit?.Name
+                };
+            }
+           
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("SubmitRequest")]

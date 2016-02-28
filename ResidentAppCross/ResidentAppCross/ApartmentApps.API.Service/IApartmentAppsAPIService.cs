@@ -36,6 +36,16 @@ namespace ApartmentApps.Client
             get; 
         }
         
+        INotifiations Notifiations
+        {
+            get; 
+        }
+        
+        IRegister Register
+        {
+            get; 
+        }
+        
         IValues Values
         {
             get; 
