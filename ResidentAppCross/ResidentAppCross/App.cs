@@ -15,6 +15,11 @@ using ResidentAppCross.ServiceClient;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
 
+public static class Constants
+{
+    public const string ConnectionString = "Endpoint=sb://aptappspush.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=b8UIg+ith9oTvd+/4bhvCkc81e6nSnombxgsTqTB8ak=";
+    public const string NotificationHubPath = "apartmentapps";
+}
 public class App : MvxApplication
 {
     public App()
