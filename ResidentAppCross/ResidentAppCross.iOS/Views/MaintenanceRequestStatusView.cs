@@ -39,12 +39,6 @@ namespace ResidentAppCross.iOS
             //View has 2 headers and 2 footers
 
 
-            var headerWhenRequestIsPaused = HeaderSectionPaused;
-            var headerForAnyOtherCase = HeaderSectionPending;
-
-            var footerWhenInProgress = FooterSectionPending;
-            var footerWhenPausedOrNeverStarted = FooterSectionStart;
-
             UpdateHeadersAndFooters(request);
 
 
@@ -61,8 +55,12 @@ namespace ResidentAppCross.iOS
 	        RequestStatus status;
 	        Enum.TryParse(request.Status, out status);
 
-	        HeaderSectionPaused.Hidden = true;
-            
+            HeaderSectionPaused.Hidden = status != RequestStatus.Paused;
+	        HeaderSectionPending.Hidden = status == RequestStatus.Paused;
+
+	        FooterSectionPending.Hidden = status != RequestStatus.Started;
+	        FooterSectionStart.Hidden = status == RequestStatus.Started;
+
 	    }
 
         public enum RequestStatus
