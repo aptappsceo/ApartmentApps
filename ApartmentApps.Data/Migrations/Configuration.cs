@@ -29,15 +29,15 @@ namespace ApartmentApps.Data.Migrations
                   new IdentityRole { Id = "PropertyAdmin", Name = "PropertyAdmin" },
                   new IdentityRole { Id = "Admin", Name = "Admin" }
             );
-            var user = context.Users.FirstOrDefault(p => p.Email == "micahosborne@gmail.com");
-            if (user != null)
-            {
-               user.Roles.Add(new IdentityUserRole() {RoleId = "Admin",UserId = user.Id});
-               user.Roles.Add(new IdentityUserRole() {RoleId = "PropertyAdmin",UserId = user.Id});
-               user.Roles.Add(new IdentityUserRole() {RoleId = "Officer",UserId = user.Id});
-               user.Roles.Add(new IdentityUserRole() {RoleId = "Resident",UserId = user.Id});
-               user.Roles.Add(new IdentityUserRole() {RoleId = "Maintenance",UserId = user.Id});
-            }
+            //var user = context.Users.FirstOrDefault(p => p.Email == "micahosborne@gmail.com");
+            //if (user != null)
+            //{
+            //   user.Roles.Add(new IdentityUserRole() {RoleId = "Admin",UserId = user.Id});
+            //   user.Roles.Add(new IdentityUserRole() {RoleId = "PropertyAdmin",UserId = user.Id});
+            //   user.Roles.Add(new IdentityUserRole() {RoleId = "Officer",UserId = user.Id});
+            //   user.Roles.Add(new IdentityUserRole() {RoleId = "Resident",UserId = user.Id});
+            //   user.Roles.Add(new IdentityUserRole() {RoleId = "Maintenance",UserId = user.Id});
+            //}
             context.MaintenanceRequestStatuses.AddOrUpdate(
                 new MaintenanceRequestStatus { Name = "Submitted" },
                 new MaintenanceRequestStatus { Name = "Scheduled" },
