@@ -49,11 +49,9 @@ D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.csprojResolveAssemblyReference.cache
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
-C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\Microsoft.Azure.AppService.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\Microsoft.WindowsAzure.Mobile.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\System.Net.Http.Formatting.dll
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\Microsoft.Azure.AppService.xml
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\Microsoft.WindowsAzure.Mobile.xml
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\System.Net.Http.Formatting.xml

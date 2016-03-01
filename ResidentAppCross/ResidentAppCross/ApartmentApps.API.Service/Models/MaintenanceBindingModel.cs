@@ -11,6 +11,28 @@ namespace ApartmentApps.Client.Models
 {
     public partial class MaintenanceBindingModel
     {
+        private string _buildingAddress;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string BuildingAddress
+        {
+            get { return this._buildingAddress; }
+            set { this._buildingAddress = value; }
+        }
+        
+        private string _buildingCity;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string BuildingCity
+        {
+            get { return this._buildingCity; }
+            set { this._buildingCity = value; }
+        }
+        
         private string _buildingName;
         
         /// <summary>
@@ -20,6 +42,28 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._buildingName; }
             set { this._buildingName = value; }
+        }
+        
+        private string _buildingPostalCode;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string BuildingPostalCode
+        {
+            get { return this._buildingPostalCode; }
+            set { this._buildingPostalCode = value; }
+        }
+        
+        private string _buildingState;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string BuildingState
+        {
+            get { return this._buildingState; }
+            set { this._buildingState = value; }
         }
         
         private IList<string> _checkins;
@@ -147,10 +191,30 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken buildingAddressValue = inputObject["BuildingAddress"];
+                if (buildingAddressValue != null && buildingAddressValue.Type != JTokenType.Null)
+                {
+                    this.BuildingAddress = ((string)buildingAddressValue);
+                }
+                JToken buildingCityValue = inputObject["BuildingCity"];
+                if (buildingCityValue != null && buildingCityValue.Type != JTokenType.Null)
+                {
+                    this.BuildingCity = ((string)buildingCityValue);
+                }
                 JToken buildingNameValue = inputObject["BuildingName"];
                 if (buildingNameValue != null && buildingNameValue.Type != JTokenType.Null)
                 {
                     this.BuildingName = ((string)buildingNameValue);
+                }
+                JToken buildingPostalCodeValue = inputObject["BuildingPostalCode"];
+                if (buildingPostalCodeValue != null && buildingPostalCodeValue.Type != JTokenType.Null)
+                {
+                    this.BuildingPostalCode = ((string)buildingPostalCodeValue);
+                }
+                JToken buildingStateValue = inputObject["BuildingState"];
+                if (buildingStateValue != null && buildingStateValue.Type != JTokenType.Null)
+                {
+                    this.BuildingState = ((string)buildingStateValue);
                 }
                 JToken checkinsSequence = ((JToken)inputObject["Checkins"]);
                 if (checkinsSequence != null && checkinsSequence.Type != JTokenType.Null)

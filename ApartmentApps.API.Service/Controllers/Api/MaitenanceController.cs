@@ -53,6 +53,10 @@ namespace ApartmentApps.API.Service.Controllers
             public string Name { get; set; }
             public string Message { get; set; }
             public string BuildingName { get; set; }
+            public string BuildingAddress { get; set; }
+            public string BuildingState { get; set; }
+            public string BuildingCity { get; set; }
+            public string BuildingPostalCode { get; set; }
             public string UnitName { get; set; }
             public string Status { get; set; }
             public string TenantFullName { get; set; }
@@ -83,11 +87,14 @@ namespace ApartmentApps.API.Service.Controllers
 
                 return new MaintenanceBindingModel
                 {
-                    
                     UserName = result.User.UserName,
                     Status = result.StatusId,
                     TenantFullName = result.User.Tenant?.FirstName + result.User.Tenant?.LastName,
                     UserId = result.UserId,
+                    BuildingAddress = result.User.Tenant?.Address,
+                    BuildingCity= result.User.Tenant?.City,
+                    BuildingPostalCode= result.User.Tenant?.PostalCode,
+                    BuildingState= result.User.Tenant?.State,
                     Name = result.MaitenanceRequestType.Name,
                     PetStatus = result.PetStatus,
                     Checkins = result.Checkins.Select(x=>new CheckinBindingModel {StatusId = x.StatusId, Date = x.Date, Comments = x.Comments, WorkerName = x.Worker.UserName}),
