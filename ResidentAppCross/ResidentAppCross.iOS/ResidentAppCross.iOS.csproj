@@ -248,6 +248,8 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="Views\AppTheme.cs" />
+    <Compile Include="Views\Attributes\ViewsAttributes.cs" />
     <Compile Include="Views\PhotoGallery\PhotoGalleryCells.cs" />
     <Compile Include="Views\PhotoGallery\PhotoGallerySource.cs" />
     <Compile Include="Views\TableSources\HomeMenuTableSource.cs" />

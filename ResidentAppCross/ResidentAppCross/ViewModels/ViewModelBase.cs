@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
@@ -8,6 +10,7 @@ using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Events;
+using ResidentAppCross.Interfaces;
 
 namespace ResidentAppCross.ViewModels
 {
@@ -41,6 +44,7 @@ namespace ResidentAppCross.ViewModels
             config(this);
         }
         
+
     }
 
     public static class ViewModelExtensions
@@ -49,6 +53,23 @@ namespace ResidentAppCross.ViewModels
         {
             viewModel.EventAggregator.Publish(message);
         }
+
+
+        public static IDisposable Subscribe<T>(this T model, string propertyName, Action<T> handler) where T : IMvxNotifyPropertyChanged, IDisposableContainer
+        {
+            PropertyChangedEventHandler wrapper = (sender, args) =>
+            {
+                if (args.PropertyName == propertyName) handler(model);
+            };
+            model.PropertyChanged += wrapper;
+            var disposable = new Disposable(() =>
+            {
+                model.PropertyChanged -= wrapper;
+            });
+            disposable.DisposeWith(model);
+            return disposable;
+        }
+
     }
 
 

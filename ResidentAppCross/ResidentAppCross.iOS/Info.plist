@@ -19,6 +19,8 @@
 			</dict>
 		</dict>
 	</dict>
+  <key>UIViewControllerBasedStatusBarAppearance</key>
+  <false/>
 	<key>CFBundleDisplayName</key>
 	<string>ResidentAppCross.iOS</string>
 	<key>CFBundleIdentifier</key>

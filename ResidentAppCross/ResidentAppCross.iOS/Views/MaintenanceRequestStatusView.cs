@@ -4,12 +4,13 @@ using Foundation;
 using MvvmCross.Binding.BindingContext;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.PhotoGallery;
+using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	public partial class MaintenanceRequestStatusView : ViewBase
+	public partial class MaintenanceRequestStatusView : ViewBase<MaintenanceRequestStatusViewModel>
 	{
 
         /* 
@@ -29,19 +30,23 @@ namespace ResidentAppCross.iOS
             //1. Populate ViewModel.AttachedPhotos
             //2. Uncomment the following code.
 
-//            PhotoContainer.RegisterClassForCell(typeof(PhotoGalleryCells), (NSString)PhotoGalleryCells.CellIdentifier);
-//            PhotoContainer.Source = new PhotoGallerySource(ViewModel.AttachedPhotos);
-//            PhotoContainer.ReloadData();
+            //            PhotoContainer.RegisterClassForCell(typeof(PhotoGalleryCells), (NSString)PhotoGalleryCells.CellIdentifier);
+            //            PhotoContainer.Source = new PhotoGallerySource(ViewModel.AttachedPhotos);
+            //            PhotoContainer.ReloadData();
 
-            
 
             //TODO: Important note:
             //View has 2 headers and 2 footers
+
+
             var headerWhenRequestIsPaused = HeaderSectionPaused;
             var headerForAnyOtherCase = HeaderSectionPending;
 
             var footerWhenInProgress = FooterSectionPending;
             var footerWhenPausedOrNeverStarted = FooterSectionStart;
+
+            UpdateHeadersAndFooters(request);
+
 
             //Hide/Show those depending on the state of the request;
 
@@ -51,17 +56,27 @@ namespace ResidentAppCross.iOS
             //this.EntrancePermissionSwitch.On = request.PermissionToEnter;
         }
 
+	    private void UpdateHeadersAndFooters(MaintenanceBindingModel request)
+	    {
+	        RequestStatus status;
+	        Enum.TryParse(request.Status, out status);
 
-        public MaintenanceRequestStatusView () : base ("MaintenanceRequestStatusView", null)
+	        HeaderSectionPaused.Hidden = true;
+            
+	    }
+
+        public enum RequestStatus
+	    {
+	        Complete,
+            Paused,
+            Scheduled,
+            Started,
+            Submitted
+	    }
+
+	    public MaintenanceRequestStatusView () : base ("MaintenanceRequestStatusView", null)
 		{
 		}
-
-
-	    public new MaintenanceRequestStatusViewModel ViewModel
-	    {
-	        get { return (MaintenanceRequestStatusViewModel) base.ViewModel; }
-	        set { base.ViewModel = value; }
-	    }
 
 	    public override void ViewDidLoad ()
 		{
@@ -74,7 +89,6 @@ namespace ResidentAppCross.iOS
 	            }
 	        };
 		}
-
 
 	    public override void DidReceiveMemoryWarning ()
 		{

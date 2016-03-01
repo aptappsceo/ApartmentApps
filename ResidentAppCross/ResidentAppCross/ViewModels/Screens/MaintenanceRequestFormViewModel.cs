@@ -34,108 +34,30 @@ namespace ResidentAppCross.ViewModels
 
         public MaintenanceRequestFormViewModel(IApartmentAppsAPIService service, IImageService imageService)
         {
-           
             _service = service;
             _imageService = imageService;
-
         }
 
         public override void Start()
         {
             base.Start();
-            //            _service.Maitenance.GetMaitenanceRequestTypesWithOperationResponseAsync().ContinueWith(t =>
-            //            {
-            //                RequestTypes.AddRange(t.Result.Body);
-            //            });
-            Task.Run(async () =>
-            {
-                this.StartTask("Loading Request Types...");
-               
-                HttpOperationResponse<IList<LookupPairModel>> op;
-                try
-                {
-                    op = await _service.Maitenance.GetMaitenanceRequestTypesWithOperationResponseAsync();
-                    RequestTypes.AddRange(op.Body);
-                    SelectedRequestType = RequestTypes.FirstOrDefault();
-                    this.CompleteTask();
-                }
-                catch(Exception ex)
-                {
-                    this.FailTaskWithPrompt("Failed to load request types.", exp=>Close(this));
-                    return;
-                }
-            });
-            
+            UpdateRequestTypes.Execute(null);
         }
 
         public ObservableCollection<LookupPairModel> RequestTypes
         {
             get { return _requestTypes; }
-            set
-            {
-                _requestTypes = value;
-                RaisePropertyChanged();
-            }
+            set { SetProperty(ref _requestTypes, value); }
         }
 
         public string Title => "Maintenance Request";
 
-        public ICommand DoneCommand
-        {
-            get
-            {
-                return this.TaskCommand(async context =>
-                {
-                    await _service.Maitenance.SubmitRequestAsync(new MaitenanceRequestModel()
-                    {
-                        Comments = Comments,
-                        MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
-                        Images =
-                            ImagesToUpload.RawImages.Select(p => Encoding.UTF8.GetString(p.Data, 0, p.Data.Length))
-                                .ToList()
-                    });
-                }).OnStart("Sending Request...")
-                .OnComplete("Request Sent", ()=>Close(this));
-            }
-        }
-
-        public ICommand AddPhotoCommand
-        {
-            get
-            {
-                return new MvxCommand(() =>
-                {
-                    _imageService.SelectImage(s =>
-                    {
-                        ImagesToUpload.RawImages.Add(new ImageBundleItemViewModel()
-                        {
-                            Data = s
-                        });
-                    }, ()=> {});
-                });
-            }
-        }
-
-        public ImageBundleViewModel ImagesToUpload { get; set; } = new ImageBundleViewModel() { Title = "Halo?" };
-
-        public ICommand HomeCommand
-        {
-            get
-            {
-                return new MvxCommand(() =>
-                {
-                    Close(this);
-                });
-            }
-        }
+        public ImageBundleViewModel ImagesToUpload { get; set; } = new ImageBundleViewModel() { Title = "Photos?" };
 
         public LookupPairModel SelectedRequestType
         {
             get { return _selectedRequestType; }
-            set
-            {
-                SetProperty(ref _selectedRequestType, value);
-            }
+            set { SetProperty(ref _selectedRequestType, value); }
         }
 
         public string Comments
@@ -159,6 +81,71 @@ namespace ResidentAppCross.ViewModels
                     MaintenanceRequestTypeSelectionViewModel.Options = RequestTypes.ToList();
                     ShowViewModel<MaintenanceRequestTypeSelectionViewModel>();
                 });
+            }
+        }
+
+        public ICommand HomeCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    Close(this);
+                });
+            }
+        }
+
+        public ICommand DoneCommand
+        {
+            get
+            {
+                return this.TaskCommand(async context =>
+                {
+                    await _service.Maitenance.SubmitRequestAsync(new MaitenanceRequestModel()
+                    {
+                        Comments = Comments,
+                        MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
+                        Images =
+                            ImagesToUpload.RawImages.Select(p => Encoding.UTF8.GetString(p.Data, 0, p.Data.Length))
+                                .ToList()
+                    });
+                }).OnStart("Sending Request...")
+                .OnComplete("Request Sent", () => Close(this));
+            }
+        }
+
+        public ICommand AddPhotoCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    _imageService.SelectImage(s =>
+                    {
+                        ImagesToUpload.RawImages.Add(new ImageBundleItemViewModel()
+                        {
+                            Data = s
+                        });
+                    }, () => { });
+                });
+            }
+        }
+
+        public ICommand UpdateRequestTypes
+        {
+            get
+            {
+                return this.TaskCommand(async context =>
+                {
+                    var operation = await _service.Maitenance.GetMaitenanceRequestTypesWithOperationResponseAsync();
+                    var lookupPairModels = operation?.Body?.ToArray();
+                    if (lookupPairModels == null || lookupPairModels.Length == 0)
+                    {
+                        context.FailTask("Failed to load Request Types");
+                    }
+                    RequestTypes.AddRange(lookupPairModels);
+                    SelectedRequestType = RequestTypes.FirstOrDefault();
+                }).OnStart("Loading Request Types...");
             }
         }
     }

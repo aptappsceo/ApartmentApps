@@ -6,6 +6,7 @@ using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
 using ResidentAppCross.iOS.Extensions;
 using ResidentAppCross.iOS.Views;
+using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.PhotoGallery;
 using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.ViewModels;
@@ -13,16 +14,27 @@ using UIKit;
 
 namespace ResidentAppCross.iOS.Views
 {
-	public partial class MaintenanceRequestFormView : ViewBase
+
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    [NavbarStyling(Hidden = false)]
+	public partial class MaintenanceRequestFormView : ViewBase<MaintenanceRequestFormViewModel>
 	{
-		public MaintenanceRequestFormView () : base ("MaintenanceRequestFormView", null)
+
+//        public new MaintenanceRequestFormViewModel ViewModel
+//        {
+//            get { return (MaintenanceRequestFormViewModel)base.ViewModel; }
+//            set { base.ViewModel = value; }
+//        }
+
+        public override string Title => "Maintenance Request";
+
+        public MaintenanceRequestFormView () : base ("MaintenanceRequestFormView", null)
 		{
 
 			this.DelayBind(() =>
 				{
 					var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
-
-
+                    
 					b.Bind(CommentsTextView).TwoWay().For(v => v.Text).To(vm => vm.Comments);
 
 					ViewModel.ImagesToUpload.RawImages.CollectionChanged += ImagesChanged;
@@ -37,12 +49,6 @@ namespace ResidentAppCross.iOS.Views
 
 					b.Apply();
 
-//					PetTypeSelection.RemoveAllSegments();
-//
-//                    PetTypeSelection.InsertSegment("No Pet",0,false);
-//                    PetTypeSelection.InsertSegment("Yes, Contained",1,false);
-//                    PetTypeSelection.InsertSegment("Yes, Free",2,false);
-
 				});
 
 		}
@@ -52,24 +58,24 @@ namespace ResidentAppCross.iOS.Views
 			PhotoContainer.ReloadData();
 		}
 
-		public new MaintenanceRequestFormViewModel ViewModel
-		{
-			get { return (MaintenanceRequestFormViewModel) base.ViewModel; }
-			set { base.ViewModel = value; }
-		}
+	
 
 		public void ShowRequestSelection()
 		{
-			var selectionTable = new UITableViewController(UITableViewStyle.Grouped)
-			{
-				ModalPresentationStyle = UIModalPresentationStyle.FullScreen,
-				TableView =
-				{
-					LayoutMargins = new UIEdgeInsets(25, 25, 0, 50),
-					SeparatorColor = UIColor.Gray,
-					SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine
-				}
-				};
+		    var selectionTable = new UITableViewController(UITableViewStyle.Grouped)
+		    {
+		        ModalPresentationStyle = UIModalPresentationStyle.Popover,
+		        TableView =
+		        {
+		            LayoutMargins = new UIEdgeInsets(25, 25, 0, 50),
+		            SeparatorColor = UIColor.Gray,
+		            SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine
+		        }
+		    };
+
+
+		    selectionTable.ExtendedLayoutIncludesOpaqueBars = false;
+            selectionTable.EdgesForExtendedLayout = UIRectEdge.None;
 			var uiTableViewHeaderFooterView = new UITableViewHeaderFooterView();
 			selectionTable.TableView.TableHeaderView = uiTableViewHeaderFooterView;
 			uiTableViewHeaderFooterView.TextLabel.Text = "Please, Select Request Type";
@@ -80,37 +86,35 @@ namespace ResidentAppCross.iOS.Views
 				OnItemSelected = item =>
 				{
 					ViewModel.SelectedRequestType = item;
-					selectionTable.DismissViewController(true,()=> {});
+				    NavigationController.PopViewController(true);
 				}
 			};
 
 			selectionTable.TableView.LayoutIfNeeded();
 			selectionTable.TableView.LayoutSubviews();
 
-			this.PresentViewController(selectionTable, true, null);
+            NavigationController.PushViewController(selectionTable,true);
+
+			//this.PresentViewController(selectionTable, true, null);
 		}
 
-		public override void ViewDidLoad ()
+
+	    public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 
-			this.NavigationController.SetNavigationBarHidden(false, true);
-			this.NavigationController.NavigationBar.BarTintColor = new UIColor(20f/255,92f/255,153f/255,1f);
-			this.Title = "Maintenance Request";
+                EdgesForExtendedLayout = UIRectEdge.None;
+            this.NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem(
+				"Back", 
+                UIBarButtonItemStyle.Plain, 
+                (sender, args) => NavigationController.PopViewController(true)), 
+                true);
 
-			this.NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem(
-				UIImage.FromBundle("HomeIcon"), UIBarButtonItemStyle.Plain, (sender, args) => {
-					NavigationController.PopViewController(true);
-				}), true);
-
-
-			this.NavigationItem.SetRightBarButtonItem(
-				new UIBarButtonItem("Done"
-					, UIBarButtonItemStyle.Plain
-					, (sender, args) => {
-						ViewModel.DoneCommand.Execute(null);
-					})
-				, true);
+			this.NavigationItem.SetRightBarButtonItem(new UIBarButtonItem
+                ("Done", 
+                UIBarButtonItemStyle.Plain, 
+                (sender, args) => ViewModel.DoneCommand.Execute(null)), 
+                true);
 
 
             PhotoContainer.RegisterClassForCell(typeof(PhotoGalleryCells), (NSString)PhotoGalleryCells.CellIdentifier);
