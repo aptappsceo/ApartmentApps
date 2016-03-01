@@ -136,7 +136,7 @@ namespace ResidentAppCross.ServiceClient
                 if (result)
                 {
                     UserInfo = Data.Account.GetUserInfo();
-                    if (GetRegistrationId != null)
+                    if (GetRegistrationId != null && DeviceHandle != null)
                     {
                         var registerResult = await Data.Register.PutAsync(GetRegistrationId().Replace("\"",""), new DeviceRegistration()
                         {

@@ -215,6 +215,42 @@ namespace ApartmentApps.Client
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IMaitenance.
         /// </param>
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='scheduleDate'>
+        /// Required.
+        /// </param>
+        public static object ScheduleRequest(this IMaitenance operations, int id, DateTimeOffset scheduleDate)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IMaitenance)s).ScheduleRequestAsync(id, scheduleDate);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IMaitenance.
+        /// </param>
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='scheduleDate'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<object> ScheduleRequestAsync(this IMaitenance operations, int id, DateTimeOffset scheduleDate, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<object> result = await operations.ScheduleRequestWithOperationResponseAsync(id, scheduleDate, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IMaitenance.
+        /// </param>
         /// <param name='request'>
         /// Required.
         /// </param>

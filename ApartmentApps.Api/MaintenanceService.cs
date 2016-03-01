@@ -74,5 +74,17 @@ namespace ApartmentApps.Api
         {
             Checkin(worker, id, comments, "Started");
         }
+
+        public void ScheduleRequest(ApplicationUser currentUser, int id, DateTime scheduleDate)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var mr = ctx.MaitenanceRequests.Find(id);
+                mr.ScheduleDate = scheduleDate;
+                ctx.SaveChanges();
+            }
+            Checkin(currentUser, id,
+                $"Schedule date set to {scheduleDate.DayOfWeek} at {scheduleDate.Hour}:{scheduleDate.Minute}", "Scheduled");
+        }
     }
 }

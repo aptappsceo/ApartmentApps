@@ -47,6 +47,7 @@ namespace ResidentAppCross.iOS
 
             this.CommentsTextView.Text = request.Message;
             this.TenantFullNameLabel.Text = request.UserName;
+            
             //this.EntrancePermissionSwitch.On = request.PermissionToEnter;
         }
 

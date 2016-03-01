@@ -70,6 +70,17 @@ namespace ApartmentApps.Client
         /// </param>
         Task<HttpOperationResponse<object>> PauseRequestWithOperationResponseAsync(int id, string comments, IList<string> images, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='scheduleDate'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> ScheduleRequestWithOperationResponseAsync(int id, DateTimeOffset scheduleDate, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
         /// <param name='request'>
         /// Required.
         /// </param>

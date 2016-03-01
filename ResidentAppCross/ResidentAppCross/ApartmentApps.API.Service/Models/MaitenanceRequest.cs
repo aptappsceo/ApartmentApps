@@ -89,6 +89,39 @@ namespace ApartmentApps.Client.Models
             set { this._message = value; }
         }
         
+        private bool? _permissionToEnter;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? PermissionToEnter
+        {
+            get { return this._permissionToEnter; }
+            set { this._permissionToEnter = value; }
+        }
+        
+        private int? _petStatus;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? PetStatus
+        {
+            get { return this._petStatus; }
+            set { this._petStatus = value; }
+        }
+        
+        private DateTimeOffset? _scheduleDate;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public DateTimeOffset? ScheduleDate
+        {
+            get { return this._scheduleDate; }
+            set { this._scheduleDate = value; }
+        }
+        
         private MaintenanceRequestStatus _status;
         
         /// <summary>
@@ -213,6 +246,21 @@ namespace ApartmentApps.Client.Models
                 if (messageValue != null && messageValue.Type != JTokenType.Null)
                 {
                     this.Message = ((string)messageValue);
+                }
+                JToken permissionToEnterValue = inputObject["PermissionToEnter"];
+                if (permissionToEnterValue != null && permissionToEnterValue.Type != JTokenType.Null)
+                {
+                    this.PermissionToEnter = ((bool)permissionToEnterValue);
+                }
+                JToken petStatusValue = inputObject["PetStatus"];
+                if (petStatusValue != null && petStatusValue.Type != JTokenType.Null)
+                {
+                    this.PetStatus = ((int)petStatusValue);
+                }
+                JToken scheduleDateValue = inputObject["ScheduleDate"];
+                if (scheduleDateValue != null && scheduleDateValue.Type != JTokenType.Null)
+                {
+                    this.ScheduleDate = ((DateTimeOffset)scheduleDateValue);
                 }
                 JToken statusValue = inputObject["Status"];
                 if (statusValue != null && statusValue.Type != JTokenType.Null)

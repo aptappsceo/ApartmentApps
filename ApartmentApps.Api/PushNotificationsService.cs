@@ -94,7 +94,7 @@ namespace ApartmentApps.Api
 
         public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest)
         {
-            
+            _pushHandler.SendToUser(maitenanceRequest.MaitenanceRequest.UserId, $"Maintenance {maitenanceRequest.StatusId}");
         }
     }
 }

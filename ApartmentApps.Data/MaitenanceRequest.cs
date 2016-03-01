@@ -15,6 +15,11 @@ namespace ApartmentApps.Data
 
         public int MaitenanceRequestTypeId { get; set; }
 
+        public bool PermissionToEnter { get; set; }
+
+        // 0 = false, 1= yes, 2 = yes contained
+        public int PetStatus { get; set; }
+
         public int? UnitId { get; set; }
 
         [ForeignKey("UnitId")]
@@ -26,7 +31,9 @@ namespace ApartmentApps.Data
         [ForeignKey("MaitenanceRequestTypeId")]
         public virtual MaitenanceRequestType MaitenanceRequestType { get; set; }
 
-        public ICollection<MaintenanceRequestCheckin> Checkins { get; set; }
+        public virtual ICollection<MaintenanceRequestCheckin> Checkins { get; set; }
+
+        public DateTime? ScheduleDate { get; set; }
 
         public string Message { get; set; }
 

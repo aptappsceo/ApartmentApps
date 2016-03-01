@@ -89,6 +89,11 @@ namespace ApartmentApps.API.Service.Controllers.Api
             registration.Tags = new HashSet<string>(deviceUpdate.Tags);
             registration.Tags.Add("username:" + username);
             registration.Tags.Add("userid:" + currentUser.Id);
+            registration.Tags.Add("propertyid:" +currentUser.PropertyId);
+            if (currentUser.PropertyId != null)
+            {
+                registration.Tags.Add("propertyid:" + currentUser.PropertyId);
+            }
             foreach (var role in currentUser.Roles)
             {
                 registration.Tags.Add("role:"+ role.RoleId);

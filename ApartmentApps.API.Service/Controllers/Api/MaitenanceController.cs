@@ -54,6 +54,19 @@ namespace ApartmentApps.API.Service.Controllers
             public string Message { get; set; }
             public string BuildingName { get; set; }
             public string UnitName { get; set; }
+            public string Status { get; set; }
+            public string TenantFullName { get; set; }
+            public DateTime? ScheduleDate { get; set; }
+            public int PetStatus { get; set; }
+            public IEnumerable<object> Checkins { get; set; }
+        }
+
+        public class CheckinBindingModel
+        {
+            public string StatusId { get; set; }
+            public DateTime Date { get; set; }
+            public string Comments { get; set; }
+            public string WorkerName { get; set; }
         }
 
         [System.Web.Http.HttpGet]
@@ -66,18 +79,32 @@ namespace ApartmentApps.API.Service.Controllers
                 //var user = Context.Users.FirstOrDefault(p => p.UserName == userId);
 
                 var result = await Context.MaitenanceRequests
-                    
                     .FirstOrDefaultAsync(p=>p.Id == id);
+
                 return new MaintenanceBindingModel
                 {
+                    
                     UserName = result.User.UserName,
+                    Status = result.StatusId,
+                    TenantFullName = result.User.Tenant?.FirstName + result.User.Tenant?.LastName,
                     UserId = result.UserId,
                     Name = result.MaitenanceRequestType.Name,
+                    PetStatus = result.PetStatus,
+                    Checkins = result.Checkins.Select(x=>new CheckinBindingModel {StatusId = x.StatusId, Date = x.Date, Comments = x.Comments, WorkerName = x.Worker.UserName}),
+                    ScheduleDate = result.ScheduleDate,
                     Message = result.Message, BuildingName = result.Unit?.Building?.Name, UnitName = result.Unit?.Name
                 };
             }
            
         }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("ScheduleRequest")]
+        public void ScheduleRequest(int id, DateTime scheduleDate)
+        {
+            MaintenanceService.ScheduleRequest(CurrentUser, id, scheduleDate);
+        }
+
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("SubmitRequest")]
         public void SubmitRequest(MaitenanceRequestModel request)
