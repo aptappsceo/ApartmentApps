@@ -82,10 +82,6 @@ namespace ApartmentApps.Api
 
         }
 
-        public void MaintenanceRequestPaused(MaitenanceRequest maitenanceRequest)
-        {
-
-        }
 
         public void MaintenanceRequestSubmited(MaitenanceRequest maitenanceRequest)
         {
