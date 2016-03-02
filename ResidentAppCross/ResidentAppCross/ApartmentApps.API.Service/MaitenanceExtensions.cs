@@ -251,6 +251,48 @@ namespace ApartmentApps.Client
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IMaitenance.
         /// </param>
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='comments'>
+        /// Required.
+        /// </param>
+        /// <param name='images'>
+        /// Required.
+        /// </param>
+        public static object StartRequest(this IMaitenance operations, int id, string comments, IList<string> images)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IMaitenance)s).StartRequestAsync(id, comments, images);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IMaitenance.
+        /// </param>
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='comments'>
+        /// Required.
+        /// </param>
+        /// <param name='images'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<object> StartRequestAsync(this IMaitenance operations, int id, string comments, IList<string> images, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<object> result = await operations.StartRequestWithOperationResponseAsync(id, comments, images, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IMaitenance.
+        /// </param>
         /// <param name='request'>
         /// Required.
         /// </param>

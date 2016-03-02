@@ -6,6 +6,7 @@ using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Platform;
 using MvvmCross.iOS.Views.Presenters;
 using MvvmCross.Platform;
+using ResidentAppCross.iOS.Services;
 using ResidentAppCross.Services;
 
 namespace ResidentAppCross.iOS
@@ -25,20 +26,9 @@ namespace ResidentAppCross.iOS
             protected override void InitializeIoC()
             {
                 base.InitializeIoC();
-                Mvx.ConstructAndRegisterSingleton<IQRService, IosQRService>();
+                Mvx.ConstructAndRegisterSingleton<IQRService, IOSQRService>();
             }
         }
 
-        public class IosQRService : IQRService
-        {
-            public async Task<QRData> ScanAsync()
-            {
-                return new QRData()
-                {
-                    Data = "",
-                    ImageData = new byte[0],
-                    Timestamp = long.MinValue
-                };
-            }
-        }
+      
 }

@@ -55,3 +55,5 @@ C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\System.Net.H
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\Microsoft.Azure.AppService.xml
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\Microsoft.WindowsAzure.Mobile.xml
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\System.Net.Http.Formatting.xml
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
+C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb

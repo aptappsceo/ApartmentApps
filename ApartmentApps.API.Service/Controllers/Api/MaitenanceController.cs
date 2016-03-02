@@ -131,7 +131,7 @@ namespace ApartmentApps.API.Service.Controllers
             MaintenanceService.PauseRequest(CurrentUser, id, comments, images);
         }
         [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("PauseRequest")]
+        [System.Web.Http.Route("StartRequest")]
         public void StartRequest(int id, string comments, List<Byte[]> images)
         {
             MaintenanceService.StartRequest(CurrentUser, id, comments, images);
