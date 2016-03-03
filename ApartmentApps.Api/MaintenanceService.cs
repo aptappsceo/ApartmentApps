@@ -17,7 +17,7 @@ namespace ApartmentApps.Api
                     Message = comments,
                     UnitId = unitId,
                     MaitenanceRequestTypeId = requestTypeId,
-                    StatusId = "Started"
+                    StatusId = "Submitted"
                 };
                 var localCtxUser = ctx.Users.Find(user.Id);
                 if (maitenanceRequest.UnitId == 0)
