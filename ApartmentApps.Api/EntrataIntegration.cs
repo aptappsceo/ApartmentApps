@@ -102,7 +102,7 @@ namespace ApartmentApps.Api
             // Sync with entrata on work order
         }
 
-        public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest)
+        public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
         {
             
         }
