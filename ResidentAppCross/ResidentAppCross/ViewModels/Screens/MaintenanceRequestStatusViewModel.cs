@@ -103,9 +103,57 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        
+        public ICommand FinishCommmand
+        {
+            get
+            {
+                return this.TaskCommand(async context =>
+                {
+                    var data = ScanResult?.Data;
+                    if (string.IsNullOrEmpty(data))
+                    {
+                        this.FailTaskWithPrompt("No QR Code scanned.");
+                        return;
+                    }
 
-      
+                    if (CurrentRequestStatus == RequestStatus.Started)
+                    {
+                        await _appService.Maitenance.CompleteRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Paused with Data: {0}", ScanResult?.Data), new List<string>());
+                        context.OnComplete(string.Format("Request Paused: {0}", ScanResult?.Data));
+                    }
+                    else
+                    {
+                        context.FailTask("Request is already In Progress or Complete.");
+                    }
+                }).OnStart("Updating Request...");
+            }
+        }
+        public ICommand PauseCommmand
+        {
+            get
+            {
+                return this.TaskCommand(async context =>
+                {
+                    var data = ScanResult?.Data;
+                    if (string.IsNullOrEmpty(data))
+                    {
+                        this.FailTaskWithPrompt("No QR Code scanned.");
+                        return;
+                    }
+
+                    if (CurrentRequestStatus == RequestStatus.Started)
+                    {
+                        await _appService.Maitenance.PauseRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Paused with Data: {0}", ScanResult?.Data), new List<string>());
+                        context.OnComplete(string.Format("Request Paused: {0}", ScanResult?.Data));
+                    }
+                    else
+                    {
+                        context.FailTask("Request is already In Progress or Complete.");
+                    }
+                }).OnStart("Updating Request...");
+            }
+        }
+
 
         public ICommand StartOrResumeCommand
         {

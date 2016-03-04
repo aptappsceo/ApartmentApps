@@ -1,21 +1,19 @@
 ﻿@model IQueryable<ApartmentApps.Data.MaitenanceRequest>
-
 @{
     ViewBag.Title = "Mobile View";
     Layout = "~/Views/Shared/_MobileClientViewLayout.cshtml";
 }
-<h2>Requests (Test)</h2>
 @foreach (var item in Model.GroupBy(p => p.StatusId).ToArray())
 {
-    <div class="row">
-        <h2>@item.Key</h2>
+    <div class="row nav-header">
+        <h3>@item.Key</h3>
     </div>
     foreach (var request in item)
     {
         <div class="row">
             <div class="col-md-6 request-list-item" style="float: none; margin: 0 auto;">
                 <div class="media">
-                    <img class="request-list-icon pull-left" style="" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSFeON1utbyA3AOgrwDIyUnQAzeQCAr20mpKWNZhLH1PMTPrMKh" />
+                    @*<img class="request-list-icon pull-left" style="" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSFeON1utbyA3AOgrwDIyUnQAzeQCAr20mpKWNZhLH1PMTPrMKh" />*@
                     <div class="media-body">
                         <h2 class="request-header-text"><a href="Request/@request.Id">@request.MaitenanceRequestType.Name</a></h2>
 
