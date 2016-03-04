@@ -88,9 +88,9 @@ namespace ApartmentApps.Api
             _pushHandler.SendToUser(maitenanceRequest.UserId, "New maintenance request has been created");
         }
 
-        public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest)
+        public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
         {
-            _pushHandler.SendToUser(maitenanceRequest.MaitenanceRequest.UserId, $"Maintenance {maitenanceRequest.StatusId}");
+            _pushHandler.SendToUser(request.UserId, $"Maintenance {maitenanceRequest.StatusId}");
         }
     }
 }

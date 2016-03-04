@@ -20,10 +20,11 @@ namespace ResidentAppCross.ViewModels.Screens
         //Will make it a command later. 
         public void RequestAction(string url)
         {
+            var id = Convert.ToInt32(url.Split('/').LastOrDefault());
             //TODO: Parse ID from URL
             ShowViewModel<MaintenanceRequestStatusViewModel>(vm =>
             {
-                vm.MaintenanceRequestId = 12;
+                vm.MaintenanceRequestId = id;
             });
         }
     }

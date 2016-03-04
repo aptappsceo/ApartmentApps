@@ -17,7 +17,7 @@ namespace ApartmentApps.Api
                     Message = comments,
                     UnitId = unitId,
                     MaitenanceRequestTypeId = requestTypeId,
-                    StatusId = "Started"
+                    StatusId = "Submitted"
                 };
                 var localCtxUser = ctx.Users.Find(user.Id);
                 if (maitenanceRequest.UnitId == 0)
@@ -54,11 +54,14 @@ namespace ApartmentApps.Api
                     WorkerId = worker.Id,
                     Date = DateTime.UtcNow,
                 };
-                
+                ctx.MaintenanceRequestCheckins.Add(checkin);
                 ctx.SaveChanges();
-                checkin.MaitenanceRequest.StatusId = status;
+                var request = 
+                    ctx.MaitenanceRequests.Find(requestId);
+                request.StatusId = status;
+              
                 ctx.SaveChanges();
-                this.InvokeEvent<IMaintenanceRequestCheckinEvent>(ctx, worker, _ => _.MaintenanceRequestCheckin(checkin));
+                this.InvokeEvent<IMaintenanceRequestCheckinEvent>(ctx, worker, _ => _.MaintenanceRequestCheckin(checkin, request));
                 return true;
             }
         }

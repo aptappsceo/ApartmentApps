@@ -12,19 +12,20 @@ using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
 using SharpMobileCode.ModalPicker;
 using UIKit;
+using ZXing;
 using ZXing.Mobile;
 using ZXing.QrCode.Internal;
 
 namespace ResidentAppCross.iOS
 {
-	public partial class MaintenanceRequestStatusView : ViewBase<MaintenanceRequestStatusViewModel>
-	{
+    public partial class MaintenanceRequestStatusView : ViewBase<MaintenanceRequestStatusViewModel>
+    {
 
-        /* 
+        /*
         //TODO: README
         //TODO: README
         //TODO: README
-            
+
 
 
         // if you want to make it work quick and dirty, fallback to the following method
@@ -32,7 +33,7 @@ namespace ResidentAppCross.iOS
         */
 
 
-	    private void OnRequestChanged(MaintenanceBindingModel request)
+        private void OnRequestChanged(MaintenanceBindingModel request)
         {
 
             //How to show photos
@@ -56,58 +57,59 @@ namespace ResidentAppCross.iOS
             CommentsTextView.Text = request.Message;
             TenantFullNameLabel.Text = request.UserName;
 
+            SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
+
+
             //this.EntrancePermissionSwitch.On = request.PermissionToEnter;
         }
 
-	    private void UpdateHeadersAndFooters(MaintenanceBindingModel request)
-	    {
-	        var status = ViewModel.CurrentRequestStatus;
+        private void UpdateHeadersAndFooters(MaintenanceBindingModel request)
+        {
+            var status = ViewModel.CurrentRequestStatus;
             HeaderSectionPaused.Hidden = status != RequestStatus.Paused;
-	        HeaderSectionPending.Hidden = status == RequestStatus.Paused;
+            HeaderSectionPending.Hidden = status == RequestStatus.Paused;
 
-	        FooterSectionPending.Hidden = status != RequestStatus.Started;
-	        FooterSectionStart.Hidden = status == RequestStatus.Started;
+            FooterSectionPending.Hidden = status != RequestStatus.Started;
+            FooterSectionStart.Hidden = status == RequestStatus.Started;
 
-	    }
+        }
 
-     
 
-	    public MaintenanceRequestStatusView () : base ("MaintenanceRequestStatusView", null)
-		{
+
+        public MaintenanceRequestStatusView() : base("MaintenanceRequestStatusView", null)
+        {
             this.DelayBind(() =>
             {
                 var b = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
                 //b.Bind(FooterStartButton).To(vm => vm.StartOrResumeCommand);
                 b.Apply();
-                FooterStartButton.TouchUpInside += (sender, args) =>
+
+                FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(result => ViewModel.StartOrResumeCommand.Execute(null));
+                FooterPauseButton.TouchUpInside += (sender, args) => PushScannerViewController(result => ViewModel.PauseCommmand.Execute(null));
+                FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(result => ViewModel.FinishCommmand.Execute(null));
+            });
+        }
+
+        private void PushScannerViewController(Action<Result> onScanned)
+        {
+            var view = new AVCaptureScannerViewController(new MobileBarcodeScanningOptions()
+            {
+            },
+                new MobileBarcodeScanner()
                 {
-                    var view = new AVCaptureScannerViewController(new MobileBarcodeScanningOptions()
-                    {
-                        
-                    },
-                    new MobileBarcodeScanner()
-                    {
-                            
-                    });
-
-                    view.OnScannedResult += result =>
-                    {
-                        NavigationController.PopViewController(true);
-                        ViewModel.ScanResult = new QRData()
-                        {
-                            Data = result.Text,
-                            ImageData = result.RawBytes,
-                            Timestamp = result.Timestamp
-                        };
-                        ViewModel.StartOrResumeCommand.Execute(null);
-                    };
-
-                    NavigationController.PushViewController(view,true);
-
+                });
+            view.OnScannedResult += _ =>
+            {
+                NavigationController.PopViewController(true);
+                ViewModel.ScanResult = new QRData()
+                {
+                    Data = _.Text,
+                    ImageData = _.RawBytes,
+                    Timestamp = _.Timestamp
                 };
 
                 SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
-            });
+            };
         }
 
         public async void ShowScheduleDatePicker(object sender, EventArgs eventArgs)
@@ -130,27 +132,24 @@ namespace ResidentAppCross.iOS
 
             await PresentViewControllerAsync(modalPicker, true);
 
-            this.SetTaskComplete(true,"Wowow");
         }
 
         public override void ViewDidLoad ()
-		{
-			base.ViewDidLoad ();
-	        ViewModel.PropertyChanged += (sender, args) =>
-	        {
-	            if (args.PropertyName == "Request")
-	            {
-	                this.OnRequestChanged(ViewModel.Request);
-	            }
-	        };
-		}
+    		{
+    			base.ViewDidLoad ();
+    	        ViewModel.PropertyChanged += (sender, args) =>
+    	        {
+    	            if (args.PropertyName == "Request")
+    	            {
+    	                this.OnRequestChanged(ViewModel.Request);
+    	            }
+    	        };
+    		}
 
 	    public override void DidReceiveMemoryWarning ()
-		{
-			base.DidReceiveMemoryWarning ();
-			// Release any cached data, images, etc that aren't in use.
-		}
+  		{
+  			base.DidReceiveMemoryWarning ();
+  			// Release any cached data, images, etc that aren't in use.
+  		}
 	}
 }
-
-

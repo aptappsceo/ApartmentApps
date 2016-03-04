@@ -19,56 +19,29 @@ namespace ResidentAppCross
         public HomeMenuViewModel(IApartmentAppsAPIService data, ILoginManager loginManager)
         {
             Data = data;
-            
-//            if (loginManager.UserInfo.Role.Contains("Maitenance"))
-//            {
-//                MenuItems.Add(new HomeMenuItemViewModel()
-//                {
-//                    Name = "Maitenance Request"
-//                });
-//            }
-//            if (loginManager.UserInfo.Role.Contains("Officer"))
-//            {
-//                MenuItems.Add(new HomeMenuItemViewModel()
-//                {
-//                    Name = "Report Incedent"
-//                });
-//                MenuItems.Add(new HomeMenuItemViewModel()
-//                {
-//                    Name = "Check-Ins"
-//                });
-//                MenuItems.Add(new HomeMenuItemViewModel()
-//                {
-//                    Name = "Daily Report"
-//                });
-//            }
-//            if (loginManager.UserInfo.Role.Contains("PropertyAdmin"))
-//            {
-//                MenuItems.Add(new HomeMenuItemViewModel()
-//                {
-//                    Name = "Maitenance Request"
-//                });
-//
-//            }
-          
+
+            if (loginManager.UserInfo.Roles.Contains("Maintenance"))
+            {
+                MenuItems.Add(new HomeMenuItemViewModel()
+                {
+                    Name = "Resident Requests",
+                    Icon = SharedResources.Icons.MaintenaceIcon,
+                    Command = RequestsIndexCommand
+                });
+            }
+
+       
+
+            //MenuItems.Add(new HomeMenuItemViewModel()
+            //{
+            //    Name = "(Test) Request Status",
+            //    Icon = SharedResources.Icons.MaintenaceIcon,
+            //    Command = RequestStatusCommand
+            //});
 
             MenuItems.Add(new HomeMenuItemViewModel()
             {
-                Name = "(Test) Requests Index",
-                Icon = SharedResources.Icons.MaintenaceIcon,
-                Command = RequestsIndexCommand
-            });
-
-            MenuItems.Add(new HomeMenuItemViewModel()
-            {
-                Name = "(Test) Request Status",
-                Icon = SharedResources.Icons.MaintenaceIcon,
-                Command = RequestStatusCommand
-            });
-
-            MenuItems.Add(new HomeMenuItemViewModel()
-            {
-                Name = "Home",
+                Name = "Notifications",
                 Icon = SharedResources.Icons.HouseIcon,
                 Command = HomeCommand
             });
