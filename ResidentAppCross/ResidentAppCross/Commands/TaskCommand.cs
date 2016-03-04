@@ -12,6 +12,7 @@ using ResidentAppCross.ViewModels;
 
 namespace ResidentAppCross.Commands
 {
+
     public class TaskCommand : MvxCommandBase, IMvxCommand, ICommand, ITaskCommandContext
     {
 
@@ -45,11 +46,11 @@ namespace ResidentAppCross.Commands
             return this.CanExecute((object)null);
         }
 
-        public void Execute(object parameter)
+        public virtual void Execute(object parameter)
         {
             if (!this.CanExecute(parameter))
                 return;
-
+            Argument = parameter;
             var act = _execute;
             Task.Run(ExecuteTask);
         }
@@ -132,14 +133,19 @@ namespace ResidentAppCross.Commands
         {
             throw new Exception(reason);
         }
+
+        public object Argument { get; set; }
     }
 
     public interface ITaskCommandContext : ICommand
     {
         void UpdateTask(string message, float progress = -1);
         void FailTask(string reason);
+        object Argument { get; }
         ITaskCommandContext OnStart(string message);
         ITaskCommandContext OnComplete(string message, Action completeHandler = null);
         ITaskCommandContext OnFail(Action<Exception> exceptionHandler = null);
+
     }
+
 }

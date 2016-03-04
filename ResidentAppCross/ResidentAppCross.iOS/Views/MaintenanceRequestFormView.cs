@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
+using MvvmCross.Binding.iOS.Views;
 using MvvmCross.iOS.Views;
 using ResidentAppCross.iOS.Extensions;
 using ResidentAppCross.iOS.Views;
@@ -44,7 +45,8 @@ namespace ResidentAppCross.iOS.Views
 
 					SelectRequestTypeButton.TouchUpInside += (sender, ea) =>
 					{
-						ShowRequestSelection();
+					    ShowRequestSelection2();
+                        //ShowRequestSelection();
 					};
 
 					b.Apply();
@@ -58,10 +60,69 @@ namespace ResidentAppCross.iOS.Views
 			PhotoContainer.ReloadData();
 		}
 
+
+        public void ShowRequestSelection2()
+        {
+            var selectionTable = new UITableViewController(UITableViewStyle.Grouped)
+            {
+                ModalPresentationStyle = UIModalPresentationStyle.Popover,
+                TableView =
+                {
+                    LayoutMargins = new UIEdgeInsets(25, 25, 0, 50),
+                    SeparatorColor = UIColor.Gray,
+                    SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                }
+            };
+
+            var tableView = selectionTable.TableView;
+            var source = new MvxStandardTableViewSource(tableView, "TitleText Value");
+            tableView.Source = source;
+
+            var searchBar = new UISearchBar()
+            {
+                AutocorrectionType = UITextAutocorrectionType.Yes,
+                KeyboardType = UIKeyboardType.WebSearch
+            };
+            tableView.TableHeaderView = searchBar;
+            searchBar.SizeToFit();
+            searchBar.Placeholder = "Search...";
+
+//            searchBar.OnEditingStarted += (sender, args) =>
+//            {
+//                BeginInvokeOnMainThread(() => searchBar.BecomeFirstResponder());
+//            };
+//
+//            searchBar.CancelButtonClicked += (i, e) =>
+//            {
+//                BeginInvokeOnMainThread(() => searchBar.ResignFirstResponder());
+//            };
+
+            searchBar.OnEditingStopped += (sender, args) =>
+            {
+                searchBar.ResignFirstResponder();
+            };
+
+            var set = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
+
+            set.Bind(source).To(vm => vm.RequestTypesFiltered);
+            set.Bind(source).For(s => s.SelectionChangedCommand).To(vm => vm.UpdateRequestTypeSelection);
+            set.Bind(searchBar).For(searchBar.Text).TwoWay().To(vm => vm.RequestTypeSearchText);
+
+            set.Apply();
+
+            selectionTable.ExtendedLayoutIncludesOpaqueBars = false;
+            selectionTable.EdgesForExtendedLayout = UIRectEdge.None;
+
+            selectionTable.Title = "Select Type";
+
+            source.SelectedItemChanged += (i, e) => { NavigationController.PopViewController(true); };
+            NavigationController.PushViewController(selectionTable, true);
+        }
 	
 
 		public void ShowRequestSelection()
 		{
+
 		    var selectionTable = new UITableViewController(UITableViewStyle.Grouped)
 		    {
 		        ModalPresentationStyle = UIModalPresentationStyle.Popover,

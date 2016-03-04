@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ApartmentApps.Client.Models;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
+using MvvmCross.Binding.iOS.Views;
+using MvvmCross.Platform.iOS;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.PhotoGallery;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
+using SharpMobileCode.ModalPicker;
 using UIKit;
 using ZXing.Mobile;
 using ZXing.QrCode.Internal;
@@ -101,10 +105,35 @@ namespace ResidentAppCross.iOS
                     NavigationController.PushViewController(view,true);
 
                 };
+
+                SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
             });
         }
 
-	    public override void ViewDidLoad ()
+        public async void ShowScheduleDatePicker(object sender, EventArgs eventArgs)
+        {
+            var modalPicker = new ModalPickerViewController(ModalPickerType.Date, "Select A Date", this)
+            {
+                HeaderBackgroundColor = AppTheme.SecondaryBackgoundColor,
+                HeaderTextColor = UIColor.White,
+                TransitioningDelegate = new ModalPickerTransitionDelegate(),
+                ModalPresentationStyle = UIModalPresentationStyle.Custom
+            };
+
+            modalPicker.DatePicker.Mode = UIDatePickerMode.DateAndTime;
+
+            modalPicker.OnModalPickerDismissed += (s, ea) =>
+            {
+                modalPicker.DismissModalViewController(true);
+                ViewModel.ScheduleMaintenanceCommand.Execute(modalPicker.DatePicker.Date.ToDateTimeUtc());
+            };
+
+            await PresentViewControllerAsync(modalPicker, true);
+
+            this.SetTaskComplete(true,"Wowow");
+        }
+
+        public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 	        ViewModel.PropertyChanged += (sender, args) =>

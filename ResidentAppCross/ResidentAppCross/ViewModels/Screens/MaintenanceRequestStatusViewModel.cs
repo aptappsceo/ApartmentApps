@@ -103,10 +103,6 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        
-
-      
-
         public ICommand StartOrResumeCommand
         {
             get
@@ -136,6 +132,21 @@ namespace ResidentAppCross.ViewModels.Screens
         }
 
         public QRData ScanResult { get; set; }
+
+        public ICommand ScheduleMaintenanceCommand
+        {
+            get
+            {
+                return this.TaskCommand(async context =>
+                {
+                    var date = (DateTime) context.Argument;
+
+                    await
+                        _appService.Maitenance.ScheduleRequestWithOperationResponseAsync(MaintenanceRequestId, date);
+
+                }).OnStart("Scheduling...").OnComplete("Maintenance Scheduled!",()=>UpdateMaintenanceRequest.Execute(null));
+            }
+        }
 
         private void AddPhoto()
         {

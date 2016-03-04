@@ -270,6 +270,11 @@
     <Compile Include="Setup.cs" />
     <Compile Include="Views\AppTheme.cs" />
     <Compile Include="Views\Attributes\ViewsAttributes.cs" />
+    <Compile Include="Views\ModalDatePicker\CustomPickerModel.cs" />
+    <Compile Include="Views\ModalDatePicker\ModalPickerAnimatedDismissed.cs" />
+    <Compile Include="Views\ModalDatePicker\ModalPickerAnimatedTransitioning.cs" />
+    <Compile Include="Views\ModalDatePicker\ModalPickerTransitionDelegate.cs" />
+    <Compile Include="Views\ModalDatePicker\ModalPickerViewController.cs" />
     <Compile Include="Views\PhotoGallery\PhotoGalleryCells.cs" />
     <Compile Include="Views\PhotoGallery\PhotoGallerySource.cs" />
     <Compile Include="Views\TableSources\HomeMenuTableSource.cs" />

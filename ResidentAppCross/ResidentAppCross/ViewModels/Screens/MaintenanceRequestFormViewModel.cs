@@ -28,9 +28,13 @@ namespace ResidentAppCross.ViewModels
         private ObservableCollection<LookupPairModel> _requestTypes =
             new ObservableCollection<LookupPairModel>();
 
+        private ObservableCollection<LookupPairModel> _requestTypesFiltered =
+            new ObservableCollection<LookupPairModel>();
+
         private string _title;
         private LookupPairModel _selectedRequestType;
         private string _comments;
+        private string _requestTypeSearchText;
 
         public MaintenanceRequestFormViewModel(IApartmentAppsAPIService service, IImageService imageService)
         {
@@ -50,6 +54,12 @@ namespace ResidentAppCross.ViewModels
             set { SetProperty(ref _requestTypes, value); }
         }
 
+        public ObservableCollection<LookupPairModel> RequestTypesFiltered
+        {
+            get { return _requestTypesFiltered; }
+            set { SetProperty(ref _requestTypesFiltered, value); }
+        }
+
         public string Title => "Maintenance Request";
 
         public ImageBundleViewModel ImagesToUpload { get; set; } = new ImageBundleViewModel() { Title = "Photos?" };
@@ -66,9 +76,46 @@ namespace ResidentAppCross.ViewModels
             set { SetProperty(ref _comments, value); }
         }
 
+        public string RequestTypeSearchText
+        {
+            get { return _requestTypeSearchText; }
+            set
+            {
+                SetProperty(ref _requestTypeSearchText, value);
+                UpdateRequestTypeSearch();
+            }
+        }
+
+        private void UpdateRequestTypeSearch()
+        {
+            RequestTypesFiltered.Clear();
+
+            if (string.IsNullOrEmpty(RequestTypeSearchText))
+            {
+                RequestTypesFiltered.AddRange(RequestTypes);
+            }
+            else
+            {
+                RequestTypesFiltered.AddRange(RequestTypes.Where(m => m.Value.ToLowerInvariant().Contains(RequestTypeSearchText.ToLowerInvariant())));
+            }
+        }
+
+
         public void OnRequestTypeSelected(LookupPairModel type)
         {
             SelectedRequestType = type;
+        }
+
+
+        public ICommand UpdateRequestTypeSelection
+        {
+            get
+            {
+                return new MvxCommand<LookupPairModel>(type =>
+                {
+                        SelectedRequestType = type;
+                });
+            }
         }
 
         public ICommand SelectRequestTypeCommand
@@ -145,6 +192,7 @@ namespace ResidentAppCross.ViewModels
                     }
                     RequestTypes.AddRange(lookupPairModels);
                     SelectedRequestType = RequestTypes.FirstOrDefault();
+                    UpdateRequestTypeSearch();
                 }).OnStart("Loading Request Types...");
             }
         }
