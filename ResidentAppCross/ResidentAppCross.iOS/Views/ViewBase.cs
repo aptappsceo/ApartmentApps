@@ -14,6 +14,7 @@ using ResidentAppCross.Events;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.Interfaces;
+using UIKit;
 
 namespace ResidentAppCross.iOS.Views
 {
@@ -115,7 +116,7 @@ namespace ResidentAppCross.iOS.Views
         public static void SetTaskRunning(this ViewBase view, string label, bool block = true)
         {
             if (block)
-                BTProgressHUD.Show(null, () => { }, label, -1f, ProgressHUD.MaskType.Black);
+                BTProgressHUD.Show("", () => { }, label, -1f, ProgressHUD.MaskType.Black);
         }
 
         public static void SetTaskComplete(this ViewBase view, bool prompt, string label = null,

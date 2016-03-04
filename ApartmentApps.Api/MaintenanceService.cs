@@ -7,12 +7,14 @@ namespace ApartmentApps.Api
 {
     public class MaintenanceService : IMaintenanceService
     {
-        public int SubmitRequest(ApplicationUser user, string comments, int requestTypeId, int unitId = 0)
+        public int SubmitRequest(ApplicationUser user, string comments, int requestTypeId, int petStatus, bool permissionToEnter = true, int unitId = 0)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var maitenanceRequest = new MaitenanceRequest()
                 {
+                    PermissionToEnter =  permissionToEnter,
+                    PetStatus = petStatus,
                     UserId = user.Id,
                     Message = comments,
                     UnitId = unitId,

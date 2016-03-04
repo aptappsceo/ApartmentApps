@@ -7,7 +7,8 @@ namespace ApartmentApps.API.Service.Models.VMS
 {
     public class MaitenanceRequestModel
     {
-        
+        public bool PermissionToEnter { get; set; }
+        public int PetStatus { get; set; }
         public int UnitId { get; set; }
         public int MaitenanceRequestTypeId { get; set; }
         public string Comments { get; set; }

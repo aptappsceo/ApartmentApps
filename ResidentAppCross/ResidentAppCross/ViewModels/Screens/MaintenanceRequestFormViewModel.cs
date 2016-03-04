@@ -35,6 +35,8 @@ namespace ResidentAppCross.ViewModels
         private LookupPairModel _selectedRequestType;
         private string _comments;
         private string _requestTypeSearchText;
+        private int? _selectedPetStatus;
+        private string _selectRequestTypeActionTitle;
 
         public MaintenanceRequestFormViewModel(IApartmentAppsAPIService service, IImageService imageService)
         {
@@ -62,12 +64,24 @@ namespace ResidentAppCross.ViewModels
 
         public string Title => "Maintenance Request";
 
+        public string SelectRequestTypeActionTitle => SelectedRequestType?.Value ?? "Select...";
+
         public ImageBundleViewModel ImagesToUpload { get; set; } = new ImageBundleViewModel() { Title = "Photos?" };
 
         public LookupPairModel SelectedRequestType
         {
             get { return _selectedRequestType; }
-            set { SetProperty(ref _selectedRequestType, value); }
+            set
+            {
+                SetProperty(ref _selectedRequestType, value); 
+                RaisePropertyChanged(()=>SelectRequestTypeActionTitle);
+            }
+        }
+
+        public int? SelectedPetStatus
+        {
+            get { return _selectedPetStatus; }
+            set { SetProperty(ref _selectedPetStatus, value); }
         }
 
         public string Comments
@@ -150,6 +164,8 @@ namespace ResidentAppCross.ViewModels
                 {
                     await _service.Maitenance.SubmitRequestAsync(new MaitenanceRequestModel()
                     {
+                        PermissionToEnter = true,
+                        PetStatus = SelectedPetStatus,
                         Comments = Comments,
                         MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
                         Images =

@@ -116,7 +116,7 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("SubmitRequest")]
         public void SubmitRequest(MaitenanceRequestModel request)
         {
-            MaintenanceService.SubmitRequest(CurrentUser, request.Comments, request.MaitenanceRequestTypeId);
+            MaintenanceService.SubmitRequest(CurrentUser, request.Comments, request.MaitenanceRequestTypeId,request.PetStatus,request.PermissionToEnter);
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("CompleteRequest")]

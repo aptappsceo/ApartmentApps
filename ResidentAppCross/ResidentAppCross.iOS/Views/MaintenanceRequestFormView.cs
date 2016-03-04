@@ -29,9 +29,13 @@ namespace ResidentAppCross.iOS.Views
 
         public override string Title => "Maintenance Request";
 
+        public override void TouchesBegan(NSSet touches, UIEvent evt)
+        {
+            base.TouchesBegan(touches, evt);
+        }
+
         public MaintenanceRequestFormView () : base ("MaintenanceRequestFormView", null)
 		{
-
 			this.DelayBind(() =>
 				{
 					var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
@@ -39,9 +43,13 @@ namespace ResidentAppCross.iOS.Views
 					b.Bind(CommentsTextView).TwoWay().For(v => v.Text).To(vm => vm.Comments);
 
 					ViewModel.ImagesToUpload.RawImages.CollectionChanged += ImagesChanged;
-
-					b.Bind(SelectRequestTypeButton.TitleLabel).For(v => v.Text).To(vm => vm.SelectedRequestType.Value);
-					b.Bind(AddPhotoButton).To(vm => vm.AddPhotoCommand);
+					b.Bind(SelectRequestTypeButton.TitleLabel).For(l=>l.Text).To(vm=>vm.SelectRequestTypeActionTitle);
+                    CommentsTextView.Ended += (sender, args) =>
+				    {
+				        CommentsTextView.TextInputView.EndEditing(true);
+                        CommentsTextView.ResignFirstResponder();
+                    };
+                    b.Bind(AddPhotoButton).To(vm => vm.AddPhotoCommand);
 
 					SelectRequestTypeButton.TouchUpInside += (sender, ea) =>
 					{
@@ -51,11 +59,27 @@ namespace ResidentAppCross.iOS.Views
 
 					b.Apply();
 
+                    PetTypeSelection.ValueChanged += PetTypeSelection_ValueChanged;
+
 				});
 
 		}
 
-		private void ImagesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void PetTypeSelection_ValueChanged(object sender, EventArgs e)
+        {
+            ViewModel.SelectedPetStatus = (int)PetTypeSelection.SelectedSegment;
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            PhotoContainer.BackgroundColor = UIColor.White;
+            SelectRequestTypeButton.BackgroundColor = UIColor.DarkGray;
+            SelectRequestTypeButton.TitleLabel.BackgroundColor = UIColor.Green;
+            PetTypeSelection.SelectedSegment = ViewModel.SelectedPetStatus ?? -1;
+        }
+
+        private void ImagesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
 			PhotoContainer.ReloadData();
 		}
@@ -77,7 +101,6 @@ namespace ResidentAppCross.iOS.Views
             var tableView = selectionTable.TableView;
             var source = new MvxStandardTableViewSource(tableView, "TitleText Value");
             tableView.Source = source;
-
             var searchBar = new UISearchBar()
             {
                 AutocorrectionType = UITextAutocorrectionType.Yes,
@@ -93,9 +116,11 @@ namespace ResidentAppCross.iOS.Views
 //            };
 //
 //            searchBar.CancelButtonClicked += (i, e) =>
-//            {
+//            {\
 //                BeginInvokeOnMainThread(() => searchBar.ResignFirstResponder());
 //            };
+
+            
 
             searchBar.OnEditingStopped += (sender, args) =>
             {

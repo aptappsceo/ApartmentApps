@@ -2,12 +2,15 @@
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using ResidentAppCross.iOS.Views;
+using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	public partial class MaintenaceRequestIndexView : ViewBase
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    public partial class MaintenaceRequestIndexView : ViewBase
 	{
 		public MaintenaceRequestIndexView () : base ("MaintenaceRequestIndexView", null)
 		{

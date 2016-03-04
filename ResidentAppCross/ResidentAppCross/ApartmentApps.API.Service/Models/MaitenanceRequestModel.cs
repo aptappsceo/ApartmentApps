@@ -44,6 +44,28 @@ namespace ApartmentApps.Client.Models
             set { this._maitenanceRequestTypeId = value; }
         }
         
+        private bool? _permissionToEnter;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? PermissionToEnter
+        {
+            get { return this._permissionToEnter; }
+            set { this._permissionToEnter = value; }
+        }
+        
+        private int? _petStatus;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? PetStatus
+        {
+            get { return this._petStatus; }
+            set { this._petStatus = value; }
+        }
+        
         private int? _unitId;
         
         /// <summary>
@@ -98,6 +120,14 @@ namespace ApartmentApps.Client.Models
             if (this.MaitenanceRequestTypeId != null)
             {
                 outputObject["MaitenanceRequestTypeId"] = this.MaitenanceRequestTypeId.Value;
+            }
+            if (this.PermissionToEnter != null)
+            {
+                outputObject["PermissionToEnter"] = this.PermissionToEnter.Value;
+            }
+            if (this.PetStatus != null)
+            {
+                outputObject["PetStatus"] = this.PetStatus.Value;
             }
             if (this.UnitId != null)
             {

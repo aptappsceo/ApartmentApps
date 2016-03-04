@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ApartmentApps.Client.Models;
 using Foundation;
@@ -6,6 +7,7 @@ using MvvmCross.Binding.BindingContext;
 using MvvmCross.Binding.iOS.Views;
 using MvvmCross.Platform.iOS;
 using ResidentAppCross.iOS.Views;
+using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.PhotoGallery;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
@@ -18,6 +20,9 @@ using ZXing.QrCode.Internal;
 
 namespace ResidentAppCross.iOS
 {
+
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
     public partial class MaintenanceRequestStatusView : ViewBase<MaintenanceRequestStatusViewModel>
     {
 
@@ -57,8 +62,19 @@ namespace ResidentAppCross.iOS
             CommentsTextView.Text = request.Message;
             TenantFullNameLabel.Text = request.UserName;
 
-            SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
+            SelectRepairDateButton.TitleLabel.Text = request.ScheduleDate?.ToString("g") ?? "Select Date";
+            SelectRepairDateButton.SizeToFit();
 
+            var lastCheckin = request.Checkins.LastOrDefault();
+            RepairDateChangeTitleLabel.Text = lastCheckin;
+            RepairDateChangeDateLabel.Text = "";
+
+            TenantAddressFirstLineLabel.Text = request.BuildingName+" "+request.BuildingAddress;
+            TenantAddressFirstLineLabel.Text = request.BuildingCity+" "+request.BuildingState;
+
+            PhotoContainer.BackgroundColor = UIColor.White;
+            PhotoContainer.BackgroundView.BackgroundColor = UIColor.White;
+            PetSelection.SelectedSegment = request.PetStatus ?? -1;
 
             //this.EntrancePermissionSwitch.On = request.PermissionToEnter;
         }
@@ -83,7 +99,7 @@ namespace ResidentAppCross.iOS
                 var b = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
                 //b.Bind(FooterStartButton).To(vm => vm.StartOrResumeCommand);
                 b.Apply();
-
+                SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
                 FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(result => ViewModel.StartOrResumeCommand.Execute(null));
                 FooterPauseButton.TouchUpInside += (sender, args) => PushScannerViewController(result => ViewModel.PauseCommmand.Execute(null));
                 FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(result => ViewModel.FinishCommmand.Execute(null));

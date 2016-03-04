@@ -52,7 +52,7 @@ namespace ResidentAppCross
                         context.FailTask("Invalid login or password!");
                     }
                 })
-                .OnStart("Logging In... :)")
+                .OnStart("Logging In...")
                 .OnComplete("Logged In!", () => ShowViewModel<HomeMenuViewModel>(homeViewModel =>
                 {
                     homeViewModel.Username = Username;
@@ -60,18 +60,7 @@ namespace ResidentAppCross
             }
         }
 
-        public ICommand RemindPasswordCommand
-        {
-            get
-            {
-                return new MvxCommand(() =>
-                {
-                    var httpLocalhostGeneralviews = "http://82.151.208.56:54683/generalviews";
-                    ShowViewModel<GenericWebViewModel>(new { url = httpLocalhostGeneralviews });
-                    Debug.WriteLine("Please implement \"RemindPasswordCommand\" @ LoginFormViewModel");
-                });
-            }
-        }
+        public ICommand RemindPasswordCommand => StubCommands.NoActionSpecifiedCommand(this);
 
         public ICommand SignUpCommand => StubCommands.NoActionSpecifiedCommand(this);
     }
