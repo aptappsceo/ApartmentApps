@@ -124,7 +124,7 @@ namespace ResidentAppCross.ViewModels.Screens
                         CurrentRequestStatus == RequestStatus.Scheduled ||
                         CurrentRequestStatus == RequestStatus.Paused)
                     {
-                        await _appService.Maitenance.StartRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Started with Data: {0}", ScanResult?.Data), new List<string>());
+                        await _appService.Maitenance.PauseRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Started with Data: {0}", ScanResult?.Data), new List<string>());
                         context.OnComplete(string.Format("Request Started: {0}", ScanResult?.Data));
                     }
                     else
