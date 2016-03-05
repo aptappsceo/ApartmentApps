@@ -49,7 +49,11 @@ namespace ResidentAppCross.ViewModels.Screens
         public MaintenanceBindingModel Request
         {
             get { return _request; }
-            set { SetProperty(ref _request, value); }
+            set
+            {
+                SetProperty(ref _request, value); 
+                RaisePropertyChanged("SelectScheduleDateActionLabel");
+            }
         }
 
         public RequestStatus CurrentRequestStatus
@@ -67,6 +71,8 @@ namespace ResidentAppCross.ViewModels.Screens
             get { return _comments; }
             set { SetProperty(ref _comments, value); }
         }
+
+        public string SelectScheduleDateActionLabel => Request?.ScheduleDate?.ToString("g") ?? "Select Date";
 
         public DateTime NewRepairDate
         {

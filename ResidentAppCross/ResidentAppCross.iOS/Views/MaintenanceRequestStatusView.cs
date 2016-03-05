@@ -99,6 +99,7 @@ namespace ResidentAppCross.iOS
             {
                 var b = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
                 //b.Bind(FooterStartButton).To(vm => vm.StartOrResumeCommand);
+                b.Bind(SelectRepairDateButton).For("Title").To(vm => vm.SelectScheduleDateActionLabel);
                 b.Apply();
                 SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
                 FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.StartOrResumeCommand.Execute(null));
