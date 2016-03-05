@@ -42,6 +42,7 @@ namespace ResidentAppCross.iOS.Views
 					b.Bind(CommentsTextView).TwoWay().For(v => v.Text).To(vm => vm.Comments);
                     b.Bind(SelectRequestTypeButton).For("Title").To(vm => vm.SelectRequestTypeActionTitle);
                     b.Bind(AddPhotoButton).To(vm => vm.AddPhotoCommand);
+				    b.Bind(EntrancePermissionSwitch).TwoWay().To(vm => vm.EntrancePermission);
                     b.Apply();
 
                     ViewModel.ImagesToUpload.RawImages.CollectionChanged += ImagesChanged;
@@ -61,7 +62,10 @@ namespace ResidentAppCross.iOS.Views
 					SelectRequestTypeButton.TouchUpInside += (sender, ea) => ShowRequestSelection2();
 
                     PetTypeSelection.ValueChanged += PetTypeSelection_ValueChanged;
-				});
+
+                    PhotoContainer.Hidden = !ViewModel.ImagesToUpload.RawImages.Any();
+
+                });
 
 		}
 
@@ -80,6 +84,7 @@ namespace ResidentAppCross.iOS.Views
         private void ImagesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
 			PhotoContainer.ReloadData();
+            PhotoContainer.Hidden = !ViewModel.ImagesToUpload.RawImages.Any();
 		}
 
 
@@ -117,7 +122,6 @@ namespace ResidentAppCross.iOS.Views
             b.Bind(source).To(vm => vm.RequestTypesFiltered);
             b.Bind(source).For(s => s.SelectionChangedCommand).To(vm => vm.UpdateRequestTypeSelection);
             b.Bind(searchBar).For(searchBar.Text).TwoWay().To(vm => vm.RequestTypeSearchText);
-
             b.Apply();
 
             selectionTable.EdgesForExtendedLayout = UIRectEdge.None;

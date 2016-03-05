@@ -66,6 +66,9 @@ namespace ResidentAppCross.iOS
             SelectRepairDateButton.TitleLabel.Text = request.ScheduleDate?.ToString("g") ?? "Select Date";
             SelectRepairDateButton.SizeToFit();
 
+            PhotoContainer.Hidden = true;
+            PhotoTitleLabel.Text = "No Photos Attached.";
+
             var lastCheckin = request.Checkins.LastOrDefault();
             RepairDateChangeTitleLabel.Text = lastCheckin;
             RepairDateChangeDateLabel.Text = "";
@@ -74,8 +77,7 @@ namespace ResidentAppCross.iOS
             TenantAddressFirstLineLabel.Text = request.BuildingCity+" "+request.BuildingState;
 
             PhotoContainer.BackgroundColor = UIColor.White;
-            PhotoContainer.BackgroundView.BackgroundColor = UIColor.White;
-            PetSelection.SelectedSegment = request.PetStatus ?? -1;
+            PetSelection.SelectedSegment = ViewModel.SelectedPetStatus;
 
             //this.EntrancePermissionSwitch.On = request.PermissionToEnter;
         }
@@ -100,10 +102,11 @@ namespace ResidentAppCross.iOS
                 var b = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
                 //b.Bind(FooterStartButton).To(vm => vm.StartOrResumeCommand);
                 b.Bind(SelectRepairDateButton).For("Title").To(vm => vm.SelectScheduleDateActionLabel);
+                b.Bind(FooterPauseButton).To(vm=>vm.PauseCommmand);
                 b.Apply();
                 SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
                 FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.StartOrResumeCommand.Execute(null));
-                FooterPauseButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.PauseCommmand.Execute(null));
+      
                 FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.FinishCommmand.Execute(null));
             });
         }
@@ -142,6 +145,7 @@ namespace ResidentAppCross.iOS
 
                 onScanned?.Invoke();
             };
+            NavigationController.PushViewController(view,true);
         }
 
         public async void ShowScheduleDatePicker(object sender, EventArgs eventArgs)

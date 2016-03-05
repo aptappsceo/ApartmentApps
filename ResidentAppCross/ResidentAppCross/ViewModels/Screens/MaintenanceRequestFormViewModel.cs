@@ -37,6 +37,7 @@ namespace ResidentAppCross.ViewModels
         private string _requestTypeSearchText;
         private int? _selectedPetStatus;
         private string _selectRequestTypeActionTitle;
+        private bool _entrancePermission;
 
         public MaintenanceRequestFormViewModel(IApartmentAppsAPIService service, IImageService imageService)
         {
@@ -164,7 +165,7 @@ namespace ResidentAppCross.ViewModels
                 {
                     await _service.Maitenance.SubmitRequestAsync(new MaitenanceRequestModel()
                     {
-                        PermissionToEnter = true,
+                        PermissionToEnter = EntrancePermission,
                         PetStatus = SelectedPetStatus,
                         Comments = Comments,
                         MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
@@ -211,6 +212,12 @@ namespace ResidentAppCross.ViewModels
                     UpdateRequestTypeSearch();
                 }).OnStart("Loading Request Types...");
             }
+        }
+
+        public bool EntrancePermission
+        {
+            get { return _entrancePermission; }
+            set { SetProperty(ref _entrancePermission,value); }
         }
     }
 }

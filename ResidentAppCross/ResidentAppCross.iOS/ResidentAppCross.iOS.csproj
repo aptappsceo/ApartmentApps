@@ -65,7 +65,7 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>True</MtouchProfiling>
-    <CodesignKey>iPhone Developer: Josh Brewer (B5LK3679EV)</CodesignKey>
+    <CodesignKey>iPhone Developer: Nikita Silin (37N7JC5UMN)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
     <CodesignProvision>
     </CodesignProvision>

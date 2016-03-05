@@ -125,7 +125,7 @@ namespace ResidentAppCross.ViewModels.Screens
                     if (CurrentRequestStatus == RequestStatus.Started)
                     {
                         await _appService.Maitenance.CompleteRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Paused with Data: {0}", ScanResult?.Data), new List<string>());
-                        context.OnComplete(string.Format("Request Finished (QR: {0})", ScanResult?.Data));
+                        context.OnComplete(string.Format("Request Finished (QR: {0})", ScanResult?.Data),()=>UpdateMaintenanceRequest.Execute(null));
                     }
                     else
                     {
@@ -138,25 +138,29 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             get
             {
-                return this.TaskCommand(async context =>
+                return new MvxCommand(() =>
                 {
-                    var data = ScanResult?.Data;
-                    if (string.IsNullOrEmpty(data))
+                    ShowViewModel<MaintenancePauseFormViewModel>(vm =>
                     {
-                        this.FailTaskWithPrompt("No QR Code scanned.");
-                        return;
-                    }
+                        vm.MaintenanceRequestId = MaintenanceRequestId;
+                        vm.OnDismissed = () => UpdateMaintenanceRequest.Execute(null);
+                    });
+                });
+            }
+        }
 
-                    if (CurrentRequestStatus == RequestStatus.Started)
-                    {
-                        await _appService.Maitenance.PauseRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Paused with Data: {0}", ScanResult?.Data), new List<string>());
-                        context.OnComplete(string.Format("Request Paused (QR: {0})", ScanResult?.Data));
-                    }
-                    else
-                    {
-                        context.FailTask("Request is already In Progress or Complete.");
-                    }
-                }).OnStart("Updating Request...");
+        public int SelectedPetStatus
+        {
+            get
+            {
+                if (Request?.PetStatus != null)
+                {
+                    return Request.PetStatus.Value;
+                }
+                else
+                {
+                    return -1;
+                }
             }
         }
 
@@ -178,7 +182,10 @@ namespace ResidentAppCross.ViewModels.Screens
                         CurrentRequestStatus == RequestStatus.Paused)
                     {
                         await _appService.Maitenance.StartRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Started with Data: {0}", ScanResult?.Data), new List<string>());
-                        context.OnComplete(string.Format("Request Started (QR: {0})", ScanResult?.Data));
+                        context.OnComplete(string.Format("Request Started (QR: {0})", ScanResult?.Data), () =>
+                        {
+                            UpdateMaintenanceRequest.Execute(null);
+                        });
                     }
                     else
                     {

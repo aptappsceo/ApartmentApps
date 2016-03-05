@@ -114,14 +114,7 @@ namespace ResidentAppCross
             });
         });
 
-        public ICommand HomeCommand
-        {
-            get { return new MvxCommand(() =>
-            {
-                var httpLocalhostGeneralviews = "http://apartmentappsapiservice.azurewebsites.net/generalviews/index";
-                ShowViewModel<GenericWebViewModel>(new { url = httpLocalhostGeneralviews });
-            }); }
-        }
+        public ICommand HomeCommand => StubCommands.NoActionSpecifiedCommand(this);
 
         public ICommand MaintenaceRequestCommand => new MvxCommand(() =>
         {
