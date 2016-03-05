@@ -3,12 +3,15 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MaintenanceRequestFormView">
             <connections>
                 <outlet property="AddPhotoButton" destination="GnH-lE-22V" id="0VS-F3-f1S"/>
                 <outlet property="CommentsTextView" destination="Umi-KU-Pm9" id="d0H-3J-WSz"/>
+                <outlet property="EntrancePermissionSwitch" destination="bVR-hG-bkJ" id="MLF-9I-TU8"/>
                 <outlet property="PetTypeSelection" destination="TJ9-Le-Krf" id="YT9-Nr-peH"/>
                 <outlet property="PhotoContainer" destination="NiJ-H5-uSx" id="UiC-gk-G64"/>
                 <outlet property="SelectRequestTypeButton" destination="heE-ZU-mhE" id="GbC-X9-LNW"/>
@@ -22,8 +25,8 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r7a-Qo-3D4" userLabel="ScrollableContainer">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="2000"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="5ec-G4-qZE">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="960"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="5ec-G4-qZE">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="1143"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qh-1n-UCQ" userLabel="TitleSection">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
@@ -124,10 +127,10 @@
                                         <constraint firstAttribute="height" constant="250" id="ufy-YX-cpz"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gR3-HD-yIs" userLabel="PhotosSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gR3-HD-yIs" userLabel="PhotosSection">
                                     <rect key="frame" x="0.0" y="520" width="414" height="280"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="ncZ-6M-r2X" userLabel="PhotoSectionStack">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="ncZ-6M-r2X" userLabel="PhotoSectionStack">
                                             <rect key="frame" x="20" y="20" width="374" height="260"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="t8x-b4-RCD" userLabel="ButtonsBar">
@@ -150,7 +153,7 @@
                                                         <constraint firstAttribute="height" constant="80" id="guG-Ix-vn1"/>
                                                     </constraints>
                                                 </stackView>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="NiJ-H5-uSx" userLabel="PhotosContainer">
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="NiJ-H5-uSx" userLabel="PhotosContainer">
                                                     <rect key="frame" x="0.0" y="80" width="374" height="180"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" priority="998" constant="180" id="8ww-4b-dES"/>
@@ -178,7 +181,7 @@
                                         <constraint firstItem="ncZ-6M-r2X" firstAttribute="leading" secondItem="gR3-HD-yIs" secondAttribute="leading" constant="20" symbolic="YES" id="OG1-jd-LUo"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6ER-hq-ScP" userLabel="PetsSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ER-hq-ScP" userLabel="PetsSection">
                                     <rect key="frame" x="0.0" y="820" width="414" height="140"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you have a pet?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GON-Z2-aIz" userLabel="PetsTitle">
@@ -211,9 +214,59 @@
                                         <constraint firstItem="GON-Z2-aIz" firstAttribute="top" secondItem="6ER-hq-ScP" secondAttribute="top" id="yQh-D1-Eif"/>
                                     </constraints>
                                 </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZ6-uT-cxp" userLabel="EntrancePermissionSection">
+                                    <rect key="frame" x="0.0" y="980" width="414" height="163"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Permission to enter:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7y-TQ-vy8" userLabel="EntrancePermissionLabel">
+                                            <rect key="frame" x="20" y="20" width="207" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="vWM-Rv-hHx"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bVR-hG-bkJ">
+                                            <rect key="frame" x="331" y="20" width="65" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="bVR-hG-bkJ" secondAttribute="height" multiplier="49:31" id="Whj-q6-sb4"/>
+                                            </constraints>
+                                        </switch>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allowed" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="Imp-rc-Vz5" userLabel="AllowedLabel">
+                                            <rect key="frame" x="239" y="25" width="84" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If &quot;Allowed&quot;, you provide the maintenance staff permission to enter your home while you are not home." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="WDA-kB-Kl2" userLabel="DescriptionLabel">
+                                            <rect key="frame" x="20" y="68" width="207" height="75"/>
+                                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="Imp-rc-Vz5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="u7y-TQ-vy8" secondAttribute="trailing" constant="8" symbolic="YES" id="9wa-7Q-SKA"/>
+                                        <constraint firstItem="bVR-hG-bkJ" firstAttribute="leading" secondItem="Imp-rc-Vz5" secondAttribute="trailing" constant="8" symbolic="YES" id="AUA-al-ngr"/>
+                                        <constraint firstItem="Imp-rc-Vz5" firstAttribute="centerY" secondItem="u7y-TQ-vy8" secondAttribute="centerY" id="FnP-1d-4kZ"/>
+                                        <constraint firstItem="WDA-kB-Kl2" firstAttribute="top" secondItem="u7y-TQ-vy8" secondAttribute="bottom" constant="8" symbolic="YES" id="ImO-rB-VAr"/>
+                                        <constraint firstItem="u7y-TQ-vy8" firstAttribute="top" secondItem="bZ6-uT-cxp" secondAttribute="top" constant="20" id="N23-wg-WWz"/>
+                                        <constraint firstItem="bVR-hG-bkJ" firstAttribute="top" secondItem="bZ6-uT-cxp" secondAttribute="top" constant="20" symbolic="YES" id="NNi-Tf-ED7"/>
+                                        <constraint firstAttribute="bottom" secondItem="WDA-kB-Kl2" secondAttribute="bottom" constant="20" symbolic="YES" id="PfI-9k-3JS"/>
+                                        <constraint firstItem="u7y-TQ-vy8" firstAttribute="leading" secondItem="bZ6-uT-cxp" secondAttribute="leading" constant="20" symbolic="YES" id="TDe-mN-Shz"/>
+                                        <constraint firstItem="WDA-kB-Kl2" firstAttribute="width" secondItem="u7y-TQ-vy8" secondAttribute="width" id="VTw-Vn-f8o"/>
+                                        <constraint firstItem="bVR-hG-bkJ" firstAttribute="centerY" secondItem="u7y-TQ-vy8" secondAttribute="centerY" id="bsJ-jm-Dk9"/>
+                                        <constraint firstItem="WDA-kB-Kl2" firstAttribute="centerX" secondItem="u7y-TQ-vy8" secondAttribute="centerX" id="f6l-3q-ZMp"/>
+                                        <constraint firstAttribute="trailing" secondItem="bVR-hG-bkJ" secondAttribute="trailing" constant="20" symbolic="YES" id="hGd-BJ-hRb"/>
+                                        <constraint firstAttribute="height" constant="163" id="kld-hD-PaE"/>
+                                        <constraint firstItem="u7y-TQ-vy8" firstAttribute="width" secondItem="bZ6-uT-cxp" secondAttribute="width" multiplier="0.5" id="m6b-qh-zQ3"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                         </stackView>
                     </subviews>
+                    <color key="backgroundColor" red="0.91372549020000005" green="0.92549019610000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="5ec-G4-qZE" secondAttribute="trailing" id="83z-Wf-G17"/>
                         <constraint firstItem="5ec-G4-qZE" firstAttribute="top" secondItem="r7a-Qo-3D4" secondAttribute="top" id="Qip-b0-rtI"/>
