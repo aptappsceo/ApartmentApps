@@ -39,28 +39,28 @@ namespace ResidentAppCross.iOS.Views
 			this.DelayBind(() =>
 				{
 					var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
-                    
 					b.Bind(CommentsTextView).TwoWay().For(v => v.Text).To(vm => vm.Comments);
-
-					ViewModel.ImagesToUpload.RawImages.CollectionChanged += ImagesChanged;
-					b.Bind(SelectRequestTypeButton.TitleLabel).For(l=>l.Text).To(vm=>vm.SelectRequestTypeActionTitle);
-                    CommentsTextView.Ended += (sender, args) =>
-				    {
-				        CommentsTextView.TextInputView.EndEditing(true);
-                        CommentsTextView.ResignFirstResponder();
-                    };
+                    b.Bind(SelectRequestTypeButton).For("Title").To(vm => vm.SelectRequestTypeActionTitle);
                     b.Bind(AddPhotoButton).To(vm => vm.AddPhotoCommand);
+                    b.Apply();
 
-					SelectRequestTypeButton.TouchUpInside += (sender, ea) =>
-					{
-					    ShowRequestSelection2();
-                        //ShowRequestSelection();
-					};
+                    ViewModel.ImagesToUpload.RawImages.CollectionChanged += ImagesChanged;
 
-					b.Apply();
+                    CommentsTextView.ReturnKeyType = UIReturnKeyType.Done;
+
+				    CommentsTextView.ShouldChangeText += (view, range, text) =>
+				    {
+				        if (text == "\n")
+				        {
+				            CommentsTextView.ResignFirstResponder();
+				            return false;
+				        }
+				        return true;
+				    };
+
+					SelectRequestTypeButton.TouchUpInside += (sender, ea) => ShowRequestSelection2();
 
                     PetTypeSelection.ValueChanged += PetTypeSelection_ValueChanged;
-
 				});
 
 		}
@@ -74,8 +74,6 @@ namespace ResidentAppCross.iOS.Views
         {
             base.ViewWillAppear(animated);
             PhotoContainer.BackgroundColor = UIColor.White;
-            SelectRequestTypeButton.BackgroundColor = UIColor.DarkGray;
-            SelectRequestTypeButton.TitleLabel.BackgroundColor = UIColor.Green;
             PetTypeSelection.SelectedSegment = ViewModel.SelectedPetStatus ?? -1;
         }
 
@@ -92,7 +90,7 @@ namespace ResidentAppCross.iOS.Views
                 ModalPresentationStyle = UIModalPresentationStyle.Popover,
                 TableView =
                 {
-                    LayoutMargins = new UIEdgeInsets(25, 25, 0, 50),
+                    //LayoutMargins = new UIEdgeInsets(25, 25, 0, 50),
                     SeparatorColor = UIColor.Gray,
                     SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine
                 }
@@ -109,33 +107,19 @@ namespace ResidentAppCross.iOS.Views
             tableView.TableHeaderView = searchBar;
             searchBar.SizeToFit();
             searchBar.Placeholder = "Search...";
-
-//            searchBar.OnEditingStarted += (sender, args) =>
-//            {
-//                BeginInvokeOnMainThread(() => searchBar.BecomeFirstResponder());
-//            };
-//
-//            searchBar.CancelButtonClicked += (i, e) =>
-//            {\
-//                BeginInvokeOnMainThread(() => searchBar.ResignFirstResponder());
-//            };
-
-            
-
             searchBar.OnEditingStopped += (sender, args) =>
             {
                 searchBar.ResignFirstResponder();
             };
 
-            var set = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
+            var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
 
-            set.Bind(source).To(vm => vm.RequestTypesFiltered);
-            set.Bind(source).For(s => s.SelectionChangedCommand).To(vm => vm.UpdateRequestTypeSelection);
-            set.Bind(searchBar).For(searchBar.Text).TwoWay().To(vm => vm.RequestTypeSearchText);
+            b.Bind(source).To(vm => vm.RequestTypesFiltered);
+            b.Bind(source).For(s => s.SelectionChangedCommand).To(vm => vm.UpdateRequestTypeSelection);
+            b.Bind(searchBar).For(searchBar.Text).TwoWay().To(vm => vm.RequestTypeSearchText);
 
-            set.Apply();
+            b.Apply();
 
-            selectionTable.ExtendedLayoutIncludesOpaqueBars = false;
             selectionTable.EdgesForExtendedLayout = UIRectEdge.None;
 
             selectionTable.Title = "Select Type";
@@ -159,24 +143,41 @@ namespace ResidentAppCross.iOS.Views
 		        }
 		    };
 
+            var searchBar = new UISearchBar()
+            {
+                AutocorrectionType = UITextAutocorrectionType.Yes,
+                KeyboardType = UIKeyboardType.WebSearch
+            };
 
-		    selectionTable.ExtendedLayoutIncludesOpaqueBars = false;
-            selectionTable.EdgesForExtendedLayout = UIRectEdge.None;
-			var uiTableViewHeaderFooterView = new UITableViewHeaderFooterView();
-			selectionTable.TableView.TableHeaderView = uiTableViewHeaderFooterView;
-			uiTableViewHeaderFooterView.TextLabel.Text = "Please, Select Request Type";
+            selectionTable.TableView.TableHeaderView = searchBar;
+            searchBar.SizeToFit();
+            searchBar.Placeholder = "Search...";
+            searchBar.OnEditingStopped += (sender, args) =>
+            {
+                searchBar.ResignFirstResponder();
+            };
 
-			selectionTable.TableView.Source = new LookUpPairSelectionTableSource()
-			{
-				Items = ViewModel.RequestTypes.ToArray(),
-				OnItemSelected = item =>
-				{
-					ViewModel.SelectedRequestType = item;
-				    NavigationController.PopViewController(true);
-				}
-			};
 
-			selectionTable.TableView.LayoutIfNeeded();
+		    var source = new LookUpPairSelectionTableSource()
+		    {
+		        Items = ViewModel.RequestTypes.ToArray(),
+		        OnItemSelected = item =>
+		        {
+		            ViewModel.UpdateRequestTypeSelection.Execute(item);
+		            NavigationController.PopViewController(true);
+		        }
+		    };
+		    selectionTable.TableView.Source = source;
+
+            var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
+
+            b.Bind(source).To(vm => vm.RequestTypesFiltered);
+            b.Bind(searchBar).For(searchBar.Text).TwoWay().To(vm => vm.RequestTypeSearchText);
+
+            b.Apply();
+
+
+            selectionTable.TableView.LayoutIfNeeded();
 			selectionTable.TableView.LayoutSubviews();
 
             NavigationController.PushViewController(selectionTable,true);
