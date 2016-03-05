@@ -13,6 +13,9 @@ namespace ResidentAppCross.iOS
 	partial class MaintenancePauseFormView
 	{
 		[Outlet]
+		UIKit.UIButton AddPhotoButton { get; set; }
+
+		[Outlet]
 		UIKit.UITextView CommentsTextView { get; set; }
 
 		[Outlet]
@@ -28,6 +31,11 @@ namespace ResidentAppCross.iOS
 			if (PhotoContainer != null) {
 				PhotoContainer.Dispose ();
 				PhotoContainer = null;
+			}
+
+			if (AddPhotoButton != null) {
+				AddPhotoButton.Dispose ();
+				AddPhotoButton = null;
 			}
 		}
 	}

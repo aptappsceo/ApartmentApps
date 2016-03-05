@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MaintenancePauseFormView">
             <connections>
+                <outlet property="AddPhotoButton" destination="O8u-4K-dau" id="GiW-F2-U3X"/>
                 <outlet property="CommentsTextView" destination="5zH-pO-qXU" id="7sA-Dj-gQ8"/>
                 <outlet property="PhotoContainer" destination="229-A4-SSw" id="Bld-ly-Rhv"/>
                 <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
@@ -19,7 +20,7 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5LY-T2-kiN" userLabel="ScrollableContainer">
                     <rect key="frame" x="0.0" y="0.0" width="627" height="2000"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="RlK-fo-ktV">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="RlK-fo-ktV">
                             <rect key="frame" x="0.0" y="0.0" width="627" height="700"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wA5-F4-v15" userLabel="TitleSection">
@@ -50,7 +51,7 @@
                                         <constraint firstItem="9Kb-NE-PQF" firstAttribute="leading" secondItem="4O8-cQ-0z1" secondAttribute="trailing" constant="8" symbolic="YES" id="y22-3Y-jnq"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="heh-ya-9dI" userLabel="CommentsSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heh-ya-9dI" userLabel="CommentsSection">
                                     <rect key="frame" x="0.0" y="150" width="627" height="250"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details &amp; Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qaq-ub-U7Q" userLabel="CommentsTitle">
@@ -94,7 +95,7 @@
                                         <constraint firstAttribute="bottom" secondItem="Fda-O3-LeB" secondAttribute="bottom" constant="20" symbolic="YES" id="zXm-Ww-6hQ"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h07-d7-pDX" userLabel="PhotosSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h07-d7-pDX" userLabel="PhotosSection">
                                     <rect key="frame" x="0.0" y="420" width="627" height="280"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="cup-if-SPU" userLabel="PhotoSectionStack">
