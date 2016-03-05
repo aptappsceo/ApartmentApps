@@ -6,6 +6,7 @@ using Foundation;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Binding.iOS.Views;
 using MvvmCross.Platform.iOS;
+using ObjCRuntime;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.PhotoGallery;
@@ -100,20 +101,34 @@ namespace ResidentAppCross.iOS
                 //b.Bind(FooterStartButton).To(vm => vm.StartOrResumeCommand);
                 b.Apply();
                 SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
-                FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(result => ViewModel.StartOrResumeCommand.Execute(null));
-                FooterPauseButton.TouchUpInside += (sender, args) => PushScannerViewController(result => ViewModel.PauseCommmand.Execute(null));
-                FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(result => ViewModel.FinishCommmand.Execute(null));
+                FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.StartOrResumeCommand.Execute(null));
+                FooterPauseButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.PauseCommmand.Execute(null));
+                FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.FinishCommmand.Execute(null));
             });
         }
 
-        private void PushScannerViewController(Action<Result> onScanned)
+        private void PushScannerViewController(Action onScanned)
         {
-            var view = new AVCaptureScannerViewController(new MobileBarcodeScanningOptions()
+
+            if (ObjCRuntime.Runtime.Arch == Arch.SIMULATOR)
+            {
+                ViewModel.ScanResult = new QRData()
+                {
+                    Data = "Simulated Text",
+                    ImageData = new byte[0],
+                    Timestamp = DateTime.Now.Ticks
+                };
+                onScanned();
+                return;
+            }
+
+            var view = new AVCaptureScannerViewController(
+            new MobileBarcodeScanningOptions()
             {
             },
-                new MobileBarcodeScanner()
-                {
-                });
+            new MobileBarcodeScanner()
+            {
+            });
             view.OnScannedResult += _ =>
             {
                 NavigationController.PopViewController(true);
@@ -124,7 +139,7 @@ namespace ResidentAppCross.iOS
                     Timestamp = _.Timestamp
                 };
 
-                SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
+                onScanned?.Invoke();
             };
         }
 

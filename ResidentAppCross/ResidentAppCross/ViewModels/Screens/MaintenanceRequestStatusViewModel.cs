@@ -119,7 +119,7 @@ namespace ResidentAppCross.ViewModels.Screens
                     if (CurrentRequestStatus == RequestStatus.Started)
                     {
                         await _appService.Maitenance.CompleteRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Paused with Data: {0}", ScanResult?.Data), new List<string>());
-                        context.OnComplete(string.Format("Request Paused: {0}", ScanResult?.Data));
+                        context.OnComplete(string.Format("Request Finished (QR: {0})", ScanResult?.Data));
                     }
                     else
                     {
@@ -144,7 +144,7 @@ namespace ResidentAppCross.ViewModels.Screens
                     if (CurrentRequestStatus == RequestStatus.Started)
                     {
                         await _appService.Maitenance.PauseRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Paused with Data: {0}", ScanResult?.Data), new List<string>());
-                        context.OnComplete(string.Format("Request Paused: {0}", ScanResult?.Data));
+                        context.OnComplete(string.Format("Request Paused (QR: {0})", ScanResult?.Data));
                     }
                     else
                     {
@@ -172,7 +172,7 @@ namespace ResidentAppCross.ViewModels.Screens
                         CurrentRequestStatus == RequestStatus.Paused)
                     {
                         await _appService.Maitenance.StartRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Started with Data: {0}", ScanResult?.Data), new List<string>());
-                        context.OnComplete(string.Format("Request Started: {0}", ScanResult?.Data));
+                        context.OnComplete(string.Format("Request Started (QR: {0})", ScanResult?.Data));
                     }
                     else
                     {

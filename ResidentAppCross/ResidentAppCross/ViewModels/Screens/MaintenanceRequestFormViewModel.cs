@@ -74,7 +74,7 @@ namespace ResidentAppCross.ViewModels
             set
             {
                 SetProperty(ref _selectedRequestType, value); 
-                RaisePropertyChanged(()=>SelectRequestTypeActionTitle);
+                RaisePropertyChanged("SelectRequestTypeActionTitle");
             }
         }
 
