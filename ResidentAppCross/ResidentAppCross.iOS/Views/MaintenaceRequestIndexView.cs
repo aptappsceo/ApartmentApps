@@ -47,9 +47,9 @@ namespace ResidentAppCross.iOS
 	    }
 
 
-	    public override void ViewDidAppear(bool animated)
+	    public override void ViewWillAppear(bool animated)
         {
-            base.ViewDidAppear(animated);
+            base.ViewWillAppear(animated);
             this.NavigationController.SetNavigationBarHidden(false, true);
             var s = "Bearer " + App.ApartmentAppsClient.AparmentAppsDelegating.AuthorizationKey;
 
@@ -57,7 +57,7 @@ namespace ResidentAppCross.iOS
             request2.Headers = request2.Headers ?? NSDictionary.FromObjectAndKey(FromObject(s), FromObject("Authorization"));
 
             var headers = request2.Headers;
-
+            NSUrlCache.SharedCache.RemoveAllCachedResponses();
             ListWebView.LoadRequest(request2);
 
         }

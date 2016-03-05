@@ -3,42 +3,46 @@
     ViewBag.Title = "Mobile View";
     Layout = "~/Views/Shared/_MobileClientViewLayout.cshtml";
 }
+
+<p class="res-indicator">[DEV] Styling for media: </p>
+
 @foreach (var item in Model.GroupBy(p => p.StatusId).ToArray())
 {
-    <div class="row nav-header">
-        <h3>@item.Key</h3>
-    </div>
-    foreach (var request in item)
-    {
-        <div class="row">
-            <div class="col-md-6 request-list-item" style="float: none; margin: 0 auto;">
+    <div class="request-list-section">
+            <h3 class="section-header-text">@item.Key</h3>
+        @foreach (var request in item)
+        {
+        <div class="row request-list-item-container">
+            <div class="col-md-6 request-list-item">
                 <div class="media">
                     @*<img class="request-list-icon pull-left" style="" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSFeON1utbyA3AOgrwDIyUnQAzeQCAr20mpKWNZhLH1PMTPrMKh" />*@
                     <div class="media-body">
-                        <h2 class="request-header-text"><a href="Request/@request.Id">@request.MaitenanceRequestType.Name</a></h2>
+                        
+                        <h2 class="request-header-text"><a href="Request/@request.Id">@request.MaitenanceRequestType.Name</a>
+                        </h2>
 
                         <div>
-                            <hr/>
+                 
                             @if (request.Unit != null)
                             {
                                 <p>Building: @request.Unit.Building.Name Unit: @request.Unit.Name </p>
-                                <hr />
+                                <hr/>
                             }
-                          
+
                             <p>Comments: @request.Message</p>
-                            
+
                             <div class="request-list-item-gallery">
-                                <img src="http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png" />
-                                <img src="http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png" />
+                                <img src="https://openmerchantaccount.com/img2/-text.png"/>
+                                <img src="https://openmerchantaccount.com/img2/-text.png"/>
                             </div>
-                            <hr />
-                            <small>Date</small>
+                            <hr/>
+                            <small>@(request.ScheduleDate?.ToString("g") ?? "Submitted")</small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    }
-
+        }
+    </div>
 }
 

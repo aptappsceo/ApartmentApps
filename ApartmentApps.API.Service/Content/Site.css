@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 00px;
     padding-bottom: 20px;
 }
 
@@ -16,8 +16,269 @@ textarea {
     max-width: 280px;
 }
 
+ .res-indicator {
+        font-size: 0.6em;
+}
+
+ .res-indicator:after {
+        content: "NONE"
+    }
 @media (min-width:320px) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
     
+    .request-list-photo {
+        
+    }
+
+    .request-list-item-container {
+        background-color: white;
+        margin-bottom: 15px;
+        padding-left: 30px;
+    }
+
+    .request-list-icon {
+        width: 4em;
+        margin: 10px;
+    }
+
+    .request-list-item-gallery img{
+        display: inline;
+        max-height: 60px
+    }
+
+    .request-list-section {
+        background-color: #f2f4f3;
+        float: none;
+        margin: 0;
+    }
+
+    .request-list-item hr {
+        margin: 5px;
+        background-color: #e4e4e4
+    }
+
+    .request-list {
+        
+    }
+    
+    .section-header-text {
+        font-size: 1.8em;
+        color: #0b5ba4;
+    }  
+
+    .request-header-text {
+        font-size: 1.4em;
+        color: #595959;
+    
+    }
+     
+    
+    .request-list-text {
+        
+    }
+    
+    .request-list-text-small {
+        
+    }
+
+    .res-indicator:after {
+        content: "MW320"
+    }
+}
+@media (min-width:480px) {
+    
+    .res-indicator:after {
+        font-size: 0.6em;
+        content: "MW480"
+    }
+
+      .request-list-photo {
+        
+    }
+
+    .request-list-icon {
+        width: 4em;
+        margin: 10px;
+    }
+
+    .request-list-item-gallery img{
+        display: inline;
+        max-height: 60px
+    }
+
+    .request-list-item hr {
+        margin: 5px
+    }
+
+    .request-list {
+        
+    }
+    
+    .section-header-text {
+        font-size: 1.8em;
+        background-color: red
+    }  
+
+    .request-header-text {
+        font-size: 1.2em;
+    }  
+    
+    .request-list-text {
+        
+    }
+    
+    .request-list-text-small {
+        
+    }
+     
+}
+@media (min-width:600px) {
+    
+    .res-indicator:after {
+        font-size: 0.6em;
+        content: "MW600"
+    }
+
+     .request-list-photo {
+        
+    }
+
+    .request-list-icon {
+        width: 4em;
+        margin: 10px;
+    }
+
+    .request-list-item-gallery img{
+        display: inline;
+        max-height: 60px
+    }
+
+    .request-list-item hr {
+        margin: 5px
+    }
+
+    .request-list {
+        
+    }
+    
+    .section-header-text {
+        font-size: 1.8em;
+        background-color: tomato
+    }  
+
+    .request-header-text {
+        font-size: 1.2em;
+    }  
+    
+    .request-list-text {
+        
+    }
+    
+    .request-list-text-small {
+        
+    }
+      
+}
+@media (min-width:801px) { /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+
+    .request-list-photo {
+        
+    }
+
+    .res-indicator:after {
+        font-size: 0.6em;
+        content: "MW801"
+    }
+
+    .request-list-icon {
+        width: 4em;
+        margin: 10px;
+    }
+
+    .request-list-item-gallery img{
+        display: inline;
+        max-height: 60px
+    }
+
+    .request-list-item hr {
+        margin: 5px
+    }
+
+    .request-list {
+        
+    }
+    
+    .section-header-text {
+        font-size: 1.8em;
+        background-color: cadetblue
+    }  
+
+    .request-header-text {
+        font-size: 1.2em;
+    }  
+    
+    .request-list-text {
+        
+    }
+    
+    .request-list-text-small {
+        
+    }
+
+}
+@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ 
+
+    .request-list-photo {
+        
+    }
+
+    .res-indicator:after {
+        font-size: 0.6em;
+        content: "MW1025"
+    }
+
+    .request-list-icon {
+        width: 4em;
+        margin: 10px;
+    }
+
+    .request-list-item-gallery img{
+        display: inline;
+        max-height: 60px
+    }
+
+    .request-list-item hr {
+        margin: 5px
+    }
+
+    .request-list {
+        
+    }
+    
+    .section-header-text {
+        font-size: 1.8em;
+        background-color: blueviolet
+    }  
+
+    .request-header-text {
+        font-size: 1.2em;
+    }  
+    
+    .request-list-text {
+        
+    }
+    
+    .request-list-text-small {
+        
+    }
+
+}
+@media (min-width:1281px) { /* hi-res laptops and desktops */ 
+
+    .res-indicator:after {
+        font-size: 0.6em;
+        content: "MW1281"
+    }
+
     .request-list-photo {
         
     }
@@ -39,9 +300,14 @@ textarea {
     .request-list {
         
     }
+    
+    .section-header-text {
+        font-size: 1.8em;
+        background-color: blue
+    }  
 
     .request-header-text {
-        font-size: 2em;
+        font-size: 1.2em;
     }  
     
     .request-list-text {
@@ -52,11 +318,10 @@ textarea {
         
     }
 
-    
 }
 
-@media (min-width:480px) { /* smartphones, Android phones, landscape iPhone */ }
-@media (min-width:600px) { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ }
-@media (min-width:801px) { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
-@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
-@media (min-width:1281px) { /* hi-res laptops and desktops */ }
+
+                                               
+    
+
+                                           
