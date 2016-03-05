@@ -19,7 +19,7 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rj3-ZF-a28" userLabel="ScrollableContainer">
                     <rect key="frame" x="0.0" y="0.0" width="627" height="2000"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="SlS-Xe-9kr">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="SlS-Xe-9kr">
                             <rect key="frame" x="0.0" y="0.0" width="627" height="1938"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ezf-E3-Ybv" userLabel="PageTitleSection-Paused">
@@ -89,7 +89,7 @@
                                         <constraint firstItem="jSj-dL-W0w" firstAttribute="height" secondItem="7y5-gg-JML" secondAttribute="height" id="kDr-lp-5aM"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5fL-mg-0Im" userLabel="DateSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fL-mg-0Im" userLabel="DateSection">
                                     <rect key="frame" x="0.0" y="300" width="627" height="163"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vNE-we-9sV" userLabel="SelectRepairDateButton">
@@ -151,7 +151,7 @@
                                         <constraint firstAttribute="trailing" secondItem="w6b-sP-PsM" secondAttribute="trailing" constant="20" symbolic="YES" id="vlU-GB-D2r"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4rF-aS-Qky" userLabel="TenantSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4rF-aS-Qky" userLabel="TenantSection">
                                     <rect key="frame" x="0.0" y="483" width="627" height="302"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="kDv-Dv-Y5R">
@@ -247,7 +247,7 @@
                                         <constraint firstAttribute="bottom" secondItem="kDv-Dv-Y5R" secondAttribute="bottom" id="vwp-mb-AvA"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zgH-EM-szj" userLabel="RequestTypeSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zgH-EM-szj" userLabel="RequestTypeSection">
                                     <rect key="frame" x="0.0" y="805" width="627" height="80"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="caN-jO-5oc" userLabel="SelectRequestTypeButton">
@@ -286,7 +286,7 @@
                                         <constraint firstItem="5WO-9y-LDV" firstAttribute="height" secondItem="zgH-EM-szj" secondAttribute="height" multiplier="0.5" id="ujQ-i2-ste"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Is3-68-SFD" userLabel="CommentsSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Is3-68-SFD" userLabel="CommentsSection">
                                     <rect key="frame" x="0.0" y="905" width="627" height="250"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details &amp; Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ftJ-Ke-AWO" userLabel="CommentsTitle">
@@ -330,7 +330,7 @@
                                         <constraint firstAttribute="trailing" secondItem="ftJ-Ke-AWO" secondAttribute="trailing" constant="20" symbolic="YES" id="nvD-fo-0Lj"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dI7-sA-A5A" userLabel="PhotosSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dI7-sA-A5A" userLabel="PhotosSection">
                                     <rect key="frame" x="0.0" y="1175" width="627" height="280"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oEf-LT-mQe" userLabel="PhotosTitle">
@@ -363,7 +363,7 @@
                                         <constraint firstAttribute="bottom" secondItem="gJp-Iz-qfc" secondAttribute="bottom" constant="20" symbolic="YES" id="xnQ-tj-pQZ"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IWI-Qf-K5z" userLabel="EntrancePermissionSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IWI-Qf-K5z" userLabel="EntrancePermissionSection">
                                     <rect key="frame" x="0.0" y="1475" width="627" height="163"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Permission to enter:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKT-f3-18R" userLabel="EntrancePermissionLabel">
@@ -418,7 +418,7 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSj-Ck-rBo" userLabel="PetsSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hSj-Ck-rBo" userLabel="PetsSection">
                                     <rect key="frame" x="0.0" y="1658" width="627" height="140"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you have a pet?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dm6-mH-vz2" userLabel="PetsTitle">
@@ -451,7 +451,7 @@
                                         <constraint firstAttribute="bottom" secondItem="osf-p6-uvp" secondAttribute="bottom" constant="20" symbolic="YES" id="otM-70-1dc"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w5W-vf-m0X" userLabel="StartSection">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5W-vf-m0X" userLabel="StartSection">
                                     <rect key="frame" x="0.0" y="1818" width="627" height="120"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53V-BJ-DhC">
