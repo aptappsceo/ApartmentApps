@@ -344,9 +344,7 @@
     <Content Include="Grid.mvc.readme" />
     <Content Include="push\DevPushCert.p12" />
     <Content Include="push\ProdPushCert.p12" />
-    <None Include="Properties\PublishProfiles\ApartmentAppsAPIService - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\ApartmentAppsAPIService - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ApartmentAppsAPIService - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\ApartmentAppsAPIService - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\gridmvc.js" />

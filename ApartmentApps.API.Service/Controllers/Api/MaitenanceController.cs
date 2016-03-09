@@ -89,7 +89,7 @@ namespace ApartmentApps.API.Service.Controllers
                 {
                     UserName = result.User.UserName,
                     Status = result.StatusId,
-                    TenantFullName = result.User.Tenant?.FirstName + result.User.Tenant?.LastName,
+                    TenantFullName = result.User.FirstName + " " + result.User.LastName,
                     UserId = result.UserId,
                     BuildingAddress = result.User.Tenant?.Address,
                     BuildingCity= result.User.Tenant?.City,
