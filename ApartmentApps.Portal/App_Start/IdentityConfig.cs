@@ -89,9 +89,9 @@ namespace ApartmentApps.Portal
             return manager;
         }
 
-        public async Task<ApplicationUser> CreateUser(string email, string password)
+        public async Task<ApplicationUser> CreateUser(string email, string password, string firstName, string lastName)
         {
-            var user = new ApplicationUser() {UserName = email, Email = email};
+            var user = new ApplicationUser() {UserName = email, Email = email, FirstName = firstName, LastName = lastName};
             var result = await CreateAsync(user, password);
             if (result.Succeeded)
             {

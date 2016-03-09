@@ -97,7 +97,7 @@ namespace ApartmentApps.Portal.Controllers
             if (tenant.UserId == null)
             {
 
-                var user = await UserManager.CreateUser(tenant.Email, tenant.FirstName[0].ToString().ToLower() + tenant.LastName.ToLower());
+                var user = await UserManager.CreateUser(tenant.Email, tenant.FirstName[0].ToString().ToLower() + tenant.LastName.ToLower(), tenant.FirstName, tenant.LastName);
                 user.PropertyId = Property.Id;
                 tenant.UserId = user.Id;
             }

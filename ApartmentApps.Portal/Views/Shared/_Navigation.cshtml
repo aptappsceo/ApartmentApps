@@ -3,6 +3,7 @@
     var property = ViewBag.Property as Property;
     var properties = ViewBag.Properties as Property[];
 }
+
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav" id="side-menu">
@@ -33,43 +34,63 @@
                     AA+
                 </div>
             </li>
-            
-            <li class="@Html.IsSelected(controller: "Home")">
-                <a href="@Url.Action("Index", "Home")"><i class="fa fa-laptop"></i> <span class="nav-label">Main page</span> </a>
+
+            <li class="@Html.IsSelected(controller: "Dashboard")">
+                <a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-laptop"></i> <span class="nav-label">Dashboard</span> </a>
             </li>
             @if (User.IsInRole("Admin"))
             {
-                <li>Admin</li>
-                <li class="@Html.IsSelected(controller: "Corporations")">
-                    <a href="@Url.Action("Index", "Corporations")"><i class="fa fa-desktop"></i> <span class="nav-label">Corporations</span></a>
+                <li>
+                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse in">
+                        <li class="@Html.IsSelected(controller: "Corporations")">
+                            <a href="@Url.Action("Index", "Corporations")"><i class="fa fa-desktop"></i> <span class="nav-label">Corporations</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(controller: "Properties")">
+                            <a href="/Properties/Index"><i class="fa fa-desktop"></i> <span class="nav-label">Properties</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(controller: "PropertyEntrataInfo")">
+                            <a href="@Url.Action("Index", "PropertyEntrataInfo")"><i class="fa fa-desktop"></i> <span class="nav-label">Entrata Info</span></a>
+                        </li>
+                        
+                    </ul>
                 </li>
-                <li class="@Html.IsSelected(controller: "Properties")">
-                    <a href="/Properties/Index"><i class="fa fa-desktop"></i> <span class="nav-label">Properties</span></a>
-                </li>
-                <li class="@Html.IsSelected(controller: "PropertyEntrataInfo")">
-                    <a href="@Url.Action("Index", "PropertyEntrataInfo")"><i class="fa fa-desktop"></i> <span class="nav-label">Entrata Info</span></a>
-                </li>
-                <li class="">Property Admin</li>
+
+
             }
-            @if (User.IsInRole("PropertyAdmin"))
-            {
-                <li class="@Html.IsSelected(controller: "Buildings")">
-                    <a href="@Url.Action("Index", "Buildings")"><i class="fa fa-desktop"></i> <span class="nav-label">Buildings</span></a>
-                </li>
-                <li class="@Html.IsSelected(controller: "Tenants")">
-                    <a href="@Url.Action("Index", "Tenants")"><i class="fa fa-desktop"></i> <span class="nav-label">Tenants</span></a>
-                </li>
-                <li class="@Html.IsSelected(controller: "Units")">
-                    <a href="@Url.Action("Index", "Units")"><i class="fa fa-desktop"></i> <span class="nav-label">Units</span></a>
-                </li>
-            }
+
             @if (User.IsInRole("PropertyAdmin") || User.IsInRole("Maintenance"))
             {
-                
-                <li class="@Html.IsSelected(controller: "MaitenanceRequests")">
-                    <a href="@Url.Action("Index", "MaitenanceRequests")"><i class="fa fa-desktop"></i> <span class="nav-label">Maintenance Requests</span></a>
+                <li>
+                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Work Orders</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse in">
+
+
+                        <li class="@Html.IsSelected(controller: "MaitenanceRequests")">
+                            <a href="@Url.Action("Index", "MaitenanceRequests")"><i class="fa fa-desktop"></i> <span class="nav-label">Maintenance Requests</span></a>
+                        </li>
+                    </ul>
                 </li>
             }
+            <li>
+                <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Settings</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse in">
+
+                    @if (User.IsInRole("PropertyAdmin"))
+            {
+                        <li class="@Html.IsSelected(controller: "Buildings")">
+                            <a href="@Url.Action("Index", "Buildings")"><i class="fa fa-desktop"></i> <span class="nav-label">Buildings</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(controller: "Tenants")">
+                            <a href="@Url.Action("Index", "Tenants")"><i class="fa fa-desktop"></i> <span class="nav-label">Tenants</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(controller: "Units")">
+                            <a href="@Url.Action("Index", "Units")"><i class="fa fa-desktop"></i> <span class="nav-label">Units</span></a>
+                        </li>
+                    }
+                </ul>
+            </li>
+ 
         </ul>
     </div>
 </nav>

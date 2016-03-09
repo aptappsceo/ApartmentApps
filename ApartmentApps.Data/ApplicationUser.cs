@@ -13,7 +13,12 @@ namespace ApartmentApps.Data
     {
         [Key]
         public override string Id { get; set; }
+
         public virtual Tenant Tenant { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
 
         public int? PropertyId { get; set; }
 

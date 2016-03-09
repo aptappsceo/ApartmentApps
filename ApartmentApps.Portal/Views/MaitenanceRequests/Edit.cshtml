@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -54,18 +53,26 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkerId, "WorkerId", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("WorkerId", String.Empty)
-                @Html.ValidationMessageFor(model => model.WorkerId)
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.MaitenanceRequestTypeId, "MaitenanceRequestTypeId", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("MaitenanceRequestTypeId", String.Empty)
                 @Html.ValidationMessageFor(model => model.MaitenanceRequestTypeId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PermissionToEnter, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PermissionToEnter)
+                @Html.ValidationMessageFor(model => model.PermissionToEnter)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PetStatus, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PetStatus)
+                @Html.ValidationMessageFor(model => model.PetStatus)
             </div>
         </div>
 
@@ -78,14 +85,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SubmissionDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SubmissionDate)
-                @Html.ValidationMessageFor(model => model.SubmissionDate)
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.ScheduleDate, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ScheduleDate)
@@ -94,10 +93,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CloseDate, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Message, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CloseDate)
-                @Html.ValidationMessageFor(model => model.CloseDate)
+                @Html.EditorFor(model => model.Message)
+                @Html.ValidationMessageFor(model => model.Message)
             </div>
         </div>
 
@@ -110,10 +109,26 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Message, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ImageDirectoryId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Message)
-                @Html.ValidationMessageFor(model => model.Message)
+                @Html.EditorFor(model => model.ImageDirectoryId)
+                @Html.ValidationMessageFor(model => model.ImageDirectoryId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SubmissionDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SubmissionDate)
+                @Html.ValidationMessageFor(model => model.SubmissionDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompletionDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CompletionDate)
+                @Html.ValidationMessageFor(model => model.CompletionDate)
             </div>
         </div>
 

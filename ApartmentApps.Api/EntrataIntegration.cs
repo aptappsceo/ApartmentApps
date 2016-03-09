@@ -59,9 +59,7 @@ namespace ApartmentApps.Api
 
                 if (user == null)
                 {
-                    user = await createUser.CreateUser(item.Email, item.FirstName[0].ToString().ToLower() + item.LastName.ToLower());
-
-
+                    user = await createUser.CreateUser(item.Email, item.FirstName[0].ToString().ToLower() + item.LastName.ToLower(), item.FirstName, item.LastName);
                 }
                 if (user == null)
                 {

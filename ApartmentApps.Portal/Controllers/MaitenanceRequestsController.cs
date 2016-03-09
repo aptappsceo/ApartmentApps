@@ -10,21 +10,14 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    [Authorize(Roles = "PropertyAdmin")]
     public class MaitenanceRequestsController : AAController
     {
-        
+      
 
         // GET: /MaitenanceRequests/
         public ActionResult Index()
         {
-            var maitenancerequests = db
-                .MaitenanceRequests.Where(p => p.User.PropertyId == Property.Id)
-                .Include(m => m.MaitenanceRequestType)
-                .Include(m => m.Unit)
-                .Include(m => m.User);
-            
-
+            var maitenancerequests = db.MaitenanceRequests.Include(m => m.MaitenanceRequestType).Include(m => m.Status).Include(m => m.Unit).Include(m => m.User);
             return View(maitenancerequests.ToList());
         }
 
@@ -35,7 +28,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MaitenanceRequest maitenanceRequest = Property.MaitenanceRequests.FirstOrDefault(p=>p.Id == id);
+            MaitenanceRequest maitenanceRequest = db.MaitenanceRequests.Find(id);
             if (maitenanceRequest == null)
             {
                 return HttpNotFound();
@@ -48,9 +41,8 @@ namespace ApartmentApps.Portal.Controllers
         {
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name");
             ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name");
-            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name");
-            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email");
-            ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email");
+            ViewBag.UnitId = new SelectList(db.Units.Where(p => p.Building.PropertyId == CurrentUser.PropertyId), "Id", "Name");
+            ViewBag.UserId = new SelectList(db.Users.Where(p => p.PropertyId == CurrentUser.PropertyId), "Id", "FirstName");
             return View();
         }
 
@@ -59,7 +51,7 @@ namespace ApartmentApps.Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,UserId,WorkerId,MaitenanceRequestTypeId,UnitId,SubmissionDate,ScheduleDate,CloseDate,StatusId,Message")] MaitenanceRequest maitenanceRequest)
+        public ActionResult Create([Bind(Include="Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
         {
             if (ModelState.IsValid)
             {
@@ -69,10 +61,9 @@ namespace ApartmentApps.Portal.Controllers
             }
 
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            //ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.UserId);
-            //ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
+            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p => p.Building.PropertyId == CurrentUser.PropertyId), "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(db.Users.Where(p => p.PropertyId == CurrentUser.PropertyId), "Id", "FirstName", maitenanceRequest.UserId);
             return View(maitenanceRequest);
         }
 
@@ -83,16 +74,15 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MaitenanceRequest maitenanceRequest = Property.MaitenanceRequests.FirstOrDefault(p => p.Id == id);
+            MaitenanceRequest maitenanceRequest = db.MaitenanceRequests.Find(id);
             if (maitenanceRequest == null)
             {
                 return HttpNotFound();
             }
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-          //  ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.UserId);
-            //ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
+            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == CurrentUser.PropertyId), "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == CurrentUser.PropertyId), "Id", "FirstName", maitenanceRequest.UserId);
             return View(maitenanceRequest);
         }
 
@@ -101,7 +91,7 @@ namespace ApartmentApps.Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,UserId,WorkerId,MaitenanceRequestTypeId,UnitId,SubmissionDate,ScheduleDate,CloseDate,StatusId,Message")] MaitenanceRequest maitenanceRequest)
+        public ActionResult Edit([Bind(Include="Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
         {
             if (ModelState.IsValid)
             {
@@ -110,10 +100,9 @@ namespace ApartmentApps.Portal.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            //ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == Property.Id), "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.UserId);
-            //ViewBag.WorkerId = new SelectList(db.Users.Where(p=>p.PropertyId == Property.Id), "Id", "Email", maitenanceRequest.WorkerId);
+            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(db.Units.Where(p => p.Building.PropertyId == CurrentUser.PropertyId), "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == CurrentUser.PropertyId), "Id", "FirstName", maitenanceRequest.UserId);
             return View(maitenanceRequest);
         }
 
@@ -137,7 +126,7 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            MaitenanceRequest maitenanceRequest = Property.MaitenanceRequests.FirstOrDefault(p => p.Id == id);
+            MaitenanceRequest maitenanceRequest = db.MaitenanceRequests.Find(id);
             db.MaitenanceRequests.Remove(maitenanceRequest);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -5,6 +5,6 @@ namespace ApartmentApps.Api
 {
     public interface ICreateUser
     {
-        Task<ApplicationUser> CreateUser(string email, string password);
+        Task<ApplicationUser> CreateUser(string email, string password, string firstName, string lastName);
     }
 }
