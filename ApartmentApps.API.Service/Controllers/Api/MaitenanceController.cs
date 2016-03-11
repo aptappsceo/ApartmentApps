@@ -65,6 +65,8 @@ namespace ApartmentApps.API.Service.Controllers
             public IEnumerable<object> Checkins { get; set; }
         }
 
+       
+
         public class CheckinBindingModel
         {
             public string StatusId { get; set; }
@@ -136,6 +138,7 @@ namespace ApartmentApps.API.Service.Controllers
         {
             MaintenanceService.StartRequest(CurrentUser, id, comments, images);
         }
+
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetMaitenanceRequestTypes")]
         public IEnumerable<LookupPairModel> GetMaitenanceRequestTypes()

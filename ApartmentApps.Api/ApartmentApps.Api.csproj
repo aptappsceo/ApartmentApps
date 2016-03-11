@@ -132,6 +132,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CourtesyService.cs" />
+    <Compile Include="ICourtesyService.cs" />
     <Compile Include="Notifications.cs" />
     <Compile Include="ServiceExtensions.cs" />
     <Compile Include="EntrataIntegration.cs" />
