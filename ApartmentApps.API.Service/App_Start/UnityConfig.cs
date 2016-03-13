@@ -31,9 +31,9 @@ namespace ApartmentApps.API.Service
             // Push notifications
             container.RegisterType<IPushNotifiationHandler, AzurePushNotificationHandler>();
             container.RegisterType<IService, PushNotificationsService>("PushNotifications");
-          
-            container.RegisterType<IMaintenanceService, MaintenanceService>();
+            container.RegisterType<IBlobStorageService, BlobStorageService>();
 
+            container.RegisterType<IMaintenanceService, MaintenanceService>();
             container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
           

@@ -7,7 +7,15 @@ namespace ApartmentApps.Api
 {
     public class MaintenanceService : IMaintenanceService
     {
-        public int SubmitRequest(ApplicationUser user, string comments, int requestTypeId, int petStatus, bool permissionToEnter = true, int unitId = 0)
+
+        private IBlobStorageService _blobStorageService;
+
+        public MaintenanceService(IBlobStorageService blobStorageService)
+        {
+            _blobStorageService = blobStorageService;
+        }
+
+        public int SubmitRequest(ApplicationUser user, string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -32,6 +40,13 @@ namespace ApartmentApps.Api
                     maitenanceRequest.UnitId = null;
                 //if (maitenanceRequest.UnitId == 0)
                 //    throw new Exception("Unit Id Required.");
+
+
+//                foreach (var image in images)
+//                {
+//                    var imageKey = $"{new Guid()}.{user.UserName}".ToLowerInvariant();
+//                    _blobStorageService.UploadPhoto(image,imageKey);
+//                }
 
                 ctx.MaitenanceRequests.Add(maitenanceRequest);
                 ctx.SaveChanges();

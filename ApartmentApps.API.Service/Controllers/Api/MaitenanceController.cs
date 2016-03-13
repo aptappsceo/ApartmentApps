@@ -65,6 +65,8 @@ namespace ApartmentApps.API.Service.Controllers
             public IEnumerable<object> Checkins { get; set; }
         }
 
+       
+
         public class CheckinBindingModel
         {
             public string StatusId { get; set; }
@@ -116,7 +118,7 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("SubmitRequest")]
         public void SubmitRequest(MaitenanceRequestModel request)
         {
-            MaintenanceService.SubmitRequest(CurrentUser, request.Comments, request.MaitenanceRequestTypeId,request.PetStatus,request.PermissionToEnter);
+            MaintenanceService.SubmitRequest(CurrentUser, request.Comments, request.MaitenanceRequestTypeId,request.PetStatus,request.PermissionToEnter,request.Images);
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("CompleteRequest")]
@@ -136,6 +138,7 @@ namespace ApartmentApps.API.Service.Controllers
         {
             MaintenanceService.StartRequest(CurrentUser, id, comments, images);
         }
+
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetMaitenanceRequestTypes")]
         public IEnumerable<LookupPairModel> GetMaitenanceRequestTypes()
