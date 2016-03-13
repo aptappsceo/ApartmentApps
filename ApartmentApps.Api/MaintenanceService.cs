@@ -28,7 +28,8 @@ namespace ApartmentApps.Api
                     UnitId = unitId,
                     MaitenanceRequestTypeId = requestTypeId,
                     StatusId = "Submitted",
-                    SubmissionDate = DateTime.UtcNow
+                    SubmissionDate = DateTime.UtcNow,
+                    
                 };
                 var localCtxUser = ctx.Users.Find(user.Id);
                 if (maitenanceRequest.UnitId == 0)

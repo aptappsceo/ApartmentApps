@@ -32,7 +32,17 @@ namespace ApartmentApps.Portal.Controllers
             if (endDate == null)
                 endDate = DateTime.UtcNow;
 
-            return View(new DashboardBindingModel {StartDate = startDate, EndDate = startDate, NumberEntered = WorkOrdersByRange(startDate, endDate, currentPropertyId).Count(p=>p.StatusId == "Submitted"), NumberOutstanding = WorkOrdersByRange(startDate, endDate, currentPropertyId).Count(p=>p.StatusId != "Completed"), NumberCompleted = WorkOrdersByRange(startDate, endDate, currentPropertyId).Count(p=>p.StatusId != "Complete"), Entered = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId == "Submitted"), Outstanding = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId != "Complete"), Completed = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId != "Complete"), WorkOrdersPerEmployee = WorkOrdersByRange(startDate, endDate, currentPropertyId).GroupBy(p=>p.User)});
+            return View(new DashboardBindingModel {
+                StartDate = startDate,
+                EndDate = endDate,
+                NumberEntered = WorkOrdersByRange(startDate, endDate, currentPropertyId).Count(p=>p.StatusId == "Submitted"),
+                NumberOutstanding = WorkOrdersByRange(startDate, endDate, currentPropertyId).Count(p=>p.StatusId != "Complete"),
+                NumberCompleted = WorkOrdersByRange(startDate, endDate, currentPropertyId).Count(p=>p.StatusId == "Complete"),
+                Entered = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId == "Submitted"),
+                Outstanding = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId != "Complete"),
+                Completed = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId == "Complete"),
+                WorkOrdersPerEmployee = WorkOrdersByRange(startDate, endDate, currentPropertyId).GroupBy(p=>p.User)
+            });
         }
 
         private IQueryable<MaitenanceRequest> WorkOrdersByRange(DateTime? startDate, DateTime? endDate, int? currentPropertyId)

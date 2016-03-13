@@ -41,7 +41,7 @@
             @if (User.IsInRole("Admin"))
             {
                 <li>
-                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse in">
                         <li class="@Html.IsSelected(controller: "Corporations")">
                             <a href="@Url.Action("Index", "Corporations")"><i class="fa fa-desktop"></i> <span class="nav-label">Corporations</span></a>

@@ -3,23 +3,34 @@
 
 @helper MaintenanceTable(IQueryable<MaitenanceRequest> entered)
 {
+    var items = entered.ToArray();
+
     <table class="table table-hover no-margins">
         <thead>
             <tr>
                 <th>Submission Date</th>
                 <th>Request Type</th>
                 <th>Resident Name</th>
-                <th></th>
+                @if (items.Any(p => p.CompletionDate != null))
+                {
+                    <th>Total Time Taken</th>
+                }
+
+                @*<th></th>*@
             </tr>
         </thead>
         <tbody>
-        @foreach (var item in entered)
+        @foreach (var item in entered.ToArray())
         {
             <tr>
-                <td><i class="fa fa-clock-o"></i> @item.SubmissionDate </td>
-                <td>@item.MaitenanceRequestTypeId</td>
-                <td>@item.User.UserName</td>
-                <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
+                <td><i class="fa fa-clock-o"></i> @item.SubmissionDate.ToShortDateString() </td>
+                <td>@(item.MaitenanceRequestType?.Name)</td>
+                <td>@item.User.FirstName @item.User.LastName</td>
+                @if (item.CompletionDate != null)
+                {
+                    <td>@item.TimeToComplete</td>
+                }
+                @*<td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>*@
             </tr>
         }
   
@@ -27,13 +38,22 @@
         </tbody>
     </table>
 }
-
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Dashboard</h2>
+        <ol class="breadcrumb">
+            <li class="active">
+                <strong>@Model.StartDate.Value.ToShortDateString() - @Model.EndDate.Value.ToShortDateString()</strong>
+            </li>
+        </ol>
+    </div>
+</div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
 
-                <h5>Outstanding Work Orders</h5>
+                <h5>New Work Orders</h5>
                 <div class="ibox-tools">
                     <span class="label label-success pull-right">@Model.NumberEntered</span>
                     <a class="collapse-link">
@@ -46,7 +66,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Outstanding Work Orders</h5>
@@ -62,7 +82,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Completed Work Orders</h5>

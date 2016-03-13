@@ -49,10 +49,10 @@ namespace ApartmentApps.Data
         public string ImageDirectoryId { get; set; }
 
         public DateTime SubmissionDate { get; set; }
-        public DateTime CompletionDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
 
         [NotMapped]
-        public TimeSpan TimeToComplete => CompletionDate.Subtract(SubmissionDate);
+        public TimeSpan? TimeToComplete => CompletionDate?.Subtract(SubmissionDate);
     }
 
     public class MaintenanceRequestCheckin
