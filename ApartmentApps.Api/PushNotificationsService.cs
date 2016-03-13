@@ -8,24 +8,21 @@ namespace ApartmentApps.Api
     public interface IPushNotifiationHandler
     {
         Task<bool> SendToUser(string username, string message);
-        void SendToRole(string role);
+        Task<bool> SendToRole(int propertyId, string role, string message);
 
 
+        Task<bool> Send( string message, string pns, string expression);
     }
 
     public class AzurePushNotificationHandler : IPushNotifiationHandler
     {
         public async Task<bool> SendToUser(string username, string message)
         {
-            var user = username;
-            string[] userTag = new string[1];
-            userTag[0] = "userid:" + username;
-            //userTag[1] = "from:" + user;
             var pns = "apns";
-            return await SendToTags(message, pns, userTag);
+            return await Send(message, pns, "userid:" + username);
         }
 
-        private static async Task<bool> SendToTags(string message, string pns, string[] userTag)
+        public async Task<bool> Send(string message, string pns, string expression)
         {
             Microsoft.Azure.NotificationHubs.NotificationOutcome outcome = null;
             //HttpStatusCode ret = HttpStatusCode.InternalServerError;
@@ -36,17 +33,17 @@ namespace ApartmentApps.Api
                     // Windows 8.1 / Windows Phone 8.1
                     var toast = @"<toast><visual><binding template=""ToastText01""><text id=""1"">" +
                                  message + "</text></binding></visual></toast>";
-                    outcome = await Notifications.Instance.Hub.SendWindowsNativeNotificationAsync(toast, userTag);
+                    outcome = await Notifications.Instance.Hub.SendWindowsNativeNotificationAsync(toast, expression);
                     break;
                 case "apns":
                     // iOS
                     var alert = "{\"aps\":{\"alert\":\"" +  message + "\"}}";
-                    outcome = await Notifications.Instance.Hub.SendAppleNativeNotificationAsync(alert, userTag);
+                    outcome = await Notifications.Instance.Hub.SendAppleNativeNotificationAsync(alert, expression);
                     break;
                 case "gcm":
                     // Android
                     var notif = "{ \"data\" : {\"message\":\""  + message + "\"}}";
-                    outcome = await Notifications.Instance.Hub.SendGcmNativeNotificationAsync(notif, userTag);
+                    outcome = await Notifications.Instance.Hub.SendGcmNativeNotificationAsync(notif, expression);
                     break;
             }
             if (outcome != null)
@@ -60,9 +57,12 @@ namespace ApartmentApps.Api
             return false;
         }
 
-        public void SendToRole(string role)
+    
+        public async Task<bool> SendToRole(int propertyId, string role, string message)
         {
-            throw new NotImplementedException();
+            var pns = "apns";
+            return await Send(message, pns, $"propertyid:{propertyId} && role:{role}");
+
         }
     }
 
@@ -90,7 +90,11 @@ namespace ApartmentApps.Api
 
         public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
         {
-            _pushHandler.SendToUser(request.UserId, $"Maintenance {maitenanceRequest.StatusId}");
+            if (request.User?.PropertyId != null)
+            {
+                _pushHandler.SendToRole(request.User.PropertyId.Value, request.UserId, $"Maintenance {maitenanceRequest.StatusId}");
+            }
+            
         }
     }
 }
