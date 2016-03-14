@@ -43,11 +43,11 @@ namespace ApartmentApps.Api
                 //    throw new Exception("Unit Id Required.");
 
 
-//                foreach (var image in images)
-//                {
-//                    var imageKey = $"{new Guid()}.{user.UserName}".ToLowerInvariant();
-//                    _blobStorageService.UploadPhoto(image,imageKey);
-//                }
+                foreach (var image in images)
+                {
+                    var imageKey = $"{Guid.NewGuid()}.{user.UserName.Replace('@','_').Replace('.', '_')}".ToLowerInvariant();
+                    _blobStorageService.UploadPhoto(image,imageKey);
+                }
 
                 ctx.MaitenanceRequests.Add(maitenanceRequest);
                 ctx.SaveChanges();
