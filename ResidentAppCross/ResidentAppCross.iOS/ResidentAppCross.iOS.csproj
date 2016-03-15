@@ -35,8 +35,8 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer: Josh Brewer (B5LK3679EV)</CodesignKey>
     <CodesignProvision>db63c980-d2d7-431c-a9bc-643b7b3eb1f1</CodesignProvision>
-    <CodesignResourceRules />
-    <CodesignExtraArgs />
+    <CodesignExtraArgs>
+    </CodesignExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -48,10 +48,10 @@
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
     <CodesignKey>iPhone Distribution</CodesignKey>
-    <CodesignProvision />
-    <CodesignEntitlements />
-    <CodesignResourceRules />
-    <CodesignExtraArgs />
+    <CodesignProvision>
+    </CodesignProvision>
+    <CodesignExtraArgs>
+    </CodesignExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -75,23 +75,17 @@
     <MtouchLink>None</MtouchLink>
     <MtouchI18n>
     </MtouchI18n>
-    <CodesignResourceRules />
-    <MtouchFastDev>False</MtouchFastDev>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
-    <MtouchUseLlvm>False</MtouchUseLlvm>
-    <MtouchUseThumb>False</MtouchUseThumb>
-    <MtouchUseSGen>False</MtouchUseSGen>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
-    <OptimizePNGs>True</OptimizePNGs>
-    <MtouchFloat32>False</MtouchFloat32>
-    <DeviceSpecificBuild>False</DeviceSpecificBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhone'">
     <CodesignKey>iPhone Distribution</CodesignKey>
-    <CodesignProvision />
-    <CodesignEntitlements />
-    <CodesignResourceRules />
-    <CodesignExtraArgs />
+    <CodesignProvision>
+    </CodesignProvision>
+    <CodesignExtraArgs>
+    </CodesignExtraArgs>
+    <OutputPath>bin\AppStore</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AlertView">
@@ -140,17 +134,17 @@
     <Reference Include="MvvmCross.Plugins.PictureChooser.iOS, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\MvvmCross.Plugin.PictureChooser.4.0.0\lib\Xamarin.iOS10\MvvmCross.Plugins.PictureChooser.iOS.dll</HintPath>
     </Reference>
-    <Reference Include="ZXing.Net.Mobile.Core, Version=2.0.4.19, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ZXing.Net.Mobile.Core, Version=2.0.4.19, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\ZXing.Net.Mobile.2.0.4.19\lib\Xamarin.iOS10\ZXing.Net.Mobile.Core.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="zxing.portable, Version=2.0.4.19, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="zxing.portable, Version=2.0.4.19, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\ZXing.Net.Mobile.2.0.4.19\lib\Xamarin.iOS10\zxing.portable.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="ZXingNetMobile, Version=2.0.4.19, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ZXingNetMobile, Version=2.0.4.19, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\ZXing.Net.Mobile.2.0.4.19\lib\Xamarin.iOS10\ZXingNetMobile.dll</HintPath>
-      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>bin\iPhone\Release\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -311,8 +305,8 @@
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="azure-messaging">
-      <Visible>False</Visible>
       <Version>1.1.5.6</Version>
+      <Visible>False</Visible>
     </XamarinComponentReference>
     <XamarinComponentReference Include="btprogresshud">
       <Version>1.20</Version>
@@ -327,8 +321,8 @@
       <Visible>False</Visible>
     </XamarinComponentReference>
     <XamarinComponentReference Include="zxing.net.mobile">
-      <Visible>False</Visible>
       <Version>2.0.4.17</Version>
+      <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
