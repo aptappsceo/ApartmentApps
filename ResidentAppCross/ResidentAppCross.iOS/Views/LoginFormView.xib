@@ -108,10 +108,10 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UAH-zX-nAt">
                     <rect key="frame" x="0.0" y="410" width="600" height="166"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lFG-DA-uiJ" userLabel="SignUpButton">
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lFG-DA-uiJ" userLabel="SignUpButton">
                             <rect key="frame" x="157" y="65" width="286" height="36"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                            <state key="normal" title="Sign Up For Appartment Apps">
+                            <state key="normal" title="Sign Up For Apartment Apps">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>

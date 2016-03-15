@@ -382,7 +382,7 @@
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="T1j-yI-ePe" userLabel="PhotosContainer">
                                                     <rect key="frame" x="0.0" y="80" width="560" height="200"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="200" id="T07-cs-ue5"/>
+                                                        <constraint firstAttribute="height" priority="980" constant="200" id="T07-cs-ue5"/>
                                                     </constraints>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="P1f-Ej-XIx">
                                                         <size key="itemSize" width="150" height="150"/>

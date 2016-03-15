@@ -1,11 +1,13 @@
 // WARNING
 //
-// This file has been generated automatically by Xamarin Studio to store outlets and
-// actions made in the UI designer. If it is removed, they will be lost.
-// Manual changes to this file may not be handled correctly.
+// This file has been generated automatically by Xamarin Studio from the outlets and
+// actions declared in your storyboard file.
+// Manual changes to this file will not be maintained.
 //
 using Foundation;
+using System;
 using System.CodeDom.Compiler;
+using UIKit;
 
 namespace ResidentAppCross.iOS.Views
 {
@@ -35,37 +37,32 @@ namespace ResidentAppCross.iOS.Views
 
 		[Action ("PetTypeChanged:")]
 		partial void PetTypeChanged (UIKit.UISegmentedControl sender);
-		
+
 		void ReleaseDesignerOutlets ()
 		{
 			if (AddPhotoButton != null) {
 				AddPhotoButton.Dispose ();
 				AddPhotoButton = null;
 			}
-
 			if (CommentsTextView != null) {
 				CommentsTextView.Dispose ();
 				CommentsTextView = null;
 			}
-
+			if (EntrancePermissionSwitch != null) {
+				EntrancePermissionSwitch.Dispose ();
+				EntrancePermissionSwitch = null;
+			}
 			if (PetTypeSelection != null) {
 				PetTypeSelection.Dispose ();
 				PetTypeSelection = null;
 			}
-
 			if (PhotoContainer != null) {
 				PhotoContainer.Dispose ();
 				PhotoContainer = null;
 			}
-
 			if (SelectRequestTypeButton != null) {
 				SelectRequestTypeButton.Dispose ();
 				SelectRequestTypeButton = null;
-			}
-
-			if (EntrancePermissionSwitch != null) {
-				EntrancePermissionSwitch.Dispose ();
-				EntrancePermissionSwitch = null;
 			}
 		}
 	}

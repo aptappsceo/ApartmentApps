@@ -17,8 +17,7 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
 
         private void Initialize()
         {
-            //          this.ImageView = new UIImageView (this.ContentView.Bounds);
-            this.ImageView = new UIImageView(UIImage.FromBundle("HouseIcon"));
+            this.ImageView = new UIImageView (this.ContentView.Bounds);
             this.ContentView.AddSubview(this.ImageView);
         }
     }

@@ -88,19 +88,14 @@ namespace ResidentAppCross.ViewModels.Screens
 
         public ICommand UpdateMaintenanceRequest => this.TaskCommand(async context =>
         {
-            try
-            {
+          
                 Request = await _appService.Maitenance.GetAsync(MaintenanceRequestId);
                 Photos.RawImages.AddRange(Request.Photos.Select(url => new ImageBundleItemViewModel()
                 {
                     Uri = new Uri(url)
                 }));
                 Debug.WriteLine("Images loaded");
-            }
-            catch (Exception ex)
-            {
-                //TODO: Fix it here.
-            }
+          
         }).OnStart("Loading Request...").OnFail(ex=> { Close(this); });
 
         public ICommand ScanBarCodeCommand

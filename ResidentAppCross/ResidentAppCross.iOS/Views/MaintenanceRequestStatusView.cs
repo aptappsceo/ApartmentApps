@@ -66,7 +66,7 @@ namespace ResidentAppCross.iOS
             SelectRepairDateButton.TitleLabel.Text = request.ScheduleDate?.ToString("g") ?? "Select Date";
             SelectRepairDateButton.SizeToFit();
 
-            PhotoContainer.Hidden = false;
+            PhotoContainer.Hidden = true;
             PhotoTitleLabel.Text = "No Photos Attached.";
 
             var lastCheckin = request.Checkins.LastOrDefault();
@@ -115,15 +115,18 @@ namespace ResidentAppCross.iOS
 
         private void RawImages_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            UpdatePhotos();
+			InvokeOnMainThread (UpdatePhotos);
+
         }
 
         public void UpdatePhotos()
         {
+			
             var hasPhotos = ViewModel.Photos.RawImages.Any();
             PhotoContainer.Hidden = !hasPhotos;
             PhotoTitleLabel.Text = hasPhotos ? "Photos" : "No Photos Attached.";
             PhotoContainer.ReloadData();
+			PhotoContainer.LayoutSubviews ();
         }
 
         private void PushScannerViewController(Action onScanned)

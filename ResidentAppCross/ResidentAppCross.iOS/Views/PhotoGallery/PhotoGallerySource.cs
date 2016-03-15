@@ -34,7 +34,14 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
             var photoCell = (PhotoGalleryCells)collectionView.DequeueReusableCell((NSString)PhotoGalleryCells.CellIdentifier, indexPath);
             var photo = Photos.RawImages[indexPath.Row];
 
-            if (photo.Data != null)
+			photoCell.ImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
+
+			photoCell.AutosizesSubviews = true;
+			photoCell.ImageView.ClipsToBounds = true;
+			photoCell.ImageView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+			photoCell.LayoutIfNeeded ();
+			photoCell.LayoutSubviews ();
+			if (photo.Data != null)
             {
                 photoCell.ImageView.Image = photo.Data.ToImage();
             }
@@ -42,7 +49,12 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
             {
                 photoCell.ImageView.SetImage(
                     url: new NSUrl(photo.Uri.ToString()),
-                    placeholder: UIImage.FromBundle("HouseIcon")
+					placeholder: UIImage.FromBundle("HouseIcon"),
+					completedBlock: (image, error, type, url) =>{
+						photoCell.LayoutIfNeeded ();
+						photoCell.LayoutSubviews ();
+					}
+
                 );
             }
 
