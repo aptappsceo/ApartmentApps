@@ -6,8 +6,18 @@ using System.Linq;
 
 namespace ApartmentApps.Data
 {
-    public partial class Image   
+    public partial class ImageReference   
     {
+
+        [Key]
+        public int Id { get; set; }
+
+        public string Url { get; set; }
+
+        public string ThumbnailUrl { get; set; }
+
+        public Guid GroupId { get; set; }
+
     }
 
     public partial class MaitenanceRequest
@@ -20,6 +30,8 @@ namespace ApartmentApps.Data
         public int MaitenanceRequestTypeId { get; set; }
 
         public bool PermissionToEnter { get; set; }
+
+        public Guid GroupId { get; set; }
 
         // 0 = false, 1= yes, 2 = yes contained
         public int PetStatus { get; set; }

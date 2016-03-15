@@ -169,7 +169,7 @@ namespace ResidentAppCross.ViewModels
                     })
                         .ToList();
 
-                    await _service.Maitenance.SubmitRequestAsync(new MaitenanceRequestModel()
+                    var maitenanceRequestModel = new MaitenanceRequestModel()
                     {
                         PermissionToEnter = EntrancePermission,
                         PetStatus = SelectedPetStatus,
@@ -178,7 +178,9 @@ namespace ResidentAppCross.ViewModels
                         Images =
                             images
                         
-                    });
+                    };
+
+                    await _service.Maitenance.SubmitRequestAsync(maitenanceRequestModel);
                 }).OnStart("Sending Request...")
                 .OnComplete("Request Sent", () => Close(this));
             }

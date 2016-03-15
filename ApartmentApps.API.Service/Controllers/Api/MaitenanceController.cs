@@ -43,6 +43,7 @@ namespace ApartmentApps.API.Service.Controllers
 
 
         public IMaintenanceService MaintenanceService { get; set; }
+        public IBlobStorageService BlobStorageService { get; set; }
         public ApplicationDbContext Context { get; set; }
 
 
@@ -56,6 +57,7 @@ namespace ApartmentApps.API.Service.Controllers
             public string BuildingAddress { get; set; }
             public string BuildingState { get; set; }
             public string BuildingCity { get; set; }
+            public IEnumerable<string> Photos { get; set; }
             public string BuildingPostalCode { get; set; }
             public string UnitName { get; set; }
             public string Status { get; set; }
@@ -86,8 +88,9 @@ namespace ApartmentApps.API.Service.Controllers
 
                 var result = await Context.MaitenanceRequests
                     .FirstOrDefaultAsync(p=>p.Id == id);
+                var photos = Context.ImageReferences.Where(r => r.GroupId == result.GroupId).ToList();
 
-                return new MaintenanceBindingModel
+                var response = new MaintenanceBindingModel
                 {
                     UserName = result.User.UserName,
                     Status = result.StatusId,
@@ -101,8 +104,10 @@ namespace ApartmentApps.API.Service.Controllers
                     PetStatus = result.PetStatus,
                     Checkins = result.Checkins.Select(x=>new CheckinBindingModel {StatusId = x.StatusId, Date = x.Date, Comments = x.Comments, WorkerName = x.Worker.UserName}),
                     ScheduleDate = result.ScheduleDate,
-                    Message = result.Message, BuildingName = result.Unit?.Building?.Name, UnitName = result.Unit?.Name
+                    Message = result.Message, BuildingName = result.Unit?.Building?.Name, UnitName = result.Unit?.Name,
+                    Photos = photos.Select(key=> BlobStorageService.GetPhotoUrl(key.Url))
                 };
+                return response;
             }
            
         }
@@ -168,9 +173,10 @@ namespace ApartmentApps.API.Service.Controllers
         {
         }
 
-        public MaitenanceController(IMaintenanceService maintenanceService) 
+        public MaitenanceController(IMaintenanceService maintenanceService, IBlobStorageService blobStorageService) 
         {
             MaintenanceService = maintenanceService;
+            BlobStorageService = blobStorageService;
         }
     }
 

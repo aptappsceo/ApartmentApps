@@ -31,6 +31,11 @@ namespace ApartmentApps.Client
             get; 
         }
         
+        ICourtesy Courtesy
+        {
+            get; 
+        }
+        
         IMaitenance Maitenance
         {
             get; 

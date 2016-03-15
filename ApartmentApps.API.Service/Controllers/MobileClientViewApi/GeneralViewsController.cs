@@ -33,7 +33,6 @@ namespace ApartmentApps.API.Service.Controllers.MobileClientViewApi
         [AllowAnonymous]
         public ActionResult Index()
         {
-           
             return View(db.MaitenanceRequests.Include(p=>p.User).Include(p=>p.Unit).Include(p=>p.MaitenanceRequestType).Where(p=>p.User.PropertyId == Property.Id));
         }
     }

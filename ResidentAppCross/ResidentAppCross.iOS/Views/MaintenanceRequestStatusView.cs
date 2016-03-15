@@ -66,7 +66,7 @@ namespace ResidentAppCross.iOS
             SelectRepairDateButton.TitleLabel.Text = request.ScheduleDate?.ToString("g") ?? "Select Date";
             SelectRepairDateButton.SizeToFit();
 
-            PhotoContainer.Hidden = true;
+            PhotoContainer.Hidden = false;
             PhotoTitleLabel.Text = "No Photos Attached.";
 
             var lastCheckin = request.Checkins.LastOrDefault();
@@ -108,7 +108,22 @@ namespace ResidentAppCross.iOS
                 FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.StartOrResumeCommand.Execute(null));
       
                 FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.FinishCommmand.Execute(null));
+
+                ViewModel.Photos.RawImages.CollectionChanged += RawImages_CollectionChanged;
             });
+        }
+
+        private void RawImages_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            UpdatePhotos();
+        }
+
+        public void UpdatePhotos()
+        {
+            var hasPhotos = ViewModel.Photos.RawImages.Any();
+            PhotoContainer.Hidden = !hasPhotos;
+            PhotoTitleLabel.Text = hasPhotos ? "Photos" : "No Photos Attached.";
+            PhotoContainer.ReloadData();
         }
 
         private void PushScannerViewController(Action onScanned)
@@ -180,7 +195,13 @@ namespace ResidentAppCross.iOS
     	                this.OnRequestChanged(ViewModel.Request);
     	            }
     	        };
-    		}
+
+                PhotoContainer.RegisterClassForCell(typeof(PhotoGalleryCells), (NSString)PhotoGalleryCells.CellIdentifier);
+                PhotoContainer.Source = new PhotoGallerySource(ViewModel.Photos);
+                UpdatePhotos();
+
+
+        }
 
 	    public override void DidReceiveMemoryWarning ()
   		{

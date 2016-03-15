@@ -72,7 +72,7 @@ namespace ResidentAppCross.iOS
                     {
                         ForgotPasswordButton.SetTitle("Selected Endpoint: Sini PC", UIControlState.Selected | UIControlState.Normal | UIControlState.Focused);
 
-                        Mvx.Resolve<IApartmentAppsAPIService>().BaseUri = new Uri("http://82.151.208.56:54683/");
+                        Mvx.Resolve<IApartmentAppsAPIService>().BaseUri = new Uri("http://82.151.208.56.xip.io:54683");
                     }));
 
 

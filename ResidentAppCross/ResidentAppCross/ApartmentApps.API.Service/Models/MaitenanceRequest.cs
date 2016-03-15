@@ -23,6 +23,28 @@ namespace ApartmentApps.Client.Models
             set { this._checkins = value; }
         }
         
+        private DateTimeOffset? _completionDate;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public DateTimeOffset? CompletionDate
+        {
+            get { return this._completionDate; }
+            set { this._completionDate = value; }
+        }
+        
+        private string _groupId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string GroupId
+        {
+            get { return this._groupId; }
+            set { this._groupId = value; }
+        }
+        
         private int? _id;
         
         /// <summary>
@@ -144,6 +166,28 @@ namespace ApartmentApps.Client.Models
             set { this._statusId = value; }
         }
         
+        private DateTimeOffset? _submissionDate;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public DateTimeOffset? SubmissionDate
+        {
+            get { return this._submissionDate; }
+            set { this._submissionDate = value; }
+        }
+        
+        private string _timeToComplete;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string TimeToComplete
+        {
+            get { return this._timeToComplete; }
+            set { this._timeToComplete = value; }
+        }
+        
         private Unit _unit;
         
         /// <summary>
@@ -213,6 +257,16 @@ namespace ApartmentApps.Client.Models
                         this.Checkins.Add(maintenanceRequestCheckin);
                     }
                 }
+                JToken completionDateValue = inputObject["CompletionDate"];
+                if (completionDateValue != null && completionDateValue.Type != JTokenType.Null)
+                {
+                    this.CompletionDate = ((DateTimeOffset)completionDateValue);
+                }
+                JToken groupIdValue = inputObject["GroupId"];
+                if (groupIdValue != null && groupIdValue.Type != JTokenType.Null)
+                {
+                    this.GroupId = ((string)groupIdValue);
+                }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
@@ -273,6 +327,16 @@ namespace ApartmentApps.Client.Models
                 if (statusIdValue != null && statusIdValue.Type != JTokenType.Null)
                 {
                     this.StatusId = ((string)statusIdValue);
+                }
+                JToken submissionDateValue = inputObject["SubmissionDate"];
+                if (submissionDateValue != null && submissionDateValue.Type != JTokenType.Null)
+                {
+                    this.SubmissionDate = ((DateTimeOffset)submissionDateValue);
+                }
+                JToken timeToCompleteValue = inputObject["TimeToComplete"];
+                if (timeToCompleteValue != null && timeToCompleteValue.Type != JTokenType.Null)
+                {
+                    this.TimeToComplete = ((string)timeToCompleteValue);
                 }
                 JToken unitValue = inputObject["Unit"];
                 if (unitValue != null && unitValue.Type != JTokenType.Null)

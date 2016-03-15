@@ -110,6 +110,17 @@ namespace ApartmentApps.Client.Models
             set { this._petStatus = value; }
         }
         
+        private IList<string> _photos;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Photos
+        {
+            get { return this._photos; }
+            set { this._photos = value; }
+        }
+        
         private DateTimeOffset? _scheduleDate;
         
         /// <summary>
@@ -182,6 +193,7 @@ namespace ApartmentApps.Client.Models
         public MaintenanceBindingModel()
         {
             this.Checkins = new LazyList<string>();
+            this.Photos = new LazyList<string>();
         }
         
         /// <summary>
@@ -238,6 +250,14 @@ namespace ApartmentApps.Client.Models
                 if (petStatusValue != null && petStatusValue.Type != JTokenType.Null)
                 {
                     this.PetStatus = ((int)petStatusValue);
+                }
+                JToken photosSequence = ((JToken)inputObject["Photos"]);
+                if (photosSequence != null && photosSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken photosValue in ((JArray)photosSequence))
+                    {
+                        this.Photos.Add(((string)photosValue));
+                    }
                 }
                 JToken scheduleDateValue = inputObject["ScheduleDate"];
                 if (scheduleDateValue != null && scheduleDateValue.Type != JTokenType.Null)

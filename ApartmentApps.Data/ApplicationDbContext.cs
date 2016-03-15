@@ -69,6 +69,7 @@ namespace ApartmentApps.Data
         public virtual IDbSet<MaintenanceRequestStatus> MaintenanceRequestStatuses { get; set; }
         public virtual IDbSet<Corporation> Corporations { get; set; }
         public virtual IDbSet<Property> Properties { get; set; }
+        public virtual IDbSet<ImageReference> ImageReferences { get; set; }
         public virtual DbSet<Building> Buildings { get; set; }
         public virtual IDbSet<Unit> Units { get; set; }
         public virtual IDbSet<Tenant> Tenants { get; set; }

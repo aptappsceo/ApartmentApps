@@ -9,6 +9,7 @@ using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
 using ResidentAppCross.Commands;
+using ResidentAppCross.Extensions;
 using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels.Screens
@@ -80,16 +81,21 @@ namespace ResidentAppCross.ViewModels.Screens
             set { SetProperty(ref _newRepairDate, value); }
         }
 
-        public ImageBundleViewModel ImagesToUpload { get; set; } = new ImageBundleViewModel() { Title = "Photos" };
+        public ImageBundleViewModel Photos { get; set; } = new ImageBundleViewModel() { Title = "Photos" };
+
         public ICommand ApproveCommand => StubCommands.NoActionSpecifiedCommand(this);
         public ICommand DeclineCommand => StubCommands.NoActionSpecifiedCommand(this);
-        public ICommand AddPhotoCommand => new MvxCommand(AddPhoto);
 
         public ICommand UpdateMaintenanceRequest => this.TaskCommand(async context =>
         {
             try
             {
                 Request = await _appService.Maitenance.GetAsync(MaintenanceRequestId);
+                Photos.RawImages.AddRange(Request.Photos.Select(url => new ImageBundleItemViewModel()
+                {
+                    Uri = new Uri(url)
+                }));
+                Debug.WriteLine("Images loaded");
             }
             catch (Exception ex)
             {
@@ -216,7 +222,7 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             _imageService.SelectImage(s =>
             {
-                ImagesToUpload.RawImages.Add(new ImageBundleItemViewModel()
+                Photos.RawImages.Add(new ImageBundleItemViewModel()
                 {
                     Data = s
                 });

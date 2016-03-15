@@ -29,7 +29,7 @@ namespace ApartmentApps.Api
                     MaitenanceRequestTypeId = requestTypeId,
                     StatusId = "Submitted",
                     SubmissionDate = DateTime.UtcNow,
-                    
+                    GroupId = Guid.NewGuid()
                 };
                 var localCtxUser = ctx.Users.Find(user.Id);
                 if (maitenanceRequest.UnitId == 0)
@@ -43,13 +43,22 @@ namespace ApartmentApps.Api
                 //    throw new Exception("Unit Id Required.");
 
 
-                foreach (var image in images)
-                {
-                    var imageKey = $"{Guid.NewGuid()}.{user.UserName.Replace('@','_').Replace('.', '_')}".ToLowerInvariant();
-                    _blobStorageService.UploadPhoto(image,imageKey);
-                }
+           
 
                 ctx.MaitenanceRequests.Add(maitenanceRequest);
+
+                foreach (var image in images)
+                {
+                    var imageKey = $"{Guid.NewGuid()}.{user.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
+                    var filename = _blobStorageService.UploadPhoto(image, imageKey);
+                    ctx.ImageReferences.Add(new ImageReference()
+                    {
+                        GroupId = maitenanceRequest.GroupId,
+                        Url = filename,
+                        ThumbnailUrl = filename
+                    });
+                }
+
                 ctx.SaveChanges();
                 this.InvokeEvent<IMaintenanceSubmissionEvent>(ctx, localCtxUser, _ => _.MaintenanceRequestSubmited(maitenanceRequest));
                 return maitenanceRequest.Id;

@@ -15,8 +15,8 @@ namespace ApartmentApps.Api
 {
     public interface IBlobStorageService
     {
-        void UploadPhoto(byte[] data, string photoKey);
-         
+        string UploadPhoto(byte[] data, string photoKey);
+        string GetPhotoUrl(string filename);
     }
 
     public class BlobStorageService : IBlobStorageService
@@ -42,7 +42,7 @@ namespace ApartmentApps.Api
         //            //Create Table if it does not exist
         //            CloudTable table = _blobClient.GetTableReference("ProfileEntityTable");
         //        table.CreateIfNotExists();
-        public void UploadPhoto(byte[] data, string photoKey)
+        public string UploadPhoto(byte[] data, string photoKey)
         {
 
             var header = new byte[4];
@@ -65,6 +65,15 @@ namespace ApartmentApps.Api
             var blob = _photoBlobContainer.GetBlockBlobReference(photoFileName);
 
             blob.UploadFromByteArray(data,0,data.Length);
+
+            return photoFileName;
+
+        }
+
+        public string GetPhotoUrl(string filename)
+        {
+            var blob = _photoBlobContainer.GetBlobReference(filename);
+            return blob.Uri.ToString();
         }
 
         static bool IsJpegHeader(byte[] fourByteHeader)

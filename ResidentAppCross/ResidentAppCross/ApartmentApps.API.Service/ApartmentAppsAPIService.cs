@@ -40,6 +40,13 @@ namespace ApartmentApps.Client
             get { return this._account; }
         }
         
+        private ICourtesy _courtesy;
+        
+        public virtual ICourtesy Courtesy
+        {
+            get { return this._courtesy; }
+        }
+        
         private IMaitenance _maitenance;
         
         public virtual IMaitenance Maitenance
@@ -75,11 +82,12 @@ namespace ApartmentApps.Client
             : base()
         {
             this._account = new Account(this);
+            this._courtesy = new Courtesy(this);
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
             this._values = new Values(this);
-            this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
+            this._baseUri = new Uri("http://localhost:54683");
         }
         
         /// <summary>
@@ -93,11 +101,12 @@ namespace ApartmentApps.Client
             : base(handlers)
         {
             this._account = new Account(this);
+            this._courtesy = new Courtesy(this);
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
             this._values = new Values(this);
-            this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
+            this._baseUri = new Uri("http://localhost:54683");
         }
         
         /// <summary>
@@ -114,11 +123,12 @@ namespace ApartmentApps.Client
             : base(rootHandler, handlers)
         {
             this._account = new Account(this);
+            this._courtesy = new Courtesy(this);
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
             this._values = new Values(this);
-            this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
+            this._baseUri = new Uri("http://localhost:54683");
         }
         
         /// <summary>

@@ -5,6 +5,7 @@ using Foundation;
 using ObjCRuntime;
 using ResidentAppCross.iOS.Extensions;
 using ResidentAppCross.ViewModels;
+using SDWebImage;
 using UIKit;
 
 namespace ResidentAppCross.iOS.Views.PhotoGallery
@@ -31,9 +32,22 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
         public override UICollectionViewCell GetCell(UICollectionView collectionView, NSIndexPath indexPath)
         {
             var photoCell = (PhotoGalleryCells)collectionView.DequeueReusableCell((NSString)PhotoGalleryCells.CellIdentifier, indexPath);
-            var photo = Photos.RawImages[indexPath.Row].Data;
-            photoCell.ImageView.Image = photo.ToImage();
+            var photo = Photos.RawImages[indexPath.Row];
+
+            if (photo.Data != null)
+            {
+                photoCell.ImageView.Image = photo.Data.ToImage();
+            }
+            else
+            {
+                photoCell.ImageView.SetImage(
+                    url: new NSUrl(photo.Uri.ToString()),
+                    placeholder: UIImage.FromBundle("HouseIcon")
+                );
+            }
+
             return photoCell;
+
         }
 
 

@@ -4,6 +4,7 @@ using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ServiceClient;
@@ -110,7 +111,7 @@ namespace ResidentAppCross
         {
             ShowViewModel<MaintenanceRequestIndexViewModel>(vm =>
             {
-                vm.Url = "http://apartmentappsapiservice.azurewebsites.net/generalviews/index";
+                vm.Url = Mvx.Resolve<IApartmentAppsAPIService>().BaseUri+"/generalviews/index";
             });
         });
 

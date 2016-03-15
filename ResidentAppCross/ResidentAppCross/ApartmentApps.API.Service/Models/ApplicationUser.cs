@@ -78,6 +78,17 @@ namespace ApartmentApps.Client.Models
             set { this._emailConfirmed = value; }
         }
         
+        private string _firstName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string FirstName
+        {
+            get { return this._firstName; }
+            set { this._firstName = value; }
+        }
+        
         private string _id;
         
         /// <summary>
@@ -87,6 +98,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._id; }
             set { this._id = value; }
+        }
+        
+        private string _lastName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string LastName
+        {
+            get { return this._lastName; }
+            set { this._lastName = value; }
         }
         
         private bool? _lockoutEnabled;
@@ -296,10 +318,20 @@ namespace ApartmentApps.Client.Models
                 {
                     this.EmailConfirmed = ((bool)emailConfirmedValue);
                 }
+                JToken firstNameValue = inputObject["FirstName"];
+                if (firstNameValue != null && firstNameValue.Type != JTokenType.Null)
+                {
+                    this.FirstName = ((string)firstNameValue);
+                }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((string)idValue);
+                }
+                JToken lastNameValue = inputObject["LastName"];
+                if (lastNameValue != null && lastNameValue.Type != JTokenType.Null)
+                {
+                    this.LastName = ((string)lastNameValue);
                 }
                 JToken lockoutEnabledValue = inputObject["LockoutEnabled"];
                 if (lockoutEnabledValue != null && lockoutEnabledValue.Type != JTokenType.Null)
