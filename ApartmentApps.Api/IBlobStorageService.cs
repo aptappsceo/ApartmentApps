@@ -45,12 +45,8 @@ namespace ApartmentApps.Api
         public void UploadPhoto(byte[] data, string photoKey)
         {
 
-            MemoryStream ms = new MemoryStream(data);
-            Image returnImage = Image.FromStream(ms);
-
-            if(returnImage == null) throw new InvalidCastException("ByteArray is not a valid image");
-
             var header = new byte[4];
+            Array.Copy(data,header,4);
             string photoFileName;
 
             if (IsJpegHeader(header))

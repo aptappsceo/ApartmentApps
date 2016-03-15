@@ -1,8 +1,10 @@
 ﻿
 using System;
+using ApartmentApps.Client;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
+using MvvmCross.Platform;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using UIKit;
@@ -46,9 +48,36 @@ namespace ResidentAppCross.iOS
             b.Bind(LoginTextField).TwoWay().For(v => v.Text).To(vm => vm.Username);
             b.Bind(PasswordTextField).TwoWay().For(v => v.Text).To(vm => vm.Password);
             b.Bind(LoginButton).To(vm => vm.LoginCommand);
-            b.Bind(ForgotPasswordButton).To(vm => vm.RemindPasswordCommand);
-            b.Bind(SignUpButton).To(vm => vm.SignUpCommand);
+            //b.Bind(ForgotPasswordButton).To(vm => vm.RemindPasswordCommand);
+            //b.Bind(SignUpButton).To(vm => vm.SignUpCommand);
             b.Apply();
+
+
+            ForgotPasswordButton.SetTitle("Selected Endpoint: Azure",UIControlState.Selected | UIControlState.Normal | UIControlState.Focused);
+
+            ForgotPasswordButton.TouchUpInside += (sender, args) =>
+            {
+                var controller = new UIAlertController();
+                controller.Title = "Select Endpoint";
+                controller.AddAction(UIAlertAction.Create("Default (Azure)", UIAlertActionStyle.Default, x =>
+                {
+                    ForgotPasswordButton.SetTitle("Selected Endpoint: Azure", UIControlState.Selected | UIControlState.Normal | UIControlState.Focused);
+
+                    Mvx.Resolve<IApartmentAppsAPIService>().BaseUri =
+                        new Uri("http://apartmentappsapiservice.azurewebsites.net");
+                }));
+
+                controller.AddAction(UIAlertAction.Create("82.151.208.56 (Sini PC)", UIAlertActionStyle.Default,
+                    x =>
+                    {
+                        ForgotPasswordButton.SetTitle("Selected Endpoint: Sini PC", UIControlState.Selected | UIControlState.Normal | UIControlState.Focused);
+
+                        Mvx.Resolve<IApartmentAppsAPIService>().BaseUri = new Uri("http://82.151.208.56:54683/");
+                    }));
+
+
+                this.PresentViewController(controller, true, () => { });
+            };
 
             LoginTextField.ShouldReturn += (textField) =>
             {

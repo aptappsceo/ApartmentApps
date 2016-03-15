@@ -118,7 +118,8 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("SubmitRequest")]
         public void SubmitRequest(MaitenanceRequestModel request)
         {
-            MaintenanceService.SubmitRequest(CurrentUser, request.Comments, request.MaitenanceRequestTypeId,request.PetStatus,request.PermissionToEnter,request.Images);
+            var images = request.Images.Select(Convert.FromBase64String).ToList();
+            MaintenanceService.SubmitRequest(CurrentUser, request.Comments, request.MaitenanceRequestTypeId,request.PetStatus,request.PermissionToEnter, images);
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("CompleteRequest")]

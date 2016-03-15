@@ -6,6 +6,10 @@ using System.Linq;
 
 namespace ApartmentApps.Data
 {
+    public partial class Image   
+    {
+    }
+
     public partial class MaitenanceRequest
     {
         [Key]

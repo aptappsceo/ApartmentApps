@@ -163,6 +163,12 @@ namespace ResidentAppCross.ViewModels
             {
                 return this.TaskCommand(async context =>
                 {
+                    var images = ImagesToUpload.RawImages.Select(p =>
+                    {
+                        return Convert.ToBase64String(p.Data);
+                    })
+                        .ToList();
+
                     await _service.Maitenance.SubmitRequestAsync(new MaitenanceRequestModel()
                     {
                         PermissionToEnter = EntrancePermission,
@@ -170,8 +176,8 @@ namespace ResidentAppCross.ViewModels
                         Comments = Comments,
                         MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
                         Images =
-                            ImagesToUpload.RawImages.Select(p => Encoding.UTF8.GetString(p.Data, 0, p.Data.Length))
-                                .ToList()
+                            images
+                        
                     });
                 }).OnStart("Sending Request...")
                 .OnComplete("Request Sent", () => Close(this));
