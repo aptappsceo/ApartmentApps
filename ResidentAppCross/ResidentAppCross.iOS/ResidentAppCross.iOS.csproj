@@ -143,7 +143,7 @@
       <HintPath>..\..\packages\ZXing.Net.Mobile.2.0.4.19\lib\Xamarin.iOS10\ZXingNetMobile.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>bin\iPhone\Release\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>bin\iPhone\Debug\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
