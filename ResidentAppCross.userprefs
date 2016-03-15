@@ -1,18 +1,18 @@
 ﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../../Library/Frameworks/Xamarin.iOS.framework/Versions/9.4.1.25/lib/mono/2.1/Xamarin.iOS.Common.targets">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Bootstrap/MessengerPluginBootstrap.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Setup.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Values.cs" Line="409" Column="41" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Values.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Account.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Maitenance.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross/ServiceClient/ILoginManager.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenancePauseFormView.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenanceStartFormView.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Notifiations.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/AppDelegate.cs" Line="1" Column="1" />
-      <File FileName="../../../../../Library/Frameworks/Xamarin.iOS.framework/Versions/9.4.1.25/lib/mono/2.1/Xamarin.iOS.Common.targets" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/AppDelegate.cs" Line="125" Column="34" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
