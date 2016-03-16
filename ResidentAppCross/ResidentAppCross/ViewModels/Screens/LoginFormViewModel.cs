@@ -6,6 +6,7 @@ using ResidentAppCross.Commands;
 using ResidentAppCross.Events;
 using ResidentAppCross.ServiceClient;
 using ResidentAppCross.ViewModels;
+using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross
 {
@@ -70,7 +71,7 @@ namespace ResidentAppCross
             {
                 return new MvxCommand(() =>
                 {
-                    ShowViewModel<FormViewModel>();
+                    ShowViewModel<CheckingFormViewModel>();
                 });
             }
         }

@@ -353,6 +353,7 @@
     <Compile Include="Setup.cs" />
     <Compile Include="Views\AppTheme.cs" />
     <Compile Include="Views\Attributes\ViewsAttributes.cs" />
+    <Compile Include="Views\CheckingFormView.cs" />
     <Compile Include="Views\ExampleSectionView.cs" />
     <Compile Include="Views\ExampleSectionView.designer.cs">
       <DependentUpon>ExampleSectionView.cs</DependentUpon>
