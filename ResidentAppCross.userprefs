@@ -1,6 +1,6 @@
 ﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/Views/PhotoGallery/PhotoGallerySource.cs">
     <Files>
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Bootstrap/MessengerPluginBootstrap.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Setup.cs" Line="1" Column="1" />
@@ -11,8 +11,10 @@
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenancePauseFormView.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenanceStartFormView.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Notifiations.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/AppDelegate.cs" Line="125" Column="34" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/AppDelegate.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Entitlements.plist" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/PhotoGallery/PhotoGallerySource.cs" Line="14" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
