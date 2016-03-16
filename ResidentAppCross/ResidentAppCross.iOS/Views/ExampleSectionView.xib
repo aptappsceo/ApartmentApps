@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Details &amp; Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Erm-8U-sOV" userLabel="HeaderLabel">
-                    <rect key="frame" x="0.0" y="0.0" width="278" height="80"/>
+                    <rect key="frame" x="8" y="8" width="278" height="80"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="500" constant="80" id="7c9-83-tJx"/>
                     </constraints>
@@ -20,7 +21,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="528-Rt-bKt" userLabel="TextViewContainer">
-                    <rect key="frame" x="0.0" y="80" width="278" height="283"/>
+                    <rect key="frame" x="8" y="88" width="278" height="283"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9Ut-Bc-383" userLabel="TextView">
                             <rect key="frame" x="1" y="1" width="276" height="281"/>
@@ -41,13 +42,13 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Erm-8U-sOV" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="GD2-nj-4wS"/>
-                <constraint firstItem="Erm-8U-sOV" firstAttribute="top" secondItem="1" secondAttribute="top" id="Wr0-K5-np2"/>
-                <constraint firstAttribute="bottom" secondItem="528-Rt-bKt" secondAttribute="bottom" id="ZCA-VX-ZSE"/>
-                <constraint firstAttribute="trailing" secondItem="528-Rt-bKt" secondAttribute="trailing" id="eOY-Kx-XNc"/>
-                <constraint firstItem="528-Rt-bKt" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="jif-Rs-zLR"/>
+                <constraint firstItem="Erm-8U-sOV" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="GD2-nj-4wS"/>
+                <constraint firstItem="Erm-8U-sOV" firstAttribute="top" secondItem="1" secondAttribute="topMargin" id="Wr0-K5-np2"/>
+                <constraint firstAttribute="bottom" secondItem="528-Rt-bKt" secondAttribute="bottomMargin" id="ZCA-VX-ZSE"/>
+                <constraint firstAttribute="trailing" secondItem="528-Rt-bKt" secondAttribute="trailingMargin" id="eOY-Kx-XNc"/>
+                <constraint firstItem="528-Rt-bKt" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="jif-Rs-zLR"/>
                 <constraint firstItem="528-Rt-bKt" firstAttribute="top" secondItem="Erm-8U-sOV" secondAttribute="bottom" id="vs0-mw-h1X"/>
-                <constraint firstAttribute="trailing" secondItem="Erm-8U-sOV" secondAttribute="trailing" id="zDq-yz-cZA"/>
+                <constraint firstAttribute="trailing" secondItem="Erm-8U-sOV" secondAttribute="trailingMargin" id="zDq-yz-cZA"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
