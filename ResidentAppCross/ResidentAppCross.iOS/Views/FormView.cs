@@ -3,7 +3,9 @@
 using UIKit;
 using ResidentAppCross.iOS.Views;
 using System.Diagnostics;
+using System.Linq;
 using Cirrious.FluentLayouts.Touch;
+using CoreGraphics;
 using Foundation;
 using ObjCRuntime;
 using ResidentAppCross.iOS.Views.Attributes;
@@ -19,7 +21,20 @@ namespace ResidentAppCross.iOS
 
 	    bool hidden = false;
 
-		public override void ViewDidLoad ()
+	    private ExampleSectionView _section1;
+
+
+	    public ExampleSectionView Section1
+	    {
+	        get
+	        {
+                return _section1;
+	        }
+	        set { _section1 = value; }
+	    }
+
+
+	    public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			// Perform any additional setup after loading the view, typically from a nib.
@@ -35,6 +50,9 @@ namespace ResidentAppCross.iOS
                     scrollView.AtLeftOf(View)
                 );
 
+
+
+
             scrollView.BackgroundColor = UIColor.Brown;
             
 
@@ -43,22 +61,29 @@ namespace ResidentAppCross.iOS
             button.BackgroundColor = UIColor.Orange;
             button.TranslatesAutoresizingMaskIntoConstraints = false;
 
+
+
             //ExtendedLayoutIncludesOpaqueBars = false;
 
             //
             var form = Formals.Create<ExampleSectionView>().AddTo(scrollView);
             form.HeightConstraint.Constant = 200;
-            form.ScrollTextViewToTop();
             form.SetHeaderLabelText("Section 1");
+            form.LayoutMargins = new UIEdgeInsets(20,20,20,20);
 
             var firstSection = form;
             button.TouchUpInside += (sender, args) =>
             {
                 hidden = !hidden;
-                firstSection.HeightConstraint.Constant = hidden ? 0 : 200;
-                firstSection.LayoutIfNeeded();
-                scrollView.LayoutIfNeeded();
-                scrollView.LayoutSubviews();
+                if (hidden)
+                {
+                    firstSection.HeightConstraint.Constant = 0;
+                }
+                else
+                {
+                    firstSection.HeightConstraint.Constant = 200;
+
+                }
             };
 
             form = Formals.Create<ExampleSectionView>().AddTo(scrollView);
@@ -83,8 +108,6 @@ namespace ResidentAppCross.iOS
                                             scrollView.Subviews);
 
             scrollView.AddConstraints(constraints);
-
-
 
 
         }
