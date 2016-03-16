@@ -5,10 +5,14 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	partial class CallToActionSection : UIView
+	public partial class CallToActionSection : SectionViewBase
 	{
 		public CallToActionSection (IntPtr handle) : base (handle)
 		{
 		}
+
+	    public UIButton MainButton => ActionButton;
+
+
 	}
 }

@@ -90,6 +90,9 @@
     <Reference Include="BTProgressHUD">
       <HintPath>..\..\Components\btprogresshud-1.20\lib\ios-unified\BTProgressHUD.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>..\..\packages\Microsoft.Rest.ClientRuntime.0.9.6\lib\portable-net403+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Messaging.iOS">
       <HintPath>..\..\Components\azure-messaging-1.1.5.6\lib\ios-unified\Microsoft.WindowsAzure.Messaging.iOS.dll</HintPath>
     </Reference>
@@ -141,9 +144,6 @@
     </Reference>
     <Reference Include="SDWebImage, Version=3.7.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Xamarin.SDWebImage.3.7.5\lib\Xamarin.iOS\SDWebImage.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime">
-      <HintPath>bin\iPhone\Release\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
     <Reference Include="Cirrious.FluentLayouts.Touch, Version=2.5.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Cirrious.FluentLayout.2.5.0\lib\Xamarin.iOS10\Cirrious.FluentLayouts.Touch.dll</HintPath>
@@ -330,17 +330,17 @@
     <InterfaceDefinition Include="Views\MaintenanceStartFormView.xib" />
     <InterfaceDefinition Include="Views\MaintenanceRequestStatusView.xib" />
     <InterfaceDefinition Include="Views\MaintenaceRequestIndexView.xib" />
-    <InterfaceDefinition Include="Views\TextViewSection.xib" />
-    <InterfaceDefinition Include="Views\LabelWithButtonSection.xib" />
-    <InterfaceDefinition Include="Views\PhotoGallerySection.xib" />
-    <InterfaceDefinition Include="Views\SegmentSelectionSection.xib" />
-    <InterfaceDefinition Include="Views\CourtesyOfficerIncidentsSection.xib" />
-    <InterfaceDefinition Include="Views\CourtesyOfficerCheckInsSection.xib" />
-    <InterfaceDefinition Include="Views\CallToActionSection.xib" />
-    <InterfaceDefinition Include="Views\TenantDataSection.xib" />
-    <InterfaceDefinition Include="Views\HeaderSection.xib" />
-    <InterfaceDefinition Include="Views\LabelWithLabelSection.xib" />
-    <InterfaceDefinition Include="Views\ButtonAndButtonSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\TextViewSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\LabelWithButtonSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\PhotoGallerySection.xib" />
+    <InterfaceDefinition Include="Views\Sections\SegmentSelectionSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\CourtesyOfficerIncidentsSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\CourtesyOfficerCheckInsSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\CallToActionSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\TenantDataSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\HeaderSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\LabelWithLabelSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\ButtonAndButtonSection.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -349,8 +349,6 @@
     </None>
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
-    <InterfaceDefinition Include="Views\ExampleSectionView.xib" />
-    <InterfaceDefinition Include="Views\FormView.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\MessengerPluginBootstrap.cs" />
@@ -364,14 +362,7 @@
     <Compile Include="Views\AppTheme.cs" />
     <Compile Include="Views\Attributes\ViewsAttributes.cs" />
     <Compile Include="Views\CheckingFormView.cs" />
-    <Compile Include="Views\ExampleSectionView.cs" />
-    <Compile Include="Views\ExampleSectionView.designer.cs">
-      <DependentUpon>ExampleSectionView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FormView.cs" />
-    <Compile Include="Views\FormView.designer.cs">
-      <DependentUpon>FormView.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Views\Sections\Formals.cs" />
     <Compile Include="Views\ModalDatePicker\CustomPickerModel.cs" />
     <Compile Include="Views\ModalDatePicker\ModalPickerAnimatedDismissed.cs" />
     <Compile Include="Views\ModalDatePicker\ModalPickerAnimatedTransitioning.cs" />
@@ -379,6 +370,7 @@
     <Compile Include="Views\ModalDatePicker\ModalPickerViewController.cs" />
     <Compile Include="Views\PhotoGallery\PhotoGalleryCells.cs" />
     <Compile Include="Views\PhotoGallery\PhotoGallerySource.cs" />
+    <Compile Include="Views\Sections\SectionViewBase.cs" />
     <Compile Include="Views\TableSources\HomeMenuTableSource.cs" />
     <Compile Include="Views\TableSources\LookUpPairSelectionTableSource.cs" />
     <Compile Include="Views\ViewBase.cs" />
@@ -410,48 +402,48 @@
     <Compile Include="Views\MaintenaceRequestIndexView.designer.cs">
       <DependentUpon>MaintenaceRequestIndexView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ButtonAndButtonSection.cs" />
-    <Compile Include="Views\ButtonAndButtonSection.designer.cs">
+    <Compile Include="Views\Sections\ButtonAndButtonSection.cs" />
+    <Compile Include="Views\Sections\ButtonAndButtonSection.designer.cs">
       <DependentUpon>ButtonAndButtonSection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\CallToActionSection.cs" />
-    <Compile Include="Views\CallToActionSection.designer.cs">
+    <Compile Include="Views\Sections\CallToActionSection.cs" />
+    <Compile Include="Views\Sections\CallToActionSection.designer.cs">
       <DependentUpon>CallToActionSection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\CourtesyOfficerCheckInsSection.cs" />
-    <Compile Include="Views\CourtesyOfficerCheckInsSection.designer.cs">
+    <Compile Include="Views\Sections\CourtesyOfficerCheckInsSection.cs" />
+    <Compile Include="Views\Sections\CourtesyOfficerCheckInsSection.designer.cs">
       <DependentUpon>CourtesyOfficerCheckInsSection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\CourtesyOfficerIncidentsSection.cs" />
-    <Compile Include="Views\CourtesyOfficerIncidentsSection.designer.cs">
+    <Compile Include="Views\Sections\CourtesyOfficerIncidentsSection.cs" />
+    <Compile Include="Views\Sections\CourtesyOfficerIncidentsSection.designer.cs">
       <DependentUpon>CourtesyOfficerIncidentsSection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\LabelWithButtonSection.cs" />
-    <Compile Include="Views\LabelWithButtonSection.designer.cs">
+    <Compile Include="Views\Sections\LabelWithButtonSection.cs" />
+    <Compile Include="Views\Sections\LabelWithButtonSection.designer.cs">
       <DependentUpon>LabelWithButtonSection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\LabelWithLabelSection.cs" />
-    <Compile Include="Views\LabelWithLabelSection.designer.cs">
+    <Compile Include="Views\Sections\LabelWithLabelSection.cs" />
+    <Compile Include="Views\Sections\LabelWithLabelSection.designer.cs">
       <DependentUpon>LabelWithLabelSection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\PhotoGallerySection.cs" />
-    <Compile Include="Views\PhotoGallerySection.designer.cs">
+    <Compile Include="Views\Sections\PhotoGallerySection.cs" />
+    <Compile Include="Views\Sections\PhotoGallerySection.designer.cs">
       <DependentUpon>PhotoGallerySection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\SegmentSelectionSection.cs" />
-    <Compile Include="Views\SegmentSelectionSection.designer.cs">
+    <Compile Include="Views\Sections\SegmentSelectionSection.cs" />
+    <Compile Include="Views\Sections\SegmentSelectionSection.designer.cs">
       <DependentUpon>SegmentSelectionSection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TenantDataSection.cs" />
-    <Compile Include="Views\TenantDataSection.designer.cs">
+    <Compile Include="Views\Sections\TenantDataSection.cs" />
+    <Compile Include="Views\Sections\TenantDataSection.designer.cs">
       <DependentUpon>TenantDataSection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TextViewSection.cs" />
-    <Compile Include="Views\TextViewSection.designer.cs">
+    <Compile Include="Views\Sections\TextViewSection.cs" />
+    <Compile Include="Views\Sections\TextViewSection.designer.cs">
       <DependentUpon>TextViewSection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\HeaderSection.cs" />
-    <Compile Include="Views\HeaderSection.designer.cs">
+    <Compile Include="Views\Sections\HeaderSection.cs" />
+    <Compile Include="Views\Sections\HeaderSection.designer.cs">
       <DependentUpon>HeaderSection.cs</DependentUpon>
     </Compile>
   </ItemGroup>

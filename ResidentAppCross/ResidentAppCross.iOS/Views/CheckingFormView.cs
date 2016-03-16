@@ -9,6 +9,7 @@ using MvvmCross.Binding.BindingContext;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
+using SDWebImage;
 
 namespace ResidentAppCross.iOS.Views
 {
@@ -18,104 +19,58 @@ namespace ResidentAppCross.iOS.Views
     [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
     public class CheckingFormView : BaseForm<CheckingFormViewModel> 
     {
-        private bool hidden;
-        private ExampleSectionView _form1;
-        private ExampleSectionView _form2;
-        private ExampleSectionView _form5;
-        private ExampleSectionView _form3;
-        private ExampleSectionView _form4;
+        private HeaderSection _headerSection;
+        private TextViewSection _commentsSection;
+        private CallToActionSection _actionSection;
 
         public CheckingFormView()
         {
         }
 
-        public override void BindForm()
+        public CheckingFormView(string nibName, NSBundle bundle) : base(nibName, bundle)
         {
-            base.BindForm();
-            Form1.SetHeaderLabelText("Woop Woop");   
-            Form2.SetHeaderLabelText("Section2");   
-            Form3.SetHeaderLabelText("Something Else");   
-            Form4.SetHeaderLabelText("Finally");   
-            Form5.SetHeaderLabelText("Whhooot");   
         }
-
-        public override void DidReceiveMemoryWarning()
-        {
-            // Releases the view if it doesn't have a superview.
-            base.DidReceiveMemoryWarning();
-
-            // Release any cached data, images, etc that aren't in use.
-        }
-
-        public override void ViewDidLoad()
-        {
-            base.ViewDidLoad();
-
-            // Perform any additional setup after loading the view
-        }
-
-        public ExampleSectionView Form1
+        public HeaderSection HeaderSection
         {
             get
             {
-                if (_form1 == null)
+                if (_headerSection == null)
                 {
-                    _form1 = Formals.Create<ExampleSectionView>();
-                    _form1.HeightConstraint.Constant = 200;
+                    _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.HeightConstraint.Constant = 100;
+                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
+                    _headerSection.MainLabel.Text = "Maintenance Request";
+                    _headerSection.SubLabel.Text = "Pause";
                 }
-                return _form1;
+                return _headerSection;
             }
         }
-        public ExampleSectionView Form2
+        public TextViewSection CommentsSection
         {
             get
             {
-                if (_form2 == null)
+                if (_commentsSection == null)
                 {
-                    _form2 = Formals.Create<ExampleSectionView>();
-                    _form2.HeightConstraint.Constant = 200;
-
+                    _commentsSection = Formals.Create<TextViewSection>();
+                    _commentsSection.HeightConstraint.Constant = 200;
+                    _commentsSection.HeaderLabel.Text = "Comments & Details";
+                    _commentsSection.TextView.Text =
+                        "Some random text here to simulate sufficent amount of characters to test scrolling and behaviour of Comments Section";
                 }
-                return _form2;
+                return _commentsSection;
             }
         }
-        public ExampleSectionView Form3
+        public CallToActionSection ActionSection
         {
             get
             {
-                if (_form3 == null)
+                if (_actionSection == null)
                 {
-                    _form3 = Formals.Create<ExampleSectionView>();
-                    _form3.HeightConstraint.Constant = 200;
-
+                    _actionSection = Formals.Create<CallToActionSection>();
+                    _actionSection.HeightConstraint.Constant = 100;
+                    _actionSection.MainButton.SetTitle("Send Request");
                 }
-                return _form3;
-            }
-        }
-        public ExampleSectionView Form4
-        {
-            get
-            {
-                if (_form4 == null)
-                {
-                    _form4 = Formals.Create<ExampleSectionView>();
-                    _form4.HeightConstraint.Constant = 200;
-
-                }
-                return _form4;
-            }
-        }
-        public ExampleSectionView Form5
-        {
-            get
-            {
-                if (_form5 == null)
-                {
-                    _form5 = Formals.Create<ExampleSectionView>();
-                    _form5.HeightConstraint.Constant = 200;
-
-                }
-                return _form5;
+                return _actionSection;
             }
         }
 
@@ -123,35 +78,15 @@ namespace ResidentAppCross.iOS.Views
         {
             base.GetContent(content);
 
-            Button = new UIButton().WithHeight(60f);
-            Button.SetTitle("Toggle", UIControlState.Disabled | UIControlState.Focused | UIControlState.Normal | UIControlState.Highlighted | UIControlState.Reserved | UIControlState.Selected);
-            Button.TitleLabel.SizeToFit();
-            Button.TranslatesAutoresizingMaskIntoConstraints = false;
-            Button.WithHeight(20);
-            Button.TouchUpInside += (sender, args) =>
-            {
-                hidden = !hidden;
-                RefreshContent();
-            };
-            content.Add(Button);
-          
-            if (!hidden)
-            {
-                content.Add(Form1);
-            }
-            content.Add(Form2);
-            content.Add(Form3);
-            content.Add(Form4);
-            content.Add(Form5);
+      
+            content.Add(HeaderSection);
+            content.Add(CommentsSection);
+            content.Add(ActionSection);
 
         }
 
 
-        public UIButton Button { get; set; }
 
-        public CheckingFormView(string nibName, NSBundle bundle) : base(nibName, bundle)
-        {
-        }
     }
 
     public class BaseForm<T> : ViewBase<T> where T : ViewModelBase
@@ -173,7 +108,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_sectionsContainer == null)
                 {
                     EdgesForExtendedLayout = UIRectEdge.None;
-                    View.BackgroundColor = AppTheme.PrimaryForegroundColor;
+                    View.BackgroundColor = AppTheme.DeepBackgroundColor;
 
                     _sectionsContainer = new UIScrollView().AddTo(View);
                     _sectionsContainer.TranslatesAutoresizingMaskIntoConstraints = false;
@@ -235,5 +170,16 @@ namespace ResidentAppCross.iOS.Views
             
         }
 
+    }
+
+    public static class UIButtonExtensions
+    {
+        public static void SetTitle(this UIButton button, string title)
+        {
+            button.Enabled = false;
+            button.SetTitle(title,UIControlState.Normal);
+            button.SetNeedsLayout();
+            button.Enabled = true;
+        }
     }
 }
