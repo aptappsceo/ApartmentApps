@@ -4,8 +4,6 @@
     Layout = "~/Views/Shared/_MobileClientViewLayout.cshtml";
 }
 
-<p class="res-indicator">[DEV] Styling for media: </p>
-
 @foreach (var item in Model.GroupBy(p => p.StatusId).ToArray())
 {
     <div class="request-list-section">

@@ -16,7 +16,7 @@
                     <th>Total Time Taken</th>
                 }
 
-                @*<th></th>*@
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +30,7 @@
                 {
                     <td>@item.TimeToComplete</td>
                 }
+                <td>@Html.ActionLink("Details", "Details","MaitenanceRequests", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })</td>
                 @*<td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>*@
             </tr>
         }
