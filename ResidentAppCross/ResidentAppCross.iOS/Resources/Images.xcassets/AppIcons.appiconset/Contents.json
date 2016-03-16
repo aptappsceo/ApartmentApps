@@ -1,110 +1,121 @@
 {
   "images": [
     {
-      "filename": "Icon-Small.png",
+      "filename": "IconLogo29.png",
       "size": "29x29",
       "scale": "1x",
       "idiom": "iphone"
     },
     {
-      "filename": "Icon-Small@2x.png",
+      "filename": "IconLogo58-1.png",
       "size": "29x29",
       "scale": "2x",
       "idiom": "iphone"
     },
     {
-      "filename": "Icon-Small@3x.png",
+      "filename": "IconLogo87.png",
       "size": "29x29",
       "scale": "3x",
       "idiom": "iphone"
     },
     {
-      "filename": "Icon-Small-40@2x.png",
+      "filename": "IconLogo80-1.png",
       "size": "40x40",
       "scale": "2x",
       "idiom": "iphone"
     },
     {
-      "filename": "Icon-Small-40@3x.png",
+      "filename": "IconLogo120-1.png",
       "size": "40x40",
       "scale": "3x",
       "idiom": "iphone"
     },
     {
+      "filename": "IconLogo57.png",
       "size": "57x57",
       "scale": "1x",
       "idiom": "iphone"
     },
     {
+      "filename": "IconLogo114.png",
       "size": "57x57",
       "scale": "2x",
       "idiom": "iphone"
     },
     {
-      "filename": "Icon-60@2x.png",
+      "filename": "IconLogo120.png",
       "size": "60x60",
       "scale": "2x",
       "idiom": "iphone"
     },
     {
-      "filename": "Icon-60@3x.png",
+      "filename": "IconLogo180.png",
       "size": "60x60",
       "scale": "3x",
       "idiom": "iphone"
     },
     {
-      "filename": "Icon-Small.png",
+      "filename": "IconLogo29-1.png",
       "size": "29x29",
       "scale": "1x",
       "idiom": "ipad"
     },
     {
-      "filename": "Icon-Small@2x.png",
+      "filename": "IconLogo58.png",
       "size": "29x29",
       "scale": "2x",
       "idiom": "ipad"
     },
     {
+      "filename": "IconLogo40-1.png",
       "size": "40x40",
       "scale": "1x",
       "idiom": "ipad"
     },
     {
+      "filename": "IconLogo80.png",
       "size": "40x40",
       "scale": "2x",
       "idiom": "ipad"
     },
     {
+      "filename": "IconLogo50.png",
       "size": "50x50",
       "scale": "1x",
       "idiom": "ipad"
     },
     {
+      "filename": "IconLogo100.png",
       "size": "50x50",
       "scale": "2x",
       "idiom": "ipad"
     },
     {
+      "filename": "IconLogo167.png",
       "size": "83.5x83.5",
       "scale": "2x",
       "idiom": "ipad"
     },
     {
+      "filename": "IconLogo72.png",
       "size": "72x72",
       "scale": "1x",
       "idiom": "ipad"
     },
     {
+      "filename": "IconLogo144.png",
       "size": "72x72",
       "scale": "2x",
       "idiom": "ipad"
     },
     {
+      "filename": "IconLogo76-1.png",
       "size": "76x76",
       "scale": "1x",
       "idiom": "ipad"
     },
     {
+      "filename": "IconLogo152.png",
       "size": "76x76",
       "scale": "2x",
       "idiom": "ipad"
@@ -121,6 +132,7 @@
     },
     {
       "role": "notificationCenter",
+      "filename": "IconLogo48.png",
       "size": "24x24",
       "subtype": "38mm",
       "scale": "2x",
@@ -128,6 +140,7 @@
     },
     {
       "role": "notificationCenter",
+      "filename": "IconLogo55.png",
       "size": "27.5x27.5",
       "subtype": "42mm",
       "scale": "2x",
@@ -135,18 +148,21 @@
     },
     {
       "role": "companionSettings",
+      "filename": "IconLogo58-2.png",
       "size": "29x29",
       "scale": "2x",
       "idiom": "watch"
     },
     {
       "role": "companionSettings",
+      "filename": "IconLogo87-2.png",
       "size": "29x29",
       "scale": "3x",
       "idiom": "watch"
     },
     {
       "role": "appLauncher",
+      "filename": "IconLogo80-2.png",
       "size": "40x40",
       "subtype": "38mm",
       "scale": "2x",
@@ -154,6 +170,7 @@
     },
     {
       "role": "longLook",
+      "filename": "IconLogo88.png",
       "size": "44x44",
       "subtype": "42mm",
       "scale": "2x",
@@ -161,6 +178,7 @@
     },
     {
       "role": "quickLook",
+      "filename": "IconLogo172.png",
       "size": "86x86",
       "subtype": "38mm",
       "scale": "2x",
@@ -168,6 +186,7 @@
     },
     {
       "role": "quickLook",
+      "filename": "IconLogo196.png",
       "size": "98x98",
       "subtype": "42mm",
       "scale": "2x",
