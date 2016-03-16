@@ -11,8 +11,8 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("FormView")]
-	partial class FormView
+	[Register ("CallToActionSection")]
+	partial class CallToActionSection
 	{
 		void ReleaseDesignerOutlets ()
 		{
