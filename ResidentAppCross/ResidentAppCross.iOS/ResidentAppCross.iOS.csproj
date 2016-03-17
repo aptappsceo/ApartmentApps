@@ -62,15 +62,11 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>True</MtouchProfiling>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Josh Brewer (B5LK3679EV)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
-    <CodesignProvision>113a64cd-b4bc-4c76-a0fc-05fafb1cca81</CodesignProvision>
-    <CodesignExtraArgs>
-    </CodesignExtraArgs>
+    <CodesignProvision>d2113118-05f2-43cc-84ac-843a88ed2dd1</CodesignProvision>
     <MtouchSdkVersion>9.2</MtouchSdkVersion>
     <MtouchLink>None</MtouchLink>
-    <MtouchI18n>
-    </MtouchI18n>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhone'">
@@ -347,8 +343,8 @@
     <None Include="Info.plist">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Entitlements.plist" />
     <None Include="packages.config" />
+    <None Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\MessengerPluginBootstrap.cs" />
