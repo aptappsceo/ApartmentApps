@@ -1,4 +1,5 @@
 using System;
+using ResidentAppCross.iOS.Views;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -14,6 +15,8 @@ namespace ResidentAppCross.iOS
         }
 
         private NSLayoutConstraint _heightConstraint;
+
+        public ViewBase ParentController { get; set; }
 
         public NSLayoutConstraint HeightConstraint
         {
