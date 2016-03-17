@@ -228,34 +228,90 @@
     <ImageAsset Include="Resources\Icons.xcassets\PayIcon.imageset\PayIcon.png">
       <InProject>false</InProject>
     </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo29-1.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo29.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo40-1.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo48.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo50.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo55.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo57.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo58-1.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo58-2.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo58.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo72.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo76-1.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo80-1.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo80-2.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo80.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo87-2.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo87.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo88.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo100.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo114.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo120-1.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo120.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo144.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo152.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo172.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo180.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo196.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo167.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo29-1.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo29.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo40-1.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo48.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo50.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo55.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo57.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo58-1.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo58-2.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo58.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo72.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo76-1.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo80-1.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo80-2.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo80.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo87-2.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo87.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo88.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo100.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo114.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo120-1.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo120.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo144.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo152.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo172.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo180.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo196.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo167.png">
+      <InProject>false</InProject>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="Resources\ITunesArtwork" />
