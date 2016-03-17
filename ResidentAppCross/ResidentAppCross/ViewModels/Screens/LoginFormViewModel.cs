@@ -6,6 +6,7 @@ using ResidentAppCross.Commands;
 using ResidentAppCross.Events;
 using ResidentAppCross.ServiceClient;
 using ResidentAppCross.ViewModels;
+using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross
 {
@@ -63,5 +64,16 @@ namespace ResidentAppCross
         public ICommand RemindPasswordCommand => StubCommands.NoActionSpecifiedCommand(this);
 
         public ICommand SignUpCommand => StubCommands.NoActionSpecifiedCommand(this);
+
+        public ICommand OpenTestFormCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    ShowViewModel<CheckingFormViewModel>();
+                });
+            }
+        }
     }
 }

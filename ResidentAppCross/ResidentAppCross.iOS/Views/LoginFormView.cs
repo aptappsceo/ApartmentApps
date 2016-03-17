@@ -75,6 +75,12 @@ namespace ResidentAppCross.iOS
                         Mvx.Resolve<IApartmentAppsAPIService>().BaseUri = new Uri("http://82.151.208.56.xip.io:54683");
                     }));
 
+                controller.AddAction(UIAlertAction.Create("Open Test Form", UIAlertActionStyle.Default,
+                    x =>
+                    {
+                        ViewModel.OpenTestFormCommand.Execute(null);
+                    }));
+
 
                 this.PresentViewController(controller, true, () => { });
             };

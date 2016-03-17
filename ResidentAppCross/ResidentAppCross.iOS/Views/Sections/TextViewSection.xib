@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1" customClass="TextViewSection">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Details &amp; Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1x-ie-ZUn" userLabel="HeaderLabel">
+                    <rect key="frame" x="8" y="8" width="584" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="JSR-bD-9fd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tou-lz-HmP" userLabel="TextViewContainer">
+                    <rect key="frame" x="8" y="68" width="584" height="524"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RE8-LS-Hxa" userLabel="TextView">
+                            <rect key="frame" x="1" y="1" width="582" height="522"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="RE8-LS-Hxa" firstAttribute="top" secondItem="tou-lz-HmP" secondAttribute="top" constant="1" id="8ZY-Bq-O87"/>
+                        <constraint firstAttribute="trailing" secondItem="RE8-LS-Hxa" secondAttribute="trailing" constant="1" id="AdX-6W-DRR"/>
+                        <constraint firstItem="RE8-LS-Hxa" firstAttribute="leading" secondItem="tou-lz-HmP" secondAttribute="leading" constant="1" id="NhU-6p-PqL"/>
+                        <constraint firstAttribute="bottom" secondItem="RE8-LS-Hxa" secondAttribute="bottom" constant="1" id="vyU-BB-nYF"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottomMargin" secondItem="tou-lz-HmP" secondAttribute="bottom" id="3W2-24-DUH"/>
+                <constraint firstItem="tou-lz-HmP" firstAttribute="top" secondItem="e1x-ie-ZUn" secondAttribute="bottom" id="8ZA-Mn-yuX"/>
+                <constraint firstAttribute="trailingMargin" secondItem="e1x-ie-ZUn" secondAttribute="trailing" id="Efp-P4-X1R"/>
+                <constraint firstItem="e1x-ie-ZUn" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="RiR-gb-skZ"/>
+                <constraint firstItem="e1x-ie-ZUn" firstAttribute="top" secondItem="1" secondAttribute="topMargin" id="b7X-rk-wYA"/>
+                <constraint firstAttribute="trailingMargin" secondItem="tou-lz-HmP" secondAttribute="trailing" id="eDh-Jt-oCz"/>
+                <constraint firstItem="tou-lz-HmP" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="oRF-Qh-C7C"/>
+            </constraints>
+            <connections>
+                <outlet property="_headerLabel" destination="e1x-ie-ZUn" id="BUs-0B-wOq"/>
+                <outlet property="_textView" destination="RE8-LS-Hxa" id="PtX-u2-7gm"/>
+                <outlet property="_textViewContainer" destination="tou-lz-HmP" id="brq-e3-n5j"/>
+            </connections>
+        </view>
+    </objects>
+</document>
