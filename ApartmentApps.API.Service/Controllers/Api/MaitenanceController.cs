@@ -130,7 +130,7 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("CompleteRequest")]
         public void CompleteRequest(int id, string comments, List<Byte[]> images)
         {
-            MaintenanceService.CompleteRequest(CurrentUser, id, comments);
+            MaintenanceService.CompleteRequest(CurrentUser, id, comments, images);
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("PauseRequest")]

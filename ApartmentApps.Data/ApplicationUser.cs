@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
@@ -24,6 +25,9 @@ namespace ApartmentApps.Data
 
         [ForeignKey("PropertyId")]
         public virtual Property Property { get; set; }
+
+        [NotMapped]
+        public TimeZoneInfo TimeZone => Property.TimeZone ?? TimeZoneInfo.Local;
 
         public virtual ICollection<MaitenanceRequest> MaitenanceRequests { get; set; }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
 
 namespace ApartmentApps.Portal.Controllers
@@ -23,14 +24,14 @@ namespace ApartmentApps.Portal.Controllers
     public class DashboardController : AAController
     {
         // GET: Dashboard
-       
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
             var currentPropertyId = CurrentUser.PropertyId;
             if (startDate == null)
-                startDate = DateTime.UtcNow.Subtract(new TimeSpan(30, 0, 0, 0));
+                startDate = CurrentUser.TimeZone.Now().Subtract(new TimeSpan(30, 0, 0, 0));
+
             if (endDate == null)
-                endDate = DateTime.UtcNow;
+                endDate = CurrentUser.TimeZone.Now();
 
             return View(new DashboardBindingModel {
                 StartDate = startDate,

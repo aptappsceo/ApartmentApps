@@ -257,6 +257,7 @@
     <Compile Include="Controllers\Api\RegisterController.cs" />
     <Compile Include="Controllers\Api\ValuesController.cs" />
     <Compile Include="Controllers\MobileClientViewApi\GeneralViewsController.cs" />
+    <Compile Include="DateUtil.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

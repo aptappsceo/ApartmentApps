@@ -45,6 +45,12 @@ namespace ApartmentApps.Data.Migrations
                 new MaintenanceRequestStatus { Name = "Paused" },
                 new MaintenanceRequestStatus { Name = "Complete" }
             );
+            context.IncidentReportStatuses.AddOrUpdate(
+                new IncidentReportStatus { Name = "Reported" },
+                new IncidentReportStatus { Name = "Open" },
+                new IncidentReportStatus { Name = "Paused" },
+                new IncidentReportStatus { Name = "Complete" }
+            );
             context.MaitenanceRequestTypes.AddOrUpdate(
                 new MaitenanceRequestType() { Id=1, Name = "Alarm" },
                 new MaitenanceRequestType() { Id = 2, Name = "APEX Meter" },

@@ -6,4 +6,8 @@ namespace ApartmentApps.Api
     {
         void MaintenanceRequestSubmited(MaitenanceRequest maitenanceRequest);
     }
+    public interface IIncidentReportSubmissionEvent
+    {
+        void IncidentReportSubmited(IncidentReport incidentReport);
+    }
 }

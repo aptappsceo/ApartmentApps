@@ -34,6 +34,7 @@ namespace ApartmentApps.API.Service
             container.RegisterType<IBlobStorageService, BlobStorageService>();
 
             container.RegisterType<IMaintenanceService, MaintenanceService>();
+            container.RegisterType<ICourtesyService, CourtesyService>();
             container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
           

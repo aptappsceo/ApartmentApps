@@ -28,7 +28,7 @@ namespace ApartmentApps.Api
                     UnitId = unitId,
                     MaitenanceRequestTypeId = requestTypeId,
                     StatusId = "Submitted",
-                    SubmissionDate = DateTime.UtcNow,
+                    SubmissionDate = user.TimeZone.Now(),
                     GroupId = Guid.NewGuid()
                 };
                 var localCtxUser = ctx.Users.Find(user.Id);
@@ -39,11 +39,6 @@ namespace ApartmentApps.Api
                 }
                 if (maitenanceRequest.UnitId == 0)
                     maitenanceRequest.UnitId = null;
-                //if (maitenanceRequest.UnitId == 0)
-                //    throw new Exception("Unit Id Required.");
-
-
-           
 
                 ctx.MaitenanceRequests.Add(maitenanceRequest);
 
@@ -67,10 +62,10 @@ namespace ApartmentApps.Api
 
         public bool PauseRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images)
         {
-            return Checkin(worker, requestId, comments, "Paused");
+            return Checkin(worker, requestId, comments, "Paused",images);
         }
 
-        private bool Checkin(ApplicationUser worker, int requestId, string comments, string status)
+        private bool Checkin(ApplicationUser worker, int requestId, string comments, string status, List<byte[]> photos)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -80,8 +75,21 @@ namespace ApartmentApps.Api
                     Comments = comments,
                     StatusId = status,
                     WorkerId = worker.Id,
-                    Date = DateTime.UtcNow,
+                    Date = worker.TimeZone.Now(),
+                    GroupId = Guid.NewGuid()
                 };
+                if (photos != null)
+                foreach (var image in photos)
+                {
+                    var imageKey = $"{Guid.NewGuid()}.{worker.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
+                    var filename = _blobStorageService.UploadPhoto(image, imageKey);
+                    ctx.ImageReferences.Add(new ImageReference()
+                    {
+                        GroupId = checkin.GroupId,
+                        Url = filename,
+                        ThumbnailUrl = filename
+                    });
+                }
                 ctx.MaintenanceRequestCheckins.Add(checkin);
                 ctx.SaveChanges();
                 var request = 
@@ -89,7 +97,7 @@ namespace ApartmentApps.Api
                 request.StatusId = status;
                 if (status == "Complete")
                 {
-                    request.CompletionDate = DateTime.UtcNow;
+                    request.CompletionDate = worker.TimeZone.Now();
                 }
                 ctx.SaveChanges();
                 this.InvokeEvent<IMaintenanceRequestCheckinEvent>(ctx, worker, _ => _.MaintenanceRequestCheckin(checkin, request));
@@ -97,16 +105,16 @@ namespace ApartmentApps.Api
             }
         }
 
-        public bool CompleteRequest(ApplicationUser worker, int requestId, string comments)
+        public bool CompleteRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images)
         {
-            Checkin(worker, requestId, comments, "Complete");
+            Checkin(worker, requestId, comments, "Complete",images);
             return true;
         }
 
      
         public void StartRequest(ApplicationUser worker, int id, string comments, List<byte[]> images)
         {
-            Checkin(worker, id, comments, "Started");
+            Checkin(worker, id, comments, "Started",images);
         }
 
         public void ScheduleRequest(ApplicationUser currentUser, int id, DateTime scheduleDate)
@@ -119,7 +127,19 @@ namespace ApartmentApps.Api
             }
 
             Checkin(currentUser, id,
-                $"Schedule date set to {scheduleDate.DayOfWeek} at {scheduleDate.Hour}:{scheduleDate.Minute}", "Scheduled");
+                $"Schedule date set to {scheduleDate.DayOfWeek} at {scheduleDate.Hour}:{scheduleDate.Minute}", "Scheduled", null);
+        }
+    }
+
+    public static class DateTimeUtil
+    {
+        public static DateTime Now(this TimeZoneInfo zone, DateTime time)
+        {
+            return TimeZoneInfo.ConvertTime(time, zone);
+        }
+        public static DateTime Now(this TimeZoneInfo zone)
+        {
+            return TimeZoneInfo.ConvertTime(DateTime.UtcNow, zone );
         }
     }
 }

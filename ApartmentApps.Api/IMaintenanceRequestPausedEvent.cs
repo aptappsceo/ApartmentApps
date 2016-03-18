@@ -6,5 +6,10 @@ namespace ApartmentApps.Api
     {
         void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request);
     }
+
+    public interface IIncidentReportCheckinEvent
+    {
+        void IncidentReportCheckin(IncidentReportCheckin incidentReportCheckin, IncidentReport incidentReport);
+    }
  
 }
