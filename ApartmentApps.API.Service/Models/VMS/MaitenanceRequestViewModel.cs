@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ApartmentApps.Data;
 
 namespace ApartmentApps.API.Service.Models.VMS
 {
@@ -17,7 +18,7 @@ namespace ApartmentApps.API.Service.Models.VMS
 
     public class IncidentReportModel
     {
-        public string IncidentReportTypeId { get; set; }
+        public IncidentType IncidentReportTypeId { get; set; }
         public string Comments { get; set; }
         public List<Byte[]> Images { get; set; }
     }

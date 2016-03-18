@@ -62,7 +62,6 @@ namespace ApartmentApps.Data
         public string StatusId { get; set; }
         [ForeignKey("StatusId")]
         public virtual MaintenanceRequestStatus Status { get; set; }
-        public string ImageDirectoryId { get; set; }
 
         public DateTime SubmissionDate { get; set; }
         public DateTime? CompletionDate { get; set; }
@@ -91,10 +90,16 @@ namespace ApartmentApps.Data
         public string Comments { get; set; }
 
         public DateTime Date { get; set; }
-        public string ImageDirectoryId { get; set; }
+        public Guid GroupId { get; set; }
     }
 
     public class MaintenanceRequestStatus
+    {
+        [Key]
+        public string Name { get; set; }
+    }
+
+    public class IncidentReportStatus
     {
         [Key]
         public string Name { get; set; }
