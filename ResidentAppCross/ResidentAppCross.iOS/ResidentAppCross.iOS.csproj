@@ -357,6 +357,7 @@
     <Compile Include="Setup.cs" />
     <Compile Include="Views\AppTheme.cs" />
     <Compile Include="Views\Attributes\ViewsAttributes.cs" />
+    <Compile Include="Views\BaseForm.cs" />
     <Compile Include="Views\CheckingFormView.cs" />
     <Compile Include="Views\Sections\Formals.cs" />
     <Compile Include="Views\ModalDatePicker\CustomPickerModel.cs" />

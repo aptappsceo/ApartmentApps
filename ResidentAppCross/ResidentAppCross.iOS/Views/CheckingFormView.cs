@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Cirrious.FluentLayouts.Touch;
 using CoreFoundation;
 using UIKit;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using ResidentAppCross.iOS.Views.Attributes;
-using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
 using SDWebImage;
 
@@ -22,6 +20,7 @@ namespace ResidentAppCross.iOS.Views
         private HeaderSection _headerSection;
         private TextViewSection _commentsSection;
         private CallToActionSection _actionSection;
+        private PhotoGallerySection _photosSection;
 
         public CheckingFormView()
         {
@@ -30,6 +29,9 @@ namespace ResidentAppCross.iOS.Views
         public CheckingFormView(string nibName, NSBundle bundle) : base(nibName, bundle)
         {
         }
+
+        public override string Title => "Check In";
+
         public HeaderSection HeaderSection
         {
             get
@@ -39,7 +41,7 @@ namespace ResidentAppCross.iOS.Views
                     _headerSection = Formals.Create<HeaderSection>();
                     _headerSection.HeightConstraint.Constant = 100;
                     _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
-                    _headerSection.MainLabel.Text = "Maintenance Request";
+                    _headerSection.MainLabel.Text = "Maintenance";
                     _headerSection.SubLabel.Text = "Pause";
                 }
                 return _headerSection;
@@ -54,8 +56,7 @@ namespace ResidentAppCross.iOS.Views
                     _commentsSection = Formals.Create<TextViewSection>();
                     _commentsSection.HeightConstraint.Constant = 200;
                     _commentsSection.HeaderLabel.Text = "Comments & Details";
-                    _commentsSection.TextView.Text =
-                        "Some random text here to simulate sufficent amount of characters to test scrolling and behaviour of Comments Section";
+                    _commentsSection.SetEditable(true);
                 }
                 return _commentsSection;
             }
@@ -68,106 +69,50 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _actionSection = Formals.Create<CallToActionSection>();
                     _actionSection.HeightConstraint.Constant = 100;
-                    _actionSection.MainButton.SetTitle("Send Request");
                 }
                 return _actionSection;
             }
+        }
+
+        public PhotoGallerySection PhotosSection
+        {
+            get
+            {
+                if (_photosSection == null)
+                {
+                    _photosSection = Formals.Create<PhotoGallerySection>();
+                }
+                return _photosSection;
+            }
+        }
+
+
+        public override void BindForm()
+        {
+            base.BindForm();
+            PhotosSection.BindViewModel(ViewModel.Photos);
+
+            var set = this.CreateBindingSet<CheckingFormView, CheckingFormViewModel>();
+
+            set.Bind(HeaderSection.MainLabel).For(l => l.Text).To(vm => vm.HeaderText);
+            set.Bind(HeaderSection.SubLabel).For(l => l.Text).To(vm => vm.SubHeaderText);
+            set.Bind(ActionSection.MainButton).For("Title").To(vm => vm.ActionText);
+            set.Bind(ActionSection.MainButton).To(vm => vm.ActionCommand);
+            set.Bind(CommentsSection.TextView).To(vm => vm.Comments);
+            
+            set.Apply();
+
         }
 
         public override void GetContent(List<UIView> content)
         {
             base.GetContent(content);
 
-      
             content.Add(HeaderSection);
             content.Add(CommentsSection);
+            content.Add(PhotosSection);
             content.Add(ActionSection);
 
-        }
-
-
-
-    }
-
-    public class BaseForm<T> : ViewBase<T> where T : ViewModelBase
-    {
-        private UIScrollView _sectionsContainer;
-
-        public BaseForm(string nibName, NSBundle bundle) : base(nibName, bundle)
-        {
-        }
-
-        public BaseForm() : base (null,null)
-		{
-        }
-
-        public UIScrollView SectionsContainer
-        {
-            get
-            {
-                if (_sectionsContainer == null)
-                {
-                    EdgesForExtendedLayout = UIRectEdge.None;
-                    View.BackgroundColor = AppTheme.DeepBackgroundColor;
-
-                    _sectionsContainer = new UIScrollView().AddTo(View);
-                    _sectionsContainer.TranslatesAutoresizingMaskIntoConstraints = false;
-                    View.AddConstraints(
-                            _sectionsContainer.WithSameWidth(View),
-                            _sectionsContainer.WithSameHeight(View),
-                            _sectionsContainer.AtTopOf(View),
-                            _sectionsContainer.AtLeftOf(View)
-                        );
-                }
-                return _sectionsContainer;
-            }
-            set { _sectionsContainer = value; }
-        }
-
-        public override void ViewDidLoad()
-        {
-            base.ViewDidLoad();
-            BindForm();
-            RefreshContent();
-        }
-
-        public virtual void BindForm()
-        {
-        }
-
-        public virtual void UnbindForm()
-        {
-        }
-
-        public virtual void RefreshContent()
-        {
-
-            foreach (var subview in SectionsContainer.Subviews)
-            {
-                subview.RemoveFromSuperview();
-            }
-
-            SectionsContainer.RemoveConstraints(SectionsContainer.Constraints);
-
-            List<UIView> content = new List<UIView>();
-            GetContent(content);
-
-            foreach (var uiView in content)
-            {
-                SectionsContainer.Add(uiView);
-            }
-
-            var constraints = SectionsContainer.VerticalStackPanelConstraints(
-                                           new Margins(0, 0, 0, 20, 0, 15),
-                                           SectionsContainer.Subviews);
-
-            SectionsContainer.AddConstraints(constraints);
-
-        }
-
-        public virtual void GetContent(List<UIView> content)
-        {
-            
         }
 
     }

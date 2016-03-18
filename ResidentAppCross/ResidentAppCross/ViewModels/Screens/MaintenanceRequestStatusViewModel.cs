@@ -94,7 +94,6 @@ namespace ResidentAppCross.ViewModels.Screens
                 {
                     Uri = new Uri(url)
                 }));
-                Debug.WriteLine("Images loaded");
           
         }).OnStart("Loading Request...").OnFail(ex=> { Close(this); });
 
@@ -110,29 +109,55 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
+
+
         public ICommand FinishCommmand
         {
             get
             {
-                return this.TaskCommand(async context =>
-                {
-                    var data = ScanResult?.Data;
-                    if (string.IsNullOrEmpty(data))
-                    {
-                        this.FailTaskWithPrompt("No QR Code scanned.");
-                        return;
-                    }
 
-                    if (CurrentRequestStatus == RequestStatus.Started)
+                return new MvxCommand(() =>
+                {
+                    ShowViewModel<CheckingFormViewModel>(vm =>
                     {
-                        await _appService.Maitenance.CompleteRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Paused with Data: {0}", ScanResult?.Data), new List<string>());
-                        context.OnComplete(string.Format("Request Finished (QR: {0})", ScanResult?.Data),()=>UpdateMaintenanceRequest.Execute(null));
-                    }
-                    else
-                    {
-                        context.FailTask("Request is already In Progress or Complete.");
-                    }
-                }).OnStart("Updating Request...");
+                        vm.HeaderText = "Maintenance";
+                        vm.SubHeaderText = "Finish";
+                        vm.ActionText = "Finish Maintenance";                       
+                        vm.ActionCommand = this.TaskCommand(async context =>
+                        {
+                            var data = ScanResult?.Data;
+                            if (string.IsNullOrEmpty(data))
+                            {
+                                this.FailTaskWithPrompt("No QR Code scanned.");
+                                return;
+                            }
+
+                            if (CurrentRequestStatus == RequestStatus.Started)
+                            {
+                                await
+                                    _appService.Maitenance.CompleteRequestWithOperationResponseAsync(
+                                        MaintenanceRequestId,
+                                        vm.Comments,
+                                        vm.Photos.ImagesAsBase64.ToList());
+
+                                context.OnComplete(string.Format("Request Closed!", ScanResult?.Data),
+                                    () =>
+                                    {
+                                        Close(vm);
+                                        UpdateMaintenanceRequest.Execute(null);
+                                    });
+                            }
+                            else
+                            {
+                                context.FailTask("Request is already In Progress or Complete.");
+                                Close(vm);
+                            }
+
+                        }).OnStart("Closing Request...");
+                    });
+                });
+
+                
             }
         }
         public ICommand PauseCommmand

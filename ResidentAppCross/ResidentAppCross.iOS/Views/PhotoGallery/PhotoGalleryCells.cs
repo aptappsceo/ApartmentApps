@@ -18,6 +18,8 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
         private void Initialize()
         {
             this.ImageView = new UIImageView (this.ContentView.Bounds);
+            //Uncomment to debug cell images issues
+            //ImageView.BackgroundColor = UIColor.Blue;
             this.ContentView.AddSubview(this.ImageView);
         }
     }

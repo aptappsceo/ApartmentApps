@@ -59,6 +59,28 @@ namespace ResidentAppCross.iOS.Views.Attributes
             navBar.TitleTextAttributes = attribs;
         }
 
+        public static void ApplyToNavigationController(UINavigationController controller, bool animated = true, bool hidden = false, UIColor backgroundColor = null, UIColor foregroundColor = null)
+        {
+            if (backgroundColor == null) backgroundColor = AppTheme.SecondaryBackgoundColor;
+            if (foregroundColor == null) foregroundColor = AppTheme.SecondaryForegroundColor;
+
+            controller.SetNavigationBarHidden(hidden, animated);
+            if (hidden) return;
+
+            var navBar = controller?.NavigationBar;
+            if (navBar == null)
+            {
+                Debug.WriteLine("Warning: View Misses Nav Controller or Nav Bar");
+                return;
+            }
+
+            navBar.BarTintColor = backgroundColor;
+            navBar.TintColor = foregroundColor;
+            var attribs = navBar.TitleTextAttributes ?? new UIStringAttributes();
+            attribs.ForegroundColor = foregroundColor;
+            navBar.TitleTextAttributes = attribs;
+        }
+
     }
 
     public class Edges : ViewAttribute

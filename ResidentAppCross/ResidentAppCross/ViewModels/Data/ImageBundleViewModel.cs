@@ -23,11 +23,13 @@ namespace ResidentAppCross.ViewModels
         }
 
         public ObservableCollection<ImageBundleItemViewModel> RawImages { get; set; } = new ObservableCollection<ImageBundleItemViewModel>();
+
+        public IEnumerable<string> ImagesAsBase64 => from image in RawImages where image.Data != null select Convert.ToBase64String(image.Data);
     }
 
     public class ImageBundleItemViewModel
     {
-        public Uri Uri { get; set; } = new Uri("file:///tmp/"+Guid.NewGuid().ToString());
+        public Uri Uri { get; set; }
         public byte[] Data { get; set; }
     }
 }
