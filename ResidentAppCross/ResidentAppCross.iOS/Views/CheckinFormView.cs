@@ -12,21 +12,21 @@ using SDWebImage;
 namespace ResidentAppCross.iOS.Views
 {
 
-    [Register("CheckingFormView")]
+    [Register("CheckinFormView")]
     [NavbarStyling]
     [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
-    public class CheckingFormView : BaseForm<CheckingFormViewModel> 
+    public class CheckinFormView : BaseForm<CheckinFormViewModel> 
     {
         private HeaderSection _headerSection;
         private TextViewSection _commentsSection;
         private CallToActionSection _actionSection;
         private PhotoGallerySection _photosSection;
 
-        public CheckingFormView()
+        public CheckinFormView()
         {
         }
 
-        public CheckingFormView(string nibName, NSBundle bundle) : base(nibName, bundle)
+        public CheckinFormView(string nibName, NSBundle bundle) : base(nibName, bundle)
         {
         }
 
@@ -47,6 +47,7 @@ namespace ResidentAppCross.iOS.Views
                 return _headerSection;
             }
         }
+
         public TextViewSection CommentsSection
         {
             get
@@ -54,13 +55,14 @@ namespace ResidentAppCross.iOS.Views
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeightConstraint.Constant = 200;
+                    _commentsSection.HeightConstraint.Constant = 400;
                     _commentsSection.HeaderLabel.Text = "Comments & Details";
                     _commentsSection.SetEditable(true);
                 }
                 return _commentsSection;
             }
         }
+
         public CallToActionSection ActionSection
         {
             get
@@ -86,13 +88,12 @@ namespace ResidentAppCross.iOS.Views
             }
         }
 
-
         public override void BindForm()
         {
             base.BindForm();
             PhotosSection.BindViewModel(ViewModel.Photos);
 
-            var set = this.CreateBindingSet<CheckingFormView, CheckingFormViewModel>();
+            var set = this.CreateBindingSet<CheckinFormView, CheckinFormViewModel>();
 
             set.Bind(HeaderSection.MainLabel).For(l => l.Text).To(vm => vm.HeaderText);
             set.Bind(HeaderSection.SubLabel).For(l => l.Text).To(vm => vm.SubHeaderText);
@@ -104,14 +105,18 @@ namespace ResidentAppCross.iOS.Views
 
         }
 
+
         public override void GetContent(List<UIView> content)
         {
             base.GetContent(content);
+            content.Add(Formals.Create<PhotoGallerySection>());
 
             content.Add(HeaderSection);
-            content.Add(CommentsSection);
             content.Add(PhotosSection);
             content.Add(ActionSection);
+            content.Add(CommentsSection);
+            content.Add(Formals.Create<HeaderSection>());
+
 
         }
 

@@ -15,12 +15,12 @@ public static class Formals
 
         NSArray arr;
         var nibName = typeof(T).Name;
-
+//
         if (!NibCache.TryGetValue(nibName,out arr))
         {
             NibCache[nibName] = arr = NSBundle.MainBundle.LoadNib(nibName, null, null);
         }
-
+        //arr = NSBundle.MainBundle.LoadNib(nibName, null, null);
 
         var nsObject = Runtime.GetNSObject<T>(arr.ValueAt(0));
 

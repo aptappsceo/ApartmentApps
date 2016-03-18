@@ -118,7 +118,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
                 return new MvxCommand(() =>
                 {
-                    ShowViewModel<CheckingFormViewModel>(vm =>
+                    ShowViewModel<CheckinFormViewModel>(vm =>
                     {
                         vm.HeaderText = "Maintenance";
                         vm.SubHeaderText = "Finish";
