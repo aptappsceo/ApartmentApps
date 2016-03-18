@@ -37,6 +37,7 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
 			photoCell.ImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
 
 			photoCell.AutosizesSubviews = true;
+            photoCell.TranslatesAutoresizingMaskIntoConstraints = false;
 			photoCell.ImageView.ClipsToBounds = true;
 			photoCell.ImageView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
 			photoCell.LayoutIfNeeded ();

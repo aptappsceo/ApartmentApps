@@ -1,12 +1,27 @@
+using System.Collections.Generic;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
 
 public static class Formals
 {
+
+
+    private static Dictionary<string,NSArray> NibCache { get; set; } = new Dictionary<string, NSArray>();
+
     public static T Create<T>(bool defaultSetup = true) where T : NSObject
     {
-        var arr = NSBundle.MainBundle.LoadNib(typeof (T).Name, null, null);
+
+
+        NSArray arr;
+        var nibName = typeof(T).Name;
+
+        if (!NibCache.TryGetValue(nibName,out arr))
+        {
+            NibCache[nibName] = arr = NSBundle.MainBundle.LoadNib(nibName, null, null);
+        }
+
+
         var nsObject = Runtime.GetNSObject<T>(arr.ValueAt(0));
 
         if (defaultSetup)

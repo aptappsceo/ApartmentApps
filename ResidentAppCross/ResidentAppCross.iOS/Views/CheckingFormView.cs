@@ -30,6 +30,8 @@ namespace ResidentAppCross.iOS.Views
         {
         }
 
+        public override string Title => "Check In";
+
         public HeaderSection HeaderSection
         {
             get
@@ -39,7 +41,7 @@ namespace ResidentAppCross.iOS.Views
                     _headerSection = Formals.Create<HeaderSection>();
                     _headerSection.HeightConstraint.Constant = 100;
                     _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
-                    _headerSection.MainLabel.Text = "Maintenance Request";
+                    _headerSection.MainLabel.Text = "Maintenance";
                     _headerSection.SubLabel.Text = "Pause";
                 }
                 return _headerSection;
@@ -54,8 +56,7 @@ namespace ResidentAppCross.iOS.Views
                     _commentsSection = Formals.Create<TextViewSection>();
                     _commentsSection.HeightConstraint.Constant = 200;
                     _commentsSection.HeaderLabel.Text = "Comments & Details";
-                    _commentsSection.TextView.Text =
-                        "Some random text here to simulate sufficent amount of characters to test scrolling and behaviour of Comments Section";
+                    _commentsSection.SetEditable(true);
                 }
                 return _commentsSection;
             }
@@ -68,7 +69,6 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _actionSection = Formals.Create<CallToActionSection>();
                     _actionSection.HeightConstraint.Constant = 100;
-                    _actionSection.MainButton.SetTitle("Send Request");
                 }
                 return _actionSection;
             }
@@ -81,7 +81,6 @@ namespace ResidentAppCross.iOS.Views
                 if (_photosSection == null)
                 {
                     _photosSection = Formals.Create<PhotoGallerySection>();
-                    _photosSection.HeaderLabel.Text = "No Photos Attached";
                 }
                 return _photosSection;
             }
@@ -92,6 +91,17 @@ namespace ResidentAppCross.iOS.Views
         {
             base.BindForm();
             PhotosSection.BindViewModel(ViewModel.Photos);
+
+            var set = this.CreateBindingSet<CheckingFormView, CheckingFormViewModel>();
+
+            set.Bind(HeaderSection.MainLabel).For(l => l.Text).To(vm => vm.HeaderText);
+            set.Bind(HeaderSection.SubLabel).For(l => l.Text).To(vm => vm.SubHeaderText);
+            set.Bind(ActionSection.MainButton).For("Title").To(vm => vm.ActionText);
+            set.Bind(ActionSection.MainButton).To(vm => vm.ActionCommand);
+            set.Bind(CommentsSection.TextView).To(vm => vm.Comments);
+            
+            set.Apply();
+
         }
 
         public override void GetContent(List<UIView> content)
@@ -104,8 +114,6 @@ namespace ResidentAppCross.iOS.Views
             content.Add(ActionSection);
 
         }
-
-
 
     }
 

@@ -103,11 +103,12 @@ namespace ResidentAppCross.iOS
                 //b.Bind(FooterStartButton).To(vm => vm.StartOrResumeCommand);
                 b.Bind(SelectRepairDateButton).For("Title").To(vm => vm.SelectScheduleDateActionLabel);
                 b.Bind(FooterPauseButton).To(vm=>vm.PauseCommmand);
+                b.Bind(FooterFinishButton).To(vm => vm.FinishCommmand);
                 b.Apply();
                 SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
-                FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.StartOrResumeCommand.Execute(null));
+               // FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.StartOrResumeCommand.Execute(null));
       
-                FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.FinishCommmand.Execute(null));
+              //  FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.FinishCommmand.Execute(null));
 
                 ViewModel.Photos.RawImages.CollectionChanged += RawImages_CollectionChanged;
             });
@@ -116,7 +117,6 @@ namespace ResidentAppCross.iOS
         private void RawImages_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
 			InvokeOnMainThread (UpdatePhotos);
-
         }
 
         public void UpdatePhotos()

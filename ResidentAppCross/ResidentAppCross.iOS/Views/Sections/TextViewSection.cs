@@ -15,6 +15,11 @@ namespace ResidentAppCross.iOS
 		{
 		}
 
+	    public void SetEditable(bool editable)
+	    {
+	        TextView.Editable = editable;
+	    }
+
 	    public UIView TextViewContainer => _textViewContainer;
 	    public UITextView TextView => _textView;
 	    public UILabel HeaderLabel => _headerLabel;

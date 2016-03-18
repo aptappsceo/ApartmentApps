@@ -4,23 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ResidentAppCross.Commands;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
     public class CheckingFormViewModel : ViewModelBase
     {
-        private string _comments;
+        private string _comments = "";
         private ImageBundleViewModel _photos;
-        private string _actionText;
+        private string _actionText = "";
+        private string _headerText = "";
+        private string _subHeaderText = "";
 
         public CheckingFormViewModel()
         {
         }
 
+        public ICommand ActionCommand { get; set; }
+
         public string Comments
         {
             get { return _comments; }
-            set { SetProperty(ref _comments,value); }
+            set { SetProperty(ref _comments, value); }
         }
 
         public ImageBundleViewModel Photos
@@ -35,8 +40,16 @@ namespace ResidentAppCross.ViewModels.Screens
             set { SetProperty(ref _actionText, value); }
         }
 
-        public ICommand ActionCommand { get; set; }
+        public string HeaderText
+        {
+            get { return _headerText; }
+            set { SetProperty(ref _headerText, value); }
+        }
 
-        
+        public string SubHeaderText
+        {
+            get { return _subHeaderText; }
+            set { SetProperty(ref _subHeaderText,value); }
+        }
     }
 }

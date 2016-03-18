@@ -210,6 +210,7 @@ namespace ResidentAppCross.iOS.Views
 
             PhotoContainer.RegisterClassForCell(typeof(PhotoGalleryCells), (NSString)PhotoGalleryCells.CellIdentifier);
             PhotoContainer.Source = new PhotoGallerySource(ViewModel.ImagesToUpload);
+
             PhotoContainer.ReloadData();
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
