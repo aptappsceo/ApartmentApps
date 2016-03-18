@@ -55,7 +55,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeightConstraint.Constant = 400;
+                    _commentsSection.HeightConstraint.Constant = 200;
                     _commentsSection.HeaderLabel.Text = "Comments & Details";
                     _commentsSection.SetEditable(true);
                 }
@@ -109,14 +109,11 @@ namespace ResidentAppCross.iOS.Views
         public override void GetContent(List<UIView> content)
         {
             base.GetContent(content);
-            content.Add(Formals.Create<PhotoGallerySection>());
 
             content.Add(HeaderSection);
+            content.Add(CommentsSection);
             content.Add(PhotosSection);
             content.Add(ActionSection);
-            content.Add(CommentsSection);
-            content.Add(Formals.Create<HeaderSection>());
-
 
         }
 
