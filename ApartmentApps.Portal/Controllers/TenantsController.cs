@@ -23,14 +23,9 @@ namespace ApartmentApps.Portal.Controllers
                 return db.Users.FirstOrDefault(p => p.Email == uName);
             }
         }
+        public int PropertyId => CurrentUser.PropertyId ?? 0;
 
-        public Property Property
-        {
-            get
-            {
-                return CurrentUser?.Property;
-            }
-        }
+        public Property Property => CurrentUser?.Property;
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

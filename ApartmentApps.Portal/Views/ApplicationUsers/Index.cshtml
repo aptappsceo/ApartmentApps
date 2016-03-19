@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ApartmentApps.Data.ApplicationUser>
+﻿@using GridMvc.Html
+@model IEnumerable<ApartmentApps.Data.ApplicationUser>
 
 @{
     ViewBag.Title = "Index";
@@ -10,7 +11,7 @@
         <h2>Index</h2>
         <ol class="breadcrumb">
             <li class="active">
-                <strong>ApplicationUser</strong>
+                <strong>Application User</strong>
             </li>
         </ol>
     </div>
@@ -23,112 +24,27 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>List of ApplicationUser</h5>
-					<div class="ibox-tools">
-						@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-xs"})
-					</div>
+                    <div class="ibox-tools">
+                        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-xs" })
+                    </div>
                 </div>
                 <div class="ibox-content">
+                    @Html.Grid(Model).Columns(columns =>
+                   {
+                       columns.Add(foo => foo.FirstName).Titled("First Name").SetWidth(110);
+                       //columns.Add(foo => foo.Unit.Building.Name).Titled("Building Name").SetWidth(110);
+                       columns.Add(foo => foo.LastName).Titled("Last Name").Sortable(true).Filterable(true);
+                       columns.Add(foo => foo.Email).Sortable(true).Filterable(true);
+                       columns.Add().Titled("Roles").RenderValueAs(item=>@Html.Raw(string.Join(",",item.Roles.Select(p=>p.RoleId))));
+                       columns.Add().Encoded(false).Sanitized(false).RenderValueAs(item => @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "" }));
 
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Property.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tenant.ThirdPartyId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailConfirmed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SecurityStamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LockoutEnabled)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AccessFailedCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tenant.ThirdPartyId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmailConfirmed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PasswordHash)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SecurityStamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LockoutEnabled)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccessFailedCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-			@Html.ActionLink("Details", "Details", new { id=item.Id }, new { @class = "btn btn-primary btn-sm"})
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { @class = "btn btn-white btn-sm"})
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn btn-white btn-sm"})
-        </td>
-    </tr>
-}
-
-</table>
+                   }).WithPaging(10)
 
                 </div>
             </div>
         </div>
     </div>
- </div>
+</div>
 
 
 

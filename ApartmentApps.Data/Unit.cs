@@ -31,6 +31,8 @@ namespace ApartmentApps.Data
         [Key]
         public int Id { get; set; }
 
+        public string Label { get; set; }
+
         ////[Index("IX_LocationAndProperty",1)]
         public string LocationId { get; set; }
 

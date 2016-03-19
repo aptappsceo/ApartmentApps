@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -10,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ApartmentApps.Portal.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -244,7 +246,7 @@ namespace ApartmentApps.Portal.Controllers
             CurrentUser.PropertyId = id;
             db.SaveChanges();
             ViewBag.Property = Property;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         //
@@ -491,5 +493,7 @@ namespace ApartmentApps.Portal.Controllers
             }
         }
         #endregion
+
+        
     }
 }

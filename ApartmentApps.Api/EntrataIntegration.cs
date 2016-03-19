@@ -1,7 +1,9 @@
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using ApartmentApps.Data;
 using Entrata.Client;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Api
 {
@@ -66,6 +68,17 @@ namespace ApartmentApps.Api
                     continue;
                 }
                 user.PropertyId = property.Id;
+                if (user.Roles.Any(p => p.RoleId == "Resident"))
+                {
+                    user.Roles.Add(new IdentityUserRole()
+                    {
+                        RoleId = "Resident",
+                        UserId = user.Id
+                    });
+
+                }
+               
+               
                 var tenantInfo = await ctx.Tenants.FirstOrDefaultAsync(p => p.UserId == user.Id);
                 if (tenantInfo == null)
                 {

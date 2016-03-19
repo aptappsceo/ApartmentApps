@@ -17,10 +17,10 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /ApplicationUsers/
         public ActionResult Index()
         {
-            var applicationusers = db.Users.Include(a => a.Property).Include(a => a.Tenant);
+            var applicationusers = db.Users.Include(a => a.Property).Include(a => a.Tenant).Where(p=>p.PropertyId == PropertyId);
             return View(applicationusers.ToList());
         }
-
+        
         // GET: /ApplicationUsers/Details/5
         public ActionResult Details(string id)
         {
@@ -41,6 +41,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name");
             ViewBag.Id = new SelectList(db.Tenants, "UserId", "ThirdPartyId");
+            ViewBag.Roles = new SelectList(db.Roles, "Id", "Name");
             return View();
         }
 
@@ -49,7 +50,8 @@ namespace ApartmentApps.Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,PropertyId,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public ActionResult Create([Bind(Include="Id,PropertyId,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")]
+        ApplicationUser applicationUser, string[] selectedRoles)
         {
             if (ModelState.IsValid)
             {
@@ -60,6 +62,7 @@ namespace ApartmentApps.Portal.Controllers
 
             ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", applicationUser.PropertyId);
             ViewBag.Id = new SelectList(db.Tenants, "UserId", "ThirdPartyId", applicationUser.Id);
+           
             return View(applicationUser);
         }
 
