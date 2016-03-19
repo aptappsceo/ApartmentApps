@@ -123,6 +123,7 @@
     <Compile Include="ViewModels\Screens\MaintenanceRequestStatusViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceStartFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\PropertyConfigFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\TestFormViewModel.cs" />
     <Compile Include="ViewModels\Selectors\MaintenanceRequestTypeSelectionViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceRequestFormViewModel.cs" />
     <Compile Include="ViewModels\QRScannerViewModel.cs" />

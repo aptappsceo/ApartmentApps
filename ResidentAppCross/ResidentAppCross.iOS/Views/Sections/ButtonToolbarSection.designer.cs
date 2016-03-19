@@ -11,11 +11,18 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("ButtonAndButtonSection")]
-	partial class ButtonAndButtonSection
+	[Register ("ButtonToolbarSection")]
+	partial class ButtonToolbarSection
 	{
+		[Outlet]
+		UIKit.UIStackView ButtonBar { get; set; }
+
 		void ReleaseDesignerOutlets ()
 		{
+			if (ButtonBar != null) {
+				ButtonBar.Dispose ();
+				ButtonBar = null;
+			}
 		}
 	}
 }

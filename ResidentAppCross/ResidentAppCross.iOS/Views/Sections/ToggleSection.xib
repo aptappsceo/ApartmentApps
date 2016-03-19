@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1" customClass="ToggleSection">
+            <rect key="frame" x="0.0" y="0.0" width="492" height="200"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T8W-zz-cxR" userLabel="HeaderLabel">
+                    <rect key="frame" x="8" y="8" width="427" height="61"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="61" id="5BM-UX-9H0"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4pS-Mr-1bI">
+                    <rect key="frame" x="435" y="23" width="51" height="30"/>
+                </switch>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXR-Gc-0G8" userLabel="SubHeaderLabel">
+                    <rect key="frame" x="8" y="69" width="246" height="123"/>
+                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailingMargin" secondItem="4pS-Mr-1bI" secondAttribute="trailing" id="VaV-s5-J5C"/>
+                <constraint firstItem="4pS-Mr-1bI" firstAttribute="centerY" secondItem="T8W-zz-cxR" secondAttribute="centerY" id="cc6-IS-inJ"/>
+                <constraint firstItem="4pS-Mr-1bI" firstAttribute="leading" secondItem="T8W-zz-cxR" secondAttribute="trailing" id="cqp-Ds-meQ"/>
+                <constraint firstAttribute="bottomMargin" secondItem="eXR-Gc-0G8" secondAttribute="bottom" id="f1O-0S-yHD"/>
+                <constraint firstItem="eXR-Gc-0G8" firstAttribute="top" secondItem="T8W-zz-cxR" secondAttribute="bottom" id="huE-Qp-qCZ"/>
+                <constraint firstItem="T8W-zz-cxR" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="lyU-91-eHW"/>
+                <constraint firstItem="eXR-Gc-0G8" firstAttribute="width" secondItem="1" secondAttribute="width" multiplier="0.5" id="nV0-g3-hsa"/>
+                <constraint firstItem="4pS-Mr-1bI" firstAttribute="height" secondItem="T8W-zz-cxR" secondAttribute="height" multiplier="0.5" id="pGI-R4-nNO"/>
+                <constraint firstItem="T8W-zz-cxR" firstAttribute="top" secondItem="1" secondAttribute="topMargin" id="rbM-74-cma"/>
+                <constraint firstItem="eXR-Gc-0G8" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="txw-F5-wMN"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="_headerLabel" destination="T8W-zz-cxR" id="s39-db-1uO"/>
+                <outlet property="_subHeaderLabel" destination="eXR-Gc-0G8" id="1EF-6a-8Wt"/>
+                <outlet property="_switch" destination="4pS-Mr-1bI" id="ghd-fg-knb"/>
+            </connections>
+            <point key="canvasLocation" x="204" y="247"/>
+        </view>
+    </objects>
+</document>

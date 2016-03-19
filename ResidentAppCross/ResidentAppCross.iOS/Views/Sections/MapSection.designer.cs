@@ -11,24 +11,24 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("LabelWithLabelSection")]
-	public partial class LabelWithLabelSection
+	[Register ("MapSection")]
+	partial class MapSection
 	{
 		[Outlet]
-		UIKit.UILabel _firstLabel { get; set; }
+		UIKit.UILabel _headerLabel { get; set; }
 
 		[Outlet]
-		UIKit.UILabel _secondLabel { get; set; }
+		MapKit.MKMapView _mapView { get; set; }
 
 		void ReleaseDesignerOutlets ()
 		{
-			if (_firstLabel != null) {
-				_firstLabel.Dispose ();
-				_firstLabel = null;
+			if (_headerLabel != null) {
+				_headerLabel.Dispose ();
+				_headerLabel = null;
 			}
-			if (_secondLabel != null) {
-				_secondLabel.Dispose ();
-				_secondLabel = null;
+			if (_mapView != null) {
+				_mapView.Dispose ();
+				_mapView = null;
 			}
 		}
 	}

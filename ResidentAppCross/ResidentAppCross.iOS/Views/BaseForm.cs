@@ -268,7 +268,7 @@ namespace ResidentAppCross.iOS.Views
 
         public virtual void RefreshContent()
         {
-            foreach (var subview in SectionsContainer.Subviews)
+            foreach (var subview in SectionsContainer.Subviews.ToArray())
             {
                 subview.RemoveFromSuperview();
             }
