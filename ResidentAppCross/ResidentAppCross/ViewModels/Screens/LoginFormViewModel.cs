@@ -71,7 +71,7 @@ namespace ResidentAppCross
             {
                 return new MvxCommand(() =>
                 {
-                    ShowViewModel<CheckingFormViewModel>();
+                    ShowViewModel<CheckinFormViewModel>();
                 });
             }
         }

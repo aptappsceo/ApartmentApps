@@ -18,6 +18,8 @@ namespace ResidentAppCross.iOS
 
         public ViewBase ParentController { get; set; }
 
+
+
         public NSLayoutConstraint HeightConstraint
         {
             get

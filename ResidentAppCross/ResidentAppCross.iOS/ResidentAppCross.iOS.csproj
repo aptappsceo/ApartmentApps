@@ -359,7 +359,12 @@
     <Compile Include="Views\AppTheme.cs" />
     <Compile Include="Views\Attributes\ViewsAttributes.cs" />
     <Compile Include="Views\BaseForm.cs" />
-    <Compile Include="Views\CheckingFormView.cs" />
+    <Compile Include="Views\CheckinFormView.cs" />
+    <Compile Include="Views\Sections\Intefaces\ISoftKeyboardEventsListener.cs" />
+    <Compile Include="Views\Sections\Intefaces\IFormEventsListener.cs" />
+    <Compile Include="Views\Sections\Intefaces\IFormTapListener.cs" />
+    <Compile Include="Views\KeyboardScrolling\KeyboardViewScroller.cs" />
+    <Compile Include="Views\PropertyConfigFormView.cs" />
     <Compile Include="Views\Sections\Formals.cs" />
     <Compile Include="Views\ModalDatePicker\CustomPickerModel.cs" />
     <Compile Include="Views\ModalDatePicker\ModalPickerAnimatedDismissed.cs" />
@@ -535,5 +540,6 @@
       <Name>ResidentAppCross</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

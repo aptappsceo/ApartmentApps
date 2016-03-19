@@ -7,20 +7,13 @@ public static class Formals
 {
 
 
-    private static Dictionary<string,NSArray> NibCache { get; set; } = new Dictionary<string, NSArray>();
-
     public static T Create<T>(bool defaultSetup = true) where T : NSObject
     {
 
 
         NSArray arr;
         var nibName = typeof(T).Name;
-
-        if (!NibCache.TryGetValue(nibName,out arr))
-        {
-            NibCache[nibName] = arr = NSBundle.MainBundle.LoadNib(nibName, null, null);
-        }
-
+        arr = NSBundle.MainBundle.LoadNib(nibName, null, null);
 
         var nsObject = Runtime.GetNSObject<T>(arr.ValueAt(0));
 

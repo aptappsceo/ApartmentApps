@@ -8,7 +8,7 @@ using ResidentAppCross.Commands;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
-    public class CheckingFormViewModel : ViewModelBase
+    public class CheckinFormViewModel : ViewModelBase
     {
         private string _comments = "";
         private ImageBundleViewModel _photos;
@@ -16,7 +16,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private string _headerText = "";
         private string _subHeaderText = "";
 
-        public CheckingFormViewModel()
+        public CheckinFormViewModel()
         {
         }
 

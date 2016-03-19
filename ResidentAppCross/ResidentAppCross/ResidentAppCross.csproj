@@ -106,7 +106,7 @@
     <Compile Include="ViewModels\Data\BadgeType.cs" />
     <Compile Include="ViewModels\Data\ChangeViewModel.cs" />
     <Compile Include="ViewModels\GenericWebViewModel.cs" />
-    <Compile Include="ViewModels\Screens\CheckingFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\CheckinFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\FormViewModel.cs" />
     <Compile Include="ViewModels\Screens\HomeMenuItemViewModel.cs" />
     <Compile Include="ViewModels\Screens\HomeMenuViewModel.cs" />
@@ -122,6 +122,7 @@
     <Compile Include="ViewModels\Screens\MaintenanceRequestIndexViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceRequestStatusViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceStartFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\PropertyConfigFormViewModel.cs" />
     <Compile Include="ViewModels\Selectors\MaintenanceRequestTypeSelectionViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceRequestFormViewModel.cs" />
     <Compile Include="ViewModels\QRScannerViewModel.cs" />
