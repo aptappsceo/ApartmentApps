@@ -14,8 +14,22 @@ namespace ResidentAppCross.iOS
 	[Register ("MapSection")]
 	partial class MapSection
 	{
+		[Outlet]
+		UIKit.UILabel _headerLabel { get; set; }
+
+		[Outlet]
+		MapKit.MKMapView _mapView { get; set; }
+
 		void ReleaseDesignerOutlets ()
 		{
+			if (_headerLabel != null) {
+				_headerLabel.Dispose ();
+				_headerLabel = null;
+			}
+			if (_mapView != null) {
+				_mapView.Dispose ();
+				_mapView = null;
+			}
 		}
 	}
 }

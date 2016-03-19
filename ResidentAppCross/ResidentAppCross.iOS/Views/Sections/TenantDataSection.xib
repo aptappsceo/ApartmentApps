@@ -1,40 +1,130 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1" customClass="TenantDataSection">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="514" height="407"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unit Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H6E-RH-6VN" userLabel="HeaderLabel">
+                    <rect key="frame" x="8" y="8" width="498" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="8E8-Jw-kFB"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ziu-m4-2FQ" userLabel="Separator">
+                    <rect key="frame" x="8" y="68" width="498" height="1"/>
+                    <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="wkw-cr-NxV"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ap. #1026, Block C 5678 Street D" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYR-K3-Rzp" userLabel="AddressLabel">
+                    <rect key="frame" x="8" y="69" width="498" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="G39-y8-qUj"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="27"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1bT-ji-vaU" userLabel="Separator">
+                    <rect key="frame" x="8" y="169" width="498" height="1"/>
+                    <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="5Ta-t3-qBE"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I9G-kv-jzt" userLabel="TenantInformationContainer">
+                    <rect key="frame" x="8" y="178" width="498" height="221"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p8p-Gm-Uk4" userLabel="TenantAvatar">
+                            <rect key="frame" x="0.0" y="0.0" width="221" height="221"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="p8p-Gm-Uk4" secondAttribute="height" multiplier="1:1" id="Hiv-HP-Iyt"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AddIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="jot-dq-U0X" userLabel="PhoneIcon">
+                            <rect key="frame" x="229" y="181" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="OuC-CV-ltD"/>
+                                <constraint firstAttribute="height" constant="40" id="YhT-iR-CGE"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+1 555 777 999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hw1-9F-scg" userLabel="PhoneLabel">
+                            <rect key="frame" x="277" y="181" width="221" height="40"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joshua Brewer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="akH-Fc-rKz" userLabel="TenantNameLabel">
+                            <rect key="frame" x="229" y="0.0" width="269" height="173"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="hw1-9F-scg" firstAttribute="leading" secondItem="jot-dq-U0X" secondAttribute="trailing" constant="8" symbolic="YES" id="1yz-cY-NQa"/>
+                        <constraint firstItem="akH-Fc-rKz" firstAttribute="leading" secondItem="p8p-Gm-Uk4" secondAttribute="trailing" constant="8" symbolic="YES" id="6Ak-FS-bsi"/>
+                        <constraint firstItem="jot-dq-U0X" firstAttribute="leading" secondItem="p8p-Gm-Uk4" secondAttribute="trailing" constant="8" id="9ik-ge-hFp"/>
+                        <constraint firstItem="p8p-Gm-Uk4" firstAttribute="leading" secondItem="I9G-kv-jzt" secondAttribute="leading" id="BCD-Fn-ped"/>
+                        <constraint firstAttribute="trailing" secondItem="akH-Fc-rKz" secondAttribute="trailing" id="DqG-Ji-qId"/>
+                        <constraint firstAttribute="trailing" secondItem="hw1-9F-scg" secondAttribute="trailing" id="G0A-Oj-ePw"/>
+                        <constraint firstItem="hw1-9F-scg" firstAttribute="top" secondItem="akH-Fc-rKz" secondAttribute="bottom" constant="8" symbolic="YES" id="H0O-0m-r1o"/>
+                        <constraint firstItem="akH-Fc-rKz" firstAttribute="top" secondItem="I9G-kv-jzt" secondAttribute="top" id="J80-me-U6l"/>
+                        <constraint firstAttribute="bottom" secondItem="jot-dq-U0X" secondAttribute="bottom" id="NiX-2W-gWS"/>
+                        <constraint firstItem="hw1-9F-scg" firstAttribute="height" secondItem="jot-dq-U0X" secondAttribute="height" id="WwC-Vx-h3m"/>
+                        <constraint firstAttribute="bottom" secondItem="hw1-9F-scg" secondAttribute="bottom" id="atH-Mc-CFx"/>
+                        <constraint firstItem="p8p-Gm-Uk4" firstAttribute="top" secondItem="I9G-kv-jzt" secondAttribute="top" id="gtL-Xk-rHp"/>
+                        <constraint firstAttribute="bottom" secondItem="p8p-Gm-Uk4" secondAttribute="bottom" id="q0Y-Ic-Bzz"/>
+                    </constraints>
+                </view>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="I9G-kv-jzt" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="6ct-Fa-x8p"/>
+                <constraint firstAttribute="bottomMargin" secondItem="I9G-kv-jzt" secondAttribute="bottom" id="9LL-su-wHc"/>
+                <constraint firstItem="TYR-K3-Rzp" firstAttribute="top" secondItem="Ziu-m4-2FQ" secondAttribute="bottom" id="EGE-LH-lm9"/>
+                <constraint firstItem="1bT-ji-vaU" firstAttribute="top" secondItem="TYR-K3-Rzp" secondAttribute="bottom" id="G1p-JA-LTz"/>
+                <constraint firstItem="1bT-ji-vaU" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="NMf-7c-ICJ"/>
+                <constraint firstAttribute="trailingMargin" secondItem="H6E-RH-6VN" secondAttribute="trailing" id="V4v-dx-eus"/>
+                <constraint firstItem="TYR-K3-Rzp" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="XnA-cb-2hs"/>
+                <constraint firstItem="Ziu-m4-2FQ" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="ZOy-jS-g9R"/>
+                <constraint firstItem="1bT-ji-vaU" firstAttribute="trailing" secondItem="1" secondAttribute="trailingMargin" id="aah-cu-kjs"/>
+                <constraint firstAttribute="trailingMargin" secondItem="Ziu-m4-2FQ" secondAttribute="trailing" id="bmP-q2-Le0"/>
+                <constraint firstItem="I9G-kv-jzt" firstAttribute="top" secondItem="1bT-ji-vaU" secondAttribute="bottom" constant="8" symbolic="YES" id="gN1-6h-GRe"/>
+                <constraint firstAttribute="trailingMargin" secondItem="TYR-K3-Rzp" secondAttribute="trailing" id="hlt-rD-nZz"/>
+                <constraint firstItem="H6E-RH-6VN" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="mGu-VN-xZP"/>
+                <constraint firstAttribute="trailingMargin" secondItem="I9G-kv-jzt" secondAttribute="trailing" id="w9U-sV-9oi"/>
+                <constraint firstItem="Ziu-m4-2FQ" firstAttribute="top" secondItem="H6E-RH-6VN" secondAttribute="bottom" id="yRe-ed-7vX"/>
+                <constraint firstItem="H6E-RH-6VN" firstAttribute="top" secondItem="1" secondAttribute="topMargin" id="zXA-L8-pFk"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="_addressLabel" destination="TYR-K3-Rzp" id="L5D-qT-3XM"/>
+                <outlet property="_headerLabel" destination="H6E-RH-6VN" id="JCI-tr-S43"/>
+                <outlet property="_phoneIcon" destination="jot-dq-U0X" id="jFk-rQ-xwW"/>
+                <outlet property="_phoneLabel" destination="hw1-9F-scg" id="ZAQ-s1-Fg0"/>
+                <outlet property="_tenantAvatar" destination="p8p-Gm-Uk4" id="h3l-AP-ma2"/>
+                <outlet property="_tenantInformationContainer" destination="I9G-kv-jzt" id="49p-j4-mm3"/>
+                <outlet property="_tenantNameLabel" destination="akH-Fc-rKz" id="ymf-7C-96v"/>
+            </connections>
+            <point key="canvasLocation" x="475" y="490.5"/>
         </view>
     </objects>
     <resources>
-        <image name="HouseIcon" width="160" height="160"/>
-        <image name="MaintenaceIcon" width="160" height="160"/>
-        <image name="OfficerIcon" width="160" height="160"/>
-        <image name="PartnersIcon" width="160" height="160"/>
-        <image name="PayIcon" width="160" height="160"/>
-        <image name="WhiteHomeIcon.png" width="160" height="160"/>
-        <image name="LOGIN.png" width="640" height="1136"/>
-        <image name="logo_03.png" width="375" height="273"/>
-        <image name="MaintenaceIcon.png" width="160" height="160"/>
-        <image name="MaintenanceRequestMainIcon.png" width="160" height="160"/>
-        <image name="OfficerIcon.png" width="160" height="160"/>
-        <image name="PartnersIcon.png" width="160" height="160"/>
-        <image name="PayIcon.png" width="160" height="160"/>
-        <image name="SecurityIcon.png" width="128" height="128"/>
-        <image name="SettingsIcon.png" width="160" height="160"/>
-        <image name="SignOutIcon.png" width="160" height="160"/>
-        <image name="UsernameIcon.png" width="128" height="128"/>
-        <image name="Icon.png" width="96" height="96"/>
-        <image name="AccountIcon.png" width="160" height="160"/>
         <image name="AddIcon.png" width="160" height="160"/>
-        <image name="AppartmentAppsIcon.png" width="160" height="160"/>
-        <image name="background.png" width="640" height="1136"/>
-        <image name="HouseIcon.png" width="160" height="160"/>
     </resources>
 </document>

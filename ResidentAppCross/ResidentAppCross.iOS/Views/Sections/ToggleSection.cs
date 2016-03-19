@@ -5,9 +5,9 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	partial class ButtonAndButtonSection : UIView
+	partial class ToggleSection : UIView
 	{
-		public ButtonAndButtonSection (IntPtr handle) : base (handle)
+		public ToggleSection (IntPtr handle) : base (handle)
 		{
 		}
 	}

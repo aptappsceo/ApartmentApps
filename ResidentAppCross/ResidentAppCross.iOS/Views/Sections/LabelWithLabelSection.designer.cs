@@ -14,8 +14,22 @@ namespace ResidentAppCross.iOS
 	[Register ("LabelWithLabelSection")]
 	partial class LabelWithLabelSection
 	{
+		[Outlet]
+		UIKit.UILabel _firstLabel { get; set; }
+
+		[Outlet]
+		UIKit.UILabel _secondLabel { get; set; }
+
 		void ReleaseDesignerOutlets ()
 		{
+			if (_firstLabel != null) {
+				_firstLabel.Dispose ();
+				_firstLabel = null;
+			}
+			if (_secondLabel != null) {
+				_secondLabel.Dispose ();
+				_secondLabel = null;
+			}
 		}
 	}
 }
