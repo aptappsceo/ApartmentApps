@@ -1,12 +1,6 @@
 ﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.iPhone (4)" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/Views/Sections/SegmentSelectionSection.designer.cs">
-    <Files>
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/Sections/SegmentSelectionSection.designer.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/Sections/SegmentSelectionSection.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/Sections/PhotoGallerySection.designer.cs" Line="1" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

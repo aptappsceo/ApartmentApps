@@ -11,18 +11,11 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("CallToActionSection")]
-	partial class CallToActionSection
+	[Register ("MapSection")]
+	partial class MapSection
 	{
-		[Outlet]
-		UIKit.UIButton ActionButton { get; set; }
-
 		void ReleaseDesignerOutlets ()
 		{
-			if (ActionButton != null) {
-				ActionButton.Dispose ();
-				ActionButton = null;
-			}
 		}
 	}
 }

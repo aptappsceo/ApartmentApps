@@ -337,6 +337,7 @@
     <InterfaceDefinition Include="Views\Sections\HeaderSection.xib" />
     <InterfaceDefinition Include="Views\Sections\LabelWithLabelSection.xib" />
     <InterfaceDefinition Include="Views\Sections\ButtonAndButtonSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\MapSection.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -442,6 +443,10 @@
     <Compile Include="Views\Sections\HeaderSection.cs" />
     <Compile Include="Views\Sections\HeaderSection.designer.cs">
       <DependentUpon>HeaderSection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sections\MapSection.cs" />
+    <Compile Include="Views\Sections\MapSection.designer.cs">
+      <DependentUpon>MapSection.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
