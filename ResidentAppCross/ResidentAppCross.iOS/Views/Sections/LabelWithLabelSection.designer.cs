@@ -12,7 +12,7 @@ using UIKit;
 namespace ResidentAppCross.iOS
 {
 	[Register ("LabelWithLabelSection")]
-	partial class LabelWithLabelSection
+	public partial class LabelWithLabelSection
 	{
 		[Outlet]
 		UIKit.UILabel _firstLabel { get; set; }

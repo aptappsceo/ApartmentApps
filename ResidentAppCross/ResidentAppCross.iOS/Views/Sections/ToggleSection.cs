@@ -5,10 +5,19 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	partial class ToggleSection : UIView
+    public partial class ToggleSection : SectionViewBase
 	{
-		public ToggleSection (IntPtr handle) : base (handle)
+	    public ToggleSection()
+	    {
+	    }
+
+	    public ToggleSection (IntPtr handle) : base (handle)
 		{
 		}
+
+	    public UISwitch Switch => _switch;
+	    public UILabel HeaderLabel => _headerLabel;
+	    public UILabel SubHeaderLabel => _subHeaderLabel;
+
 	}
 }
