@@ -221,7 +221,8 @@ namespace ResidentAppCross.iOS.Views
                             IsFocusable = item => item.Focusable
                         }
                     };
-
+                    _tableSection.Table.EstimatedRowHeight = 250f;
+                    _tableSection.Table.RowHeight = UITableView.AutomaticDimension;
                     _tableSection.Source = source;
                     _tableSection.ReloadData();
                     _tableSection.HeightConstraint.Constant = 200;
