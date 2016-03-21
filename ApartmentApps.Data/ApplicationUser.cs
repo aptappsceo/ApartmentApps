@@ -30,6 +30,7 @@ namespace ApartmentApps.Data
         public TimeZoneInfo TimeZone => Property.TimeZone ?? TimeZoneInfo.Local;
 
         public virtual ICollection<MaitenanceRequest> MaitenanceRequests { get; set; }
+        public virtual ICollection<UserAlert> UserAlerts { get; set; }
 
         public string DevicePlatform { get; set; }
 
@@ -51,4 +52,24 @@ namespace ApartmentApps.Data
         }
     }
 
+    public class UserAlert
+    {
+        [Key]
+        public int Id { get; set; }
+
+        public string UserId { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
+
+        public string Title { get; set; }
+
+        public string Message { get; set; }
+
+        public string Type { get; set; }
+
+        public int RelatedId { get; set; }
+    }
 }

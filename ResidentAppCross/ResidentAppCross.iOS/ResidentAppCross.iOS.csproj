@@ -64,10 +64,13 @@
     <MtouchProfiling>True</MtouchProfiling>
     <CodesignKey>iPhone Developer: Josh Brewer (B5LK3679EV)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
-    <CodesignProvision>d2113118-05f2-43cc-84ac-843a88ed2dd1</CodesignProvision>
+    <CodesignProvision>
+    </CodesignProvision>
     <MtouchSdkVersion>9.2</MtouchSdkVersion>
     <MtouchLink>None</MtouchLink>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
+    <CodesignResourceRules />
+    <CodesignExtraArgs />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhone'">
     <CodesignKey>iPhone Distribution</CodesignKey>

@@ -1,4 +1,6 @@
 using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using ApartmentApps.Data;
 using Microsoft.Azure.NotificationHubs;
@@ -61,6 +63,7 @@ namespace ApartmentApps.Api
         public async Task<bool> SendToRole(int propertyId, string role, string message)
         {
             var pns = "apns";
+         
             return await Send(message, pns, $"propertyid:{propertyId} && role:{role}");
 
         }
@@ -69,32 +72,67 @@ namespace ApartmentApps.Api
     /// <summary>
     /// This service is used to handle when push notifications should be sent out.
     /// </summary>
-    public class PushNotificationsService : IService, IMaintenanceRequestCompletedEvent, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent
+    public class AlertsService : IService, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent
     {
         private IPushNotifiationHandler _pushHandler;
 
-        public PushNotificationsService(IPushNotifiationHandler pushHandler)
+        public AlertsService(IPushNotifiationHandler pushHandler)
         {
             _pushHandler = pushHandler;
         }
-        public void MaintenanceRequestCompleted(MaitenanceRequest maitenanceRequest)
-        {
 
+        public void MaintenanceRequestSubmited(ApplicationDbContext ctx, MaitenanceRequest maitenanceRequest)
+        {
+            if (maitenanceRequest.User.PropertyId != null)
+                SendAlert(ctx, maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id);
+            
         }
 
-
-        public void MaintenanceRequestSubmited(MaitenanceRequest maitenanceRequest)
-        {
-            _pushHandler.SendToUser(maitenanceRequest.UserId, "New maintenance request has been created");
-        }
-
-        public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
+        public void MaintenanceRequestCheckin(ApplicationDbContext ctx, MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
         {
             if (request.User?.PropertyId != null)
             {
-                _pushHandler.SendToRole(request.User.PropertyId.Value, request.UserId, $"Maintenance {maitenanceRequest.StatusId}");
+                SendAlert(ctx, request.User, $"Maintenance {maitenanceRequest.StatusId}", maitenanceRequest.Comments,"Maintenance", request.Id);
+            }
+        }
+
+        public void SendAlert(ApplicationDbContext ctx,ApplicationUser user, string title, string message, string type, int relatedId = 0)
+        {
+            ctx.UserAlerts.Add(new UserAlert()
+            {
+                Title = title,
+                Message = message,
+                CreatedOn = user.Property.TimeZone.Now(),
+                RelatedId = relatedId,
+                Type = type,
+                UserId = user.Id
+            });
+            ctx.SaveChanges();
+            _pushHandler.SendToUser(user.Id, message);
+
+        }
+        public void SendAlert(ApplicationDbContext ctx, int propertyId, string role, string title, string message, string type, int relatedId = 0)
+        {
+            foreach (var item in ctx.Users.Include(p=>p.Property).Where(x => x.PropertyId == propertyId && x.Roles.Any(p => p.RoleId == role)))
+            {
+                ctx.UserAlerts.Add(new UserAlert()
+                {
+                    Title = title,
+                    Message = message,
+                    CreatedOn = item.TimeZone.Now(),
+                    RelatedId = relatedId,
+                    Type = type,
+                    UserId = item.Id
+                });
             }
             
+            ctx.SaveChanges();
+            _pushHandler.SendToRole(propertyId, role, title);
+
         }
     }
+
+
+
+
 }

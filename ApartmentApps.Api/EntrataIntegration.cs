@@ -108,12 +108,12 @@ namespace ApartmentApps.Api
             return true;
         }
 
-        public void MaintenanceRequestSubmited(MaitenanceRequest maitenanceRequest)
+        public void MaintenanceRequestSubmited(ApplicationDbContext ctx, MaitenanceRequest maitenanceRequest)
         {
             // Sync with entrata on work order
         }
 
-        public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
+        public void MaintenanceRequestCheckin(ApplicationDbContext ctx,MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
         {
             
         }

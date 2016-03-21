@@ -95,6 +95,7 @@ namespace ApartmentApps.Data
         public virtual IDbSet<CourtesyOfficerLocation> CourtesyOfficerLocations { get; set; }
         public virtual IDbSet<IncidentReport> IncidentReports { get; set; }
         public virtual IDbSet<IncidentReportCheckin> IncidentReportCheckins { get; set; }
+        public virtual IDbSet<UserAlert> UserAlerts { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

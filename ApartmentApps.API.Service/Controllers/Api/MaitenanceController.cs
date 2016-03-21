@@ -123,26 +123,29 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("SubmitRequest")]
         public void SubmitRequest(MaitenanceRequestModel request)
         {
-            var images = request.Images.Select(Convert.FromBase64String).ToList();
+            var images = request.Images?.Select(Convert.FromBase64String).ToList();
             MaintenanceService.SubmitRequest(CurrentUser, request.Comments, request.MaitenanceRequestTypeId,request.PetStatus,request.PermissionToEnter, images);
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("CompleteRequest")]
-        public void CompleteRequest(int id, string comments, List<Byte[]> images)
+        public void CompleteRequest(int id, string comments, List<string> images)
         {
-            MaintenanceService.CompleteRequest(CurrentUser, id, comments, images);
+            var photos = images?.Select(Convert.FromBase64String).ToList();
+            MaintenanceService.CompleteRequest(CurrentUser, id, comments, photos);
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("PauseRequest")]
-        public void PauseRequest(int id, string comments, List<Byte[]> images)
+        public void PauseRequest(int id, string comments, List<string> images)
         {
-            MaintenanceService.PauseRequest(CurrentUser, id, comments, images);
+            var photos = images?.Select(Convert.FromBase64String).ToList();
+            MaintenanceService.PauseRequest(CurrentUser, id, comments, photos);
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("StartRequest")]
-        public void StartRequest(int id, string comments, List<Byte[]> images)
+        public void StartRequest(int id, string comments, List<string> images)
         {
-            MaintenanceService.StartRequest(CurrentUser, id, comments, images);
+            var photos = images?.Select(Convert.FromBase64String).ToList();
+            MaintenanceService.StartRequest(CurrentUser, id, comments, photos);
         }
 
         [System.Web.Http.HttpGet]
