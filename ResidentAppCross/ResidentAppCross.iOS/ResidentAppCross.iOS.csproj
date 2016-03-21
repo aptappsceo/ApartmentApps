@@ -89,14 +89,6 @@
     <Reference Include="Microsoft.WindowsAzure.Messaging.iOS">
       <HintPath>..\..\Components\azure-messaging-1.1.5.6\lib\ios-unified\Microsoft.WindowsAzure.Messaging.iOS.dll</HintPath>
     </Reference>
-    <Reference Include="MvvmCross.Plugins.Location, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\Xamarin.iOS10\MvvmCross.Plugins.Location.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MvvmCross.Plugins.Location.iOS, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\Xamarin.iOS10\MvvmCross.Plugins.Location.iOS.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -151,6 +143,12 @@
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
       <HintPath>Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Plugins.Location, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\Xamarin.iOS10\MvvmCross.Plugins.Location.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Plugins.Location.iOS, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\Xamarin.iOS10\MvvmCross.Plugins.Location.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +347,8 @@
     <InterfaceDefinition Include="Views\Sections\ToggleSection.xib" />
     <InterfaceDefinition Include="Views\Sections\TableSection.xib" />
     <InterfaceDefinition Include="Views\TableSources\TicketIndexTableViewCell.xib" />
+    <InterfaceDefinition Include="Views\Sections\VerticalCollectionSection.xib" />
+    <InterfaceDefinition Include="Views\CollectionItems\TicketCollectionViewCell.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -481,6 +481,14 @@
     <Compile Include="Views\TableSources\TicketIndexTableViewCell.designer.cs">
       <DependentUpon>TicketIndexTableViewCell.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Sections\VerticalCollectionSection.cs" />
+    <Compile Include="Views\Sections\VerticalCollectionSection.designer.cs">
+      <DependentUpon>VerticalCollectionSection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CollectionItems\TicketCollectionViewCell.cs" />
+    <Compile Include="Views\CollectionItems\TicketCollectionViewCell.designer.cs">
+      <DependentUpon>TicketCollectionViewCell.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="azure-messaging">
@@ -570,4 +578,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Views\CollectionItems\" />
+  </ItemGroup>
 </Project>

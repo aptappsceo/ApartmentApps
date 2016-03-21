@@ -1,11 +1,13 @@
-﻿// WARNING
+// WARNING
 //
-// This file has been generated automatically by Xamarin Studio to store outlets and
-// actions made in the UI designer. If it is removed, they will be lost.
-// Manual changes to this file may not be handled correctly.
+// This file has been generated automatically by Xamarin Studio from the outlets and
+// actions declared in your storyboard file.
+// Manual changes to this file will not be maintained.
 //
 using Foundation;
+using System;
 using System.CodeDom.Compiler;
+using UIKit;
 
 namespace ResidentAppCross.iOS
 {
@@ -29,37 +31,12 @@ namespace ResidentAppCross.iOS
 
 		[Outlet]
 		UIKit.UICollectionView _photoContainer { get; set; }
-		
+
 		void ReleaseDesignerOutlets ()
 		{
-			if (_headerIcon != null) {
-				_headerIcon.Dispose ();
-				_headerIcon = null;
-			}
-
-			if (_commentsLabel != null) {
-				_commentsLabel.Dispose ();
-				_commentsLabel = null;
-			}
-
 			if (_headerLabel != null) {
 				_headerLabel.Dispose ();
 				_headerLabel = null;
-			}
-
-			if (_noPhotosLabel != null) {
-				_noPhotosLabel.Dispose ();
-				_noPhotosLabel = null;
-			}
-
-			if (_photoContainer != null) {
-				_photoContainer.Dispose ();
-				_photoContainer = null;
-			}
-
-			if (_dateLabel != null) {
-				_dateLabel.Dispose ();
-				_dateLabel = null;
 			}
 		}
 	}
