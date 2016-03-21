@@ -13,7 +13,7 @@ namespace ResidentAppCross.iOS.Views.TableSources
     {
 
         public object[] Items { get; set; }
-        public TableDataBinding Binding { get; set; }
+        public CollectionDataBinding Binding { get; set; }
 
         public Type CellType => Binding.CellType;
         public string CellIdentifier => CellType?.Name;
@@ -66,7 +66,7 @@ namespace ResidentAppCross.iOS.Views.TableSources
         }
     }
 
-    public class TableDataBinding<C,T> : TableDataBinding where C : UITableViewCell
+    public class TableDataBinding<C,T> : CollectionDataBinding where C : UITableViewCell
     {
 
         public Action<C, T> Bind
@@ -93,7 +93,34 @@ namespace ResidentAppCross.iOS.Views.TableSources
         public override Type DataType => typeof (T);
     }
 
-    public class TableDataBinding
+    public class CollectionDataBinding<C,T> : CollectionDataBinding where C : UICollectionViewCell
+    {
+
+        public Action<C, T> Bind
+        {
+            set { ObjectBind = (c, o) => value((C)c, (T)o); }
+        }
+
+        public Func<T, bool> IsMoveable
+        {
+            set { ObjectIsMoveable = o => value((T)o); }
+        }
+
+        public Func<T, bool> IsFocusable
+        {
+            set { ObjectIsFocusable = o => value((T)o); }
+        }
+
+        public Func<T, bool> IsEditable
+        {
+            set { ObjectIsEditable = o => value((T)o); }
+        }
+
+        public override Type CellType => typeof (C);
+        public override Type DataType => typeof (T);
+    }
+
+    public class CollectionDataBinding
     {
         public virtual Type CellType { get; }
         public virtual Type DataType { get; }

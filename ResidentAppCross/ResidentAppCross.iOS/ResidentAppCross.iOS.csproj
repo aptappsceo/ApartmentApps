@@ -373,6 +373,7 @@
     <Compile Include="Views\Attributes\ViewsAttributes.cs" />
     <Compile Include="Views\BaseForm.cs" />
     <Compile Include="Views\CheckinFormView.cs" />
+    <Compile Include="Views\Sections\CollectionSections\GenericCollectionViewSource.cs" />
     <Compile Include="Views\Sections\Intefaces\ISoftKeyboardEventsListener.cs" />
     <Compile Include="Views\Sections\Intefaces\IFormEventsListener.cs" />
     <Compile Include="Views\Sections\Intefaces\IFormTapListener.cs" />
@@ -578,7 +579,5 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Views\CollectionItems\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

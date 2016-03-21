@@ -6,7 +6,9 @@ using System.Text;
 using CoreLocation;
 using Foundation;
 using MapKit;
+using MvvmCross.Binding.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
+using ResidentAppCross.iOS.Views.Sections.CollectionSections;
 using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
@@ -37,6 +39,7 @@ namespace ResidentAppCross.iOS.Views
         private SegmentSelectionSection _segmentSelectionSection;
         private ToggleSection _toggleSection;
         private TableSection _tableSection;
+        private VerticalCollectionSection _collectionSection;
 
         public ButtonToolbarSection ButtonToolbarSection
         {
@@ -232,6 +235,44 @@ namespace ResidentAppCross.iOS.Views
         }
 
 
+        public VerticalCollectionSection CollectionSection
+        {
+            get
+            {
+
+                if (_collectionSection == null)
+                {
+
+                    var collection = new[] {
+                        new TestDataItem() { Title = "Item 1" },
+                        new TestDataItem() { Title = "Editable Item", Editable = true},
+                        new TestDataItem() { Title = "Third Item" },
+                        new TestDataItem() { Title = "Movable Item" , Moveable = true},
+                        new TestDataItem() { Title = "5th Item" },
+                        new TestDataItem() { Title = "Last Item" }
+                    };
+
+                    _collectionSection = Formals.Create<VerticalCollectionSection>();
+                    _collectionSection.HeightConstraint.Constant = 600;
+                    _collectionSection.SetVerticalTableMode(200);
+
+                    _collectionSection.Collection.RegisterClassForCell(typeof(TicketCollectionViewCell), TicketCollectionViewCell.Key);
+                    _collectionSection.Collection.RegisterNibForCell(UINib.FromName("TicketCollectionViewCell", NSBundle.MainBundle), TicketCollectionViewCell.Key);
+
+                    _collectionSection.Collection.Source = new GenericCollectionViewSource()
+                    {
+                        Items = collection.Cast<object>().ToArray(),
+                        Binding = new CollectionDataBinding<TicketCollectionViewCell, TestDataItem>()
+                        {
+                            Bind = (c,i) => { }
+                        }
+                    };
+                    _collectionSection.Collection.ReloadData();
+                }
+                return _collectionSection;
+            }
+        }
+
         public override void BindForm()
         {
             base.BindForm();
@@ -241,7 +282,9 @@ namespace ResidentAppCross.iOS.Views
         {
             base.GetContent(content);
             content.Add(HeaderSection);
-            content.Add(TableSection);
+           // content.Add(TableSection);
+            content.Add(CollectionSection);
+            CollectionSection.Collection.ReloadData();
             content.Add(LabelWithButtonSection);
             content.Add(PhotoGallerySection);
             content.Add(ToggleSection);

@@ -18,5 +18,7 @@ namespace ResidentAppCross.iOS
 		public TicketCollectionViewCell (IntPtr handle) : base (handle)
 		{
 		}
+
+	    public override NSString ReuseIdentifier => Key;
 	}
 }
