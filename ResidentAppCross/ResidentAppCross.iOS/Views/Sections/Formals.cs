@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Foundation;
 using ObjCRuntime;
@@ -6,16 +7,19 @@ using UIKit;
 public static class Formals
 {
 
-
     public static T Create<T>(bool defaultSetup = true) where T : NSObject
     {
+        return (T)Create(typeof(T),defaultSetup);
+    }
 
+    public static object Create(Type type, bool defaultSetup = true)
+    {
 
         NSArray arr;
-        var nibName = typeof(T).Name;
+        var nibName = type.Name;
         arr = NSBundle.MainBundle.LoadNib(nibName, null, null);
 
-        var nsObject = Runtime.GetNSObject<T>(arr.ValueAt(0));
+        var nsObject = Runtime.GetNSObject(arr.ValueAt(0));
 
         if (defaultSetup)
         {
@@ -25,7 +29,6 @@ public static class Formals
                 view.TranslatesAutoresizingMaskIntoConstraints = false;
             }
         }
-
 
         return nsObject;
     }

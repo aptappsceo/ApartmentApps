@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using CoreLocation;
 using Foundation;
 using MapKit;
 using ResidentAppCross.iOS.Views.Attributes;
+using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
@@ -34,6 +36,7 @@ namespace ResidentAppCross.iOS.Views
         private PhotoGallerySection _photoGallerySection;
         private SegmentSelectionSection _segmentSelectionSection;
         private ToggleSection _toggleSection;
+        private TableSection _tableSection;
 
         public ButtonToolbarSection ButtonToolbarSection
         {
@@ -178,11 +181,55 @@ namespace ResidentAppCross.iOS.Views
                     _toggleSection = Formals.Create<ToggleSection>();
                     _toggleSection.HeightConstraint.Constant = 150;
                     _toggleSection.HeaderLabel.Text = "Some Switch here";
-                    _toggleSection.SubHeaderLabel.Text = "This is a very long text to simulate such behaviour when you gotta tell the user about all the possible sequences of setting the switch to true. Right, this is just a dummy text.";
+                    _toggleSection.SubHeaderLabel.Text = "This is a very long text to simulate such behaviour when you gotta tell the user about all the possible consequences of setting the switch to true. Right, this is just a dummy text.";
                 }
                 return _toggleSection;
             }
         }
+
+        public override float VerticalSectionsSpacing
+        {
+            get { return 2f; }
+            set { }
+        }
+
+        public TableSection TableSection
+        {
+            get
+            {
+                if (_tableSection == null)
+                {
+                    _tableSection = Formals.Create<TableSection>();
+
+                    var collection = new[] {
+                        new TestDataItem() { Title = "Item 1" },
+                        new TestDataItem() { Title = "Editable Item", Editable = true},
+                        new TestDataItem() { Title = "Third Item" },
+                        new TestDataItem() { Title = "Movable Item" , Moveable = true},
+                        new TestDataItem() { Title = "5th Item" },
+                        new TestDataItem() { Title = "Last Item" }
+                    };
+
+                    var source = new TableSource()
+                    {
+                        Items = collection.Cast<object>().ToArray(),
+                        Binding = new TableDataBinding<TicketIndexTableViewCell, TestDataItem>()
+                        {
+                            Bind = (cell,item) => { cell.HeaderLabel.Text = item.Title; },
+                            IsMoveable = item => item.Moveable,
+                            IsEditable = item => item.Editable,
+                            IsFocusable = item => item.Focusable
+                        }
+                    };
+
+                    _tableSection.Source = source;
+                    _tableSection.ReloadData();
+                    _tableSection.HeightConstraint.Constant = 200;
+                }
+                return _tableSection;
+            }
+        }
+
 
         public override void BindForm()
         {
@@ -193,6 +240,7 @@ namespace ResidentAppCross.iOS.Views
         {
             base.GetContent(content);
             content.Add(HeaderSection);
+            content.Add(TableSection);
             content.Add(LabelWithButtonSection);
             content.Add(PhotoGallerySection);
             content.Add(ToggleSection);

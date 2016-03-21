@@ -144,13 +144,13 @@ namespace ResidentAppCross.iOS
                 return;
             }
 
-            var view = new AVCaptureScannerViewController(
-            new MobileBarcodeScanningOptions()
+            var view = new AVCaptureScannerViewController(new MobileBarcodeScanningOptions()
             {
             },
             new MobileBarcodeScanner()
             {
             });
+
             view.OnScannedResult += _ =>
             {
                 NavigationController.PopViewController(true);

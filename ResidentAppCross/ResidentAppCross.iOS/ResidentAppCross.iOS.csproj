@@ -348,6 +348,7 @@
     <InterfaceDefinition Include="Views\Sections\ButtonToolbarSection.xib" />
     <InterfaceDefinition Include="Views\Sections\ToggleSection.xib" />
     <InterfaceDefinition Include="Views\Sections\TableSection.xib" />
+    <InterfaceDefinition Include="Views\TableSources\TicketIndexTableViewCell.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -475,6 +476,10 @@
     <Compile Include="Views\Sections\TableSection.cs" />
     <Compile Include="Views\Sections\TableSection.designer.cs">
       <DependentUpon>TableSection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableSources\TicketIndexTableViewCell.cs" />
+    <Compile Include="Views\TableSources\TicketIndexTableViewCell.designer.cs">
+      <DependentUpon>TicketIndexTableViewCell.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

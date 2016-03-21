@@ -10,5 +10,12 @@ namespace ResidentAppCross.iOS
 		public TenantDataSection (IntPtr handle) : base (handle)
 		{
 		}
+
+	    public TenantDataSection()
+	    {
+	    }
+
+
+
 	}
 }
