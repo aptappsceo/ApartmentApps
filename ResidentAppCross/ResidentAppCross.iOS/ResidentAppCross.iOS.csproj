@@ -339,6 +339,7 @@
     <InterfaceDefinition Include="Views\Sections\MapSection.xib" />
     <InterfaceDefinition Include="Views\Sections\ButtonToolbarSection.xib" />
     <InterfaceDefinition Include="Views\Sections\ToggleSection.xib" />
+    <InterfaceDefinition Include="Views\Sections\TableSection.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -457,6 +458,10 @@
     <Compile Include="Views\Sections\ToggleSection.cs" />
     <Compile Include="Views\Sections\ToggleSection.designer.cs">
       <DependentUpon>ToggleSection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sections\TableSection.cs" />
+    <Compile Include="Views\Sections\TableSection.designer.cs">
+      <DependentUpon>TableSection.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
