@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using ApartmentApps.Client;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
+using MvvmCross.Platform.IoC;
+using MvvmCross.Plugins.Location;
 using Newtonsoft.Json.Linq;
 using ResidentAppCross;
 using ResidentAppCross.ServiceClient;
@@ -25,13 +27,16 @@ public class App : MvxApplication
     public App()
     {
         //Mvx.RegisterType<ICalculation, Calculation>();
+        Mvx.ConstructAndRegisterSingleton<IImageService, ImageService>();
+        Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
         //Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
+        //Mvx.RegisterSingleton<ILocationService,LocationService>();
         var client = new ApartmentAppsClient();
         //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);
         Mvx.RegisterSingleton<ILoginManager>(new LoginService(client));
-        Mvx.ConstructAndRegisterSingleton<IImageService,ImageService>();
+       
 
     }
 

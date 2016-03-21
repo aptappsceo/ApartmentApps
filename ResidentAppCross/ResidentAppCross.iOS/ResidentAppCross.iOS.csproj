@@ -89,6 +89,14 @@
     <Reference Include="Microsoft.WindowsAzure.Messaging.iOS">
       <HintPath>..\..\Components\azure-messaging-1.1.5.6\lib\ios-unified\Microsoft.WindowsAzure.Messaging.iOS.dll</HintPath>
     </Reference>
+    <Reference Include="MvvmCross.Plugins.Location, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\Xamarin.iOS10\MvvmCross.Plugins.Location.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvvmCross.Plugins.Location.iOS, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\Xamarin.iOS10\MvvmCross.Plugins.Location.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -350,6 +358,7 @@
     <None Include="EntitlementsRelease.plist" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrap\LocationPluginBootstrap.cs" />
     <Compile Include="Bootstrap\MessengerPluginBootstrap.cs" />
     <Compile Include="Bootstrap\PictureChooserPluginBootstrap.cs" />
     <Compile Include="Extensions\UIImageExtensions.cs" />
