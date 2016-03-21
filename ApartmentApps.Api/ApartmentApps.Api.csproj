@@ -174,7 +174,7 @@
     <Compile Include="MaintenanceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyIntegrationAddon.cs" />
-    <Compile Include="PushNotificationsService.cs" />
+    <Compile Include="AlertsService.cs" />
     <Compile Include="YardiIntegration.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,12 +4,12 @@ namespace ApartmentApps.Api
 {
     public interface IMaintenanceRequestCheckinEvent
     {
-        void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request);
+        void MaintenanceRequestCheckin(ApplicationDbContext ctx, MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request);
     }
 
     public interface IIncidentReportCheckinEvent
     {
-        void IncidentReportCheckin(IncidentReportCheckin incidentReportCheckin, IncidentReport incidentReport);
+        void IncidentReportCheckin(ApplicationDbContext ctx, IncidentReportCheckin incidentReportCheckin, IncidentReport incidentReport);
     }
  
 }

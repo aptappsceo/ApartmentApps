@@ -10,7 +10,7 @@ using System.CodeDom.Compiler;
 namespace ResidentAppCross.iOS
 {
 	[Register ("ToggleSection")]
-	partial class ToggleSection
+	public partial class ToggleSection
 	{
 		[Outlet]
 		UIKit.UILabel _headerLabel { get; set; }

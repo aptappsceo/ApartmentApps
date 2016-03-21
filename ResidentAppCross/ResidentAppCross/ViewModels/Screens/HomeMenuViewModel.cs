@@ -31,14 +31,15 @@ namespace ResidentAppCross
                 });
             }
 
-       
-
-            //MenuItems.Add(new HomeMenuItemViewModel()
-            //{
-            //    Name = "(Test) Request Status",
-            //    Icon = SharedResources.Icons.MaintenaceIcon,
-            //    Command = RequestStatusCommand
-            //});
+            if (loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
+            {
+                MenuItems.Add(new HomeMenuItemViewModel()
+                {
+                    Name = "Configure Property",
+                    Icon = SharedResources.Icons.HouseIcon,
+                    Command = ConfigurePropertyCommand
+                });
+            }
 
             MenuItems.Add(new HomeMenuItemViewModel()
             {
@@ -105,6 +106,13 @@ namespace ResidentAppCross
         public ICommand RequestStatusCommand => new MvxCommand(() =>
         {
             ShowViewModel<MaintenanceStartFormViewModel>();
+        });
+        public ICommand ConfigurePropertyCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<PropertyConfigFormViewModel>(vm =>
+            {
+                //vm.Url = Mvx.Resolve<IApartmentAppsAPIService>().BaseUri + "/generalviews/index";
+            });
         });
 
         public ICommand RequestsIndexCommand => new MvxCommand(() =>

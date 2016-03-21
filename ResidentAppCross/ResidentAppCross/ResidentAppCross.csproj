@@ -95,6 +95,7 @@
     <Compile Include="Commands\StubCommands.cs" />
     <Compile Include="Commands\TaskCommand.cs" />
     <Compile Include="Events\ViewProgressEvents.cs" />
+    <Compile Include="Extensions\DistanceCalcs.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Interfaces\IDisposableContainer.cs" />
     <Compile Include="Interfaces\IItem.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Services\ApplicationContext.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\IQRService.cs" />
+    <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\ViewModelConfigurator.cs" />
     <Compile Include="ViewModels\Data\BadgeType.cs" />
     <Compile Include="ViewModels\Data\ChangeViewModel.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="ViewModels\Screens\MaintenanceRequestStatusViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceStartFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\PropertyConfigFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\TestFormViewModel.cs" />
     <Compile Include="ViewModels\Selectors\MaintenanceRequestTypeSelectionViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceRequestFormViewModel.cs" />
     <Compile Include="ViewModels\QRScannerViewModel.cs" />
@@ -156,6 +159,10 @@
     </Reference>
     <Reference Include="MvvmCross.Plugins.File, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\MvvmCross.Plugin.File.4.0.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Plugins.File.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Plugins.Location, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Plugins.Location.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="MvvmCross.Plugins.Messenger, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\MvvmCross.Plugin.Messenger.4.0.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Plugins.Messenger.dll</HintPath>

@@ -25,6 +25,8 @@ namespace ApartmentApps.Data
         } 
 
     }
+
+    
     public class ApplicationDbContext2 : DbContext
     {
         public virtual IDbSet<MaintenanceRequestStatus> MaintenanceRequestStatuses { get; set; }
@@ -41,10 +43,9 @@ namespace ApartmentApps.Data
 
         public virtual IDbSet<ApplicationUser> Users { get; set; }
         public virtual IDbSet<IdentityRole> Roles { get; set; }
-
         public ApplicationDbContext2()
         {
-
+           
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -58,6 +59,7 @@ namespace ApartmentApps.Data
             modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
+            
 
             modelBuilder.Entity<ApplicationUser>().HasMany<IdentityUserRole>((ApplicationUser u) => u.Roles);
             //modelBuilder.Entity<IdentityUserRole>().HasKey((IdentityUserRole r) =>
@@ -67,6 +69,12 @@ namespace ApartmentApps.Data
         public System.Data.Entity.DbSet<ApartmentApps.Data.ApplicationUser> ApplicationUsers { get; set; }
 
         public System.Data.Entity.DbSet<ApartmentApps.Data.MaintenanceRequestStatus> MaintenanceRequestStatus { get; set; }
+
+        public virtual IDbSet<CourtesyOfficerLocation> CourtesyOfficerLocations { get; set; }
+        public virtual IDbSet<IncidentReport> IncidentReports { get; set; }
+        public virtual IDbSet<IncidentReportCheckin> IncidentReportCheckins { get; set; }
+        public virtual IDbSet<IncidentReportStatus> IncidentReportStatuses { get; set; }
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -87,6 +95,7 @@ namespace ApartmentApps.Data
         public virtual IDbSet<CourtesyOfficerLocation> CourtesyOfficerLocations { get; set; }
         public virtual IDbSet<IncidentReport> IncidentReports { get; set; }
         public virtual IDbSet<IncidentReportCheckin> IncidentReportCheckins { get; set; }
+        public virtual IDbSet<UserAlert> UserAlerts { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

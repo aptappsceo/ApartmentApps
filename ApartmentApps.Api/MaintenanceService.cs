@@ -41,7 +41,7 @@ namespace ApartmentApps.Api
                     maitenanceRequest.UnitId = null;
 
                 ctx.MaitenanceRequests.Add(maitenanceRequest);
-
+                if (images != null)
                 foreach (var image in images)
                 {
                     var imageKey = $"{Guid.NewGuid()}.{user.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
@@ -55,7 +55,8 @@ namespace ApartmentApps.Api
                 }
 
                 ctx.SaveChanges();
-                this.InvokeEvent<IMaintenanceSubmissionEvent>(ctx, localCtxUser, _ => _.MaintenanceRequestSubmited(maitenanceRequest));
+                this.InvokeEvent<IMaintenanceSubmissionEvent>(ctx, localCtxUser, _ => _.MaintenanceRequestSubmited(ctx,maitenanceRequest));
+                
                 return maitenanceRequest.Id;
             }
         }
@@ -100,7 +101,8 @@ namespace ApartmentApps.Api
                     request.CompletionDate = worker.TimeZone.Now();
                 }
                 ctx.SaveChanges();
-                this.InvokeEvent<IMaintenanceRequestCheckinEvent>(ctx, worker, _ => _.MaintenanceRequestCheckin(checkin, request));
+                this.InvokeEvent<IMaintenanceRequestCheckinEvent>(ctx, worker, _ => _.MaintenanceRequestCheckin(ctx,checkin, request));
+               
                 return true;
             }
         }

@@ -42,7 +42,8 @@ namespace ApartmentApps.Api
                 }
 
                 ctx.SaveChanges();
-                this.InvokeEvent<IIncidentReportSubmissionEvent>(ctx, localCtxUser, _ => _.IncidentReportSubmited(incidentReport));
+                this.InvokeEvent<IIncidentReportSubmissionEvent>(ctx, localCtxUser, _ => _.IncidentReportSubmited(ctx, incidentReport));
+                
                 return incidentReport.Id;
             }
         }
@@ -83,7 +84,7 @@ namespace ApartmentApps.Api
                     incidentReport.CompletionDate = officer.TimeZone.Now();
                 }
                 ctx.SaveChanges();
-                this.InvokeEvent<IIncidentReportCheckinEvent>(ctx, officer, _ => _.IncidentReportCheckin(checkin, incidentReport));
+                this.InvokeEvent<IIncidentReportCheckinEvent>(ctx, officer, _ => _.IncidentReportCheckin(ctx,checkin, incidentReport));
                 return true;
             }
         }

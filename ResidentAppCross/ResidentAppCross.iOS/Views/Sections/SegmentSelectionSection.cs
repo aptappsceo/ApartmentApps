@@ -5,10 +5,18 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	partial class SegmentSelectionSection : UIView
+	public partial class SegmentSelectionSection : SectionViewBase
 	{
-		public SegmentSelectionSection (IntPtr handle) : base (handle)
+	    public SegmentSelectionSection()
+	    {
+	    }
+
+	    public SegmentSelectionSection (IntPtr handle) : base (handle)
 		{
 		}
+
+	    public UILabel Label => _headerTitle;
+	    public UISegmentedControl Selector => _segmentSelector;
+
 	}
 }

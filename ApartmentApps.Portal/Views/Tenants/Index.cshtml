@@ -31,7 +31,7 @@
                 <div class="ibox-content">
                     @Html.Grid(Model).Columns(columns =>
                {
-                   columns.Add(foo => foo.Unit.Name).Titled("Unit Name").SetWidth(110);
+                   columns.Add(foo => foo.Unit.Name).Titled("Unit Name").Sortable(true).SetWidth(110);
                    //columns.Add(foo => foo.Unit.Building.Name).Titled("Building Name").SetWidth(110);
                    columns.Add(foo => foo.User.Email).Sortable(true).Filterable(true);
                    columns.Add(foo => foo.FirstName).Sortable(true).Filterable(true);

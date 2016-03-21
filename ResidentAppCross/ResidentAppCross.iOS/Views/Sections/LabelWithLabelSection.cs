@@ -5,10 +5,18 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	partial class LabelWithLabelSection : UIView
+    public partial class LabelWithLabelSection : SectionViewBase
 	{
-		public LabelWithLabelSection (IntPtr handle) : base (handle)
+        public LabelWithLabelSection()
+        {
+        }
+
+        public LabelWithLabelSection (IntPtr handle) : base (handle)
 		{
 		}
-	}
+
+        public UILabel FirstLabel => _firstLabel;
+        public UILabel SecondLabel => _secondLabel;
+
+    }
 }
