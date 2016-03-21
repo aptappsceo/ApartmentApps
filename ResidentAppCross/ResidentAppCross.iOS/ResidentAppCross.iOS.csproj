@@ -386,6 +386,8 @@
     <Compile Include="Views\PhotoGallery\PhotoGalleryCells.cs" />
     <Compile Include="Views\PhotoGallery\PhotoGallerySource.cs" />
     <Compile Include="Views\Sections\SectionViewBase.cs" />
+    <Compile Include="Views\Sections\TableSection\TestDataItem.cs" />
+    <Compile Include="Views\Sections\TableSection\TableSource.cs" />
     <Compile Include="Views\TableSources\HomeMenuTableSource.cs" />
     <Compile Include="Views\TableSources\LookUpPairSelectionTableSource.cs" />
     <Compile Include="Views\TestFormView.cs" />
