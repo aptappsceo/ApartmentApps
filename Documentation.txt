@@ -3,5 +3,7 @@ Database:
 	update-database -TargetMigration:0 | update-database -force | update-database -force
 
 Annotations:
-Databinding: https://github.com/MvvmCross/MvvmCross/wiki/Map-Annotation-Data-Binding
-MVXAnnotationManager: https://gist.github.com/slodge/6070386
+	Databinding: https://github.com/MvvmCross/MvvmCross/wiki/Map-Annotation-Data-Binding
+	MVXAnnotationManager: https://gist.github.com/slodge/6070386
+	N=37 - Maps and Zombies Part 1 - N+1 Vids of MvvmCross ...
+	https://www.youtube.com/watch?v=wpPXrwjgdSU
