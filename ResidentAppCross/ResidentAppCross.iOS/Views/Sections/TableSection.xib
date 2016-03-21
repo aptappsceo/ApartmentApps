@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -9,32 +11,22 @@
         <view contentMode="scaleToFill" id="1" customClass="TableSection">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tKd-Qm-pb0">
+                    <rect key="frame" x="8" y="8" width="584" height="584"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottomMargin" secondItem="tKd-Qm-pb0" secondAttribute="bottom" id="640-vR-QmU"/>
+                <constraint firstItem="tKd-Qm-pb0" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="Cd6-eQ-SGd"/>
+                <constraint firstAttribute="trailingMargin" secondItem="tKd-Qm-pb0" secondAttribute="trailing" id="OYb-9A-RlE"/>
+                <constraint firstItem="tKd-Qm-pb0" firstAttribute="top" secondItem="1" secondAttribute="topMargin" id="qPb-fj-Sba"/>
+            </constraints>
+            <connections>
+                <outlet property="TableView" destination="tKd-Qm-pb0" id="whO-3f-v4m"/>
+            </connections>
         </view>
     </objects>
-    <resources>
-        <image name="HouseIcon" width="160" height="160"/>
-        <image name="MaintenaceIcon" width="160" height="160"/>
-        <image name="OfficerIcon" width="160" height="160"/>
-        <image name="PartnersIcon" width="160" height="160"/>
-        <image name="PayIcon" width="160" height="160"/>
-        <image name="WhiteHomeIcon.png" width="160" height="160"/>
-        <image name="LOGIN.png" width="640" height="1136"/>
-        <image name="logo_03.png" width="375" height="273"/>
-        <image name="MaintenaceIcon.png" width="160" height="160"/>
-        <image name="MaintenanceRequestMainIcon.png" width="160" height="160"/>
-        <image name="OfficerIcon.png" width="160" height="160"/>
-        <image name="PartnersIcon.png" width="160" height="160"/>
-        <image name="PayIcon.png" width="160" height="160"/>
-        <image name="SecurityIcon.png" width="128" height="128"/>
-        <image name="SettingsIcon.png" width="160" height="160"/>
-        <image name="SignOutIcon.png" width="160" height="160"/>
-        <image name="UsernameIcon.png" width="128" height="128"/>
-        <image name="Icon.png" width="96" height="96"/>
-        <image name="AccountIcon.png" width="160" height="160"/>
-        <image name="AddIcon.png" width="160" height="160"/>
-        <image name="AppartmentAppsIcon.png" width="160" height="160"/>
-        <image name="background.png" width="640" height="1136"/>
-        <image name="HouseIcon.png" width="160" height="160"/>
-    </resources>
 </document>
