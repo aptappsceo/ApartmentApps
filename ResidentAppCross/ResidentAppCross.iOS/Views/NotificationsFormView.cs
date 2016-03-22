@@ -20,7 +20,7 @@ namespace ResidentAppCross.iOS
         {
         }
     }
-    [Register("NotificationsFormView")]
+	[Register("SettingsFormView")]
     [NavbarStyling]
     [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
     partial class SettingsFormView : BaseForm<SettingsFormViewModel>
