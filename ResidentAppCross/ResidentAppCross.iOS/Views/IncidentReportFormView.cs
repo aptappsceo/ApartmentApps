@@ -62,7 +62,7 @@ namespace ResidentAppCross.iOS
         public override void GetContent(List<UIView> content)
 	    {
 	        base.GetContent(content);
-            content.Add(HeaderSection);
+           // content.Add(HeaderSection);
             content.Add(SegmentSelectionSection);
 
 	    }
