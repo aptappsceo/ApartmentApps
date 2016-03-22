@@ -7,6 +7,7 @@ using CoreLocation;
 using Foundation;
 using MapKit;
 using MvvmCross.Binding.iOS.Views;
+using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.Sections.CollectionSections;
 using ResidentAppCross.iOS.Views.TableSources;
@@ -20,13 +21,29 @@ namespace ResidentAppCross.iOS
 	[StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
 	partial class IncidentReportIndexView : BaseForm<IncidentReportIndexViewModel>
 	{
+	   
+	    private HeaderSection _headerSection;
 
-		public IncidentReportIndexView(string nibName, NSBundle bundle) : base(nibName, bundle)
+	    public IncidentReportIndexView(string nibName, NSBundle bundle) : base(nibName, bundle)
 		{
 		}
 
 		public IncidentReportIndexView()
 		{
 		}
-	}
+    
+        public HeaderSection HeaderSection
+        {
+            get
+            {
+                if (_headerSection == null)
+                {
+                    _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.HeightConstraint.Constant = 100;
+                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
+                }
+                return _headerSection;
+            }
+        }
+    }
 }

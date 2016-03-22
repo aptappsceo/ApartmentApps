@@ -40,7 +40,16 @@ namespace ResidentAppCross
                     Command = ConfigurePropertyCommand
                 });
             }
-
+            if (loginManager.UserInfo.Roles.Contains("Officer"))
+            {
+                MenuItems.Add(new HomeMenuItemViewModel()
+                {
+                    Name = "Incident Reports",
+                    Icon = SharedResources.Icons.OfficerIcon,
+                    Command = ConfigurePropertyCommand
+                });
+               
+            }
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Notifications",
@@ -123,14 +132,26 @@ namespace ResidentAppCross
             });
         });
 
-        public ICommand HomeCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand HomeCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<NotificationsFormViewModel>(vm =>
+            {
+                
+            });
+        });
 
         public ICommand MaintenaceRequestCommand => new MvxCommand(() =>
         {
             ShowViewModel<MaintenanceRequestFormViewModel>();
         });
 
-        public ICommand RequestCourtesyOfficerCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand RequestCourtesyOfficerCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<IncidentReportFormViewModel>(vm =>
+            {
+                //vm.Url = Mvx.Resolve<IApartmentAppsAPIService>().BaseUri + "/generalviews/index";
+            });
+        });
 
         public ICommand PayRentCommand => StubCommands.NoActionSpecifiedCommand(this);
 

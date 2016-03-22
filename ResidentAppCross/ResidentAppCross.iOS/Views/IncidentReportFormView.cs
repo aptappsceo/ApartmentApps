@@ -7,6 +7,7 @@ using CoreLocation;
 using Foundation;
 using MapKit;
 using MvvmCross.Binding.iOS.Views;
+using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.Sections.CollectionSections;
 using ResidentAppCross.iOS.Views.TableSources;
@@ -15,45 +16,55 @@ using UIKit;
 namespace ResidentAppCross.iOS
 {
 	[Register("IncidentReportFormView")]
-	[NavbarStyling]
-	[StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
-	partial class IncidentReportFormView : BaseForm<IncidentReportFormViewModel>
+	public class IncidentReportFormView : BaseForm<IncidentReportFormViewModel>
 	{
-		
-		public IncidentReportFormView(string nibName, NSBundle bundle) : base(nibName, bundle)
+	    private SegmentSelectionSection _segmentSelectionSection;
+	    private HeaderSection _headerSection;
+
+	    public IncidentReportFormView(string nibName, NSBundle bundle) : base(nibName, bundle)
 		{
 		}
 
 		public IncidentReportFormView()
 		{
 		}
-	}
-	[Register("IncidentReportStatusView")]
-	[NavbarStyling]
-	[StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
-	partial class IncidentReportStatusView : BaseForm<IncidentReportStatusViewModel>
-	{
+        public HeaderSection HeaderSection
+        {
+            get
+            {
+                if (_headerSection == null)
+                {
+                    _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.HeightConstraint.Constant = 100;
+                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
+                }
+                return _headerSection;
+            }
+        }
+        public SegmentSelectionSection SegmentSelectionSection
+        {
+            get
+            {
+                if (_segmentSelectionSection == null)
+                {
+                    _segmentSelectionSection = Formals.Create<SegmentSelectionSection>();
+                    _segmentSelectionSection.HeightConstraint.Constant = 120;
+                    _segmentSelectionSection.Label.Text = "Incident Type";
+                    _segmentSelectionSection.Selector.RemoveAllSegments();
+                    _segmentSelectionSection.Selector.InsertSegment("Noise", 0, false);
+                    _segmentSelectionSection.Selector.InsertSegment("Parking", 1, false);
+                    _segmentSelectionSection.Selector.InsertSegment("Visual Disturbance", 2, false);
+                    _segmentSelectionSection.Selector.InsertSegment("Other", 3, false);
+                }
+                return _segmentSelectionSection;
+            }
+        }
+        public override void GetContent(List<UIView> content)
+	    {
+	        base.GetContent(content);
+            content.Add(HeaderSection);
+            content.Add(SegmentSelectionSection);
 
-		public IncidentReportStatusView(string nibName, NSBundle bundle) : base(nibName, bundle)
-		{
-		}
-
-		public IncidentReportStatusView()
-		{
-		}
-	}
-	[Register("IncidentReportIndexView")]
-	[NavbarStyling]
-	[StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
-	partial class IncidentReportIndexView : BaseForm<IncidentReportIndexViewModel>
-	{
-
-		public IncidentReportIndexView(string nibName, NSBundle bundle) : base(nibName, bundle)
-		{
-		}
-
-		public IncidentReportIndexView()
-		{
-		}
+	    }
 	}
 }

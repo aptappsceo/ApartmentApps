@@ -9,4 +9,9 @@ namespace ResidentAppCross.ViewModels.Screens
     public class IncidentReportFormViewModel : ViewModelBase
     {
     }
+
+    public class NotificationsFormViewModel : ViewModelBase
+    {
+        
+    }
 }
