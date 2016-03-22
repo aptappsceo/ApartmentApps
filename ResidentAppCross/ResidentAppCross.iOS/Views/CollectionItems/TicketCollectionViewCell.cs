@@ -20,5 +20,8 @@ namespace ResidentAppCross.iOS
 		}
 
 	    public override NSString ReuseIdentifier => Key;
+
+		public UICollectionView PhotoContainer => _photoContainer;
+		public UILabel NoPhotosLabel => _noPhotoLabel;
 	}
 }
