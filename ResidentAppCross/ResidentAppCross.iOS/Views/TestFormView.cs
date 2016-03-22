@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -202,30 +203,62 @@ namespace ResidentAppCross.iOS.Views
             {
                 if (_tableSection == null)
                 {
-                    _tableSection = Formals.Create<TableSection>();
+                    _tableSection = Formals.Create<TableSection>(); //Create as usually. 
 
-                    var collection = new[] {
+
+                    //Data should be delivered as IList (ObservableCollection works just fine)
+                    var collection = new ObservableCollection<TestDataItem>() {
                         new TestDataItem() { Title = "Item 1" },
-                        new TestDataItem() { Title = "Editable Item", Editable = true},
+                        new TestDataItem() { Title = "Editable Item"},
                         new TestDataItem() { Title = "Third Item" },
-                        new TestDataItem() { Title = "Movable Item" , Moveable = true},
+                        new TestDataItem() { Title = "Movable Item"},
                         new TestDataItem() { Title = "5th Item" },
                         new TestDataItem() { Title = "Last Item" }
                     };
 
-                    var source = new TableSource()
+                    var tableDataBinding = new TableDataBinding<UITableViewCell, TestDataItem>() //Define cell type and data type as type args
                     {
-                        Items = collection.Cast<object>().ToArray(),
-                        Binding = new TableDataBinding<TicketIndexTableViewCell, TestDataItem>()
+                        Bind = (cell, item) => //What to do when cell is created for item
                         {
-                            Bind = (cell,item) => { cell.HeaderLabel.Text = item.Title; },
-                            IsMoveable = item => item.Moveable,
-                            IsEditable = item => item.Editable,
-                            IsFocusable = item => item.Focusable
-                        }
+                            cell.TextLabel.Text = item.Title;
+                            cell.DetailTextLabel.Text = "Some Details Here";
+                            cell.ImageView.Image = UIImage.FromBundle("OfficerIcon");
+                        },
+                        ItemAccessoryClicked = item => { Debug.WriteLine("Accessory Clicked");}, //When accessory button clicked
+                        ItemSelected = item => { Debug.WriteLine("Item Selected");}, //Yet to be revealed how to invoke this ??? TODO
+                        AccessoryType = item => UITableViewCellAccessory.DetailDisclosureButton, //What is displayed on the right edge
+                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell"), //Define how to create cell, if reusables not found
                     };
-                    //_tableSection.Table.EstimatedRowHeight = 250f;
-                    //_tableSection.Table.RowHeight = UITableView.AutomaticDimension;
+
+                    tableDataBinding.AddAction(new TableCellAction<TestDataItem>()
+                    {
+                        Style = UITableViewRowActionStyle.Default,
+                        Handler = i => Debug.WriteLine("Default Action"),
+                        Title = "Default"
+                    });
+
+                    tableDataBinding.AddAction(new TableCellAction<TestDataItem>()
+                    {
+                        Style = UITableViewRowActionStyle.Destructive,
+                        Handler = i => Debug.WriteLine("Destructive  Action"),
+                        Title = "Kill"
+                    });
+
+                    tableDataBinding.AddAction(new TableCellAction<TestDataItem>()
+                    {
+                        Style = UITableViewRowActionStyle.Normal,
+                        Handler = i => Debug.WriteLine("Normal Action"),
+                        Title = "Normal"
+                    });
+
+                    var source = new GenericTableSource()
+                    {
+                        Items = collection, //Deliver data
+                        Binding = tableDataBinding, //Deliver binding
+                        ItemsEditableByDefault = true, //Set all items editable
+                        ItemsFocusableByDefault = true
+                    };
+
                     _tableSection.Source = source;
                     _tableSection.ReloadData();
                     _tableSection.HeightConstraint.Constant = 200;
@@ -282,8 +315,8 @@ namespace ResidentAppCross.iOS.Views
         {
             base.GetContent(content);
             content.Add(HeaderSection);
-           // content.Add(TableSection);
-            content.Add(CollectionSection);
+            content.Add(TableSection);
+            //content.Add(CollectionSection);
             CollectionSection.Collection.ReloadData();
             content.Add(LabelWithButtonSection);
             content.Add(PhotoGallerySection);
