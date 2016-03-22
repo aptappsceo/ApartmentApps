@@ -490,6 +490,9 @@
     <Compile Include="Views\CollectionItems\TicketCollectionViewCell.designer.cs">
       <DependentUpon>TicketCollectionViewCell.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\IncidentReportFormView.cs" />
+    <Compile Include="Views\IncidentReportStatusView.cs" />
+    <Compile Include="Views\IncidentReportIndexView.cs" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="azure-messaging">
