@@ -16,6 +16,8 @@ using UIKit;
 namespace ResidentAppCross.iOS
 {
 	[Register("IncidentReportFormView")]
+	[NavbarStyling]
+	[StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
 	public class IncidentReportFormView : BaseForm<IncidentReportFormViewModel>
 	{
 	    private SegmentSelectionSection _segmentSelectionSection;
