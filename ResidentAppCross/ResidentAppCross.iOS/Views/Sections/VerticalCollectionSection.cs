@@ -22,13 +22,12 @@ namespace ResidentAppCross.iOS
 	    public void SetVerticalTableMode(float itemHeight)
 	    {
 
-	        var layout = new CollectionViewTableLayout()
+			var layout = new CollectionViewTableLayout()
 	        {
 	            ScrollDirection = UICollectionViewScrollDirection.Vertical,
-                MinimumLineSpacing = 10f,
-                ItemHeight = itemHeight
             };
 
+			//layout.EstimatedItemSize = new CGSize(100,100);
             
             Collection.SetCollectionViewLayout(layout,true);
 	    }
@@ -44,7 +43,7 @@ namespace ResidentAppCross.iOS
         {
             get
             {
-                return new CGSize(CollectionView.Frame.Size.Width - SectionInset.Left - SectionInset.Right - CollectionView.ContentInset.Left - CollectionView.ContentInset.Right, ItemHeight) ;
+				return new CGSize(CollectionView.Frame.Size.Width - SectionInset.Left - SectionInset.Right - CollectionView.ContentInset.Left - CollectionView.ContentInset.Right, 0) ;
             }
             set
             {
@@ -52,7 +51,12 @@ namespace ResidentAppCross.iOS
             }
         }
 
-        public override CGSize EstimatedItemSize => ItemSize;
+		public override CGSize EstimatedItemSize {
+			get {
+				return new CGSize (CollectionView.Frame.Size.Width - SectionInset.Left - SectionInset.Right - CollectionView.ContentInset.Left - CollectionView.ContentInset.Right, 120);
+			}
+			set{ }
+		}
     }
 
 

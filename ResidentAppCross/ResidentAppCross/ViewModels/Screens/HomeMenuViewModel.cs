@@ -126,10 +126,7 @@ namespace ResidentAppCross
 
         public ICommand RequestsIndexCommand => new MvxCommand(() =>
         {
-            ShowViewModel<MaintenanceRequestIndexViewModel>(vm =>
-            {
-                vm.Url = Mvx.Resolve<IApartmentAppsAPIService>().BaseUri+"/generalviews/index";
-            });
+            ShowViewModel<MaintenanceRequestIndexViewModel>();
         });
 
         public ICommand HomeCommand => new MvxCommand(() =>

@@ -56,6 +56,11 @@ namespace ApartmentApps.Client
         /// </param>
         Task<HttpOperationResponse<IList<MaitenanceRequest>>> GetWorkOrdersWithOperationResponseAsync(string workerId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<MaintenanceIndexBindingModel>>> ListRequestsWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
         /// <param name='id'>
         /// Required.
         /// </param>

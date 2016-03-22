@@ -22,6 +22,7 @@ namespace ResidentAppCross.iOS
 	    private int _maxPixelDimension = 1024;
 	    private float _percentQuality = 64f;
 	    private UIImagePickerController _imagePickerController;
+	    private bool _editable;
 
 	    public PhotoGallerySection()
 	    {
@@ -30,6 +31,16 @@ namespace ResidentAppCross.iOS
 	    public PhotoGallerySection (IntPtr handle) : base (handle)
 		{
 		}
+
+	    public bool Editable
+	    {
+	        get { return _editable; }
+	        set
+	        {
+	            _editable = value;
+	            AddPhotoButton.Hidden = !value;
+	        }
+	    }
 
 	    public UICollectionView PhotoContainer => _photoContainer;
 	    public UILabel HeaderLabel => _headerLabel;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApartmentApps.Client.Models;
@@ -22,148 +23,187 @@ using ZXing.QrCode.Internal;
 namespace ResidentAppCross.iOS
 {
 
+    [Register("MaintenanceRequestStatusView")]
     [NavbarStyling]
     [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
-    public partial class MaintenanceRequestStatusView : ViewBase<MaintenanceRequestStatusViewModel>
+    public partial class MaintenanceRequestStatusView : BaseForm<MaintenanceRequestStatusViewModel>
     {
 
-        /*
-        //TODO: README
-        //TODO: README
-        //TODO: README
-
-
-
-        // if you want to make it work quick and dirty, fallback to the following method
-        // to update all kinds of labels.
-        */
-
-
-        private void OnRequestChanged(MaintenanceBindingModel request)
+        public MaintenanceRequestStatusView(string nibName, NSBundle bundle) : base(nibName, bundle)
         {
-
-            //How to show photos
-            //1. Populate ViewModel.AttachedPhotos
-            //2. Uncomment the following code.
-
-            //            PhotoContainer.RegisterClassForCell(typeof(PhotoGalleryCells), (NSString)PhotoGalleryCells.CellIdentifier);
-            //            PhotoContainer.Source = new PhotoGallerySource(ViewModel.AttachedPhotos);
-            //            PhotoContainer.ReloadData();
-
-
-            //TODO: Important note:
-            //View has 2 headers and 2 footers
-
-
-            UpdateHeadersAndFooters(request);
-
-
-            //Hide/Show those depending on the state of the request;
-
-            CommentsTextView.Text = request.Message;
-            TenantFullNameLabel.Text = request.UserName;
-
-            SelectRepairDateButton.TitleLabel.Text = request.ScheduleDate?.ToString("g") ?? "Select Date";
-            SelectRepairDateButton.SizeToFit();
-
-            PhotoContainer.Hidden = true;
-            PhotoTitleLabel.Text = "No Photos Attached.";
-
-            var lastCheckin = request.Checkins.LastOrDefault();
-            RepairDateChangeTitleLabel.Text = lastCheckin;
-            RepairDateChangeDateLabel.Text = "";
-
-            TenantAddressFirstLineLabel.Text = request.BuildingName+" "+request.BuildingAddress;
-            TenantAddressFirstLineLabel.Text = request.BuildingCity+" "+request.BuildingState;
-
-            PhotoContainer.BackgroundColor = UIColor.White;
-            PetSelection.SelectedSegment = ViewModel.SelectedPetStatus;
-
-            //this.EntrancePermissionSwitch.On = request.PermissionToEnter;
         }
 
-        private void UpdateHeadersAndFooters(MaintenanceBindingModel request)
+        public MaintenanceRequestStatusView()
+        {
+        }
+
+        private HeaderSection _headerSection;
+        private LabelWithButtonSection _scheduleSection;
+        private ButtonToolbarSection _footerSection;
+        private TextViewSection _commentsSection;
+        private PhotoGallerySection _photoSection;
+
+        public override string Title => "Maintenance Request";
+
+        public HeaderSection HeaderSection
+        {
+            get
+            {
+                if (_headerSection == null)
+                {
+                    _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
+                    _headerSection.HeightConstraint.Constant = 120;
+                }
+                return _headerSection;
+            }
+        }
+
+        public LabelWithButtonSection ScheduleSection
+        {
+            get
+            {
+                if (_scheduleSection == null)
+                {
+                    _scheduleSection = Formals.Create<LabelWithButtonSection>();
+                    _scheduleSection.Label.Text = "Repair Date";
+                    _scheduleSection.HeightConstraint.Constant = 60;
+                }
+                return _scheduleSection;
+            }
+        }
+
+        public TextViewSection CommentsSection
+        {
+            get
+            {
+                if (_commentsSection == null)
+                {
+                    _commentsSection = Formals.Create<TextViewSection>();
+                    _commentsSection.HeightConstraint.Constant = 200;
+                    _commentsSection.HeaderLabel.Text = "Details & Comments";
+                }
+                return _commentsSection;
+            }
+        }
+
+        public PhotoGallerySection PhotoSection
+        {
+            get
+            {
+                if (_photoSection == null)
+                {
+                    _photoSection = Formals.Create<PhotoGallerySection>();
+                }
+                return _photoSection;
+            }
+        }
+
+        public ButtonToolbarSection FooterSection
+        {
+            get
+            {
+                if (_footerSection == null)
+                {
+                    _footerSection = Formals.Create<ButtonToolbarSection>();
+                    _footerSection.HeightConstraint.Constant = 120;
+                }
+                return _footerSection;
+            }
+        }
+
+        public UIButton FooterPauseButton { get; set; }
+        public UIButton FooterFinishButton { get; set; }
+        public UIButton FooterStartButton { get; set; }
+
+        public void UpdateFooter()
         {
             var status = ViewModel.CurrentRequestStatus;
-            HeaderSectionPaused.Hidden = status != RequestStatus.Paused;
-            HeaderSectionPending.Hidden = status == RequestStatus.Paused;
+            FooterFinishButton.Hidden = status == RequestStatus.Started;
+            FooterPauseButton.Hidden = status == RequestStatus.Started;
+            FooterStartButton.Hidden = status != RequestStatus.Started;
+        }
 
-            FooterSectionPending.Hidden = status != RequestStatus.Started;
-            FooterSectionStart.Hidden = status == RequestStatus.Started;
+        public void OnRequestChanged(MaintenanceBindingModel request)
+        {
 
         }
 
-
-
-        public MaintenanceRequestStatusView() : base("MaintenanceRequestStatusView", null)
+        public override void BindForm()
         {
-            this.DelayBind(() =>
+            base.BindForm();
+            var b = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
+
+
+
+
+            //Schedule Section
+            b.Bind(ScheduleSection.Button).For("Title").To(vm => vm.SelectScheduleDateActionLabel);
+            
+            //Footer Section
+
+            var style = new UIViewStyle()
             {
-                var b = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
-                //b.Bind(FooterStartButton).To(vm => vm.StartOrResumeCommand);
-                b.Bind(SelectRepairDateButton).For("Title").To(vm => vm.SelectScheduleDateActionLabel);
-                b.Bind(FooterPauseButton).To(vm=>vm.PauseCommmand);
-                b.Bind(FooterFinishButton).To(vm => vm.FinishCommmand);
-                b.Apply();
-                SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
-               // FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.StartOrResumeCommand.Execute(null));
-      
-              //  FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.FinishCommmand.Execute(null));
-
-                ViewModel.Photos.RawImages.CollectionChanged += RawImages_CollectionChanged;
-            });
-        }
-
-        private void RawImages_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-			InvokeOnMainThread (UpdatePhotos);
-        }
-
-        public void UpdatePhotos()
-        {
-			
-            var hasPhotos = ViewModel.Photos.RawImages.Any();
-            PhotoContainer.Hidden = !hasPhotos;
-            PhotoTitleLabel.Text = hasPhotos ? "Photos" : "No Photos Attached.";
-            PhotoContainer.ReloadData();
-			PhotoContainer.LayoutSubviews ();
-        }
-
-        private void PushScannerViewController(Action onScanned)
-        {
-
-            if (ObjCRuntime.Runtime.Arch == Arch.SIMULATOR)
-            {
-                ViewModel.ScanResult = new QRData()
-                {
-                    Data = "Simulated Text",
-                    ImageData = new byte[0],
-                    Timestamp = DateTime.Now.Ticks
-                };
-                onScanned();
-                return;
-            }
-
-            var view = new AVCaptureScannerViewController(new MobileBarcodeScanningOptions()
-            {
-            },
-            new MobileBarcodeScanner()
-            {
-            });
-
-            view.OnScannedResult += _ =>
-            {
-                NavigationController.PopViewController(true);
-                ViewModel.ScanResult = new QRData()
-                {
-                    Data = _.Text,
-                    ImageData = _.RawBytes,
-                    Timestamp = _.Timestamp
-                };
-
-                onScanned?.Invoke();
+                BackgroundColor = AppTheme.SecondaryBackgoundColor,
+                ForegroundColor = AppTheme.SecondaryForegroundColor,
+                FontSize = 23.0f
             };
-            NavigationController.PushViewController(view,true);
+
+          
+            FooterPauseButton = FooterSection.AddButton("Pause", style);
+            FooterFinishButton = FooterSection.AddButton("Finish", style);
+            FooterStartButton = FooterSection.AddButton("Scan QR Code", style);
+
+            b.Bind(FooterPauseButton).To(vm => vm.PauseCommmand);
+            b.Bind(FooterFinishButton).To(vm => vm.FinishCommmand);
+            b.Bind(FooterStartButton).To(vm => vm.StartCommand);
+
+            b.Bind(FooterFinishButton).For(but => but.Hidden).To(vm => vm.ForbidComplete);
+            b.Bind(FooterStartButton).For(but => but.Hidden).To(vm => vm.ForbidStart);
+            b.Bind(FooterPauseButton).For(but => but.Hidden).To(vm => vm.ForbidPause);
+
+            //Comments section
+
+            CommentsSection.SetEditable(false);
+            b.Bind(CommentsSection.TextView).For(c=>c.Text).To(vm => vm.Request.Message);
+
+            //Photo Section
+            PhotoSection.Editable = false;
+            PhotoSection.BindViewModel(ViewModel.Photos);
+            
+            //Header section
+
+            b.Bind(HeaderSection.MainLabel).For(l => l.Text).To(vm => vm.Request.Name);
+            b.Bind(HeaderSection.SubLabel).For(l => l.Text).To(vm => vm.Request.Status);
+
+
+            b.Apply();
+
+            ViewModel.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == "Request")
+                {
+                    this.OnRequestChanged(ViewModel.Request);
+                }
+            };
+
+            OnRequestChanged(ViewModel.Request);
+            // SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
+            // FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.StartOrResumeCommand.Execute(null));
+
+            //  FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.FinishCommmand.Execute(null));
+
+            // ViewModel.Photos.RawImages.CollectionChanged += RawImages_CollectionChanged;
+        }
+
+        public override void GetContent(List<UIView> content)
+        {
+            base.GetContent(content);
+            content.Add(HeaderSection);
+            content.Add(ScheduleSection);
+            content.Add(CommentsSection);
+            content.Add(PhotoSection);
+            content.Add(FooterSection);
         }
 
         public async void ShowScheduleDatePicker(object sender, EventArgs eventArgs)
@@ -175,41 +215,18 @@ namespace ResidentAppCross.iOS
                 TransitioningDelegate = new ModalPickerTransitionDelegate(),
                 ModalPresentationStyle = UIModalPresentationStyle.Custom
             };
-
+    
             modalPicker.DatePicker.Mode = UIDatePickerMode.DateAndTime;
-
+    
             modalPicker.OnModalPickerDismissed += (s, ea) =>
             {
                 modalPicker.DismissModalViewController(true);
                 ViewModel.ScheduleMaintenanceCommand.Execute(modalPicker.DatePicker.Date.ToDateTimeUtc());
             };
-
+    
             await PresentViewControllerAsync(modalPicker, true);
-
+    
         }
 
-        public override void ViewDidLoad ()
-    		{
-    			base.ViewDidLoad ();
-    	        ViewModel.PropertyChanged += (sender, args) =>
-    	        {
-    	            if (args.PropertyName == "Request")
-    	            {
-    	                this.OnRequestChanged(ViewModel.Request);
-    	            }
-    	        };
-
-                PhotoContainer.RegisterClassForCell(typeof(PhotoGalleryCells), (NSString)PhotoGalleryCells.CellIdentifier);
-                PhotoContainer.Source = new PhotoGallerySource(ViewModel.Photos);
-                UpdatePhotos();
-
-
-        }
-
-	    public override void DidReceiveMemoryWarning ()
-  		{
-  			base.DidReceiveMemoryWarning ();
-  			// Release any cached data, images, etc that aren't in use.
-  		}
-	}
+    }
 }

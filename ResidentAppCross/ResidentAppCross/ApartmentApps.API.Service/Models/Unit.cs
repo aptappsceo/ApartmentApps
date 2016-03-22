@@ -45,6 +45,28 @@ namespace ApartmentApps.Client.Models
             set { this._id = value; }
         }
         
+        private double? _latitude;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public double? Latitude
+        {
+            get { return this._latitude; }
+            set { this._latitude = value; }
+        }
+        
+        private double? _longitude;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public double? Longitude
+        {
+            get { return this._longitude; }
+            set { this._longitude = value; }
+        }
+        
         private IList<MaitenanceRequest> _maitenanceRequests;
         
         /// <summary>
@@ -110,6 +132,16 @@ namespace ApartmentApps.Client.Models
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((int)idValue);
+                }
+                JToken latitudeValue = inputObject["Latitude"];
+                if (latitudeValue != null && latitudeValue.Type != JTokenType.Null)
+                {
+                    this.Latitude = ((double)latitudeValue);
+                }
+                JToken longitudeValue = inputObject["Longitude"];
+                if (longitudeValue != null && longitudeValue.Type != JTokenType.Null)
+                {
+                    this.Longitude = ((double)longitudeValue);
                 }
                 JToken maitenanceRequestsSequence = ((JToken)inputObject["MaitenanceRequests"]);
                 if (maitenanceRequestsSequence != null && maitenanceRequestsSequence.Type != JTokenType.Null)

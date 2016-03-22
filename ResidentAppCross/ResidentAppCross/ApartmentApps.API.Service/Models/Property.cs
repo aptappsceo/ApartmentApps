@@ -111,6 +111,28 @@ namespace ApartmentApps.Client.Models
             set { this._tenants = value; }
         }
         
+        private string _timeZone;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string TimeZone
+        {
+            get { return this._timeZone; }
+            set { this._timeZone = value; }
+        }
+        
+        private string _timeZoneIdentifier;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string TimeZoneIdentifier
+        {
+            get { return this._timeZoneIdentifier; }
+            set { this._timeZoneIdentifier = value; }
+        }
+        
         private IList<ApplicationUser> _users;
         
         /// <summary>
@@ -220,6 +242,16 @@ namespace ApartmentApps.Client.Models
                         tenant.DeserializeJson(tenantsValue);
                         this.Tenants.Add(tenant);
                     }
+                }
+                JToken timeZoneValue = inputObject["TimeZone"];
+                if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
+                {
+                    this.TimeZone = timeZoneValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                }
+                JToken timeZoneIdentifierValue = inputObject["TimeZoneIdentifier"];
+                if (timeZoneIdentifierValue != null && timeZoneIdentifierValue.Type != JTokenType.Null)
+                {
+                    this.TimeZoneIdentifier = ((string)timeZoneIdentifierValue);
                 }
                 JToken usersSequence = ((JToken)inputObject["Users"]);
                 if (usersSequence != null && usersSequence.Type != JTokenType.Null)

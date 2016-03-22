@@ -56,17 +56,6 @@ namespace ApartmentApps.Client.Models
             set { this._id = value; }
         }
         
-        private string _imageDirectoryId;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string ImageDirectoryId
-        {
-            get { return this._imageDirectoryId; }
-            set { this._imageDirectoryId = value; }
-        }
-        
         private MaintenanceRequestCheckin _latestCheckin;
         
         /// <summary>
@@ -271,11 +260,6 @@ namespace ApartmentApps.Client.Models
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((int)idValue);
-                }
-                JToken imageDirectoryIdValue = inputObject["ImageDirectoryId"];
-                if (imageDirectoryIdValue != null && imageDirectoryIdValue.Type != JTokenType.Null)
-                {
-                    this.ImageDirectoryId = ((string)imageDirectoryIdValue);
                 }
                 JToken latestCheckinValue = inputObject["LatestCheckin"];
                 if (latestCheckinValue != null && latestCheckinValue.Type != JTokenType.Null)

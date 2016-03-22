@@ -243,6 +243,17 @@ namespace ApartmentApps.Client.Models
             set { this._tenant = value; }
         }
         
+        private string _timeZone;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string TimeZone
+        {
+            get { return this._timeZone; }
+            set { this._timeZone = value; }
+        }
+        
         private bool? _twoFactorEnabled;
         
         /// <summary>
@@ -252,6 +263,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._twoFactorEnabled; }
             set { this._twoFactorEnabled = value; }
+        }
+        
+        private IList<UserAlert> _userAlerts;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<UserAlert> UserAlerts
+        {
+            get { return this._userAlerts; }
+            set { this._userAlerts = value; }
         }
         
         private string _userName;
@@ -274,6 +296,7 @@ namespace ApartmentApps.Client.Models
             this.Logins = new LazyList<IdentityUserLogin>();
             this.MaitenanceRequests = new LazyList<MaitenanceRequest>();
             this.Roles = new LazyList<IdentityUserRole>();
+            this.UserAlerts = new LazyList<UserAlert>();
         }
         
         /// <summary>
@@ -412,10 +435,25 @@ namespace ApartmentApps.Client.Models
                     tenant.DeserializeJson(tenantValue);
                     this.Tenant = tenant;
                 }
+                JToken timeZoneValue = inputObject["TimeZone"];
+                if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
+                {
+                    this.TimeZone = timeZoneValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                }
                 JToken twoFactorEnabledValue = inputObject["TwoFactorEnabled"];
                 if (twoFactorEnabledValue != null && twoFactorEnabledValue.Type != JTokenType.Null)
                 {
                     this.TwoFactorEnabled = ((bool)twoFactorEnabledValue);
+                }
+                JToken userAlertsSequence = ((JToken)inputObject["UserAlerts"]);
+                if (userAlertsSequence != null && userAlertsSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken userAlertsValue in ((JArray)userAlertsSequence))
+                    {
+                        UserAlert userAlert = new UserAlert();
+                        userAlert.DeserializeJson(userAlertsValue);
+                        this.UserAlerts.Add(userAlert);
+                    }
                 }
                 JToken userNameValue = inputObject["UserName"];
                 if (userNameValue != null && userNameValue.Type != JTokenType.Null)

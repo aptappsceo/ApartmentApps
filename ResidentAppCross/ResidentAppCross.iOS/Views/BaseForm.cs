@@ -288,9 +288,14 @@ namespace ResidentAppCross.iOS.Views
                 SectionsContainer.Add(uiView);
             }
 
+            LayoutContent();
+        }
+
+        public virtual void LayoutContent()
+        {
             var constraints = SectionsContainer.VerticalStackPanelConstraints(
-                new Margins(0, 0, 0, 25, 0, VerticalSectionsSpacing),
-                SectionsContainer.Subviews);
+             new Margins(0, 0, 0, 25, 0, VerticalSectionsSpacing),
+             SectionsContainer.Subviews);
 
             SectionsContainer.AddConstraints(constraints);
         }

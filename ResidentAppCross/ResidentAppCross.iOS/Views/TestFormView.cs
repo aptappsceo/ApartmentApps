@@ -286,8 +286,8 @@ namespace ResidentAppCross.iOS.Views
                     };
 
                     _collectionSection = Formals.Create<VerticalCollectionSection>();
-                    _collectionSection.HeightConstraint.Constant = 600;
-                    _collectionSection.SetVerticalTableMode(200);
+                    _collectionSection.HeightConstraint.Constant = 400;
+                    _collectionSection.SetVerticalTableMode(145);
 
                     _collectionSection.Collection.RegisterClassForCell(typeof(TicketCollectionViewCell), TicketCollectionViewCell.Key);
                     _collectionSection.Collection.RegisterNibForCell(UINib.FromName("TicketCollectionViewCell", NSBundle.MainBundle), TicketCollectionViewCell.Key);
@@ -297,7 +297,12 @@ namespace ResidentAppCross.iOS.Views
                         Items = collection.Cast<object>().ToArray(),
                         Binding = new CollectionDataBinding<TicketCollectionViewCell, TestDataItem>()
                         {
-                            Bind = (c,i) => { }
+                            Bind = (c,i) => { 
+								if(i.Editable) {
+									c.PhotoContainer.Hidden = true;
+									c.NoPhotosLabel.Hidden = true;
+								}
+							}
                         }
                     };
                     _collectionSection.Collection.ReloadData();

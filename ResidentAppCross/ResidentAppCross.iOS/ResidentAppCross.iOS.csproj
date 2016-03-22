@@ -62,12 +62,15 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>True</MtouchProfiling>
-    <CodesignKey>iPhone Developer: Josh Brewer (B5LK3679EV)</CodesignKey>
+    <CodesignKey>iPhone Developer: info@apartmentapps.com (Z3EFY936DV)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
     <MtouchSdkVersion>9.2</MtouchSdkVersion>
     <MtouchLink>None</MtouchLink>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
-    <CodesignProvision>1b68aea1-aa0a-4224-a1e8-7bd7b63030bf</CodesignProvision>
+    <CodesignProvision>
+    </CodesignProvision>
+    <CodesignResourceRules />
+    <CodesignExtraArgs />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhone'">
     <CodesignKey>iPhone Distribution</CodesignKey>
@@ -330,8 +333,6 @@
     <InterfaceDefinition Include="Views\MaintenanceRequestFormView.xib" />
     <InterfaceDefinition Include="Views\MaintenancePauseFormView.xib" />
     <InterfaceDefinition Include="Views\MaintenanceStartFormView.xib" />
-    <InterfaceDefinition Include="Views\MaintenanceRequestStatusView.xib" />
-    <InterfaceDefinition Include="Views\MaintenaceRequestIndexView.xib" />
     <InterfaceDefinition Include="Views\Sections\TextViewSection.xib" />
     <InterfaceDefinition Include="Views\Sections\LabelWithButtonSection.xib" />
     <InterfaceDefinition Include="Views\Sections\PhotoGallerySection.xib" />
@@ -373,6 +374,7 @@
     <Compile Include="Views\Attributes\ViewsAttributes.cs" />
     <Compile Include="Views\BaseForm.cs" />
     <Compile Include="Views\CheckinFormView.cs" />
+    <Compile Include="Views\MaintenanceRequestIndexView.cs" />
     <Compile Include="Views\NotificationsFormView.cs" />
     <Compile Include="Views\Sections\CollectionSections\GenericCollectionViewSource.cs" />
     <Compile Include="Views\Sections\Intefaces\ISoftKeyboardEventsListener.cs" />
@@ -390,7 +392,7 @@
     <Compile Include="Views\PhotoGallery\PhotoGallerySource.cs" />
     <Compile Include="Views\Sections\SectionViewBase.cs" />
     <Compile Include="Views\Sections\TableSection\TestDataItem.cs" />
-    <Compile Include="Views\Sections\TableSection\TableSource.cs" />
+    <Compile Include="Views\Sections\TableSection\GenericTableSource.cs" />
     <Compile Include="Views\TableSources\HomeMenuTableSource.cs" />
     <Compile Include="Views\TableSources\LookUpPairSelectionTableSource.cs" />
     <Compile Include="Views\TestFormView.cs" />
@@ -416,13 +418,6 @@
     <Compile Include="Views\MaintenanceStartFormView.cs" />
     <Compile Include="Views\MaintenanceStartFormView.designer.cs" />
     <Compile Include="Views\MaintenanceRequestStatusView.cs" />
-    <Compile Include="Views\MaintenanceRequestStatusView.designer.cs">
-      <DependentUpon>MaintenanceRequestStatusView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MaintenaceRequestIndexView.cs" />
-    <Compile Include="Views\MaintenaceRequestIndexView.designer.cs">
-      <DependentUpon>MaintenaceRequestIndexView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\Sections\CallToActionSection.cs" />
     <Compile Include="Views\Sections\CallToActionSection.designer.cs">
       <DependentUpon>CallToActionSection.cs</DependentUpon>

@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using ObjCRuntime;
 using ResidentAppCross.Services;
+using UIKit;
 using ZXing.Mobile;
 
 namespace ResidentAppCross.iOS.Services
@@ -19,14 +22,61 @@ namespace ResidentAppCross.iOS.Services
 
         public async Task<QRData> ScanAsync()
         {
-            var data = await Scanner.Scan();
 
-            return new QRData()
+            if (ObjCRuntime.Runtime.Arch == Arch.SIMULATOR)
             {
-                Data = data.Text,
-                ImageData = data.RawBytes,
-                Timestamp = data.Timestamp
+                return new QRData()
+                {
+                    Data = "Simulated Text",
+                    ImageData = new byte[0],
+                    Timestamp = DateTime.Now.Ticks
+                }; 
+            }
+
+            var view = new AVCaptureScannerViewController(new MobileBarcodeScanningOptions()
+            {
+            },
+            new MobileBarcodeScanner()
+            {
+            });
+
+            var window = UIApplication.SharedApplication.KeyWindow;
+            var vc = window.RootViewController.PresentedViewController;
+
+
+
+            QRData result = null;
+
+            view.OnScannedResult += _ =>
+            {
+                
+                result = new QRData()
+                {
+                    Data = _.Text,
+                    ImageData = _.RawBytes,
+                    Timestamp = _.Timestamp
+                };
+
+                view.DismissViewController(true, ()=> {});
             };
+
+
+            await vc.PresentViewControllerAsync(view,true);
+
+            return result;
         }
+    
+
+//        public async Task<QRData> ScanAsync()
+//        {
+//            var data = await Scanner.Scan();
+//
+//            return new QRData()
+//            {
+//                Data = data.Text,
+//                ImageData = data.RawBytes,
+//                Timestamp = data.Timestamp
+//            };
+//        }
     }
 }
