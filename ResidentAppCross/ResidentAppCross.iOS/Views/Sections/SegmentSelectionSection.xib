@@ -23,7 +23,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you have a pet?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SkB-bt-Pt6" userLabel="HeaderTitle">
                     <rect key="frame" x="8" y="8" width="584" height="60"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="4lD-lM-P2t"/>
+                        <constraint firstAttribute="height" constant="60" id="4lD-lM-P2t" userLabel="HeaderHeightConstraint"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,6 +43,7 @@
             <connections>
                 <outlet property="HeaderLabel" destination="SkB-bt-Pt6" id="VHs-Az-sAp"/>
                 <outlet property="SegmentSelector" destination="KQH-q9-lNB" id="dGA-PG-KFO"/>
+                <outlet property="_headerHeightConstraint" destination="4lD-lM-P2t" id="y0d-sn-Wde"/>
                 <outlet property="_headerTitle" destination="SkB-bt-Pt6" id="k3o-cv-jP3"/>
                 <outlet property="_segmentSelector" destination="KQH-q9-lNB" id="7Nw-I4-7oj"/>
             </connections>
