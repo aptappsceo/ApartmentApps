@@ -32,6 +32,17 @@ namespace ApartmentApps.Client.Models
             set { this._date = value; }
         }
         
+        private string _groupId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string GroupId
+        {
+            get { return this._groupId; }
+            set { this._groupId = value; }
+        }
+        
         private int? _id;
         
         /// <summary>
@@ -41,17 +52,6 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._id; }
             set { this._id = value; }
-        }
-        
-        private string _imageDirectoryId;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string ImageDirectoryId
-        {
-            get { return this._imageDirectoryId; }
-            set { this._imageDirectoryId = value; }
         }
         
         private MaitenanceRequest _maitenanceRequest;
@@ -144,15 +144,15 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Date = ((DateTimeOffset)dateValue);
                 }
+                JToken groupIdValue = inputObject["GroupId"];
+                if (groupIdValue != null && groupIdValue.Type != JTokenType.Null)
+                {
+                    this.GroupId = ((string)groupIdValue);
+                }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((int)idValue);
-                }
-                JToken imageDirectoryIdValue = inputObject["ImageDirectoryId"];
-                if (imageDirectoryIdValue != null && imageDirectoryIdValue.Type != JTokenType.Null)
-                {
-                    this.ImageDirectoryId = ((string)imageDirectoryIdValue);
                 }
                 JToken maitenanceRequestValue = inputObject["MaitenanceRequest"];
                 if (maitenanceRequestValue != null && maitenanceRequestValue.Type != JTokenType.Null)

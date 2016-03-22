@@ -2,7 +2,9 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
@@ -20,6 +22,17 @@ namespace ApartmentApps.Client.Models
             set { this._comments = value; }
         }
         
+        private DateTimeOffset? _createdOn;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get { return this._createdOn; }
+            set { this._createdOn = value; }
+        }
+        
         private string _incidentType;
         
         /// <summary>
@@ -31,11 +44,45 @@ namespace ApartmentApps.Client.Models
             set { this._incidentType = value; }
         }
         
+        private IList<string> _photos;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Photos
+        {
+            get { return this._photos; }
+            set { this._photos = value; }
+        }
+        
+        private string _requester;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Requester
+        {
+            get { return this._requester; }
+            set { this._requester = value; }
+        }
+        
+        private string _requesterId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string RequesterId
+        {
+            get { return this._requesterId; }
+            set { this._requesterId = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the IncidentReportBindingModel class.
         /// </summary>
         public IncidentReportBindingModel()
         {
+            this.Photos = new LazyList<string>();
         }
         
         /// <summary>
@@ -50,10 +97,33 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Comments = ((string)commentsValue);
                 }
+                JToken createdOnValue = inputObject["CreatedOn"];
+                if (createdOnValue != null && createdOnValue.Type != JTokenType.Null)
+                {
+                    this.CreatedOn = ((DateTimeOffset)createdOnValue);
+                }
                 JToken incidentTypeValue = inputObject["IncidentType"];
                 if (incidentTypeValue != null && incidentTypeValue.Type != JTokenType.Null)
                 {
                     this.IncidentType = ((string)incidentTypeValue);
+                }
+                JToken photosSequence = ((JToken)inputObject["Photos"]);
+                if (photosSequence != null && photosSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken photosValue in ((JArray)photosSequence))
+                    {
+                        this.Photos.Add(((string)photosValue));
+                    }
+                }
+                JToken requesterValue = inputObject["Requester"];
+                if (requesterValue != null && requesterValue.Type != JTokenType.Null)
+                {
+                    this.Requester = ((string)requesterValue);
+                }
+                JToken requesterIdValue = inputObject["RequesterId"];
+                if (requesterIdValue != null && requesterIdValue.Type != JTokenType.Null)
+                {
+                    this.RequesterId = ((string)requesterIdValue);
                 }
             }
         }

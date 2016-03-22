@@ -67,7 +67,13 @@ namespace ApartmentApps.API.Service.Controllers
             public IEnumerable<object> Checkins { get; set; }
         }
 
-       
+        public class MaintenanceIndexBindingModel
+        {
+            public string Title { get; set; }
+            public string Comments { get; set; }
+            public string StatusId { get; set; }
+            public int Id { get; set; }
+        }
 
         public class CheckinBindingModel
         {
@@ -77,6 +83,24 @@ namespace ApartmentApps.API.Service.Controllers
             public string WorkerName { get; set; }
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("List")]
+        public IEnumerable<MaintenanceIndexBindingModel> ListRequests()
+        {
+            using (Context = new ApplicationDbContext())
+            {
+                return
+                    Context.MaitenanceRequests.Include(r=>r.MaitenanceRequestType).Select(
+                        x => new MaintenanceIndexBindingModel()
+                        {
+                            Title = x.MaitenanceRequestType.Name,
+                            Comments = x.Message,
+                            StatusId = x.StatusId,
+                            Id = x.Id
+                        }).ToArray();
+            }
+        }
+        
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetRequest")]
         public async Task<MaintenanceBindingModel> Get(int id)

@@ -173,6 +173,30 @@ namespace ApartmentApps.Client
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IMaitenance.
         /// </param>
+        public static IList<MaintenanceIndexBindingModel> ListRequests(this IMaitenance operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IMaitenance)s).ListRequestsAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IMaitenance.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<IList<MaintenanceIndexBindingModel>> ListRequestsAsync(this IMaitenance operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.MaintenanceIndexBindingModel>> result = await operations.ListRequestsWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IMaitenance.
+        /// </param>
         /// <param name='id'>
         /// Required.
         /// </param>

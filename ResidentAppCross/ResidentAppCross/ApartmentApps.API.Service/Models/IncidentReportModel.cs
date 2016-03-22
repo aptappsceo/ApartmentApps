@@ -33,12 +33,12 @@ namespace ApartmentApps.Client.Models
             set { this._images = value; }
         }
         
-        private string _incidentReportTypeId;
+        private int? _incidentReportTypeId;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string IncidentReportTypeId
+        public int? IncidentReportTypeId
         {
             get { return this._incidentReportTypeId; }
             set { this._incidentReportTypeId = value; }
@@ -86,7 +86,7 @@ namespace ApartmentApps.Client.Models
             }
             if (this.IncidentReportTypeId != null)
             {
-                outputObject["IncidentReportTypeId"] = this.IncidentReportTypeId;
+                outputObject["IncidentReportTypeId"] = this.IncidentReportTypeId.Value;
             }
             return outputObject;
         }
