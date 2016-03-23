@@ -62,15 +62,12 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>True</MtouchProfiling>
-    <CodesignKey>iPhone Developer: info@apartmentapps.com (Z3EFY936DV)</CodesignKey>
+    <CodesignKey>iPhone Developer: Josh Brewer (B5LK3679EV)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
     <MtouchSdkVersion>9.2</MtouchSdkVersion>
     <MtouchLink>None</MtouchLink>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
-    <CodesignProvision>
-    </CodesignProvision>
-    <CodesignResourceRules />
-    <CodesignExtraArgs />
+    <CodesignProvision>1b68aea1-aa0a-4224-a1e8-7bd7b63030bf</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhone'">
     <CodesignKey>iPhone Distribution</CodesignKey>

@@ -1,6 +1,10 @@
 ﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.iPhone (4)" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/Info.plist">
+    <Files>
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
