@@ -23,11 +23,13 @@ using CoreGraphics;
 
 namespace SharpMobileCode.ModalPicker
 {
-    public delegate void ModalPickerDimissedEventHandler(object sender, EventArgs e);
+    public delegate void ModalPickerSelectionConfirmed(object sender, EventArgs e);
+    public delegate void ModalPickerSelectionCanceled(object sender, EventArgs e);
 
     public class ModalPickerViewController : UIViewController
     {
-        public event ModalPickerDimissedEventHandler OnModalPickerDismissed;
+        public event ModalPickerSelectionConfirmed OnSelectionConfirmed;
+        public event ModalPickerSelectionCanceled OnSelectionCancelled;
         const float _headerBarHeight = 40;
 
         public UIColor HeaderBackgroundColor { get; set; }
@@ -209,16 +211,20 @@ namespace SharpMobileCode.ModalPicker
         void DoneButtonTapped (object sender, EventArgs e)
         {
             DismissViewController(true, null);
-            if(OnModalPickerDismissed != null)
+            if(OnSelectionConfirmed != null)
             {
-                OnModalPickerDismissed(sender, e);
+                OnSelectionConfirmed(sender, e);
             }
 		}
 
 		void CancelButtonTapped (object sender, EventArgs e)
 		{
 			DismissViewController(true, null);
-		}
+            if (OnSelectionCancelled!= null)
+            {
+                OnSelectionCancelled(sender, e);
+            }
+        }
 
         public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
         {

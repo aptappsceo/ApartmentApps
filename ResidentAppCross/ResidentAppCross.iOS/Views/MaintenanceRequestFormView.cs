@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using Foundation;
@@ -16,10 +17,17 @@ using UIKit;
 namespace ResidentAppCross.iOS.Views
 {
 
+    [Register("MaintenanceRequestFormView")]
     [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
     [NavbarStyling(Hidden = false)]
-	public partial class MaintenanceRequestFormView : ViewBase<MaintenanceRequestFormViewModel>
+	public partial class MaintenanceRequestFormView : BaseForm<MaintenanceRequestFormViewModel>
 	{
+        private HeaderSection _headerSection;
+        private LabelWithButtonSection _requestTypeSection;
+        private ToggleSection _entrancePermissionSection;
+        private SegmentSelectionSection _petStatusSection;
+        private TextViewSection _commentsSection;
+        private PhotoGallerySection _photoSection;
 
 //        public new MaintenanceRequestFormViewModel ViewModel
 //        {
@@ -27,179 +35,159 @@ namespace ResidentAppCross.iOS.Views
 //            set { base.ViewModel = value; }
 //        }
 
-        public override string Title => "Maintenance Request";
-
-        public override void TouchesBegan(NSSet touches, UIEvent evt)
+        public MaintenanceRequestFormView(string nibName, NSBundle bundle) : base(nibName, bundle)
         {
-            base.TouchesBegan(touches, evt);
         }
 
-        public MaintenanceRequestFormView () : base ("MaintenanceRequestFormView", null)
-		{
-			this.DelayBind(() =>
-				{
-					var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
-					b.Bind(CommentsTextView).TwoWay().For(v => v.Text).To(vm => vm.Comments);
-                    b.Bind(SelectRequestTypeButton).For("Title").To(vm => vm.SelectRequestTypeActionTitle);
-                    b.Bind(AddPhotoButton).To(vm => vm.AddPhotoCommand);
-				    b.Bind(EntrancePermissionSwitch).TwoWay().To(vm => vm.EntrancePermission);
-                    b.Apply();
-
-                    ViewModel.ImagesToUpload.RawImages.CollectionChanged += ImagesChanged;
-
-                    CommentsTextView.ReturnKeyType = UIReturnKeyType.Done;
-
-				    CommentsTextView.ShouldChangeText += (view, range, text) =>
-				    {
-				        if (text == "\n")
-				        {
-				            CommentsTextView.ResignFirstResponder();
-				            return false;
-				        }
-				        return true;
-				    };
-
-					SelectRequestTypeButton.TouchUpInside += (sender, ea) => ShowRequestSelection2();
-
-                    PetTypeSelection.ValueChanged += PetTypeSelection_ValueChanged;
-
-                    PhotoContainer.Hidden = !ViewModel.ImagesToUpload.RawImages.Any();
-
-                });
-
-		}
-
-        private void PetTypeSelection_ValueChanged(object sender, EventArgs e)
+        public MaintenanceRequestFormView()
         {
-            ViewModel.SelectedPetStatus = (int)PetTypeSelection.SelectedSegment;
         }
 
-        public override void ViewWillAppear(bool animated)
+        public override string Title => "Maintenance";
+
+        public HeaderSection HeaderSection
         {
-            base.ViewWillAppear(animated);
-            PhotoContainer.BackgroundColor = UIColor.White;
-            PetTypeSelection.SelectedSegment = ViewModel.SelectedPetStatus ?? -1;
-        }
-
-        private void ImagesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-		{
-			PhotoContainer.ReloadData();
-            PhotoContainer.Hidden = !ViewModel.ImagesToUpload.RawImages.Any();
-		}
-
-
-        public void ShowRequestSelection2()
-        {
-            var selectionTable = new UITableViewController(UITableViewStyle.Grouped)
+            get
             {
-                ModalPresentationStyle = UIModalPresentationStyle.Popover,
-                TableView =
+                if (_headerSection == null)
                 {
-                    //LayoutMargins = new UIEdgeInsets(25, 25, 0, 50),
-                    SeparatorColor = UIColor.Gray,
-                    SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                    _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
+                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
+                    _headerSection.MainLabel.Text = "Request";
+                    _headerSection.SubLabel.Text = "Fill the information below";
                 }
-            };
-
-            var tableView = selectionTable.TableView;
-            var source = new MvxStandardTableViewSource(tableView, "TitleText Value");
-            tableView.Source = source;
-            var searchBar = new UISearchBar()
-            {
-                AutocorrectionType = UITextAutocorrectionType.Yes,
-                KeyboardType = UIKeyboardType.WebSearch
-            };
-            tableView.TableHeaderView = searchBar;
-            searchBar.SizeToFit();
-            searchBar.Placeholder = "Search...";
-            searchBar.OnEditingStopped += (sender, args) =>
-            {
-                searchBar.ResignFirstResponder();
-            };
-
-            var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
-
-            b.Bind(source).To(vm => vm.RequestTypesFiltered);
-            b.Bind(source).For(s => s.SelectionChangedCommand).To(vm => vm.UpdateRequestTypeSelection);
-            b.Bind(searchBar).For(searchBar.Text).TwoWay().To(vm => vm.RequestTypeSearchText);
-            b.Apply();
-
-            selectionTable.EdgesForExtendedLayout = UIRectEdge.None;
-
-            selectionTable.Title = "Select Type";
-
-            source.SelectedItemChanged += (i, e) => { NavigationController.PopViewController(true); };
-            NavigationController.PushViewController(selectionTable, true);
+                return _headerSection;
+            }
         }
-	
 
-		public void ShowRequestSelection()
-		{
-
-		    var selectionTable = new UITableViewController(UITableViewStyle.Grouped)
-		    {
-		        ModalPresentationStyle = UIModalPresentationStyle.Popover,
-		        TableView =
-		        {
-		            LayoutMargins = new UIEdgeInsets(25, 25, 0, 50),
-		            SeparatorColor = UIColor.Gray,
-		            SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine
-		        }
-		    };
-
-            var searchBar = new UISearchBar()
+        public LabelWithButtonSection RequestTypeSection
+        {
+            get
             {
-                AutocorrectionType = UITextAutocorrectionType.Yes,
-                KeyboardType = UIKeyboardType.WebSearch
-            };
+                if (_requestTypeSection == null)
+                {
+                    _requestTypeSection = Formals.Create<LabelWithButtonSection>();
+                    _requestTypeSection.Label.Text = "Request Type *";
+                    _requestTypeSection.HeightConstraint.Constant = 60;
+                }
+                return _requestTypeSection;
+            }
+        }
 
-            selectionTable.TableView.TableHeaderView = searchBar;
-            searchBar.SizeToFit();
-            searchBar.Placeholder = "Search...";
-            searchBar.OnEditingStopped += (sender, args) =>
+        public SegmentSelectionSection PetStatusSection
+        {
+            get
             {
-                searchBar.ResignFirstResponder();
-            };
+                if (_petStatusSection == null)
+                {
+                    _petStatusSection = Formals.Create<SegmentSelectionSection>();
+                    _petStatusSection.Selector.RemoveAllSegments();
+                    _petStatusSection.HeightConstraint.Constant = 120;
+                    _petStatusSection.Editable = true;
+                    _petStatusSection.Selector.ControlStyle = UISegmentedControlStyle.Bezeled;
+                }
+                return _petStatusSection;
+            }
+        }
+
+        public TextViewSection CommentsSection
+        {
+            get
+            {
+                if (_commentsSection == null)
+                {
+                    _commentsSection = Formals.Create<TextViewSection>();
+                    _commentsSection.HeightConstraint.Constant = 200;
+                    _commentsSection.HeaderLabel.Text = "Details & Comments";
+                    _commentsSection.SetEditable(true);
+                }
+                return _commentsSection;
+            }
+        }
+
+        public PhotoGallerySection PhotoSection
+        {
+            get
+            {
+                if (_photoSection == null)
+                {
+                    _photoSection = Formals.Create<PhotoGallerySection>();
+                }
+                return _photoSection;
+            }
+        }
 
 
-		    var source = new LookUpPairSelectionTableSource()
-		    {
-		        Items = ViewModel.RequestTypes.ToArray(),
-		        OnItemSelected = item =>
-		        {
-		            ViewModel.UpdateRequestTypeSelection.Execute(item);
-		            NavigationController.PopViewController(true);
-		        }
-		    };
-		    selectionTable.TableView.Source = source;
+        public ToggleSection EntrancePermissionSection
+        {
+            get
+            {
+                if (_entrancePermissionSection == null)
+                {
+                    _entrancePermissionSection = Formals.Create<ToggleSection>();
+                    _entrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
+                    _entrancePermissionSection.SubHeaderLabel.Text =
+                        "Do you give a permission for tech guys to enter your apartment when you are not at home?";
+                    _entrancePermissionSection.HeightConstraint.Constant = 160;
+                    _entrancePermissionSection.Editable = true;
+
+                }
+                return _entrancePermissionSection;
+            }
+        }
+
+        public override void BindForm()
+        {
+            base.BindForm();
 
             var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
 
-            b.Bind(source).To(vm => vm.RequestTypesFiltered);
-            b.Bind(searchBar).For(searchBar.Text).TwoWay().To(vm => vm.RequestTypeSearchText);
+            //Header Section
+
+            //---
+
+            //Request type section
+
+            b.Bind(RequestTypeSection.Button).For("Title").To(vm => vm.SelectRequestTypeActionTitle);
+            b.Bind(RequestTypeSection.Button).To(vm => vm.SelectRequestTypeCommand);
+
+            //Comments Section
+
+            b.Bind(CommentsSection.TextView).For(v => v.Text).TwoWay().To(vm => vm.Comments);
+
+            //Photo Section
+
+            PhotoSection.BindViewModel(ViewModel.Photos);
+
+            //Entrance permission switch
+            b.Bind(EntrancePermissionSection.Switch).For(s=> s.On).TwoWay().To(vm => vm.EntrancePermission);
+
+            // Pet Status section
+
+            PetStatusSection.BindTo(ViewModel.PetStatuses,s=>s.Title,s=>ViewModel.SelectedPetStatus = s.Id, 0);
+            b.Bind(PetStatusSection.Selector).For(s => s.SelectedSegment).To(vm => vm.SelectedPetStatus);
 
             b.Apply();
 
+        }
 
-            selectionTable.TableView.LayoutIfNeeded();
-			selectionTable.TableView.LayoutSubviews();
+        public override void GetContent(List<UIView> content)
+        {
+            base.GetContent(content);
+            content.Add(HeaderSection);
+            content.Add(RequestTypeSection);
+            content.Add(CommentsSection);
+            content.Add(PhotoSection);
+            content.Add(PetStatusSection);
+            content.Add(EntrancePermissionSection);
+        }
 
-            NavigationController.PushViewController(selectionTable,true);
 
-			//this.PresentViewController(selectionTable, true, null);
-		}
-
-
-	    public override void ViewDidLoad ()
+        public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 
-                EdgesForExtendedLayout = UIRectEdge.None;
-            this.NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem(
-				"Back", 
-                UIBarButtonItemStyle.Plain, 
-                (sender, args) => NavigationController.PopViewController(true)), 
-                true);
 
 			this.NavigationItem.SetRightBarButtonItem(new UIBarButtonItem
                 ("Done", 
@@ -207,18 +195,6 @@ namespace ResidentAppCross.iOS.Views
                 (sender, args) => ViewModel.DoneCommand.Execute(null)), 
                 true);
 
-
-            PhotoContainer.RegisterClassForCell(typeof(PhotoGalleryCells), (NSString)PhotoGalleryCells.CellIdentifier);
-            PhotoContainer.Source = new PhotoGallerySource(ViewModel.ImagesToUpload);
-
-            PhotoContainer.ReloadData();
-			// Perform any additional setup after loading the view, typically from a nib.
-		}
-
-		public override void DidReceiveMemoryWarning ()
-		{
-			base.DidReceiveMemoryWarning ();
-			// Release any cached data, images, etc that aren't in use.
 		}
 	}
 }

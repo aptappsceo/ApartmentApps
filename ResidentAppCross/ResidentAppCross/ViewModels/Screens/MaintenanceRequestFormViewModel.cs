@@ -15,6 +15,7 @@ using MvvmCross.Core.ViewModels;
 using ResidentAppCross.Events;
 using ResidentAppCross.Extensions;
 using ResidentAppCross.Services;
+using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross.ViewModels
 {
@@ -39,10 +40,11 @@ namespace ResidentAppCross.ViewModels
         private string _selectRequestTypeActionTitle;
         private bool _entrancePermission;
 
-        public MaintenanceRequestFormViewModel(IApartmentAppsAPIService service, IImageService imageService)
+        public MaintenanceRequestFormViewModel(IApartmentAppsAPIService service, IImageService imageService, IDialogService dialogService)
         {
             _service = service;
             _imageService = imageService;
+            _dialogService = dialogService;
         }
 
         public override void Start()
@@ -67,7 +69,7 @@ namespace ResidentAppCross.ViewModels
 
         public string SelectRequestTypeActionTitle => SelectedRequestType?.Value ?? "Select...";
 
-        public ImageBundleViewModel ImagesToUpload { get; set; } = new ImageBundleViewModel() { Title = "Photos?" };
+        public ImageBundleViewModel Photos { get; set; } = new ImageBundleViewModel() { Title = "Photos?" };
 
         public LookupPairModel SelectedRequestType
         {
@@ -133,15 +135,23 @@ namespace ResidentAppCross.ViewModels
             }
         }
 
+
+        IDialogService _dialogService;
+
+        private ObservableCollection<PetStatus> _petStatuses;
+
         public ICommand SelectRequestTypeCommand
         {
             get
             {
-                return new MvxCommand(() =>
+                return new MvxCommand(async () =>
                 {
-                    MaintenanceRequestTypeSelectionViewModel.OnSelect = OnRequestTypeSelected;
-                    MaintenanceRequestTypeSelectionViewModel.Options = RequestTypes.ToList();
-                    ShowViewModel<MaintenanceRequestTypeSelectionViewModel>();
+                    var type =await
+                        _dialogService.OpenSearchableTableSelectionDialog(RequestTypes, "Select Request Type",
+                            item => item.Value);
+
+
+                    SelectedRequestType = type;
                 });
             }
         }
@@ -163,7 +173,7 @@ namespace ResidentAppCross.ViewModels
             {
                 return this.TaskCommand(async context =>
                 {
-                    var images = ImagesToUpload.RawImages.Select(p =>
+                    var images = Photos.RawImages.Select(p =>
                     {
                         return Convert.ToBase64String(p.Data);
                     })
@@ -194,7 +204,7 @@ namespace ResidentAppCross.ViewModels
                 {
                     _imageService.SelectImage(s =>
                     {
-                        ImagesToUpload.RawImages.Add(new ImageBundleItemViewModel()
+                        Photos.RawImages.Add(new ImageBundleItemViewModel()
                         {
                             Data = s
                         });
@@ -226,6 +236,24 @@ namespace ResidentAppCross.ViewModels
         {
             get { return _entrancePermission; }
             set { SetProperty(ref _entrancePermission,value); }
+        }
+
+        public ObservableCollection<PetStatus> PetStatuses
+        {
+            get
+            {
+                if (_petStatuses == null)
+                {
+                    _petStatuses = new ObservableCollection<PetStatus>
+                    {
+                        new PetStatus() {Title = "No Pet", Id = 0},
+                        new PetStatus() {Title = "Yes, Contained", Id = 1},
+                        new PetStatus() {Title = "Yes, Free", Id = 2}
+                    };
+                }
+                return _petStatuses;
+            }
+            set { _petStatuses = value; }
         }
     }
 }

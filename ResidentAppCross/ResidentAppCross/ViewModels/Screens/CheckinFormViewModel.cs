@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MvvmCross.Core.ViewModels;
 using ResidentAppCross.Commands;
+using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
@@ -15,9 +17,25 @@ namespace ResidentAppCross.ViewModels.Screens
         private string _actionText = "";
         private string _headerText = "";
         private string _subHeaderText = "";
+        private IQRService _qrService;
+        public QRData QRScanResult { get; set; }
+        public bool ShouldScanQr { get; set; } = true;
 
-        public CheckinFormViewModel()
+        public CheckinFormViewModel(IQRService qrService)
         {
+            _qrService = qrService;
+        }
+
+        public ICommand SubmitCheckinCommand
+        {
+            get
+            {
+                return new MvxCommand(async () =>
+                {
+                    if(ShouldScanQr) QRScanResult = await _qrService.ScanAsync();
+                    ActionCommand?.Execute(null);
+                });
+            }
         }
 
         public ICommand ActionCommand { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -132,6 +133,11 @@ namespace ResidentAppCross.Commands
         public void FailTask(string reason)
         {
             throw new Exception(reason);
+        }
+
+        public void CancelTask()
+        {
+            
         }
 
         public object Argument { get; set; }

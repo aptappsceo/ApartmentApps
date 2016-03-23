@@ -7,7 +7,9 @@ namespace ResidentAppCross.iOS
 {
     public partial class ToggleSection : SectionViewBase
 	{
-	    public ToggleSection()
+        private bool _editable;
+
+        public ToggleSection()
 	    {
 	    }
 
@@ -15,7 +17,18 @@ namespace ResidentAppCross.iOS
 		{
 		}
 
-	    public UISwitch Switch => _switch;
+
+        public bool Editable
+        {
+            get { return _editable; }
+            set
+            {
+                _editable = value;
+                Switch.Enabled = value;
+            }
+        }
+
+        public UISwitch Switch => _switch;
 	    public UILabel HeaderLabel => _headerLabel;
 	    public UILabel SubHeaderLabel => _subHeaderLabel;
 

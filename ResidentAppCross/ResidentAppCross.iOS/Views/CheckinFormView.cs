@@ -39,7 +39,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.HeightConstraint.Constant = 100;
+                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
                     _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
                     _headerSection.MainLabel.Text = "Maintenance";
                     _headerSection.SubLabel.Text = "Pause";
@@ -70,7 +70,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_actionSection == null)
                 {
                     _actionSection = Formals.Create<CallToActionSection>();
-                    _actionSection.HeightConstraint.Constant = 100;
+                    _actionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
                 }
                 return _actionSection;
             }
@@ -98,8 +98,8 @@ namespace ResidentAppCross.iOS.Views
             set.Bind(HeaderSection.MainLabel).For(l => l.Text).To(vm => vm.HeaderText);
             set.Bind(HeaderSection.SubLabel).For(l => l.Text).To(vm => vm.SubHeaderText);
             set.Bind(ActionSection.MainButton).For("Title").To(vm => vm.ActionText);
-            set.Bind(ActionSection.MainButton).To(vm => vm.ActionCommand);
-            set.Bind(CommentsSection.TextView).To(vm => vm.Comments);
+            set.Bind(ActionSection.MainButton).To(vm => vm.SubmitCheckinCommand);
+            set.Bind(CommentsSection.TextView).For(t=>t.Text).TwoWay().To(vm => vm.Comments);
             
             set.Apply();
 

@@ -27,6 +27,7 @@ namespace ResidentAppCross.iOS
             {
                 base.InitializeIoC();
                 Mvx.ConstructAndRegisterSingleton<IQRService, IOSQRService>();
+                Mvx.ConstructAndRegisterSingleton<IDialogService, IOSDialogService>();
             }
         }
 

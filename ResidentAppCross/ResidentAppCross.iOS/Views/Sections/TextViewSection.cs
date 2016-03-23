@@ -21,6 +21,14 @@ namespace ResidentAppCross.iOS
 	    public void SetEditable(bool editable)
 	    {
 	        TextView.Editable = editable;
+	        if (editable)
+	        {
+	            TextViewContainer.BackgroundColor = AppTheme.SecondaryBackgoundColor;
+	        }
+	        else
+	        {
+	            TextViewContainer.BackgroundColor = AppTheme.DeepBackgroundColor;
+	        }
 	    }
 
 	    public IScrollableView ScrollableParent => ParentController as IScrollableView;

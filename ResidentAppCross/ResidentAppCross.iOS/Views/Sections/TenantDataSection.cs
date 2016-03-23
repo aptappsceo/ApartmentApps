@@ -5,7 +5,7 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	partial class TenantDataSection : UIView
+	public partial class TenantDataSection : SectionViewBase
 	{
 		public TenantDataSection (IntPtr handle) : base (handle)
 		{
@@ -14,6 +14,15 @@ namespace ResidentAppCross.iOS
 	    public TenantDataSection()
 	    {
 	    }
+
+
+	    public UILabel AddressLabel => _addressLabel;
+	    public UILabel HeaderLabel => _headerLabel;
+	    public UIImageView PhoneIcon => _phoneIcon;
+	    public UILabel PhoneLabel => _phoneLabel;
+	    public UIImageView TenantAvatar => _tenantAvatar;
+	    public UIView TenantInformationContainer => _tenantInformationContainer;
+	    public UILabel TenantNameLabel => _tenantNameLabel;
 
 
 

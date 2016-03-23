@@ -59,7 +59,7 @@ namespace ResidentAppCross
 
             MenuItems.Add(new HomeMenuItemViewModel()
             {
-                Name = "Maitenance Request",
+                Name = "Maintenance Request",
                 Icon = SharedResources.Icons.MaintenaceIcon,
                 BadgeLabel = "6",
                 Command = MaintenaceRequestCommand

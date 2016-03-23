@@ -42,6 +42,9 @@ namespace ResidentAppCross.iOS
         private ButtonToolbarSection _footerSection;
         private TextViewSection _commentsSection;
         private PhotoGallerySection _photoSection;
+        private SegmentSelectionSection _petStatusSection;
+        private ToggleSection _entrancePermissionSection;
+        private TenantDataSection _tenantDataSection;
 
         public override string Title => "Maintenance Request";
 
@@ -53,7 +56,7 @@ namespace ResidentAppCross.iOS
                 {
                     _headerSection = Formals.Create<HeaderSection>();
                     _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
-                    _headerSection.HeightConstraint.Constant = 120;
+                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
                 }
                 return _headerSection;
             }
@@ -70,6 +73,22 @@ namespace ResidentAppCross.iOS
                     _scheduleSection.HeightConstraint.Constant = 60;
                 }
                 return _scheduleSection;
+            }
+        }
+
+        public SegmentSelectionSection PetStatusSection
+        {
+            get
+            {
+                if (_petStatusSection == null)
+                {
+                    _petStatusSection = Formals.Create<SegmentSelectionSection>();
+                    _petStatusSection.Selector.RemoveAllSegments();
+                    _petStatusSection.HeightConstraint.Constant = 120;
+                    _petStatusSection.Editable = false;
+                    _petStatusSection.Selector.ControlStyle = UISegmentedControlStyle.Bezeled;
+                }
+                return _petStatusSection;
             }
         }
 
@@ -109,6 +128,42 @@ namespace ResidentAppCross.iOS
                     _footerSection.HeightConstraint.Constant = 120;
                 }
                 return _footerSection;
+            }
+        }
+
+        public ToggleSection EntrancePermissionSection
+        {
+            get
+            {
+                if (_entrancePermissionSection == null)
+                {
+                    _entrancePermissionSection = Formals.Create<ToggleSection>();
+                    _entrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
+                    _entrancePermissionSection.SubHeaderLabel.Text =
+                        "Do you give a permission for tech guys to enter your apartment when you are not at home?";
+                    _entrancePermissionSection.HeightConstraint.Constant = 160;
+                    _entrancePermissionSection.Editable = false;
+
+                }
+                return _entrancePermissionSection;
+            }
+        }
+
+        public TenantDataSection TenantDataSection
+        {
+            get
+            {
+                if(_tenantDataSection == null)
+                {
+                    _tenantDataSection = Formals.Create<TenantDataSection>();
+                    _tenantDataSection.HeaderLabel.Text = "Unit Information";
+                    _tenantDataSection.AddressLabel.Text = "795 E DRAGRAM TUCSON AZ 85705 USA";
+                    _tenantDataSection.PhoneLabel.Text = "+1 777 777 777";
+                    _tenantDataSection.TenantAvatar.Image = UIImage.FromBundle("OfficerIcon");
+
+                    _tenantDataSection.HeightConstraint.Constant = 270;;
+                }
+                return _tenantDataSection;
             }
         }
 
@@ -156,7 +211,7 @@ namespace ResidentAppCross.iOS
 
             b.Bind(FooterPauseButton).To(vm => vm.PauseCommmand);
             b.Bind(FooterFinishButton).To(vm => vm.FinishCommmand);
-            b.Bind(FooterStartButton).To(vm => vm.StartCommand);
+            b.Bind(FooterStartButton).To(vm => vm.ScanAndStartCommand);
 
             b.Bind(FooterFinishButton).For(but => but.Hidden).To(vm => vm.ForbidComplete);
             b.Bind(FooterStartButton).For(but => but.Hidden).To(vm => vm.ForbidStart);
@@ -176,8 +231,32 @@ namespace ResidentAppCross.iOS
             b.Bind(HeaderSection.MainLabel).For(l => l.Text).To(vm => vm.Request.Name);
             b.Bind(HeaderSection.SubLabel).For(l => l.Text).To(vm => vm.Request.Status);
 
+            //Pet section
+            PetStatusSection.BindTo(ViewModel.PetStatuses,p=>p.Title,p=> {},0);
+            b.Bind(PetStatusSection.Selector).For(s => s.SelectedSegment).To(vm => vm.Request.PetStatus);
+
+
+            //Tenant section
+
+            b.Bind(TenantDataSection.TenantNameLabel).For(t => t.Text).To(vm => vm.Request.TenantFullName);
+
+            //Date section
+            b.Bind(ScheduleSection.Button).To(vm => vm.ScheduleCommand);
+
+
+            //b.Bind(TenantDataSection.AddressLabel).For(t => t.Text).To(vm => vm.UnitAddressString);
+            //b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.TenantPhone)
+            //b.Bind(TenantDataSection.TenantAvatar)
+
+            //Entrance Permission section
+
+            //b.Bind(EntrancePermissionSection.Switch).For(s => s.On).To(vm => vm.Request.EntrancePermission);
+
 
             b.Apply();
+
+
+
 
             ViewModel.PropertyChanged += (sender, args) =>
             {
@@ -201,32 +280,14 @@ namespace ResidentAppCross.iOS
             base.GetContent(content);
             content.Add(HeaderSection);
             content.Add(ScheduleSection);
+            content.Add(TenantDataSection);
             content.Add(CommentsSection);
             content.Add(PhotoSection);
+            content.Add(PetStatusSection);
+            content.Add(EntrancePermissionSection);
             content.Add(FooterSection);
         }
 
-        public async void ShowScheduleDatePicker(object sender, EventArgs eventArgs)
-        {
-            var modalPicker = new ModalPickerViewController(ModalPickerType.Date, "Select A Date", this)
-            {
-                HeaderBackgroundColor = AppTheme.SecondaryBackgoundColor,
-                HeaderTextColor = UIColor.White,
-                TransitioningDelegate = new ModalPickerTransitionDelegate(),
-                ModalPresentationStyle = UIModalPresentationStyle.Custom
-            };
-    
-            modalPicker.DatePicker.Mode = UIDatePickerMode.DateAndTime;
-    
-            modalPicker.OnModalPickerDismissed += (s, ea) =>
-            {
-                modalPicker.DismissModalViewController(true);
-                ViewModel.ScheduleMaintenanceCommand.Execute(modalPicker.DatePicker.Date.ToDateTimeUtc());
-            };
-    
-            await PresentViewControllerAsync(modalPicker, true);
-    
-        }
-
+        
     }
 }

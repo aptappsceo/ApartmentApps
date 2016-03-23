@@ -41,6 +41,7 @@ namespace ResidentAppCross.iOS.Views
         private ToggleSection _toggleSection;
         private TableSection _tableSection;
         private VerticalCollectionSection _collectionSection;
+        private TextViewSection _textViewSection;
 
         public ButtonToolbarSection ButtonToolbarSection
         {
@@ -93,6 +94,21 @@ namespace ResidentAppCross.iOS.Views
                     _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
                 }
                 return _headerSection;
+            }
+        }
+
+        public TextViewSection TextViewSection
+        {
+            get
+            {
+                if (_textViewSection == null)
+                {
+                    _textViewSection = Formals.Create<TextViewSection>();
+                    _textViewSection.HeaderLabel.Text = "Comments Section";
+                    _textViewSection.TextView.Text = "Use .SetEditable(bool) on the section to make it editable or not.";
+
+                }
+                return _textViewSection;
             }
         }
 
@@ -258,7 +274,7 @@ namespace ResidentAppCross.iOS.Views
                         ItemsEditableByDefault = true, //Set all items editable
                         ItemsFocusableByDefault = true
                     };
-
+                    _tableSection.Table.AllowsSelection = true; //Make sure this is called if you use ItemSelected handler
                     _tableSection.Source = source;
                     _tableSection.ReloadData();
                     _tableSection.HeightConstraint.Constant = 200;
@@ -322,7 +338,7 @@ namespace ResidentAppCross.iOS.Views
             content.Add(HeaderSection);
             content.Add(TableSection);
             //content.Add(CollectionSection);
-            CollectionSection.Collection.ReloadData();
+            content.Add(TextViewSection);
             content.Add(LabelWithButtonSection);
             content.Add(PhotoGallerySection);
             content.Add(ToggleSection);

@@ -37,13 +37,15 @@ namespace ResidentAppCross.iOS.Views
                             cell.TextLabel.Text = item.Title;
                             cell.DetailTextLabel.Text = item.Comments;
                             cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
+                            cell.TextLabel.MinimumScaleFactor = 0.2f;
+                            
                         },
-                        ItemAccessoryClicked = item =>
+                        ItemSelected = item =>
                         {
                             ViewModel.SelectedRequest = item;
                             ViewModel.OpenSelectedRequestCommand.Execute(null);
                         }, //When accessory button clicked
-                        AccessoryType = item => UITableViewCellAccessory.DetailDisclosureButton, //What is displayed on the right edge
+                        AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
                         CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell"), //Define how to create cell, if reusables not found
                     };
 
@@ -55,6 +57,8 @@ namespace ResidentAppCross.iOS.Views
                         ItemsFocusableByDefault = true
                     };
 
+
+                    _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
                     _tableSection.Source = source;
                     _tableSection.ReloadData();
 
@@ -85,7 +89,7 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _callToActionSection = Formals.Create<CallToActionSection>();
                     _callToActionSection.MainButton.SetTitle("Scan QR Code",UIControlState.Normal);
-                    _callToActionSection.HeightConstraint.Constant = 100;
+                    _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
 
                 }
                 return _callToActionSection;
@@ -128,12 +132,26 @@ namespace ResidentAppCross.iOS.Views
                 true);
 
 
+            //Every form is placed inside of ScrollView (called SectionContainer);
+            //ScrollView and nested TableView do not come along very well:
+            //Row Selection will only work if you tap and hold the row for a few seconds.
+            //This is caused by gesture recognizers on the scroll view.
+
+            //In this particular form, ScrollView does nothing, since form has fixed height
+            //So I just remove all gesture recognizers.
+
+            foreach (var uiGestureRecognizer in SectionsContainer.GestureRecognizers)
+            {
+                SectionsContainer.RemoveGestureRecognizer(uiGestureRecognizer);
+            }
+
         }
 
         public override void GetContent(List<UIView> content)
         {
             base.GetContent(content);
 
+            
             content.Add(FilterSection);
             content.Add(TableSection);
             content.Add(CallToActionSection);
@@ -141,6 +159,7 @@ namespace ResidentAppCross.iOS.Views
 //
         public override void LayoutContent()
         {
+
             View.AddConstraints(
                     FilterSection.AtTopOf(View),
                     FilterSection.AtLeftOf(View),

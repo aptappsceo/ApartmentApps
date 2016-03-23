@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
+using Microsoft.WindowsAzure.MobileServices;
 using MvvmCross.Core.ViewModels;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Extensions;
@@ -31,12 +33,15 @@ namespace ResidentAppCross.ViewModels.Screens
         private bool _forbidStart;
         private bool _forbitSchedule;
         private string _selectScheduleDateActionLabel;
-
-        public MaintenanceRequestStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService)
+        private ObservableCollection<PetStatus> _petStatuses;
+        private string _unitAddressString;
+        private IDialogService _dialogService;
+        public MaintenanceRequestStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService)
         {
             _appService = appService;
             _imageService = imageService;
             _qrService = qrService;
+            _dialogService = dialogService;
         }
 
         public int MaintenanceRequestId
@@ -125,9 +130,10 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        public override void Start()
+        public string UnitAddressString
         {
-            base.Start();
+            get { return _unitAddressString; }
+            set { SetProperty(ref _unitAddressString, value); }
         }
 
         public ImageBundleViewModel Photos { get; set; } = new ImageBundleViewModel() { Title = "Photos" };
@@ -152,20 +158,10 @@ namespace ResidentAppCross.ViewModels.Screens
                 ForbitSchedule = CurrentRequestStatus == RequestStatus.Complete || CurrentRequestStatus == RequestStatus.Started;
                 ForbidStart = CurrentRequestStatus == RequestStatus.Started || CurrentRequestStatus == RequestStatus.Complete;
 
+                UnitAddressString = $"{Request?.BuildingName} {Request?.BuildingState} {Request?.BuildingCity} {Request?.BuildingPostalCode}";
+            
 
         }).OnStart("Loading Request...").OnFail(ex=> { Close(this); });
-
-        public ICommand ScanBarCodeCommand
-        {
-            get
-            {
-                return new MvxCommand(async () =>
-                {
-                    ScanResult = await _qrService.ScanAsync();
-                    StartCommand.Execute(null);
-                });
-            }
-        }
 
         public ICommand FinishCommmand
         {
@@ -178,10 +174,11 @@ namespace ResidentAppCross.ViewModels.Screens
                     {
                         vm.HeaderText = "Maintenance";
                         vm.SubHeaderText = "Finish";
-                        vm.ActionText = "Finish Maintenance";                       
+                        vm.ActionText = "Finish Maintenance";
+                        vm.ShouldScanQr = true;            
                         vm.ActionCommand = this.TaskCommand(async context =>
                         {
-                            var data = ScanResult?.Data;
+                            var data = vm.QRScanResult?.Data;
                             if (string.IsNullOrEmpty(data))
                             {
                                 context.FailTask("No QR Code scanned.");
@@ -196,7 +193,7 @@ namespace ResidentAppCross.ViewModels.Screens
                                         vm.Comments,
                                         vm.Photos.ImagesAsBase64.ToList());
 
-                                context.OnComplete(string.Format("Request Closed!", ScanResult?.Data),
+                                context.OnComplete("Request Closed!",
                                     () =>
                                     {
                                         Close(vm);
@@ -228,9 +225,11 @@ namespace ResidentAppCross.ViewModels.Screens
                         vm.HeaderText = "Maintenance";
                         vm.SubHeaderText = "Pause";
                         vm.ActionText = "Pause Maintenance";
+                        vm.ShouldScanQr = true;
+
                         vm.ActionCommand = this.TaskCommand(async context =>
                         {
-                            var data = ScanResult?.Data;
+                            var data = vm.QRScanResult?.Data;
                             if (string.IsNullOrEmpty(data))
                             {
                                 context.FailTask("No QR Code scanned.");
@@ -240,9 +239,9 @@ namespace ResidentAppCross.ViewModels.Screens
                             if (CurrentRequestStatus == RequestStatus.Started)
                             {
                                 await
-                                  _appService.Maitenance.PauseRequestWithOperationResponseAsync(MaintenanceRequestId, Comments, new List<string>());
+                                  _appService.Maitenance.PauseRequestWithOperationResponseAsync(MaintenanceRequestId, vm.Comments, vm.Photos.ImagesAsBase64.ToList());
 
-                                context.OnComplete(string.Format("Request Paused!", ScanResult?.Data),
+                                context.OnComplete("Request Paused!",
                                     () =>
                                     {
                                         Close(vm);
@@ -261,36 +260,62 @@ namespace ResidentAppCross.ViewModels.Screens
 
             }
         }
-        public ICommand StartCommand
+
+        public ICommand ScanAndStartCommand
         {
             get
             {
-                return this.TaskCommand(async context =>
+                return new MvxCommand(async () =>
                 {
                     var qr = await _qrService.ScanAsync();
 
                     var data = qr?.Data;
-                    if (string.IsNullOrEmpty(data))
+                   
+                    this.TaskCommand(async context =>
                     {
-                        context.FailTask("No QR Code scanned.");
-                        return;
-                    }
 
-                    if (CurrentRequestStatus == RequestStatus.Submitted || CurrentRequestStatus == RequestStatus.Scheduled || CurrentRequestStatus == RequestStatus.Paused)
-                    {
-                        await _appService.Maitenance.StartRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Started with Data: {0}", data), new List<string>());
-                        context.OnComplete(string.Format("Request Started (QR: {0})", data));
-                    }
-                    else
-                    {
-                        context.FailTask("Request is already In Progress or Complete.");
-                    }
-                }).OnStart("Starting...");
+                        if (string.IsNullOrEmpty(data))
+                        {
+                            context.FailTask("No QR Code scanned.");
+                            return;
+                        }
 
+                        if (CurrentRequestStatus == RequestStatus.Submitted || CurrentRequestStatus == RequestStatus.Scheduled || CurrentRequestStatus == RequestStatus.Paused)
+                        {
+                            await _appService.Maitenance.StartRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Started with Data: {0}", data), new List<string>());
+                            context.OnComplete(string.Format("Request Started (QR: {0})", data), () =>
+                            {
+                                UpdateMaintenanceRequest.Execute(null);
+                            });
+                        }
+                        else
+                        {
+                            context.FailTask("Request is already In Progress or Complete.");
+                        }
+                    }).OnStart("Starting...").Execute(null);
+
+                });    
             }
         }
 
 
+        public ObservableCollection<PetStatus> PetStatuses
+        {
+            get
+            {
+                if (_petStatuses == null)
+                {
+                    _petStatuses = new ObservableCollection<PetStatus>
+                    {
+                        new PetStatus() {Title = "No Pet", Id = 0},
+                        new PetStatus() {Title = "Yes, Contained", Id = 1},
+                        new PetStatus() {Title = "Yes, Free", Id = 2}
+                    };
+                }
+                return _petStatuses;
+            }
+            set { _petStatuses = value; }
+        }
 
         public ICommand ScheduleMaintenanceCommand
         {
@@ -304,6 +329,33 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
+        public ICommand ScheduleCommand
+        {
+            get
+            {
+                return new MvxCommand(async () =>
+                {
+                    var date = await _dialogService.OpenDateDialog("hello");
+                    if (!date.HasValue) return;
+                    this.TaskCommand(async context =>
+                    {
+                        await _appService.Maitenance.ScheduleRequestWithOperationResponseAsync(MaintenanceRequestId, date.Value);
+                    })
+                    .OnStart("Scheduling...")
+                    .OnComplete("Maintenance Scheduled!", () => UpdateMaintenanceRequest.Execute(null))
+                    .Execute(null);
+
+                });
+
+
+            }
+        }
+    }
+
+    public class PetStatus
+    {
+        public string Title { get; set; }
+        public int Id { get; set; }
     }
 
     public enum RequestStatus

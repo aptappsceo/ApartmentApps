@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using MvvmCross.iOS.Views;
+using MvvmCross.Platform.Core;
 using ObjCRuntime;
 using ResidentAppCross.Services;
 using UIKit;
+using ZXing;
 using ZXing.Mobile;
 
 namespace ResidentAppCross.iOS.Services
@@ -13,16 +17,17 @@ namespace ResidentAppCross.iOS.Services
 
         public MobileBarcodeScanner Scanner
         {
-            get { return _scanner ?? (_scanner = new MobileBarcodeScanner()
+            get { return _scanner ?? (_scanner = new MobileBarcodeScanner(UIApplication.SharedApplication.KeyWindow.RootViewController)
             {
                 BottomText = "Please, point to appartment QR Code"
             }); }
             set { _scanner = value; }
         }
+        
+
 
         public async Task<QRData> ScanAsync()
         {
-
             if (ObjCRuntime.Runtime.Arch == Arch.SIMULATOR)
             {
                 return new QRData()
@@ -33,37 +38,48 @@ namespace ResidentAppCross.iOS.Services
                 }; 
             }
 
-            var view = new AVCaptureScannerViewController(new MobileBarcodeScanningOptions()
+            var scan = await Scanner.Scan();
+            
+            return new QRData()
             {
-            },
-            new MobileBarcodeScanner()
-            {
-            });
-
-            var window = UIApplication.SharedApplication.KeyWindow;
-            var vc = window.RootViewController.PresentedViewController;
-
-
-
-            QRData result = null;
-
-            view.OnScannedResult += _ =>
-            {
-                
-                result = new QRData()
-                {
-                    Data = _.Text,
-                    ImageData = _.RawBytes,
-                    Timestamp = _.Timestamp
-                };
-
-                view.DismissViewController(true, ()=> {});
+                Data = scan?.Text,
+                ImageData = scan?.RawBytes,
+                Timestamp = scan?.Timestamp ?? 0
             };
 
 
-            await vc.PresentViewControllerAsync(view,true);
-
-            return result;
+////
+//            var view = new AVCaptureScannerViewController(new MobileBarcodeScanningOptions()
+//            {
+//            },
+//            new MobileBarcodeScanner()
+//            {
+//            });
+//
+//            var window = UIApplication.SharedApplication.KeyWindow;
+//            var vc = window.RootViewController as UINavigationController;
+//
+//            if (vc == null)
+//            {
+//                throw new Exception("Wowowowo");
+//            }
+//
+//            QRData result = null;
+//
+//            view.OnScannedResult += _ =>
+//            {
+//                result =  new QRData()
+//            {
+//                Data = _?.Text,
+//                ImageData = _?.RawBytes,
+//                Timestamp = _?.Timestamp ?? 0
+//            };
+//                view.DismissViewController(true, ()=> {});
+//            };
+//
+//            await vc.PresentViewControllerAsync(view,true);
+//
+//            return result;
         }
     
 

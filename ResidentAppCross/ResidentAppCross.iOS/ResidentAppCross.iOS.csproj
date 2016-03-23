@@ -68,6 +68,8 @@
     <MtouchLink>None</MtouchLink>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
     <CodesignProvision>1b68aea1-aa0a-4224-a1e8-7bd7b63030bf</CodesignProvision>
+    <CodesignResourceRules />
+    <CodesignExtraArgs />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhone'">
     <CodesignKey>iPhone Distribution</CodesignKey>
@@ -327,9 +329,6 @@
     <InterfaceDefinition Include="Main.storyboard" />
     <InterfaceDefinition Include="Views\HomeMenuView.xib" />
     <InterfaceDefinition Include="Views\LoginFormView.xib" />
-    <InterfaceDefinition Include="Views\MaintenanceRequestFormView.xib" />
-    <InterfaceDefinition Include="Views\MaintenancePauseFormView.xib" />
-    <InterfaceDefinition Include="Views\MaintenanceStartFormView.xib" />
     <InterfaceDefinition Include="Views\Sections\TextViewSection.xib" />
     <InterfaceDefinition Include="Views\Sections\LabelWithButtonSection.xib" />
     <InterfaceDefinition Include="Views\Sections\PhotoGallerySection.xib" />
@@ -365,6 +364,8 @@
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Services\IOSDialogService.cs" />
+    <Compile Include="Services\IOSTouchPresentationService.cs" />
     <Compile Include="Services\QRService.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="Views\AppTheme.cs" />
@@ -407,13 +408,6 @@
       <DependentUpon>LoginFormView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\MaintenanceRequestFormView.cs" />
-    <Compile Include="Views\MaintenanceRequestFormView.designer.cs">
-      <DependentUpon>MaintenanceRequestFormView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MaintenancePauseFormView.cs" />
-    <Compile Include="Views\MaintenancePauseFormView.designer.cs" />
-    <Compile Include="Views\MaintenanceStartFormView.cs" />
-    <Compile Include="Views\MaintenanceStartFormView.designer.cs" />
     <Compile Include="Views\MaintenanceRequestStatusView.cs" />
     <Compile Include="Views\Sections\CallToActionSection.cs" />
     <Compile Include="Views\Sections\CallToActionSection.designer.cs">

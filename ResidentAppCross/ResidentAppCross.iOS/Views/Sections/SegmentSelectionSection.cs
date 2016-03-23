@@ -10,6 +10,8 @@ namespace ResidentAppCross.iOS
 {
 	public partial class SegmentSelectionSection : SectionViewBase
 	{
+	    private bool _editable;
+
 	    public SegmentSelectionSection()
 	    {
 	    }
@@ -26,6 +28,16 @@ namespace ResidentAppCross.iOS
 	    {
 	        _headerHeightConstraint.Constant = hide ? 0 : 60;
 	        _headerTitle.Hidden = hide;
+	    }
+
+	    public bool Editable
+	    {
+	        get { return _editable; }
+	        set
+	        {
+	            _editable = value;
+	            SegmentSelector.Enabled = value;
+	        }
 	    }
 
 	    public void BindTo<T>(ObservableCollection<T> items, Func<T,string> keySelector, Action<T> itemSelected, int startIndex)

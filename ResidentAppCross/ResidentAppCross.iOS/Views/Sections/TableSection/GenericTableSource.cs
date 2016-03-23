@@ -73,7 +73,7 @@ namespace ResidentAppCross.iOS.Views.TableSources
         {
             Binding.ObjectItemSelected?.Invoke(Items[indexPath.Row]);
         }
-
+        
         public override bool ShouldIndentWhileEditing(UITableView tableView, NSIndexPath indexPath)
         {
             return IndentWhileIditing;

@@ -18,6 +18,9 @@ namespace ResidentAppCross.iOS.Views
         public static UIColor SecondaryBackgoundColor => _secondaryBackgroundColor ?? (_secondaryBackgroundColor = Color(20, 92, 153));
         public static UIColor SecondaryForegroundColor => _secondaryForegroundColor ?? (_secondaryForegroundColor = UIColor.White);
 
+        public static float HeaderSectionHeight = 100;
+        public static float CallToActionSectionHeight = 80;
+
         public static UIColor DeepBackgroundColor => _deepBackgroundColor ?? ( _deepBackgroundColor = Color(228,228,228));
 
         private static UIColor Color(byte r, byte g, byte b, byte a = 255)

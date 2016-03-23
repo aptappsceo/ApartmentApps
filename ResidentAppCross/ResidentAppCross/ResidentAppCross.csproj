@@ -109,6 +109,7 @@
     <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Resources\SharedResources.cs" />
     <Compile Include="Services\ApplicationContext.cs" />
+    <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\IQRService.cs" />
     <Compile Include="Services\LocationService.cs" />
