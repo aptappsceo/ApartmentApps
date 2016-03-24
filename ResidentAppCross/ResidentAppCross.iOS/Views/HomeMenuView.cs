@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CoreGraphics;
 using MvvmCross.iOS.Views;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
@@ -35,10 +36,20 @@ namespace ResidentAppCross.iOS
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
 
-	    public override void ViewDidAppear(bool animated)
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
+            UsernameAvatarImage.Layer.MasksToBounds = true;
+            UsernameAvatarImage.Layer.CornerRadius = UsernameAvatarImage.Frame.Width/2;
+            UsernameAvatarImage.Layer.BorderWidth = 10f;
+            UsernameAvatarImage.Layer.BorderColor = new CGColor(1f,1f,1f);
+        }
+
+        public override void ViewDidAppear(bool animated)
 	    {
 	        base.ViewDidAppear(animated);
-        }
+	    }
 
         public override void DidReceiveMemoryWarning ()
 		{

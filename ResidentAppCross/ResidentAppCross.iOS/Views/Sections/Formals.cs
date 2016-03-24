@@ -33,10 +33,10 @@ public static class Formals
         return nsObject;
     }
 
-    public static T WithHeight<T>(this T view, float constant) where T : UIView
+    public static T WithHeight<T>(this T view, float constant, int priority = 700) where T : UIView
     {
         var nsLayoutConstraint = NSLayoutConstraint.Create(view, NSLayoutAttribute.Height, NSLayoutRelation.Equal, null,NSLayoutAttribute.NoAttribute, 1.0f,constant);
-        nsLayoutConstraint.Priority = 700;
+        nsLayoutConstraint.Priority = priority;
         view.AddConstraint(nsLayoutConstraint);
         return view;
     }

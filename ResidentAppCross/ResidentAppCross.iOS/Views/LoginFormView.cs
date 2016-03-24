@@ -1,6 +1,7 @@
 ﻿
 using System;
 using ApartmentApps.Client;
+using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
@@ -31,6 +32,12 @@ namespace ResidentAppCross.iOS
             // Release any cached data, images, etc that aren't in use.
         }
 
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            LoginTextField.SetLeftIcon("HouseIcon");
+            PasswordTextField.SetLeftIcon("OfficerIcon");
+        }
 
         public override void ViewDidAppear(bool animated)
         {

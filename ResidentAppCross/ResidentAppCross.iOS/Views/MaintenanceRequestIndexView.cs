@@ -76,6 +76,7 @@ namespace ResidentAppCross.iOS.Views
                     _filterSection = Formals.Create<SegmentSelectionSection>();
                     _filterSection.HeightConstraint.Constant = 60;
                     _filterSection.HideTitle(true);
+                    _filterSection.Selector.ApportionsSegmentWidthsByContent = true;
                 }
                 return _filterSection;
             }
@@ -151,7 +152,6 @@ namespace ResidentAppCross.iOS.Views
         {
             base.GetContent(content);
 
-            
             content.Add(FilterSection);
             content.Add(TableSection);
             content.Add(CallToActionSection);
