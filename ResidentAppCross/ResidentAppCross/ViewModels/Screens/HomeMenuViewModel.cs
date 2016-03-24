@@ -54,7 +54,7 @@ namespace ResidentAppCross
             {
                 Name = "Notifications",
                 Icon = SharedResources.Icons.HouseIcon,
-                Command = HomeCommand
+                Command = AlertsCommand
             });
 
             MenuItems.Add(new HomeMenuItemViewModel()
@@ -85,6 +85,17 @@ namespace ResidentAppCross
             });
         }
 
+        public ICommand AlertsCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    ShowViewModel<NotificationIndexFormViewModel>();
+                });
+            }
+        }
+
         public string Username
         {
             get { return _username; }
@@ -99,11 +110,7 @@ namespace ResidentAppCross
         public ObservableCollection<HomeMenuItemViewModel> MenuItems
         {
             get { return _menuItems; }
-            set
-            {
-                _menuItems = value;
-                RaisePropertyChanged("MenuItems");
-            }
+            set { SetProperty(ref _menuItems, value); }
         }
 
         public ICommand EditProfileCommand => StubCommands.NoActionSpecifiedCommand(this);

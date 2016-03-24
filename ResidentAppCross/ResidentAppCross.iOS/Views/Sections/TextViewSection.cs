@@ -16,6 +16,7 @@ namespace ResidentAppCross.iOS
 
 	    public TextViewSection (IntPtr handle) : base (handle)
 		{
+            
 		}
 
 	    public void SetEditable(bool editable)
@@ -48,11 +49,16 @@ namespace ResidentAppCross.iOS
         }
 
         public void FormDidAppear()
-	    {
-	    }
+        {
+        }
 
 	    public void FormWillAppear()
 	    {
+            TextView.ClipsToBounds = true;
+            TextView.Layer.CornerRadius = 10.0f;
+            TextViewContainer.BackgroundColor = UIColor.Clear;
+	        TextView.Layer.BorderColor = AppTheme.SecondaryBackgoundColor.CGColor;
+	        TextView.Layer.BorderWidth = 1f;
 	    }
 
 	    public void FormWillDisappear()

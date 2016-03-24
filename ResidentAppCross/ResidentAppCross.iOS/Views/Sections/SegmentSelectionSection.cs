@@ -2,6 +2,7 @@ using Foundation;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.ObjectModel;
+using ResidentAppCross.iOS.Views;
 using ResidentAppCross.Interfaces;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
@@ -17,8 +18,8 @@ namespace ResidentAppCross.iOS
 	    }
 
 	    public SegmentSelectionSection (IntPtr handle) : base (handle)
-		{
-		}
+	    {
+	    }
 
 	    public UILabel Label => _headerTitle;
 	    public UISegmentedControl Selector => _segmentSelector;
@@ -74,5 +75,6 @@ namespace ResidentAppCross.iOS
 	    }
 
 	    public Disposable BindingDisposable { get; set; }
+
 	}
 }
