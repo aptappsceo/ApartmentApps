@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ApartmentApps.Client;
+using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Services;
@@ -35,6 +38,7 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             CurrentLocation = locationMessage;
         }
+
         public ICommand AddLocationCommand
         {
             get
@@ -62,5 +66,6 @@ namespace ResidentAppCross.ViewModels.Screens
         }
 
         public QRData ScanResult { get; set; }
+        public ObservableCollection<CourtesyOfficerLocation> Locations { get; set; }
     }
 }
