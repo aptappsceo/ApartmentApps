@@ -11,6 +11,18 @@ namespace ApartmentApps.Client.Models
 {
     public partial class IncidentReportBindingModel
     {
+        public string Status { get; set; }
+        private string _buildingName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string BuildingName
+        {
+            get { return this._buildingName; }
+            set { this._buildingName = value; }
+        }
+        
         private string _comments;
         
         /// <summary>
@@ -77,6 +89,17 @@ namespace ApartmentApps.Client.Models
             set { this._requesterId = value; }
         }
         
+        private string _unitName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string UnitName
+        {
+            get { return this._unitName; }
+            set { this._unitName = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the IncidentReportBindingModel class.
         /// </summary>
@@ -92,6 +115,16 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken buildingNameValue = inputObject["BuildingName"];
+                if (buildingNameValue != null && buildingNameValue.Type != JTokenType.Null)
+                {
+                    this.BuildingName = ((string)buildingNameValue);
+                }
+                JToken statusValue = inputObject["Status"];
+                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                {
+                    this.Status = ((string)statusValue);
+                }
                 JToken commentsValue = inputObject["Comments"];
                 if (commentsValue != null && commentsValue.Type != JTokenType.Null)
                 {
@@ -124,6 +157,11 @@ namespace ApartmentApps.Client.Models
                 if (requesterIdValue != null && requesterIdValue.Type != JTokenType.Null)
                 {
                     this.RequesterId = ((string)requesterIdValue);
+                }
+                JToken unitNameValue = inputObject["UnitName"];
+                if (unitNameValue != null && unitNameValue.Type != JTokenType.Null)
+                {
+                    this.UnitName = ((string)unitNameValue);
                 }
             }
         }

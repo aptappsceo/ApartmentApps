@@ -21,16 +21,19 @@ namespace ResidentAppCross.iOS.Views
         private TableSection _tableSection;
         private SegmentSelectionSection _filterSection;
         private CallToActionSection _callToActionSection;
+        private TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel> _tableItemsBinding;
+        private TableDataBinding<UITableViewCell, RequestsIndexFilter> _tableFilterBinding;
+        private GenericTableSource _tableItemSource;
+        private GenericTableSource _tableFiltersSource;
 
-        public TableSection TableSection
+
+        public TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel> TableItemsBinding
         {
             get
             {
-                if (_tableSection == null)
+                if (_tableItemsBinding == null)
                 {
-                    _tableSection = Formals.Create<TableSection>(); //Create as usually. 
-
-                    var tableDataBinding = new TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel>() //Define cell type and data type as type args
+                    _tableItemsBinding = new TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item) => //What to do when cell is created for item
                         {
@@ -38,7 +41,7 @@ namespace ResidentAppCross.iOS.Views
                             cell.DetailTextLabel.Text = item.Comments;
                             cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
                             cell.TextLabel.MinimumScaleFactor = 0.2f;
-                            
+
                         },
                         ItemSelected = item =>
                         {
@@ -48,36 +51,91 @@ namespace ResidentAppCross.iOS.Views
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
                         CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell"), //Define how to create cell, if reusables not found
                     };
+                }
+                return _tableItemsBinding;
+            }
+            set { _tableItemsBinding = value; }
+        }
 
-                    var source = new GenericTableSource()
+        public TableDataBinding<UITableViewCell, RequestsIndexFilter> TableFilterBinding
+        {
+            get
+            {
+                if (_tableFilterBinding == null)
+                {
+                    _tableFilterBinding = new TableDataBinding<UITableViewCell, RequestsIndexFilter>() //Define cell type and data type as type args
+                    {
+                        Bind = (cell, item) => //What to do when cell is created for item
+                        {
+                            cell.TextLabel.Text = item.Title;
+                            cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
+                            cell.TextLabel.MinimumScaleFactor = 0.2f;
+                        },
+                        ItemSelected = item =>
+                        {
+                            ViewModel.CurrentFilter = item;
+                        }, //When accessory button clicked
+                        AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
+                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell"), //Define how to create cell, if reusables not found
+                    };
+                }
+                return _tableFilterBinding;
+            }
+            set { _tableFilterBinding = value; }
+        }
+
+        public GenericTableSource TableItemSource
+        {
+            get
+            {
+                if (_tableItemSource == null)
+                {
+                    _tableItemSource = new GenericTableSource()
                     {
                         Items = ViewModel.FilteredRequests, //Deliver data
-                        Binding = tableDataBinding, //Deliver binding
+                        Binding = TableItemsBinding, //Deliver binding
                         ItemsEditableByDefault = true, //Set all items editable
                         ItemsFocusableByDefault = true
                     };
 
+                }
+                return _tableItemSource;
+            }
+            set { _tableItemSource = value; }
+        }
 
+        public GenericTableSource TableFiltersSource
+        {
+            get
+            {
+                if (_tableFiltersSource == null)
+                {
+                    _tableFiltersSource = new GenericTableSource()
+                    {
+                        Items = ViewModel.Filters, //Deliver data
+                        Binding = TableFilterBinding, //Deliver binding
+                        ItemsEditableByDefault = true, //Set all items editable
+                        ItemsFocusableByDefault = true
+                    };
+                }
+                return _tableFiltersSource;
+            }
+            set { _tableFiltersSource = value; }
+        }
+
+        public TableSection TableSection
+        {
+            get
+            {
+                if (_tableSection == null)
+                {
+                    _tableSection = Formals.Create<TableSection>(); //Create as usually. 
                     _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
-                    _tableSection.Source = source;
+                    _tableSection.Source = TableFiltersSource;
                     _tableSection.ReloadData();
 
                 }
                 return _tableSection;
-            }
-        }
-
-        public SegmentSelectionSection FilterSection
-        {
-            get
-            {
-                if (_filterSection == null)
-                {
-                    _filterSection = Formals.Create<SegmentSelectionSection>();
-                    _filterSection.HeightConstraint.Constant = 60;
-                    _filterSection.HideTitle(true);
-                }
-                return _filterSection;
             }
         }
 
@@ -110,16 +168,26 @@ namespace ResidentAppCross.iOS.Views
             base.BindForm();
 
             //Update table data when collection changes. Heads up for Main Thread!
-            ViewModel.FilteredRequests.CollectionChanged += (sender, args) =>
-            {
-                InvokeOnMainThread(()=>TableSection.Table.ReloadData());
-            };
 
-            FilterSection.BindTo(
-                ViewModel.Filters, //What collection to use
-                f=>f.Title, //How to extract title
-                f => ViewModel.CurrentFilter = f, //What to do when item selected
-                0); //First segment
+            this.OnViewModelEvent<RequestsIndexFiltersUpdatedEvent>(_ =>
+            {
+                InvokeOnMainThread(() =>
+                {
+                    if(ViewModel.CurrentFilter != null) SetTableToDisplayItems();
+                    else SetTableToDisplayFilters();
+                });
+            });
+
+            this.OnViewModelEvent<RequestsIndexUpdateStarted>(_ =>
+            {
+                InvokeOnMainThread(()=> TableSection.SetLoading(true));
+            });
+
+            this.OnViewModelEvent<RequestsIndexUpdateFinished>(_ =>
+            {
+                InvokeOnMainThread(()=> TableSection.SetLoading(false));
+            });
+
 
             // Plus button to the top right
             this.NavigationItem.SetRightBarButtonItem(new UIBarButtonItem
@@ -132,6 +200,18 @@ namespace ResidentAppCross.iOS.Views
                 true);
 
 
+            NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem
+               (
+               "Back", UIBarButtonItemStyle.Plain,
+               (sender, args) =>
+               {
+                   if (ViewModel.CurrentFilter == null)
+                       NavigationController.PopViewController(true);
+                   else ViewModel.CurrentFilter = null;
+               }), true);
+
+
+            SetTableToDisplayFilters();
             //Every form is placed inside of ScrollView (called SectionContainer);
             //ScrollView and nested TableView do not come along very well:
             //Row Selection will only work if you tap and hold the row for a few seconds.
@@ -151,23 +231,30 @@ namespace ResidentAppCross.iOS.Views
         {
             base.GetContent(content);
 
-            
-            content.Add(FilterSection);
             content.Add(TableSection);
             content.Add(CallToActionSection);
         }
+
+        public void SetTableToDisplayFilters()
+        {
+
+            TableSection.Source = TableFiltersSource;
+            TableSection.ReloadDataAnimated(UIViewAnimationOptions.TransitionCurlDown);
+        }
+
+        public void SetTableToDisplayItems()
+        {
+
+            TableSection.Source = TableItemSource;
+            TableSection.ReloadDataAnimated(UIViewAnimationOptions.TransitionCurlUp);
+        }
+
 //
         public override void LayoutContent()
         {
 
             View.AddConstraints(
-                    FilterSection.AtTopOf(View),
-                    FilterSection.AtLeftOf(View),
-                    FilterSection.AtRightOf(View)
-                );
-
-            View.AddConstraints(
-                    TableSection.Below(FilterSection),
+                    TableSection.AtTopOf(View),
                     TableSection.AtLeftOf(View),
                     TableSection.AtRightOf(View)
                 );

@@ -73,6 +73,7 @@ namespace ApartmentApps.API.Service.Controllers
             public string Comments { get; set; }
             public string StatusId { get; set; }
             public int Id { get; set; }
+            public DateTime RequestDate { get; set; }
         }
 
         public class CheckinBindingModel
@@ -89,11 +90,13 @@ namespace ApartmentApps.API.Service.Controllers
         {
             using (Context = new ApplicationDbContext())
             {
+                var propertyId = this.CurrentUser.PropertyId;
                 return
-                    Context.MaitenanceRequests.Include(r=>r.MaitenanceRequestType).Select(
+                    Context.MaitenanceRequests.Include(r=>r.MaitenanceRequestType).Where(p => p.User.PropertyId == propertyId).Select(
                         x => new MaintenanceIndexBindingModel()
                         {
                             Title = x.MaitenanceRequestType.Name,
+                            RequestDate = x.SubmissionDate,
                             Comments = x.Message,
                             StatusId = x.StatusId,
                             Id = x.Id
@@ -125,6 +128,7 @@ namespace ApartmentApps.API.Service.Controllers
                     BuildingPostalCode= result.User.Tenant?.PostalCode,
                     BuildingState= result.User.Tenant?.State,
                     Name = result.MaitenanceRequestType.Name,
+                   
                     PetStatus = result.PetStatus,
                     Checkins = result.Checkins.Select(x=>new CheckinBindingModel {StatusId = x.StatusId, Date = x.Date, Comments = x.Comments, WorkerName = x.Worker.UserName}),
                     ScheduleDate = result.ScheduleDate,

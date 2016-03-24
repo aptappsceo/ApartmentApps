@@ -18,7 +18,7 @@ namespace ResidentAppCross.iOS.Views.Attributes
     public class StatusBarStyling : ViewAttribute
     {
 
-        public UIStatusBarStyle Style { get; set; }
+        public UIStatusBarStyle Style { get; set; } = UIStatusBarStyle.BlackOpaque;
         public bool Hidden { get; set; } = false;
         public bool Animated { get; set; } = true;
         public override void OnViewLoaded(ViewBase viewBase)

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class MaintenanceIndexBindingModel
+    public partial class IncidentIndexBindingModel
     {
         private string _comments;
         
@@ -65,10 +65,9 @@ namespace ApartmentApps.Client.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the MaintenanceIndexBindingModel
-        /// class.
+        /// Initializes a new instance of the IncidentIndexBindingModel class.
         /// </summary>
-        public MaintenanceIndexBindingModel()
+        public IncidentIndexBindingModel()
         {
         }
         

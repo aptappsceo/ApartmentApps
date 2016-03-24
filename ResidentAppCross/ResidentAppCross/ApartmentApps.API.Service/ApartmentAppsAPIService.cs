@@ -95,7 +95,7 @@ namespace ApartmentApps.Client
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
             this._values = new Values(this);
-            this._baseUri = new Uri("http://localhost:54683");
+            this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
         
         /// <summary>
@@ -115,7 +115,7 @@ namespace ApartmentApps.Client
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
             this._values = new Values(this);
-            this._baseUri = new Uri("http://localhost:54683");
+            this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
         
         /// <summary>
@@ -138,7 +138,7 @@ namespace ApartmentApps.Client
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
             this._values = new Values(this);
-            this._baseUri = new Uri("http://localhost:54683");
+            this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
         
         /// <summary>

@@ -64,6 +64,8 @@
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserClaim.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserLogin.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserRole.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\IncidentIndexBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\IncidentIndexBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentReportBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentReportModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LookupPairModel.cs" />
@@ -117,6 +119,8 @@
     <Compile Include="ViewModels\Data\BadgeType.cs" />
     <Compile Include="ViewModels\Data\ChangeViewModel.cs" />
     <Compile Include="ViewModels\GenericWebViewModel.cs" />
+    <Compile Include="ViewModels\Screens\NotificationDetailsFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\NotificationIndexFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\CheckinFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\FormViewModel.cs" />
     <Compile Include="ViewModels\Screens\HomeMenuItemViewModel.cs" />

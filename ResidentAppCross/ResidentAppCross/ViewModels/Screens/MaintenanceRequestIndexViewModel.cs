@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Extensions;
 
 namespace ResidentAppCross.ViewModels.Screens
@@ -27,7 +29,7 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             _service = service;
         }
-        
+
 
 
         public override void Start()
@@ -39,8 +41,6 @@ namespace ResidentAppCross.ViewModels.Screens
                 FilterExpression = item => true
             };
             Filters.Add(all);
-
-            CurrentFilter = all;
 
 
             Filters.Add(new RequestsIndexFilter()
@@ -104,7 +104,7 @@ namespace ResidentAppCross.ViewModels.Screens
             get { return _currentFilter; }
             set
             {
-                SetProperty(ref _currentFilter,value);
+                SetProperty(ref _currentFilter, value);
                 UpdateFilters();
             }
         }
@@ -113,14 +113,26 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             get
             {
-                return this.TaskCommand(async context =>
+                return new MvxCommand(async () =>
                 {
+                    this.Publish(new RequestsIndexUpdateStarted(this));
                     var requests = await _service.Maitenance.ListRequestsAsync();
                     Requests.Clear();
                     Requests.AddRange(requests);
                     UpdateFilters();
+                    this.Publish(new RequestsIndexUpdateFinished(this));
 
-                }).OnStart("Fetching Requests...");
+                });
+
+//                return this.TaskCommand(async context =>
+//                {
+//
+//                    var requests = await _service.Maitenance.ListRequestsAsync();
+//                    Requests.Clear();
+//                    Requests.AddRange(requests);
+//                    UpdateFilters();
+//
+//                }).OnStart("Fetching Requests...");
             }
         }
 
@@ -138,7 +150,7 @@ namespace ResidentAppCross.ViewModels.Screens
         public MaintenanceIndexBindingModel SelectedRequest
         {
             get { return _selectedRequest; }
-            set { SetProperty(ref _selectedRequest,value); }
+            set { SetProperty(ref _selectedRequest, value); }
         }
 
         public ICommand OpenSelectedRequestCommand
@@ -148,7 +160,7 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(() =>
                 {
                     if (SelectedRequest == null) return;
-                    int id = SelectedRequest.Id ?? -1 ;
+                    int id = SelectedRequest.Id ?? -1;
                     if (id == -1) return;
                     ShowViewModel<MaintenanceRequestStatusViewModel>(vm =>
                     {
@@ -161,14 +173,40 @@ namespace ResidentAppCross.ViewModels.Screens
         private void UpdateFilters()
         {
             FilteredRequests.Clear();
+            if(CurrentFilter != null)
             FilteredRequests.AddRange(Requests.Where(item => CurrentFilter.FilterExpression(item)));
+
+            this.Publish(new RequestsIndexFiltersUpdatedEvent(this));
         }
     }
 
     public class RequestsIndexFilter
     {
         public string Title { get; set; }
-        public Func<MaintenanceIndexBindingModel,bool> FilterExpression { get; set; }
+        public Func<MaintenanceIndexBindingModel, bool> FilterExpression { get; set; }
+    }
+
+
+    public class RequestsIndexFiltersUpdatedEvent : MvxMessage
+    {
+        public RequestsIndexFiltersUpdatedEvent(object sender) : base(sender)
+        {
+
+        }
+    }
+
+    public class RequestsIndexUpdateStarted : MvxMessage
+    {
+        public RequestsIndexUpdateStarted(object sender) : base(sender)
+        {
+        }
+    }
+
+    public class RequestsIndexUpdateFinished : MvxMessage
+    {
+        public RequestsIndexUpdateFinished(object sender) : base(sender)
+        {
+        }
     }
 
 }

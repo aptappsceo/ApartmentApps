@@ -1,22 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ApartmentApps.Client.Models;
 using CoreLocation;
 using Foundation;
 using MapKit;
 using MvvmCross.Binding.BindingContext;
+using ResidentAppCross.iOS.Views.Attributes;
+using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
 namespace ResidentAppCross.iOS.Views
 {
     [Register("PropertyConfigFormView")]
+    [NavbarStyling]
     public class PropertyConfigFormView : BaseForm<PropertyConfigFormViewModel>
     {
         private HeaderSection _headerSection;
         private MapSection _mapSection;
         private ButtonToolbarSection _toolbarSection;
+        private UIButton _addLocationButton;
+        private SegmentSelectionSection _segmentSelectionSection;
+        private TableSection _tableSection;
 
+        public SegmentSelectionSection SegmentSelectionSection
+        {
+            get
+            {
+                if (_segmentSelectionSection == null)
+                {
+                    _segmentSelectionSection = Formals.Create<SegmentSelectionSection>();
+                    _segmentSelectionSection.HeightConstraint.Constant = 60;
+                    _segmentSelectionSection.HideTitle(true);
+                    _segmentSelectionSection.Selector.RemoveAllSegments();
+                    _segmentSelectionSection.Selector.InsertSegment("Map", 0, false);
+                    _segmentSelectionSection.Selector.InsertSegment("List", 1, false);
+                }
+                return _segmentSelectionSection;
+            }
+        }
 
         //create
 
@@ -28,6 +51,7 @@ namespace ResidentAppCross.iOS.Views
                 {
 
                     _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.HeightConstraint.Constant = 100;
                     _headerSection.MainLabel.Text = "Property";
                     _headerSection.SubLabel.Text = "Configuration";
                     _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
@@ -54,6 +78,50 @@ namespace ResidentAppCross.iOS.Views
                 return _mapSection;
             }
         }
+        public TableSection TableSection
+        {
+            get
+            {
+                if (_tableSection == null)
+                {
+                    _tableSection = Formals.Create<TableSection>(); //Create as usually. 
+
+                    var tableDataBinding = new TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel>() //Define cell type and data type as type args
+                    {
+                        Bind = (cell, item) => //What to do when cell is created for item
+                        {
+                            cell.TextLabel.Text = item.Title;
+                            cell.DetailTextLabel.Text = item.Comments;
+                            cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
+                            cell.TextLabel.MinimumScaleFactor = 0.2f;
+
+                        },
+                        ItemSelected = item =>
+                        {
+                            //ViewModel.SelectedRequest = item;
+                            //ViewModel.OpenSelectedRequestCommand.Execute(null);
+                        }, //When accessory button clicked
+                        AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
+                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell"), //Define how to create cell, if reusables not found
+                    };
+
+                    var source = new GenericTableSource()
+                    {
+                        Items = ViewModel.Locations, //Deliver data
+                        Binding = tableDataBinding, //Deliver binding
+                        ItemsEditableByDefault = true, //Set all items editable
+                        ItemsFocusableByDefault = true
+                    };
+
+
+                    _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
+                    _tableSection.Source = source;
+                    _tableSection.ReloadData();
+
+                }
+                return _tableSection;
+            }
+        }
 
         //bind
 
@@ -71,10 +139,8 @@ namespace ResidentAppCross.iOS.Views
                             ViewModel.CurrentLocation.Longitude);
                 }
             };
-           // b.Bind(MapSection.MapView.UserLocation).OneWay().For(p => p.).To(p =>p.CurrentLocation.Longitude);
             b.Bind(AddLocationButton).To(p => p.AddLocationCommand);
-            //b.Bind(ForgotPasswordButton).To(vm => vm.RemindPasswordCommand);
-            //b.Bind(SignUpButton).To(vm => vm.SignUpCommand);
+            SegmentSelectionSection.Selector.ValueChanged += (sender, args) => RefreshContent();
             b.Apply();
         }
 
@@ -86,31 +152,36 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _toolbarSection = Formals.Create<ButtonToolbarSection>();
                     _toolbarSection.HeightConstraint.Constant = 80;
-
-                    var style = new UIViewStyle()
-                    {
-                        BackgroundColor = AppTheme.SecondaryBackgoundColor,
-                        ForegroundColor = AppTheme.SecondaryForegroundColor,
-                        FontSize = 23.0f
-                    };
-
-                    AddLocationButton = _toolbarSection.AddButton("Add Location", style);
-                   
-                   
-
                 }
                 return _toolbarSection;
             }
         }
 
-        public UIButton AddLocationButton { get; set; }
+        public UIButton AddLocationButton
+            =>
+                _addLocationButton ??
+                (_addLocationButton = ButtonToolbarSection.AddButton("Add Location", new UIViewStyle()
+                {
+                    BackgroundColor = AppTheme.SecondaryBackgoundColor,
+                    ForegroundColor = AppTheme.SecondaryForegroundColor,
+                    FontSize = 23.0f
+                }));
 
         public override void GetContent(List<UIView> content)
         {
             base.GetContent(content);
 
             content.Add(HeaderSection);
-            content.Add(MapSection);
+            content.Add(SegmentSelectionSection);
+            if (SegmentSelectionSection.Selector.SelectedSegment == 0)
+            {
+                content.Add(MapSection);
+            }
+            else
+            {
+                content.Add(TableSection);
+            }
+           
             content.Add(ButtonToolbarSection);
         }
 
