@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ApartmentApps.Client;
+using MvvmCross.Core.ViewModels;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Services;
 
@@ -11,12 +13,14 @@ namespace ResidentAppCross.ViewModels.Screens
 {
     public class PropertyConfigFormViewModel : ViewModelBase
     {
+        public IApartmentAppsAPIService ApiService { get; set; }
         private readonly IQRService _qrService;
         private MvxSubscriptionToken _token;
         private LocationMessage _currentLocation;
 
-        public PropertyConfigFormViewModel(IMvxMessenger messenger, IQRService qrService)
+        public PropertyConfigFormViewModel(IApartmentAppsAPIService apiService, IMvxMessenger messenger, IQRService qrService)
         {
+            ApiService = apiService;
             _qrService = qrService;
             _token = messenger.Subscribe<LocationMessage>(DeliveryAction);
         }
@@ -35,14 +39,25 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             get
             {
-                return this.TaskCommand(async context =>
+                return new MvxCommand(async () =>
                 {
                     ScanResult = await _qrService.ScanAsync();
-                    var data = ScanResult?.Data;
-                    
+                    if (!string.IsNullOrEmpty(ScanResult.Data))
+                    {
+                        this.TaskCommand(async context =>
+                        {
 
+                            var result = await ApiService.Configure.AddCourtesyLocationWithOperationResponseAsync(ScanResult.Data,
+                                CurrentLocation.Latitude, CurrentLocation.Longitude);
+                            if (!result.Response.IsSuccessStatusCode)
+                            {
+                                context.FailTask(result.Response.ReasonPhrase);
+                            }
+                        }).OnStart("Adding...").Execute(null);
+                    }
                     
-                }).OnStart("Updating Request...");
+                });
+               
             }
         }
 

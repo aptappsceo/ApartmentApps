@@ -72,7 +72,7 @@ namespace ApartmentApps.Api
     /// <summary>
     /// This service is used to handle when push notifications should be sent out.
     /// </summary>
-    public class AlertsService : IService, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent
+    public class AlertsService : IService, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent
     {
         private IPushNotifiationHandler _pushHandler;
 
@@ -129,6 +129,21 @@ namespace ApartmentApps.Api
             ctx.SaveChanges();
             _pushHandler.SendToRole(propertyId, role, title);
 
+        }
+
+        public void IncidentReportSubmited(ApplicationDbContext ctx, IncidentReport incidentReport)
+        {
+            if (incidentReport.User.PropertyId != null)
+                SendAlert(ctx, incidentReport.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", incidentReport.Comments, "Maintenance", incidentReport.Id);
+        }
+
+        public void IncidentReportCheckin(ApplicationDbContext ctx, IncidentReportCheckin incidentReportCheckin,
+            IncidentReport incidentReport)
+        {
+            if (incidentReport.User?.PropertyId != null)
+            {
+                SendAlert(ctx, incidentReport.User, $"Incident Report {incidentReport.StatusId}", incidentReport.Comments, "Maintenance", incidentReport.Id);
+            }
         }
     }
 

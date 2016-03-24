@@ -46,7 +46,7 @@ namespace ResidentAppCross
                 {
                     Name = "Incident Reports",
                     Icon = SharedResources.Icons.OfficerIcon,
-                    Command = ConfigurePropertyCommand
+                    Command = IncidentsIndexCommand
                 });
                
             }
@@ -123,7 +123,10 @@ namespace ResidentAppCross
                 //vm.Url = Mvx.Resolve<IApartmentAppsAPIService>().BaseUri + "/generalviews/index";
             });
         });
-
+        public ICommand IncidentsIndexCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<IncidentReportIndexViewModel>();
+        });
         public ICommand RequestsIndexCommand => new MvxCommand(() =>
         {
             ShowViewModel<MaintenanceRequestIndexViewModel>();

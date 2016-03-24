@@ -351,11 +351,7 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
     }
-    public class SegmentItem
-    {
-        public string Title { get; set; }
-        public int Id { get; set; }
-    }
+
     public class PetStatus
     {
         public string Title { get; set; }

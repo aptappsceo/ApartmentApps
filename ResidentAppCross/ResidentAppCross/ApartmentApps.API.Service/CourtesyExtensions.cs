@@ -89,6 +89,30 @@ namespace ApartmentApps.Client
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.ICourtesy.
         /// </param>
+        public static IList<IncidentIndexBindingModel> ListRequests(this ICourtesy operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ICourtesy)s).ListRequestsAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.ICourtesy.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<IList<IncidentIndexBindingModel>> ListRequestsAsync(this ICourtesy operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.IncidentIndexBindingModel>> result = await operations.ListRequestsWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.ICourtesy.
+        /// </param>
         /// <param name='id'>
         /// Required.
         /// </param>

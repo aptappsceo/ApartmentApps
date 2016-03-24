@@ -5,17 +5,20 @@ using CoreLocation;
 using Foundation;
 using MapKit;
 using MvvmCross.Binding.BindingContext;
+using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
 namespace ResidentAppCross.iOS.Views
 {
     [Register("PropertyConfigFormView")]
+    [NavbarStyling]
     public class PropertyConfigFormView : BaseForm<PropertyConfigFormViewModel>
     {
         private HeaderSection _headerSection;
         private MapSection _mapSection;
         private ButtonToolbarSection _toolbarSection;
+        private UIButton _addLocationButton;
 
 
         //create
@@ -71,10 +74,7 @@ namespace ResidentAppCross.iOS.Views
                             ViewModel.CurrentLocation.Longitude);
                 }
             };
-           // b.Bind(MapSection.MapView.UserLocation).OneWay().For(p => p.).To(p =>p.CurrentLocation.Longitude);
             b.Bind(AddLocationButton).To(p => p.AddLocationCommand);
-            //b.Bind(ForgotPasswordButton).To(vm => vm.RemindPasswordCommand);
-            //b.Bind(SignUpButton).To(vm => vm.SignUpCommand);
             b.Apply();
         }
 
@@ -86,24 +86,20 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _toolbarSection = Formals.Create<ButtonToolbarSection>();
                     _toolbarSection.HeightConstraint.Constant = 80;
-
-                    var style = new UIViewStyle()
-                    {
-                        BackgroundColor = AppTheme.SecondaryBackgoundColor,
-                        ForegroundColor = AppTheme.SecondaryForegroundColor,
-                        FontSize = 23.0f
-                    };
-
-                    AddLocationButton = _toolbarSection.AddButton("Add Location", style);
-                   
-                   
-
                 }
                 return _toolbarSection;
             }
         }
 
-        public UIButton AddLocationButton { get; set; }
+        public UIButton AddLocationButton
+            =>
+                _addLocationButton ??
+                (_addLocationButton = ButtonToolbarSection.AddButton("Add Location", new UIViewStyle()
+                {
+                    BackgroundColor = AppTheme.SecondaryBackgoundColor,
+                    ForegroundColor = AppTheme.SecondaryForegroundColor,
+                    FontSize = 23.0f
+                }));
 
         public override void GetContent(List<UIView> content)
         {

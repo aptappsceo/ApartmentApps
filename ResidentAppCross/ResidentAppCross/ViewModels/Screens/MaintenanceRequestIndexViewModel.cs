@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             _service = service;
         }
-        
+
 
 
         public override void Start()
@@ -104,7 +105,7 @@ namespace ResidentAppCross.ViewModels.Screens
             get { return _currentFilter; }
             set
             {
-                SetProperty(ref _currentFilter,value);
+                SetProperty(ref _currentFilter, value);
                 UpdateFilters();
             }
         }
@@ -138,7 +139,7 @@ namespace ResidentAppCross.ViewModels.Screens
         public MaintenanceIndexBindingModel SelectedRequest
         {
             get { return _selectedRequest; }
-            set { SetProperty(ref _selectedRequest,value); }
+            set { SetProperty(ref _selectedRequest, value); }
         }
 
         public ICommand OpenSelectedRequestCommand
@@ -148,7 +149,7 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(() =>
                 {
                     if (SelectedRequest == null) return;
-                    int id = SelectedRequest.Id ?? -1 ;
+                    int id = SelectedRequest.Id ?? -1;
                     if (id == -1) return;
                     ShowViewModel<MaintenanceRequestStatusViewModel>(vm =>
                     {
@@ -168,7 +169,7 @@ namespace ResidentAppCross.ViewModels.Screens
     public class RequestsIndexFilter
     {
         public string Title { get; set; }
-        public Func<MaintenanceIndexBindingModel,bool> FilterExpression { get; set; }
+        public Func<MaintenanceIndexBindingModel, bool> FilterExpression { get; set; }
     }
 
 }
