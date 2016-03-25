@@ -56,8 +56,6 @@
     <Compile Include="ApartmentApps.API.Service\Models\Building.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ChangePasswordBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Corporation.cs" />
-    <Compile Include="ApartmentApps.API.Service\Models\CourtesyOfficerLocation.cs" />
-    <Compile Include="ApartmentApps.API.Service\Models\CourtesyOfficerLocationCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\DeviceRegistration.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModelCollection.cs" />
@@ -68,6 +66,8 @@
     <Compile Include="ApartmentApps.API.Service\Models\IncidentIndexBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentReportBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentReportModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\LocationBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\LocationBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LookupPairModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LookupPairModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaintenanceBindingModel.cs" />

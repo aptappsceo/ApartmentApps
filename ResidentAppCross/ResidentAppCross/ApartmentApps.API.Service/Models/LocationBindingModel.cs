@@ -3,12 +3,11 @@
 
 using System;
 using System.Linq;
-using ApartmentApps.Client.Models;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class CourtesyOfficerLocation
+    public partial class LocationBindingModel
     {
         private int? _id;
         
@@ -19,17 +18,6 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._id; }
             set { this._id = value; }
-        }
-        
-        private string _label;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Label
-        {
-            get { return this._label; }
-            set { this._label = value; }
         }
         
         private double? _latitude;
@@ -43,17 +31,6 @@ namespace ApartmentApps.Client.Models
             set { this._latitude = value; }
         }
         
-        private string _locationId;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string LocationId
-        {
-            get { return this._locationId; }
-            set { this._locationId = value; }
-        }
-        
         private double? _longitude;
         
         /// <summary>
@@ -65,32 +42,32 @@ namespace ApartmentApps.Client.Models
             set { this._longitude = value; }
         }
         
-        private Property _property;
+        private string _name;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public Property Property
+        public string Name
         {
-            get { return this._property; }
-            set { this._property = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
-        private int? _propertyId;
+        private string _type;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public int? PropertyId
+        public string Type
         {
-            get { return this._propertyId; }
-            set { this._propertyId = value; }
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CourtesyOfficerLocation class.
+        /// Initializes a new instance of the LocationBindingModel class.
         /// </summary>
-        public CourtesyOfficerLocation()
+        public LocationBindingModel()
         {
         }
         
@@ -106,37 +83,25 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Id = ((int)idValue);
                 }
-                JToken labelValue = inputObject["Label"];
-                if (labelValue != null && labelValue.Type != JTokenType.Null)
-                {
-                    this.Label = ((string)labelValue);
-                }
                 JToken latitudeValue = inputObject["Latitude"];
                 if (latitudeValue != null && latitudeValue.Type != JTokenType.Null)
                 {
                     this.Latitude = ((double)latitudeValue);
-                }
-                JToken locationIdValue = inputObject["LocationId"];
-                if (locationIdValue != null && locationIdValue.Type != JTokenType.Null)
-                {
-                    this.LocationId = ((string)locationIdValue);
                 }
                 JToken longitudeValue = inputObject["Longitude"];
                 if (longitudeValue != null && longitudeValue.Type != JTokenType.Null)
                 {
                     this.Longitude = ((double)longitudeValue);
                 }
-                JToken propertyValue = inputObject["Property"];
-                if (propertyValue != null && propertyValue.Type != JTokenType.Null)
+                JToken nameValue = inputObject["Name"];
+                if (nameValue != null && nameValue.Type != JTokenType.Null)
                 {
-                    Property property = new Property();
-                    property.DeserializeJson(propertyValue);
-                    this.Property = property;
+                    this.Name = ((string)nameValue);
                 }
-                JToken propertyIdValue = inputObject["PropertyId"];
-                if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
+                JToken typeValue = inputObject["Type"];
+                if (typeValue != null && typeValue.Type != JTokenType.Null)
                 {
-                    this.PropertyId = ((int)propertyIdValue);
+                    this.Type = ((string)typeValue);
                 }
             }
         }
