@@ -6,6 +6,7 @@ using Foundation;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
 using MvvmCross.Platform;
+using MvvmCross.Plugins.PictureChooser.iOS;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using UIKit;
@@ -37,6 +38,8 @@ namespace ResidentAppCross.iOS
             base.ViewWillAppear(animated);
             LoginTextField.SetLeftIcon("HouseIcon");
             PasswordTextField.SetLeftIcon("OfficerIcon");
+            _textFieldsContainer.Layer.CornerRadius = 8f;
+            View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png").ImageToFitSize(View.Frame.Size));
         }
 
         public override void ViewDidAppear(bool animated)
@@ -56,7 +59,7 @@ namespace ResidentAppCross.iOS
             b.Bind(PasswordTextField).TwoWay().For(v => v.Text).To(vm => vm.Password);
             b.Bind(LoginButton).To(vm => vm.LoginCommand);
             //b.Bind(ForgotPasswordButton).To(vm => vm.RemindPasswordCommand);
-            //b.Bind(SignUpButton).To(vm => vm.SignUpCommand);
+            b.Bind(_signUpButton).To(vm => vm.SignUpCommand);
             b.Apply();
 
 

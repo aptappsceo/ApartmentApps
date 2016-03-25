@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignUpFormView">
             <connections>
-                <outlet property="FirstLastNameTextField" destination="beW-MD-q0r" id="1Ig-CX-iFZ"/>
                 <outlet property="_birthdayField" destination="gOL-jw-755" id="3t8-Qe-Xu6"/>
                 <outlet property="_emailTextField" destination="DvQ-NW-cBx" id="CKi-tB-5Ld"/>
                 <outlet property="_firstLastNameTextField" destination="beW-MD-q0r" id="dQt-fg-6y4"/>
