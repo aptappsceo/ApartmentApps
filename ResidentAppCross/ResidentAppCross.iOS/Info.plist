@@ -115,6 +115,6 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We would like to use your location.</string>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>8</string>
 </dict>
 </plist>
