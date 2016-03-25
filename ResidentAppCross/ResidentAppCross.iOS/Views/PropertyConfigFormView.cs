@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Text;
 using ApartmentApps.Client.Models;
 using CoreLocation;
 using Foundation;
 using MapKit;
+using MvvmCross.Binding.Attributes;
 using MvvmCross.Binding.BindingContext;
+using MvvmCross.Platform.WeakSubscription;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.ViewModels.Screens;
@@ -23,6 +28,7 @@ namespace ResidentAppCross.iOS.Views
         private UIButton _addLocationButton;
         private SegmentSelectionSection _segmentSelectionSection;
         private TableSection _tableSection;
+        private LocationsAnnotationManager _manager;
 
         public SegmentSelectionSection SegmentSelectionSection
         {
@@ -131,18 +137,25 @@ namespace ResidentAppCross.iOS.Views
             var b = this.CreateBindingSet<PropertyConfigFormView, PropertyConfigFormViewModel>();
             ViewModel.PropertyChanged += (sender, args) =>
             {
-                if (ViewModel.CurrentLocation != null)
+                MapSection.MapView.UserLocation.Coordinate =
+                     new CLLocationCoordinate2D(ViewModel.CurrentLocation.Latitude,
+                         ViewModel.CurrentLocation.Longitude);
+                if (ViewModel.CurrentLocation != null && !CurrentLocationUpdated)
                 {
                     MapSection.MapView.SetCenterCoordinate(new CLLocationCoordinate2D(ViewModel.CurrentLocation.Latitude, ViewModel.CurrentLocation.Longitude),true);
-                    MapSection.MapView.UserLocation.Coordinate =
-                        new CLLocationCoordinate2D(ViewModel.CurrentLocation.Latitude,
-                            ViewModel.CurrentLocation.Longitude);
+                 
+                    CurrentLocationUpdated = true;
                 }
             };
             b.Bind(AddLocationButton).To(p => p.AddLocationCommand);
+            _manager = new LocationsAnnotationManager(this.MapSection.MapView);
+            b.Bind(_manager).For(m => m.ItemsSource).To(vm => vm.Locations);
             SegmentSelectionSection.Selector.ValueChanged += (sender, args) => RefreshContent();
             b.Apply();
+            ViewModel.UpdateLocations.Execute(null);
         }
+
+        public bool CurrentLocationUpdated { get; set; }
 
         public ButtonToolbarSection ButtonToolbarSection
         {
@@ -166,6 +179,7 @@ namespace ResidentAppCross.iOS.Views
                     ForegroundColor = AppTheme.SecondaryForegroundColor,
                     FontSize = 23.0f
                 }));
+        
 
         public override void GetContent(List<UIView> content)
         {
@@ -173,9 +187,10 @@ namespace ResidentAppCross.iOS.Views
 
             content.Add(HeaderSection);
             content.Add(SegmentSelectionSection);
+            content.Add(MapSection);
             if (SegmentSelectionSection.Selector.SelectedSegment == 0)
             {
-                content.Add(MapSection);
+                
             }
             else
             {
@@ -188,4 +203,190 @@ namespace ResidentAppCross.iOS.Views
 
         //add to contents
     }
+
+    public sealed class LocationBindingModelAnnotation : MKAnnotation
+    {
+        private readonly LocationBindingModel _house;
+        private CLLocationCoordinate2D _coordinate;
+
+        public LocationBindingModelAnnotation(LocationBindingModel house)
+        {
+            _house = house;
+            // Todo - the details of actually using the house here.
+            // in theory you could also data-bind to the house too (e.g. if it's location were to move...)
+            if (house.Latitude != null)
+                if (house.Longitude != null)
+                    _coordinate = new CLLocationCoordinate2D(house.Latitude.Value, house.Longitude.Value);
+           
+        
+        }
+      
+        public override string Description => _house.Name;
+        public override string Title => _house.Name;
+        public override string Subtitle => _house.Type;
+        public override CLLocationCoordinate2D Coordinate => _coordinate;
+    }
+
+    // an abstract helper class
+    public abstract class MvxAnnotationManager
+    {
+        private readonly MKMapView _mapView;
+        private IEnumerable _itemsSource;
+        private IDisposable _subscription;
+        public Dictionary<object, MKAnnotation> _annotations = new Dictionary<object, MKAnnotation>();
+
+        protected MvxAnnotationManager(MKMapView mapView)
+        {
+            _mapView = mapView;
+        }
+
+        // MvxSetToNullAfterBinding isn't strictly needed any more 
+        // - but it's nice to have for when binding is torn down
+        [MvxSetToNullAfterBinding]
+        public virtual IEnumerable ItemsSource
+        {
+            get { return _itemsSource; }
+            set { SetItemsSource(value); }
+        }
+
+        protected virtual void SetItemsSource(IEnumerable value)
+        {
+            if (_itemsSource == value)
+                return;
+
+            if (_subscription != null)
+            {
+                _subscription.Dispose();
+                _subscription = null;
+            }
+            _itemsSource = value;
+            //if (_itemsSource != null && !(_itemsSource is IList))
+            //    MvxBindingTrace.Trace(MvxTraceLevel.Warning,
+            //                          "Binding to IEnumerable rather than IList - this can be inefficient, especially for large lists");
+
+            ReloadAllAnnotations();
+
+            var newObservable = _itemsSource as INotifyCollectionChanged;
+            if (newObservable != null)
+            {
+                _subscription = newObservable.WeakSubscribe(OnItemsSourceCollectionChanged);
+            }
+        }
+
+        protected virtual void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    AddAnnotations(e.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    RemoveAnnotations(e.OldItems);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    RemoveAnnotations(e.OldItems);
+                    AddAnnotations(e.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    // not interested in this
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    ReloadAllAnnotations();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        protected virtual void ReloadAllAnnotations()
+        {
+
+            foreach (var item in _annotations)
+            {
+                _mapView.RemoveAnnotation(item.Value);
+            }
+            _annotations.Clear();
+
+            if (_itemsSource == null)
+                return;
+
+            AddAnnotations(_itemsSource);
+            var firstOrDefault = _annotations.Values.FirstOrDefault();
+            if (firstOrDefault != null)
+                _mapView.SetCenterCoordinate(firstOrDefault.Coordinate,true);
+        }
+
+        protected abstract MKAnnotation CreateAnnotation(object item);
+
+        protected virtual void RemoveAnnotations(IEnumerable oldItems)
+        {
+            foreach (var item in oldItems)
+            {
+                RemoveAnnotationFor(item);
+            }
+        }
+
+        protected virtual void RemoveAnnotationFor(object item)
+        {
+            var annotation = _annotations[item];
+            _mapView.RemoveAnnotation(annotation);
+            _annotations.Remove(item);
+        }
+
+        protected virtual void AddAnnotations(IEnumerable newItems)
+        {
+            foreach (object item in newItems)
+            {
+                AddAnnotationFor(item);
+            }
+        }
+
+        protected virtual void AddAnnotationFor(object item)
+        {
+            var annotation = CreateAnnotation(item);
+            _annotations[item] = annotation;
+            _mapView.AddAnnotation(annotation);
+        }
+    }
+
+
+    public class LocationsAnnotationManager
+        : MvxAnnotationManager
+    {
+        public LocationsAnnotationManager(MKMapView mapView) : base(mapView)
+        {
+        }
+
+        protected override MKAnnotation CreateAnnotation(object item)
+        {
+            var bindingModel = item as LocationBindingModel;
+            return new LocationBindingModelAnnotation(bindingModel);
+        }
+    }
+
+
+
+    //[Register("FirstView")]
+    //public class FirstView : MvxViewController
+    //{
+    //    private HouseAnnotationManager _manager;
+
+    //    public override void ViewDidLoad()
+    //    {
+    //        View = new UIView() { BackgroundColor = UIColor.White };
+    //        base.ViewDidLoad();
+
+    //        var myMapView = new MKMapView(View.Frame);
+    //        Add(myMapView);
+    //        myMapView.Delegate = new MyMapDelegate(); // standard map delegate - must provide the annotation views
+
+    //        _manager = new HouseAnnotationManager(myMapView);
+
+    //        var set = this.CreateBindingSet<FirstView, FirstViewModel>();
+    //        set.Bind(_manager).For(m => m.ItemsSource).To(vm => vm.HouseList);
+    //        set.Apply();
+    //    }
+    //}
+
+
 }

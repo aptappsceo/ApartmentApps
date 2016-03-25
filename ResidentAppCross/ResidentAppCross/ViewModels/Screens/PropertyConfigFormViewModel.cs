@@ -26,8 +26,29 @@ namespace ResidentAppCross.ViewModels.Screens
             ApiService = apiService;
             _qrService = qrService;
             _token = messenger.Subscribe<LocationMessage>(DeliveryAction);
+            
         }
 
+        public ICommand UpdateLocations
+        {
+            get
+            {
+                return new MvxCommand(async () =>
+                {
+                    var locations = await ApiService.Configure.GetLocationsAsync();
+                    Locations.Clear();
+                    foreach (var item in locations)
+                    {
+                        Locations.Add(item);
+                    }
+
+                });
+                //return this.TaskCommand(async context =>
+                //{
+                   
+                //}).OnStart("Loading Locations");
+            }
+        }
         public LocationMessage CurrentLocation
         {
             get { return _currentLocation; }
@@ -51,7 +72,7 @@ namespace ResidentAppCross.ViewModels.Screens
                         this.TaskCommand(async context =>
                         {
 
-                            var result = await ApiService.Configure.AddCourtesyLocationWithOperationResponseAsync(ScanResult.Data,
+                            var result = await ApiService.Configure.AddLocationWithOperationResponseAsync(ScanResult.Data,
                                 CurrentLocation.Latitude, CurrentLocation.Longitude);
                             if (!result.Response.IsSuccessStatusCode)
                             {
@@ -66,6 +87,6 @@ namespace ResidentAppCross.ViewModels.Screens
         }
 
         public QRData ScanResult { get; set; }
-        public ObservableCollection<CourtesyOfficerLocation> Locations { get; set; }
+        public ObservableCollection<LocationBindingModel> Locations { get; set; } = new ObservableCollection<LocationBindingModel>();
     }
 }

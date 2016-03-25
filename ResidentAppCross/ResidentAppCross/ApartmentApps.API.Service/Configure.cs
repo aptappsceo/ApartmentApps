@@ -39,7 +39,7 @@ namespace ApartmentApps.Client
             get { return this._client; }
         }
         
-        /// <param name='locationId'>
+        /// <param name='qrCode'>
         /// Required.
         /// </param>
         /// <param name='latitude'>
@@ -54,12 +54,12 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<CourtesyOfficerLocation>> AddCourtesyLocationWithOperationResponseAsync(string locationId, double latitude, double longitude, string label = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<object>> AddLocationWithOperationResponseAsync(string qrCode, double latitude, double longitude, string label = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Validate
-            if (locationId == null)
+            if (qrCode == null)
             {
-                throw new ArgumentNullException("locationId");
+                throw new ArgumentNullException("qrCode");
             }
             
             // Tracing
@@ -69,18 +69,18 @@ namespace ApartmentApps.Client
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("locationId", locationId);
+                tracingParameters.Add("qrCode", qrCode);
                 tracingParameters.Add("latitude", latitude);
                 tracingParameters.Add("longitude", longitude);
                 tracingParameters.Add("label", label);
-                ServiceClientTracing.Enter(invocationId, this, "AddCourtesyLocationAsync", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "AddLocationAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/AddCourtesyLocation";
+            url = url + "/AddLocation";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("locationId=" + Uri.EscapeDataString(locationId));
+            queryParameters.Add("qrCode=" + Uri.EscapeDataString(qrCode));
             queryParameters.Add("latitude=" + Uri.EscapeDataString(latitude.ToString()));
             queryParameters.Add("longitude=" + Uri.EscapeDataString(longitude.ToString()));
             if (label != null)
@@ -130,7 +130,7 @@ namespace ApartmentApps.Client
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (statusCode != HttpStatusCode.OK)
+            if (statusCode != HttpStatusCode.NoContent)
             {
                 HttpOperationException<object> ex = new HttpOperationException<object>();
                 ex.Request = httpRequest;
@@ -144,25 +144,13 @@ namespace ApartmentApps.Client
             }
             
             // Create Result
-            HttpOperationResponse<CourtesyOfficerLocation> result = new HttpOperationResponse<CourtesyOfficerLocation>();
+            HttpOperationResponse<object> result = new HttpOperationResponse<object>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             
             // Deserialize Response
-            if (statusCode == HttpStatusCode.OK)
-            {
-                CourtesyOfficerLocation resultModel = new CourtesyOfficerLocation();
-                JToken responseDoc = null;
-                if (string.IsNullOrEmpty(responseContent) == false)
-                {
-                    responseDoc = JToken.Parse(responseContent);
-                }
-                if (responseDoc != null)
-                {
-                    resultModel.DeserializeJson(responseDoc);
-                }
-                result.Body = resultModel;
-            }
+            object resultModel = default(object);
+            result.Body = resultModel;
             
             if (shouldTrace)
             {
@@ -174,11 +162,20 @@ namespace ApartmentApps.Client
         /// <param name='id'>
         /// Required.
         /// </param>
+        /// <param name='type'>
+        /// Required.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<object>> DeleteCourtesyLocationWithOperationResponseAsync(int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<object>> DeleteLocationWithOperationResponseAsync(int id, string type, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
+            // Validate
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
             string invocationId = null;
@@ -187,14 +184,16 @@ namespace ApartmentApps.Client
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
-                ServiceClientTracing.Enter(invocationId, this, "DeleteCourtesyLocationAsync", tracingParameters);
+                tracingParameters.Add("type", type);
+                ServiceClientTracing.Enter(invocationId, this, "DeleteLocationAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/DeleteCourtesyLocation";
+            url = url + "/DeleteLocation";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("id=" + Uri.EscapeDataString(id.ToString()));
+            queryParameters.Add("type=" + Uri.EscapeDataString(type));
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -270,7 +269,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<IList<CourtesyOfficerLocation>>> GetLocationsWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<IList<LocationBindingModel>>> GetLocationsWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -338,14 +337,14 @@ namespace ApartmentApps.Client
             }
             
             // Create Result
-            HttpOperationResponse<IList<CourtesyOfficerLocation>> result = new HttpOperationResponse<IList<CourtesyOfficerLocation>>();
+            HttpOperationResponse<IList<LocationBindingModel>> result = new HttpOperationResponse<IList<LocationBindingModel>>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                IList<CourtesyOfficerLocation> resultModel = new List<CourtesyOfficerLocation>();
+                IList<LocationBindingModel> resultModel = new List<LocationBindingModel>();
                 JToken responseDoc = null;
                 if (string.IsNullOrEmpty(responseContent) == false)
                 {
@@ -353,7 +352,7 @@ namespace ApartmentApps.Client
                 }
                 if (responseDoc != null)
                 {
-                    resultModel = CourtesyOfficerLocationCollection.DeserializeJson(responseDoc);
+                    resultModel = LocationBindingModelCollection.DeserializeJson(responseDoc);
                 }
                 result.Body = resultModel;
             }

@@ -349,6 +349,7 @@
     <InterfaceDefinition Include="Views\TableSources\TicketIndexTableViewCell.xib" />
     <InterfaceDefinition Include="Views\Sections\VerticalCollectionSection.xib" />
     <InterfaceDefinition Include="Views\CollectionItems\TicketCollectionViewCell.xib" />
+    <InterfaceDefinition Include="Views\SignUpFormView.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -486,6 +487,10 @@
     <Compile Include="Views\IncidentReportFormView.cs" />
     <Compile Include="Views\IncidentReportStatusView.cs" />
     <Compile Include="Views\IncidentReportIndexView.cs" />
+    <Compile Include="Views\SignUpFormView.cs" />
+    <Compile Include="Views\SignUpFormView.designer.cs">
+      <DependentUpon>SignUpFormView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="azure-messaging">

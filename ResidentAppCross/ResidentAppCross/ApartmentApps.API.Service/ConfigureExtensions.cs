@@ -17,7 +17,7 @@ namespace ApartmentApps.Client
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IConfigure.
         /// </param>
-        /// <param name='locationId'>
+        /// <param name='qrCode'>
         /// Required.
         /// </param>
         /// <param name='latitude'>
@@ -29,11 +29,11 @@ namespace ApartmentApps.Client
         /// <param name='label'>
         /// Optional.
         /// </param>
-        public static CourtesyOfficerLocation AddCourtesyLocation(this IConfigure operations, string locationId, double latitude, double longitude, string label = null)
+        public static object AddLocation(this IConfigure operations, string qrCode, double latitude, double longitude, string label = null)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IConfigure)s).AddCourtesyLocationAsync(locationId, latitude, longitude, label);
+                return ((IConfigure)s).AddLocationAsync(qrCode, latitude, longitude, label);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -41,7 +41,7 @@ namespace ApartmentApps.Client
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IConfigure.
         /// </param>
-        /// <param name='locationId'>
+        /// <param name='qrCode'>
         /// Required.
         /// </param>
         /// <param name='latitude'>
@@ -56,9 +56,9 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<CourtesyOfficerLocation> AddCourtesyLocationAsync(this IConfigure operations, string locationId, double latitude, double longitude, string label = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<object> AddLocationAsync(this IConfigure operations, string qrCode, double latitude, double longitude, string label = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.CourtesyOfficerLocation> result = await operations.AddCourtesyLocationWithOperationResponseAsync(locationId, latitude, longitude, label, cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<object> result = await operations.AddLocationWithOperationResponseAsync(qrCode, latitude, longitude, label, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         
@@ -68,11 +68,14 @@ namespace ApartmentApps.Client
         /// <param name='id'>
         /// Required.
         /// </param>
-        public static object DeleteCourtesyLocation(this IConfigure operations, int id)
+        /// <param name='type'>
+        /// Required.
+        /// </param>
+        public static object DeleteLocation(this IConfigure operations, int id, string type)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IConfigure)s).DeleteCourtesyLocationAsync(id);
+                return ((IConfigure)s).DeleteLocationAsync(id, type);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -83,19 +86,22 @@ namespace ApartmentApps.Client
         /// <param name='id'>
         /// Required.
         /// </param>
+        /// <param name='type'>
+        /// Required.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<object> DeleteCourtesyLocationAsync(this IConfigure operations, int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<object> DeleteLocationAsync(this IConfigure operations, int id, string type, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<object> result = await operations.DeleteCourtesyLocationWithOperationResponseAsync(id, cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<object> result = await operations.DeleteLocationWithOperationResponseAsync(id, type, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IConfigure.
         /// </param>
-        public static IList<CourtesyOfficerLocation> GetLocations(this IConfigure operations)
+        public static IList<LocationBindingModel> GetLocations(this IConfigure operations)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -110,9 +116,9 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<IList<CourtesyOfficerLocation>> GetLocationsAsync(this IConfigure operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<IList<LocationBindingModel>> GetLocationsAsync(this IConfigure operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.CourtesyOfficerLocation>> result = await operations.GetLocationsWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.LocationBindingModel>> result = await operations.GetLocationsWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
     }

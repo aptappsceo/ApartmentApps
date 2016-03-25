@@ -11,7 +11,6 @@ namespace ApartmentApps.Client.Models
 {
     public partial class IncidentReportBindingModel
     {
-        public string Status { get; set; }
         private string _buildingName;
         
         /// <summary>
@@ -89,6 +88,17 @@ namespace ApartmentApps.Client.Models
             set { this._requesterId = value; }
         }
         
+        private string _status;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
         private string _unitName;
         
         /// <summary>
@@ -119,11 +129,6 @@ namespace ApartmentApps.Client.Models
                 if (buildingNameValue != null && buildingNameValue.Type != JTokenType.Null)
                 {
                     this.BuildingName = ((string)buildingNameValue);
-                }
-                JToken statusValue = inputObject["Status"];
-                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                {
-                    this.Status = ((string)statusValue);
                 }
                 JToken commentsValue = inputObject["Comments"];
                 if (commentsValue != null && commentsValue.Type != JTokenType.Null)
@@ -157,6 +162,11 @@ namespace ApartmentApps.Client.Models
                 if (requesterIdValue != null && requesterIdValue.Type != JTokenType.Null)
                 {
                     this.RequesterId = ((string)requesterIdValue);
+                }
+                JToken statusValue = inputObject["Status"];
+                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                {
+                    this.Status = ((string)statusValue);
                 }
                 JToken unitNameValue = inputObject["UnitName"];
                 if (unitNameValue != null && unitNameValue.Type != JTokenType.Null)

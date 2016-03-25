@@ -13,7 +13,7 @@ namespace ApartmentApps.Client
 {
     public partial interface IConfigure
     {
-        /// <param name='locationId'>
+        /// <param name='qrCode'>
         /// Required.
         /// </param>
         /// <param name='latitude'>
@@ -28,19 +28,22 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<CourtesyOfficerLocation>> AddCourtesyLocationWithOperationResponseAsync(string locationId, double latitude, double longitude, string label = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<object>> AddLocationWithOperationResponseAsync(string qrCode, double latitude, double longitude, string label = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='type'>
         /// Required.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> DeleteCourtesyLocationWithOperationResponseAsync(int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<object>> DeleteLocationWithOperationResponseAsync(int id, string type, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<CourtesyOfficerLocation>>> GetLocationsWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<IList<LocationBindingModel>>> GetLocationsWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

@@ -9,19 +9,19 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public static partial class CourtesyOfficerLocationCollection
+    public static partial class LocationBindingModelCollection
     {
         /// <summary>
         /// Deserialize the object
         /// </summary>
-        public static IList<CourtesyOfficerLocation> DeserializeJson(JToken inputObject)
+        public static IList<LocationBindingModel> DeserializeJson(JToken inputObject)
         {
-            IList<CourtesyOfficerLocation> deserializedObject = new List<CourtesyOfficerLocation>();
+            IList<LocationBindingModel> deserializedObject = new List<LocationBindingModel>();
             foreach (JToken iListValue in ((JArray)inputObject))
             {
-                CourtesyOfficerLocation courtesyOfficerLocation = new CourtesyOfficerLocation();
-                courtesyOfficerLocation.DeserializeJson(iListValue);
-                deserializedObject.Add(courtesyOfficerLocation);
+                LocationBindingModel locationBindingModel = new LocationBindingModel();
+                locationBindingModel.DeserializeJson(iListValue);
+                deserializedObject.Add(locationBindingModel);
             }
             return deserializedObject;
         }
