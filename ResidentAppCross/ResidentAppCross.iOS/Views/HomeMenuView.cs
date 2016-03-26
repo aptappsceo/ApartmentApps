@@ -42,14 +42,18 @@ namespace ResidentAppCross.iOS
 
             UsernameAvatarImage.Layer.MasksToBounds = true;
             UsernameAvatarImage.Layer.CornerRadius = UsernameAvatarImage.Frame.Width/2;
-            UsernameAvatarImage.Layer.BorderWidth = 10f;
+            UsernameAvatarImage.Layer.BorderWidth = 4f;
             UsernameAvatarImage.Layer.BorderColor = new CGColor(1f,1f,1f);
         }
 
         public override void ViewDidAppear(bool animated)
 	    {
 	        base.ViewDidAppear(animated);
-	    }
+            UsernameAvatarImage.Layer.MasksToBounds = true;
+            UsernameAvatarImage.Layer.CornerRadius = UsernameAvatarImage.Frame.Width / 2;
+            UsernameAvatarImage.Layer.BorderWidth = 4f;
+            UsernameAvatarImage.Layer.BorderColor = new CGColor(1f, 1f, 1f);
+        }
 
         public override void DidReceiveMemoryWarning ()
 		{

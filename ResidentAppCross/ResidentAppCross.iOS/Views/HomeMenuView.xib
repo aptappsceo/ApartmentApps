@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -25,32 +25,32 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cC0-Oh-eag" userLabel="Body">
-                    <rect key="frame" x="0.0" y="100" width="600" height="425"/>
+                    <rect key="frame" x="0.0" y="80" width="600" height="490"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Micah Osborne" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Box-Xl-ldp" userLabel="UsernameLabel">
-                            <rect key="frame" x="0.0" y="95" width="600" height="33"/>
+                            <rect key="frame" x="0.0" y="75" width="600" height="33"/>
                             <fontDescription key="fontDescription" type="system" pointSize="27"/>
                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5hL-mL-VvH" userLabel="EditProfileButton">
-                            <rect key="frame" x="262" y="128" width="75" height="30"/>
+                            <rect key="frame" x="262" y="108" width="75" height="30"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-5"/>
                             <state key="normal" title="Edit Profile"/>
                         </button>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dJm-4m-dUK" userLabel="MenuTable">
-                            <rect key="frame" x="0.0" y="158" width="600" height="212"/>
+                            <rect key="frame" x="0.0" y="138" width="600" height="297"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </tableView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BHj-Fr-wgy" userLabel="SettingsButton">
-                            <rect key="frame" x="0.0" y="370" width="300" height="55"/>
+                            <rect key="frame" x="0.0" y="435" width="300" height="55"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="55" id="Ez6-Zf-fMd"/>
                             </constraints>
                             <state key="normal" title="Settings"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CmQ-yM-8PS" userLabel="SignOutButton">
-                            <rect key="frame" x="300" y="370" width="300" height="55"/>
+                            <rect key="frame" x="300" y="435" width="300" height="55"/>
                             <state key="normal" title="Sign Out"/>
                         </button>
                     </subviews>
@@ -75,16 +75,16 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iUZ-aZ-kJ1" userLabel="Footer">
-                    <rect key="frame" x="0.0" y="525" width="600" height="75"/>
+                    <rect key="frame" x="0.0" y="570" width="600" height="30"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Appartment Apps 2016" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1S-vr-jjo" userLabel="CopyrightLabel">
-                            <rect key="frame" x="0.0" y="0.0" width="300" height="75"/>
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dq-bW-RIq" userLabel="VersionLabel">
-                            <rect key="frame" x="300" y="0.0" width="300" height="75"/>
+                            <rect key="frame" x="300" y="0.0" width="300" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -95,7 +95,7 @@
                         <constraint firstAttribute="bottom" secondItem="0dq-bW-RIq" secondAttribute="bottom" id="57A-Zk-MxT"/>
                         <constraint firstAttribute="trailing" secondItem="0dq-bW-RIq" secondAttribute="trailing" id="6LL-nS-R3i"/>
                         <constraint firstItem="B1S-vr-jjo" firstAttribute="width" secondItem="iUZ-aZ-kJ1" secondAttribute="width" multiplier="0.5" id="ELj-4V-PbC"/>
-                        <constraint firstAttribute="height" constant="75" id="IkM-g5-AXi"/>
+                        <constraint firstAttribute="height" constant="30" id="IkM-g5-AXi"/>
                         <constraint firstAttribute="bottom" secondItem="B1S-vr-jjo" secondAttribute="bottom" id="Ipg-V5-gu5"/>
                         <constraint firstItem="B1S-vr-jjo" firstAttribute="height" secondItem="iUZ-aZ-kJ1" secondAttribute="height" id="aQU-ov-GAm"/>
                         <constraint firstItem="0dq-bW-RIq" firstAttribute="width" secondItem="iUZ-aZ-kJ1" secondAttribute="width" multiplier="0.5" id="diE-rf-wmt"/>
@@ -104,31 +104,30 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A0g-a6-aGY" userLabel="Header">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                     <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="100" id="Lnw-xB-mIg"/>
-                    </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="VRX-Ul-EVA" userLabel="UsernameAvatarImage">
-                    <rect key="frame" x="225" y="25" width="150" height="150"/>
+                    <rect key="frame" x="240" y="20" width="120" height="120"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="150" id="7YU-NO-LBl"/>
-                        <constraint firstAttribute="width" constant="150" id="use-cl-6Ec"/>
+                        <constraint firstAttribute="width" secondItem="VRX-Ul-EVA" secondAttribute="height" multiplier="1:1" id="TB3-C4-bpI"/>
                     </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="A0g-a6-aGY" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="2W0-cF-4iE"/>
-                <constraint firstItem="Box-Xl-ldp" firstAttribute="top" secondItem="VRX-Ul-EVA" secondAttribute="bottom" constant="20" id="6VZ-hw-y8l"/>
+                <constraint firstItem="Box-Xl-ldp" firstAttribute="top" secondItem="VRX-Ul-EVA" secondAttribute="bottom" constant="15" id="6VZ-hw-y8l"/>
+                <constraint firstItem="VRX-Ul-EVA" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="7sz-7n-IYy"/>
                 <constraint firstItem="VRX-Ul-EVA" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="9Nh-hh-pob"/>
                 <constraint firstAttribute="trailing" secondItem="iUZ-aZ-kJ1" secondAttribute="trailing" id="9nv-av-Uji"/>
                 <constraint firstAttribute="bottom" secondItem="iUZ-aZ-kJ1" secondAttribute="bottom" id="GVy-wj-kYX"/>
                 <constraint firstItem="cC0-Oh-eag" firstAttribute="top" secondItem="A0g-a6-aGY" secondAttribute="bottom" id="K93-wK-3Kn"/>
                 <constraint firstAttribute="trailing" secondItem="cC0-Oh-eag" secondAttribute="trailing" id="KdX-hh-YqO"/>
+                <constraint firstItem="A0g-a6-aGY" firstAttribute="bottom" secondItem="VRX-Ul-EVA" secondAttribute="centerY" id="ThZ-OA-0ZR"/>
                 <constraint firstItem="iUZ-aZ-kJ1" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="ZM0-06-riW"/>
                 <constraint firstItem="A0g-a6-aGY" firstAttribute="top" secondItem="2" secondAttribute="top" id="aew-TP-nDX"/>
+                <constraint firstItem="VRX-Ul-EVA" firstAttribute="height" secondItem="2" secondAttribute="height" multiplier="0.2" id="c7z-eb-6F6"/>
                 <constraint firstItem="cC0-Oh-eag" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="dvN-ai-ivO"/>
                 <constraint firstItem="VRX-Ul-EVA" firstAttribute="centerY" secondItem="A0g-a6-aGY" secondAttribute="bottom" id="nXm-RO-M9t"/>
                 <constraint firstItem="cC0-Oh-eag" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="rAu-sx-bAq"/>

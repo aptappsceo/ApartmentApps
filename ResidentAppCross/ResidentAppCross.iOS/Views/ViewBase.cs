@@ -125,9 +125,21 @@ namespace ResidentAppCross.iOS.Views
             BTProgressHUD.Dismiss();
             if (prompt)
             {
-                var alertWithBody = MBAlertView.AlertWithBody(label, "Continue", () => onPrompted?.Invoke());
-                alertWithBody.BackgroundAlpha = 0.7f;
-                alertWithBody.AddToDisplayQueue();
+
+                var alertView = new UIAlertView(null,label,null ,"Continue");
+                //alertView.DismissWithClickedButtonIndex(alertView.CancelButtonIndex,true);
+                alertView.Clicked += (sender, args) =>
+                {
+                    if (args.ButtonIndex == alertView.CancelButtonIndex)
+                    {
+                        onPrompted?.Invoke();
+                    }
+                };
+
+                alertView.Show();
+//                var alertWithBody = MBAlertView.AlertWithBody(label, "Continue", () => onPrompted?.Invoke());
+//                alertWithBody.BackgroundAlpha = 0.7f;
+//                alertWithBody.AddToDisplayQueue();
             }
         }
 

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignUpFormView">
+            <connections>
+                <outlet property="_birthdayField" destination="gOL-jw-755" id="3t8-Qe-Xu6"/>
+                <outlet property="_emailTextField" destination="DvQ-NW-cBx" id="CKi-tB-5Ld"/>
+                <outlet property="_firstLastNameTextField" destination="beW-MD-q0r" id="dQt-fg-6y4"/>
+                <outlet property="_passwordConfirmationField" destination="GgW-V3-XuE" id="ogL-tU-unZ"/>
+                <outlet property="_passwordField" destination="Y8K-8i-Rjy" id="64S-aA-DFo"/>
+                <outlet property="_signUpButton" destination="k1u-gg-eAo" id="ISD-7q-QZt"/>
+                <outlet property="_usernameField" destination="9w7-qd-Spn" id="hbd-jf-8um"/>
+                <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="2">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tXv-DD-u6F">
+                    <rect key="frame" x="20" y="20" width="560" height="384"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First &amp; Last Name *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="beW-MD-q0r" userLabel="FirstLastNameTextField">
+                            <rect key="frame" x="0.0" y="0.0" width="560" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="Unq-ZP-W38"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DvQ-NW-cBx" userLabel="EmailTextField">
+                            <rect key="frame" x="0.0" y="56" width="560" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="NOg-zU-wXa"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Birthday *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gOL-jw-755" userLabel="BirthdayField">
+                            <rect key="frame" x="0.0" y="112" width="560" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="ql7-Sw-YZU"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9w7-qd-Spn" userLabel="UsernameField">
+                            <rect key="frame" x="0.0" y="168" width="560" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="xcn-4f-nwo"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password (min 8 characters) *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y8K-8i-Rjy" userLabel="PasswordField">
+                            <rect key="frame" x="0.0" y="224" width="560" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="qV3-sI-fo8"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GgW-V3-XuE" userLabel="PasswordConfirmationField">
+                            <rect key="frame" x="0.0" y="280" width="560" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="Lfe-rN-r0v"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1u-gg-eAo" userLabel="SignUpButton">
+                            <rect key="frame" x="0.0" y="336" width="560" height="48"/>
+                            <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="x9d-hJ-kbZ"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <state key="normal" title="Create New Account">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="tXv-DD-u6F" secondAttribute="trailing" constant="20" symbolic="YES" id="3Wp-h1-vNm"/>
+                <constraint firstItem="tXv-DD-u6F" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="9QH-0J-pJD"/>
+                <constraint firstItem="tXv-DD-u6F" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="gVn-Fw-bDS"/>
+            </constraints>
+            <point key="canvasLocation" x="410" y="433"/>
+        </view>
+    </objects>
+</document>
