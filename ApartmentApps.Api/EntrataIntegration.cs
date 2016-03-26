@@ -7,18 +7,32 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Api
 {
+    public interface IDataImporter
+    {
+        Task<bool> ImportData(ICreateUser createUser, Property property);
+    }
     /// <summary>
     /// Handles the synchronization of entrata and apartment apps.
     /// </summary>
-    public class EntrataIntegration : PropertyIntegrationAddon, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent
+    public class EntrataIntegration : 
+        PropertyIntegrationAddon, 
+        IMaintenanceSubmissionEvent, 
+        IMaintenanceRequestCheckinEvent,
+        IDataImporter
     {
+        public ApplicationDbContext Context { get; set; }
+
+        public EntrataIntegration(ApplicationDbContext context)
+        {
+            Context = context;
+        }
+
         public override bool Filter(ApplicationUser user)
         {
-
             return user.Property.EntrataInfo != null;
         }
 
-        public static async Task<bool> ImportData(ICreateUser createUser, ApplicationDbContext ctx, Property property)
+        public async Task<bool> ImportData(ICreateUser createUser, Property property)
         {
             var client = new EntrataClient();
             var info = property.EntrataInfo;
@@ -31,7 +45,7 @@ namespace ApartmentApps.Api
 
                 // Create the building
                 var building =
-                    await ctx.Buildings.FirstOrDefaultAsync(p => p.PropertyId == property.Id && p.Name == item.BuildingName);
+                    await Context.Buildings.FirstOrDefaultAsync(p => p.PropertyId == property.Id && p.Name == item.BuildingName);
 
                 if (building == null)
                 {
@@ -40,12 +54,12 @@ namespace ApartmentApps.Api
                         Name = item.BuildingName,
                         PropertyId = property.Id
                     };
-                    ctx.Buildings.Add(building);
-                    await ctx.SaveChangesAsync();
+                    Context.Buildings.Add(building);
+                    await Context.SaveChangesAsync();
                 }
 
                 var unit =
-                    await ctx.Units.FirstOrDefaultAsync(p => p.BuildingId == building.Id && p.Name == item.UnitNumber);
+                    await Context.Units.FirstOrDefaultAsync(p => p.BuildingId == building.Id && p.Name == item.UnitNumber);
                 if (unit == null)
                 {
                     unit = new Unit()
@@ -53,11 +67,11 @@ namespace ApartmentApps.Api
                         Name = item.UnitNumber,
                         BuildingId = building.Id
                     };
-                    ctx.Units.Add(unit);
-                    await ctx.SaveChangesAsync();
+                    Context.Units.Add(unit);
+                    await Context.SaveChangesAsync();
                 }
 
-                var user = await ctx.Users.FirstOrDefaultAsync(p => p.Email.ToLower() == item.Email.ToLower());
+                var user = await Context.Users.FirstOrDefaultAsync(p => p.Email.ToLower() == item.Email.ToLower());
 
                 if (user == null)
                 {
@@ -79,11 +93,11 @@ namespace ApartmentApps.Api
                 }
                
                
-                var tenantInfo = await ctx.Tenants.FirstOrDefaultAsync(p => p.UserId == user.Id);
+                var tenantInfo = await Context.Tenants.FirstOrDefaultAsync(p => p.UserId == user.Id);
                 if (tenantInfo == null)
                 {
                     tenantInfo = new Tenant();
-                    ctx.Tenants.Add(tenantInfo);
+                    Context.Tenants.Add(tenantInfo);
                 }
                 
                
@@ -102,20 +116,21 @@ namespace ApartmentApps.Api
                 tenantInfo.Address = item.Address;
 
                
-                await ctx.SaveChangesAsync();
+                await Context.SaveChangesAsync();
                 
             }
             return true;
         }
 
-        public void MaintenanceRequestSubmited(ApplicationDbContext ctx, MaitenanceRequest maitenanceRequest)
+        public void MaintenanceRequestSubmited( MaitenanceRequest maitenanceRequest)
         {
             // Sync with entrata on work order
         }
 
-        public void MaintenanceRequestCheckin(ApplicationDbContext ctx,MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
+        public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
         {
             
         }
+
     }
 }

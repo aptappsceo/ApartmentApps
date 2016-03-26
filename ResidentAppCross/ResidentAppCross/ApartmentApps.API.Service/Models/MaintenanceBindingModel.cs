@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ApartmentApps.Client.Models;
 using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
@@ -66,12 +67,12 @@ namespace ApartmentApps.Client.Models
             set { this._buildingState = value; }
         }
         
-        private IList<string> _checkins;
+        private IList<CheckinBindingModel> _checkins;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public IList<string> Checkins
+        public IList<CheckinBindingModel> Checkins
         {
             get { return this._checkins; }
             set { this._checkins = value; }
@@ -192,7 +193,7 @@ namespace ApartmentApps.Client.Models
         /// </summary>
         public MaintenanceBindingModel()
         {
-            this.Checkins = new LazyList<string>();
+            this.Checkins = new LazyList<CheckinBindingModel>();
             this.Photos = new LazyList<string>();
         }
         
@@ -233,7 +234,9 @@ namespace ApartmentApps.Client.Models
                 {
                     foreach (JToken checkinsValue in ((JArray)checkinsSequence))
                     {
-                        this.Checkins.Add(checkinsValue.ToString(Newtonsoft.Json.Formatting.Indented));
+                        CheckinBindingModel checkinBindingModel = new CheckinBindingModel();
+                        checkinBindingModel.DeserializeJson(checkinsValue);
+                        this.Checkins.Add(checkinBindingModel);
                     }
                 }
                 JToken messageValue = inputObject["Message"];

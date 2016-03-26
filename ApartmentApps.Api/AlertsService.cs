@@ -74,31 +74,33 @@ namespace ApartmentApps.Api
     /// </summary>
     public class AlertsService : IService, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent
     {
+        public ApplicationDbContext Context { get; set; }
         private IPushNotifiationHandler _pushHandler;
 
-        public AlertsService(IPushNotifiationHandler pushHandler)
+        public AlertsService(IPushNotifiationHandler pushHandler, ApplicationDbContext context)
         {
+            Context = context;
             _pushHandler = pushHandler;
         }
 
-        public void MaintenanceRequestSubmited(ApplicationDbContext ctx, MaitenanceRequest maitenanceRequest)
+        public void MaintenanceRequestSubmited( MaitenanceRequest maitenanceRequest)
         {
             if (maitenanceRequest.User.PropertyId != null)
-                SendAlert(ctx, maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id);
+                SendAlert(maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id);
             
         }
 
-        public void MaintenanceRequestCheckin(ApplicationDbContext ctx, MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
+        public void MaintenanceRequestCheckin( MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
         {
             if (request.User?.PropertyId != null)
             {
-                SendAlert(ctx, request.User, $"Maintenance {maitenanceRequest.StatusId}", maitenanceRequest.Comments,"Maintenance", request.Id);
+                SendAlert( request.User, $"Maintenance {maitenanceRequest.StatusId}", maitenanceRequest.Comments,"Maintenance", request.Id);
             }
         }
 
-        public void SendAlert(ApplicationDbContext ctx,ApplicationUser user, string title, string message, string type, int relatedId = 0)
+        public void SendAlert(ApplicationUser user, string title, string message, string type, int relatedId = 0)
         {
-            ctx.UserAlerts.Add(new UserAlert()
+            Context.UserAlerts.Add(new UserAlert()
             {
                 Title = title,
                 Message = message,
@@ -107,15 +109,15 @@ namespace ApartmentApps.Api
                 Type = type,
                 UserId = user.Id
             });
-            ctx.SaveChanges();
+            Context.SaveChanges();
             _pushHandler.SendToUser(user.Id, message);
 
         }
-        public void SendAlert(ApplicationDbContext ctx, int propertyId, string role, string title, string message, string type, int relatedId = 0)
+        public void SendAlert( int propertyId, string role, string title, string message, string type, int relatedId = 0)
         {
-            foreach (var item in ctx.Users.Include(p=>p.Property).Where(x => x.PropertyId == propertyId && x.Roles.Any(p => p.RoleId == role)))
+            foreach (var item in Context.Users.Include(p=>p.Property).Where(x => x.PropertyId == propertyId && x.Roles.Any(p => p.RoleId == role)))
             {
-                ctx.UserAlerts.Add(new UserAlert()
+                Context.UserAlerts.Add(new UserAlert()
                 {
                     Title = title,
                     Message = message,
@@ -125,24 +127,24 @@ namespace ApartmentApps.Api
                     UserId = item.Id
                 });
             }
-            
-            ctx.SaveChanges();
+
+            Context.SaveChanges();
             _pushHandler.SendToRole(propertyId, role, title);
 
         }
 
-        public void IncidentReportSubmited(ApplicationDbContext ctx, IncidentReport incidentReport)
+        public void IncidentReportSubmited( IncidentReport incidentReport)
         {
             if (incidentReport.User.PropertyId != null)
-                SendAlert(ctx, incidentReport.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", incidentReport.Comments, "Maintenance", incidentReport.Id);
+                SendAlert(incidentReport.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", incidentReport.Comments, "Maintenance", incidentReport.Id);
         }
 
-        public void IncidentReportCheckin(ApplicationDbContext ctx, IncidentReportCheckin incidentReportCheckin,
+        public void IncidentReportCheckin( IncidentReportCheckin incidentReportCheckin,
             IncidentReport incidentReport)
         {
             if (incidentReport.User?.PropertyId != null)
             {
-                SendAlert(ctx, incidentReport.User, $"Incident Report {incidentReport.StatusId}", incidentReport.Comments, "Maintenance", incidentReport.Id);
+                SendAlert(incidentReport.User, $"Incident Report {incidentReport.StatusId}", incidentReport.Comments, "Maintenance", incidentReport.Id);
             }
         }
     }

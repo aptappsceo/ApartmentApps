@@ -29,27 +29,28 @@ namespace ApartmentApps.API.Service
             // e.g. container.RegisterType<ITestService, TestService>();
 
             // Push notifications
-            container.RegisterType<IPushNotifiationHandler, AzurePushNotificationHandler>();
-            container.RegisterType<IService, AlertsService>("PushNotifications");
-            container.RegisterType<IBlobStorageService, BlobStorageService>();
+            //container.RegisterType<IPushNotifiationHandler, AzurePushNotificationHandler>();
+            //container.RegisterType<IService, AlertsService>("PushNotifications");
+            //container.RegisterType<IBlobStorageService, BlobStorageService>();
 
-            container.RegisterType<IMaintenanceService, MaintenanceService>();
-            container.RegisterType<ICourtesyService, CourtesyService>();
-            container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
-            container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
+            //container.RegisterType<IMaintenanceService, MaintenanceService>();
+            //container.RegisterType<ICourtesyService, CourtesyService>();
+            //container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
+            //container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
           
-            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new HierarchicalLifetimeManager());
-            container.RegisterType<IAuthenticationManager>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().Authentication));
-            container.RegisterType<ISecureDataFormat<AuthenticationTicket>, SecureDataFormat<AuthenticationTicket>>();
-            container.RegisterType<ApplicationUserManager>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>()));
+            //container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new HierarchicalLifetimeManager());
+            //container.RegisterType<IAuthenticationManager>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().Authentication));
+            //container.RegisterType<ISecureDataFormat<AuthenticationTicket>, SecureDataFormat<AuthenticationTicket>>();
+            //container.RegisterType<ApplicationUserManager>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>()));
             //container.RegisterType<UserManager<ApplicationUser>>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>()));
-            
-            
+
+
             //container.RegisterType<MaitenanceController>(new InjectionConstructor());
             //container.RegisterType<AccountController>(new InjectionConstructor());
             //container.RegisterType<HelpController>(new InjectionConstructor());
-            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
-            ServiceExtensions.GetServices = () => container.ResolveAll<IService>();
+            //GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+
+            //ServiceExtensions.GetServices = () => container.ResolveAll<IService>();
         }
     }
 }
