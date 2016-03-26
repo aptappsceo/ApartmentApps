@@ -38,15 +38,26 @@ namespace ResidentAppCross.iOS
             base.ViewWillAppear(animated);
             LoginTextField.SetLeftIcon("HouseIcon");
             PasswordTextField.SetLeftIcon("OfficerIcon");
-            _textFieldsContainer.Layer.CornerRadius = 8f;
             View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png").ImageToFitSize(View.Frame.Size));
+            this.NavigationController.SetNavigationBarHidden(true, false);
+
+
+            NSTextAttachment attachment = new NSTextAttachment();
+            attachment.Image = UIImage.FromBundle("PayIcon");
+            NSAttributedString str = NSAttributedString.CreateFrom(attachment);
+            var myString = new NSMutableAttributedString("Ok Here We Go");
+
+            myString.Insert(str, 0);
+
+           
+            LoginButton.SetAttributedTitle(myString,UIControlState.Normal);
+
         }
 
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);
-            this.NavigationController.SetNavigationBarHidden(true, false);
-
+            _textFieldsContainer.Layer.CornerRadius = 8f;
         }
 
         public override void ViewDidLoad()
