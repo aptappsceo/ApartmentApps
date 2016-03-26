@@ -24,6 +24,17 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public string UnitName { get; set; }
         public string BuildingName { get; set; }
         public string Status { get; set; }
+
+        public IncidentCheckinBindingModel[] Checkins { get; set; }
+
+    }
+    public class IncidentCheckinBindingModel
+    {
+        public string StatusId { get; set; }
+        public DateTime Date { get; set; }
+        public string Comments { get; set; }
+        public string OfficerName { get; set; }
+        public List<ImageReference> Photos { get; set; }
     }
     [System.Web.Http.RoutePrefix("api/Courtesy")]
     [System.Web.Http.Authorize]
@@ -32,23 +43,19 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
         public IBlobStorageService BlobStorageService { get; set; }
         public ICourtesyService CourtesyService { get; set; }
-        public ApplicationDbContext Context { get; set; }
 
-        public CourtesyController(ICourtesyService courtesyService, IBlobStorageService blobStorageService)
+        public CourtesyController(ICourtesyService courtesyService, IBlobStorageService blobStorageService, ApplicationDbContext context) :base (context)
         {
             CourtesyService = courtesyService;
             BlobStorageService = blobStorageService;
         }
 
-        public CourtesyController()
-        {
-        }
+
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("List")]
         public IEnumerable<IncidentIndexBindingModel> ListRequests()
         {
-            using (Context = new ApplicationDbContext())
-            {
+         
                 var propertyId = this.CurrentUser.PropertyId;
 
                 return
@@ -61,22 +68,22 @@ namespace ApartmentApps.API.Service.Controllers.Api
                             StatusId = x.StatusId,
                             Id = x.Id
                         }).ToArray();
-            }
+            
         }
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetIncidentReport")]
         public async Task<IncidentReportBindingModel> Get(int id)
         {
 
-            using (Context = new ApplicationDbContext())
-            {
+          
                 var result = await Context.IncidentReports
                     .Include(p=>p.User.Tenant)
                     .Include(p=>p.User.Tenant.Unit)
                     .Include(p=>p.User.Tenant.Unit.Building)
+                    .Include(p=>p.Checkins)
                     .FirstOrDefaultAsync(p => p.Id == id);
                 //var userId = CurrentUser.UserName;
-                //var user = Context.Users.FirstOrDefault(p => p.UserName == userId);
+                //var user = Db.Users.FirstOrDefault(p => p.UserName == userId);
                 var photos = Context.ImageReferences.Where(r => r.GroupId == result.GroupId).ToList();
 
                 var response = new IncidentReportBindingModel()
@@ -89,10 +96,18 @@ namespace ApartmentApps.API.Service.Controllers.Api
                     Status = result.StatusId,
                     CreatedOn = result.CreatedOn,
                     IncidentType = result.IncidentType.ToString(),
+                    Checkins = result.Checkins.ToArray().Select(x => new IncidentCheckinBindingModel
+                    {
+                        StatusId = x.StatusId,
+                        Date = x.CreatedOn,
+                        Comments = x.Comments,
+                        OfficerName = x.Officer.UserName,
+                        Photos = Context.ImageReferences.Where(r => r.GroupId == x.GroupId).ToList()
+                    }).ToArray(),
                     Photos = photos.Select(key => BlobStorageService.GetPhotoUrl(key.Url))
                 };
                 return response;
-            }
+            
 
         }
 

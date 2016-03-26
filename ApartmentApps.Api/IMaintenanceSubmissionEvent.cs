@@ -4,10 +4,10 @@ namespace ApartmentApps.Api
 {
     public interface IMaintenanceSubmissionEvent
     {
-        void MaintenanceRequestSubmited(ApplicationDbContext ctx, MaitenanceRequest maitenanceRequest);
+        void MaintenanceRequestSubmited( MaitenanceRequest maitenanceRequest);
     }
     public interface IIncidentReportSubmissionEvent
     {
-        void IncidentReportSubmited(ApplicationDbContext ctx, IncidentReport incidentReport);
+        void IncidentReportSubmited( IncidentReport incidentReport);
     }
 }

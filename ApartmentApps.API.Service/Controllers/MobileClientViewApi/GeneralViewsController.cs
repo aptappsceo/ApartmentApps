@@ -12,16 +12,20 @@ namespace ApartmentApps.API.Service.Controllers.MobileClientViewApi
 {
     public class GeneralViewsController : Controller
     {
-        //public GeneralViewsController(IMaintenanceService maitenanceService)
-        //{
-        //}
-        protected ApplicationDbContext db = new ApplicationDbContext();
+        public ApplicationDbContext Context { get; set; }
+
+        public GeneralViewsController(ApplicationDbContext context)
+        {
+            Context = context;
+        }
+
+  
         public ApplicationUser CurrentUser
         {
             get
             {
                 var uName = User.Identity.GetUserName();
-                return db.Users.FirstOrDefault(p => p.Email == uName);
+                return Context.Users.FirstOrDefault(p => p.Email == uName);
             }
         }
 
@@ -33,7 +37,7 @@ namespace ApartmentApps.API.Service.Controllers.MobileClientViewApi
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.MaitenanceRequests.Include(p=>p.User).Include(p=>p.Unit).Include(p=>p.MaitenanceRequestType).Where(p=>p.User.PropertyId == Property.Id));
+            return View(Context.MaitenanceRequests.Include(p=>p.User).Include(p=>p.Unit).Include(p=>p.MaitenanceRequestType).Where(p=>p.User.PropertyId == Property.Id));
         }
     }
 }

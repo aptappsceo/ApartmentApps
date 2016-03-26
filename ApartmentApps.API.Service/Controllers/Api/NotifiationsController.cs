@@ -8,12 +8,16 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Data;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
     public class NotifiationsController : ApartmentAppsApiController
     {
-       
+        public NotifiationsController(ApplicationDbContext context) : base(context)
+        {
+        }
+
         public async Task<HttpResponseMessage> Post(string pns, [FromBody]string message, string to_tag)
         {
             var user = HttpContext.Current.User.Identity.Name;

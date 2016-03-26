@@ -13,12 +13,12 @@ namespace ApartmentApps.Api
         public static Func<IEnumerable<IService>> GetServices { get; set; }
 
 
-        public static void InvokeEvent<TEventInterface>(ApplicationDbContext ctx, ApplicationUser user, Action<TEventInterface> evt) where TEventInterface : class
+        public static void InvokeEvent<TEventInterface>( ApplicationUser user, Action<TEventInterface> evt) where TEventInterface : class
         {
-            InvokeEvent<TEventInterface>(null, ctx, user, evt);
+            InvokeEvent<TEventInterface>(null,  user, evt);
         }
 
-        public static void InvokeEvent<TEventInterface>(this IService service, ApplicationDbContext ctx, ApplicationUser user, Action<TEventInterface> evt) where TEventInterface : class
+        public static void InvokeEvent<TEventInterface>(this IService service, ApplicationUser user, Action<TEventInterface> evt) where TEventInterface : class
         {
             foreach (var item in GetServices())
             {

@@ -20,6 +20,10 @@ namespace ApartmentApps.API.Service.Controllers.Api
     [Authorize(Roles = "PropertyAdmin")]
     public class ConfigureController : ApartmentAppsApiController
     {
+        public ConfigureController(ApplicationDbContext context) : base(context)
+        {
+        }
+
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("AddLocation")]
         public void AddLocation(string qrCode, decimal latitude, decimal longitude, string label = null)
@@ -30,38 +34,32 @@ namespace ApartmentApps.API.Service.Controllers.Api
             System.Collections.Specialized.NameValueCollection parameters =
                System.Web.HttpUtility.ParseQueryString(querystring);
 
-
-            using (var ctx = new ApplicationDbContext())
+            if (CurrentUser.PropertyId != null)
             {
-                if (CurrentUser.PropertyId != null)
+                var propertyId = CurrentUser.PropertyId.Value;
+                if (parameters["unitid"] != null)
                 {
-                    var propertyId = CurrentUser.PropertyId.Value;
-                    if (parameters["unitid"] != null)
+                    var unitId = Convert.ToInt32(parameters["unitid"]);
+                    var unit = Context.Units.FirstOrDefault(p => p.Id == unitId);
+                    if (unit != null)
                     {
-                        var unitId = Convert.ToInt32(parameters["unitid"]);
-                        var unit = ctx.Units.FirstOrDefault(p => p.Id == unitId);
-                        if (unit != null)
-                        {
-                            unit.Latitude = latitude;
-                            unit.Longitude = longitude;
-                        }
+                        unit.Latitude = latitude;
+                        unit.Longitude = longitude;
                     }
-                    else
-                    {
-                        var courtesyOfficerLocation = new CourtesyOfficerLocation()
-                        {
-                            PropertyId = propertyId,
-                            Latitude = latitude,
-                            Longitude = longitude,
-                            LocationId = parameters["location"],
-                            Label = label ?? "Location " + (ctx.CourtesyOfficerLocations.Count(p => p.PropertyId == propertyId) + 1)
-                        };
-                        ctx.CourtesyOfficerLocations.Add(courtesyOfficerLocation);
-                    }
-                    ctx.SaveChanges();
-
                 }
-
+                else
+                {
+                    var courtesyOfficerLocation = new CourtesyOfficerLocation()
+                    {
+                        PropertyId = propertyId,
+                        Latitude = latitude,
+                        Longitude = longitude,
+                        LocationId = parameters["location"],
+                        Label = label ?? "Location " + (Context.CourtesyOfficerLocations.Count(p => p.PropertyId == propertyId) + 1)
+                    };
+                    Context.CourtesyOfficerLocations.Add(courtesyOfficerLocation);
+                }
+                Context.SaveChanges();
             }
         }
 
@@ -71,30 +69,30 @@ namespace ApartmentApps.API.Service.Controllers.Api
         {
             //if (CurrentUser.PropertyId == null)
             //return Enumerable.Empty<LocationBindingModel>();
-            using (var ctx = new ApplicationDbContext())
-            {
-                var propertyId = CurrentUser.PropertyId.Value;
 
-                foreach (var item in ctx.CourtesyOfficerLocations.Where(p => p.PropertyId == propertyId).Select(p => new LocationBindingModel()
+            var propertyId = CurrentUser.PropertyId.Value;
+
+            foreach (var item in Context.CourtesyOfficerLocations.Where(p => p.PropertyId == propertyId).Select(p => new LocationBindingModel()
+            {
+                Id = p.Id,
+                Type = "Checkin",
+                Latitude = p.Latitude,
+                Longitude = p.Longitude,
+                Name = p.Label
+            }))
+            yield return item;
+            foreach (var item in Context.Units.Include(p => p.Building).Where(p => p.Longitude > 0 && p.Latitude > 0 && p.Building.PropertyId == propertyId))
+            {
+                yield return new LocationBindingModel()
                 {
-                    Id = p.Id,
-                    Type = "Checkin",
-                    Latitude = p.Latitude,
-                    Longitude = p.Longitude,
-                    Name = p.Label
-                })) yield return item;
-                foreach (var item in ctx.Units.Include(p => p.Building).Where(p => p.Longitude > 0 && p.Latitude > 0 && p.Building.PropertyId == propertyId))
-                {
-                    yield return new LocationBindingModel()
-                    {
-                        Id = item.Id,
-                        Type = "Unit",
-                        Name = item.Building.Name + " " + item.Name,
-                        Longitude = item.Longitude,
-                        Latitude = item.Latitude
-                    };
-                }
+                    Id = item.Id,
+                    Type = "Unit",
+                    Name = item.Building.Name + " " + item.Name,
+                    Longitude = item.Longitude,
+                    Latitude = item.Latitude
+                };
             }
+
         }
 
         [System.Web.Http.HttpPost]
