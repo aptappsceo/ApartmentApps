@@ -23,6 +23,5 @@ namespace ResidentAppCross.iOS
 	    public UILabel MainLabel => HeaderLabel;
 	    public UILabel SubLabel => SubHeaderLabel;
 
-
 	}
 }

@@ -30,6 +30,9 @@ namespace ResidentAppCross.iOS.Views
         {
         }
 
+        public virtual UIView HeaderView { get; set; }
+        public virtual UIView FooterView { get; set; }
+
         public virtual float VerticalSectionsSpacing { get; set; } = 15f;
 
         public UIScrollView SectionsContainer
@@ -43,12 +46,47 @@ namespace ResidentAppCross.iOS.Views
 
                     _sectionsContainer = new UIScrollView().AddTo(View);
                     _sectionsContainer.TranslatesAutoresizingMaskIntoConstraints = false;
+
+
+                    //                    if (HeaderView != null)
+                    //                    {
+                    //                        
+                    //                    }
+
+
                     View.AddConstraints(
-                        _sectionsContainer.WithSameWidth(View),
-                        _sectionsContainer.WithSameHeight(View),
-                        _sectionsContainer.AtTopOf(View),
-                        _sectionsContainer.AtLeftOf(View)
-                        );
+                        _sectionsContainer.AtRightOf(View),
+                        _sectionsContainer.AtLeftOf(View));
+
+                    if (HeaderView == null)
+                    {
+                        View.AddConstraints(_sectionsContainer.AtTopOf(View));
+                    }
+                    else
+                    {
+                        View.Add(HeaderView);
+                        View.AddConstraints(
+                         HeaderView.AtRightOf(View),
+                         HeaderView.AtLeftOf(View),
+                         HeaderView.AtTopOf(View),
+                         _sectionsContainer.Below(HeaderView));
+                    }
+
+
+                    if (FooterView == null)
+                    {
+                        View.AddConstraints(_sectionsContainer.AtBottomOf(View));
+                    }
+                    else
+                    {
+                        View.Add(FooterView);
+                        View.AddConstraints(
+                         FooterView.AtRightOf(View),
+                         FooterView.AtLeftOf(View),
+                         FooterView.AtBottomOf(View),
+                         _sectionsContainer.Above(FooterView));
+                    }
+
                 }
                 return _sectionsContainer;
             }
@@ -295,7 +333,22 @@ namespace ResidentAppCross.iOS.Views
         {
             var constraints = SectionsContainer.VerticalStackPanelConstraints(
              new Margins(0, 0, 0, 25, 0, VerticalSectionsSpacing),
-             SectionsContainer.Subviews);
+             SectionsContainer.Subviews).ToArray();
+
+            var subviews = SectionsContainer.Subviews.ToArray();
+
+            foreach (var source in SectionsContainer.Subviews.OfType<SectionViewBase>().Where(s=>s.ShouldStickSectionBelow))
+            {
+                var index = Array.IndexOf(subviews,source);
+                if(index == subviews.Length-1) continue;
+                var stickedView = subviews[index + 1];
+                var constraint = constraints.ToArray().FirstOrDefault(c => (c.View == source && c.SecondItem == stickedView) ||
+                    (c.View == stickedView && c.SecondItem == source));
+                if (constraint != null)
+                {
+                    constraint.Constant = 0;
+                }
+            }
 
             SectionsContainer.AddConstraints(constraints);
         }

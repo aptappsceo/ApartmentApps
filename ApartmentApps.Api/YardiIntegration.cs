@@ -13,12 +13,12 @@ namespace ApartmentApps.Api
             return user.Property.YardiInfo != null;
         }
 
-        public void MaintenanceRequestSubmited(ApplicationDbContext ctx, MaitenanceRequest maitenanceRequest)
+        public void MaintenanceRequestSubmited( MaitenanceRequest maitenanceRequest)
         {
             // Sync with entrata on work order
         }
 
-        public void MaintenanceRequestCheckin(ApplicationDbContext ctx, MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
+        public void MaintenanceRequestCheckin( MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
         {
             
         }

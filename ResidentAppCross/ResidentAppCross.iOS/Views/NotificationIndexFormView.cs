@@ -95,7 +95,7 @@ namespace ResidentAppCross.iOS.Views
         }
 
 
-//        public UITabBar TypeSelectionSection
+//        public UITabBar TabSection
 //        {
 //            get
 //            {
@@ -186,14 +186,21 @@ namespace ResidentAppCross.iOS.Views
         public static void BindTo<T>(this UITabBar tabbar, IList<T> items, Func<T,string> itemTitleSelector, Func<T, string> itemImageSelector, Func<T,string> itemBadgeSelector, Action<T> itemSelectedHandler, T selectedItem)
         {
             var index = 0;
+            UITabBarItem selectedUiItem = null;
             var uiItems =
-                items.Select(i => new UITabBarItem(itemTitleSelector(i), UIImage.FromBundle(itemImageSelector(i)), index++)
+                items.Select(i =>
                 {
-                    BadgeValue = itemBadgeSelector(i)
+                    var uiTabBarItem = new UITabBarItem(itemTitleSelector(i),
+                        UIImage.FromBundle(itemImageSelector(i)).ImageToFitSize(new CGSize(30, 30)), index++)
+                    {
+                        BadgeValue = itemBadgeSelector(i)
+                    };
+                    if (selectedItem.Equals(i)) selectedUiItem = uiTabBarItem;
+                    return uiTabBarItem;
                 }).ToArray();
 
             tabbar.SetItems(uiItems,true);
-
+            tabbar.SelectedItem = selectedUiItem;
             tabbar.ItemSelected += (sender, args) => { itemSelectedHandler(items[(int)tabbar.SelectedItem.Tag]); };
 
 

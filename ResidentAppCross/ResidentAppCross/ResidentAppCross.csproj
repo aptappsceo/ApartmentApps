@@ -55,6 +55,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\ApplicationUser.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Building.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ChangePasswordBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\CheckinBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Corporation.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\DeviceRegistration.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModel.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserClaim.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserLogin.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserRole.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\ImageReference.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentIndexBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentIndexBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentReportBindingModel.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="ViewModels\Screens\MaintenanceStartFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\PropertyConfigFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\SettingsFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\SignUpFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\TestFormViewModel.cs" />
     <Compile Include="ViewModels\Selectors\MaintenanceRequestTypeSelectionViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceRequestFormViewModel.cs" />

@@ -67,6 +67,8 @@ namespace ApartmentApps.Data
         [ForeignKey("StatusId")]
         public virtual IncidentReportStatus IncidentReportStatus { get; set; }
 
+        public virtual ICollection<IncidentReportCheckin> Checkins { get; set; }
+
         public DateTime? CompletionDate { get; set; }
     }
 

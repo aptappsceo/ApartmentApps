@@ -6,36 +6,15 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.Data;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace ApartmentApps.API.Service.Controllers
 {
-    public class ApartmentAppsApiController : ApiController
-    {
-
-        public ApplicationUserManager UserManager
-        {
-            get { return HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-        }
-        public ApplicationUser CurrentUser
-        {
-            get
-            {
-                var user = UserManager.FindByName(User.Identity.Name);
-                return user;//user.Email
-            }
-        }
-    }
-
     [System.Web.Http.RoutePrefix("api/Maitenance")]
     [System.Web.Http.Authorize]
     public class MaitenanceController : ApartmentAppsApiController
@@ -44,7 +23,7 @@ namespace ApartmentApps.API.Service.Controllers
 
         public IMaintenanceService MaintenanceService { get; set; }
         public IBlobStorageService BlobStorageService { get; set; }
-        public ApplicationDbContext Context { get; set; }
+
 
 
         public class MaintenanceBindingModel
@@ -64,7 +43,7 @@ namespace ApartmentApps.API.Service.Controllers
             public string TenantFullName { get; set; }
             public DateTime? ScheduleDate { get; set; }
             public int PetStatus { get; set; }
-            public IEnumerable<object> Checkins { get; set; }
+            public MaintenanceCheckinBindingModel[] Checkins { get; set; }
         }
 
         public class MaintenanceIndexBindingModel
@@ -76,20 +55,20 @@ namespace ApartmentApps.API.Service.Controllers
             public DateTime RequestDate { get; set; }
         }
 
-        public class CheckinBindingModel
+        public class MaintenanceCheckinBindingModel
         {
             public string StatusId { get; set; }
             public DateTime Date { get; set; }
             public string Comments { get; set; }
             public string WorkerName { get; set; }
+            public List<ImageReference> Photos { get; set; }
         }
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("List")]
         public IEnumerable<MaintenanceIndexBindingModel> ListRequests()
         {
-            using (Context = new ApplicationDbContext())
-            {
+         
                 var propertyId = this.CurrentUser.PropertyId;
                 return
                     Context.MaitenanceRequests.Include(r=>r.MaitenanceRequestType).Where(p => p.User.PropertyId == propertyId).Select(
@@ -101,17 +80,16 @@ namespace ApartmentApps.API.Service.Controllers
                             StatusId = x.StatusId,
                             Id = x.Id
                         }).ToArray();
-            }
+            
         }
         
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetRequest")]
         public async Task<MaintenanceBindingModel> Get(int id)
         {
-            using (Context = new ApplicationDbContext())
-            {
+        
                 //var userId = CurrentUser.UserName;
-                //var user = Context.Users.FirstOrDefault(p => p.UserName == userId);
+                //var user = Db.Users.FirstOrDefault(p => p.UserName == userId);
 
                 var result = await Context.MaitenanceRequests
                     .FirstOrDefaultAsync(p=>p.Id == id);
@@ -128,15 +106,21 @@ namespace ApartmentApps.API.Service.Controllers
                     BuildingPostalCode= result.User.Tenant?.PostalCode,
                     BuildingState= result.User.Tenant?.State,
                     Name = result.MaitenanceRequestType.Name,
-                   
                     PetStatus = result.PetStatus,
-                    Checkins = result.Checkins.Select(x=>new CheckinBindingModel {StatusId = x.StatusId, Date = x.Date, Comments = x.Comments, WorkerName = x.Worker.UserName}),
+                    Checkins = result.Checkins.ToArray().Select(x=>new MaintenanceCheckinBindingModel
+                    {
+                        StatusId = x.StatusId,
+                        Date = x.Date,
+                        Comments = x.Comments,
+                        WorkerName = x.Worker.UserName,
+                        Photos = Context.ImageReferences.Where(r => r.GroupId == x.GroupId).ToList()
+                    }).ToArray(),
                     ScheduleDate = result.ScheduleDate,
                     Message = result.Message, BuildingName = result.Unit?.Building?.Name, UnitName = result.Unit?.Name,
                     Photos = photos.Select(key=> BlobStorageService.GetPhotoUrl(key.Url))
                 };
                 return response;
-            }
+            
            
         }
 
@@ -180,10 +164,7 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("GetMaitenanceRequestTypes")]
         public IEnumerable<LookupPairModel> GetMaitenanceRequestTypes()
         {
-            using (Context = new ApplicationDbContext())
-            {
                 return Context.MaitenanceRequestTypes.Select(x => new LookupPairModel() { Key = x.Id.ToString(), Value = x.Name }).ToArray();
-            }
         }
 
         [System.Web.Http.HttpGet]
@@ -200,11 +181,9 @@ namespace ApartmentApps.API.Service.Controllers
             return null;
         }
 
-        public MaitenanceController()
-        {
-        }
 
-        public MaitenanceController(IMaintenanceService maintenanceService, IBlobStorageService blobStorageService) 
+
+        public MaitenanceController(IMaintenanceService maintenanceService, IBlobStorageService blobStorageService, ApplicationDbContext context) : base(context)
         {
             MaintenanceService = maintenanceService;
             BlobStorageService = blobStorageService;

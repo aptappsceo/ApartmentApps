@@ -140,7 +140,7 @@ namespace ResidentAppCross.iOS.Services
             });
         }
 
-        public Task<DateTime?> OpenDateDialog(string title)
+        public Task<DateTime?> OpenDateTimeDialog(string title)
         {
             return Task.Factory.StartNew(() =>
             {
@@ -197,6 +197,65 @@ namespace ResidentAppCross.iOS.Services
             });
 
         }
+    
+        public Task<DateTime?> OpenDateDialog(string title)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+
+                ManualResetEvent waitForCompleteEvent = new ManualResetEvent(false);
+
+                ModalPickerViewController modalPicker = null;
+
+                DateTime? result = null;
+                try
+                {
+
+                    Dispatcher.RequestMainThreadAction(() =>
+                    {
+                        modalPicker = new ModalPickerViewController(ModalPickerType.Date, "Select A Date",
+                            TopController)
+                        {
+                            HeaderBackgroundColor = AppTheme.SecondaryBackgoundColor,
+                            HeaderTextColor = UIColor.White,
+                            TransitioningDelegate = new ModalPickerTransitionDelegate(),
+                            ModalPresentationStyle = UIModalPresentationStyle.Custom
+                        };
+
+                        modalPicker.DatePicker.Mode = UIDatePickerMode.Date;
+
+                        modalPicker.OnSelectionConfirmed += (s, ea) =>
+                        {
+                            RootController.InvokeOnMainThread(() =>
+                            {
+                                result = modalPicker.DatePicker.Date?.ToDateTimeUtc();
+                                waitForCompleteEvent.Set();
+                            });
+                        };
+
+                        modalPicker.OnSelectionCancelled += (s, ea) =>
+                        {
+                            Dispatcher.RequestMainThreadAction(() =>
+                            {
+                                waitForCompleteEvent.Set();
+                            });
+                        };
+
+                        TopController.PresentModalViewController(modalPicker, true);
+                    });
+
+                    waitForCompleteEvent.WaitOne();
+                    modalPicker.Dispose();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    return result;
+                }
+            });
+
+        }
+    
     }
 }
 

@@ -45,6 +45,7 @@ namespace ResidentAppCross.iOS.Views
 
         public override string Title => "Maintenance";
 
+
         public HeaderSection HeaderSection
         {
             get

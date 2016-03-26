@@ -18,6 +18,7 @@ namespace ResidentAppCross.iOS
 
         public ViewBase ParentController { get; set; }
 
+        public bool ShouldStickSectionBelow { get; set; } = false;
 
 
         public NSLayoutConstraint HeightConstraint

@@ -63,7 +63,10 @@ namespace ResidentAppCross
 
         public ICommand RemindPasswordCommand => StubCommands.NoActionSpecifiedCommand(this);
 
-        public ICommand SignUpCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand SignUpCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<SignUpFormViewModel>();
+        });
 
         public ICommand OpenTestFormCommand
         {

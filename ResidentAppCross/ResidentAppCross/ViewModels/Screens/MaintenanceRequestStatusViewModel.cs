@@ -10,6 +10,7 @@ using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using Microsoft.WindowsAzure.MobileServices;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Extensions;
 using ResidentAppCross.Services;
@@ -36,6 +37,8 @@ namespace ResidentAppCross.ViewModels.Screens
         private ObservableCollection<PetStatus> _petStatuses;
         private string _unitAddressString;
         private IDialogService _dialogService;
+        private ObservableCollection<string> _checkins;
+
         public MaintenanceRequestStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService)
         {
             _appService = appService;
@@ -157,9 +160,10 @@ namespace ResidentAppCross.ViewModels.Screens
                 ForbidPause = CurrentRequestStatus != RequestStatus.Started;
                 ForbitSchedule = CurrentRequestStatus == RequestStatus.Complete || CurrentRequestStatus == RequestStatus.Started;
                 ForbidStart = CurrentRequestStatus == RequestStatus.Started || CurrentRequestStatus == RequestStatus.Complete;
-
+                Checkins.Clear();
+            Checkins.AddRange(Request.Checkins);
                 UnitAddressString = $"{Request?.BuildingName} {Request?.BuildingState} {Request?.BuildingCity} {Request?.BuildingPostalCode}";
-            
+            this.Publish(new MaintenanceRequestStatusUpdated(this));
 
         }).OnStart("Loading Request...").OnFail(ex=> { Close(this); });
 
@@ -335,7 +339,7 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 return new MvxCommand(async () =>
                 {
-                    var date = await _dialogService.OpenDateDialog("hello");
+                    var date = await _dialogService.OpenDateTimeDialog("hello");
                     if (!date.HasValue) return;
                     this.TaskCommand(async context =>
                     {
@@ -350,12 +354,31 @@ namespace ResidentAppCross.ViewModels.Screens
 
             }
         }
+
+        public ObservableCollection<string> Checkins
+        {
+            get { return _checkins ?? (_checkins = new ObservableCollection<string>()); }
+            set { _checkins = value; }
+        }
     }
 
     public class PetStatus
     {
         public string Title { get; set; }
         public int Id { get; set; }
+    }
+
+    public class MaintenanceRequestStatusUpdated : MvxMessage
+    {
+        public MaintenanceRequestStatusUpdated(object sender) : base(sender)
+        {
+        }
+    }
+
+    public enum RequestStatusDisplayMode
+    {
+        Status,
+        History
     }
 
     public enum RequestStatus
