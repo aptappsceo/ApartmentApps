@@ -15,10 +15,12 @@ namespace ResidentAppCross
 {
     public class HomeMenuViewModel : ViewModelBase
     {
+        private readonly ILoginManager _loginManager;
         public IApartmentAppsAPIService Data { get; set; }
 
         public HomeMenuViewModel(IApartmentAppsAPIService data, ILoginManager loginManager)
         {
+            _loginManager = loginManager;
             Data = data;
 
             if (loginManager.UserInfo.Roles.Contains("Maintenance"))
@@ -48,7 +50,16 @@ namespace ResidentAppCross
                     Icon = SharedResources.Icons.OfficerIcon,
                     Command = IncidentsIndexCommand
                 });
-               
+                MenuItems.Add(new HomeMenuItemViewModel()
+                {
+                    Name = "Checkins",
+                    Icon = SharedResources.Icons.OfficerIcon,
+                    Command = new MvxCommand(() =>
+                    {
+                        ShowViewModel<CourtesyOfficerCheckinsViewModel>();
+                    })
+                });
+
             }
             MenuItems.Add(new HomeMenuItemViewModel()
             {
@@ -117,7 +128,12 @@ namespace ResidentAppCross
 
         public ICommand OpenSettingsCommand => StubCommands.NoActionSpecifiedCommand(this);
 
-        public ICommand SignOutCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand SignOutCommand => new MvxCommand(() =>
+        {
+            _loginManager.Logout();
+            this.Close(this);
+            //this.ShowViewModel<LoginFormViewModel>();
+        });
 
         public ICommand RequestStatusCommand => new MvxCommand(() =>
         {

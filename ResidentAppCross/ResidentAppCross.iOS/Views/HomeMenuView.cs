@@ -32,8 +32,8 @@ namespace ResidentAppCross.iOS
 
 			MenuTable.Source = new HomeMenuTableSource() { Items = ViewModel.MenuItems.ToArray() };
 
-
-			// Perform any additional setup after loading the view, typically from a nib.
+		    this.SignOutButton.TouchUpInside += (sender, args) => ViewModel.SignOutCommand.Execute(null);
+		    // Perform any additional setup after loading the view, typically from a nib.
 		}
 
         public override void ViewWillAppear(bool animated)

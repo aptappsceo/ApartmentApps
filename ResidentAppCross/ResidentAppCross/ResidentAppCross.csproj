@@ -127,6 +127,7 @@
     <Compile Include="ViewModels\Data\BadgeType.cs" />
     <Compile Include="ViewModels\Data\ChangeViewModel.cs" />
     <Compile Include="ViewModels\GenericWebViewModel.cs" />
+    <Compile Include="ViewModels\Screens\CourtesyOfficerCheckinsViewModel.cs" />
     <Compile Include="ViewModels\Screens\NotificationDetailsFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\NotificationIndexFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\CheckinFormViewModel.cs" />

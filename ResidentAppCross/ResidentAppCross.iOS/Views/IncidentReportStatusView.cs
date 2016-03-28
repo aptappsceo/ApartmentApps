@@ -22,7 +22,6 @@ using ZXing.QrCode.Internal;
 
 namespace ResidentAppCross.iOS
 {
-
     [Register("IncidentReportStatusView")]
     [NavbarStyling]
     [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]

@@ -372,6 +372,7 @@
     <Compile Include="Services\IOSTouchPresentationService.cs" />
     <Compile Include="Services\QRService.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="Views\CourtesyOfficerCheckinsView.cs" />
     <Compile Include="Views\NotificationDetailsFormView.cs" />
     <Compile Include="Views\NotificationIndexFormView.cs" />
     <Compile Include="Views\AppTheme.cs" />
