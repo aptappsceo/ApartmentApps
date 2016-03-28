@@ -199,15 +199,18 @@ namespace ResidentAppCross.iOS
                             cell.DetailTextLabel.Text = item.Date?.ToString("g");
                             cell.TextLabel.MinimumScaleFactor = 0.2f;
 
-
-                            if (index == 0)
+                            if (ViewModel.Checkins.Count == 1)
+                                cell.ImageView.Image = timelineUndefinedStatusIcon;
+                            else if (index == 0)
                                 cell.ImageView.Image = timelineEndLine;
                             else if (index == ViewModel.Checkins.Count - 1)
                                 cell.ImageView.Image = timelineStartLine;
                             else
                                 cell.ImageView.Image = timelineMidLine;
 
+                            
 
+                            //cell.ImageView.Alpha = ViewModel.Checkins.Count == 1 ? 0f : 1f;
                             UIImageView anotherImageView = cell.ImageView.Subviews.OfType<UIImageView>().FirstOrDefault();
 
                             if (anotherImageView == null)
