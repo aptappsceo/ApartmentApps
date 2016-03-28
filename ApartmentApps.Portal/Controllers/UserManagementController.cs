@@ -100,13 +100,14 @@ namespace ApartmentApps.Portal.Controllers
             if (ModelState.IsValid)
             {
                 var user = db.Users.FirstOrDefault(p=>p.PropertyId == PropertyId && p.Id == model.Id );
+                var newUser = false;
                 if (user == null)
                 {
                     user = new ApplicationUser
                     {
                         
                     };
-                
+                    newUser = true;
                 }
                 else
                 {
@@ -127,7 +128,7 @@ namespace ApartmentApps.Portal.Controllers
                 {
                     user.Roles.Add(new IdentityUserRole() { RoleId = item, UserId = user.Id});
                 }
-                if (string.IsNullOrEmpty(user.Id))
+                if (newUser)
                 {
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)

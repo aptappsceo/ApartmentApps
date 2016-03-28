@@ -71,5 +71,6 @@ namespace ApartmentApps.Data
         public string Type { get; set; }
 
         public int RelatedId { get; set; }
+        public bool HasRead { get; set; }
     }
 }

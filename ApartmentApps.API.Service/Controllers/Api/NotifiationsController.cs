@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
+
 using ApartmentApps.Api;
 using ApartmentApps.Data;
 
@@ -59,5 +59,46 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
             return Request.CreateResponse(ret);
         }
+    }
+    [RoutePrefix("api/Alerts")]
+    public class AlertsController : ApartmentAppsApiController
+    {
+        public AlertsController(ApplicationDbContext context) : base(context)
+        {
+        }
+
+        [HttpPost]
+        public void Post(int alertId)
+        {
+            Context.UserAlerts.Find(alertId).HasRead = true;
+            Context.SaveChanges();
+        }
+
+        [HttpGet]
+        public IEnumerable<AlertBindingModel> Get()
+        {
+            return Context.UserAlerts.Where(p => p.UserId == CurrentUser.Id).Select(p =>
+                 new AlertBindingModel
+                 {
+                     CreatedOn = p.CreatedOn,
+                     Message = p.Message,
+                     Title = p.Title,
+                     Type = p.Type,
+                     RelatedId = p.RelatedId,
+                     HasRead = p.HasRead
+                 });
+        }
+
+
+    }
+
+    public class AlertBindingModel
+    {
+        public DateTime CreatedOn { get; set; }
+        public string Message { get; set; }
+        public string Title { get; set; }
+        public string Type { get; set; }
+        public int RelatedId { get; set; }
+        public bool HasRead { get; set; }
     }
 }

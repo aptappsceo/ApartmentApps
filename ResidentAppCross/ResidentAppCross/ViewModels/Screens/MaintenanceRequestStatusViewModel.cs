@@ -37,8 +37,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private ObservableCollection<PetStatus> _petStatuses;
         private string _unitAddressString;
         private IDialogService _dialogService;
-        private ObservableCollection<CheckinBindingModel> _checkins;
-        private CheckinBindingModel _selectedCheckin;
+        private ObservableCollection<MaintenanceCheckinBindingModel> _checkins;
 
         public MaintenanceRequestStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService)
         {
@@ -162,7 +161,7 @@ namespace ResidentAppCross.ViewModels.Screens
                 ForbitSchedule = CurrentRequestStatus == RequestStatus.Complete || CurrentRequestStatus == RequestStatus.Started;
                 ForbidStart = CurrentRequestStatus == RequestStatus.Started || CurrentRequestStatus == RequestStatus.Complete;
                 Checkins.Clear();
-                Checkins.AddRange(Request.Checkins.OrderByDescending(_=>_.Date));
+            Checkins.AddRange(Request.Checkins);
                 UnitAddressString = $"{Request?.BuildingName} {Request?.BuildingState} {Request?.BuildingCity} {Request?.BuildingPostalCode}";
             this.Publish(new MaintenanceRequestStatusUpdated(this));
 
@@ -356,23 +355,11 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        public ObservableCollection<CheckinBindingModel> Checkins
+        public ObservableCollection<MaintenanceCheckinBindingModel> Checkins
         {
-            get { return _checkins ?? (_checkins = new ObservableCollection<CheckinBindingModel>()); }
+            get { return _checkins ?? (_checkins = new ObservableCollection<MaintenanceCheckinBindingModel>()); }
             set { _checkins = value; }
         }
-
-        public CheckinBindingModel SelectedCheckin
-        {
-            get { return _selectedCheckin; }
-            set { SetProperty(ref _selectedCheckin, value); }
-        }
-
-        public ICommand ShowCheckinDetailsCommand => new MvxCommand(() =>
-        {
-            if (SelectedCheckin != null) 
-            ShowViewModel<CheckinDetailsViewModel>(vm => vm.Checkin = SelectedCheckin);
-        });
     }
 
     public class PetStatus

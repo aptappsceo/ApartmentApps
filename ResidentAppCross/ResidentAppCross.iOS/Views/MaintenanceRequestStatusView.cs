@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using ApartmentApps.Client.Models;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
@@ -9,7 +8,6 @@ using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 using Cirrious.FluentLayouts.Touch;
-using CoreGraphics;
 
 namespace ResidentAppCross.iOS
 {
@@ -184,59 +182,22 @@ namespace ResidentAppCross.iOS
                 if (_tableSection == null)
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
-                    var timelineUndefinedStatusIcon = UIImage.FromBundle("TimelineStatusIcon.png");
-                    var timelineMidLine = UIImage.FromFile("TimelineMid.png");
-                    var timelineStartLine = UIImage.FromFile("TimelineStart.png");
-                    var timelineEndLine = UIImage.FromFile("TimelineEnd.png");
 
-                    var tableDataBinding = new TableDataBinding<UITableViewCell, CheckinBindingModel>() //Define cell type and data type as type args
+                    var tableDataBinding = new TableDataBinding<UITableViewCell, MaintenanceCheckinBindingModel>() //Define cell type and data type as type args
                     {
-                        Bind = (cell, item, index) => //What to do when cell is created for item
+                        Bind = (cell, item) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = "Changed To "+item.StatusId;
-                            cell.DetailTextLabel.Text = item.Date?.ToString("g");
+                            cell.TextLabel.Text = item.Comments;
+                            cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
                             cell.TextLabel.MinimumScaleFactor = 0.2f;
-
-
-                            if (index == 0)
-                                cell.ImageView.Image = timelineEndLine;
-                            else if (index == ViewModel.Checkins.Count - 1)
-                                cell.ImageView.Image = timelineStartLine;
-                            else
-                                cell.ImageView.Image = timelineMidLine;
-
-
-                            UIImageView anotherImageView = cell.ImageView.Subviews.OfType<UIImageView>().FirstOrDefault();
-
-                            if (anotherImageView == null)
-                            {
-                                anotherImageView = new UIImageView(cell.ImageView.Frame)
-                                {
-                                    AutoresizingMask = UIViewAutoresizing.FlexibleMargins,
-                                    // AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
-                                    ContentMode = UIViewContentMode.ScaleAspectFill
-                                };
-
-                                cell.ImageView.Add(anotherImageView);
-                            }
-
-                            if (index == 0)
-                                anotherImageView.Frame = anotherImageView.Frame.WithSize(30f, 30f);
-                            else
-                                anotherImageView.Frame = anotherImageView.Frame.WithSize(24f, 24f);
-
-                            anotherImageView.Image = timelineUndefinedStatusIcon;
-
 
                         },
                         ItemSelected = item =>
                         {
-                            ViewModel.SelectedCheckin = item;
-                            ViewModel.ShowCheckinDetailsCommand.Execute(null);
-                        }, 
+
+                        }, //When accessory button clicked
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_MaintenanceStatusCheckinsTable"), //Define how to create cell, if reusables not found
-                        CellIdentifier = "UITableViewCell_MaintenanceStatusCheckinsTable"
+                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell"), //Define how to create cell, if reusables not found
                     };
 
                     var source = new GenericTableSource()
@@ -246,7 +207,7 @@ namespace ResidentAppCross.iOS
                         ItemsEditableByDefault = true, //Set all items editable
                         ItemsFocusableByDefault = true
                     };
-                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+
                     _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
                     _tableSection.Source = source;
                     _tableSection.ReloadData();
@@ -376,10 +337,8 @@ namespace ResidentAppCross.iOS
         public override void GetContent(List<UIView> content)
         {
             base.GetContent(content);
-            this.ScrollRectToVisible(new CGRect(0, 0, 0, 0));
             if (DisplayModel == RequestStatusDisplayMode.Status)
             {
-                SectionContainerGesturesEnabled = true;
                 content.Add(HeaderSection);
                 content.Add(ScheduleSection);
                 content.Add(TenantDataSection);
@@ -391,7 +350,6 @@ namespace ResidentAppCross.iOS
             }
             else
             {
-                SectionContainerGesturesEnabled = false;
                 content.Add(CheckinsSection);
             }
         }

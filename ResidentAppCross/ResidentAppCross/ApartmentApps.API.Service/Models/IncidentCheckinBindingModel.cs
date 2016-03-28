@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class CheckinBindingModel
+    public partial class IncidentCheckinBindingModel
     {
         private string _comments;
         
@@ -32,6 +32,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._date; }
             set { this._date = value; }
+        }
+        
+        private string _officerName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string OfficerName
+        {
+            get { return this._officerName; }
+            set { this._officerName = value; }
         }
         
         private IList<ImageReference> _photos;
@@ -56,21 +67,10 @@ namespace ApartmentApps.Client.Models
             set { this._statusId = value; }
         }
         
-        private string _workerName;
-        
         /// <summary>
-        /// Optional.
+        /// Initializes a new instance of the IncidentCheckinBindingModel class.
         /// </summary>
-        public string WorkerName
-        {
-            get { return this._workerName; }
-            set { this._workerName = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the CheckinBindingModel class.
-        /// </summary>
-        public CheckinBindingModel()
+        public IncidentCheckinBindingModel()
         {
             this.Photos = new LazyList<ImageReference>();
         }
@@ -92,6 +92,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Date = ((DateTimeOffset)dateValue);
                 }
+                JToken officerNameValue = inputObject["OfficerName"];
+                if (officerNameValue != null && officerNameValue.Type != JTokenType.Null)
+                {
+                    this.OfficerName = ((string)officerNameValue);
+                }
                 JToken photosSequence = ((JToken)inputObject["Photos"]);
                 if (photosSequence != null && photosSequence.Type != JTokenType.Null)
                 {
@@ -106,11 +111,6 @@ namespace ApartmentApps.Client.Models
                 if (statusIdValue != null && statusIdValue.Type != JTokenType.Null)
                 {
                     this.StatusId = ((string)statusIdValue);
-                }
-                JToken workerNameValue = inputObject["WorkerName"];
-                if (workerNameValue != null && workerNameValue.Type != JTokenType.Null)
-                {
-                    this.WorkerName = ((string)workerNameValue);
                 }
             }
         }

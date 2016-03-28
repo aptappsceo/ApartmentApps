@@ -14,7 +14,6 @@ using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
- 
     public class IncidentReportStatusViewModel : ViewModelBase
     {
    
