@@ -14,9 +14,9 @@ namespace ResidentAppCross.iOS
 
 	    public TableSection()
 	    {
-	    }
+        }
 
-	    public TableSection (IntPtr handle) : base (handle)
+        public TableSection (IntPtr handle) : base (handle)
 		{
         }
 
@@ -27,6 +27,8 @@ namespace ResidentAppCross.iOS
             get { return TableView.Source; }
             set { TableView.Source = value; }
         }
+
+	    public override UIEdgeInsets LayoutMargins => UIEdgeInsets.Zero;
 
 	    public UIActivityIndicatorView Indicator
 	    {

@@ -39,7 +39,7 @@ namespace ResidentAppCross.iOS
             LoginTextField.SetLeftIcon("HouseIcon");
             PasswordTextField.SetLeftIcon("OfficerIcon");
             View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png").ImageToFitSize(View.Frame.Size));
-            this.NavigationController.SetNavigationBarHidden(true, false);
+            this.NavigationController.SetNavigationBarHidden(true, true);
 
 
         }

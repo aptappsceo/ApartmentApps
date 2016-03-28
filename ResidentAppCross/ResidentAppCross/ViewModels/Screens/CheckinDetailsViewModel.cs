@@ -11,10 +11,10 @@ namespace ResidentAppCross.ViewModels.Screens
     public class CheckinDetailsViewModel : ViewModelBase
     {
 
-        private CheckinBindingModel _checkin;
+        private MaintenanceCheckinBindingModel _checkin;
         private ImageBundleViewModel _checkinPhotos;
 
-        public CheckinBindingModel Checkin
+        public MaintenanceCheckinBindingModel Checkin
         {
             get { return _checkin; }
             set { SetProperty(ref _checkin, value); }

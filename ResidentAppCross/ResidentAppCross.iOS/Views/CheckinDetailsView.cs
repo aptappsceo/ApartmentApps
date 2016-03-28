@@ -29,6 +29,7 @@ namespace ResidentAppCross.iOS.Views
                     _headerSection = Formals.Create<HeaderSection>();
                     _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
                     _headerSection.MainLabel.Text = "Checkin";
+                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
                     _headerSection.SubLabel.Text = $"State -> {ViewModel.Checkin.StatusId}";
                 }
                 return _headerSection;
@@ -59,6 +60,7 @@ namespace ResidentAppCross.iOS.Views
                     _commentsSection = Formals.Create<TextViewSection>();
                     _commentsSection.HeaderLabel.Text = "Details";
                     _commentsSection.SetEditable(false);
+                    _commentsSection.HeightConstraint.Constant = AppTheme.CommentsSectionHeight;
                 }
                 return _commentsSection;
             }
@@ -69,7 +71,7 @@ namespace ResidentAppCross.iOS.Views
         {
             base.BindForm();
             var set = this.CreateBindingSet<CheckinDetailsView, CheckinDetailsViewModel>();
-            set.Bind(CommentsSection.TextView).For(t=>t.Text).To(w => w.Checkin.Comments);
+            set.Bind(CommentsSection.TextView).To(w => w.Checkin.Comments);
             set.Apply();
             PhotosSection.BindViewModel(ViewModel.CheckinPhotos);
 

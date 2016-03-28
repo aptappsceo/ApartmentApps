@@ -372,6 +372,7 @@
     <Compile Include="Services\IOSTouchPresentationService.cs" />
     <Compile Include="Services\QRService.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="Views\CheckinDetailsView.cs" />
     <Compile Include="Views\CourtesyOfficerCheckinsView.cs" />
     <Compile Include="Views\NotificationDetailsFormView.cs" />
     <Compile Include="Views\NotificationIndexFormView.cs" />
@@ -583,7 +584,20 @@
       <Name>ResidentAppCross</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\TimelineEnd.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\TimelineIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TimelineMid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TimelineStart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TimelineStatusIcon.png" />
+  </ItemGroup>
 </Project>

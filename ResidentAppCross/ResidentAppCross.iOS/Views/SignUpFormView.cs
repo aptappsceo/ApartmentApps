@@ -1,6 +1,7 @@
 ﻿using System;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
+using MvvmCross.Plugins.PictureChooser.iOS;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.ViewModels.Screens;
@@ -21,6 +22,8 @@ namespace ResidentAppCross.iOS
         {
         
         }
+
+        public override string Title => "Create New Account";
 
         public override void ViewWillAppear(bool animated)
 	    {
@@ -49,7 +52,14 @@ namespace ResidentAppCross.iOS
 
 	    }
 
-	    public override void ViewDidLoad ()
+        public override void ViewDidLayoutSubviews()
+        {
+            base.ViewDidLayoutSubviews();
+            View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png").ImageToFitSize(View.Frame.Size));
+
+        }
+
+        public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			// Perform any additional setup after loading the view, typically from a nib.
