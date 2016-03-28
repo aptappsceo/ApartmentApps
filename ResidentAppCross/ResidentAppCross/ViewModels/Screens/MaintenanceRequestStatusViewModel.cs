@@ -37,7 +37,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private ObservableCollection<PetStatus> _petStatuses;
         private string _unitAddressString;
         private IDialogService _dialogService;
-        private ObservableCollection<string> _checkins;
+        private ObservableCollection<MaintenanceCheckinBindingModel> _checkins;
 
         public MaintenanceRequestStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService)
         {
@@ -355,9 +355,9 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        public ObservableCollection<string> Checkins
+        public ObservableCollection<MaintenanceCheckinBindingModel> Checkins
         {
-            get { return _checkins ?? (_checkins = new ObservableCollection<string>()); }
+            get { return _checkins ?? (_checkins = new ObservableCollection<MaintenanceCheckinBindingModel>()); }
             set { _checkins = value; }
         }
     }

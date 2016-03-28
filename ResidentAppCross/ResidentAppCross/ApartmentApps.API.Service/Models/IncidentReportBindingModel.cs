@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ApartmentApps.Client.Models;
 using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
@@ -20,6 +21,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._buildingName; }
             set { this._buildingName = value; }
+        }
+        
+        private IList<IncidentCheckinBindingModel> _checkins;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<IncidentCheckinBindingModel> Checkins
+        {
+            get { return this._checkins; }
+            set { this._checkins = value; }
         }
         
         private string _comments;
@@ -115,6 +127,7 @@ namespace ApartmentApps.Client.Models
         /// </summary>
         public IncidentReportBindingModel()
         {
+            this.Checkins = new LazyList<IncidentCheckinBindingModel>();
             this.Photos = new LazyList<string>();
         }
         
@@ -129,6 +142,16 @@ namespace ApartmentApps.Client.Models
                 if (buildingNameValue != null && buildingNameValue.Type != JTokenType.Null)
                 {
                     this.BuildingName = ((string)buildingNameValue);
+                }
+                JToken checkinsSequence = ((JToken)inputObject["Checkins"]);
+                if (checkinsSequence != null && checkinsSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken checkinsValue in ((JArray)checkinsSequence))
+                    {
+                        IncidentCheckinBindingModel incidentCheckinBindingModel = new IncidentCheckinBindingModel();
+                        incidentCheckinBindingModel.DeserializeJson(checkinsValue);
+                        this.Checkins.Add(incidentCheckinBindingModel);
+                    }
                 }
                 JToken commentsValue = inputObject["Comments"];
                 if (commentsValue != null && commentsValue.Type != JTokenType.Null)

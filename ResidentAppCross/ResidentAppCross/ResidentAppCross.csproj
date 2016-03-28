@@ -35,6 +35,8 @@
   <ItemGroup>
     <Compile Include="ApartmentApps.API.Service\Account.cs" />
     <Compile Include="ApartmentApps.API.Service\AccountExtensions.cs" />
+    <Compile Include="ApartmentApps.API.Service\Alerts.cs" />
+    <Compile Include="ApartmentApps.API.Service\AlertsExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\ApartmentAppsAPIService.cs" />
     <Compile Include="ApartmentApps.API.Service\ApartmentAppsAPIServiceExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Configure.cs" />
@@ -42,6 +44,7 @@
     <Compile Include="ApartmentApps.API.Service\Courtesy.cs" />
     <Compile Include="ApartmentApps.API.Service\CourtesyExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\IAccount.cs" />
+    <Compile Include="ApartmentApps.API.Service\IAlerts.cs" />
     <Compile Include="ApartmentApps.API.Service\IApartmentAppsAPIService.cs" />
     <Compile Include="ApartmentApps.API.Service\IConfigure.cs" />
     <Compile Include="ApartmentApps.API.Service\ICourtesy.cs" />
@@ -52,10 +55,11 @@
     <Compile Include="ApartmentApps.API.Service\Maitenance.cs" />
     <Compile Include="ApartmentApps.API.Service\MaitenanceExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AddExternalLoginBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\AlertBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\AlertBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ApplicationUser.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Building.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ChangePasswordBindingModel.cs" />
-    <Compile Include="ApartmentApps.API.Service\Models\CheckinBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Corporation.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\DeviceRegistration.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModel.cs" />
@@ -64,6 +68,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserLogin.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserRole.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ImageReference.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\IncidentCheckinBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentIndexBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentIndexBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentReportBindingModel.cs" />
@@ -73,6 +78,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\LookupPairModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LookupPairModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaintenanceBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\MaintenanceCheckinBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaintenanceIndexBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaintenanceIndexBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaintenanceRequestCheckin.cs" />

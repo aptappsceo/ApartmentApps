@@ -67,12 +67,12 @@ namespace ApartmentApps.Client.Models
             set { this._buildingState = value; }
         }
         
-        private IList<CheckinBindingModel> _checkins;
+        private IList<MaintenanceCheckinBindingModel> _checkins;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public IList<CheckinBindingModel> Checkins
+        public IList<MaintenanceCheckinBindingModel> Checkins
         {
             get { return this._checkins; }
             set { this._checkins = value; }
@@ -193,7 +193,7 @@ namespace ApartmentApps.Client.Models
         /// </summary>
         public MaintenanceBindingModel()
         {
-            this.Checkins = new LazyList<CheckinBindingModel>();
+            this.Checkins = new LazyList<MaintenanceCheckinBindingModel>();
             this.Photos = new LazyList<string>();
         }
         
@@ -234,9 +234,9 @@ namespace ApartmentApps.Client.Models
                 {
                     foreach (JToken checkinsValue in ((JArray)checkinsSequence))
                     {
-                        CheckinBindingModel checkinBindingModel = new CheckinBindingModel();
-                        checkinBindingModel.DeserializeJson(checkinsValue);
-                        this.Checkins.Add(checkinBindingModel);
+                        MaintenanceCheckinBindingModel maintenanceCheckinBindingModel = new MaintenanceCheckinBindingModel();
+                        maintenanceCheckinBindingModel.DeserializeJson(checkinsValue);
+                        this.Checkins.Add(maintenanceCheckinBindingModel);
                     }
                 }
                 JToken messageValue = inputObject["Message"];

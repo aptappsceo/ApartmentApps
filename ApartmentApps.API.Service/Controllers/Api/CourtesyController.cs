@@ -26,7 +26,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public string Status { get; set; }
 
         public IncidentCheckinBindingModel[] Checkins { get; set; }
-
+        public string RequesterPhoneNumber { get; set; }
     }
     public class IncidentCheckinBindingModel
     {
@@ -35,6 +35,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public string Comments { get; set; }
         public string OfficerName { get; set; }
         public List<ImageReference> Photos { get; set; }
+        public string OfficerPhoneNumber { get; set; }
     }
     [System.Web.Http.RoutePrefix("api/Courtesy")]
     [System.Web.Http.Authorize]
@@ -91,6 +92,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                     Comments = result.Comments,
                     Requester = result.User.FirstName + " " + result.User.LastName,
                     RequesterId = result.UserId,
+                    RequesterPhoneNumber = result.User.PhoneNumber,
                     BuildingName = result.User.Tenant?.Unit?.Building?.Name,
                     UnitName = result.User.Tenant?.Unit?.Name,
                     Status = result.StatusId,
@@ -102,6 +104,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
                         Date = x.CreatedOn,
                         Comments = x.Comments,
                         OfficerName = x.Officer.UserName,
+                        OfficerPhoneNumber = x.Officer.PhoneNumber,
+                        
                         Photos = Context.ImageReferences.Where(r => r.GroupId == x.GroupId).ToList()
                     }).ToArray(),
                     Photos = photos.Select(key => BlobStorageService.GetPhotoUrl(key.Url))

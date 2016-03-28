@@ -183,11 +183,11 @@ namespace ResidentAppCross.iOS
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
 
-                    var tableDataBinding = new TableDataBinding<UITableViewCell, string>() //Define cell type and data type as type args
+                    var tableDataBinding = new TableDataBinding<UITableViewCell, MaintenanceCheckinBindingModel>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = item;
+                            cell.TextLabel.Text = item.Comments;
                             cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
                             cell.TextLabel.MinimumScaleFactor = 0.2f;
 

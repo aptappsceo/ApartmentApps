@@ -266,7 +266,6 @@
     <Compile Include="Controllers\Api\ApartmentAppsApiController.cs" />
     <Compile Include="Controllers\Api\ConfigureController.cs" />
     <Compile Include="Controllers\Api\CourtesyController.cs" />
-    <Compile Include="Controllers\Api\HomeController.cs" />
     <Compile Include="Controllers\Api\MaitenanceController.cs" />
     <Compile Include="Controllers\Api\NotifiationsController.cs" />
     <Compile Include="Controllers\Api\RegisterController.cs" />

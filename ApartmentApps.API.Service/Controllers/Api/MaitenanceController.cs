@@ -138,6 +138,7 @@ namespace ApartmentApps.API.Service.Controllers
             var images = request.Images?.Select(Convert.FromBase64String).ToList();
             MaintenanceService.SubmitRequest(CurrentUser, request.Comments, request.MaitenanceRequestTypeId,request.PetStatus,request.PermissionToEnter, images);
         }
+
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("CompleteRequest")]
         public void CompleteRequest(int id, string comments, List<string> images)
@@ -180,8 +181,6 @@ namespace ApartmentApps.API.Service.Controllers
         {
             return null;
         }
-
-
 
         public MaitenanceController(IMaintenanceService maintenanceService, IBlobStorageService blobStorageService, ApplicationDbContext context) : base(context)
         {

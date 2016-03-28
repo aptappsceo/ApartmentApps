@@ -3,12 +3,11 @@
 
 using System;
 using System.Linq;
-using ApartmentApps.Client.Models;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class UserAlert
+    public partial class AlertBindingModel
     {
         private DateTimeOffset? _createdOn;
         
@@ -30,17 +29,6 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._hasRead; }
             set { this._hasRead = value; }
-        }
-        
-        private int? _id;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public int? Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
         }
         
         private string _message;
@@ -87,32 +75,10 @@ namespace ApartmentApps.Client.Models
             set { this._type = value; }
         }
         
-        private ApplicationUser _user;
-        
         /// <summary>
-        /// Optional.
+        /// Initializes a new instance of the AlertBindingModel class.
         /// </summary>
-        public ApplicationUser User
-        {
-            get { return this._user; }
-            set { this._user = value; }
-        }
-        
-        private string _userId;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string UserId
-        {
-            get { return this._userId; }
-            set { this._userId = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the UserAlert class.
-        /// </summary>
-        public UserAlert()
+        public AlertBindingModel()
         {
         }
         
@@ -133,11 +99,6 @@ namespace ApartmentApps.Client.Models
                 {
                     this.HasRead = ((bool)hasReadValue);
                 }
-                JToken idValue = inputObject["Id"];
-                if (idValue != null && idValue.Type != JTokenType.Null)
-                {
-                    this.Id = ((int)idValue);
-                }
                 JToken messageValue = inputObject["Message"];
                 if (messageValue != null && messageValue.Type != JTokenType.Null)
                 {
@@ -157,18 +118,6 @@ namespace ApartmentApps.Client.Models
                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                 {
                     this.Type = ((string)typeValue);
-                }
-                JToken userValue = inputObject["User"];
-                if (userValue != null && userValue.Type != JTokenType.Null)
-                {
-                    ApplicationUser applicationUser = new ApplicationUser();
-                    applicationUser.DeserializeJson(userValue);
-                    this.User = applicationUser;
-                }
-                JToken userIdValue = inputObject["UserId"];
-                if (userIdValue != null && userIdValue.Type != JTokenType.Null)
-                {
-                    this.UserId = ((string)userIdValue);
                 }
             }
         }

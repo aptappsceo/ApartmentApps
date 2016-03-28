@@ -62,7 +62,7 @@ namespace ResidentAppCross.iOS
             b.Bind(_signUpButton).To(vm => vm.SignUpCommand);
             b.Apply();
 
-
+            
             ForgotPasswordButton.SetTitle("Selected Endpoint: Azure",UIControlState.Selected | UIControlState.Normal | UIControlState.Focused);
 
             ForgotPasswordButton.TouchUpInside += (sender, args) =>
@@ -90,8 +90,35 @@ namespace ResidentAppCross.iOS
                     {
                         ViewModel.OpenTestFormCommand.Execute(null);
                     }));
-
-
+                controller.AddAction(UIAlertAction.Create("Login as Resident", UIAlertActionStyle.Default,
+                    x =>
+                    {
+                        ViewModel.Username = "residenta@apartmentapps.com";
+                        ViewModel.Password = "Asdf1234!";
+                        ViewModel.LoginCommand.Execute(null);
+                    }));
+                controller.AddAction(UIAlertAction.Create("Login as Tech", UIAlertActionStyle.Default,
+                    x =>
+                    {
+                        ViewModel.Username = "mtech@apartmentapps.com";
+                        ViewModel.Password = "Asdf1234!";
+                        ViewModel.LoginCommand.Execute(null);
+                    }));
+                controller.AddAction(UIAlertAction.Create("Login as Officer", UIAlertActionStyle.Default,
+                    x =>
+                    {
+                        ViewModel.Username = "cofficer@apartmentapps.com";
+                        ViewModel.Password = "Asdf1234!";
+                        ViewModel.LoginCommand.Execute(null);
+                    }));
+                controller.AddAction(UIAlertAction.Create("Login as Property Admin", UIAlertActionStyle.Default,
+                   x =>
+                   {
+                       ViewModel.Username = "propertyadmin@apartmentapps.com";
+                       ViewModel.Password = "Asdf1234!";
+                       ViewModel.LoginCommand.Execute(null);
+                   }));
+              
                 this.PresentViewController(controller, true, () => { });
             };
 

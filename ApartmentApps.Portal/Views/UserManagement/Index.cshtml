@@ -29,16 +29,17 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    @Html.Grid(Model).Columns(columns =>
-               {
-                   columns.Add(foo => foo.FirstName).Titled("First Name").SetWidth(110);
-                   //columns.Add(foo => foo.Unit.Building.Name).Titled("Building Name").SetWidth(110);
-                   columns.Add(foo => foo.LastName).Titled("Last Name").Sortable(true).Filterable(true);
-                   columns.Add(foo => foo.Email).Sortable(true).Filterable(true);
-                   columns.Add().Titled("Roles").RenderValueAs(item => @Html.Raw(string.Join(",", item.Roles.Select(p => p.RoleId))));
-                   columns.Add().Encoded(false).Sanitized(false).RenderValueAs(item => @Html.ActionLink("Edit", "EditUser", new { id = item.Id }, new { @class = "" }));
+                   @Html.Grid(Model).Columns(columns =>
+                   {
 
-               }).WithPaging(10)
+                       columns.Add(foo => foo.FirstName).Titled("First Name").SetWidth(110);
+                       //columns.Add(foo => foo.Unit.Building.Name).Titled("Building Name").SetWidth(110);
+                       columns.Add(foo => foo.LastName).Titled("Last Name").Sortable(true).Filterable(true);
+                       columns.Add(foo => foo.Email).Sortable(true).Filterable(true);
+                       columns.Add().Titled("Roles").RenderValueAs(item => @Html.Raw(string.Join(",", item.Roles.Select(p => p.RoleId))));
+                       columns.Add().Encoded(false).Sanitized(false).RenderValueAs(item => @Html.ActionLink("Edit", "EditUser", new { id = item.Id }, new { @class = "" }));
+
+                   }).WithPaging(10)
 
                 </div>
             </div>

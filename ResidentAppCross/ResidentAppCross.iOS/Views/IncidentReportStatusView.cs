@@ -174,7 +174,7 @@ namespace ResidentAppCross.iOS
 
 
             //Schedule Section
-            //b.Bind(ScheduleSection.Button).For("Title").To(vm => vm.SelectScheduleDateActionLabel);
+            b.Bind(ScheduleSection.Button).For("Title").To(vm => vm.Request.CreatedOn);
 
             //Footer Section
 
@@ -215,7 +215,7 @@ namespace ResidentAppCross.iOS
             //Tenant section
             //b.Bind(TenantDataSection.TenantNameLabel).For(t => t.Text).To(vm => vm.Request.TenantFullName);
             b.Bind(TenantDataSection.AddressLabel).For(t => t.Text).To(vm => vm.UnitAddressString);
-            //b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.TenantPhoneNumber);
+            //b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.);
 
             //Date section
             //b.Bind(ScheduleSection.Button).To(vm => vm.ScheduleCommand);

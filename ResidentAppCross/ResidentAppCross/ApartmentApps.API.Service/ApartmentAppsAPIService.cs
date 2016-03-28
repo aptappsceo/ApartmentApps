@@ -40,6 +40,13 @@ namespace ApartmentApps.Client
             get { return this._account; }
         }
         
+        private IAlerts _alerts;
+        
+        public virtual IAlerts Alerts
+        {
+            get { return this._alerts; }
+        }
+        
         private IConfigure _configure;
         
         public virtual IConfigure Configure
@@ -89,6 +96,7 @@ namespace ApartmentApps.Client
             : base()
         {
             this._account = new Account(this);
+            this._alerts = new Alerts(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
             this._maitenance = new Maitenance(this);
@@ -109,6 +117,7 @@ namespace ApartmentApps.Client
             : base(handlers)
         {
             this._account = new Account(this);
+            this._alerts = new Alerts(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
             this._maitenance = new Maitenance(this);
@@ -132,6 +141,7 @@ namespace ApartmentApps.Client
             : base(rootHandler, handlers)
         {
             this._account = new Account(this);
+            this._alerts = new Alerts(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
             this._maitenance = new Maitenance(this);

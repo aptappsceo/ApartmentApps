@@ -31,6 +31,11 @@ namespace ApartmentApps.Client
             get; 
         }
         
+        IAlerts Alerts
+        {
+            get; 
+        }
+        
         IConfigure Configure
         {
             get; 

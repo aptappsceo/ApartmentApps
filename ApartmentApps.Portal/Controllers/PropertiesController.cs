@@ -42,7 +42,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public async Task<ActionResult> ImportEntrata(int id)
         {
-            var result = await EntrataIntegration.ImportData(UserManager, db.Properties.Find(id));
+            var result = await ServiceExtensions.GetServices().OfType<EntrataIntegration>().First().ImportData(UserManager, db.Properties.Find(id));
             return RedirectToAction("Index");
         }
         // GET: /Properties/Details/5
