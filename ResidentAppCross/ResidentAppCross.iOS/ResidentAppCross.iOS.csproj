@@ -157,6 +157,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ImageAsset Include="Resources/Icons.xcassets/HouseIcon.imageset/HouseIcon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Icons.xcassets/MaintenaceIcon.imageset/MaintenaceIcon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Icons.xcassets/OfficerIcon.imageset/OfficerIcon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Icons.xcassets/PartnersIcon.imageset/PartnersIcon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Icons.xcassets/PayIcon.imageset/PayIcon.png">
+      <InProject>false</InProject>
+    </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json">
       <InProject>false</InProject>
     </ImageAsset>
@@ -372,6 +387,7 @@
     <Compile Include="Services\IOSTouchPresentationService.cs" />
     <Compile Include="Services\QRService.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="Views\CheckinDetailsView.cs" />
     <Compile Include="Views\NotificationDetailsFormView.cs" />
     <Compile Include="Views\NotificationIndexFormView.cs" />
     <Compile Include="Views\AppTheme.cs" />
@@ -582,7 +598,23 @@
       <Name>ResidentAppCross</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Image1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TimelineIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TimelineEnd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TimelineMid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TimelineStart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TimelineStatusIcon.png" />
+  </ItemGroup>
 </Project>

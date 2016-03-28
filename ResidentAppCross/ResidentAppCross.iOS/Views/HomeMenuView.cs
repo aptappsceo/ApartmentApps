@@ -2,6 +2,7 @@
 using System.Linq;
 using CoreGraphics;
 using MvvmCross.iOS.Views;
+using MvvmCross.Plugins.PictureChooser.iOS;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using UIKit;
@@ -31,7 +32,7 @@ namespace ResidentAppCross.iOS
 			//Hide navbars
 
 			MenuTable.Source = new HomeMenuTableSource() { Items = ViewModel.MenuItems.ToArray() };
-
+            MenuTable.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
@@ -40,19 +41,26 @@ namespace ResidentAppCross.iOS
         {
             base.ViewWillAppear(animated);
 
+            SettingsButton.SetLeftIcon("MaintenaceIcon");
+            SettingsButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+            SignOutButton.SetRightIcon("MaintenaceIcon");
+            SignOutButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+        }
+
+        public override void ViewWillLayoutSubviews()
+        {
+            base.ViewWillLayoutSubviews();
             UsernameAvatarImage.Layer.MasksToBounds = true;
-            UsernameAvatarImage.Layer.CornerRadius = UsernameAvatarImage.Frame.Width/2;
+            UsernameAvatarImage.Layer.CornerRadius = UsernameAvatarImage.Frame.Width / 2;
             UsernameAvatarImage.Layer.BorderWidth = 4f;
-            UsernameAvatarImage.Layer.BorderColor = new CGColor(1f,1f,1f);
+            UsernameAvatarImage.Layer.BorderColor = new CGColor(1f, 1f, 1f);
         }
 
         public override void ViewDidAppear(bool animated)
 	    {
 	        base.ViewDidAppear(animated);
-            UsernameAvatarImage.Layer.MasksToBounds = true;
-            UsernameAvatarImage.Layer.CornerRadius = UsernameAvatarImage.Frame.Width / 2;
-            UsernameAvatarImage.Layer.BorderWidth = 4f;
-            UsernameAvatarImage.Layer.BorderColor = new CGColor(1f, 1f, 1f);
+
+   
         }
 
         public override void DidReceiveMemoryWarning ()

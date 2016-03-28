@@ -21,6 +21,8 @@ namespace ResidentAppCross.iOS.Views
         private NSObject keyboardShowObserver;
         private NSObject keyboardHideObserver;
         private bool _heyboardShown;
+        private List<UIGestureRecognizer> _sectionsContainerGestureRecognizers;
+        private bool _sectionContainerGesturesEnabled = true;
 
         public BaseForm(string nibName, NSBundle bundle) : base(nibName, bundle)
         {
@@ -34,6 +36,41 @@ namespace ResidentAppCross.iOS.Views
         public virtual UIView FooterView { get; set; }
 
         public virtual float VerticalSectionsSpacing { get; set; } = 15f;
+
+
+        public List<UIGestureRecognizer> SectionsContainerGestureRecognizers
+        {
+            get { return _sectionsContainerGestureRecognizers ?? (_sectionsContainerGestureRecognizers = new List<UIGestureRecognizer>(SectionsContainer.GestureRecognizers)); }
+            set { _sectionsContainerGestureRecognizers = value; }
+        }
+
+
+        public bool SectionContainerGesturesEnabled
+        {
+            get { return _sectionContainerGesturesEnabled; }
+            set
+            {
+                _sectionContainerGesturesEnabled = value;
+                if (value)
+                {
+                    foreach (
+                        var recognizer in
+                            SectionsContainerGestureRecognizers.Except(SectionsContainer.GestureRecognizers))
+                    {
+                        SectionsContainer.AddGestureRecognizer(recognizer);
+                    }
+                }
+                else
+                {
+                    foreach (var uiGestureRecognizer in SectionsContainer.GestureRecognizers)
+                    {
+                        SectionsContainer.RemoveGestureRecognizer(uiGestureRecognizer);
+                    }
+                }
+
+            }
+        }
+
 
         public UIScrollView SectionsContainer
         {
@@ -364,6 +401,8 @@ namespace ResidentAppCross.iOS.Views
         }
 
         public CGSize ScrollableViewContentSize => SectionsContainer.ContentSize;
+
+
 
         public void ScrollRectToVisible(CGRect rect)
         {

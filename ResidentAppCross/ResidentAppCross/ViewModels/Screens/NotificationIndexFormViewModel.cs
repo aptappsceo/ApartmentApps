@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Plugins.Messenger;
@@ -22,6 +23,12 @@ namespace ResidentAppCross.ViewModels.Screens
         private ObservableCollection<NotificationBindingModelMock> _filteredNotifications;
         private NotificationBindingModelMock _selectedNotification;
         private ObservableCollection<NotificationBindingModelMock> _notifications;
+        private IApartmentAppsAPIService _service;
+
+        public NotificationIndexFormViewModel(IApartmentAppsAPIService service)
+        {
+            _service = service;
+        }
 
         public NotificationBindingModelMock SelectedNotification
         {
@@ -58,7 +65,10 @@ namespace ResidentAppCross.ViewModels.Screens
         }
 
 
-        public ICommand UpdateNotificationsCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand UpdateNotificationsCommand => new MvxCommand(() =>
+        {
+        });
+
         public ICommand OpenSelectedNotificationDetailsCommand => new MvxCommand(() =>
         {
             ShowViewModel<NotificationDetailsFormViewModel>();

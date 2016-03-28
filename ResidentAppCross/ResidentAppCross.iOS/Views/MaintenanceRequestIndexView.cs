@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using ApartmentApps.Client.Models;
 using Cirrious.FluentLayouts.Touch;
@@ -35,7 +36,7 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _tableItemsBinding = new TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel>() //Define cell type and data type as type args
                     {
-                        Bind = (cell, item) => //What to do when cell is created for item
+                        Bind = (cell, item,index) => //What to do when cell is created for item
                         {
                             cell.TextLabel.Text = item.Title;
                             cell.DetailTextLabel.Text = item.Comments;
@@ -49,7 +50,8 @@ namespace ResidentAppCross.iOS.Views
                             ViewModel.OpenSelectedRequestCommand.Execute(null);
                         }, //When accessory button clicked
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell"), //Define how to create cell, if reusables not found
+                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_MaintenanceIndexItemsTable"), //Define how to create cell, if reusables not found
+                        CellIdentifier = "UITableViewCell_MaintenanceIndexItemsTable"
                     };
                 }
                 return _tableItemsBinding;
@@ -65,9 +67,9 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _tableFilterBinding = new TableDataBinding<UITableViewCell, RequestsIndexFilter>() //Define cell type and data type as type args
                     {
-                        Bind = (cell, item) => //What to do when cell is created for item
+                        Bind = (cell, item, index) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = item.Title;
+                            cell.TextLabel.Text = $"{item.Title} ({ViewModel.Requests.Count(r => item.FilterExpression(r))})";
                             cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
                             cell.TextLabel.MinimumScaleFactor = 0.2f;
                         },
@@ -76,7 +78,8 @@ namespace ResidentAppCross.iOS.Views
                             ViewModel.CurrentFilter = item;
                         }, //When accessory button clicked
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell"), //Define how to create cell, if reusables not found
+                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_MaintenanceIndexFiltersTable"),
+                        CellIdentifier = "UITableViewCell_MaintenanceIndexFiltersTable" //Define how to create cell, if reusables not found
                     };
                 }
                 return _tableFilterBinding;
@@ -239,14 +242,14 @@ namespace ResidentAppCross.iOS.Views
         {
 
             TableSection.Source = TableFiltersSource;
-            TableSection.ReloadDataAnimated(UIViewAnimationOptions.TransitionCurlDown);
+            TableSection.ReloadDataAnimated(UIViewAnimationOptions.TransitionCrossDissolve);
         }
 
         public void SetTableToDisplayItems()
         {
 
             TableSection.Source = TableItemSource;
-            TableSection.ReloadDataAnimated(UIViewAnimationOptions.TransitionCurlUp);
+            TableSection.ReloadDataAnimated(UIViewAnimationOptions.TransitionCrossDissolve);
         }
 
 //

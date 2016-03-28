@@ -42,16 +42,6 @@ namespace ResidentAppCross.iOS
             this.NavigationController.SetNavigationBarHidden(true, false);
 
 
-            NSTextAttachment attachment = new NSTextAttachment();
-            attachment.Image = UIImage.FromBundle("PayIcon");
-            NSAttributedString str = NSAttributedString.CreateFrom(attachment);
-            var myString = new NSMutableAttributedString("Ok Here We Go");
-
-            myString.Insert(str, 0);
-
-           
-            LoginButton.SetAttributedTitle(myString,UIControlState.Normal);
-
         }
 
         public override void ViewDidAppear(bool animated)
