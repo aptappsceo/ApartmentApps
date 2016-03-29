@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using Cirrious.FluentLayouts.Touch;
 using CoreLocation;
 using Foundation;
 using MapKit;
@@ -229,43 +230,96 @@ namespace ResidentAppCross.iOS.Views
                         new TestDataItem() { Title = "Third Item" },
                         new TestDataItem() { Title = "Movable Item"},
                         new TestDataItem() { Title = "5th Item" },
+                        new TestDataItem() { Title = "Last Item" },
+                        new TestDataItem() { Title = "Item 1" },
+                        new TestDataItem() { Title = "Editable Item"},
+                        new TestDataItem() { Title = "Third Item" },
+                        new TestDataItem() { Title = "Movable Item"},
+                        new TestDataItem() { Title = "5th Item" },
                         new TestDataItem() { Title = "Last Item" }
                     };
 
                     var tableDataBinding = new TableDataBinding<UITableViewCell, TestDataItem>() //Define cell type and data type as type args
                     {
-                        Bind = (cell, item) => //What to do when cell is created for item
+                        Bind = (cell, item, index) => //What to do when cell is created for item
                         {
                             cell.TextLabel.Text = item.Title;
                             cell.DetailTextLabel.Text = "Some Details Here";
-                            cell.ImageView.Image = UIImage.FromBundle("OfficerIcon");
+
+
+                            var timelinemidPng = "TimelineMid.png";
+
+                            if (index == 0)
+                            {
+                                timelinemidPng = "TimelineEnd.png";
+                            } else if (index == collection.Count - 1)
+                            {
+                                timelinemidPng = "TimelineStart.png";
+                            }
+
+                            cell.ImageView.Image = UIImage.FromFile(timelinemidPng);
+
+                            UIImageView anotherImageView = null;
+
+                            foreach (var subview in cell.ImageView.Subviews)
+                            {
+                                if (subview is UIImageView) anotherImageView = subview as UIImageView;
+                            } 
+                              
+                            if(anotherImageView == null)
+                            {
+                                
+                                anotherImageView = new UIImageView(cell.ImageView.Frame.WithSize(30f,30f))
+                                {
+                                    AutoresizingMask = UIViewAutoresizing.FlexibleMargins,
+                                   // AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
+                                    ContentMode = UIViewContentMode.ScaleAspectFill
+                                };
+
+                                cell.ImageView.Add(anotherImageView);
+
+                            }
+
+                            if (index == 0)
+                            {
+                                anotherImageView.Frame = anotherImageView.Frame.WithSize(30f, 30f);
+                            }
+                            else
+                            {
+                                anotherImageView.Frame = anotherImageView.Frame.WithSize(24f, 24f);
+                            }
+
+                            anotherImageView.Image = UIImage.FromBundle("TimelineStatusIcon.png");
+
+
                         },
                         ItemAccessoryClicked = item => { Debug.WriteLine("Accessory Clicked");}, //When accessory button clicked
                         ItemSelected = item => { Debug.WriteLine("Item Selected");}, //Yet to be revealed how to invoke this ??? TODO
-                        AccessoryType = item => UITableViewCellAccessory.DetailDisclosureButton, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell"), //Define how to create cell, if reusables not found
+                        AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
+                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_TestForm"), //Define how to create cell, if reusables not found
+                        CellIdentifier = "UITableViewCell_TestForm"
                     };
 
-                    tableDataBinding.AddAction(new TableCellAction<TestDataItem>()
-                    {
-                        Style = UITableViewRowActionStyle.Default,
-                        Handler = i => Debug.WriteLine("Default Action"),
-                        Title = "Default"
-                    });
-
-                    tableDataBinding.AddAction(new TableCellAction<TestDataItem>()
-                    {
-                        Style = UITableViewRowActionStyle.Destructive,
-                        Handler = i => Debug.WriteLine("Destructive  Action"),
-                        Title = "Kill"
-                    });
-
-                    tableDataBinding.AddAction(new TableCellAction<TestDataItem>()
-                    {
-                        Style = UITableViewRowActionStyle.Normal,
-                        Handler = i => Debug.WriteLine("Normal Action"),
-                        Title = "Normal"
-                    });
+//                    tableDataBinding.AddAction(new TableCellAction<TestDataItem>()
+//                    {
+//                        Style = UITableViewRowActionStyle.Default,
+//                        Handler = i => Debug.WriteLine("Default Action"),
+//                        Title = "Default"
+//                    });
+//
+//                    tableDataBinding.AddAction(new TableCellAction<TestDataItem>()
+//                    {
+//                        Style = UITableViewRowActionStyle.Destructive,
+//                        Handler = i => Debug.WriteLine("Destructive  Action"),
+//                        Title = "Kill"
+//                    });
+//
+//                    tableDataBinding.AddAction(new TableCellAction<TestDataItem>()
+//                    {
+//                        Style = UITableViewRowActionStyle.Normal,
+//                        Handler = i => Debug.WriteLine("Normal Action"),
+//                        Title = "Normal"
+//                    });
 
                     var source = new GenericTableSource()
                     {
@@ -274,6 +328,7 @@ namespace ResidentAppCross.iOS.Views
                         ItemsEditableByDefault = true, //Set all items editable
                         ItemsFocusableByDefault = true
                     };
+                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
                     _tableSection.Table.AllowsSelection = true; //Make sure this is called if you use ItemSelected handler
                     _tableSection.Source = source;
                     _tableSection.ReloadData();
@@ -313,7 +368,7 @@ namespace ResidentAppCross.iOS.Views
                         Items = collection.Cast<object>().ToArray(),
                         Binding = new CollectionDataBinding<TicketCollectionViewCell, TestDataItem>()
                         {
-                            Bind = (c,i) => { 
+                            Bind = (c,i, index) => { 
 								if(i.Editable) {
 									c.PhotoContainer.Hidden = true;
 									c.NoPhotosLabel.Hidden = true;

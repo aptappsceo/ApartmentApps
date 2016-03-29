@@ -57,15 +57,14 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
 
-                    var tableDataBinding = new TableDataBinding<UITableViewCell, NotificationBindingModelMock>() //Define cell type and data type as type args
+                    var tableDataBinding = new TableDataBinding<UITableViewCell, AlertBindingModel>() //Define cell type and data type as type args
                     {
-                        Bind = (cell, item) => //What to do when cell is created for item
+                        Bind = (cell, item, index) => //What to do when cell is created for item
                         {
                             cell.TextLabel.Text = item.Title;
                             cell.DetailTextLabel.Text = item.Message;
-                            cell.ImageView.Image = item.Type == NotificationTypeMock.Maintenance ? UIImage.FromBundle("MaintenaceIcon") : UIImage.FromBundle("OfficerIcon");
+                            cell.ImageView.Image = item.Type == "Maintenance" ? UIImage.FromBundle("MaintenaceIcon") : UIImage.FromFile("TimelineStatusIcon.png");
                             cell.TextLabel.MinimumScaleFactor = 0.2f;
-
                         },
                         ItemSelected = item =>
                         {

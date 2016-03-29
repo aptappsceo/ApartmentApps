@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Plugins.Messenger;
@@ -19,25 +20,31 @@ namespace ResidentAppCross.ViewModels.Screens
     {
         private NotificationStatusFilter _currentNotificationStatusFilter;
         private ObservableCollection<NotificationStatusFilter> _notificationStatusFilters;
-        private ObservableCollection<NotificationBindingModelMock> _filteredNotifications;
-        private NotificationBindingModelMock _selectedNotification;
-        private ObservableCollection<NotificationBindingModelMock> _notifications;
+        private ObservableCollection<AlertBindingModel> _filteredNotifications;
+        private AlertBindingModel _selectedNotification;
+        private ObservableCollection<AlertBindingModel> _notifications;
+        private IApartmentAppsAPIService _service;
 
-        public NotificationBindingModelMock SelectedNotification
+        public NotificationIndexFormViewModel(IApartmentAppsAPIService service)
+        {
+            _service = service;
+        }
+
+        public AlertBindingModel SelectedNotification
         {
             get { return _selectedNotification; }
             set { SetProperty(ref _selectedNotification,value); }
         }
 
-        public ObservableCollection<NotificationBindingModelMock> FilteredNotifications
+        public ObservableCollection<AlertBindingModel> FilteredNotifications
         {
-            get { return _filteredNotifications ?? (FilteredNotifications = new ObservableCollection<NotificationBindingModelMock>()); }
+            get { return _filteredNotifications ?? (FilteredNotifications = new ObservableCollection<AlertBindingModel>()); }
             set { SetProperty(ref _filteredNotifications, value); }
         }
 
-        public ObservableCollection<NotificationBindingModelMock> Notifications
+        public ObservableCollection<AlertBindingModel> Notifications
         {
-            get { return _notifications ?? (Notifications = new ObservableCollection<NotificationBindingModelMock>()); }
+            get { return _notifications ?? (Notifications = new ObservableCollection<AlertBindingModel>()); }
             set { SetProperty(ref _notifications, value); }
         }
 
@@ -58,51 +65,43 @@ namespace ResidentAppCross.ViewModels.Screens
         }
 
 
-        public ICommand UpdateNotificationsCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand UpdateNotificationsCommand => new MvxCommand(async () =>
+        {
+            var task = await _service.Alerts.GetWithOperationResponseAsync();
+            Notifications.Clear();
+            Notifications.AddRange(task.Body);
+        });
+
         public ICommand OpenSelectedNotificationDetailsCommand => new MvxCommand(() =>
         {
-            ShowViewModel<NotificationDetailsFormViewModel>();
+            if (SelectedNotification == null) return;
+            if (SelectedNotification.RelatedId == null) return;
+
+            if (SelectedNotification.Type == "Maintenance")
+            {
+                ShowViewModel<MaintenanceRequestStatusViewModel>(vm =>
+                {
+                    vm.MaintenanceRequestId = SelectedNotification.RelatedId.Value;
+                });
+            }
+            else
+            {
+                
+            }
+            //ShowViewModel<NotificationDetailsFormViewModel>();
         });
 
 
         public override void Start()
         {
             base.Start();
-
-            //TODO: Replace MOCK
-
-            var ids = 0;
-
-            for (int i = 0; i < 15; i++)
-            {
-                Notifications.Add(new NotificationBindingModelMock()
-                {
-                    Id = ids++,
-                    Type =  NotificationTypeMock.Maintenance,
-                    Title = "Lorem Upsum",
-                    Message = "I'm da king of congo-bongo, obey or dance",
-                    Unread = i <= 5
-                });    
-            }
-
-            for (int i = 0; i < 15; i++)
-            {
-                Notifications.Add(new NotificationBindingModelMock()
-                {
-                    Type = NotificationTypeMock.Courtesy,
-                    Id = ids++,
-                    Title = "Lorem Upsum",
-                    Message = "I'm da king of congo-bongo, obey or dance",
-                    Unread = i <= 5
-                });    
-            }
-
+            
             NotificationStatusFilters.Clear();
 
             var defaultStatusFilter = new NotificationStatusFilter()
             {
                 Title = "Unread",
-                FilterExpression = item => item.Unread
+                FilterExpression = item => item.HasRead.HasValue && item.HasRead.Value
             };
 
             NotificationStatusFilters.Add(defaultStatusFilter);
@@ -115,7 +114,8 @@ namespace ResidentAppCross.ViewModels.Screens
 
             CurrentNotificationStatusFilter = defaultStatusFilter;
 
-
+            UpdateNotificationsCommand.Execute(null);
+            UpdateFilters();
         }
 
         private void UpdateFilters()
@@ -141,25 +141,8 @@ namespace ResidentAppCross.ViewModels.Screens
     public class NotificationStatusFilter
     {
         public string Title { get; set; }
-        public Func<NotificationBindingModelMock,bool> FilterExpression { get; set; } 
+        public Func<AlertBindingModel, bool> FilterExpression { get; set; } 
     }
-
-    public class NotificationBindingModelMock
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Message { get; set; }
-        public NotificationTypeMock Type { get; set; }
-        public bool Unread { get; set; }
-    }
-
-    public enum NotificationTypeMock
-    {
-        Maintenance,
-        Courtesy
-    }
-
-
 
 
 }

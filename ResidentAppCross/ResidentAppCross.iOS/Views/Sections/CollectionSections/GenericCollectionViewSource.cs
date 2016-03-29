@@ -26,7 +26,7 @@ namespace ResidentAppCross.iOS.Views.Sections.CollectionSections
             cell.BackgroundColor = UIColor.White;
             var view = cell.ContentView;
             view.TranslatesAutoresizingMaskIntoConstraints = false;
-            Binding?.ObjectBind?.Invoke(cell, Items[indexPath.Row]);
+            Binding?.ObjectBind?.Invoke(cell, Items[indexPath.Row],indexPath.Row);
          
             return cell;
         }

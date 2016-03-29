@@ -61,7 +61,6 @@ namespace ResidentAppCross.iOS
                 StartImageSourceSelectionDialog();
 	        };
 	        UpdatePhotos();
-
 	    }
 
 	    private void StartImageSourceSelectionDialog()

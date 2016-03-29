@@ -69,5 +69,8 @@ namespace ResidentAppCross.ViewModels.Screens
             get { return _subHeaderText; }
             set { SetProperty(ref _subHeaderText,value); }
         }
+
+
+
     }
 }

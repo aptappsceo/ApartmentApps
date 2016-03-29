@@ -107,13 +107,23 @@ namespace ApartmentApps.API.Service.Controllers
                     BuildingState= result.User.Tenant?.State,
                     Name = result.MaitenanceRequestType.Name,
                     PetStatus = result.PetStatus,
-                    Checkins = result.Checkins.ToArray().Select(x=>new MaintenanceCheckinBindingModel
+                    Checkins = result.Checkins.ToArray().Select(x=>
                     {
-                        StatusId = x.StatusId,
-                        Date = x.Date,
-                        Comments = x.Comments,
-                        WorkerName = x.Worker.UserName,
-                        Photos = Context.ImageReferences.Where(r => r.GroupId == x.GroupId).ToList()
+                        var imageReferences = Context.ImageReferences.Where(r => r.GroupId == x.GroupId).ToList();
+                        foreach (var reference in imageReferences)
+                        {
+                            reference.Url = BlobStorageService.GetPhotoUrl(reference.Url); //This call replaces RELATIVE url with ABSOLUTE url. ( STORAGE SERVICE + IMAGE URL)
+                                                                                           //This is done to make URLs independent from the service, which is used to store them.                            
+                                                                                           //It needs some cleanup later maybe
+                        }
+                        return new MaintenanceCheckinBindingModel
+                        {
+                            StatusId = x.StatusId,
+                            Date = x.Date,
+                            Comments = x.Comments,
+                            WorkerName = x.Worker.UserName,
+                            Photos = imageReferences
+                        };
                     }).ToArray(),
                     ScheduleDate = result.ScheduleDate,
                     Message = result.Message, BuildingName = result.Unit?.Building?.Name, UnitName = result.Unit?.Name,

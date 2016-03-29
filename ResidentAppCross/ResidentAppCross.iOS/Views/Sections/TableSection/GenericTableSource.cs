@@ -29,7 +29,7 @@ namespace ResidentAppCross.iOS.Views.TableSources
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             UITableViewCell cell = tableView.DequeueReusableCell(Binding.CellIdentifier) ?? Binding?.ObjectCellSelector();
-            Binding?.ObjectBind?.Invoke(cell, Items[indexPath.Row]);
+            Binding?.ObjectBind?.Invoke(cell, Items[indexPath.Row], indexPath.Row);
             cell.Accessory = Binding.ObjectAccessoryType?.Invoke(Items[indexPath.Row]) ?? ItemsDefaultAccessory;
             return cell;
         }
@@ -125,9 +125,9 @@ namespace ResidentAppCross.iOS.Views.TableSources
             set { ObjectCellSelector = value; }
         }
 
-        public Action<TCell, TData> Bind
+        public Action<TCell, TData, int> Bind
         {
-            set { ObjectBind = (c, o) => value((TCell)c, (TData)o); }
+            set { ObjectBind = (c, o, i) => value((TCell)c, (TData)o, i); }
         }
 
         public Func<TData, bool> IsMoveable
@@ -184,9 +184,9 @@ namespace ResidentAppCross.iOS.Views.TableSources
     public class CollectionDataBinding<C,T> : CollectionDataBinding where C : UICollectionViewCell
     {
 
-        public Action<C, T> Bind
+        public Action<C, T, int> Bind
         {
-            set { ObjectBind = (c, o) => value((C)c, (T)o); }
+            set { ObjectBind = (c, o, i) => value((C)c, (T)o, i); }
         }
 
         public Func<T, bool> IsMoveable
@@ -237,7 +237,7 @@ namespace ResidentAppCross.iOS.Views.TableSources
         private List<TableCellAction> _objectActions;
         public virtual Type CellType { get; }
         public virtual Type DataType { get; }
-        public Action<object, object> ObjectBind { get; set; }
+        public Action<object, object, int> ObjectBind { get; set; }
         public Func<object,bool> ObjectIsMoveable { get; set; }
         public Func<object,bool> ObjectIsFocusable { get; set; }
         public Func<object,bool> ObjectIsEditable { get; set; }

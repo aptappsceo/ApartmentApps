@@ -1,4 +1,5 @@
 using Foundation;
+using MvvmCross.Plugins.PictureChooser.iOS;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using UIKit;
@@ -17,6 +18,11 @@ namespace ResidentAppCross.iOS
 
         public SettingsFormView()
         {
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
         }
     }
 }
