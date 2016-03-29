@@ -31,14 +31,15 @@ namespace ApartmentApps.API.Service.Controllers
 
         [HttpPost]
         [Route("SetProfilePicture")]
-        public void SetProfilePicture(string image)
+        public void SetProfilePicture([FromBody] string image)
         {
             var images = Convert.FromBase64String(image);
-            var imageKey = $"{Guid.NewGuid()}.{CurrentUser.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
+            var currentUser = CurrentUser;
+            var imageKey = $"{Guid.NewGuid()}.{currentUser.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
             var filename = _blobStorage.UploadPhoto(images, imageKey);
 
-            CurrentUser.ImageUrl = filename;
-            CurrentUser.ImageThumbnailUrl = filename;
+            currentUser.ImageUrl = filename;
+            currentUser.ImageThumbnailUrl = filename;
 
             Context.SaveChanges();
 

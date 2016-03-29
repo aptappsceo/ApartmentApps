@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CoreGraphics;
+using Foundation;
 using MvvmCross.iOS.Views;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
@@ -42,6 +43,12 @@ namespace ResidentAppCross.iOS
 
             UsernameAvatarImage.Layer.MasksToBounds = true;
             UsernameAvatarImage.Layer.CornerRadius = UsernameAvatarImage.Frame.Width/2;
+            if (ViewModel.ProfileImageUrl != null)
+            {
+                using (var data = NSData.FromUrl(new NSUrl(ViewModel.ProfileImageUrl)))
+                    UsernameAvatarImage.Image = UIImage.LoadFromData(data);
+            }
+          
             UsernameAvatarImage.Layer.BorderWidth = 4f;
             UsernameAvatarImage.Layer.BorderColor = new CGColor(1f,1f,1f);
         }

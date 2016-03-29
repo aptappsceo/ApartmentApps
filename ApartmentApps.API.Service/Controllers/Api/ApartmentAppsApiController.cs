@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Web;
 using System.Web.Http;
 using ApartmentApps.Data;
@@ -18,7 +19,9 @@ namespace ApartmentApps.API.Service.Controllers
         {
             get
             {
-                var user = UserManager.FindByName(User.Identity.Name);
+                var username = User.Identity.Name;
+                
+                var user = Context.Users.FirstOrDefault(p=>p.UserName == username);
                 return user;//user.Email
             }
         }

@@ -103,6 +103,7 @@ namespace ResidentAppCross.ServiceClient
         bool IsLoggedIn { get; }
         void Logout();
         Task<bool> LoginAsync(string username, string password);
+        void RefreshUserInfo();
     }
 
     public class LoginService : ILoginManager
@@ -139,7 +140,7 @@ namespace ResidentAppCross.ServiceClient
                
                 if (IsLoggedIn)
                 {
-                    UserInfo = Data.Account.GetUserInfo();
+                    RefreshUserInfo();
                     if (GetRegistrationId != null && DeviceHandle != null)
                     {
                         var registerResult = await Data.Register.PutAsync(GetRegistrationId().Replace("\"",""), new DeviceRegistration()
@@ -151,7 +152,6 @@ namespace ResidentAppCross.ServiceClient
                         if (registerResult != null)
                         SetRegistrationId(registerResult);
                     }
-                   
                 }
                 return IsLoggedIn;
             }
@@ -160,6 +160,11 @@ namespace ResidentAppCross.ServiceClient
                 return false;
             }
 
+        }
+
+        public void RefreshUserInfo()
+        {
+            UserInfo = Data.Account.GetUserInfo();
         }
 
         public UserInfoViewModel UserInfo { get; set; }

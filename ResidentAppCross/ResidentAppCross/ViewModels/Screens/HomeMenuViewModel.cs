@@ -134,6 +134,7 @@ namespace ResidentAppCross
             {
                 await Data.Account.SetProfilePictureWithOperationResponseAsync(
                     Convert.ToBase64String(image));
+                _loginManager.RefreshUserInfo();
             }, null);
         });
 
@@ -191,6 +192,6 @@ namespace ResidentAppCross
 
         public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);
 
-
+        public string ProfileImageUrl => this._loginManager.UserInfo.ImageUrl;
     }
 }
