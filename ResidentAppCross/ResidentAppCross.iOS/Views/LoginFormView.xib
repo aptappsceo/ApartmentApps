@@ -8,14 +8,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginFormView">
             <connections>
                 <outlet property="AppTitleLabel" destination="UIq-I1-eee" id="nd7-Wp-ewG"/>
-                <outlet property="AppVersionLabel" destination="GjW-Dk-Kzx" id="3cW-GY-Unr"/>
-                <outlet property="ForgotPasswordButton" destination="cfE-GS-deO" id="G3N-lu-dIf"/>
+                <outlet property="AppVersionLabel" destination="GjW-Dk-Kzx" id="6kD-xf-d6w"/>
+                <outlet property="ForgotPasswordButton" destination="cfE-GS-deO" id="hN5-Rc-CJX"/>
                 <outlet property="LoginButton" destination="SaO-tQ-VWE" id="qIw-60-Gp6"/>
                 <outlet property="LoginImage" destination="bku-V8-BkZ" id="az6-da-vRu"/>
                 <outlet property="LoginTextField" destination="Rqt-ck-dtw" id="xaP-tt-8Ke"/>
                 <outlet property="NewHereLabel" destination="gne-la-hUj" id="hKg-Tz-P5Y"/>
                 <outlet property="PasswordTextField" destination="ry3-Mk-iFd" id="W5s-m9-ENW"/>
-                <outlet property="VersionLabel" destination="GjW-Dk-Kzx" id="9TS-NG-gV1"/>
                 <outlet property="_signUpButton" destination="lFG-DA-uiJ" id="y5N-zc-PGF"/>
                 <outlet property="_textFieldsContainer" destination="TWT-WM-gIx" id="0SG-9v-LDo"/>
                 <outlet property="view" destination="2" id="RRd-Eg-VrN"/>

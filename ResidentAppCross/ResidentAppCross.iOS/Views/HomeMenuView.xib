@@ -11,7 +11,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeMenuView">
             <connections>
                 <outlet property="AppTitleLabel" destination="B1S-vr-jjo" id="puU-tt-5Bw"/>
-                <outlet property="CopyrightLabel" destination="B1S-vr-jjo" id="TZi-7C-rQ5"/>
                 <outlet property="EditProfileButton" destination="5hL-mL-VvH" id="a27-Px-5HQ"/>
                 <outlet property="MenuTable" destination="dJm-4m-dUK" id="1pD-yQ-gbS"/>
                 <outlet property="SettingsButton" destination="BHj-Fr-wgy" id="dRn-3K-b0r"/>
@@ -19,7 +18,6 @@
                 <outlet property="UsernameAvatarImage" destination="VRX-Ul-EVA" id="rzw-YF-LYd"/>
                 <outlet property="UsernameLabel" destination="Box-Xl-ldp" id="gf1-a0-bFy"/>
                 <outlet property="VersionLabel" destination="0dq-bW-RIq" id="G4v-F5-kke"/>
-                <outlet property="VersionTitle" destination="0dq-bW-RIq" id="BLd-WK-9y4"/>
                 <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
             </connections>
         </placeholder>
