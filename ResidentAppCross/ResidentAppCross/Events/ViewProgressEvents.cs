@@ -56,4 +56,21 @@ namespace ResidentAppCross.Events
         {
         }
     }
+
+    public class TaskProgressUpdated : MvxMessage
+    {
+        private string _label;
+
+        public string Label
+        {
+            get { return _label; }
+            set { _label = value; }
+        }
+
+        public bool ShouldPrompt { get; set; }
+
+        public TaskProgressUpdated(object sender) : base(sender)
+        {
+        }
+    }
 }

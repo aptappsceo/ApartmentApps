@@ -43,8 +43,9 @@ namespace ResidentAppCross.ViewModels
             var config = ConfigurationStack.Pop();
             config(this);
         }
-        
 
+
+ 
     }
 
     public static class ViewModelExtensions
@@ -103,6 +104,11 @@ namespace ResidentAppCross.ViewModels
         public static void FailTaskWithPrompt(this ViewModelBase viewModel, Exception reason, Action<Exception> onPrompt = null)
         {
             viewModel.Publish(new TaskFailed(viewModel) { Reason = reason, ShouldPrompt = true, OnPrompted = onPrompt});
+        }
+
+        public static void UpdateTask(this ViewModelBase viewModel, string message)
+        {
+            viewModel.Publish(new TaskProgressUpdated(viewModel) { Label = message});
         }
 
     }

@@ -104,7 +104,7 @@ namespace ResidentAppCross.Commands
         private Action CompleteHandler { get; set; }
         private Action<Exception> ExceptionHandler { get; set; }
         private string CompleteMessage { get; set; }
-        private string StartMessage { get; set; } = "Please, Wait...";
+        private string StartMessage { get; set; }
 
         public ITaskCommandContext OnStart(string message)
         {
@@ -122,6 +122,12 @@ namespace ResidentAppCross.Commands
         public ITaskCommandContext OnFail(Action<Exception> exceptionHandler = null)
         {
             ExceptionHandler = exceptionHandler;
+            return this;
+        }
+
+        public ITaskCommandContext Update(string message)
+        {
+            _owner.UpdateTask(message);
             return this;
         }
 
@@ -151,7 +157,7 @@ namespace ResidentAppCross.Commands
         ITaskCommandContext OnStart(string message);
         ITaskCommandContext OnComplete(string message, Action completeHandler = null);
         ITaskCommandContext OnFail(Action<Exception> exceptionHandler = null);
-
+        ITaskCommandContext Update(string message);
     }
 
 }

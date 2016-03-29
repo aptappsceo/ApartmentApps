@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using AlertView;
-using BigTed;
 using Foundation;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Views;
@@ -83,8 +81,10 @@ namespace ResidentAppCross.iOS.Views
             this.OnViewModelEvent<TaskStarted>(evt => this.SetTaskRunning(evt.Label));
             this.OnViewModelEvent<TaskComplete>(evt => this.SetTaskComplete(evt.ShouldPrompt, evt.Label, evt.OnPrompted));
             this.OnViewModelEvent<TaskFailed>(evt => this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted));
+            this.OnViewModelEvent<TaskProgressUpdated>(evt => this.SetTaskProgress(evt.ShouldPrompt, evt.Label));
             OwnViewAttributes.ForEach(a=>a.OnViewLoaded(this));
         }
+
 
         public override void ViewDidAppear(bool animated)
         {
@@ -133,14 +133,15 @@ namespace ResidentAppCross.iOS.Views
         public static void SetTaskRunning(this ViewBase view, string label, bool block = true)
         {
             view.View?.EndEditing(true);
-            if (block)
+            if (block && label != null)
             {
                 BackgroundTaskProgressTimer  = NSTimer.CreateScheduledTimer(TimeSpan.FromMilliseconds(ShowProgressAfter),
                     x =>
                     {
                         view.InvokeOnMainThread(() =>
                         {
-                            WaitingView.ShowWaiting(view, "Please, wait", label, null, 0);
+                            if(!WaitingView.IsVisible)
+                                WaitingView.ShowWaiting(view, "Please, wait", label, null, 0);
                         });
                     });
 
@@ -206,6 +207,27 @@ namespace ResidentAppCross.iOS.Views
                 onPrompted?.Invoke(reson);
             }
         }
+
+
+        public static void SetTaskProgress(this ViewBase view, bool shouldPrompt, string label)
+        {
+            view.InvokeOnMainThread(() =>
+            {
+
+                if (WaitingView.IsVisible && string.IsNullOrEmpty(label))
+                {
+                    WaitingView.HideView();
+                    return;
+                }
+
+                if (!WaitingView.IsVisible)
+                    WaitingView.ShowWaiting(view, "Please, wait", label, null, 0);
+                else
+                    WaitingView.Title = label;
+            });
+        }
+
+
 
         public static void OnViewModelEvent<TMessage>(this ViewBase view, Action<TMessage> handler)
             where TMessage : MvxMessage

@@ -131,18 +131,20 @@ namespace ResidentAppCross
             set { SetProperty(ref _menuItems, value); }
         }
 
-        public ICommand EditProfileCommand => new MvxCommand(async () =>
+        public ICommand EditProfileCommand => this.TaskCommand(async context =>
         {
 
             var image = await _dialogService.OpenImageDialog();
             if (image == null) return;
-            await Data.Account.SetProfilePictureWithOperationResponseAsync(
-                    Convert.ToBase64String(image));
+            context.Update("Updating account picture...");
+            await Data.Account.SetProfilePictureWithOperationResponseAsync(Convert.ToBase64String(image));
             _loginManager.RefreshUserInfo();
         
             this.Publish(new UserInfoUpdated(this));
             
         });
+
+
 
         public ICommand OpenSettingsCommand => StubCommands.NoActionSpecifiedCommand(this);
 
