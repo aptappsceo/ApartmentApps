@@ -15,6 +15,10 @@ namespace ApartmentApps.Data
         [Key]
         public override string Id { get; set; }
 
+        public string ImageUrl { get; set; }
+
+        public string ImageThumbnailUrl { get; set; }
+
         public virtual Tenant Tenant { get; set; }
 
         public string FirstName { get; set; }

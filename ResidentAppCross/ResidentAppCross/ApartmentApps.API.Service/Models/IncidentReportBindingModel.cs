@@ -100,6 +100,17 @@ namespace ApartmentApps.Client.Models
             set { this._requesterId = value; }
         }
         
+        private string _requesterPhoneNumber;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string RequesterPhoneNumber
+        {
+            get { return this._requesterPhoneNumber; }
+            set { this._requesterPhoneNumber = value; }
+        }
+        
         private string _status;
         
         /// <summary>
@@ -185,6 +196,11 @@ namespace ApartmentApps.Client.Models
                 if (requesterIdValue != null && requesterIdValue.Type != JTokenType.Null)
                 {
                     this.RequesterId = ((string)requesterIdValue);
+                }
+                JToken requesterPhoneNumberValue = inputObject["RequesterPhoneNumber"];
+                if (requesterPhoneNumberValue != null && requesterPhoneNumberValue.Type != JTokenType.Null)
+                {
+                    this.RequesterPhoneNumber = ((string)requesterPhoneNumberValue);
                 }
                 JToken statusValue = inputObject["Status"];
                 if (statusValue != null && statusValue.Type != JTokenType.Null)

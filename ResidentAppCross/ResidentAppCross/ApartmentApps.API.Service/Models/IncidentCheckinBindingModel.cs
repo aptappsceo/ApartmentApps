@@ -45,6 +45,17 @@ namespace ApartmentApps.Client.Models
             set { this._officerName = value; }
         }
         
+        private string _officerPhoneNumber;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string OfficerPhoneNumber
+        {
+            get { return this._officerPhoneNumber; }
+            set { this._officerPhoneNumber = value; }
+        }
+        
         private IList<ImageReference> _photos;
         
         /// <summary>
@@ -96,6 +107,11 @@ namespace ApartmentApps.Client.Models
                 if (officerNameValue != null && officerNameValue.Type != JTokenType.Null)
                 {
                     this.OfficerName = ((string)officerNameValue);
+                }
+                JToken officerPhoneNumberValue = inputObject["OfficerPhoneNumber"];
+                if (officerPhoneNumberValue != null && officerPhoneNumberValue.Type != JTokenType.Null)
+                {
+                    this.OfficerPhoneNumber = ((string)officerPhoneNumberValue);
                 }
                 JToken photosSequence = ((JToken)inputObject["Photos"]);
                 if (photosSequence != null && photosSequence.Type != JTokenType.Null)

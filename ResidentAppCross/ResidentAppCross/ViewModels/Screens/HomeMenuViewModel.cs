@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -8,6 +9,7 @@ using MvvmCross.Platform;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ServiceClient;
+using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
 
@@ -16,11 +18,13 @@ namespace ResidentAppCross
     public class HomeMenuViewModel : ViewModelBase
     {
         private readonly ILoginManager _loginManager;
+        private readonly IImageService _imageService;
         public IApartmentAppsAPIService Data { get; set; }
 
-        public HomeMenuViewModel(IApartmentAppsAPIService data, ILoginManager loginManager)
+        public HomeMenuViewModel(IApartmentAppsAPIService data, ILoginManager loginManager, IImageService imageService)
         {
             _loginManager = loginManager;
+            _imageService = imageService;
             Data = data;
 
             if (loginManager.UserInfo.Roles.Contains("Maintenance"))
@@ -124,7 +128,14 @@ namespace ResidentAppCross
             set { SetProperty(ref _menuItems, value); }
         }
 
-        public ICommand EditProfileCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand EditProfileCommand => new MvxCommand( () =>
+        {
+            this._imageService.SelectImage(async (image) =>
+            {
+                await Data.Account.SetProfilePictureWithOperationResponseAsync(
+                    Convert.ToBase64String(image));
+            }, null);
+        });
 
         public ICommand OpenSettingsCommand => StubCommands.NoActionSpecifiedCommand(this);
 

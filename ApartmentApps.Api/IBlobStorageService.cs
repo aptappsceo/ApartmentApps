@@ -72,6 +72,7 @@ namespace ApartmentApps.Api
 
         public string GetPhotoUrl(string filename)
         {
+            if (filename == null) return null;
             var blob = _photoBlobContainer.GetBlobReference(filename);
             return blob.Uri.ToString();
         }

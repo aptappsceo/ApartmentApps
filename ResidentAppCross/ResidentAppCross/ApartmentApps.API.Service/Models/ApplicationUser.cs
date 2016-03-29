@@ -100,6 +100,28 @@ namespace ApartmentApps.Client.Models
             set { this._id = value; }
         }
         
+        private string _imageThumbnailUrl;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ImageThumbnailUrl
+        {
+            get { return this._imageThumbnailUrl; }
+            set { this._imageThumbnailUrl = value; }
+        }
+        
+        private string _imageUrl;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ImageUrl
+        {
+            get { return this._imageUrl; }
+            set { this._imageUrl = value; }
+        }
+        
         private string _lastName;
         
         /// <summary>
@@ -350,6 +372,16 @@ namespace ApartmentApps.Client.Models
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((string)idValue);
+                }
+                JToken imageThumbnailUrlValue = inputObject["ImageThumbnailUrl"];
+                if (imageThumbnailUrlValue != null && imageThumbnailUrlValue.Type != JTokenType.Null)
+                {
+                    this.ImageThumbnailUrl = ((string)imageThumbnailUrlValue);
+                }
+                JToken imageUrlValue = inputObject["ImageUrl"];
+                if (imageUrlValue != null && imageUrlValue.Type != JTokenType.Null)
+                {
+                    this.ImageUrl = ((string)imageUrlValue);
                 }
                 JToken lastNameValue = inputObject["LastName"];
                 if (lastNameValue != null && lastNameValue.Type != JTokenType.Null)

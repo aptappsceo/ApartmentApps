@@ -85,9 +85,9 @@ namespace ResidentAppCross.ViewModels
             viewModel.Publish(new TaskStarted(viewModel) { Label = label});
         }
 
-        public static void CompleteTask(this ViewModelBase viewModel)
+        public static void CompleteTask(this ViewModelBase viewModel, Action completeHandler)
         {
-            viewModel.Publish(new TaskComplete(viewModel) { });
+            viewModel.Publish(new TaskComplete(viewModel) { OnPrompted = completeHandler});
         }
 
         public static void CompleteTaskWithPrompt(this ViewModelBase viewModel, string message, Action onPrompt = null)

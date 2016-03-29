@@ -33,6 +33,28 @@ namespace ApartmentApps.Client.Models
             set { this._hasRegistered = value; }
         }
         
+        private string _imageThumbnailUrl;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ImageThumbnailUrl
+        {
+            get { return this._imageThumbnailUrl; }
+            set { this._imageThumbnailUrl = value; }
+        }
+        
+        private string _imageUrl;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ImageUrl
+        {
+            get { return this._imageUrl; }
+            set { this._imageUrl = value; }
+        }
+        
         private string _loginProvider;
         
         /// <summary>
@@ -79,6 +101,16 @@ namespace ApartmentApps.Client.Models
                 if (hasRegisteredValue != null && hasRegisteredValue.Type != JTokenType.Null)
                 {
                     this.HasRegistered = ((bool)hasRegisteredValue);
+                }
+                JToken imageThumbnailUrlValue = inputObject["ImageThumbnailUrl"];
+                if (imageThumbnailUrlValue != null && imageThumbnailUrlValue.Type != JTokenType.Null)
+                {
+                    this.ImageThumbnailUrl = ((string)imageThumbnailUrlValue);
+                }
+                JToken imageUrlValue = inputObject["ImageUrl"];
+                if (imageUrlValue != null && imageUrlValue.Type != JTokenType.Null)
+                {
+                    this.ImageUrl = ((string)imageUrlValue);
                 }
                 JToken loginProviderValue = inputObject["LoginProvider"];
                 if (loginProviderValue != null && loginProviderValue.Type != JTokenType.Null)

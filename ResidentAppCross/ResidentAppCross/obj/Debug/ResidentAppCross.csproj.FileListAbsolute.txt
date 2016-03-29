@@ -66,3 +66,5 @@ C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppC
 C:\Invert\ApartmentApps\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
 D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\obj\Debug\ResidentAppCross.dll.mdb
+D:\ApartmentApps\Projects\ResidentAppCross\ResidentAppCross\ResidentAppCross\bin\Debug\ResidentAppCross.dll.mdb

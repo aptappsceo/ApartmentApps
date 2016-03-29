@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -18,6 +19,7 @@ namespace ApartmentApps.Portal.Controllers
     [Authorize]
     public class AccountController : AAController
     {
+        private readonly IBlobStorageService _blobStorage;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -25,10 +27,12 @@ namespace ApartmentApps.Portal.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager , IBlobStorageService blobStorage)
         {
+            _blobStorage = blobStorage;
             UserManager = userManager;
             SignInManager = signInManager;
+
         }
 
         public ApplicationSignInManager SignInManager
@@ -359,6 +363,7 @@ namespace ApartmentApps.Portal.Controllers
             }
         }
 
+       
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]

@@ -114,7 +114,7 @@ namespace ResidentAppCross.ServiceClient
             Data = data as App.ApartmentAppsClient;
         }
 
-        public bool IsLoggedIn { get { return App.ApartmentAppsClient.AparmentAppsDelegating.AuthorizationKey != null; } }
+        public bool IsLoggedIn { get { return AparmentAppsDelegating.AuthorizationKey != null; } }
 
         
 
@@ -132,8 +132,12 @@ namespace ResidentAppCross.ServiceClient
         {
             try
             {
-                var result = await Data.LoginAsync(username, password);
-                if (result)
+                if (!IsLoggedIn)
+                {
+                    await Data.LoginAsync(username, password);
+                }
+               
+                if (IsLoggedIn)
                 {
                     UserInfo = Data.Account.GetUserInfo();
                     if (GetRegistrationId != null && DeviceHandle != null)
@@ -149,7 +153,7 @@ namespace ResidentAppCross.ServiceClient
                     }
                    
                 }
-                return result;
+                return IsLoggedIn;
             }
             catch (Exception ex) { }
             {

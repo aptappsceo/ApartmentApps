@@ -25,11 +25,18 @@ namespace ResidentAppCross.iOS
             set;
         }
 
+        public AppDelegate()
+        {
+            App.ApartmentAppsClient.GetAuthToken = () => AuthToken;
+            App.ApartmentAppsClient.SetAuthToken = (v) => AuthToken = v;
+        }
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
+          
             // For push notifiations
             LoginService.DevicePlatform = "apns";
             LoginService.DeviceHandle = DeviceToken;
+           
             LoginService.GetRegistrationId = () => HandleId;
             LoginService.SetRegistrationId = (v) => HandleId = v;
             // Override point for customization after application launch.
@@ -108,6 +115,23 @@ namespace ResidentAppCross.iOS
             set
             {
                 NSUserDefaults.StandardUserDefaults.SetString(value,"AA_DEVICE_TOKEN");
+            }
+        }
+        public static string AuthToken
+        {
+            get { return NSUserDefaults.StandardUserDefaults.StringForKey("AA_TOKEN"); }
+            set
+            {
+                if (value == null)
+                {
+                    NSUserDefaults.StandardUserDefaults.RemoveObject("AA_TOKEN");
+                }
+                else
+                {
+                    NSUserDefaults.StandardUserDefaults.SetString(value, "AA_TOKEN");
+
+                }
+               
             }
         }
         public static string HandleId

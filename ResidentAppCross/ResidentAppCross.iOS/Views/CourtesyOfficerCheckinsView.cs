@@ -27,6 +27,7 @@ namespace ResidentAppCross.iOS
                 {
                    
                     _mapSection = Formals.Create<MapSection>();
+                    _mapSection.MapView.Delegate = new PropertyMapViewDelegate();
                     _mapSection.MapView.MapType = MKMapType.SatelliteFlyover;
                     _mapSection.HeightConstraint.Constant = 400;
                     _mapSection.HeaderLabel.Text = "Checkin Locations";
@@ -92,5 +93,36 @@ namespace ResidentAppCross.iOS
 
         //add to con
         public bool CurrentLocationUpdated { get; set; }
+    }
+
+    public class PropertyMapViewDelegate :MKMapViewDelegate
+    {
+        private string annotationId = "LocationAnnotationView";
+
+        public override MKAnnotationView GetViewForAnnotation(MKMapView mapView, IMKAnnotation annotation)
+        {
+            MKAnnotationView annotationView = null;
+
+            if (annotation is MKUserLocation)
+                return null;
+
+            if (annotation is LocationBindingModelAnnotation)
+            {
+
+                // show conference annotation
+                annotationView = mapView.DequeueReusableAnnotation(annotationId);
+
+                if (annotationView == null)
+                    annotationView = new MKAnnotationView(annotation, annotationId);
+
+                annotationView.Image = UIImage.FromBundle("MaintenaceIcon");
+                annotationView.CanShowCallout = true;
+            }
+
+            return annotationView;
+            //var result =  base.GetViewForAnnotation(mapView, annotation);
+            //result.Image = UIImage.FromBundle("MaintenaceIcon");
+            //return result;
+        }
     }
 }

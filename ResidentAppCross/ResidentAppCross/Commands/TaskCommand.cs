@@ -92,7 +92,7 @@ namespace ResidentAppCross.Commands
             }
             else
             {
-                _owner.CompleteTask();
+                _owner.CompleteTask(CompleteHandler);
             }
         }
 

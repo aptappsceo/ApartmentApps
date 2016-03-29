@@ -38,6 +38,10 @@ namespace ResidentAppCross
         public LoginFormViewModel(ILoginManager loginManager)
         {
             LoginManager = loginManager;
+            if (loginManager.IsLoggedIn)
+            {
+                LoginCommand.Execute(null);
+            }
         }
 
         public ICommand LoginCommand
@@ -52,9 +56,13 @@ namespace ResidentAppCross
                     {
                         context.FailTask("Invalid login or password!");
                     }
+                    else
+                    {
+                        
+                    }
                 })
                 .OnStart("Logging In...")
-                .OnComplete("Logged In!", () => ShowViewModel<HomeMenuViewModel>(homeViewModel =>
+                .OnComplete(null, () => ShowViewModel<HomeMenuViewModel>(homeViewModel =>
                 {
                     homeViewModel.Username = Username;
                 }));

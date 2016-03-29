@@ -361,5 +361,35 @@ namespace ApartmentApps.Client
             Microsoft.Rest.HttpOperationResponse<string> result = await operations.SetPasswordWithOperationResponseAsync(model, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IAccount.
+        /// </param>
+        /// <param name='image'>
+        /// Required.
+        /// </param>
+        public static object SetProfilePicture(this IAccount operations, string image)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAccount)s).SetProfilePictureAsync(image);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IAccount.
+        /// </param>
+        /// <param name='image'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<object> SetProfilePictureAsync(this IAccount operations, string image, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<object> result = await operations.SetProfilePictureWithOperationResponseAsync(image, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
     }
 }

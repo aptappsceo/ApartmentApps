@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Security;
+using ApartmentApps.Api;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -26,14 +27,30 @@ namespace ApartmentApps.API.Service.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApartmentAppsApiController
     {
+        private readonly IBlobStorageService _blobStorage;
+
+        [HttpPost]
+        [Route("SetProfilePicture")]
+        public void SetProfilePicture(string image)
+        {
+            var images = Convert.FromBase64String(image);
+            var imageKey = $"{Guid.NewGuid()}.{CurrentUser.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
+            var filename = _blobStorage.UploadPhoto(images, imageKey);
+
+            CurrentUser.ImageUrl = filename;
+            CurrentUser.ImageThumbnailUrl = filename;
+
+            Context.SaveChanges();
+
+        }
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
 
-        public AccountController(ApplicationUserManager userManager, ApplicationDbContext context) : base(context)
+        public AccountController(ApplicationUserManager userManager, ApplicationDbContext context, IBlobStorageService blobStorage) : base(context)
         {
+            _blobStorage = blobStorage;
             UserManager = userManager;
-
         }
 
         public ApplicationUserManager UserManager
@@ -78,6 +95,8 @@ namespace ApartmentApps.API.Service.Controllers
                 Roles = await UserManager.GetRolesAsync(User.Identity.GetUserId()),
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
+                ImageUrl = _blobStorage.GetPhotoUrl(CurrentUser.ImageUrl),
+                ImageThumbnailUrl = _blobStorage.GetPhotoUrl(CurrentUser.ImageThumbnailUrl),
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
         }

@@ -31,7 +31,7 @@ namespace ResidentAppCross.iOS
 			//Hide navbars
 
 			MenuTable.Source = new HomeMenuTableSource() { Items = ViewModel.MenuItems.ToArray() };
-
+		    this.EditProfileButton.TouchUpInside += (sender, args) => ViewModel.EditProfileCommand.Execute(null);
 		    this.SignOutButton.TouchUpInside += (sender, args) => ViewModel.SignOutCommand.Execute(null);
 		    // Perform any additional setup after loading the view, typically from a nib.
 		}

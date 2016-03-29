@@ -126,7 +126,7 @@ namespace ResidentAppCross.iOS.Views
             if (prompt)
             {
 
-                var alertView = new UIAlertView(null,label,null ,"Continue");
+                var alertView = new UIAlertView(null, label, null, "Continue");
                 //alertView.DismissWithClickedButtonIndex(alertView.CancelButtonIndex,true);
                 alertView.Clicked += (sender, args) =>
                 {
@@ -140,6 +140,10 @@ namespace ResidentAppCross.iOS.Views
 //                var alertWithBody = MBAlertView.AlertWithBody(label, "Continue", () => onPrompted?.Invoke());
 //                alertWithBody.BackgroundAlpha = 0.7f;
 //                alertWithBody.AddToDisplayQueue();
+            }
+            else
+            {
+                onPrompted?.Invoke();
             }
         }
 

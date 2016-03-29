@@ -109,5 +109,13 @@ namespace ApartmentApps.Client
         /// Cancellation token.
         /// </param>
         Task<HttpOperationResponse<string>> SetPasswordWithOperationResponseAsync(SetPasswordBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='image'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> SetProfilePictureWithOperationResponseAsync(string image, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

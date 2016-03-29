@@ -30,16 +30,42 @@ public class App : MvxApplication
         Mvx.ConstructAndRegisterSingleton<IImageService, ImageService>();
         Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
         //Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
-        Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
+        
         //Mvx.RegisterSingleton<ILocationService,LocationService>();
         var client = new ApartmentAppsClient();
         //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);
-        Mvx.RegisterSingleton<ILoginManager>(new LoginService(client));
+        var loginService = new LoginService(client);
+        Mvx.RegisterSingleton<ILoginManager>(loginService);
+        //if (loginService.IsLoggedIn)
+        //{
+        //    Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<HomeMenuViewModel>());
+        //}
+        //else
+        //{
+            Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
+
+        //}
        
-
     }
-
+    public class CustomAppStart
+       : MvxNavigatingObject
+       , IMvxAppStart
+    {
+        public void Start(object hint = null)
+        {
+            var auth = Mvx.Resolve<ILoginManager>();
+            if (!auth.IsLoggedIn)
+            {
+                ShowViewModel<LoginFormViewModel>();
+            }
+            else
+            {
+                //ShowViewModel<LoginFormViewModel>();
+                ShowViewModel<HomeMenuViewModel>();
+            }
+        }
+    }
     public class ApartmentAppsClient : ApartmentAppsAPIService 
     {
         public ApartmentAppsClient() : base(new Uri("http://apartmentappsapiservice.azurewebsites.net"), new AparmentAppsDelegating())
@@ -82,18 +108,12 @@ public class App : MvxApplication
 
         }
 
-     
+        public static Func<string> GetAuthToken { get; set; }
 
-        public class AparmentAppsDelegating : DelegatingHandler
-        {
-            public static string AuthorizationKey { get; set; }
+        public static Action<string> SetAuthToken { get; set; }
 
 
-            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                request.Headers.Add("Authorization", "Bearer " + AuthorizationKey);
-                return base.SendAsync(request, cancellationToken);
-            }
-        }
     }
+
+
 }
