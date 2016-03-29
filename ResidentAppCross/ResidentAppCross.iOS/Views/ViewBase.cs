@@ -14,6 +14,7 @@ using ResidentAppCross.Events;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.Interfaces;
+using SCLAlertViewLib;
 using UIKit;
 
 namespace ResidentAppCross.iOS.Views
@@ -49,6 +50,7 @@ namespace ResidentAppCross.iOS.Views
         {
            
         }
+
 
         protected List<ViewAttribute> OwnViewAttributes
         {
@@ -113,33 +115,64 @@ namespace ResidentAppCross.iOS.Views
 
     public static class ViewExtensions
     {
+        private static SCLAlertView _waitingView;
+
+        public static SCLAlertView WaitingView
+        {
+            get { return _waitingView ?? (_waitingView = new SCLAlertView()
+            {
+                ShowAnimationType = SCLAlertViewShowAnimation.FadeIn,
+                HideAnimationType = SCLAlertViewHideAnimation.FadeOut,
+                CustomViewColor = AppTheme.SecondaryBackgoundColor
+            }); }
+            set { _waitingView = value; }
+        }
+
+        public static NSTimer BackgroundTaskProgressTimer { get; set; }
+
         public static void SetTaskRunning(this ViewBase view, string label, bool block = true)
         {
+            view.View?.EndEditing(true);
             if (block)
-                BTProgressHUD.Show("", () => { }, label, -1f, ProgressHUD.MaskType.Black);
+            {
+                BackgroundTaskProgressTimer  = NSTimer.CreateScheduledTimer(TimeSpan.FromMilliseconds(ShowProgressAfter),
+                    x =>
+                    {
+                        view.InvokeOnMainThread(() =>
+                        {
+                            WaitingView.ShowWaiting(view, "Please, wait", label, null, 0);
+                        });
+                    });
+
+
+                //alert.AlertIsDismissed(() => { onPrompted?.Invoke(); });
+            }
+                //BTProgressHUD.Show("", () => { }, label, -1f, ProgressHUD.MaskType.Black);
         }
+
+        public static double ShowProgressAfter = 500f;
 
         public static void SetTaskComplete(this ViewBase view, bool prompt, string label = null,
             Action onPrompted = null)
         {
-            BTProgressHUD.Dismiss();
+            if(WaitingView.IsVisible) WaitingView.HideView();
+            if (BackgroundTaskProgressTimer != null)
+            {
+                BackgroundTaskProgressTimer.Dispose();
+                BackgroundTaskProgressTimer = null;
+            }
             if (prompt)
             {
-
-                var alertView = new UIAlertView(null, label, null, "Continue");
-                //alertView.DismissWithClickedButtonIndex(alertView.CancelButtonIndex,true);
-                alertView.Clicked += (sender, args) =>
+                view.InvokeOnMainThread(() =>
                 {
-                    if (args.ButtonIndex == alertView.CancelButtonIndex)
-                    {
-                        onPrompted?.Invoke();
-                    }
-                };
-
-                alertView.Show();
-//                var alertWithBody = MBAlertView.AlertWithBody(label, "Continue", () => onPrompted?.Invoke());
-//                alertWithBody.BackgroundAlpha = 0.7f;
-//                alertWithBody.AddToDisplayQueue();
+                    var alert = new SCLAlertView();
+                    alert.ShowAnimationType = SCLAlertViewShowAnimation.FadeIn;
+                    alert.HideAnimationType = SCLAlertViewHideAnimation.FadeOut;
+                    //alert.CustomViewColor = AppTheme.SecondaryBackgoundColor;
+                    alert.AlertIsDismissed(() => { onPrompted?.Invoke(); });
+                    alert.AddTimerToButtonIndex(0);
+                    alert.ShowSuccess(view, "Success", label, "Ok", 2.5f);
+                });
             }
             else
             {
@@ -150,15 +183,27 @@ namespace ResidentAppCross.iOS.Views
         public static void SetTaskFailed(this ViewBase view, bool prompt, string label = null, Exception reson = null,
             Action<Exception> onPrompted = null)
         {
-            BTProgressHUD.Dismiss();
+            if (WaitingView.IsVisible) WaitingView.HideView(); //Release progress
+            if (BackgroundTaskProgressTimer != null) //Release timer
+            {
+                BackgroundTaskProgressTimer.Dispose();
+                BackgroundTaskProgressTimer = null;
+            }
             if (prompt)
             {
-                var alertWithBody = MBAlertView.AlertWithBody(label, "Ok", () =>
+                view.InvokeOnMainThread(() =>
                 {
-                    onPrompted?.Invoke(reson);
+                    var alert = new SCLAlertView();
+                    alert.ShowAnimationType = SCLAlertViewShowAnimation.FadeIn;
+                    alert.HideAnimationType = SCLAlertViewHideAnimation.FadeOut;
+                    alert.AlertIsDismissed(() => { onPrompted?.Invoke(reson); });
+                    //alert.CustomViewColor = AppTheme.SecondaryBackgoundColor;
+                    alert.ShowError(view, "Oops!", label, "Ok", 5f);
                 });
-                alertWithBody.BackgroundAlpha = 0.7f;
-                alertWithBody.AddToDisplayQueue();
+            }
+            else
+            {
+                onPrompted?.Invoke(reson);
             }
         }
 

@@ -89,5 +89,17 @@ namespace ResidentAppCross.iOS.Views
             return new CGRect(frame.X, frame.Y, width, height);
         }
 
+        public static UIView FindFirstResponder(this UIView view)
+        {
+            if (view.IsFirstResponder) return view;
+
+            foreach (var subview in view.Subviews)
+            {
+                var firstReponder = subview.FindFirstResponder();
+                if (firstReponder != null) return firstReponder;
+            }
+
+            return null;
+        }
     }
 }

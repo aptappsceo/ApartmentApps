@@ -2,6 +2,7 @@ using Foundation;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.ObjectModel;
+using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.TableSources;
 using UIKit;
 
@@ -36,8 +37,12 @@ namespace ResidentAppCross.iOS
 	        {
 	            if (_indicator == null)
 	            {
-	                _indicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.Gray);
-	            }
+                    _indicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.White);
+                    _indicator.Color = AppTheme.SecondaryBackgoundColor;
+                    _indicator.BackgroundColor = new UIColor(1f,1f,1f,0.6f);
+                    _indicator.HidesWhenStopped = true;
+                    _indicator.StartAnimating();
+                }
                 return _indicator;
 	        }
 	        set { _indicator = value; }
@@ -58,11 +63,20 @@ namespace ResidentAppCross.iOS
 	    {
 	        if (loading)
 	        {
-	            //TableView.TableHeaderView = Indicator;
-	            //UIView.Transition(TableView, Indicator, 0.35f, UIViewAnimationOptions.TransitionFlipFromBottom, () => { });
-	        }
-	        else
+                Table.AddSubview(Indicator);
+	            Table.UserInteractionEnabled = false;
+                Indicator.Frame = Table.Bounds;
+                Indicator.StartAnimating();
+                
+                
+                
+                //TableView.TableHeaderView = Indicator;
+                //UIView.Transition(TableView, Indicator, 0.35f, UIViewAnimationOptions.TransitionFlipFromBottom, () => { });
+            }
+            else
 	        {
+                Indicator.RemoveFromSuperview();
+                Table.UserInteractionEnabled = true;
                 //TableView.TableHeaderView = null;
                 //UIView.Transition(Indicator, TableView, 0.35f, UIViewAnimationOptions.TransitionFlipFromBottom, () => { });
             }

@@ -245,7 +245,7 @@ namespace ResidentAppCross.iOS
                     };
 
 
-            var source = new GenericTableSource()
+                    var source = new GenericTableSource()
                     {
                         Items = ViewModel.Checkins, //Deliver data
                         Binding = tableDataBinding, //Deliver binding
@@ -286,9 +286,6 @@ namespace ResidentAppCross.iOS
         {
             base.BindForm();
             var b = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
-
-
-
 
             //Schedule Section
             b.Bind(ScheduleSection.Button).For("Title").To(vm => vm.SelectScheduleDateActionLabel);
@@ -349,7 +346,11 @@ namespace ResidentAppCross.iOS
 
             this.OnViewModelEvent<MaintenanceRequestStatusUpdated>(updated =>
             {
-                InvokeOnMainThread(()=>CheckinsSection.ReloadData());
+                InvokeOnMainThread(() =>
+                {
+                    RefreshContent();
+                    CheckinsSection.ReloadData();
+                });
             });
 
             TabSection.BindTo(new List<RequestStatusDisplayMode>() {RequestStatusDisplayMode.Status, RequestStatusDisplayMode.History},i=>i.ToString(),i=>"MaintenaceIcon",i=>null,
@@ -401,7 +402,6 @@ namespace ResidentAppCross.iOS
             else
             {
                 SectionContainerGesturesEnabled = false;
-
                 content.Add(CheckinsSection);
             }
         }
@@ -411,9 +411,7 @@ namespace ResidentAppCross.iOS
             base.LayoutContent();
             if (DisplayModel == RequestStatusDisplayMode.History)
             {
-                SectionsContainer.AddConstraints(
-                    CheckinsSection.WithSameHeight(SectionsContainer)
-                    );
+                SectionsContainer.AddConstraints(CheckinsSection.WithSameHeight(SectionsContainer));
             }
         }
     }

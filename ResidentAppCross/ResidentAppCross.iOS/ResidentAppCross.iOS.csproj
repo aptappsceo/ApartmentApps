@@ -110,9 +110,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="MBProgressHUD, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\mbprogresshud.0.9.2.0\lib\Xamarin.iOS\MBProgressHUD.dll</HintPath>
-    </Reference>
     <Reference Include="MvvmCross.Binding, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\MvvmCross.Binding.4.0.0\lib\Xamarin.iOS10\MvvmCross.Binding.dll</HintPath>
     </Reference>
@@ -598,6 +595,10 @@
       <Project>{84E46F6D-1424-48B7-8966-B6FD6153FEE3}</Project>
       <Name>ResidentAppCross</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SCLAlertViewLib\SCLAlertViewLib.csproj">
+      <Project>{ee36dd11-4f2c-4d9e-a8a7-7ec647b2ad9f}</Project>
+      <Name>SCLAlertViewLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\TimelineEnd.png" />
@@ -621,5 +622,8 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\avatar-placeholder.png" />
   </ItemGroup>
 </Project>

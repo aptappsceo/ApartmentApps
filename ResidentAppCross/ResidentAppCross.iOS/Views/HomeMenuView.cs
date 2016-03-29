@@ -2,9 +2,11 @@
 using System.Linq;
 using CoreGraphics;
 using Foundation;
+using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
+using SDWebImage;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -15,9 +17,44 @@ namespace ResidentAppCross.iOS
 	{
 		public HomeMenuView () : base ("HomeMenuView", null)
 		{
+            this.DelayBind(() =>
+            {
+
+                this.OnViewModelEvent<UserInfoUpdated>(evt =>
+                {
+                    InvokeOnMainThread(()=>UpdateAvatar());
+                });
+            });
 		}
 
-		public new HomeMenuViewModel ViewModel
+        private void UpdateAvatar()
+        {
+            if (ViewModel.ProfileImageUrl != null)
+            {
+
+
+
+                var activityIndicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.White);
+                activityIndicator.Color = AppTheme.SecondaryBackgoundColor;
+                UsernameAvatarImage.AddSubview(activityIndicator);
+                activityIndicator.Frame = UsernameAvatarImage.Bounds;
+                activityIndicator.HidesWhenStopped = true;
+                activityIndicator.StartAnimating();
+                //using (var data = NSData.FromUrl(new NSUrl(ViewModel.ProfileImageUrl)))
+                UsernameAvatarImage.SetImage(
+                    url: new NSUrl(ViewModel.ProfileImageUrl), 
+                    placeholder: UIImage.FromFile("avatar-placeholder.png"),
+                    completedBlock: (image, error, type, url) =>
+                    {
+                        activityIndicator.RemoveFromSuperview();
+                    });
+
+      
+    //);
+            }
+        }
+
+        public new HomeMenuViewModel ViewModel
 		{
 			get { return (HomeMenuViewModel) base.ViewModel; }
 			set { base.ViewModel = value; }
@@ -32,34 +69,26 @@ namespace ResidentAppCross.iOS
 			//Hide navbars
 
 			MenuTable.Source = new HomeMenuTableSource() { Items = ViewModel.MenuItems.ToArray() };
+		    MenuTable.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 		    this.EditProfileButton.TouchUpInside += (sender, args) => ViewModel.EditProfileCommand.Execute(null);
 		    this.SignOutButton.TouchUpInside += (sender, args) => ViewModel.SignOutCommand.Execute(null);
 		    // Perform any additional setup after loading the view, typically from a nib.
 		}
 
-        public override void ViewWillAppear(bool animated)
+
+        public override void ViewWillLayoutSubviews()
         {
-            base.ViewWillAppear(animated);
-
-            UsernameAvatarImage.Layer.MasksToBounds = true;
-            UsernameAvatarImage.Layer.CornerRadius = UsernameAvatarImage.Frame.Width/2;
-            if (ViewModel.ProfileImageUrl != null)
-            {
-                using (var data = NSData.FromUrl(new NSUrl(ViewModel.ProfileImageUrl)))
-                    UsernameAvatarImage.Image = UIImage.LoadFromData(data);
-            }
-          
-            UsernameAvatarImage.Layer.BorderWidth = 4f;
-            UsernameAvatarImage.Layer.BorderColor = new CGColor(1f,1f,1f);
-        }
-
-        public override void ViewDidAppear(bool animated)
-	    {
-	        base.ViewDidAppear(animated);
+            base.ViewWillLayoutSubviews();
             UsernameAvatarImage.Layer.MasksToBounds = true;
             UsernameAvatarImage.Layer.CornerRadius = UsernameAvatarImage.Frame.Width / 2;
             UsernameAvatarImage.Layer.BorderWidth = 4f;
             UsernameAvatarImage.Layer.BorderColor = new CGColor(1f, 1f, 1f);
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            UpdateAvatar();
         }
 
         public override void DidReceiveMemoryWarning ()

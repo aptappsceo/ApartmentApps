@@ -6,6 +6,7 @@ using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
+using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ServiceClient;
@@ -19,12 +20,14 @@ namespace ResidentAppCross
     {
         private readonly ILoginManager _loginManager;
         private readonly IImageService _imageService;
+        private readonly IDialogService _dialogService;
         public IApartmentAppsAPIService Data { get; set; }
 
-        public HomeMenuViewModel(IApartmentAppsAPIService data, ILoginManager loginManager, IImageService imageService)
+        public HomeMenuViewModel(IApartmentAppsAPIService data, ILoginManager loginManager, IImageService imageService, IDialogService dialogService)
         {
             _loginManager = loginManager;
             _imageService = imageService;
+            _dialogService = dialogService;
             Data = data;
 
             if (loginManager.UserInfo.Roles.Contains("Maintenance"))
@@ -128,14 +131,17 @@ namespace ResidentAppCross
             set { SetProperty(ref _menuItems, value); }
         }
 
-        public ICommand EditProfileCommand => new MvxCommand( () =>
+        public ICommand EditProfileCommand => new MvxCommand(async () =>
         {
-            this._imageService.SelectImage(async (image) =>
-            {
-                await Data.Account.SetProfilePictureWithOperationResponseAsync(
+
+            var image = await _dialogService.OpenImageDialog();
+            if (image == null) return;
+            await Data.Account.SetProfilePictureWithOperationResponseAsync(
                     Convert.ToBase64String(image));
-                _loginManager.RefreshUserInfo();
-            }, null);
+            _loginManager.RefreshUserInfo();
+        
+            this.Publish(new UserInfoUpdated(this));
+            
         });
 
         public ICommand OpenSettingsCommand => StubCommands.NoActionSpecifiedCommand(this);
@@ -193,5 +199,13 @@ namespace ResidentAppCross
         public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);
 
         public string ProfileImageUrl => this._loginManager.UserInfo.ImageUrl;
+    }
+
+    public class UserInfoUpdated : MvxMessage
+    {
+        public UserInfoUpdated(object sender) : base(sender)
+        {
+
+        }
     }
 }

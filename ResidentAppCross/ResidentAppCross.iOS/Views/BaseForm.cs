@@ -368,6 +368,8 @@ namespace ResidentAppCross.iOS.Views
 
         public virtual void LayoutContent()
         {
+            if (!SectionsContainer.Subviews.Any()) return;
+
             var constraints = SectionsContainer.VerticalStackPanelConstraints(
              new Margins(0, 0, 0, 25, 0, VerticalSectionsSpacing),
              SectionsContainer.Subviews).ToArray();

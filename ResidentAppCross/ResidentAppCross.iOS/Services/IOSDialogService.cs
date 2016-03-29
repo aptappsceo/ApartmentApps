@@ -3,15 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Binding.iOS.Views;
 using MvvmCross.Platform.Core;
 using MvvmCross.Platform.iOS;
+using MvvmCross.Plugins.PictureChooser.iOS;
 using ObjCRuntime;
 using ResidentAppCross.Extensions;
 using ResidentAppCross.iOS.Views;
@@ -19,6 +23,7 @@ using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
+using SCLAlertViewLib;
 using SharpMobileCode.ModalPicker;
 using UIKit;
 using ZXing;
@@ -29,6 +34,9 @@ namespace ResidentAppCross.iOS.Services
     public class IOSDialogService : IDialogService
     {
         private IMvxMainThreadDispatcher _dispatcher;
+        private UIImagePickerController _imagePickerController;
+        private int _maxPixelDimension;
+        private float _percentQuality;
         public UIWindow KeyWindow => UIApplication.SharedApplication.KeyWindow;
         public UINavigationController RootController => KeyWindow.RootViewController as UINavigationController;
         public UIViewController CurrentController => KeyWindow.RootViewController.PresentedViewController;
@@ -255,7 +263,144 @@ namespace ResidentAppCross.iOS.Services
             });
 
         }
-    
+
+        public Task<byte[]> OpenImageDialog()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                PhotoPickEvent = new ManualResetEvent(false);
+                PhotoData = null;
+                Dispatcher.RequestMainThreadAction(() =>
+                {
+                    var shouldCancel = true;
+                    var newController = new SCLAlertView();
+
+                    if (UIImagePickerController.IsSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
+                    newController.AddButton("Take Photo", ()=> UIImagePickerController.IsSourceTypeAvailable(UIImagePickerControllerSourceType.Camera), () =>
+                    {
+                        StartImagePickingDialog(UIImagePickerControllerSourceType.Camera);
+                        shouldCancel = false;
+                    });
+
+                    if(UIImagePickerController.IsSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary))
+                    newController.AddButton("Photo Library", () =>
+                    {
+                        StartImagePickingDialog(UIImagePickerControllerSourceType.PhotoLibrary);
+                        shouldCancel = false;
+                    });
+
+                    if(UIImagePickerController.IsSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum))
+                    newController.AddButton("Saved Photos", () =>
+                    {
+                        StartImagePickingDialog(UIImagePickerControllerSourceType.SavedPhotosAlbum);
+                        shouldCancel = false;
+                    });
+                     
+                    newController.ShouldDismissOnTapOutside = true;
+                    newController.ShowAnimationType = SCLAlertViewShowAnimation.FadeIn;
+                    newController.HideAnimationType = SCLAlertViewHideAnimation.FadeOut;
+                    newController.CustomViewColor = AppTheme.SecondaryBackgoundColor;
+                    newController.AlertIsDismissed(() =>
+                    {
+                        //newController.DismissViewController(true, () => { });
+                        NSTimer.CreateScheduledTimer(TimeSpan.FromMilliseconds(50), x =>
+                        {
+                            if (shouldCancel) PhotoPickEvent.Set();
+                        });
+                    });
+                    newController.ShowEdit(TopController,"Select Photo","What photo source would you like to use?","Cancel",0);
+
+                    //TopController.PresentViewController(newController, true, () => { });
+
+                });
+                PhotoPickEvent.WaitOne();
+                return PhotoData;
+            });
+        }
+
+        public UIImagePickerController ImagePickerController
+        {
+            get
+            {
+                if (_imagePickerController == null)
+                {
+
+                    _imagePickerController = new UIImagePickerController();
+                    NavbarStyling.ApplyToNavigationController(_imagePickerController);
+
+                    _imagePickerController.FinishedPickingImage += (o, args) =>
+                    {
+                        OnImagePick(o, args);
+                        PhotoPickEvent?.Set();
+                        _imagePickerController.DismissViewController(true, () => { });
+                    };
+                    _imagePickerController.FinishedPickingMedia += (o, args) =>
+                    {
+                        OnMediaPick(o, args);
+                        PhotoPickEvent?.Set();
+                        _imagePickerController.DismissViewController(true, () => { });
+                    };
+                    _imagePickerController.Canceled += (sender, args) =>
+                    {
+                        PhotoPickEvent?.Set();
+                        _imagePickerController.DismissViewController(true, () => { });
+                    };
+                }
+                return _imagePickerController;
+            }
+        }
+
+        private void StartImagePickingDialog(UIImagePickerControllerSourceType sourceType)
+        {
+
+            ImagePickerController.SourceType = sourceType;
+            TopController.PresentViewController(ImagePickerController, true, () => { });
+        }
+
+        private void HandleUIImagePick(UIImage image)
+        {
+            if (image != null)
+            {
+                int num;
+                if (_maxPixelDimension > 0)
+                {
+                    CGSize size = image.Size;
+                    if (!(size.Height > _maxPixelDimension))
+                    {
+                        size = image.Size;
+                        num = size.Width > _maxPixelDimension ? 1 : 0;
+                    }
+                    else
+                        num = 1;
+                }
+                else
+                    num = 0;
+                if (num != 0)
+                    image = image.ImageToFitSize(new CGSize(_maxPixelDimension, this._maxPixelDimension));
+                using (NSData nsData = image.AsJPEG(_percentQuality / 100f))
+                {
+                    byte[] numArray = new byte[(ulong)nsData.Length];
+                    Marshal.Copy(nsData.Bytes, numArray, 0, Convert.ToInt32((ulong)nsData.Length));
+                    MemoryStream memoryStream1 = new MemoryStream(numArray, false);
+
+                    PhotoData = memoryStream1.ToArray();
+                }
+            }
+        }
+
+        private ManualResetEvent PhotoPickEvent;
+        private byte[] PhotoData;
+
+        private void OnMediaPick(object sender, UIImagePickerMediaPickedEventArgs e)
+        {
+            HandleUIImagePick(e.OriginalImage ?? e.EditedImage);
+        }
+
+        private void OnImagePick(object sender, UIImagePickerImagePickedEventArgs e)
+        {
+            HandleUIImagePick(e.Image);
+        }
+
     }
 }
 

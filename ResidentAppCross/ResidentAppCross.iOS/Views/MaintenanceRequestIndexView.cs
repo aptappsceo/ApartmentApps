@@ -27,6 +27,7 @@ namespace ResidentAppCross.iOS.Views
         private GenericTableSource _tableItemSource;
         private GenericTableSource _tableFiltersSource;
 
+        public override string Title => "Request Index";
 
         public TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel> TableItemsBinding
         {
