@@ -16,9 +16,6 @@ namespace ResidentAppCross.iOS
 		UIKit.UILabel AppTitleLabel { get; set; }
 
 		[Outlet]
-		UIKit.UILabel CopyrightLabel { get; set; }
-
-		[Outlet]
 		UIKit.UIButton EditProfileButton { get; set; }
 
 		[Outlet]
@@ -41,9 +38,9 @@ namespace ResidentAppCross.iOS
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (CopyrightLabel != null) {
-				CopyrightLabel.Dispose ();
-				CopyrightLabel = null;
+			if (AppTitleLabel != null) {
+				AppTitleLabel.Dispose ();
+				AppTitleLabel = null;
 			}
 
 			if (EditProfileButton != null) {
@@ -79,11 +76,6 @@ namespace ResidentAppCross.iOS
 			if (VersionLabel != null) {
 				VersionLabel.Dispose ();
 				VersionLabel = null;
-			}
-
-			if (AppTitleLabel != null) {
-				AppTitleLabel.Dispose ();
-				AppTitleLabel = null;
 			}
 		}
 	}

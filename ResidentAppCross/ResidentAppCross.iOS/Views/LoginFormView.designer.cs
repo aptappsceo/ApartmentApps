@@ -41,9 +41,6 @@ namespace ResidentAppCross.iOS
 
 		[Outlet]
 		UIKit.UITextField PasswordTextField { get; set; }
-
-		[Outlet]
-		UIKit.UILabel VersionLabel { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -57,31 +54,6 @@ namespace ResidentAppCross.iOS
 				_textFieldsContainer = null;
 			}
 
-			if (ForgotPasswordButton != null) {
-				ForgotPasswordButton.Dispose ();
-				ForgotPasswordButton = null;
-			}
-
-			if (LoginButton != null) {
-				LoginButton.Dispose ();
-				LoginButton = null;
-			}
-
-			if (LoginTextField != null) {
-				LoginTextField.Dispose ();
-				LoginTextField = null;
-			}
-
-			if (PasswordTextField != null) {
-				PasswordTextField.Dispose ();
-				PasswordTextField = null;
-			}
-
-			if (VersionLabel != null) {
-				VersionLabel.Dispose ();
-				VersionLabel = null;
-			}
-
 			if (AppTitleLabel != null) {
 				AppTitleLabel.Dispose ();
 				AppTitleLabel = null;
@@ -92,14 +64,34 @@ namespace ResidentAppCross.iOS
 				AppVersionLabel = null;
 			}
 
-			if (NewHereLabel != null) {
-				NewHereLabel.Dispose ();
-				NewHereLabel = null;
+			if (ForgotPasswordButton != null) {
+				ForgotPasswordButton.Dispose ();
+				ForgotPasswordButton = null;
+			}
+
+			if (LoginButton != null) {
+				LoginButton.Dispose ();
+				LoginButton = null;
 			}
 
 			if (LoginImage != null) {
 				LoginImage.Dispose ();
 				LoginImage = null;
+			}
+
+			if (LoginTextField != null) {
+				LoginTextField.Dispose ();
+				LoginTextField = null;
+			}
+
+			if (NewHereLabel != null) {
+				NewHereLabel.Dispose ();
+				NewHereLabel = null;
+			}
+
+			if (PasswordTextField != null) {
+				PasswordTextField.Dispose ();
+				PasswordTextField = null;
 			}
 		}
 	}
