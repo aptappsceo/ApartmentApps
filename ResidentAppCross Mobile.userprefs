@@ -1,6 +1,6 @@
 ﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/LinkerPleaseInclude.cs">
     <Files>
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/LinkerPleaseInclude.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
