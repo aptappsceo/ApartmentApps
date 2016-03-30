@@ -29,6 +29,11 @@ namespace ResidentAppCross.iOS
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (_headerHeightConstraint != null) {
+				_headerHeightConstraint.Dispose ();
+				_headerHeightConstraint = null;
+			}
+
 			if (_headerTitle != null) {
 				_headerTitle.Dispose ();
 				_headerTitle = null;
@@ -42,11 +47,6 @@ namespace ResidentAppCross.iOS
 			if (HeaderLabel != null) {
 				HeaderLabel.Dispose ();
 				HeaderLabel = null;
-			}
-
-			if (_headerHeightConstraint != null) {
-				_headerHeightConstraint.Dispose ();
-				_headerHeightConstraint = null;
 			}
 
 			if (SegmentSelector != null) {

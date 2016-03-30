@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -16,9 +16,9 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unit Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H6E-RH-6VN" userLabel="HeaderLabel">
                     <rect key="frame" x="8" y="8" width="490" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="8E8-Jw-kFB"/>
+                        <constraint firstAttribute="height" constant="30" id="8E8-Jw-kFB" userLabel="HeaderSectionHeightConstraint"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -34,7 +34,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="G39-y8-qUj"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -63,13 +63,13 @@
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+1 555 777 999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hw1-9F-scg" userLabel="PhoneLabel">
                             <rect key="frame" x="235" y="139" width="255" height="40"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joshua Brewer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="akH-Fc-rKz" userLabel="TenantNameLabel">
                             <rect key="frame" x="187" y="0.0" width="303" height="131"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -117,6 +117,7 @@
                 <outlet property="_headerLabel" destination="H6E-RH-6VN" id="JCI-tr-S43"/>
                 <outlet property="_phoneIcon" destination="jot-dq-U0X" id="jFk-rQ-xwW"/>
                 <outlet property="_phoneLabel" destination="hw1-9F-scg" id="ZAQ-s1-Fg0"/>
+                <outlet property="_sectionHeaderHeightConstraint" destination="8E8-Jw-kFB" id="wAf-Y6-Pbt"/>
                 <outlet property="_tenantAvatar" destination="p8p-Gm-Uk4" id="h3l-AP-ma2"/>
                 <outlet property="_tenantInformationContainer" destination="I9G-kv-jzt" id="49p-j4-mm3"/>
                 <outlet property="_tenantNameLabel" destination="akH-Fc-rKz" id="ymf-7C-96v"/>
