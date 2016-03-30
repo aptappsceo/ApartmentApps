@@ -13,6 +13,7 @@ using MvvmCross.Core.ViewModels;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Extensions;
+using ResidentAppCross.ServiceClient;
 using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels.Screens
@@ -23,6 +24,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private IApartmentAppsAPIService _appService;
         private IImageService _imageService;
         private IQRService _qrService;
+        private ILoginManager _loginManager;
         private string _comments;
         private DateTime _newRepairDate;
         private int _maintenanceRequestId;
@@ -39,13 +41,15 @@ namespace ResidentAppCross.ViewModels.Screens
         private IDialogService _dialogService;
         private ObservableCollection<MaintenanceCheckinBindingModel> _checkins;
         private MaintenanceCheckinBindingModel _selectedCheckin;
+        private string _tenantAvatarUrl;
 
-        public MaintenanceRequestStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService)
+        public MaintenanceRequestStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService, ILoginManager loginManager)
         {
             _appService = appService;
             _imageService = imageService;
             _qrService = qrService;
             _dialogService = dialogService;
+            _loginManager = loginManager;
         }
 
         public int MaintenanceRequestId
@@ -156,7 +160,7 @@ namespace ResidentAppCross.ViewModels.Screens
                 }));
 
                 SelectScheduleDateActionLabel = Request?.ScheduleDate?.ToString("g") ?? "Select Date";
-
+            TenantAvatarUrl = _loginManager.UserInfo.ImageUrl;
                 ForbidComplete = CurrentMaintenanceRequestStatus != MaintenanceRequestStatus.Started;
                 ForbidPause = CurrentMaintenanceRequestStatus != MaintenanceRequestStatus.Started;
                 ForbitSchedule = CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Complete || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started;
@@ -167,6 +171,12 @@ namespace ResidentAppCross.ViewModels.Screens
             this.Publish(new MaintenanceRequestStatusUpdated(this));
 
         }).OnStart("Loading Request...").OnFail(ex=> { Close(this); });
+
+        public string TenantAvatarUrl
+        {
+            get { return _tenantAvatarUrl; }
+            set { SetProperty(ref _tenantAvatarUrl, value); }
+        }
 
         public ICommand FinishCommmand
         {

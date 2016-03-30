@@ -38,7 +38,7 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
 
 			photoCell.AutosizesSubviews = true;
             photoCell.TranslatesAutoresizingMaskIntoConstraints = false;
-			photoCell.ImageView.ClipsToBounds = true;
+			//photoCell.ImageView.ClipsToBounds = true;
 			photoCell.ImageView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
 			photoCell.LayoutIfNeeded ();
 			photoCell.LayoutSubviews ();
@@ -48,15 +48,22 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
             }
             else
             {
-                photoCell.ImageView.SetImage(
-                    url: new NSUrl(photo.Uri.ToString()),
-					placeholder: UIImage.FromBundle("HouseIcon"),
-					completedBlock: (image, error, type, url) =>{
-						photoCell.LayoutIfNeeded ();
-						photoCell.LayoutSubviews ();
-					}
+                var imageUrl = photo.Uri.ToString();
 
-                );
+                if (photoCell.LoadingUrl != imageUrl)
+                {
+                    photoCell.ImageView.SetImageWithAsyncIndicator(imageUrl,UIImage.FromFile("avatar-placeholder.png"));
+                    photoCell.LoadingUrl = imageUrl;
+                }
+//                photoCell.ImageView.SetImage(
+//                    url: new NSUrl(photo.Uri.ToString()),
+//					placeholder: UIImage.FromBundle("HouseIcon"),
+//					completedBlock: (image, error, type, url) =>{
+//						photoCell.LayoutIfNeeded ();
+//						photoCell.LayoutSubviews ();
+//					}
+//
+//                );
             }
 
             return photoCell;

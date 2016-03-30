@@ -39,11 +39,10 @@ namespace ResidentAppCross.iOS.Views
                     {
                         Bind = (cell, item,index) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = item.Title;
-                            cell.DetailTextLabel.Text = item.Comments;
+                            cell.TextLabel.Text = item.Comments;
+                            cell.DetailTextLabel.Text = $"{item.Title} - {item.StatusId}";
                             cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
                             cell.TextLabel.MinimumScaleFactor = 0.2f;
-
                         },
                         ItemSelected = item =>
                         {
@@ -136,6 +135,7 @@ namespace ResidentAppCross.iOS.Views
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
                     _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
                     _tableSection.Source = TableFiltersSource;
+                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
                     _tableSection.ReloadData();
 
                 }
@@ -152,7 +152,6 @@ namespace ResidentAppCross.iOS.Views
                     _callToActionSection = Formals.Create<CallToActionSection>();
                     _callToActionSection.MainButton.SetTitle("Scan QR Code",UIControlState.Normal);
                     _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
-
                 }
                 return _callToActionSection;
             }
@@ -173,25 +172,14 @@ namespace ResidentAppCross.iOS.Views
 
             //Update table data when collection changes. Heads up for Main Thread!
 
-            this.OnViewModelEvent<RequestsIndexFiltersUpdatedEvent>(_ =>
+            this.OnViewModelEventMainThread<RequestsIndexFiltersUpdatedEvent>(_ =>
             {
-                InvokeOnMainThread(() =>
-                {
                     if(ViewModel.CurrentFilter != null) SetTableToDisplayItems();
                     else SetTableToDisplayFilters();
-                });
             });
 
-            this.OnViewModelEvent<RequestsIndexUpdateStarted>(_ =>
-            {
-                InvokeOnMainThread(()=> TableSection.SetLoading(true));
-            });
-
-            this.OnViewModelEvent<RequestsIndexUpdateFinished>(_ =>
-            {
-                InvokeOnMainThread(()=> TableSection.SetLoading(false));
-            });
-
+            this.OnViewModelEventMainThread<RequestsIndexUpdateStarted>(_ => { TableSection.SetLoading(true); });
+            this.OnViewModelEventMainThread<RequestsIndexUpdateFinished>(_ => { TableSection.SetLoading(false); });
 
             // Plus button to the top right
             this.NavigationItem.SetRightBarButtonItem(new UIBarButtonItem
@@ -203,32 +191,8 @@ namespace ResidentAppCross.iOS.Views
                     }),
                 true);
 
-
-            NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem
-               (
-               "Back", UIBarButtonItemStyle.Plain,
-               (sender, args) =>
-               {
-                   if (ViewModel.CurrentFilter == null)
-                       NavigationController.PopViewController(true);
-                   else ViewModel.CurrentFilter = null;
-               }), true);
-
-
             SetTableToDisplayFilters();
-            //Every form is placed inside of ScrollView (called SectionContainer);
-            //ScrollView and nested TableView do not come along very well:
-            //Row Selection will only work if you tap and hold the row for a few seconds.
-            //This is caused by gesture recognizers on the scroll view.
-
-            //In this particular form, ScrollView does nothing, since form has fixed height
-            //So I just remove all gesture recognizers.
-
-            foreach (var uiGestureRecognizer in SectionsContainer.GestureRecognizers)
-            {
-                SectionsContainer.RemoveGestureRecognizer(uiGestureRecognizer);
-            }
-
+            SectionContainerGesturesEnabled = false;    
         }
 
         public override void GetContent(List<UIView> content)
@@ -241,16 +205,26 @@ namespace ResidentAppCross.iOS.Views
 
         public void SetTableToDisplayFilters()
         {
-
             TableSection.Source = TableFiltersSource;
             TableSection.ReloadDataAnimated(UIViewAnimationOptions.TransitionCrossDissolve);
+            NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, GoBackButtonHandler), true);
         }
 
         public void SetTableToDisplayItems()
         {
-
             TableSection.Source = TableItemSource;
             TableSection.ReloadDataAnimated(UIViewAnimationOptions.TransitionCrossDissolve);
+            NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem("Filters", UIBarButtonItemStyle.Plain,GoBackButtonHandler), true);
+        }
+
+        private void GoBackButtonHandler(object sender, EventArgs args)
+        {
+            if (ViewModel.CurrentFilter == null)
+            {
+                NavigationController.PopViewController(true);
+                return;
+            }
+            ViewModel.CurrentFilter = null;
         }
 
 //

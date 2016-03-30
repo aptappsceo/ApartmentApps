@@ -59,6 +59,7 @@ namespace ResidentAppCross.iOS.Services
 
                 Dispatcher.RequestMainThreadAction(() =>
                 {
+                    ResignFirstReponder();
                     //Proxy collection to store search resultes
                     var filteredResults = new ObservableCollection<T>();
                     filteredResults.AddRange(items);
@@ -148,6 +149,11 @@ namespace ResidentAppCross.iOS.Services
             });
         }
 
+        private void ResignFirstReponder()
+        {
+            TopController?.View?.EndEditing(true);
+        }
+
         public Task<DateTime?> OpenDateTimeDialog(string title)
         {
             return Task.Factory.StartNew(() =>
@@ -163,6 +169,8 @@ namespace ResidentAppCross.iOS.Services
 
                     Dispatcher.RequestMainThreadAction(() =>
                     {
+                        ResignFirstReponder();
+
                         modalPicker = new ModalPickerViewController(ModalPickerType.Date, "Select A Date",
                             TopController)
                         {
@@ -221,6 +229,8 @@ namespace ResidentAppCross.iOS.Services
 
                     Dispatcher.RequestMainThreadAction(() =>
                     {
+                        ResignFirstReponder();
+
                         modalPicker = new ModalPickerViewController(ModalPickerType.Date, "Select A Date",
                             TopController)
                         {
@@ -272,6 +282,8 @@ namespace ResidentAppCross.iOS.Services
                 PhotoData = null;
                 Dispatcher.RequestMainThreadAction(() =>
                 {
+                    ResignFirstReponder();
+
                     var shouldCancel = true;
                     var newController = new SCLAlertView();
 

@@ -48,8 +48,7 @@ namespace ResidentAppCross.iOS.Views
         private static void LoadViewAttributesFor(Type type)
         {
            
-        }
-
+        } 
 
         protected List<ViewAttribute> OwnViewAttributes
         {
@@ -84,25 +83,6 @@ namespace ResidentAppCross.iOS.Views
             this.OnViewModelEvent<TaskFailed>(evt => this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted));
             this.OnViewModelEvent<TaskProgressUpdated>(evt => this.SetTaskProgress(evt.ShouldPrompt, evt.Label));
             OwnViewAttributes.ForEach(a=>a.OnViewLoaded(this));
-        }
-
-
-        public override void PresentModalViewController(UIViewController modalViewController, bool animated)
-        {
-            View?.EndEditing(true);
-            base.PresentModalViewController(modalViewController, animated);
-        }
-
-        public override void PresentViewController(UIViewController viewControllerToPresent, bool animated, Action completionHandler)
-        {
-            View?.EndEditing(true);
-            base.PresentViewController(viewControllerToPresent, animated, completionHandler);
-        }
-
-        public override Task PresentViewControllerAsync(UIViewController viewControllerToPresent, bool animated)
-        {
-            View?.EndEditing(true);
-            return base.PresentViewControllerAsync(viewControllerToPresent, animated);
         }
 
         public override void ViewDidAppear(bool animated)
@@ -151,6 +131,7 @@ namespace ResidentAppCross.iOS.Views
 
         public static void SetTaskRunning(this ViewBase view, string label, bool block = true)
         {
+            view?.View.EndEditing(true);
             if (block && label != null)
             {
                 BackgroundTaskProgressTimer  = NSTimer.CreateScheduledTimer(TimeSpan.FromMilliseconds(ShowProgressAfterMilliseconds),

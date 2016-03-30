@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using CoreGraphics;
+using Foundation;
 using MvvmCross.Plugins.PictureChooser.iOS;
 using Photos;
+using SDWebImage;
 using UIKit;
 
 namespace ResidentAppCross.iOS.Views
@@ -37,6 +39,50 @@ namespace ResidentAppCross.iOS.Views
         public static void SetRightIcon(this UIButton button, string icon, bool resizeToFit = true)
         {
             button.SetRightIcon(UIImage.FromBundle(icon),resizeToFit);
+        }
+
+        public static void ToRounded(this UIImageView view , UIColor borderColor, float borderWith = 4f)
+        {
+            view.Layer.MasksToBounds = true;
+            view.Layer.CornerRadius = view.Frame.Width / 2;
+            view.Layer.BorderWidth = borderWith;
+            view.Layer.BorderColor = borderColor.CGColor;
+        }
+
+        public static void SetImageWithAsyncIndicator(this UIImageView view, string imageUrl, UIImage placeholder)
+        {
+
+            var activityIndicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.White);
+            activityIndicator.Color = UIColor.White;
+            activityIndicator.BackgroundColor = UIColor.Black.ColorWithAlpha(0.7f);
+            view.AddSubview(activityIndicator);
+            activityIndicator.Frame = view.Bounds;
+            activityIndicator.HidesWhenStopped = true;
+            activityIndicator.StartAnimating();
+            //using (var data = NSData.FromUrl(new NSUrl(ViewModel.ProfileImageUrl)))
+            view.SetImage(
+                url: new NSUrl(imageUrl),
+                placeholder: UIImage.FromFile("avatar-placeholder.png"),
+                completedBlock: (image, error, type, url) =>
+                {
+                    UIView.Animate(0.4f, () =>
+                    {
+                        activityIndicator.Alpha = 0;
+
+                    },()=> { activityIndicator.RemoveFromSuperview(); });
+                    //activityIndicator.RemoveFromSuperview();
+                });
+
+
+        }
+
+        public static void Shadow(this UIView view, UIColor color, CGSize shadowoffset, float opacity, float radius)
+        {
+            view.Layer.ShadowColor = color.CGColor;
+            view.Layer.ShadowOffset = shadowoffset;
+            view.Layer.ShadowOpacity = opacity;
+            view.Layer.ShadowRadius = radius;
+            view.ClipsToBounds = false;
         }
 
         public static void SetLeftIcon(this UITextField textField, string iconBundle)

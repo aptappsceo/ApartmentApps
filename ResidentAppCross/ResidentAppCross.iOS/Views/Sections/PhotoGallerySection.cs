@@ -75,22 +75,32 @@ namespace ResidentAppCross.iOS
                 }
                 //StartImageSourceSelectionDialog();
 	        };
-	        UpdatePhotos();
+
+            UpdatePhotos();
 	    }
 
 	    public ImageBundleViewModel Source { get; set; }
 
 	    private void SourceChanged(object sender, NotifyCollectionChangedEventArgs e)
 	    {
-            InvokeOnMainThread(UpdatePhotos);
-        }
+            UpdateThrottleTimer?.Dispose();
+            InvokeOnMainThread(() =>
+	        {
+	            UpdateThrottleTimer = NSTimer.CreateScheduledTimer(TimeSpan.FromMilliseconds(100f), x =>
+	            {
+                    UpdatePhotos();
+                });
+	        });
+	    }
+
+	    public NSTimer UpdateThrottleTimer { get; set; }
 
 	    private void UpdatePhotos()
 	    {
 
             PhotoContainer.LayoutSubviews();
             PhotoContainer.ReloadData();
-
+	        PhotoContainer.ClipsToBounds = false;
             var hasPhotos = Source.RawImages.Any();
             PhotoContainer.Hidden = !hasPhotos;
             HeaderLabel.Text = hasPhotos ? "Photos:" : "No Photos";
