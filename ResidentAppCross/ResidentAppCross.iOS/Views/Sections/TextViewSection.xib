@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -13,10 +12,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tou-lz-HmP" userLabel="TextViewContainer">
-                    <rect key="frame" x="8" y="38" width="584" height="554"/>
+                    <rect key="frame" x="8" y="46" width="584" height="546"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RE8-LS-Hxa" userLabel="TextView">
-                            <rect key="frame" x="1" y="1" width="582" height="552"/>
+                            <rect key="frame" x="1" y="1" width="582" height="544"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -44,7 +43,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottomMargin" secondItem="tou-lz-HmP" secondAttribute="bottom" id="3W2-24-DUH"/>
-                <constraint firstItem="tou-lz-HmP" firstAttribute="top" secondItem="e1x-ie-ZUn" secondAttribute="bottom" id="8ZA-Mn-yuX"/>
+                <constraint firstItem="tou-lz-HmP" firstAttribute="top" secondItem="e1x-ie-ZUn" secondAttribute="bottom" constant="8" symbolic="YES" id="8ZA-Mn-yuX"/>
                 <constraint firstAttribute="trailingMargin" secondItem="e1x-ie-ZUn" secondAttribute="trailing" id="Efp-P4-X1R"/>
                 <constraint firstItem="e1x-ie-ZUn" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="RiR-gb-skZ"/>
                 <constraint firstItem="e1x-ie-ZUn" firstAttribute="top" secondItem="1" secondAttribute="topMargin" id="b7X-rk-wYA"/>
