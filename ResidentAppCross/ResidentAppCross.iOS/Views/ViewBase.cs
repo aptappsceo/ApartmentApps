@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using Foundation;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Views;
@@ -86,6 +87,24 @@ namespace ResidentAppCross.iOS.Views
         }
 
 
+        public override void PresentModalViewController(UIViewController modalViewController, bool animated)
+        {
+            View?.EndEditing(true);
+            base.PresentModalViewController(modalViewController, animated);
+        }
+
+        public override void PresentViewController(UIViewController viewControllerToPresent, bool animated, Action completionHandler)
+        {
+            View?.EndEditing(true);
+            base.PresentViewController(viewControllerToPresent, animated, completionHandler);
+        }
+
+        public override Task PresentViewControllerAsync(UIViewController viewControllerToPresent, bool animated)
+        {
+            View?.EndEditing(true);
+            return base.PresentViewControllerAsync(viewControllerToPresent, animated);
+        }
+
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);
@@ -132,10 +151,9 @@ namespace ResidentAppCross.iOS.Views
 
         public static void SetTaskRunning(this ViewBase view, string label, bool block = true)
         {
-            view.View?.EndEditing(true);
             if (block && label != null)
             {
-                BackgroundTaskProgressTimer  = NSTimer.CreateScheduledTimer(TimeSpan.FromMilliseconds(ShowProgressAfter),
+                BackgroundTaskProgressTimer  = NSTimer.CreateScheduledTimer(TimeSpan.FromMilliseconds(ShowProgressAfterMilliseconds),
                     x =>
                     {
                         view.InvokeOnMainThread(() =>
@@ -151,7 +169,7 @@ namespace ResidentAppCross.iOS.Views
                 //BTProgressHUD.Show("", () => { }, label, -1f, ProgressHUD.MaskType.Black);
         }
 
-        public static double ShowProgressAfter = 500f;
+        public static double ShowProgressAfterMilliseconds = 300f; 
 
         public static void SetTaskComplete(this ViewBase view, bool prompt, string label = null,
             Action onPrompted = null)
@@ -235,6 +253,15 @@ namespace ResidentAppCross.iOS.Views
             view.OnEvent<TMessage>(evt =>
             {
                 if (evt.Sender == view.ViewModel) handler(evt);
+            });
+        }
+
+        public static void OnViewModelEventMainThread<TMessage>(this ViewBase view, Action<TMessage> handler)
+            where TMessage : MvxMessage
+        {
+            view.OnEvent<TMessage>(evt =>
+            {
+                if (evt.Sender == view.ViewModel) view.InvokeOnMainThread(()=> handler(evt));
             });
         }
 

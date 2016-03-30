@@ -70,7 +70,7 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _requestTypeSection = Formals.Create<LabelWithButtonSection>();
                     _requestTypeSection.Label.Text = "Request Type *";
-                    _requestTypeSection.HeightConstraint.Constant = 60;
+                    _requestTypeSection.HeightConstraint.Constant = AppTheme.LabelWithButtonSectionHeight;
                 }
                 return _requestTypeSection;
             }
@@ -84,7 +84,7 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _petStatusSection = Formals.Create<SegmentSelectionSection>();
                     _petStatusSection.Selector.RemoveAllSegments();
-                    _petStatusSection.HeightConstraint.Constant = 120;
+                    _petStatusSection.HeightConstraint.Constant = AppTheme.SegmentSectionHeight;
                     _petStatusSection.Editable = true;
                     _petStatusSection.Selector.ControlStyle = UISegmentedControlStyle.Bezeled;
                 }
@@ -99,7 +99,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeightConstraint.Constant = 200;
+                    _commentsSection.HeightConstraint.Constant = AppTheme.CommentsSectionHeight;
                     _commentsSection.HeaderLabel.Text = "Details & Comments";
                     _commentsSection.SetEditable(true);
                 }
@@ -130,7 +130,7 @@ namespace ResidentAppCross.iOS.Views
                     _entrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
                     _entrancePermissionSection.SubHeaderLabel.Text =
                         "Do you give a permission for tech guys to enter your apartment when you are not at home?";
-                    _entrancePermissionSection.HeightConstraint.Constant = 160;
+                    _entrancePermissionSection.HeightConstraint.Constant = 120;
                     _entrancePermissionSection.Editable = true;
 
                 }

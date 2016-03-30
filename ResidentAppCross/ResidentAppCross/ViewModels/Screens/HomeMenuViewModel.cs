@@ -36,6 +36,7 @@ namespace ResidentAppCross
                 {
                     Name = "Resident Requests",
                     Icon = SharedResources.Icons.MaintenaceIcon,
+                    BadgeLabel = "??",
                     Command = RequestsIndexCommand
                 });
             }
@@ -79,28 +80,26 @@ namespace ResidentAppCross
             {
                 Name = "Maintenance Request",
                 Icon = SharedResources.Icons.MaintenaceIcon,
-                BadgeLabel = "6",
                 Command = MaintenaceRequestCommand
             });
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Request Courtesy Officer",
                 Icon = SharedResources.Icons.OfficerIcon,
-                BadgeLabel = "12",
                 Command = RequestCourtesyOfficerCommand
             });
-            MenuItems.Add(new HomeMenuItemViewModel()
-            {
-                Name = "Pay Rent",
-                Icon = SharedResources.Icons.PayIcon,
-                Command = PayRentCommand
-            });
-            MenuItems.Add(new HomeMenuItemViewModel()
-            {
-                Name = "Community Partners",
-                Icon = SharedResources.Icons.PartnersIcon,
-                Command = CommunityPartnersCommand
-            });
+//            MenuItems.Add(new HomeMenuItemViewModel()
+//            {
+//                Name = "Pay Rent",
+//                Icon = SharedResources.Icons.PayIcon,
+//                Command = PayRentCommand
+//            });
+//            MenuItems.Add(new HomeMenuItemViewModel()
+//            {
+//                Name = "Community Partners",
+//                Icon = SharedResources.Icons.PartnersIcon,
+//                Command = CommunityPartnersCommand
+//            });
         }
 
         public ICommand AlertsCommand
@@ -114,16 +113,10 @@ namespace ResidentAppCross
             }
         }
 
-        public string Username
-        {
-            get { return _username; }
-            set { SetProperty(ref _username, value); }
-        }
-
         private ObservableCollection<HomeMenuItemViewModel> _menuItems =
             new ObservableCollection<HomeMenuItemViewModel>();
 
-        private string _username;
+
 
         public ObservableCollection<HomeMenuItemViewModel> MenuItems
         {
@@ -201,6 +194,7 @@ namespace ResidentAppCross
         public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);
 
         public string ProfileImageUrl => this._loginManager.UserInfo.ImageUrl;
+        public string Username => _loginManager.UserInfo.Email;
     }
 
     public class UserInfoUpdated : MvxMessage

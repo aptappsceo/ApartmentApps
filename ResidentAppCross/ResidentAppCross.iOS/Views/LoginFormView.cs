@@ -42,6 +42,9 @@ namespace ResidentAppCross.iOS
             this.NavigationController.SetNavigationBarHidden(true, true);
 
 
+            AppTitleLabel.Text = AppString.ApplicationTitle;
+            AppVersionLabel.Text = "Version "+NSBundle.MainBundle.InfoDictionary["CFBundleShortVersionString"];
+
         }
 
         public override void ViewDidAppear(bool animated)

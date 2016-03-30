@@ -99,6 +99,13 @@ namespace ResidentAppCross.ViewModels.Screens
             set { _filteredRequests = value; }
         }
 
+        public MaintenanceIndexBindingModel SelectedRequest
+        {
+            get { return _selectedRequest; }
+            set { SetProperty(ref _selectedRequest, value); }
+        }
+
+
         public RequestsIndexFilter CurrentFilter
         {
             get { return _currentFilter; }
@@ -147,11 +154,6 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        public MaintenanceIndexBindingModel SelectedRequest
-        {
-            get { return _selectedRequest; }
-            set { SetProperty(ref _selectedRequest, value); }
-        }
 
         public ICommand OpenSelectedRequestCommand
         {

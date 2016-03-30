@@ -24,6 +24,14 @@ namespace ResidentAppCross.iOS
                 {
                     InvokeOnMainThread(()=>UpdateAvatar());
                 });
+
+                var set = this.CreateBindingSet<HomeMenuView, HomeMenuViewModel>();
+                set.Bind(UsernameLabel).For(l => l.Text).To(vm => vm.Username);
+                set.Apply();
+
+
+                AppTitleLabel.Text = AppString.ApplicationTitle;
+                VersionLabel.Text = AppString.VersionShortVerstion;
             });
 		}
 

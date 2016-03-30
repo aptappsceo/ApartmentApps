@@ -10,6 +10,7 @@ using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
+using MaintenanceRequestStatus = ResidentAppCross.ViewModels.Screens.MaintenanceRequestStatus;
 
 namespace ResidentAppCross.iOS
 {
@@ -171,7 +172,7 @@ namespace ResidentAppCross.iOS
                     _tenantDataSection.PhoneLabel.Text = "+1 777 777 777";
                     _tenantDataSection.TenantAvatar.Image = UIImage.FromBundle("OfficerIcon");
 
-                    _tenantDataSection.HeightConstraint.Constant = 270;;
+                    _tenantDataSection.HeightConstraint.Constant = 180;;
                 }
                 return _tenantDataSection;
             }
@@ -271,10 +272,10 @@ namespace ResidentAppCross.iOS
 
         public void UpdateFooter()
         {
-            var status = ViewModel.CurrentRequestStatus;
-            FooterFinishButton.Hidden = status == RequestStatus.Started;
-            FooterPauseButton.Hidden = status == RequestStatus.Started;
-            FooterStartButton.Hidden = status != RequestStatus.Started;
+            var status = ViewModel.CurrentMaintenanceRequestStatus;
+            FooterFinishButton.Hidden = status == MaintenanceRequestStatus.Started;
+            FooterPauseButton.Hidden = status == MaintenanceRequestStatus.Started;
+            FooterStartButton.Hidden = status != MaintenanceRequestStatus.Started;
         }
 
         public void OnRequestChanged(MaintenanceBindingModel request)
@@ -353,12 +354,12 @@ namespace ResidentAppCross.iOS
                 });
             });
 
-            TabSection.BindTo(new List<RequestStatusDisplayMode>() {RequestStatusDisplayMode.Status, RequestStatusDisplayMode.History},i=>i.ToString(),i=>"MaintenaceIcon",i=>null,
+            TabSection.BindTo(new List<MaintenanceRequestStatusDisplayMode>() {MaintenanceRequestStatusDisplayMode.Status, MaintenanceRequestStatusDisplayMode.History},i=>i.ToString(),i=>"MaintenaceIcon",i=>null,
                 i =>
                 {
                     this.DisplayModel = i;
                       RefreshContent();
-                }, RequestStatusDisplayMode.Status);
+                }, MaintenanceRequestStatusDisplayMode.Status);
 
 
             ViewModel.PropertyChanged += (sender, args) =>
@@ -378,7 +379,7 @@ namespace ResidentAppCross.iOS
             // ViewModel.Photos.RawImages.CollectionChanged += RawImages_CollectionChanged;
         }
 
-        public RequestStatusDisplayMode DisplayModel { get; set; }
+        public MaintenanceRequestStatusDisplayMode DisplayModel { get; set; }
 
         public override UIView FooterView => TabSection;
 
@@ -387,7 +388,7 @@ namespace ResidentAppCross.iOS
             base.GetContent(content);
             this.ScrollRectToVisible(new CGRect(0, 0, 0, 0));
 
-            if (DisplayModel == RequestStatusDisplayMode.Status)
+            if (DisplayModel == MaintenanceRequestStatusDisplayMode.Status)
             {
                 SectionContainerGesturesEnabled = true;
                 content.Add(HeaderSection);
@@ -409,7 +410,7 @@ namespace ResidentAppCross.iOS
         public override void LayoutContent()
         {
             base.LayoutContent();
-            if (DisplayModel == RequestStatusDisplayMode.History)
+            if (DisplayModel == MaintenanceRequestStatusDisplayMode.History)
             {
                 SectionsContainer.AddConstraints(CheckinsSection.WithSameHeight(SectionsContainer));
             }

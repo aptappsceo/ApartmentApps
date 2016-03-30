@@ -55,7 +55,7 @@ namespace ResidentAppCross.iOS
 	    public void FormWillAppear()
 	    {
             TextView.ClipsToBounds = true;
-            TextView.Layer.CornerRadius = 10.0f;
+            TextView.Layer.CornerRadius = 6.0f;
             TextViewContainer.BackgroundColor = UIColor.Clear;
 	        TextView.Layer.BorderColor = AppTheme.SecondaryBackgoundColor.CGColor;
 	        TextView.Layer.BorderWidth = 1f;

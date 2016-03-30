@@ -8,7 +8,7 @@ using ResidentAppCross.Extensions;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
-    public class CheckinDetailsViewModel : ViewModelBase
+    public class MaintenanceCheckinDetailsViewModel : ViewModelBase
     {
 
         private MaintenanceCheckinBindingModel _checkin;

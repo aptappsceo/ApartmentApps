@@ -62,10 +62,7 @@ namespace ResidentAppCross
                     }
                 })
                 .OnStart("Logging In...")
-                .OnComplete(null, () => ShowViewModel<HomeMenuViewModel>(homeViewModel =>
-                {
-                    homeViewModel.Username = Username;
-                }));
+                .OnComplete(null, () => ShowViewModel<HomeMenuViewModel>());
             }
         }
 

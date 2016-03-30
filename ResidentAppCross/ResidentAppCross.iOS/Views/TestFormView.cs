@@ -387,6 +387,8 @@ namespace ResidentAppCross.iOS.Views
             base.BindForm();
         }
 
+
+
         public override void GetContent(List<UIView> content)
         {
             base.GetContent(content);
@@ -400,8 +402,9 @@ namespace ResidentAppCross.iOS.Views
             content.Add(SegmentSelectionSection);
             content.Add(ButtonToolbarSection);
             content.Add(LabelWithLabelSection);
-            content.Add(MapSection);
+            //content.Add(MapSection);
             content.Add(CallToActionSection);
         }
     }
+
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApartmentApps.Client.Models;
+using Cirrious.FluentLayouts.Touch;
+using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Binding.iOS.Views;
@@ -11,6 +13,7 @@ using ObjCRuntime;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.PhotoGallery;
+using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
@@ -19,6 +22,7 @@ using UIKit;
 using ZXing;
 using ZXing.Mobile;
 using ZXing.QrCode.Internal;
+using MaintenanceRequestStatus = ResidentAppCross.ViewModels.Screens.MaintenanceRequestStatus;
 
 namespace ResidentAppCross.iOS
 {
@@ -44,8 +48,10 @@ namespace ResidentAppCross.iOS
         private SegmentSelectionSection _petStatusSection;
         private ToggleSection _entrancePermissionSection;
         private TenantDataSection _tenantDataSection;
+        private UITabBar _typeSelectionSection;
+        private TableSection _tableSection;
 
-        public override string Title => "Incident Report";
+        public override string Title => "Incident Details";
 
         public HeaderSection HeaderSection
         {
@@ -54,10 +60,27 @@ namespace ResidentAppCross.iOS
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromBundle("OfficerIcon");
+                    _headerSection.LogoImage.Image = UIImage.FromFile("PoliceIcon");
                     _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
                 }
                 return _headerSection;
+            }
+        }
+
+        public UITabBar TabSection
+        {
+            get
+            {
+                if (_typeSelectionSection == null)
+                {
+                    _typeSelectionSection = new UITabBar().WithHeight(49, 1000);
+                    _typeSelectionSection.BarStyle = UIBarStyle.BlackOpaque;
+                    _typeSelectionSection.TranslatesAutoresizingMaskIntoConstraints = false;
+                    _typeSelectionSection.BarTintColor = AppTheme.SecondaryBackgoundColor;
+                    _typeSelectionSection.SelectedImageTintColor = UIColor.White;
+                    _typeSelectionSection.TintColor = new UIColor(0.8f, 0.8f, 0.8f, 1);
+                }
+                return _typeSelectionSection;
             }
         }
 
@@ -69,7 +92,7 @@ namespace ResidentAppCross.iOS
                 {
                     _scheduleSection = Formals.Create<LabelWithButtonSection>();
                     _scheduleSection.Label.Text = "Report Date";
-                    _scheduleSection.HeightConstraint.Constant = 60;
+                    _scheduleSection.HeightConstraint.Constant = 40;
                 }
                 return _scheduleSection;
             }
@@ -83,7 +106,7 @@ namespace ResidentAppCross.iOS
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeightConstraint.Constant = 200;
+                    _commentsSection.HeightConstraint.Constant = 170;
                     _commentsSection.HeaderLabel.Text = "Details & Comments";
                 }
                 return _commentsSection;
@@ -125,7 +148,7 @@ namespace ResidentAppCross.iOS
                     _entrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
                     _entrancePermissionSection.SubHeaderLabel.Text =
                         "Do you give a permission for tech guys to enter your apartment when you are not at home?";
-                    _entrancePermissionSection.HeightConstraint.Constant = 160;
+                    _entrancePermissionSection.HeightConstraint.Constant = 130;
                     _entrancePermissionSection.Editable = false;
 
                 }
@@ -144,10 +167,96 @@ namespace ResidentAppCross.iOS
                     _tenantDataSection.AddressLabel.Text = "795 E DRAGRAM TUCSON AZ 85705 USA";
                     _tenantDataSection.PhoneLabel.Text = "+1 777 777 777";
                     _tenantDataSection.TenantAvatar.Image = UIImage.FromBundle("OfficerIcon");
-
-                    _tenantDataSection.HeightConstraint.Constant = 270; ;
+                    _tenantDataSection.HeightConstraint.Constant = AppTheme.TenantDataSectionHeight;
                 }
                 return _tenantDataSection;
+            }
+        }
+
+        public TableSection CheckinsSection
+        {
+            get
+            {
+                if (_tableSection == null)
+                {
+                    _tableSection = Formals.Create<TableSection>(); //Create as usually. 
+
+                    var timelineUndefinedStatusIcon = UIImage.FromBundle("TimelineStatusIcon.png");
+                    var timelineMidLine = UIImage.FromFile("TimelineMid.png");
+                    var timelineStartLine = UIImage.FromFile("TimelineStart.png");
+                    var timelineEndLine = UIImage.FromFile("TimelineEnd.png");
+
+                    var tableDataBinding = new TableDataBinding<UITableViewCell, IncidentCheckinBindingModel>() //Define cell type and data type as type args
+                    {
+                        Bind = (cell, item, index) => //What to do when cell is created for item
+                        {
+                            cell.TextLabel.Text = item.StatusId;
+                            cell.ImageView.Image = UIImage.FromBundle("OfficerIcon");
+                            cell.DetailTextLabel.Text = item.Date?.ToString("g");
+                            cell.TextLabel.MinimumScaleFactor = 0.2f;
+
+                            if (ViewModel.Checkins.Count == 1)
+                                cell.ImageView.Image = timelineUndefinedStatusIcon;
+                            else if (index == 0)
+                                cell.ImageView.Image = timelineEndLine;
+                            else if (index == ViewModel.Checkins.Count - 1)
+                                cell.ImageView.Image = timelineStartLine;
+                            else
+                                cell.ImageView.Image = timelineMidLine;
+
+
+
+                            //cell.ImageView.Alpha = ViewModel.Checkins.Count == 1 ? 0f : 1f;
+                            UIImageView anotherImageView = cell.ImageView.Subviews.OfType<UIImageView>().FirstOrDefault();
+
+                            if (anotherImageView == null)
+                            {
+                                anotherImageView = new UIImageView(cell.ImageView.Frame)
+                                {
+                                    AutoresizingMask = UIViewAutoresizing.FlexibleMargins,
+                                    // AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
+                                    ContentMode = UIViewContentMode.ScaleAspectFill
+                                };
+
+                                cell.ImageView.Add(anotherImageView);
+                            }
+
+                            if (index == 0)
+                                anotherImageView.Frame = anotherImageView.Frame.WithSize(30f, 30f);
+                            else
+                                anotherImageView.Frame = anotherImageView.Frame.WithSize(24f, 24f);
+
+                            anotherImageView.Image = timelineUndefinedStatusIcon;
+
+
+                        },
+                        ItemSelected = item =>
+                        {
+                            ViewModel.SelectedCheckin = item;
+                            ViewModel.ShowCheckinDetailsCommand.Execute(null);
+                        }, //When accessory button clicked
+                        AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
+                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_IncidentDetailsCheckinsTable"), //Define how to create cell, if reusables not found
+                        CellIdentifier = "UITableViewCell_IncidentDetailsCheckinsTable"
+                    };
+
+
+                    var source = new GenericTableSource()
+                    {
+                        Items = ViewModel.Checkins, //Deliver data
+                        Binding = tableDataBinding, //Deliver binding
+                        ItemsEditableByDefault = true, //Set all items editable
+                        ItemsFocusableByDefault = true
+                    };
+
+                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+
+                    _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
+                    _tableSection.Source = source;
+                    _tableSection.ReloadData();
+
+                }
+                return _tableSection;
             }
         }
 
@@ -157,16 +266,25 @@ namespace ResidentAppCross.iOS
 
         public void UpdateFooter()
         {
-            var status = ViewModel.CurrentRequestStatus;
-            FooterFinishButton.Hidden = status == RequestStatus.Started;
-            FooterPauseButton.Hidden = status == RequestStatus.Started;
-            FooterStartButton.Hidden = status != RequestStatus.Started;
+            FooterFinishButton.Hidden = !ViewModel.CloseIncidentCommand.CanExecute(null);
+            FooterPauseButton.Hidden = !ViewModel.PauseIncidentCommmand.CanExecute(null); 
+            FooterStartButton.Hidden = !ViewModel.OpenIncidentCommand.CanExecute(null); 
         }
 
 
         public override void BindForm()
         {
             base.BindForm();
+
+
+            this.OnViewModelEventMainThread<IncidentReportStatusUpdated>(_ =>
+            {
+                CheckinsSection.ReloadData();
+                RefreshContent();
+                UpdateFooter();
+            });
+
+
             var b = this.CreateBindingSet<IncidentReportStatusView, IncidentReportStatusViewModel>();
 
 
@@ -186,16 +304,12 @@ namespace ResidentAppCross.iOS
 
 
             FooterPauseButton = FooterSection.AddButton("Pause", style);
-            FooterFinishButton = FooterSection.AddButton("Finish", style);
-            FooterStartButton = FooterSection.AddButton("Scan QR Code", style);
+            FooterFinishButton = FooterSection.AddButton("Close", style);
+            FooterStartButton = FooterSection.AddButton("Open", style);
 
-            b.Bind(FooterPauseButton).To(vm => vm.PauseCommmand);
-            b.Bind(FooterFinishButton).To(vm => vm.FinishCommmand);
-            b.Bind(FooterStartButton).To(vm => vm.ScanAndStartCommand);
-
-            b.Bind(FooterFinishButton).For(but => but.Hidden).To(vm => vm.ForbidComplete);
-            b.Bind(FooterStartButton).For(but => but.Hidden).To(vm => vm.ForbidStart);
-            b.Bind(FooterPauseButton).For(but => but.Hidden).To(vm => vm.ForbidPause);
+            b.Bind(FooterPauseButton).To(vm => vm.PauseIncidentCommmand);
+            b.Bind(FooterFinishButton).To(vm => vm.CloseIncidentCommand);
+            b.Bind(FooterStartButton).To(vm => vm.OpenIncidentCommand);
 
             //Comments section
 
@@ -232,7 +346,12 @@ namespace ResidentAppCross.iOS
             b.Apply();
 
 
-
+            TabSection.BindTo(new List<IncidentReportStatusDisplayMode>() { IncidentReportStatusDisplayMode.Status, IncidentReportStatusDisplayMode.History }, i => i.ToString(), i => "PoliceIcon", i => null,
+              i =>
+              {
+                  this.DisplayMode = i;
+                  RefreshContent();
+              }, IncidentReportStatusDisplayMode.Status);
 
             //ViewModel.PropertyChanged += (sender, args) =>
             //{
@@ -246,23 +365,47 @@ namespace ResidentAppCross.iOS
             // SelectRepairDateButton.TouchUpInside += ShowScheduleDatePicker;
             // FooterStartButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.StartOrResumeCommand.Execute(null));
 
-            //  FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.FinishCommmand.Execute(null));
+            //  FooterFinishButton.TouchUpInside += (sender, args) => PushScannerViewController(() => ViewModel.CloseIncidentCommand.Execute(null));
 
             // ViewModel.Photos.RawImages.CollectionChanged += RawImages_CollectionChanged;
         }
 
+        public IncidentReportStatusDisplayMode DisplayMode { get; set; }
+
+        public override UIView FooterView => TabSection;
+
         public override void GetContent(List<UIView> content)
         {
             base.GetContent(content);
-            content.Add(HeaderSection);
-            content.Add(ScheduleSection);
-            content.Add(TenantDataSection);
-            content.Add(CommentsSection);
-            content.Add(PhotoSection);
-            content.Add(EntrancePermissionSection);
-            content.Add(FooterSection);
+            this.ScrollRectToVisible(new CGRect(0, 0, 0, 0));
+
+            if (DisplayMode == IncidentReportStatusDisplayMode.Status)
+            {
+                SectionContainerGesturesEnabled = true;
+                content.Add(HeaderSection);
+                content.Add(ScheduleSection);
+                content.Add(TenantDataSection);
+                content.Add(CommentsSection);
+                content.Add(PhotoSection);
+                content.Add(EntrancePermissionSection);
+                content.Add(FooterSection);
+            }
+            else
+            {
+                SectionContainerGesturesEnabled = false;
+                content.Add(CheckinsSection);
+            }
+
+      
         }
 
-
+        public override void LayoutContent()
+        {
+            base.LayoutContent();
+            if (DisplayMode == IncidentReportStatusDisplayMode.History)
+            {
+                SectionsContainer.AddConstraints(CheckinsSection.WithSameHeight(SectionsContainer));
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Extensions;
 using ResidentAppCross.Services;
@@ -20,20 +21,20 @@ namespace ResidentAppCross.ViewModels.Screens
         private IApartmentAppsAPIService _appService;
         private IImageService _imageService;
         private IQRService _qrService;
+        private IDialogService _dialogService;
+
         private string _comments;
         private DateTime _newRepairDate;
         private int _incidentReportId;
         private IncidentReportBindingModel _request;
         private bool _shouldShowPhotos;
         private string _photoSectionTitle;
-        private bool _forbidComplete;
-        private bool _forbidPause;
-        private bool _forbidStart;
-        private bool _forbitSchedule;
         private string _selectScheduleDateActionLabel;
         private ObservableCollection<PetStatus> _petStatuses;
         private string _unitAddressString;
-        private IDialogService _dialogService;
+        private ObservableCollection<IncidentCheckinBindingModel> _checkins;
+        private IncidentCheckinBindingModel _selectedCheckin;
+
         public IncidentReportStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService)
         {
             _appService = appService;
@@ -58,36 +59,25 @@ namespace ResidentAppCross.ViewModels.Screens
             set { SetProperty(ref _request, value); }
         }
 
-        public bool ForbidComplete
+        public ObservableCollection<IncidentCheckinBindingModel> Checkins
         {
-            get { return _forbidComplete; }
-            set { SetProperty(ref _forbidComplete, value); }
+            get { return _checkins ?? (_checkins = new ObservableCollection<IncidentCheckinBindingModel>()); }
+            set { _checkins = value; }
         }
 
-        public bool ForbidPause
+        public IncidentCheckinBindingModel SelectedCheckin
         {
-            get { return _forbidPause; }
-            set { SetProperty(ref _forbidPause, value); }
+            get { return _selectedCheckin; }
+            set { SetProperty(ref _selectedCheckin, value); }
         }
 
-        public bool ForbidStart
-        {
-            get { return _forbidStart; }
-            set { SetProperty(ref _forbidStart, value); }
-        }
 
-        public bool ForbitSchedule
-        {
-            get { return _forbitSchedule; }
-            set { SetProperty(ref _forbitSchedule, value); }
-        }
-
-        public RequestStatus CurrentRequestStatus
+        public IncidentReportStatus CurrentMaintenanceRequestStatus
         {
             get
             {
-                if (Request == null) return RequestStatus.Submitted;
-                RequestStatus status;
+                if (Request == null) return IncidentReportStatus.Reported;
+                IncidentReportStatus status;
                 Enum.TryParse(Request.Status, out status);
                 return status;
             }
@@ -98,8 +88,6 @@ namespace ResidentAppCross.ViewModels.Screens
             get { return _comments; }
             set { SetProperty(ref _comments, value); }
         }
-
-
 
         public string UnitAddressString
         {
@@ -119,19 +107,31 @@ namespace ResidentAppCross.ViewModels.Screens
                 Uri = new Uri(url)
             }));
 
-           
-
-            ForbidComplete = CurrentRequestStatus != RequestStatus.Started;
-            ForbidPause = CurrentRequestStatus != RequestStatus.Started;
-            ForbitSchedule = CurrentRequestStatus == RequestStatus.Complete || CurrentRequestStatus == RequestStatus.Started;
-            ForbidStart = CurrentRequestStatus == RequestStatus.Started || CurrentRequestStatus == RequestStatus.Complete;
-
             UnitAddressString = $"Building - {Request?.BuildingName} Unit - {Request?.UnitName}";
+            Checkins.Clear();
+            Checkins.AddRange(Request.Checkins);
+            this.Publish(new IncidentReportStatusUpdated(this));
+
+        }).OnStart("Loading incident details...").OnFail(ex => { Close(this); });
 
 
-        }).OnStart("Loading Request...").OnFail(ex => { Close(this); });
+        public bool CanOpen()
+        {
+            return CurrentMaintenanceRequestStatus == IncidentReportStatus.Reported ||
+                         CurrentMaintenanceRequestStatus == IncidentReportStatus.Paused;
+        }
 
-        public ICommand FinishCommmand
+        public bool CanPause()
+        {
+            return CurrentMaintenanceRequestStatus == IncidentReportStatus.Open;
+        }
+
+        public bool CanClose()
+        {
+            return CurrentMaintenanceRequestStatus == IncidentReportStatus.Reported || CurrentMaintenanceRequestStatus == IncidentReportStatus.Open;
+        }
+
+        public ICommand CloseIncidentCommand
         {
             get
             {
@@ -140,20 +140,20 @@ namespace ResidentAppCross.ViewModels.Screens
                 {
                     ShowViewModel<CheckinFormViewModel>(vm =>
                     {
-                        vm.HeaderText = "Maintenance";
-                        vm.SubHeaderText = "Finish";
-                        vm.ActionText = "Finish Maintenance";
-                        vm.ShouldScanQr = true;
+                        vm.HeaderText = "Incident Report";
+                        vm.SubHeaderText = "Close";
+                        vm.ActionText = "Close Incident";
+                        //vm.ShouldScanQr = true;
                         vm.ActionCommand = this.TaskCommand(async context =>
                         {
-                            var data = vm.QRScanResult?.Data;
-                            if (string.IsNullOrEmpty(data))
-                            {
-                                context.FailTask("No QR Code scanned.");
-                                return;
-                            }
+//                            var data = vm.QRScanResult?.Data;
+//                            if (string.IsNullOrEmpty(data))
+//                            {
+//                                context.FailTask("No QR Code scanned.");
+//                                return;
+//                            }
 
-                            if (CurrentRequestStatus == RequestStatus.Started)
+                            if (CanClose())
                             {
                                 await
                                     _appService.Courtesy.CloseIncidentReportWithOperationResponseAsync(
@@ -161,7 +161,7 @@ namespace ResidentAppCross.ViewModels.Screens
                                         vm.Comments,
                                         vm.Photos.ImagesAsBase64.ToList());
 
-                                context.OnComplete("Report Closed!",
+                                context.OnComplete("Incident closed!",
                                     () =>
                                     {
                                         Close(vm);
@@ -170,18 +170,18 @@ namespace ResidentAppCross.ViewModels.Screens
                             }
                             else
                             {
-                                context.FailTask("Request is already In Progress or Complete.");
+                                context.FailTask("Incident is already In Progress or Complete.");
                                 Close(vm);
                             }
 
-                        }).OnStart("Closing Request...");
+                        }).OnStart("Closing incident...");
                     });
-                });
+                },CanClose);
 
 
             }
         }
-        public ICommand PauseCommmand
+        public ICommand PauseIncidentCommmand
         {
             get
             {
@@ -190,26 +190,26 @@ namespace ResidentAppCross.ViewModels.Screens
                 {
                     ShowViewModel<CheckinFormViewModel>(vm =>
                     {
-                        vm.HeaderText = "Maintenance";
+                        vm.HeaderText = "Incident Report";
                         vm.SubHeaderText = "Pause";
-                        vm.ActionText = "Pause Maintenance";
-                        vm.ShouldScanQr = true;
+                        vm.ActionText = "Pause Incident";
+                        vm.ShouldScanQr = false;
 
                         vm.ActionCommand = this.TaskCommand(async context =>
                         {
-                            var data = vm.QRScanResult?.Data;
-                            if (string.IsNullOrEmpty(data))
-                            {
-                                context.FailTask("No QR Code scanned.");
-                                return;
-                            }
+//                            var data = vm.QRScanResult?.Data;
+//                            if (string.IsNullOrEmpty(data))
+//                            {
+//                                context.FailTask("No QR Code scanned.");
+//                                return;
+//                            }
 
-                            if (CurrentRequestStatus == RequestStatus.Started)
+                            if (CanPause())
                             {
                                 await
                                   _appService.Courtesy.PauseIncidentReportWithOperationResponseAsync(IncidentReportId, vm.Comments, vm.Photos.ImagesAsBase64.ToList());
 
-                                context.OnComplete("Request Paused!",
+                                context.OnComplete("Incident paused!",
                                     () =>
                                     {
                                         Close(vm);
@@ -218,63 +218,95 @@ namespace ResidentAppCross.ViewModels.Screens
                             }
                             else
                             {
-                                context.FailTask("Request is not started yet!");
+                                context.FailTask("Incident is not opened yet!");
                                 Close(vm);
                             }
 
-                        }).OnStart("Pausing Request...");
+                        }).OnStart("Pausing incident...");
                     });
-                });
+                },CanPause);
 
             }
         }
 
-        public ICommand ScanAndStartCommand
+
+        public ICommand OpenIncidentCommand
         {
             get
             {
-                return new MvxCommand(async () =>
+                return new MvxCommand(() =>
                 {
-                    var qr = await _qrService.ScanAsync();
-
-                    var data = qr?.Data;
-
-                    this.TaskCommand(async context =>
+                    ShowViewModel<CheckinFormViewModel>(vm =>
                     {
+                        vm.HeaderText = "Incident Report";
+                        vm.SubHeaderText = "Open";
+                        vm.ActionText = "Open Incident";
+                        vm.ShouldScanQr = false;
 
-                        if (string.IsNullOrEmpty(data))
+                        vm.ActionCommand = this.TaskCommand(async context =>
                         {
-                            context.FailTask("No QR Code scanned.");
-                            return;
-                        }
+//                            var data = vm.QRScanResult?.Data;
+//                            if (string.IsNullOrEmpty(data))
+//                            {
+//                                context.FailTask("No QR Code scanned.");
+//                                return;
+//                            }
 
-                        if (CurrentRequestStatus == RequestStatus.Submitted || CurrentRequestStatus == RequestStatus.Scheduled || CurrentRequestStatus == RequestStatus.Paused)
-                        {
-                            await _appService.Courtesy.OpenIncidentReportWithOperationResponseAsync(IncidentReportId, string.Format("Request Started with Data: {0}", data), new List<string>());
-                            context.OnComplete(string.Format("Request Started (QR: {0})", data), () =>
+                            if (CanOpen())
                             {
-                                UpdateIncidentReport.Execute(null);
-                            });
-                        }
-                        else
-                        {
-                            context.FailTask("Request is already In Progress or Complete.");
-                        }
-                    }).OnStart("Starting...").Execute(null);
+                                await
+                                  _appService.Courtesy.OpenIncidentReportWithOperationResponseAsync(IncidentReportId, vm.Comments, vm.Photos.ImagesAsBase64.ToList());
 
-                });
+                                context.OnComplete("Incident Opened!",
+                                    () =>
+                                    {
+                                        Close(vm);
+                                        UpdateIncidentReport.Execute(null);
+                                    });
+                            }
+                            else
+                            {
+                                context.FailTask("Incident is already opened or closed!");
+                                Close(vm);
+                            }
+
+                        }).OnStart("Opening incident...");
+                    });
+                }, CanOpen);
+            
+
+
+
+
             }
+
+
+
         }
 
-   
-
+        public ICommand ShowCheckinDetailsCommand => StubCommands.NoActionSpecifiedCommand(this);
     }
-    public enum IncidentRequestStatus
+
+    public class IncidentReportStatusUpdated : MvxMessage
     {
-        Reported,
+        public IncidentReportStatusUpdated(object sender) : base(sender)
+        {
+        }
+    }
+
+    public enum IncidentReportStatusDisplayMode
+    {
+        Status,
+        History
+    }
+
+    public enum IncidentReportStatus
+    {
+        Complete,
         Open,
         Paused,
-        Started,
-        Submitted
+        Reported
     }
+
+
 }

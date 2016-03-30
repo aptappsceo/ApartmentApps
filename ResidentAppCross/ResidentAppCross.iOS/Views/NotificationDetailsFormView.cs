@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Foundation;
-using MarkdownDeep;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
@@ -34,7 +33,6 @@ namespace ResidentAppCross.iOS.Views
         public override void BindForm()
         {
             base.BindForm();
-            WebView.LoadHtmlString(ViewModel.Message.MarkdownToHTML(),NSUrl.FromString("/"));
         }
 
         public override void GetContent(List<UIView> content)
@@ -44,24 +42,5 @@ namespace ResidentAppCross.iOS.Views
         }
     }
 
-
-    public static class MarkdownStringExtensions
-    {
-        private static Markdown _markdownEngine;
-
-        public static MarkdownDeep.Markdown MarkdownEngine
-        {
-            get { return _markdownEngine ?? (_markdownEngine = new Markdown()
-            {
- 
-            }); }
-            set { _markdownEngine = value; }
-        }
-
-        public static string MarkdownToHTML(this string source)
-        {
-            return MarkdownEngine.Transform(source);
-        }
-    }
 
 }

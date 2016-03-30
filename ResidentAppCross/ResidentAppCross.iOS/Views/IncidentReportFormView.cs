@@ -22,7 +22,7 @@ namespace ResidentAppCross.iOS
 	[StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
 	public class IncidentReportFormView : BaseForm<IncidentReportFormViewModel>
 	{
-	    private SegmentSelectionSection _segmentSelectionSection;
+
 	    private HeaderSection _headerSection;
 
 	    public IncidentReportFormView(string nibName, NSBundle bundle) : base(nibName, bundle)
@@ -32,26 +32,7 @@ namespace ResidentAppCross.iOS
 		public IncidentReportFormView()
 		{
 		}
-    
-        public SegmentSelectionSection SegmentSelectionSection
-        {
-            get
-            {
-                if (_segmentSelectionSection == null)
-                {
-                    _segmentSelectionSection = Formals.Create<SegmentSelectionSection>();
-                    _segmentSelectionSection.HeightConstraint.Constant = 120;
-                    _segmentSelectionSection.Label.Text = "Incident Type";
-                    _segmentSelectionSection.Selector.RemoveAllSegments();
-                    _segmentSelectionSection.Selector.InsertSegment("Noise", 0, false);
-                    _segmentSelectionSection.Selector.InsertSegment("Parking", 1, false);
-                    _segmentSelectionSection.Selector.InsertSegment("Visual Disturbance", 2, false);
-                    _segmentSelectionSection.Selector.InsertSegment("Other", 3, false);
-                }
-                return _segmentSelectionSection;
-            }
-        }
-    
+     
      
         private SegmentSelectionSection _incidentReportTypeSegment;
         private TextViewSection _commentsSection;
@@ -63,8 +44,6 @@ namespace ResidentAppCross.iOS
         //            set { base.ViewModel = value; }
         //        }
 
-     
-
         public override string Title => "Courtesy Officer";
 
         public HeaderSection HeaderSection
@@ -74,7 +53,7 @@ namespace ResidentAppCross.iOS
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
+                    _headerSection.LogoImage.Image = UIImage.FromFile("PoliceIcon");
                     _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
                     _headerSection.MainLabel.Text = "Report Incident";
                     _headerSection.SubLabel.Text = "Fill the information below";
@@ -91,7 +70,8 @@ namespace ResidentAppCross.iOS
                 {
                     _incidentReportTypeSegment = Formals.Create<SegmentSelectionSection>();
                     _incidentReportTypeSegment.Selector.RemoveAllSegments();
-                    _incidentReportTypeSegment.HeightConstraint.Constant = 120;
+                    _incidentReportTypeSegment.Label.Text = "Incident Type";
+                    _incidentReportTypeSegment.HeightConstraint.Constant = 80;
                     _incidentReportTypeSegment.Editable = true;
                     _incidentReportTypeSegment.Selector.ControlStyle = UISegmentedControlStyle.Bezeled;
                 }
@@ -106,7 +86,7 @@ namespace ResidentAppCross.iOS
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeightConstraint.Constant = 200;
+                    _commentsSection.HeightConstraint.Constant = 170;
                     _commentsSection.HeaderLabel.Text = "Details & Comments";
                     _commentsSection.SetEditable(true);
                 }
@@ -135,7 +115,7 @@ namespace ResidentAppCross.iOS
             var b = this.CreateBindingSet<IncidentReportFormView, IncidentReportFormViewModel>();
 
             IncidentReportTypeSegment.BindTo(ViewModel.IncidentReportTypes, s => s.Title, s => ViewModel.SelectIncidentReportTypeId = s.Id, 0);
-            b.Bind(SegmentSelectionSection.Selector).For(s => s.SelectedSegment).To(vm => vm.SelectIncidentReportTypeId);
+            //b.Bind(SegmentSelectionSection.Selector).For(s => s.SelectedSegment).To(vm => vm.SelectIncidentReportTypeId);
 
 
             //Comments Section

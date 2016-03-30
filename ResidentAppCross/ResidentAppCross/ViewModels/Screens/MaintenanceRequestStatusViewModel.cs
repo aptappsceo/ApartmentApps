@@ -88,12 +88,12 @@ namespace ResidentAppCross.ViewModels.Screens
             set { SetProperty(ref _forbitSchedule, value); }
         }
 
-        public RequestStatus CurrentRequestStatus
+        public MaintenanceRequestStatus CurrentMaintenanceRequestStatus
         {
             get
             {
-                if(Request ==null) return RequestStatus.Submitted;
-                RequestStatus status;
+                if(Request ==null) return MaintenanceRequestStatus.Submitted;
+                MaintenanceRequestStatus status;
                 Enum.TryParse(Request.Status, out status);
                 return status;
             }
@@ -157,10 +157,10 @@ namespace ResidentAppCross.ViewModels.Screens
 
                 SelectScheduleDateActionLabel = Request?.ScheduleDate?.ToString("g") ?? "Select Date";
 
-                ForbidComplete = CurrentRequestStatus != RequestStatus.Started;
-                ForbidPause = CurrentRequestStatus != RequestStatus.Started;
-                ForbitSchedule = CurrentRequestStatus == RequestStatus.Complete || CurrentRequestStatus == RequestStatus.Started;
-                ForbidStart = CurrentRequestStatus == RequestStatus.Started || CurrentRequestStatus == RequestStatus.Complete;
+                ForbidComplete = CurrentMaintenanceRequestStatus != MaintenanceRequestStatus.Started;
+                ForbidPause = CurrentMaintenanceRequestStatus != MaintenanceRequestStatus.Started;
+                ForbitSchedule = CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Complete || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started;
+                ForbidStart = CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Complete;
                 Checkins.Clear();
                 Checkins.AddRange(Request.Checkins.OrderByDescending(x=>x.Date));
                 UnitAddressString = $"{Request?.BuildingName} {Request?.BuildingState} {Request?.BuildingCity} {Request?.BuildingPostalCode}";
@@ -190,7 +190,7 @@ namespace ResidentAppCross.ViewModels.Screens
                                 return;
                             }
 
-                            if (CurrentRequestStatus == RequestStatus.Started)
+                            if (CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started)
                             {
                                 await
                                     _appService.Maitenance.CompleteRequestWithOperationResponseAsync(
@@ -241,7 +241,7 @@ namespace ResidentAppCross.ViewModels.Screens
                                 return;
                             }
 
-                            if (CurrentRequestStatus == RequestStatus.Started)
+                            if (CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started)
                             {
                                 await
                                   _appService.Maitenance.PauseRequestWithOperationResponseAsync(MaintenanceRequestId, vm.Comments, vm.Photos.ImagesAsBase64.ToList());
@@ -285,7 +285,7 @@ namespace ResidentAppCross.ViewModels.Screens
                             return;
                         }
 
-                        if (CurrentRequestStatus == RequestStatus.Submitted || CurrentRequestStatus == RequestStatus.Scheduled || CurrentRequestStatus == RequestStatus.Paused)
+                        if (CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Submitted || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Scheduled || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Paused)
                         {
                             await _appService.Maitenance.StartRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Started with Data: {0}", data), new List<string>());
                             context.OnComplete(string.Format("Request Started (QR: {0})", data), () =>
@@ -370,7 +370,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
         public ICommand ShowCheckinDetailsCommand => new MvxCommand(() =>
         {
-            if (SelectedCheckin != null) ShowViewModel<CheckinDetailsViewModel>(vm => vm.Checkin = SelectedCheckin);
+            if (SelectedCheckin != null) ShowViewModel<MaintenanceCheckinDetailsViewModel>(vm => vm.Checkin = SelectedCheckin);
         });
     }
 
@@ -387,13 +387,13 @@ namespace ResidentAppCross.ViewModels.Screens
         }
     }
 
-    public enum RequestStatusDisplayMode
+    public enum MaintenanceRequestStatusDisplayMode
     {
         Status,
         History
     }
 
-    public enum RequestStatus
+    public enum MaintenanceRequestStatus
     {
         Complete,
         Paused,

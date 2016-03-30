@@ -167,9 +167,6 @@
     <Reference Include="MvvmCross.Plugins.Location.iOS, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\Xamarin.iOS10\MvvmCross.Plugins.Location.iOS.dll</HintPath>
     </Reference>
-    <Reference Include="MarkDownDeep.iOS">
-      <HintPath>..\..\Components\MarkDownDeep-1.1.1\lib\ios-unified\MarkDownDeep.iOS.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json">
@@ -387,7 +384,7 @@
     <Compile Include="Services\IOSTouchPresentationService.cs" />
     <Compile Include="Services\QRService.cs" />
     <Compile Include="Setup.cs" />
-    <Compile Include="Views\CheckinDetailsView.cs" />
+    <Compile Include="Views\MaintenanceCheckinDetailsView.cs" />
     <Compile Include="Views\CourtesyOfficerCheckinsView.cs" />
     <Compile Include="Views\NotificationDetailsFormView.cs" />
     <Compile Include="Views\NotificationIndexFormView.cs" />
@@ -417,6 +414,7 @@
     <Compile Include="Views\TableSources\HomeMenuTableSource.cs" />
     <Compile Include="Views\TableSources\LookUpPairSelectionTableSource.cs" />
     <Compile Include="Views\TestFormView.cs" />
+    <Compile Include="Views\ThemeFramework\Theme.cs" />
     <Compile Include="Views\UIViewsExtensions.cs" />
     <Compile Include="Views\ViewBase.cs" />
     <Compile Include="ViewController.cs" />
@@ -512,10 +510,6 @@
   <ItemGroup>
     <XamarinComponentReference Include="azure-messaging">
       <Version>1.1.5.6</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="MarkDownDeep">
-      <Version>1.1.1</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
     <XamarinComponentReference Include="sdwebimage">
@@ -616,5 +610,8 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\avatar-placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PoliceIcon.png" />
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Extensions;
 
 namespace ResidentAppCross.ViewModels.Screens
@@ -20,7 +21,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private ObservableCollection<IncidentIndexBindingModel> _filteredRequests;
         private ObservableCollection<IncidentIndexFilter> _filters;
         private IncidentIndexFilter _currentFilter;
-        private IncidentIndexBindingModel _selectedRequest;
+        private IncidentIndexBindingModel _selectedIncident;
 
         public IncidentReportIndexViewModel(IApartmentAppsAPIService service)
         {
@@ -39,10 +40,16 @@ namespace ResidentAppCross.ViewModels.Screens
             Filters.Clear();
             Filters.Add(new IncidentIndexFilter()
             {
+                Title = "All",
+                FilterExpression = item => true
+            });
+
+            Filters.Add(new IncidentIndexFilter()
+            {
                 Title = "Reported",
                 FilterExpression = item => item.StatusId == "Reported"
             });
-            CurrentFilter = Filters[0];
+
             Filters.Add(new IncidentIndexFilter()
             {
                 Title = "Open",
@@ -63,9 +70,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
         }
 
-
-
-        public ObservableCollection<IncidentIndexBindingModel> Requests
+        public ObservableCollection<IncidentIndexBindingModel> Incidents
         {
             get { return _requests ?? (_requests = new ObservableCollection<IncidentIndexBindingModel>()); }
             set { _requests = value; }
@@ -77,7 +82,7 @@ namespace ResidentAppCross.ViewModels.Screens
             set { _filters = value; }
         }
 
-        public ObservableCollection<IncidentIndexBindingModel> FilteredRequests
+        public ObservableCollection<IncidentIndexBindingModel> FilteredIncidents
         {
             get { return _filteredRequests ?? (_filteredRequests = new ObservableCollection<IncidentIndexBindingModel>()); }
             set { _filteredRequests = value; }
@@ -93,22 +98,35 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        public ICommand UpdateRequestsCommand
+        public ICommand UpdateIncidentsCommand
         {
             get
             {
-                return this.TaskCommand(async context =>
-                {
-                    var requests = await _service.Courtesy.ListRequestsAsync();
-                    Requests.Clear();
-                    Requests.AddRange(requests);
-                    UpdateFilters();
 
-                }).OnStart("Fetching Requests...");
+                return new MvxCommand(async () =>
+                {
+                    this.Publish(new IncidentsIndexUpdateStarted(this));
+                    var requests = await _service.Courtesy.ListRequestsAsync();
+                    Incidents.Clear();
+                    Incidents.AddRange(requests);
+                    UpdateFilters();
+                    this.Publish(new IncidentsIndexUpdateFinished(this));
+
+                });
+
+
+//                return this.TaskCommand(async context =>
+//                {
+//                    var requests = await _service.Courtesy.ListRequestsAsync();
+//                    Incidents.Clear();
+//                    Incidents.AddRange(requests);
+//                    UpdateFilters();
+//
+//                }).OnStart("Fetching Incidents...");
             }
         }
 
-        public ICommand OpenMaintenanceRequestFormCommand
+        public ICommand OpenIncidentReportFormCommand
         {
             get
             {
@@ -119,20 +137,20 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        public IncidentIndexBindingModel SelectedRequest
+        public IncidentIndexBindingModel SelectedIncident
         {
-            get { return _selectedRequest; }
-            set { SetProperty(ref _selectedRequest, value); }
+            get { return _selectedIncident; }
+            set { SetProperty(ref _selectedIncident, value); }
         }
 
-        public ICommand OpenSelectedRequestCommand
+        public ICommand OpenSelectedIncidentCommand
         {
             get
             {
                 return new MvxCommand(() =>
                 {
-                    if (SelectedRequest == null) return;
-                    int id = SelectedRequest.Id ?? -1;
+                    if (SelectedIncident == null) return;
+                    int id = SelectedIncident.Id ?? -1;
                     if (id == -1) return;
                     ShowViewModel<IncidentReportStatusViewModel>(vm =>
                     {
@@ -144,8 +162,11 @@ namespace ResidentAppCross.ViewModels.Screens
 
         private void UpdateFilters()
         {
-            FilteredRequests.Clear();
-            FilteredRequests.AddRange(Requests.Where(item => CurrentFilter.FilterExpression(item)));
+            FilteredIncidents.Clear();
+            if (CurrentFilter != null)
+                FilteredIncidents.AddRange(Incidents.Where(item => CurrentFilter.FilterExpression(item)));
+
+            this.Publish(new IncidentsIndexFiltersUpdatedEvent(this));
         }
     }
 
@@ -153,6 +174,27 @@ namespace ResidentAppCross.ViewModels.Screens
     {
         public string Title { get; set; }
         public Func<IncidentIndexBindingModel, bool> FilterExpression { get; set; }
+    }
+
+    public class IncidentsIndexFiltersUpdatedEvent : MvxMessage
+    {
+        public IncidentsIndexFiltersUpdatedEvent(object sender) : base(sender)
+        {
+        }
+    }
+
+    public class IncidentsIndexUpdateStarted : MvxMessage
+    {
+        public IncidentsIndexUpdateStarted(object sender) : base(sender)
+        {
+        }
+    }
+
+    public class IncidentsIndexUpdateFinished : MvxMessage
+    {
+        public IncidentsIndexUpdateFinished(object sender) : base(sender)
+        {
+        }
     }
 
 }
