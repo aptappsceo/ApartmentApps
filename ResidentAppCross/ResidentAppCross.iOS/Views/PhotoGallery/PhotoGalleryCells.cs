@@ -34,7 +34,7 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
         public string LoadingUrl { get; set; }
         private void Initialize()
         {
-            this.ImageView = new UIImageView (ContentView.Bounds.PadInside(4f,4f));
+            this.ImageView = new UIImageView (this.ContentView.Bounds);
                 //Uncomment to debug cell images issues
             //ImageView.BackgroundColor = UIColor.Blue;
             this.ContentView.AddSubview(this.ImageView);

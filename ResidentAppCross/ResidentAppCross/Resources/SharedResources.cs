@@ -10,11 +10,39 @@ namespace ResidentAppCross.Resources
     {
         public enum Icons
         {
-            OfficerIcon,
-            PayIcon,
-            PartnersIcon,
-            HouseIcon,
-            MaintenaceIcon
+            Alerts,
+            Checkin,
+            Exit,
+            IncidentList,
+            Location,
+            LocationConfigure,
+            Maintenance,
+            MaintenanceList,
+            Police,
+            Report,
+            Settings,
+            Calendar,
+            Ok,
+            Pause,
+            Play,
+            QuestionMark,
+            MaintenanceComplete,
+            MaintenanceInProgress,
+            MaintenancePending,
+            MaintenanceScheduled,
+            MaintenancePaused,
+            CourtesyComplete,
+            CourtesyInProgress,
+            CourtesyPaused,
+            CourtesyPending,
+        }
+
+        public enum Size
+        {
+            X,
+            M,
+            S,
+            XS
         }
     }
 }

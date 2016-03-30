@@ -35,7 +35,7 @@ namespace ResidentAppCross
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Resident Requests",
-                    Icon = SharedResources.Icons.MaintenaceIcon,
+                    Icon = SharedResources.Icons.MaintenanceList,
                     BadgeLabel = "??",
                     Command = RequestsIndexCommand
                 });
@@ -46,7 +46,7 @@ namespace ResidentAppCross
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Configure Property",
-                    Icon = SharedResources.Icons.HouseIcon,
+                    Icon = SharedResources.Icons.LocationConfigure,
                     Command = ConfigurePropertyCommand
                 });
             }
@@ -55,13 +55,13 @@ namespace ResidentAppCross
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Incident Reports",
-                    Icon = SharedResources.Icons.OfficerIcon,
+                    Icon = SharedResources.Icons.IncidentList,
                     Command = IncidentsIndexCommand
                 });
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Checkins",
-                    Icon = SharedResources.Icons.OfficerIcon,
+                    Icon = SharedResources.Icons.Checkin,
                     Command = new MvxCommand(() =>
                     {
                         ShowViewModel<CourtesyOfficerCheckinsViewModel>();
@@ -72,20 +72,20 @@ namespace ResidentAppCross
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Notifications",
-                Icon = SharedResources.Icons.HouseIcon,
+                Icon = SharedResources.Icons.Alerts,
                 Command = AlertsCommand
             });
 
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Maintenance Request",
-                Icon = SharedResources.Icons.MaintenaceIcon,
+                Icon = SharedResources.Icons.Maintenance,
                 Command = MaintenaceRequestCommand
             });
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Request Courtesy Officer",
-                Icon = SharedResources.Icons.OfficerIcon,
+                Icon = SharedResources.Icons.Police,
                 Command = RequestCourtesyOfficerCommand
             });
 //            MenuItems.Add(new HomeMenuItemViewModel()

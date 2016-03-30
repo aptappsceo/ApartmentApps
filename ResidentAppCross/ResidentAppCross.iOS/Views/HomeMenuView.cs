@@ -6,6 +6,7 @@ using MvvmCross.Binding.BindingContext;
 using MvvmCross.iOS.Views;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
+using ResidentAppCross.Resources;
 using SDWebImage;
 using UIKit;
 
@@ -29,7 +30,15 @@ namespace ResidentAppCross.iOS
                 set.Bind(UsernameLabel).For(l => l.Text).To(vm => vm.Username);
                 set.Apply();
 
-
+                SignOutButton.SetRightIcon(AppTheme.GetTemplateIcon(SharedResources.Icons.Exit, SharedResources.Size.S), false);
+                SignOutButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+                SignOutButton.TitleEdgeInsets = new UIEdgeInsets(0, 32f, 0, 0);
+                SignOutButton.ImageEdgeInsets = new UIEdgeInsets(0, 16f, 0, 0);
+                SignOutButton.ImageView.TintColor = UIColor.Orange;
+                SettingsButton.SetLeftIcon(AppTheme.GetTemplateIcon(SharedResources.Icons.Settings, SharedResources.Size.S),false);
+                SettingsButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+                SettingsButton.TitleEdgeInsets = new UIEdgeInsets(0, 32f,0,0);
+                SettingsButton.ImageEdgeInsets = new UIEdgeInsets(0, 16f,0,0);
                 AppTitleLabel.Text = AppString.ApplicationTitle;
                 VersionLabel.Text = AppString.VersionShortVerstion;
             });
@@ -53,10 +62,8 @@ namespace ResidentAppCross.iOS
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-
 			MenuTable.Source = new HomeMenuTableSource() { Items = ViewModel.MenuItems.ToArray() };
 		    MenuTable.SeparatorStyle = UITableViewCellSeparatorStyle.None;
-
 		    var set = this.CreateBindingSet<HomeMenuView, HomeMenuViewModel>();
 		    set.Bind(EditProfileButton).To(vm => vm.EditProfileCommand);
 		    set.Bind(SignOutButton).To(vm => vm.SignOutCommand);

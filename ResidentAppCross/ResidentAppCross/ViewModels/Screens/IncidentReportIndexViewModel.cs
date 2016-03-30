@@ -11,6 +11,7 @@ using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Extensions;
+using ResidentAppCross.Resources;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
@@ -42,30 +43,44 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 Title = "All",
                 FilterExpression = item => true
+                ,Icon = SharedResources.Icons.IncidentList
+                
             });
 
             Filters.Add(new IncidentIndexFilter()
             {
                 Title = "Reported",
                 FilterExpression = item => item.StatusId == "Reported"
+                ,
+                Icon = SharedResources.Icons.QuestionMark
+
             });
 
             Filters.Add(new IncidentIndexFilter()
             {
                 Title = "Open",
                 FilterExpression = item => item.StatusId == "Open"
+                ,
+                Icon = SharedResources.Icons.Play
+
             });
 
             Filters.Add(new IncidentIndexFilter()
             {
                 Title = "Paused",
                 FilterExpression = item => item.StatusId == "Paused"
+                ,
+                Icon = SharedResources.Icons.Pause
+
             });
 
             Filters.Add(new IncidentIndexFilter()
             {
                 Title = "Complete",
                 FilterExpression = item => item.StatusId == "Complete"
+                ,
+                Icon = SharedResources.Icons.Ok
+
             });
 
         }
@@ -174,6 +189,7 @@ namespace ResidentAppCross.ViewModels.Screens
     {
         public string Title { get; set; }
         public Func<IncidentIndexBindingModel, bool> FilterExpression { get; set; }
+        public SharedResources.Icons Icon { get; set; }
     }
 
     public class IncidentsIndexFiltersUpdatedEvent : MvxMessage

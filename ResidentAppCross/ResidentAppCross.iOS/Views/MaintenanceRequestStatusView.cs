@@ -49,7 +49,7 @@ namespace ResidentAppCross.iOS
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
+                    _headerSection.LogoImage.Image = UIImage.FromFile("MaintenanceIcon");
                     _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
                 }
                 return _headerSection;

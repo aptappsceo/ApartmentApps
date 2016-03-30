@@ -21,6 +21,7 @@ namespace ResidentAppCross.iOS.Views.TableSources
         public bool ItemsMovableByDefault { get; set; } = false;
         public bool ItemsFocusableByDefault { get; set; } = false;
         public int ItemsDefaultIndentation { get; set; } = 0;
+        public float DefaultCellHeight { get; set; } = 44;
         public UITableViewCellAccessory ItemsDefaultAccessory { get; set; } =  UITableViewCellAccessory.None;
         public UITableViewCellEditingStyle ItemsDefaultEditingStyle { get; set; } = UITableViewCellEditingStyle.Delete;
         public string DeleteButtonTitle { get; set; } = "Remove";
@@ -100,6 +101,12 @@ namespace ResidentAppCross.iOS.Views.TableSources
                 a => UITableViewRowAction.Create(a.Style, a.Title, (action, path) => a.ObjectHandler(Items[path.Row])))
                 .ToArray();
         }
+
+        public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
+        {
+            return Binding?.ObjectCellHeight?.Invoke(Items[indexPath.Row],indexPath.Row) ?? DefaultCellHeight;
+        }
+
     }
 
     public class TableCellAction<TData> : TableCellAction
@@ -175,7 +182,10 @@ namespace ResidentAppCross.iOS.Views.TableSources
             ObjectActions.Add(action);
         }
 
-
+        public Func<TData, int, float> CellHeight
+        {
+            set { ObjectCellHeight = (o,i) => value((TData)o,i); }
+        }
 
         public override Type CellType => typeof (TCell);
         public override Type DataType => typeof (TData);
@@ -244,6 +254,7 @@ namespace ResidentAppCross.iOS.Views.TableSources
         public Func<object, UITableViewCellAccessory> ObjectAccessoryType { get; set; }
         public Func<object, UITableViewCellEditingStyle> ObjectEditingStyle { get; set; }
         public Func<object, int> ObjectIndentationLevel { get; set; }
+        public Func<object, int, float> ObjectCellHeight { get; set; }
         public Action<object> ObjectItemSelected { get; set; }
         public Action<object> ObjectItemAccessoryClicked { get; set; }
         public Func<UITableViewCell> ObjectCellSelector { get; set; }
