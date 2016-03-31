@@ -13,6 +13,7 @@ using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Extensions;
+using ResidentAppCross.Resources;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
@@ -38,7 +39,8 @@ namespace ResidentAppCross.ViewModels.Screens
             var all = new RequestsIndexFilter()
             {
                 Title = "All",
-                FilterExpression = item => true
+                FilterExpression = item => true,
+                Icon = SharedResources.Icons.MaintenanceList
             };
             Filters.Add(all);
 
@@ -46,35 +48,40 @@ namespace ResidentAppCross.ViewModels.Screens
             Filters.Add(new RequestsIndexFilter()
             {
                 Title = "Open",
-                FilterExpression = item => item.StatusId == "Submitted"
+                FilterExpression = item => item.StatusId == "Submitted",
+                Icon = SharedResources.Icons.QuestionMark
             });
 
 
             Filters.Add(new RequestsIndexFilter()
             {
                 Title = "Scheduled",
-                FilterExpression = item => item.StatusId == "Scheduled"
+                FilterExpression = item => item.StatusId == "Scheduled",
+                Icon = SharedResources.Icons.Calendar
             });
 
 
             Filters.Add(new RequestsIndexFilter()
             {
                 Title = "Started",
-                FilterExpression = item => item.StatusId == "Started"
+                FilterExpression = item => item.StatusId == "Started",
+                Icon = SharedResources.Icons.Play
             });
 
 
             Filters.Add(new RequestsIndexFilter()
             {
                 Title = "Paused",
-                FilterExpression = item => item.StatusId == "Paused"
+                FilterExpression = item => item.StatusId == "Paused",
+                Icon = SharedResources.Icons.Pause
             });
 
 
             Filters.Add(new RequestsIndexFilter()
             {
                 Title = "Complete",
-                FilterExpression = item => item.StatusId == "Complete"
+                FilterExpression = item => item.StatusId == "Complete",
+                Icon = SharedResources.Icons.Ok
             });
 
         }
@@ -186,6 +193,7 @@ namespace ResidentAppCross.ViewModels.Screens
     {
         public string Title { get; set; }
         public Func<MaintenanceIndexBindingModel, bool> FilterExpression { get; set; }
+        public SharedResources.Icons Icon { get; set; }
     }
 
 

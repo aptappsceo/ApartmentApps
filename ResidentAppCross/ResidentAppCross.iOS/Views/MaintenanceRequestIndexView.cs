@@ -6,11 +6,14 @@ using System.Linq;
 using System.Text;
 using ApartmentApps.Client.Models;
 using Cirrious.FluentLayouts.Touch;
+using CoreGraphics;
 using Foundation;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.TableSources;
+using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
+using MaintenanceRequestStatus = ResidentAppCross.ViewModels.Screens.MaintenanceRequestStatus;
 
 namespace ResidentAppCross.iOS.Views
 {
@@ -22,35 +25,36 @@ namespace ResidentAppCross.iOS.Views
         private TableSection _tableSection;
         private SegmentSelectionSection _filterSection;
         private CallToActionSection _callToActionSection;
-        private TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel> _tableItemsBinding;
-        private TableDataBinding<UITableViewCell, RequestsIndexFilter> _tableFilterBinding;
+        private TableDataBinding<TicketItemCell, MaintenanceIndexBindingModel> _tableItemsBinding;
+        private TableDataBinding<FilterTableCell, RequestsIndexFilter> _tableFilterBinding;
         private GenericTableSource _tableItemSource;
         private GenericTableSource _tableFiltersSource;
 
         public override string Title => "Request Index";
 
-        public TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel> TableItemsBinding
+        public TableDataBinding<TicketItemCell, MaintenanceIndexBindingModel> TableItemsBinding
         {
             get
             {
                 if (_tableItemsBinding == null)
                 {
-                    _tableItemsBinding = new TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel>() //Define cell type and data type as type args
+                    _tableItemsBinding = new TableDataBinding<TicketItemCell, MaintenanceIndexBindingModel>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item,index) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = item.Comments;
-                            cell.DetailTextLabel.Text = $"{item.Title} - {item.StatusId}";
-                            cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
-                            cell.TextLabel.MinimumScaleFactor = 0.2f;
+                            cell.MainLabel.Text = item.Comments;
+                            cell.SubLabel.Text = $"{item.Title} - {item.StatusId}";
+                            cell.IconView.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.IconByStatus(item.StatusId), SharedResources.Size.S);
+                            cell.IconView.TintColor = MaintenanceRequestStyling.ColorByStatus(item.StatusId);
+                            cell.DateLabel.Text = "24/1/2 6:64 PM";;
                         },
-                        ItemSelected = item =>
+                        CellHeight = (item, index) => { return 75; }, ItemSelected = item =>
                         {
                             ViewModel.SelectedRequest = item;
                             ViewModel.OpenSelectedRequestCommand.Execute(null);
                         }, //When accessory button clicked
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_MaintenanceIndexItemsTable"), //Define how to create cell, if reusables not found
+                        CellSelector = () => new TicketItemCell("UITableViewCell_MaintenanceIndexItemsTable"), //Define how to create cell, if reusables not found
                         CellIdentifier = "UITableViewCell_MaintenanceIndexItemsTable"
                     };
                 }
@@ -59,27 +63,24 @@ namespace ResidentAppCross.iOS.Views
             set { _tableItemsBinding = value; }
         }
 
-        public TableDataBinding<UITableViewCell, RequestsIndexFilter> TableFilterBinding
+        public TableDataBinding<FilterTableCell, RequestsIndexFilter> TableFilterBinding
         {
             get
             {
                 if (_tableFilterBinding == null)
                 {
-                    _tableFilterBinding = new TableDataBinding<UITableViewCell, RequestsIndexFilter>() //Define cell type and data type as type args
+                    _tableFilterBinding = new TableDataBinding<FilterTableCell, RequestsIndexFilter>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = $"{item.Title} ({ViewModel.Requests.Count(r => item.FilterExpression(r))})";
-                            cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
-                            cell.TextLabel.MinimumScaleFactor = 0.2f;
+                            cell.MainLabel.Text = $"{item.Title} ({ViewModel.Requests.Count(r => item.FilterExpression(r))})";
+
+                            cell.IconView.Image = AppTheme.GetTemplateIcon(item.Icon, SharedResources.Size.S);
+                            cell.IconView.TintColor = AppTheme.PrimaryIconColor;
                         },
-                        ItemSelected = item =>
-                        {
-                            ViewModel.CurrentFilter = item;
-                        }, //When accessory button clicked
+                        ItemSelected = item => { ViewModel.CurrentFilter = item; }, //When accessory button clicked
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_MaintenanceIndexFiltersTable"),
-                        CellIdentifier = "UITableViewCell_MaintenanceIndexFiltersTable" //Define how to create cell, if reusables not found
+                        CellSelector = () => new FilterTableCell("UITableViewCell_MaintenanceIndexFiltersTable"), CellIdentifier = "UITableViewCell_MaintenanceIndexFiltersTable" //Define how to create cell, if reusables not found
                     };
                 }
                 return _tableFilterBinding;
@@ -100,7 +101,6 @@ namespace ResidentAppCross.iOS.Views
                         ItemsEditableByDefault = true, //Set all items editable
                         ItemsFocusableByDefault = true
                     };
-
                 }
                 return _tableItemSource;
             }
@@ -132,12 +132,11 @@ namespace ResidentAppCross.iOS.Views
             {
                 if (_tableSection == null)
                 {
-                    _tableSection = Formals.Create<TableSection>(); //Create as usually. 
-                    _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
+                    _tableSection = Formals.Create<TableSection>();
+                    _tableSection.Table.AllowsSelection = true;
                     _tableSection.Source = TableFiltersSource;
-                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.DoubleLineEtched;
                     _tableSection.ReloadData();
-
                 }
                 return _tableSection;
             }
@@ -150,7 +149,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_callToActionSection == null)
                 {
                     _callToActionSection = Formals.Create<CallToActionSection>();
-                    _callToActionSection.MainButton.SetTitle("Scan QR Code",UIControlState.Normal);
+                    _callToActionSection.MainButton.SetTitle("Scan QR Code", UIControlState.Normal);
                     _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
                 }
                 return _callToActionSection;
@@ -163,10 +162,9 @@ namespace ResidentAppCross.iOS.Views
             base.ViewDidAppear(animated);
 
             ViewModel.UpdateRequestsCommand.Execute(null);
-
         }
 
-    public override void BindForm()
+        public override void BindForm()
         {
             base.BindForm();
 
@@ -174,25 +172,18 @@ namespace ResidentAppCross.iOS.Views
 
             this.OnViewModelEventMainThread<RequestsIndexFiltersUpdatedEvent>(_ =>
             {
-                    if(ViewModel.CurrentFilter != null) SetTableToDisplayItems();
-                    else SetTableToDisplayFilters();
+                if (ViewModel.CurrentFilter != null) SetTableToDisplayItems();
+                else SetTableToDisplayFilters();
             });
 
             this.OnViewModelEventMainThread<RequestsIndexUpdateStarted>(_ => { TableSection.SetLoading(true); });
             this.OnViewModelEventMainThread<RequestsIndexUpdateFinished>(_ => { TableSection.SetLoading(false); });
 
             // Plus button to the top right
-            this.NavigationItem.SetRightBarButtonItem(new UIBarButtonItem
-                (
-                    UIBarButtonSystemItem.Add,
-                    (sender, args) =>
-                    {
-                        ViewModel.OpenMaintenanceRequestFormCommand.Execute(null);
-                    }),
-                true);
+            this.NavigationItem.SetRightBarButtonItem(new UIBarButtonItem(UIBarButtonSystemItem.Add, (sender, args) => { ViewModel.OpenMaintenanceRequestFormCommand.Execute(null); }), true);
 
             SetTableToDisplayFilters();
-            SectionContainerGesturesEnabled = false;    
+            SectionContainerGesturesEnabled = false;
         }
 
         public override void GetContent(List<UIView> content)
@@ -214,7 +205,7 @@ namespace ResidentAppCross.iOS.Views
         {
             TableSection.Source = TableItemSource;
             TableSection.ReloadDataAnimated(UIViewAnimationOptions.TransitionCrossDissolve);
-            NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem("Filters", UIBarButtonItemStyle.Plain,GoBackButtonHandler), true);
+            NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem("Filters", UIBarButtonItemStyle.Plain, GoBackButtonHandler), true);
         }
 
         private void GoBackButtonHandler(object sender, EventArgs args)
@@ -230,19 +221,138 @@ namespace ResidentAppCross.iOS.Views
 //
         public override void LayoutContent()
         {
+            View.AddConstraints(TableSection.AtTopOf(View), TableSection.AtLeftOf(View), TableSection.AtRightOf(View));
 
-            View.AddConstraints(
-                    TableSection.AtTopOf(View),
-                    TableSection.AtLeftOf(View),
-                    TableSection.AtRightOf(View)
-                );
+            View.AddConstraints(CallToActionSection.Below(TableSection), CallToActionSection.AtLeftOf(View), CallToActionSection.AtRightOf(View), CallToActionSection.AtBottomOf(View));
+        }
+    }
 
-            View.AddConstraints(
-                    CallToActionSection.Below(TableSection),
-                    CallToActionSection.AtLeftOf(View),
-                    CallToActionSection.AtRightOf(View),
-                    CallToActionSection.AtBottomOf(View)
-                );
+
+    public class FilterTableCell : UITableViewCell
+    {
+        public const string CellIdentifier = "FilterTableCell";
+
+        public FilterTableCell(string cellId) : base(UITableViewCellStyle.Default, cellId)
+        {
+            MainLabel = new UILabel(new CGRect(44 + 15f + 8f, 0, ContentView.Frame.Width, 44))
+            {
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+            };
+
+            IconView = new UIImageView(new CGRect(15f, 0, 44, 44).PadInside(6f, 6f));
+
+            ContentView.AddSubview(MainLabel);
+            ContentView.AddSubview(IconView);
+        }
+
+        public UILabel MainLabel { get; set; }
+        public UIImageView IconView { get; set; }
+    }
+
+    public class TicketItemCell : UITableViewCell
+    {
+        public const string CellIdentifier = "TicketItemCell";
+
+        public TicketItemCell(string cellId) : base(UITableViewCellStyle.Default, cellId)
+        {
+
+            float imageSize = 55f;
+            float textualContentPadding = 15f + imageSize + 8f;
+
+            MainLabel = new UILabel(new CGRect(textualContentPadding, 5, ContentView.Frame.Width, 24f))
+            {
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth
+            };
+
+            MainLabel.Font = UIFont.PreferredHeadline;
+
+            SubLabel = new UILabel(new CGRect(textualContentPadding, 5+24-2, ContentView.Frame.Width, 24f))
+            {
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth
+            };
+
+            SubLabel.Font = UIFont.PreferredSubheadline;
+
+            DateLabel = new UILabel(new CGRect(textualContentPadding, 24+5+24-2, ContentView.Frame.Width, 20f))
+            {
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth
+            };
+
+            DateLabel.Font = UIFont.PreferredCaption2;
+
+            IconView = new UIImageView(new CGRect(15f, 0, imageSize, imageSize).PadInside(6f, 6f));
+
+            ContentView.AddSubview(MainLabel);
+            ContentView.AddSubview(SubLabel);
+            ContentView.AddSubview(DateLabel);
+            ContentView.AddSubview(IconView);
+        }
+
+        public UILabel MainLabel { get; set; }
+        public UIImageView IconView { get; set; }
+        public UILabel SubLabel { get; set; }
+        public UILabel DateLabel { get; set; }
+    }
+
+
+    public static class MaintenanceRequestStyling
+    {
+        public static SharedResources.Icons IconByStatus(string status)
+        {
+            MaintenanceRequestStatus val;
+            if (!Enum.TryParse(status, out val))
+            {
+                throw new Exception("Unrecognized Maintenance Request Status: " + status);
+            }
+            return IconByStatus(val);
+        }
+
+        public static SharedResources.Icons IconByStatus(MaintenanceRequestStatus val)
+        {
+            switch (val)
+            {
+                case MaintenanceRequestStatus.Complete:
+                    return SharedResources.Icons.MaintenanceComplete;
+                case MaintenanceRequestStatus.Paused:
+                    return SharedResources.Icons.MaintenancePaused;
+                case MaintenanceRequestStatus.Scheduled:
+                    return SharedResources.Icons.MaintenanceScheduled;
+                case MaintenanceRequestStatus.Started:
+                    return SharedResources.Icons.MaintenanceInProgress;
+                case MaintenanceRequestStatus.Submitted:
+                    return SharedResources.Icons.MaintenancePending;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(val), val, null);
+            }
+        }
+
+        public static UIColor ColorByStatus(string status)
+        {
+            MaintenanceRequestStatus val;
+            if (!Enum.TryParse(status, out val))
+            {
+                throw new Exception("Unrecognized Maintenance Request Status: " + status);
+            }
+            return ColorByStatus(val);
+        }
+
+        public static UIColor ColorByStatus(MaintenanceRequestStatus val)
+        {
+            switch (val)
+            {
+                case MaintenanceRequestStatus.Complete:
+                    return AppTheme.CompleteColor;
+                case MaintenanceRequestStatus.Paused:
+                    return AppTheme.PausedColor;
+                case MaintenanceRequestStatus.Scheduled:
+                    return AppTheme.ScheduledColor;
+                case MaintenanceRequestStatus.Started:
+                    return AppTheme.InProgressColor;
+                case MaintenanceRequestStatus.Submitted:
+                    return AppTheme.PendingColor;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(val), val, null);
+            }
         }
     }
 }

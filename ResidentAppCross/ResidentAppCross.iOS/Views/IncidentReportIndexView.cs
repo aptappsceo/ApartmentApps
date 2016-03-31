@@ -13,8 +13,11 @@ using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.Sections.CollectionSections;
 using ResidentAppCross.iOS.Views.TableSources;
+using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
+using MaintenanceRequestStatus = ResidentAppCross.ViewModels.Screens.MaintenanceRequestStatus;
+
 namespace ResidentAppCross.iOS
 {
 	
@@ -27,34 +30,36 @@ namespace ResidentAppCross.iOS
         private TableSection _tableSection;
         private SegmentSelectionSection _filterSection;
         private CallToActionSection _callToActionSection;
-	    private TableDataBinding<UITableViewCell, IncidentIndexBindingModel> _tableItemsBinding;
-	    private TableDataBinding<UITableViewCell, IncidentIndexFilter> _tableFilterBinding;
+	    private TableDataBinding<TicketItemCell, IncidentIndexBindingModel> _tableItemsBinding;
+	    private TableDataBinding<FilterTableCell, IncidentIndexFilter> _tableFilterBinding;
 	    private GenericTableSource _tableItemSource;
 	    private GenericTableSource _tableFiltersSource;
 
 
-	    public TableDataBinding<UITableViewCell, IncidentIndexBindingModel> TableItemsBinding
+	    public TableDataBinding<TicketItemCell, IncidentIndexBindingModel> TableItemsBinding
         {
             get
             {
                 if (_tableItemsBinding == null)
                 {
-                    _tableItemsBinding = new TableDataBinding<UITableViewCell, IncidentIndexBindingModel>() //Define cell type and data type as type args
+                    _tableItemsBinding = new TableDataBinding<TicketItemCell, IncidentIndexBindingModel>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = item.Title;
-                            cell.DetailTextLabel.Text = item.Comments;
-                            cell.ImageView.Image = UIImage.FromBundle("OfficerIcon");
-                            cell.TextLabel.MinimumScaleFactor = 0.2f;
+                            cell.MainLabel.Text = item.Comments;
+                            cell.SubLabel.Text = $"{item.Title} - {item.StatusId}";
+                            cell.IconView.Image = AppTheme.GetTemplateIcon(IncidentReportStyling.IconByStatus(item.StatusId), SharedResources.Size.S);
+                            cell.IconView.TintColor = IncidentReportStyling.ColorByStatus(item.StatusId);
+                            cell.DateLabel.Text = "24/1/2 6:64 PM"; ;
                         },
+                        CellHeight = (item, index) => { return 75; },
                         ItemSelected = item =>
                         {
                             ViewModel.SelectedIncident = item;
                             ViewModel.OpenSelectedIncidentCommand.Execute(null);
                         }, //When accessory button clicked
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_IncidentIndexItemsTable"), //Define how to create cell, if reusables not found
+                        CellSelector = () => new TicketItemCell("UITableViewCell_IncidentIndexItemsTable"), //Define how to create cell, if reusables not found
                         CellIdentifier = "UITableViewCell_IncidentIndexItemsTable"
                     };
                 }
@@ -63,26 +68,26 @@ namespace ResidentAppCross.iOS
             set { _tableItemsBinding = value; }
         }
 
-        public TableDataBinding<UITableViewCell, IncidentIndexFilter> TableFilterBinding
+        public TableDataBinding<FilterTableCell, IncidentIndexFilter> TableFilterBinding
         {
             get
             {
                 if (_tableFilterBinding == null)
                 {
-                    _tableFilterBinding = new TableDataBinding<UITableViewCell, IncidentIndexFilter>() //Define cell type and data type as type args
+                    _tableFilterBinding = new TableDataBinding<FilterTableCell, IncidentIndexFilter>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = $"{item.Title} ({ViewModel.Incidents.Count(r => item.FilterExpression(r))})";
-                            cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
-                            cell.TextLabel.MinimumScaleFactor = 0.2f;
+                            cell.MainLabel.Text = $"{item.Title} ({ViewModel.Incidents.Count(r => item.FilterExpression(r))})";
+                            cell.IconView.Image = AppTheme.GetTemplateIcon(item.Icon, SharedResources.Size.S);
+                            cell.IconView.TintColor = AppTheme.PrimaryIconColor;
                         },
                         ItemSelected = item =>
                         {
                             ViewModel.CurrentFilter = item;
                         }, //When accessory button clicked
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_IncidentIndexFiltersTable"),
+                        CellSelector = () => new FilterTableCell("UITableViewCell_IncidentIndexFiltersTable"),
                         CellIdentifier = "UITableViewCell_IncidentIndexFiltersTable" //Define how to create cell, if reusables not found
                     };
                 }
@@ -259,6 +264,63 @@ namespace ResidentAppCross.iOS
                     TableSection.AtRightOf(View),
                     TableSection.AtBottomOf(View)
                 );
+        }
+    }
+
+    public static class IncidentReportStyling
+    {
+        public static SharedResources.Icons IconByStatus(string status)
+        {
+            IncidentReportStatus val;
+            if (!Enum.TryParse(status, out val))
+            {
+                throw new Exception("Unrecognized Maintenance Request Status: " + status);
+            }
+            return IconByStatus(val);
+        }
+
+        public static SharedResources.Icons IconByStatus(IncidentReportStatus val)
+        {
+            switch (val)
+            {
+                case IncidentReportStatus.Complete:
+                    return SharedResources.Icons.CourtesyComplete;
+                case IncidentReportStatus.Paused:
+                    return SharedResources.Icons.CourtesyPaused;
+                case IncidentReportStatus.Open:
+                    return SharedResources.Icons.CourtesyInProgress;
+                case IncidentReportStatus.Reported:
+                    return SharedResources.Icons.CourtesyPending;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(val), val, null);
+            }
+        }
+
+        public static UIColor ColorByStatus(string status)
+        {
+            IncidentReportStatus val;
+            if (!Enum.TryParse(status, out val))
+            {
+                throw new Exception("Unrecognized Maintenance Request Status: " + status);
+            }
+            return ColorByStatus(val);
+        }
+
+        public static UIColor ColorByStatus(IncidentReportStatus val)
+        {
+            switch (val)
+            {
+                case IncidentReportStatus.Complete:
+                    return AppTheme.CompleteColor;
+                case IncidentReportStatus.Paused:
+                    return AppTheme.PausedColor;
+                case IncidentReportStatus.Open:
+                    return AppTheme.PendingColor;
+                case IncidentReportStatus.Reported:
+                    return AppTheme.PendingColor;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(val), val, null);
+            }
         }
     }
 }

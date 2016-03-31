@@ -614,4 +614,256 @@
   <ItemGroup>
     <BundleResource Include="Resources\PoliceIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MaintenanceIcon%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TestIcon%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Alerts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Alerts_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Checkin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Exit_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_IncidentList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Location.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Location_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_LocationConfigure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Maintenance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Maintenance_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenanceList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Police.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Police_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Report_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Settings_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Alerts%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Alerts_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Checkin%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Exit%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Exit_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_IncidentList%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Location%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Location_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_LocationConfigure%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Maintenance%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Maintenance_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenanceList%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Police%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Police_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Report%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Report_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Settings%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Settings_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_QuestionMark%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Calendar%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Ok%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Pause%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Play%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_QuestionMark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceComplete%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceInProgress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceInProgress%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenancePaused.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenancePaused%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenancePending.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenancePending%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceScheduled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceScheduled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenanceComplete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenanceComplete%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenanceInProgress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenanceInProgress%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenancePaused.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenancePaused%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenancePending.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenancePending%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenanceScheduled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenanceScheduled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceComplete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_CourtesyInProgress%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_CourtesyPaused.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_CourtesyPaused%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_CourtesyPending.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_CourtesyPending%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_CourtesyComplete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_CourtesyComplete%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_CourtesyInProgress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_CourtesyInProgress%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_CourtesyPaused.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_CourtesyPaused%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_CourtesyPending.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_CourtesyPending%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_CourtesyComplete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_CourtesyComplete%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_CourtesyInProgress.png" />
+  </ItemGroup>
 </Project>
