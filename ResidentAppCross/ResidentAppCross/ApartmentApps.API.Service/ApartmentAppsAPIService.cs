@@ -47,6 +47,13 @@ namespace ApartmentApps.Client
             get { return this._alerts; }
         }
         
+        private ICheckins _checkins;
+        
+        public virtual ICheckins Checkins
+        {
+            get { return this._checkins; }
+        }
+        
         private IConfigure _configure;
         
         public virtual IConfigure Configure
@@ -97,6 +104,7 @@ namespace ApartmentApps.Client
         {
             this._account = new Account(this);
             this._alerts = new Alerts(this);
+            this._checkins = new Checkins(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
             this._maitenance = new Maitenance(this);
@@ -118,6 +126,7 @@ namespace ApartmentApps.Client
         {
             this._account = new Account(this);
             this._alerts = new Alerts(this);
+            this._checkins = new Checkins(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
             this._maitenance = new Maitenance(this);
@@ -142,6 +151,7 @@ namespace ApartmentApps.Client
         {
             this._account = new Account(this);
             this._alerts = new Alerts(this);
+            this._checkins = new Checkins(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
             this._maitenance = new Maitenance(this);

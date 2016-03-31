@@ -93,6 +93,7 @@ namespace ApartmentApps.Data
         public virtual IDbSet<PropertyEntrataInfo> PropertyEntrataInfos { get; set; }
         public virtual IDbSet<PropertyYardiInfo> PropertyYardiInfos { get; set; }
         public virtual IDbSet<CourtesyOfficerLocation> CourtesyOfficerLocations { get; set; }
+        public virtual IDbSet<CourtesyOfficerCheckin> CourtesyOfficerCheckins { get; set; }
         public virtual IDbSet<IncidentReport> IncidentReports { get; set; }
         public virtual IDbSet<IncidentReportCheckin> IncidentReportCheckins { get; set; }
         public virtual IDbSet<UserAlert> UserAlerts { get; set; }

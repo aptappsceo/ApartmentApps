@@ -36,6 +36,11 @@ namespace ApartmentApps.Client
             get; 
         }
         
+        ICheckins Checkins
+        {
+            get; 
+        }
+        
         IConfigure Configure
         {
             get; 

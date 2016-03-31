@@ -203,7 +203,28 @@ namespace ResidentAppCross.iOS.Views
 
         //add to contents
     }
+    public sealed class CheckinBindingModelAnnotation : MKAnnotation
+    {
+        public readonly CourtesyCheckinBindingModel _house;
+        private CLLocationCoordinate2D _coordinate;
 
+        public CheckinBindingModelAnnotation(CourtesyCheckinBindingModel house)
+        {
+            _house = house;
+            // Todo - the details of actually using the house here.
+            // in theory you could also data-bind to the house too (e.g. if it's location were to move...)
+            if (house.Latitude != null)
+                if (house.Longitude != null)
+                    _coordinate = new CLLocationCoordinate2D(house.Latitude.Value, house.Longitude.Value);
+
+
+        }
+
+        public override string Description => _house.Label;
+        public override string Title => _house.Label;
+        public override string Subtitle => string.Empty;
+        public override CLLocationCoordinate2D Coordinate => _coordinate;
+    }
     public sealed class LocationBindingModelAnnotation : MKAnnotation
     {
         private readonly LocationBindingModel _house;
@@ -361,6 +382,20 @@ namespace ResidentAppCross.iOS.Views
         {
             var bindingModel = item as LocationBindingModel;
             return new LocationBindingModelAnnotation(bindingModel);
+        }
+    }
+
+    public class CheckinsAnnotationManager
+        : MvxAnnotationManager
+    {
+        public CheckinsAnnotationManager(MKMapView mapView) : base(mapView)
+        {
+        }
+
+        protected override MKAnnotation CreateAnnotation(object item)
+        {
+            var bindingModel = item as CourtesyCheckinBindingModel;
+            return new CheckinBindingModelAnnotation(bindingModel);
         }
     }
 

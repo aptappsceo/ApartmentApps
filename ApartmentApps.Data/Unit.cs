@@ -45,6 +45,8 @@ namespace ApartmentApps.Data
         public decimal Latitude { get; set; }
 
         public decimal Longitude { get; set; }
+
+        public virtual ICollection<CourtesyOfficerCheckin> CourtesyOfficerCheckins { get; set; } 
     }
 
     public class IncidentReport

@@ -18,6 +18,7 @@ namespace ResidentAppCross.iOS
         private MapSection _mapSection;
         private LocationsAnnotationManager _manager;
         private HeaderSection _headerSection;
+        private CallToActionSection _callToActionSection;
 
         public MapSection MapSection
         {
@@ -52,7 +53,7 @@ namespace ResidentAppCross.iOS
                          ViewModel.CurrentLocation.Longitude);
                 MapSection.MapView.SetCenterCoordinate(new CLLocationCoordinate2D(ViewModel.CurrentLocation.Latitude, ViewModel.CurrentLocation.Longitude), false);
             };
-
+            b.Bind(CallToActionSection.MainButton).To(vm => vm.CheckinCommand);
             _manager = new LocationsAnnotationManager(this.MapSection.MapView);
             b.Bind(_manager).For(m => m.ItemsSource).To(vm => vm.Locations);
             // SegmentSelectionSection.Selector.ValueChanged += (sender, args) => RefreshContent();
@@ -85,9 +86,22 @@ namespace ResidentAppCross.iOS
             content.Add(HeaderSection);
             //content.Add(SegmentSelectionSection);
             content.Add(MapSection);
-            
+            content.Add(CallToActionSection);
 
             //content.Add(ButtonToolbarSection);
+        }
+        public CallToActionSection CallToActionSection
+        {
+            get
+            {
+                if (_callToActionSection == null)
+                {
+                    _callToActionSection = Formals.Create<CallToActionSection>();
+                    _callToActionSection.MainButton.SetTitle("Scan QR Code", UIControlState.Normal);
+                    _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
+                }
+                return _callToActionSection;
+            }
         }
 
 
@@ -105,8 +119,8 @@ namespace ResidentAppCross.iOS
 
             if (annotation is MKUserLocation)
                 return null;
-
-            if (annotation is LocationBindingModelAnnotation)
+            var checkinAnnotation = annotation as CheckinBindingModelAnnotation;
+            if (checkinAnnotation != null)
             {
 
                 // show conference annotation
@@ -114,8 +128,16 @@ namespace ResidentAppCross.iOS
 
                 if (annotationView == null)
                     annotationView = new MKAnnotationView(annotation, annotationId);
+                if (checkinAnnotation._house.Complete == true)
+                {
+                    annotationView.Image = UIImage.FromBundle("MaintenaceIcon");
 
-                annotationView.Image = UIImage.FromBundle("MaintenaceIcon");
+                }
+                else
+                {
+                    annotationView.Image = UIImage.FromBundle("OfficerIcon");
+                }
+               
                 annotationView.CanShowCallout = true;
             }
 

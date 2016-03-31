@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
@@ -29,7 +30,7 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 return new MvxCommand(async () =>
                 {
-                    var locations = await ApiService.Configure.GetLocationsAsync();
+                    var locations = await ApiService.Checkins.GetAsync();
                     Locations.Clear();
                     foreach (var item in locations)
                     {
@@ -54,7 +55,7 @@ namespace ResidentAppCross.ViewModels.Screens
             CurrentLocation = locationMessage;
         }
 
-        public ICommand AddLocationCommand
+        public ICommand CheckinCommand
         {
             get
             {
@@ -65,14 +66,23 @@ namespace ResidentAppCross.ViewModels.Screens
                     {
                         this.TaskCommand(async context =>
                         {
-
-                            var result = await ApiService.Configure.AddLocationWithOperationResponseAsync(ScanResult.Data,
-                                CurrentLocation.Latitude, CurrentLocation.Longitude);
+                            var location = Locations.FirstOrDefault(p => p.AcceptableCheckinCodes.Contains(ScanResult.Data));
+                            if (location == null)
+                            {
+                                context.FailTask("This is not a valid qr code.");
+                                return;
+                            }
+                            var result = await ApiService.Checkins.PostWithOperationResponseAsync(location.Id.Value);
                             if (!result.Response.IsSuccessStatusCode)
                             {
                                 context.FailTask(result.Response.ReasonPhrase);
+                                return;
                             }
-                        }).OnStart("Adding...").Execute(null);
+                            
+                        }).OnStart("Checking In...").OnComplete("Reloading...", () =>
+                        {
+                            this.UpdateLocations.Execute(null);
+                        }).Execute(null);
                     }
 
                 });
@@ -81,7 +91,7 @@ namespace ResidentAppCross.ViewModels.Screens
         }
 
         public QRData ScanResult { get; set; }
-        public ObservableCollection<LocationBindingModel> Locations { get; set; } = new ObservableCollection<LocationBindingModel>();
+        public ObservableCollection<CourtesyCheckinBindingModel> Locations { get; set; } = new ObservableCollection<CourtesyCheckinBindingModel>();
 
     }
 }

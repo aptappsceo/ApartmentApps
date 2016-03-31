@@ -40,6 +40,8 @@
     <Compile Include="ApartmentApps.API.Service\AlertsExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\ApartmentAppsAPIService.cs" />
     <Compile Include="ApartmentApps.API.Service\ApartmentAppsAPIServiceExtensions.cs" />
+    <Compile Include="ApartmentApps.API.Service\Checkins.cs" />
+    <Compile Include="ApartmentApps.API.Service\CheckinsExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Configure.cs" />
     <Compile Include="ApartmentApps.API.Service\ConfigureExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Courtesy.cs" />
@@ -47,6 +49,7 @@
     <Compile Include="ApartmentApps.API.Service\IAccount.cs" />
     <Compile Include="ApartmentApps.API.Service\IAlerts.cs" />
     <Compile Include="ApartmentApps.API.Service\IApartmentAppsAPIService.cs" />
+    <Compile Include="ApartmentApps.API.Service\ICheckins.cs" />
     <Compile Include="ApartmentApps.API.Service\IConfigure.cs" />
     <Compile Include="ApartmentApps.API.Service\ICourtesy.cs" />
     <Compile Include="ApartmentApps.API.Service\IMaitenance.cs" />
@@ -62,6 +65,8 @@
     <Compile Include="ApartmentApps.API.Service\Models\Building.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ChangePasswordBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Corporation.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\CourtesyCheckinBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\CourtesyCheckinBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\DeviceRegistration.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModelCollection.cs" />

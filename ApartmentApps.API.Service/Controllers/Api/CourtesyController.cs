@@ -37,6 +37,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public List<ImageReference> Photos { get; set; }
         public string OfficerPhoneNumber { get; set; }
     }
+
     [System.Web.Http.RoutePrefix("api/Courtesy")]
     [System.Web.Http.Authorize]
     public class CourtesyController : ApartmentAppsApiController
@@ -146,8 +147,62 @@ namespace ApartmentApps.API.Service.Controllers.Api
             CourtesyService.CloseIncidentReport(CurrentUser, id, comments, images);
         }
 
+        
 
+    }
+    [System.Web.Http.RoutePrefix("api/Checkins")]
+    [System.Web.Http.Authorize()]
+    public class CheckinsController : ApartmentAppsApiController
+    {
+        [HttpGet]
+        public IEnumerable<CourtesyCheckinBindingModel> Get()
+        {
+            var propertyId = CurrentUser.PropertyId.Value;
+            var today = CurrentUser.TimeZone.Now();
+            return Context.CourtesyOfficerLocations.Where(p => p.PropertyId == propertyId).ToArray()
+                .Select(p => new CourtesyCheckinBindingModel
+                {
+                    Latitude = p.Latitude,
+                    Longitude = p.Longitude,
+                    Label = p.Label,
+                    Id = p.Id,
+                    Complete = p.CourtesyOfficerCheckins
+                        .Any(x=>x.CreatedOn.DayOfYear == today.DayOfYear),
+                    AcceptableCheckinCodes = new List<string>()
+                    {
+                        $"http://apartmentapps.com/location={p.LocationId}"
+                    }
+                });
+        }
+        [HttpPost]
+        public void Post(int locationId)
+        {
+            Context.CourtesyOfficerCheckins.Add(new CourtesyOfficerCheckin()
+            {
+                CourtesyOfficerLocationId = locationId,
+                Comments = string.Empty,
+                OfficerId = CurrentUser.Id,
+                CreatedOn = CurrentUser.TimeZone.Now(),
+                GroupId = Guid.NewGuid(),
+                
 
+            });
+            Context.SaveChanges();
+        } 
+
+        public CheckinsController(ApplicationDbContext context) : base(context)
+        {
+        }
+    }
+
+    public class CourtesyCheckinBindingModel
+    {
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+        public string Label { get; set; }
+        public List<string> AcceptableCheckinCodes { get; set; }
+        public int Id { get; set; }
+        public bool Complete { get; set; }
     }
 
     public class IncidentIndexBindingModel
