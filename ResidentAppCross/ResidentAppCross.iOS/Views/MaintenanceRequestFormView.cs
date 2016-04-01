@@ -174,32 +174,32 @@ namespace ResidentAppCross.iOS.Views
 
             content.Add(HeaderSection);
 
-            var section = Formals.Create<LabelWithButtonSection>();
-
-            section.Label.Text = "#49557F";
-            section.Button.SetTitleColor(AppTheme.ColorFromHex(0x49557F), UIControlState.Normal);
-            content.Add(section);
-
-            section = Formals.Create<LabelWithButtonSection>();
-            section.Label.Text = "#70A0AF";
-            section.Button.SetTitleColor(AppTheme.ColorFromHex(0x70A0AF), UIControlState.Normal);
-            content.Add(section);
-
-            section = Formals.Create<LabelWithButtonSection>();
-            section.Label.Text = "#A0C1B9";
-            section.Button.SetTitleColor(AppTheme.ColorFromHex(0xA0C1B9), UIControlState.Normal);
-            content.Add(section);
-
-            section = Formals.Create<LabelWithButtonSection>();
-            section.Label.Text = "#424C55";
-            section.Button.SetTitleColor(AppTheme.ColorFromHex(0x424C55), UIControlState.Normal);
-            content.Add(section);
-
-            section = Formals.Create<LabelWithButtonSection>();
-            section.Label.Text = "#D1CCDC";
-            section.Button.SetTitleColor(AppTheme.ColorFromHex(0xD1CCDC), UIControlState.Normal);
-            content.Add(section);
-
+//            var section = Formals.Create<LabelWithButtonSection>();
+//
+//            section.Label.Text = "#49557F";
+//            section.Button.SetTitleColor(AppTheme.ColorFromHex(0x49557F), UIControlState.Normal);
+//            content.Add(section);
+//
+//            section = Formals.Create<LabelWithButtonSection>();
+//            section.Label.Text = "#70A0AF";
+//            section.Button.SetTitleColor(AppTheme.ColorFromHex(0x70A0AF), UIControlState.Normal);
+//            content.Add(section);
+//
+//            section = Formals.Create<LabelWithButtonSection>();
+//            section.Label.Text = "#A0C1B9";
+//            section.Button.SetTitleColor(AppTheme.ColorFromHex(0xA0C1B9), UIControlState.Normal);
+//            content.Add(section);
+//
+//            section = Formals.Create<LabelWithButtonSection>();
+//            section.Label.Text = "#424C55";
+//            section.Button.SetTitleColor(AppTheme.ColorFromHex(0x424C55), UIControlState.Normal);
+//            content.Add(section);
+//
+//            section = Formals.Create<LabelWithButtonSection>();
+//            section.Label.Text = "#D1CCDC";
+//            section.Button.SetTitleColor(AppTheme.ColorFromHex(0xD1CCDC), UIControlState.Normal);
+//            content.Add(section);
+//
 
             content.Add(RequestTypeSection);
             content.Add(CommentsSection);

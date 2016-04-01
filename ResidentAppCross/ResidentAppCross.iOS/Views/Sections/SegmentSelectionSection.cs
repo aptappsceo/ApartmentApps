@@ -30,7 +30,9 @@ namespace ResidentAppCross.iOS
             Label.Font = AppFonts.SectionHeader;
 	        HeightConstraint.Constant = AppTheme.SegmentSectionHeight;
 	        Selector.RemoveAllSegments();
-	    }
+            Selector.TintColor = AppTheme.FormControlColor;
+
+        }
 
         public void HideTitle(bool hide)
 	    {

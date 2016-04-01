@@ -22,10 +22,10 @@ namespace ResidentAppCross.iOS
 	    {
 	        base.AwakeFromNib();
 	        HeightConstraint.Constant = AppTheme.LabelWithButtonSectionHeight;
-            Button.Font = AppFonts.SectionHeader;
+            Button.Font = AppFonts.CellHeader;
             Label.Font = AppFonts.SectionHeader;
-            Button.SetTitleColor(AppTheme.ColorFromHex(0x48A9A6), UIControlState.Normal);
-        }
+            Button.SetTitleColor(AppTheme.FormControlColor, UIControlState.Normal);
+	    }
 
 	    public UILabel Label => _label;
 	    public UIButton Button => _button;

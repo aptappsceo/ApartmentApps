@@ -28,9 +28,10 @@ namespace ResidentAppCross.iOS
         public override void AwakeFromNib()
         {
             base.AwakeFromNib();
-            HeightConstraint.Constant = 120;
+            HeightConstraint.Constant = AppTheme.SwitchSectionHeight;
             HeaderLabel.Font = AppFonts.SectionHeader;
             SubHeaderLabel.Font = AppFonts.Note;
+            Switch.OnTintColor = AppTheme.FormControlColor;
         }
 
         public UISwitch Switch => _switch;

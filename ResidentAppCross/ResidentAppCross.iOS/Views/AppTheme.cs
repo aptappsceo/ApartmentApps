@@ -19,19 +19,28 @@ namespace ResidentAppCross.iOS.Views
         private static UIColor _primaryIconColor;
 
         public static UIColor PrimaryBackgroundColor => _primaryBackgroundColor ?? (_primaryBackgroundColor = UIColor.White);
-        public static UIColor PrimaryForegroundColor => _primaryForegroundColor ?? (_primaryForegroundColor = Color(81, 81, 81));
-        public static UIColor SecondaryBackgoundColor => _secondaryBackgroundColor ?? (_secondaryBackgroundColor = Color(20, 92, 153));
-        public static UIColor DeepBackgroundColor => _deepBackgroundColor ?? (_deepBackgroundColor = Color(228, 228, 228));
+        public static UIColor PrimaryForegroundColor => _primaryForegroundColor ?? (_primaryForegroundColor = ColorFromRGB(81, 81, 81));
+        public static UIColor SecondaryBackgoundColor => _secondaryBackgroundColor ?? (_secondaryBackgroundColor = ColorFromRGB(20, 92, 153));
+        public static UIColor DeepBackgroundColor => _deepBackgroundColor ?? (_deepBackgroundColor = ColorFromRGB(228, 228, 228));
         public static UIColor SecondaryForegroundColor => _secondaryForegroundColor ?? (_secondaryForegroundColor = UIColor.White);
-        public static UIColor PrimaryIconColor => _primaryIconColor ?? (_primaryIconColor = Color(20, 92, 153));
+        public static UIColor PrimaryIconColor => _primaryIconColor ?? (_primaryIconColor = ColorFromRGB(20, 92, 153));
 
-        public static UIColor CompleteColor => _completeColor ?? (_completeColor = Color(76, 218, 100));
-        public static UIColor InProgressColor => _inProgressColor ?? (_inProgressColor = Color(78, 203, 251));
-        public static UIColor PausedColor => _pausedColor ?? (_pausedColor = Color(254, 151, 48));
-        public static UIColor ScheduledColor => _scheduledColor ?? (_scheduledColor = Color(125, 124, 168));
-        public static UIColor PendingColor => _pendingColor ?? (_pendingColor = Color(252, 134, 86));
+        public static UIColor CompleteColor => _completeColor ?? (_completeColor = ColorFromHex(0x10a201));
+        public static UIColor InProgressColor => _inProgressColor ?? (_inProgressColor = ColorFromHex(0x289edb));
+        public static UIColor PausedColor => _pausedColor ?? (_pausedColor = ColorFromHex(0xff972e));
+        public static UIColor ScheduledColor => _scheduledColor ?? (_scheduledColor = ColorFromHex(0x872eff));
+        public static UIColor PendingColor => _pendingColor ?? (_pendingColor = ColorFromHex(0xfe5335));
 
-        public static UIColor CreateColor => _createColor ?? (_createColor = Color(65, 153, 230));
+      
+
+        public static UIColor FormControlColor
+            => _formControlButton ?? (_formControlButton = ColorFromHex(0x237ecc));
+        //Candidates
+        //0x331832
+        //0x5B1865
+        //0x095256
+        //0x28C2FF
+        public static UIColor CreateColor => _createColor ?? (_createColor = ColorFromRGB(65, 153, 230));
 
         public static float ButtonToolbarSectionHeight = 60;
         public static float HeaderSectionHeight = 80;
@@ -42,15 +51,16 @@ namespace ResidentAppCross.iOS.Views
         public static float SegmentSectionHeight = 80f;
         public static float SwitchSectionHeight = 120f;
         public static float LabelWithButtonSectionHeight = 46f;
+
         private static UIColor _completeColor;
         private static UIColor _inProgressColor;
         private static UIColor _pausedColor;
         private static UIColor _pendingColor;
         private static UIColor _scheduledColor;
         private static UIColor _createColor;
+        private static UIColor _formControlButton;
 
-
-        public static UIColor Color(byte r, byte g, byte b, byte a = 255)
+        public static UIColor ColorFromRGB(byte r, byte g, byte b, byte a = 255)
         {
             return new UIColor(r / 255f, g/ 255f, b/ 255f, a/ 255f);
         }
@@ -148,10 +158,9 @@ namespace ResidentAppCross.iOS.Views
 
         public static UIFont SectionHeader
         {
-            get { return _sectionHeaderFont ?? (_sectionHeaderFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredHeadline, 19f)); }
+            get { return _sectionHeaderFont ?? (_sectionHeaderFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredHeadline, 18f)); }
             set { _sectionHeaderFont = value; }
         }
-
 
         public static UIFont CellHeader
         {

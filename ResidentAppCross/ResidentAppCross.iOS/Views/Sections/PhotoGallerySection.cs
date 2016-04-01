@@ -56,10 +56,11 @@ namespace ResidentAppCross.iOS
 	        base.AwakeFromNib();
 	        HeaderLabel.Font = AppFonts.SectionHeader;
 	        AddPhotoButton.Font = AppFonts.SectionHeader;
-            AddPhotoButton.SetTitleColor(AppTheme.ColorFromHex(0x48A9A6), UIControlState.Normal);
+            AddPhotoButton.SetTitleColor(AppTheme.FormControlColor, UIControlState.Normal);
+
         }
 
-	    public UICollectionView PhotoContainer => _photoContainer;
+        public UICollectionView PhotoContainer => _photoContainer;
 	    public UILabel HeaderLabel => _headerLabel;
 	    public UIButton AddPhotoButton => _addPhotoButton;
 
