@@ -866,4 +866,82 @@
   <ItemGroup>
     <BundleResource Include="Resources\132_CourtesyInProgress.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Forward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Forward%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\88_Calendar_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Calendar_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Calendar_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\88_Calendar_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Circle_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Circle_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Ok_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Ok_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Pause_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Pause_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Play_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Play_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\88_Play_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\88_Play_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Comment_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Comment_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_TimelineBottom_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_TimelineBottom_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_TimelineMiddle_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_TimelineMiddle_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_TimelineTop_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_TimelineTop_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Empty%402x.png" />
+  </ItemGroup>
 </Project>

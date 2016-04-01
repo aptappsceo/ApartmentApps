@@ -1,6 +1,8 @@
 using Foundation;
 using System;
 using System.CodeDom.Compiler;
+using System.Diagnostics;
+using ResidentAppCross.iOS.Views;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -12,12 +14,17 @@ namespace ResidentAppCross.iOS
 
 	    public HeaderSection(IntPtr handle) : base(handle)
 	    {
+            Debug.WriteLine("");
 	    }
 
 	    public HeaderSection()
 	    {
 	    }
 
+	    public override void AwakeFromNib()
+	    {
+	        base.AwakeFromNib();
+	    }
 
 	    public UIImageView LogoImage => LogoImageView;
 	    public UILabel MainLabel => HeaderLabel;

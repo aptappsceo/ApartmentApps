@@ -25,7 +25,6 @@ namespace ResidentAppCross.iOS.Views
         public static UIColor SecondaryForegroundColor => _secondaryForegroundColor ?? (_secondaryForegroundColor = UIColor.White);
         public static UIColor PrimaryIconColor => _primaryIconColor ?? (_primaryIconColor = Color(20, 92, 153));
 
-
         public static UIColor CompleteColor => _completeColor ?? (_completeColor = Color(76, 218, 100));
         public static UIColor InProgressColor => _inProgressColor ?? (_inProgressColor = Color(78, 203, 251));
         public static UIColor PausedColor => _pausedColor ?? (_pausedColor = Color(254, 151, 48));
@@ -34,7 +33,7 @@ namespace ResidentAppCross.iOS.Views
 
         public static float HeaderSectionHeight = 80;
         public static float CallToActionSectionHeight = 60;
-        public static float CommentsSectionHeight = 130;
+        public static float CommentsSectionHeight = 160;
         public static float TenantDataSectionHeight = 180;
         public static float FormSectionVerticalSpacing = 8f;
         public static float SegmentSectionHeight = 92f;
@@ -53,10 +52,15 @@ namespace ResidentAppCross.iOS.Views
 
         public static UIImage GetTemplateIcon(SharedResources.Icons type, SharedResources.Size size, bool filled = false)
         {
-            return GetTemplateIcon(type.ToString(), size,filled);
+            return GetIcon(type.ToString(), size,filled).ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
         }
 
-        public static UIImage GetTemplateIcon(string resource, SharedResources.Size size, bool filled = false)
+        public static UIImage GetIcon(SharedResources.Icons type, SharedResources.Size size, bool filled = false)
+        {
+            return GetIcon(type.ToString(), size,filled);
+        }
+
+        public static UIImage GetIcon(string resource, SharedResources.Size size, bool filled = false)
         {
             var path = resource;
 
@@ -83,16 +87,14 @@ namespace ResidentAppCross.iOS.Views
                 var filledPath = path + "_Filled.png";
                 path += ".png";
                 var image = UIImage.FromFile(filledPath) ?? UIImage.FromFile(path);
-                return image?.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+                return image;
             }
             else
             {
                 path += ".png";
                 var image = UIImage.FromFile(path);
-                return image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+                return image;
             }
-
-
          
         }
     }
@@ -104,5 +106,45 @@ namespace ResidentAppCross.iOS.Views
         public static string ShortVersion { get; } = NSBundle.MainBundle.InfoDictionary["CFBundleShortVersionString"].ToString();
 
         public static string VersionShortVerstion => "Version " + ShortVersion;
+    }
+
+    public static class AppFonts
+    {
+        private static UIFont _cellHeaderFont;
+        private static UIFont _cellDetailsFont;
+        private static UIFont _cellNoteFont;
+        private static UIFont _sectionHeaderFont;
+        private static UIFont _cellNoteFontSmall;
+
+        public static UIFont SectionHeaderFont
+        {
+            get { return _sectionHeaderFont ?? (_sectionHeaderFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredHeadline, 19f)); }
+            set { _sectionHeaderFont = value; }
+        }
+
+        public static UIFont CellHeaderFont
+        {
+            get { return _cellHeaderFont ?? (_cellHeaderFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredHeadline, 16f)); }
+            set { _cellHeaderFont = value; }
+        }
+
+        public static UIFont CellDetailsFont
+        {
+            get { return _cellDetailsFont ?? (_cellDetailsFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredSubheadline, 14f)); }
+            set { _cellDetailsFont = value; }
+        }
+
+        public static UIFont CellNoteFont
+        {
+            get { return _cellNoteFont ?? (_cellNoteFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredCaption1, 13f)); }
+            set { _cellNoteFont = value; }
+        }
+
+        public static UIFont CellNoteFontSmall
+        {
+            get { return _cellNoteFontSmall ?? (_cellNoteFontSmall = UIFont.FromDescriptor(UIFontDescriptor.PreferredCaption1, 11f)); }
+            set { _cellNoteFontSmall = value; }
+        }
+
     }
 }

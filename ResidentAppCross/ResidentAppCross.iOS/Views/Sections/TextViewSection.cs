@@ -44,7 +44,13 @@ namespace ResidentAppCross.iOS
             if(TextView.IsFirstResponder) TextView.ResignFirstResponder();
 	    }
 
-	    public void FormDidDisappear()
+	    public override void AwakeFromNib()
+	    {
+	        base.AwakeFromNib();
+	      
+	    }
+
+        public void FormDidDisappear()
 	    {
         }
 
@@ -52,14 +58,19 @@ namespace ResidentAppCross.iOS
         {
         }
 
+	    public override void WillMoveToSuperview(UIView newsuper)
+	    {
+	        HeaderLabel.Font = AppFonts.SectionHeaderFont;
+            TextView.Layer.CornerRadius = 6.0f;
+            TextView.Layer.BorderColor = AppTheme.SecondaryBackgoundColor.CGColor;
+            TextView.Layer.BorderWidth = 1f;
+            TextView.ClipsToBounds = true;
+            TextViewContainer.BackgroundColor = UIColor.Clear;
+        }
+
 	    public void FormWillAppear()
 	    {
-            TextView.ClipsToBounds = true;
-            TextView.Layer.CornerRadius = 6.0f;
-            TextViewContainer.BackgroundColor = UIColor.Clear;
-	        TextView.Layer.BorderColor = AppTheme.SecondaryBackgoundColor.CGColor;
-	        TextView.Layer.BorderWidth = 1f;
-	    }
+        }
 
 	    public void FormWillDisappear()
 	    {

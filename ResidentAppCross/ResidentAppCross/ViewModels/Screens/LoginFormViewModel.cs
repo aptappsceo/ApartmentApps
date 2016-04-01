@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using MvvmCross.Core.ViewModels;
 using ResidentAppCross.Commands;
@@ -38,7 +39,13 @@ namespace ResidentAppCross
         public LoginFormViewModel(ILoginManager loginManager)
         {
             LoginManager = loginManager;
-            if (loginManager.IsLoggedIn)
+           
+        }
+
+        public override void Start()
+        {
+            base.Start();
+            if (LoginManager.IsLoggedIn)
             {
                 LoginCommand.Execute(null);
             }

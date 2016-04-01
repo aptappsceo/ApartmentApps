@@ -83,7 +83,7 @@ namespace ResidentAppCross.iOS.Views
 
                     _sectionsContainer = new UIScrollView().AddTo(View);
                     _sectionsContainer.TranslatesAutoresizingMaskIntoConstraints = false;
-
+                    _sectionsContainer.BackgroundColor = AppTheme.DeepBackgroundColor;
 
                     //                    if (HeaderView != null)
                     //                    {

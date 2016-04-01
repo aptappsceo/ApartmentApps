@@ -30,15 +30,27 @@ namespace ResidentAppCross.iOS
                 set.Bind(UsernameLabel).For(l => l.Text).To(vm => vm.Username);
                 set.Apply();
 
-                SignOutButton.SetRightIcon(AppTheme.GetTemplateIcon(SharedResources.Icons.Exit, SharedResources.Size.S), false);
+                var exitIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.Exit, SharedResources.Size.S);
+                var settingsIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.Settings, SharedResources.Size.S);
+
+                var iconsPadding = 15f;
+                var imageEdgeInsets = new UIEdgeInsets(iconsPadding, iconsPadding, iconsPadding, iconsPadding);
+                var titleEdgeInsets = new UIEdgeInsets(0, 32f, 0, 0);
+
+                UsernameLabel.Font = UIFont.PreferredTitle2;
+                EditProfileButton.Font = UIFont.PreferredCaption2;
+
+                SignOutButton.SetRightIcon(exitIcon, false);
                 SignOutButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
-                SignOutButton.TitleEdgeInsets = new UIEdgeInsets(0, 32f, 0, 0);
-                SignOutButton.ImageEdgeInsets = new UIEdgeInsets(0, 16f, 0, 0);
+                SignOutButton.TitleEdgeInsets = titleEdgeInsets;
+                SignOutButton.ImageEdgeInsets = imageEdgeInsets;
+                SignOutButton.ImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
                 SignOutButton.ImageView.TintColor = UIColor.Orange;
-                SettingsButton.SetLeftIcon(AppTheme.GetTemplateIcon(SharedResources.Icons.Settings, SharedResources.Size.S),false);
+                SettingsButton.SetLeftIcon(settingsIcon,false);
                 SettingsButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
-                SettingsButton.TitleEdgeInsets = new UIEdgeInsets(0, 32f,0,0);
-                SettingsButton.ImageEdgeInsets = new UIEdgeInsets(0, 16f,0,0);
+                SettingsButton.TitleEdgeInsets = titleEdgeInsets;
+                SettingsButton.ImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
+                SettingsButton.ImageEdgeInsets = imageEdgeInsets;
                 AppTitleLabel.Text = AppString.ApplicationTitle;
                 VersionLabel.Text = AppString.VersionShortVerstion;
             });
