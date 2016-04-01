@@ -71,6 +71,8 @@ namespace ResidentAppCross.iOS.Views
                     _requestTypeSection = Formals.Create<LabelWithButtonSection>();
                     _requestTypeSection.Label.Text = "Request Type *";
                     _requestTypeSection.HeightConstraint.Constant = AppTheme.LabelWithButtonSectionHeight;
+                    _requestTypeSection.Button.Font = UIFont.PreferredHeadline;
+                    _requestTypeSection.Label.Font = UIFont.PreferredHeadline;
                 }
                 return _requestTypeSection;
             }
@@ -86,6 +88,7 @@ namespace ResidentAppCross.iOS.Views
                     _petStatusSection.Selector.RemoveAllSegments();
                     _petStatusSection.HeightConstraint.Constant = AppTheme.SegmentSectionHeight;
                     _petStatusSection.Editable = true;
+                    _petStatusSection.Label.Font = UIFont.PreferredHeadline;
                     _petStatusSection.Selector.ControlStyle = UISegmentedControlStyle.Bezeled;
                 }
                 return _petStatusSection;
@@ -99,6 +102,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
+                    _commentsSection.HeaderLabel.Font = UIFont.PreferredHeadline;
                     _commentsSection.HeightConstraint.Constant = AppTheme.CommentsSectionHeight;
                     _commentsSection.HeaderLabel.Text = "Details & Comments";
                     _commentsSection.SetEditable(true);
@@ -114,6 +118,8 @@ namespace ResidentAppCross.iOS.Views
                 if (_photoSection == null)
                 {
                     _photoSection = Formals.Create<PhotoGallerySection>();
+                    _photoSection.HeaderLabel.Font = UIFont.PreferredHeadline;
+                    _photoSection.AddPhotoButton.Font = UIFont.PreferredHeadline;
                 }
                 return _photoSection;
             }
@@ -127,6 +133,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_entrancePermissionSection == null)
                 {
                     _entrancePermissionSection = Formals.Create<ToggleSection>();
+                    _entrancePermissionSection.HeaderLabel.Font = UIFont.PreferredHeadline;
                     _entrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
                     _entrancePermissionSection.SubHeaderLabel.Text =
                         "Do you give a permission for tech guys to enter your apartment when you are not at home?";

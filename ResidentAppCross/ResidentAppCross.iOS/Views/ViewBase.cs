@@ -8,6 +8,7 @@ using Foundation;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Views;
 using MvvmCross.Platform;
+using MvvmCross.Platform.iOS;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Events;
 using ResidentAppCross.iOS.Views;
@@ -139,7 +140,7 @@ namespace ResidentAppCross.iOS.Views
                     {
                         view.InvokeOnMainThread(() =>
                         {
-                            if(!WaitingView.IsVisible)
+                            if (!WaitingView.IsVisible || !WaitingView.IsVisible())
                                 WaitingView.ShowWaiting(view, "Please, wait", label, null, 0);
                         });
                     });

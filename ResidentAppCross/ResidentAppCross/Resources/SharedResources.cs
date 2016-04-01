@@ -35,6 +35,18 @@ namespace ResidentAppCross.Resources
             CourtesyInProgress,
             CourtesyPaused,
             CourtesyPending,
+            Forward,
+            CompleteState,
+            InProgressState,
+            PauseState,
+            ScheduledState,
+            SubmittedState,
+            Circle,
+            TimelineTop,
+            TimelineMiddle,
+            TimelineBottom,
+            Empty,
+            Comment
         }
 
         public enum Size

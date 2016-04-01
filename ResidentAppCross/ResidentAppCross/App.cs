@@ -43,10 +43,9 @@ public class App : MvxApplication
         //}
         //else
         //{
-            Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
-
+        Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
         //}
-       
+
     }
     public class CustomAppStart
        : MvxNavigatingObject
