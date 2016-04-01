@@ -24,9 +24,8 @@
                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qXs-9M-42e" userLabel="AddPhotoButton">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qXs-9M-42e" userLabel="AddPhotoButton">
                                     <rect key="frame" x="292" y="0.0" width="292" height="30"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                     <state key="normal" title="Add Photo"/>
                                 </button>
                             </subviews>

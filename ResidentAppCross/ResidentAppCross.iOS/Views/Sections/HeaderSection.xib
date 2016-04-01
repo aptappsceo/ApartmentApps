@@ -15,7 +15,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppartmentAppsIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="8yv-w8-Yc1" userLabel="LogoImageView">
-                    <rect key="frame" x="8" y="8" width="95" height="95"/>
+                    <rect key="frame" x="16" y="16" width="79" height="79"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="8yv-w8-Yc1" secondAttribute="height" multiplier="1:1" id="YR9-oi-Nem"/>
                     </constraints>
@@ -35,15 +35,15 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottomMargin" secondItem="8yv-w8-Yc1" secondAttribute="bottom" id="JJG-At-vi5"/>
-                <constraint firstItem="8yv-w8-Yc1" firstAttribute="top" secondItem="1" secondAttribute="topMargin" id="JhH-LR-pDF"/>
-                <constraint firstItem="PNy-Oy-UiE" firstAttribute="leading" secondItem="8yv-w8-Yc1" secondAttribute="trailing" constant="8" symbolic="YES" id="KRe-JY-DaL"/>
+                <constraint firstAttribute="bottomMargin" secondItem="8yv-w8-Yc1" secondAttribute="bottom" constant="8" id="JJG-At-vi5"/>
+                <constraint firstItem="8yv-w8-Yc1" firstAttribute="top" secondItem="1" secondAttribute="topMargin" constant="8" id="JhH-LR-pDF"/>
+                <constraint firstItem="PNy-Oy-UiE" firstAttribute="leading" secondItem="8yv-w8-Yc1" secondAttribute="trailing" constant="16" id="KRe-JY-DaL"/>
                 <constraint firstAttribute="trailingMargin" secondItem="PNy-Oy-UiE" secondAttribute="trailing" id="XGC-7r-syl"/>
                 <constraint firstItem="PNy-Oy-UiE" firstAttribute="top" secondItem="kp9-hO-G5t" secondAttribute="bottom" constant="8" symbolic="YES" id="d4a-cc-MHH"/>
-                <constraint firstItem="8yv-w8-Yc1" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="odO-Uk-grX"/>
+                <constraint firstItem="8yv-w8-Yc1" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" constant="8" id="odO-Uk-grX"/>
                 <constraint firstItem="kp9-hO-G5t" firstAttribute="bottom" secondItem="8yv-w8-Yc1" secondAttribute="centerY" id="qiy-Bc-WIe" userLabel="HeaderBottomAlignmentConstraint"/>
                 <constraint firstAttribute="trailingMargin" secondItem="kp9-hO-G5t" secondAttribute="trailing" id="t9a-ao-Nao"/>
-                <constraint firstItem="kp9-hO-G5t" firstAttribute="leading" secondItem="8yv-w8-Yc1" secondAttribute="trailing" constant="8" symbolic="YES" id="tgO-yh-R70"/>
+                <constraint firstItem="kp9-hO-G5t" firstAttribute="leading" secondItem="8yv-w8-Yc1" secondAttribute="trailing" constant="16" id="tgO-yh-R70"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
