@@ -33,10 +33,11 @@ namespace ResidentAppCross.iOS.Views
 
         public static UIColor CreateColor => _createColor ?? (_createColor = Color(65, 153, 230));
 
+        public static float ButtonToolbarSectionHeight = 60;
         public static float HeaderSectionHeight = 80;
         public static float CallToActionSectionHeight = 60;
         public static float CommentsSectionHeight = 160;
-        public static float TenantDataSectionHeight = 180;
+        public static float TenantDataSectionHeight = 220;
         public static float FormSectionVerticalSpacing = 8f;
         public static float SegmentSectionHeight = 80f;
         public static float SwitchSectionHeight = 120f;
@@ -49,9 +50,18 @@ namespace ResidentAppCross.iOS.Views
         private static UIColor _createColor;
 
 
-        private static UIColor Color(byte r, byte g, byte b, byte a = 255)
+        public static UIColor Color(byte r, byte g, byte b, byte a = 255)
         {
             return new UIColor(r / 255f, g/ 255f, b/ 255f, a/ 255f);
+        }
+
+        public static UIColor ColorFromHex(int hexValue)
+        {
+            return UIColor.FromRGB(
+                (((float)((hexValue & 0xFF0000) >> 16)) / 255.0f),
+                (((float)((hexValue & 0xFF00) >> 8)) / 255.0f),
+                (((float)(hexValue & 0xFF)) / 255.0f)
+            );
         }
 
         public static UIImage GetTemplateIcon(SharedResources.Icons type, SharedResources.Size size, bool filled = false)
@@ -70,7 +80,7 @@ namespace ResidentAppCross.iOS.Views
 
             switch (size)
             {
-                case SharedResources.Size.X:
+                case SharedResources.Size.L:
                     path = "132_" + path;
                     break;
                 case SharedResources.Size.M:

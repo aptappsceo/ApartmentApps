@@ -2,6 +2,7 @@ using Foundation;
 using System;
 using System.CodeDom.Compiler;
 using ResidentAppCross.iOS.Views;
+using ResidentAppCross.Resources;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -23,7 +24,7 @@ namespace ResidentAppCross.iOS
 	        HeightConstraint.Constant = AppTheme.LabelWithButtonSectionHeight;
             Button.Font = AppFonts.SectionHeader;
             Label.Font = AppFonts.SectionHeader;
-            Button.SetTitleColor(new UIColor(20,91,153,1f), UIControlState.Normal);
+            Button.SetTitleColor(AppTheme.ColorFromHex(0x48A9A6), UIControlState.Normal);
         }
 
 	    public UILabel Label => _label;

@@ -63,7 +63,7 @@ namespace ResidentAppCross.Resources
 
         public enum Size
         {
-            X,
+            L,
             M,
             S,
             XS

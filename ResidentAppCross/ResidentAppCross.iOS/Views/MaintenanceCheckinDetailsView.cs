@@ -71,7 +71,7 @@ namespace ResidentAppCross.iOS.Views
             PhotosSection.BindViewModel(ViewModel.CheckinPhotos);
             HeaderSection.MainLabel.Text = "Check In";
             HeaderSection.SubLabel.Text = $"State changed to {ViewModel.Checkin.StatusId}";
-            HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.HeaderIconByStatus(ViewModel.Checkin.StatusId), SharedResources.Size.X);
+            HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.HeaderIconByStatus(ViewModel.Checkin.StatusId), SharedResources.Size.L);
             HeaderSection.LogoImage.TintColor = MaintenanceRequestStyling.ColorByStatus(ViewModel.Checkin.StatusId);
         }
 
@@ -150,7 +150,7 @@ namespace ResidentAppCross.iOS.Views
             set.Apply();
             PhotosSection.BindViewModel(ViewModel.CheckinPhotos);
 
-            _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(IncidentReportStyling.HeaderIconByStatus(ViewModel.Checkin.StatusId), SharedResources.Size.X);
+            _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(IncidentReportStyling.HeaderIconByStatus(ViewModel.Checkin.StatusId), SharedResources.Size.L);
             _headerSection.LogoImage.TintColor = IncidentReportStyling.ColorByStatus(ViewModel.Checkin.StatusId);
 
         }
