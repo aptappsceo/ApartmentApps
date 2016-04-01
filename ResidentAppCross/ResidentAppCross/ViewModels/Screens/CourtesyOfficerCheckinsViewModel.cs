@@ -62,14 +62,16 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(async () =>
                 {
                     ScanResult = await _qrService.ScanAsync();
+						var data = ScanResult.Data;
                     if (!string.IsNullOrEmpty(ScanResult.Data))
                     {
+							
                         this.TaskCommand(async context =>
                         {
-                            var location = Locations.FirstOrDefault(p => p.AcceptableCheckinCodes.Contains(ScanResult.Data));
+							var location = Locations.FirstOrDefault(p => p.AcceptableCheckinCodes.Contains(data));
                             if (location == null)
                             {
-                                context.FailTask("This is not a valid qr code.");
+								context.FailTask(data + " - This is not a valid qr code.");
                                 return;
                             }
                             var result = await ApiService.Checkins.PostWithOperationResponseAsync(location.Id.Value);
