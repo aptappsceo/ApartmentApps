@@ -16,7 +16,7 @@ namespace ResidentAppCross.iOS
     public partial class CourtesyOfficerCheckinsView : BaseForm<CourtesyOfficerCheckinsViewModel>
     {
         private MapSection _mapSection;
-        private LocationsAnnotationManager _manager;
+		private CheckinsAnnotationManager _manager;
         private HeaderSection _headerSection;
         private CallToActionSection _callToActionSection;
 
@@ -33,7 +33,7 @@ namespace ResidentAppCross.iOS
                     _mapSection.HeightConstraint.Constant = 400;
                     _mapSection.HeaderLabel.Text = "Checkin Locations";
                     CLLocationCoordinate2D coords = new CLLocationCoordinate2D(48.857, 2.351);
-                    MKCoordinateSpan span = new MKCoordinateSpan(_mapSection.MilesToLatitudeDegrees(0.1), _mapSection.MilesToLongitudeDegrees(0.1, coords.Latitude));
+                    MKCoordinateSpan span = new MKCoordinateSpan(_mapSection.MilesToLatitudeDegrees(0.01), _mapSection.MilesToLongitudeDegrees(0.1, coords.Latitude));
                     _mapSection.MapView.Region = new MKCoordinateRegion(coords, span);
                     _mapSection.MapView.ShowsUserLocation = true;
 
@@ -54,7 +54,7 @@ namespace ResidentAppCross.iOS
                 MapSection.MapView.SetCenterCoordinate(new CLLocationCoordinate2D(ViewModel.CurrentLocation.Latitude, ViewModel.CurrentLocation.Longitude), false);
             };
             b.Bind(CallToActionSection.MainButton).To(vm => vm.CheckinCommand);
-            _manager = new LocationsAnnotationManager(this.MapSection.MapView);
+			_manager = new CheckinsAnnotationManager(this.MapSection.MapView);
             b.Bind(_manager).For(m => m.ItemsSource).To(vm => vm.Locations);
             // SegmentSelectionSection.Selector.ValueChanged += (sender, args) => RefreshContent();
             b.Apply();
@@ -130,12 +130,14 @@ namespace ResidentAppCross.iOS
                     annotationView = new MKAnnotationView(annotation, annotationId);
                 if (checkinAnnotation._house.Complete == true)
                 {
-                    annotationView.Image = UIImage.FromBundle("MaintenaceIcon");
+					annotationView.Image = AppTheme.GetTemplateIcon("Location", ResidentAppCross.Resources.SharedResources.Size.S,true);
+					annotationView.TintColor = UIColor.Green;
 
                 }
                 else
                 {
-                    annotationView.Image = UIImage.FromBundle("OfficerIcon");
+					annotationView.Image = AppTheme.GetTemplateIcon("Location", ResidentAppCross.Resources.SharedResources.Size.S,false);
+					annotationView.TintColor = UIColor.Blue;
                 }
                
                 annotationView.CanShowCallout = true;

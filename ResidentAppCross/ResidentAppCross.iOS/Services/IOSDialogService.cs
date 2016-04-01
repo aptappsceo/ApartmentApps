@@ -47,7 +47,7 @@ namespace ResidentAppCross.iOS.Services
 
 
 
-        public Task<T> OpenSearchableTableSelectionDialog<T>(IList<T> items, string title, Func<T,string> itemTitleSelector, Func<T, string> itemSubtitleSelector = null)
+		public Task<T> OpenSearchableTableSelectionDialog<T>(IList<T> items, string title, Func<T,string> itemTitleSelector, Func<T, string> itemSubtitleSelector = null, object arg = null)
         {
             return Task.Factory.StartNew(() =>
             {
@@ -138,6 +138,11 @@ namespace ResidentAppCross.iOS.Services
                         }
                         tableView.ReloadData();
                     };
+							var view = arg as UIView;
+							if (arg != null) {
+								selectionTable.PopoverPresentationController.SourceView = view;
+								selectionTable.PopoverPresentationController.SourceRect = view.Bounds;
+							}
 
                     TopController.PresentModalViewController(selectionTable, true);
                 });

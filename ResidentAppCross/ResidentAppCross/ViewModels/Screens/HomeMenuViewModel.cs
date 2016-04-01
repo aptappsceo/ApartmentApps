@@ -30,7 +30,7 @@ namespace ResidentAppCross
             _dialogService = dialogService;
             Data = data;
 
-            if (loginManager.UserInfo.Roles.Contains("Maintenance"))
+			if (loginManager.UserInfo.Roles.Contains("Maintenance") || loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
@@ -50,7 +50,7 @@ namespace ResidentAppCross
                     Command = ConfigurePropertyCommand
                 });
             }
-            if (loginManager.UserInfo.Roles.Contains("Officer"))
+			if (loginManager.UserInfo.Roles.Contains("Officer") || loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
@@ -88,18 +88,21 @@ namespace ResidentAppCross
                 Icon = SharedResources.Icons.Police,
                 Command = RequestCourtesyOfficerCommand
             });
-//            MenuItems.Add(new HomeMenuItemViewModel()
-//            {
-//                Name = "Pay Rent",
-//                Icon = SharedResources.Icons.PayIcon,
-//                Command = PayRentCommand
-//            });
-//            MenuItems.Add(new HomeMenuItemViewModel()
-//            {
-//                Name = "Community Partners",
-//                Icon = SharedResources.Icons.PartnersIcon,
-//                Command = CommunityPartnersCommand
-//            });
+			if (loginManager.UserInfo.Roles.Contains ("Resident")) {
+				MenuItems.Add(new HomeMenuItemViewModel()
+					{
+						Name = "Pay Rent",
+						//Icon = SharedResources.Icons.PayIcon,
+						Command = PayRentCommand
+					});
+				MenuItems.Add(new HomeMenuItemViewModel()
+					{
+						Name = "Community Partners",
+						//Icon = SharedResources.Icons.PartnersIcon,
+						Command = CommunityPartnersCommand
+					});
+			}
+           
         }
 
         public ICommand AlertsCommand

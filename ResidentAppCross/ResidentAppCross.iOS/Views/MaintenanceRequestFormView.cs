@@ -158,7 +158,7 @@ namespace ResidentAppCross.iOS.Views
             //Request type section
 
             b.Bind(RequestTypeSection.Button).For("Title").To(vm => vm.SelectRequestTypeActionTitle);
-            b.Bind(RequestTypeSection.Button).To(vm => vm.SelectRequestTypeCommand);
+			b.Bind(RequestTypeSection.Button).To(vm => vm.SelectRequestTypeCommand).CommandParameter(RequestTypeSection.Button);
 
             //Comments Section
 

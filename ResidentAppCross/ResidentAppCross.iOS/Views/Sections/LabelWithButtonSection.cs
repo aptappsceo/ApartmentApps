@@ -13,6 +13,7 @@ namespace ResidentAppCross.iOS
 
 	    public LabelWithButtonSection (IntPtr handle) : base (handle)
 		{
+			//ResidentAppCross.iOS.Services.IOSDialogService.LastButton = _button;
 		}
 
 	    public UILabel Label => _label;
