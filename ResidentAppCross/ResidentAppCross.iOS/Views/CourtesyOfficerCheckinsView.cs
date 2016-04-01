@@ -34,7 +34,7 @@ namespace ResidentAppCross.iOS
                     _mapSection.HeightConstraint.Constant = 400;
                     _mapSection.HeaderLabel.Text = "Checkin Locations";
                     CLLocationCoordinate2D coords = new CLLocationCoordinate2D(48.857, 2.351);
-                    MKCoordinateSpan span = new MKCoordinateSpan(_mapSection.MilesToLatitudeDegrees(0.01), _mapSection.MilesToLongitudeDegrees(0.1, coords.Latitude));
+                    MKCoordinateSpan span = new MKCoordinateSpan(_mapSection.MilesToLatitudeDegrees(0.01), _mapSection.MilesToLongitudeDegrees(0.01, coords.Latitude));
                     _mapSection.MapView.Region = new MKCoordinateRegion(coords, span);
                     _mapSection.MapView.ShowsUserLocation = true;
 
