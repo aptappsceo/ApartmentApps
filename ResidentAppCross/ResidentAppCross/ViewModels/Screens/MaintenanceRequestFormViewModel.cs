@@ -144,11 +144,12 @@ namespace ResidentAppCross.ViewModels
         {
             get
             {
-                return new MvxCommand(async () =>
+				
+				return new MvxCommand<object>(async (p) =>
                 {
                     var type =await
                         _dialogService.OpenSearchableTableSelectionDialog(RequestTypes, "Select Request Type",
-                            item => item.Value);
+                            item => item.Value,null, p);
 
 
                     SelectedRequestType = type;
