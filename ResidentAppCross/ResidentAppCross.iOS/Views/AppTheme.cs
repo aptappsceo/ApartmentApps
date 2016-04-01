@@ -31,18 +31,22 @@ namespace ResidentAppCross.iOS.Views
         public static UIColor ScheduledColor => _scheduledColor ?? (_scheduledColor = Color(125, 124, 168));
         public static UIColor PendingColor => _pendingColor ?? (_pendingColor = Color(252, 134, 86));
 
+        public static UIColor CreateColor => _createColor ?? (_createColor = Color(65, 153, 230));
+
         public static float HeaderSectionHeight = 80;
         public static float CallToActionSectionHeight = 60;
         public static float CommentsSectionHeight = 160;
         public static float TenantDataSectionHeight = 180;
         public static float FormSectionVerticalSpacing = 8f;
-        public static float SegmentSectionHeight = 92f;
+        public static float SegmentSectionHeight = 80f;
+        public static float SwitchSectionHeight = 120f;
         public static float LabelWithButtonSectionHeight = 46f;
         private static UIColor _completeColor;
         private static UIColor _inProgressColor;
         private static UIColor _pausedColor;
         private static UIColor _pendingColor;
         private static UIColor _scheduledColor;
+        private static UIColor _createColor;
 
 
         private static UIColor Color(byte r, byte g, byte b, byte a = 255)
@@ -70,7 +74,7 @@ namespace ResidentAppCross.iOS.Views
                     path = "132_" + path;
                     break;
                 case SharedResources.Size.M:
-                    path = "44_" + path;
+                    path = "88_" + path;
                     break;
                 case SharedResources.Size.S:
                     path = "44_" + path;
@@ -115,36 +119,63 @@ namespace ResidentAppCross.iOS.Views
         private static UIFont _cellNoteFont;
         private static UIFont _sectionHeaderFont;
         private static UIFont _cellNoteFontSmall;
+        private static UIFont _formSubheadline;
+        private static UIFont _headerSectionMainFont;
+        private static UIFont _formHeadline;
+        private static UIFont _note;
 
-        public static UIFont SectionHeaderFont
+        public static UIFont FormHeadline
+        {
+            get { return _formHeadline ?? (_formHeadline = UIFont.FromDescriptor(UIFontDescriptor.PreferredHeadline, 22f)); }
+            set { _formHeadline = value; }
+        }
+
+        public static UIFont FormSubheadline
+        {
+            get { return _formSubheadline ?? (_formSubheadline = UIFont.FromDescriptor(UIFontDescriptor.PreferredSubheadline, 18f)); }
+            set { _formSubheadline = value; }
+        }
+
+        public static UIFont SectionHeader
         {
             get { return _sectionHeaderFont ?? (_sectionHeaderFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredHeadline, 19f)); }
             set { _sectionHeaderFont = value; }
         }
 
-        public static UIFont CellHeaderFont
+
+        public static UIFont CellHeader
         {
             get { return _cellHeaderFont ?? (_cellHeaderFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredHeadline, 16f)); }
             set { _cellHeaderFont = value; }
         }
 
-        public static UIFont CellDetailsFont
+        public static UIFont CellDetails
         {
-            get { return _cellDetailsFont ?? (_cellDetailsFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredSubheadline, 14f)); }
+            get { return _cellDetailsFont ?? (_cellDetailsFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredSubheadline, 15f)); }
             set { _cellDetailsFont = value; }
         }
 
-        public static UIFont CellNoteFont
+        public static UIFont CellNote
         {
-            get { return _cellNoteFont ?? (_cellNoteFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredCaption1, 13f)); }
+            get { return _cellNoteFont ?? (_cellNoteFont = UIFont.FromDescriptor(UIFontDescriptor.PreferredCaption1, 14f)); }
             set { _cellNoteFont = value; }
         }
 
-        public static UIFont CellNoteFontSmall
+        public static UIFont CellNoteSmall
         {
-            get { return _cellNoteFontSmall ?? (_cellNoteFontSmall = UIFont.FromDescriptor(UIFontDescriptor.PreferredCaption1, 11f)); }
+            get { return _cellNoteFontSmall ?? (_cellNoteFontSmall = UIFont.FromDescriptor(UIFontDescriptor.PreferredCaption1, 12f)); }
             set { _cellNoteFontSmall = value; }
         }
 
+        public static UIFont Note
+        {
+            get { return _note ?? (_note = UIFont.FromDescriptor(UIFontDescriptor.PreferredCaption1, 12f)); }
+            set { _note = value; }
+        }
     }
+
+    public static class AppStrings
+    {
+        public static string DefaultTextViewHeaderText = "Comments & Details";
+    } 
 }

@@ -31,6 +31,13 @@ namespace ResidentAppCross.Resources
             MaintenancePending,
             MaintenanceScheduled,
             MaintenancePaused,
+            MaintenancePause,
+            MaintenancePlay,
+            MaintenancePlus,
+            PolicePlus,
+            MaintenanceQuesiton,
+            MaintenanceOk,
+            MaintenanceExclamation,
             CourtesyComplete,
             CourtesyInProgress,
             CourtesyPaused,
@@ -46,7 +53,12 @@ namespace ResidentAppCross.Resources
             TimelineMiddle,
             TimelineBottom,
             Empty,
-            Comment
+            Comment,
+            PoliceExclamation,
+            PoliceOk,
+            PolicePlay,
+            PolicePause,
+            PoliceQuestion,
         }
 
         public enum Size

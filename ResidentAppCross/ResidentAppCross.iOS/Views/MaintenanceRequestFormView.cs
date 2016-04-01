@@ -11,6 +11,7 @@ using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.PhotoGallery;
 using ResidentAppCross.iOS.Views.TableSources;
+using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels;
 using UIKit;
 
@@ -53,10 +54,6 @@ namespace ResidentAppCross.iOS.Views
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
-                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
-                    _headerSection.MainLabel.Text = "Request";
-                    _headerSection.SubLabel.Text = "Fill the information below";
                 }
                 return _headerSection;
             }
@@ -69,10 +66,6 @@ namespace ResidentAppCross.iOS.Views
                 if (_requestTypeSection == null)
                 {
                     _requestTypeSection = Formals.Create<LabelWithButtonSection>();
-                    _requestTypeSection.Label.Text = "Request Type *";
-                    _requestTypeSection.HeightConstraint.Constant = AppTheme.LabelWithButtonSectionHeight;
-                    _requestTypeSection.Button.Font = UIFont.PreferredHeadline;
-                    _requestTypeSection.Label.Font = UIFont.PreferredHeadline;
                 }
                 return _requestTypeSection;
             }
@@ -85,11 +78,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_petStatusSection == null)
                 {
                     _petStatusSection = Formals.Create<SegmentSelectionSection>();
-                    _petStatusSection.Selector.RemoveAllSegments();
-                    _petStatusSection.HeightConstraint.Constant = AppTheme.SegmentSectionHeight;
                     _petStatusSection.Editable = true;
-                    _petStatusSection.Label.Font = UIFont.PreferredHeadline;
-                    _petStatusSection.Selector.ControlStyle = UISegmentedControlStyle.Bezeled;
                 }
                 return _petStatusSection;
             }
@@ -102,10 +91,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeaderLabel.Font = UIFont.PreferredHeadline;
-                    _commentsSection.HeightConstraint.Constant = AppTheme.CommentsSectionHeight;
-                    _commentsSection.HeaderLabel.Text = "Details & Comments";
-                    _commentsSection.SetEditable(true);
+                    _commentsSection.Editable = true;
                 }
                 return _commentsSection;
             }
@@ -118,13 +104,10 @@ namespace ResidentAppCross.iOS.Views
                 if (_photoSection == null)
                 {
                     _photoSection = Formals.Create<PhotoGallerySection>();
-                    _photoSection.HeaderLabel.Font = UIFont.PreferredHeadline;
-                    _photoSection.AddPhotoButton.Font = UIFont.PreferredHeadline;
                 }
                 return _photoSection;
             }
         }
-
 
         public ToggleSection EntrancePermissionSection
         {
@@ -133,13 +116,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_entrancePermissionSection == null)
                 {
                     _entrancePermissionSection = Formals.Create<ToggleSection>();
-                    _entrancePermissionSection.HeaderLabel.Font = UIFont.PreferredHeadline;
-                    _entrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
-                    _entrancePermissionSection.SubHeaderLabel.Text =
-                        "Do you give a permission for tech guys to enter your apartment when you are not at home?";
-                    _entrancePermissionSection.HeightConstraint.Constant = 120;
                     _entrancePermissionSection.Editable = true;
-
                 }
                 return _entrancePermissionSection;
             }
@@ -149,6 +126,14 @@ namespace ResidentAppCross.iOS.Views
         {
             base.BindForm();
 
+
+            HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.MaintenancePlus, SharedResources.Size.X);
+            HeaderSection.LogoImage.TintColor = AppTheme.CreateColor;
+            HeaderSection.MainLabel.Text = "Request";
+            HeaderSection.SubLabel.Text = "Fill the information below";
+            RequestTypeSection.Label.Text = "Request Type";
+            EntrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
+            EntrancePermissionSection.SubHeaderLabel.Text = "Do you give a permission for tech guys to enter your apartment when you are not at home?";
             var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
 
             //Header Section

@@ -33,7 +33,7 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AparmentAppsDelegating.cs" />
+    <Compile Include="ViewModels\AparmentAppsDelegating.cs" />
     <Compile Include="ApartmentApps.API.Service\Account.cs" />
     <Compile Include="ApartmentApps.API.Service\AccountExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Alerts.cs" />

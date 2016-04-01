@@ -24,8 +24,15 @@ namespace ResidentAppCross.iOS
 	    public UILabel Label => _headerTitle;
 	    public UISegmentedControl Selector => _segmentSelector;
 
+	    public override void AwakeFromNib()
+	    {
+	        base.AwakeFromNib();
+            Label.Font = AppFonts.SectionHeader;
+	        HeightConstraint.Constant = AppTheme.SegmentSectionHeight;
+	        Selector.RemoveAllSegments();
+	    }
 
-	    public void HideTitle(bool hide)
+        public void HideTitle(bool hide)
 	    {
 	        _headerHeightConstraint.Constant = hide ? 0 : 60;
 	        _headerTitle.Hidden = hide;

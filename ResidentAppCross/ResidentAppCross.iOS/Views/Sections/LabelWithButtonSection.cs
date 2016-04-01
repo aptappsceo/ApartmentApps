@@ -1,6 +1,7 @@
 using Foundation;
 using System;
 using System.CodeDom.Compiler;
+using ResidentAppCross.iOS.Views;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -15,6 +16,15 @@ namespace ResidentAppCross.iOS
 		{
 			//ResidentAppCross.iOS.Services.IOSDialogService.LastButton = _button;
 		}
+
+	    public override void AwakeFromNib()
+	    {
+	        base.AwakeFromNib();
+	        HeightConstraint.Constant = AppTheme.LabelWithButtonSectionHeight;
+            Button.Font = AppFonts.SectionHeader;
+            Label.Font = AppFonts.SectionHeader;
+            Button.SetTitleColor(new UIColor(20,91,153,1f), UIControlState.Normal);
+        }
 
 	    public UILabel Label => _label;
 	    public UIButton Button => _button;

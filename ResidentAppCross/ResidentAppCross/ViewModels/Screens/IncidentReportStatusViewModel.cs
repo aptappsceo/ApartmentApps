@@ -284,7 +284,11 @@ namespace ResidentAppCross.ViewModels.Screens
 
         }
 
-        public ICommand ShowCheckinDetailsCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand ShowCheckinDetailsCommand => new MvxCommand(() =>
+        {
+            if (SelectedCheckin == null) return;
+            ShowViewModel<IncidentReportCheckinDetailsViewModel>(vm => vm.Checkin = SelectedCheckin);
+        });
     }
 
     public class IncidentReportStatusUpdated : MvxMessage

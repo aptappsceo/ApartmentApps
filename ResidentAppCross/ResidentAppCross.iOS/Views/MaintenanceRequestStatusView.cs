@@ -432,13 +432,13 @@ namespace ResidentAppCross.iOS
             MainLabel = new UILabel(new CGRect(textualContentPadding, 6, textualContentWith, 16f))
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellDetailsFont
+                Font = AppFonts.CellDetails
             };
 
             DateLabel = new UILabel(new CGRect(textualContentPadding, 24, textualContentWith, 12f))
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellNoteFontSmall,
+                Font = AppFonts.CellNoteSmall,
                 TextColor = UIColor.DarkGray,
                 Alpha = 0.6f,
                 TextAlignment = UITextAlignment.Left

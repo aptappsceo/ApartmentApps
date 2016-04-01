@@ -14,7 +14,6 @@ namespace ResidentAppCross.iOS
 
 	    public HeaderSection(IntPtr handle) : base(handle)
 	    {
-            Debug.WriteLine("");
 	    }
 
 	    public HeaderSection()
@@ -24,6 +23,9 @@ namespace ResidentAppCross.iOS
 	    public override void AwakeFromNib()
 	    {
 	        base.AwakeFromNib();
+	        HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
+	        MainLabel.Font = AppFonts.FormHeadline;
+	        SubLabel.Font = AppFonts.FormSubheadline;
 	    }
 
 	    public UIImageView LogoImage => LogoImageView;

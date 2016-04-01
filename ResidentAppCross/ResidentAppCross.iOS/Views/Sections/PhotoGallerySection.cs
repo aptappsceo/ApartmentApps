@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using CoreGraphics;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.PictureChooser.iOS;
+using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.PhotoGallery;
 using ResidentAppCross.Services;
@@ -47,6 +48,14 @@ namespace ResidentAppCross.iOS
 	            _editable = value;
 	            AddPhotoButton.Hidden = !value;
 	        }
+	    }
+
+
+	    public override void AwakeFromNib()
+	    {
+	        base.AwakeFromNib();
+	        HeaderLabel.Font = AppFonts.SectionHeader;
+	        AddPhotoButton.Font = AppFonts.SectionHeader;
 	    }
 
 	    public UICollectionView PhotoContainer => _photoContainer;

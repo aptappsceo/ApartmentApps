@@ -44,7 +44,7 @@ namespace ResidentAppCross.iOS.Views
                         {
                             cell.MainLabel.Text = "Unit 1234";
                             cell.SubLabel.Text = $"{item.Title} - {item.StatusId}";
-                            cell.IconView.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.IconByStatus(item.StatusId), SharedResources.Size.S);
+                            cell.IconView.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.ListIconByStatus(item.StatusId), SharedResources.Size.S);
                             cell.IconView.TintColor = MaintenanceRequestStyling.ColorByStatus(item.StatusId);
                             cell.DateLabel.Text = "24/1/2 6:64 PM";;
                         },
@@ -272,20 +272,20 @@ namespace ResidentAppCross.iOS.Views
             MainLabel = new UILabel(new CGRect(textualContentPadding, 9, textualContentWith, 30f))
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellHeaderFont
+                Font = AppFonts.CellHeader
             };
 
 
             SubLabel = new UILabel(new CGRect(textualContentPadding, 30 + 9, textualContentWith, 30f))
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellDetailsFont
+                Font = AppFonts.CellDetails
             };
 
             DateLabel = new UILabel(new CGRect(textualContentPadding, 9, textualContentWith, 30f))
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellNoteFont,
+                Font = AppFonts.CellNote,
                 TextColor = UIColor.DarkGray,
                 Alpha = 0.6f,
                 TextAlignment = UITextAlignment.Right
@@ -338,18 +338,18 @@ namespace ResidentAppCross.iOS.Views
 
     public static class MaintenanceRequestStyling
     {
-        public static SharedResources.Icons IconByStatus(string status)
+        public static SharedResources.Icons ListIconByStatus(string status)
         {
             MaintenanceRequestStatus val;
             if (!Enum.TryParse(status, out val))
             {
                 throw new Exception("Unrecognized Maintenance Request Status: " + status);
             }
-            return IconByStatus(val);
+            return ListIconByStatus(val);
         }
 
 
-        public static SharedResources.Icons IconByStatus(MaintenanceRequestStatus val)
+        public static SharedResources.Icons ListIconByStatus(MaintenanceRequestStatus val)
         {
             switch (val)
             {
@@ -363,6 +363,37 @@ namespace ResidentAppCross.iOS.Views
                     return SharedResources.Icons.MaintenanceInProgress;
                 case MaintenanceRequestStatus.Submitted:
                     return SharedResources.Icons.MaintenancePending;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(val), val, null);
+            }
+        }
+
+
+        public static SharedResources.Icons HeaderIconByStatus(string status)
+        {
+            MaintenanceRequestStatus val;
+            if (!Enum.TryParse(status, out val))
+            {
+                throw new Exception("Unrecognized Maintenance Request Status: " + status);
+            }
+            return HeaderIconByStatus(val);
+        }
+
+
+        public static SharedResources.Icons HeaderIconByStatus(MaintenanceRequestStatus val)
+        {
+            switch (val)
+            {
+                case MaintenanceRequestStatus.Complete:
+                    return SharedResources.Icons.MaintenanceOk;
+                case MaintenanceRequestStatus.Paused:
+                    return SharedResources.Icons.MaintenancePause;
+                case MaintenanceRequestStatus.Scheduled:
+                    return SharedResources.Icons.MaintenanceScheduled;
+                case MaintenanceRequestStatus.Started:
+                    return SharedResources.Icons.MaintenancePlay;
+                case MaintenanceRequestStatus.Submitted:
+                    return SharedResources.Icons.MaintenanceExclamation;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(val), val, null);
             }
