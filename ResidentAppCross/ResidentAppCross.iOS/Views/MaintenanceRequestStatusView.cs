@@ -12,6 +12,7 @@ using UIKit;
 using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
 using ResidentAppCross.Resources;
+using SDWebImage;
 using MaintenanceRequestStatus = ResidentAppCross.ViewModels.Screens.MaintenanceRequestStatus;
 
 namespace ResidentAppCross.iOS
@@ -51,8 +52,6 @@ namespace ResidentAppCross.iOS
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromFile("MaintenanceIcon");
-                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
                 }
                 return _headerSection;
             }
@@ -82,8 +81,6 @@ namespace ResidentAppCross.iOS
                 if (_scheduleSection == null)
                 {
                     _scheduleSection = Formals.Create<LabelWithButtonSection>();
-                    _scheduleSection.Label.Text = "Repair Date";
-                    _scheduleSection.HeightConstraint.Constant = 60;
                 }
                 return _scheduleSection;
             }
@@ -96,10 +93,7 @@ namespace ResidentAppCross.iOS
                 if (_petStatusSection == null)
                 {
                     _petStatusSection = Formals.Create<SegmentSelectionSection>();
-                    _petStatusSection.Selector.RemoveAllSegments();
-                    _petStatusSection.HeightConstraint.Constant = 120;
                     _petStatusSection.Editable = false;
-                    _petStatusSection.Selector.ControlStyle = UISegmentedControlStyle.Bezeled;
                 }
                 return _petStatusSection;
             }
@@ -112,8 +106,6 @@ namespace ResidentAppCross.iOS
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeightConstraint.Constant = 200;
-                    _commentsSection.HeaderLabel.Text = "Details & Comments";
                 }
                 return _commentsSection;
             }
@@ -126,6 +118,7 @@ namespace ResidentAppCross.iOS
                 if (_photoSection == null)
                 {
                     _photoSection = Formals.Create<PhotoGallerySection>();
+                    _photoSection.Editable = false;
                 }
                 return _photoSection;
             }
@@ -138,7 +131,6 @@ namespace ResidentAppCross.iOS
                 if (_footerSection == null)
                 {
                     _footerSection = Formals.Create<ButtonToolbarSection>();
-                    _footerSection.HeightConstraint.Constant = 60;
                 }
                 return _footerSection;
             }
@@ -151,12 +143,7 @@ namespace ResidentAppCross.iOS
                 if (_entrancePermissionSection == null)
                 {
                     _entrancePermissionSection = Formals.Create<ToggleSection>();
-                    _entrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
-                    _entrancePermissionSection.SubHeaderLabel.Text =
-                        "Do you give a permission for tech guys to enter your apartment when you are not at home?";
-                    _entrancePermissionSection.HeightConstraint.Constant = 160;
                     _entrancePermissionSection.Editable = false;
-
                 }
                 return _entrancePermissionSection;
             }
@@ -172,9 +159,7 @@ namespace ResidentAppCross.iOS
                     _tenantDataSection.HeaderLabel.Text = "Unit Information";
                     _tenantDataSection.AddressLabel.Text = "795 E DRAGRAM TUCSON AZ 85705 USA";
                     _tenantDataSection.PhoneLabel.Text = "+1 777 777 777";
-                    _tenantDataSection.TenantAvatar.Image = UIImage.FromBundle("OfficerIcon");
-
-                    _tenantDataSection.HeightConstraint.Constant = 180;;
+                    _tenantDataSection.TenantAvatar.SetImageWithAsyncIndicator(ViewModel.TenantAvatarUrl,UIImage.FromFile("avatar-placeholder.png"));
                 }
                 return _tenantDataSection;
             }
@@ -259,7 +244,6 @@ namespace ResidentAppCross.iOS
             }
         }
 
-
         public UIButton FooterPauseButton { get; set; }
         public UIButton FooterFinishButton { get; set; }
         public UIButton FooterStartButton { get; set; }
@@ -274,12 +258,21 @@ namespace ResidentAppCross.iOS
 
         public void OnRequestChanged(MaintenanceBindingModel request)
         {
-
+            if (request == null) return;
+            HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.HeaderIconByStatus(ViewModel.Request.Status), SharedResources.Size.L);
+            HeaderSection.LogoImage.TintColor = MaintenanceRequestStyling.ColorByStatus(ViewModel.Request.Status);
         }
 
         public override void BindForm()
         {
             base.BindForm();
+
+
+            ScheduleSection.Label.Text = "Repair Date";
+            EntrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
+            EntrancePermissionSection.SubHeaderLabel.Text =
+                "Do you give a permission for tech guys to enter your apartment when you are not at home?";
+
             var b = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
 
             //Schedule Section
@@ -399,6 +392,7 @@ namespace ResidentAppCross.iOS
                 SectionContainerGesturesEnabled = false;
                 content.Add(CheckinsSection);
             }
+            TenantDataSection.TenantAvatar.ToRounded(UIColor.DarkGray,4f);
         }
 
         public override void LayoutContent()
@@ -432,13 +426,13 @@ namespace ResidentAppCross.iOS
             MainLabel = new UILabel(new CGRect(textualContentPadding, 6, textualContentWith, 16f))
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellDetailsFont
+                Font = AppFonts.CellDetails
             };
 
             DateLabel = new UILabel(new CGRect(textualContentPadding, 24, textualContentWith, 12f))
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellNoteFontSmall,
+                Font = AppFonts.CellNoteSmall,
                 TextColor = UIColor.DarkGray,
                 Alpha = 0.6f,
                 TextAlignment = UITextAlignment.Left

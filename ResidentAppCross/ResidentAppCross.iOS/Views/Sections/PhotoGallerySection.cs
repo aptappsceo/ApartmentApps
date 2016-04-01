@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using CoreGraphics;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.PictureChooser.iOS;
+using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.PhotoGallery;
 using ResidentAppCross.Services;
@@ -49,7 +50,17 @@ namespace ResidentAppCross.iOS
 	        }
 	    }
 
-	    public UICollectionView PhotoContainer => _photoContainer;
+
+	    public override void AwakeFromNib()
+	    {
+	        base.AwakeFromNib();
+	        HeaderLabel.Font = AppFonts.SectionHeader;
+	        AddPhotoButton.Font = AppFonts.SectionHeader;
+            AddPhotoButton.SetTitleColor(AppTheme.FormControlColor, UIControlState.Normal);
+
+        }
+
+        public UICollectionView PhotoContainer => _photoContainer;
 	    public UILabel HeaderLabel => _headerLabel;
 	    public UIButton AddPhotoButton => _addPhotoButton;
 

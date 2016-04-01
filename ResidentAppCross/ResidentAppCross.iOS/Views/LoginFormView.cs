@@ -125,11 +125,11 @@ namespace ResidentAppCross.iOS
                        ViewModel.Password = "Asdf1234!";
                        ViewModel.LoginCommand.Execute(null);
                    }));
-				if (controller.PopoverPresentationController!= null) {
-					controller.PopoverPresentationController.SourceView = ForgotPasswordButton;
-					controller.PopoverPresentationController.SourceRect = ForgotPasswordButton.Bounds;
-				}
-
+                if (controller.PopoverPresentationController != null)
+                {
+                    controller.PopoverPresentationController.SourceView = ForgotPasswordButton;
+                    controller.PopoverPresentationController.SourceRect = ForgotPasswordButton.Bounds;
+                }
                 this.PresentViewController(controller, true, () => { });
             };
 

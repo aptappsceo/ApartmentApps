@@ -944,4 +944,88 @@
   <ItemGroup>
     <BundleResource Include="Resources\44_Empty%402x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PoliceExclamation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PoliceExclamation%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PoliceOk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PoliceOk%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PolicePause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PolicePause%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PolicePlay.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PolicePlay%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PoliceQuestion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PoliceQuestion%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_Police_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_Police_Filled%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceExclamation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceExclamation%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceOk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceOk%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenancePause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenancePause%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenancePlay.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenancePlay%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenancePlus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenancePlus%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceQuestion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceQuestion%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PolicePlus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_PolicePlus%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_Maintenance_Filled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_Maintenance_Filled%402x.png" />
+  </ItemGroup>
 </Project>

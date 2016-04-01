@@ -48,7 +48,7 @@ namespace ResidentAppCross.iOS
                         {
                             cell.MainLabel.Text = item.Comments;
                             cell.SubLabel.Text = $"{item.Title} - {item.StatusId}";
-                            cell.IconView.Image = AppTheme.GetTemplateIcon(IncidentReportStyling.IconByStatus(item.StatusId), SharedResources.Size.S);
+                            cell.IconView.Image = AppTheme.GetTemplateIcon(IncidentReportStyling.ListIconByStatus(item.StatusId), SharedResources.Size.S);
                             cell.IconView.TintColor = IncidentReportStyling.ColorByStatus(item.StatusId);
                             cell.DateLabel.Text = "24/1/2 6:64 PM"; ;
                         },
@@ -269,17 +269,17 @@ namespace ResidentAppCross.iOS
 
     public static class IncidentReportStyling
     {
-        public static SharedResources.Icons IconByStatus(string status)
+        public static SharedResources.Icons ListIconByStatus(string status)
         {
             IncidentReportStatus val;
             if (!Enum.TryParse(status, out val))
             {
-                throw new Exception("Unrecognized Maintenance Request Status: " + status);
+                throw new Exception("Unrecognized Report Status: " + status);
             }
-            return IconByStatus(val);
+            return ListIconByStatus(val);
         }
 
-        public static SharedResources.Icons IconByStatus(IncidentReportStatus val)
+        public static SharedResources.Icons ListIconByStatus(IncidentReportStatus val)
         {
             switch (val)
             {
@@ -296,12 +296,39 @@ namespace ResidentAppCross.iOS
             }
         }
 
+        public static SharedResources.Icons HeaderIconByStatus(string status)
+        {
+            IncidentReportStatus val;
+            if (!Enum.TryParse(status, out val))
+            {
+                throw new Exception("Unrecognized Report Status: " + status);
+            }
+            return HeaderIconByStatus(val);
+        }
+
+        public static SharedResources.Icons HeaderIconByStatus(IncidentReportStatus val)
+        {
+            switch (val)
+            {
+                case IncidentReportStatus.Complete:
+                    return SharedResources.Icons.PoliceOk;
+                case IncidentReportStatus.Paused:
+                    return SharedResources.Icons.PolicePause;
+                case IncidentReportStatus.Open:
+                    return SharedResources.Icons.PolicePlay;
+                case IncidentReportStatus.Reported:
+                    return SharedResources.Icons.PoliceExclamation;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(val), val, null);
+            }
+        }
+
         public static UIColor ColorByStatus(string status)
         {
             IncidentReportStatus val;
             if (!Enum.TryParse(status, out val))
             {
-                throw new Exception("Unrecognized Maintenance Request Status: " + status);
+                throw new Exception("Unrecognized Report Status: " + status);
             }
             return ColorByStatus(val);
         }

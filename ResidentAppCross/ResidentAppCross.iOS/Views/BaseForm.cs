@@ -325,7 +325,6 @@ namespace ResidentAppCross.iOS.Views
             UIView.CommitAnimations();
         }
 
-
         protected virtual void UnregisterNotificationHandlers()
         {
             foreach (var notificatioHandler in NotificatioHandlers.ToArray())

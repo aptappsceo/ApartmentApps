@@ -1,6 +1,7 @@
 using Foundation;
 using System;
 using System.CodeDom.Compiler;
+using ResidentAppCross.iOS.Views;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -13,6 +14,16 @@ namespace ResidentAppCross.iOS
 
 	    public TenantDataSection()
 	    {
+	    }
+
+	    public override void AwakeFromNib()
+	    {
+	        base.AwakeFromNib();
+	        HeightConstraint.Constant = AppTheme.TenantDataSectionHeight;
+	        HeaderLabel.Font = AppFonts.SectionHeader;
+	        AddressLabel.Font = AppFonts.CellHeader;
+	        TenantNameLabel.Font = AppFonts.CellHeader;
+	        PhoneLabel.Font = AppFonts.Note;
 	    }
 
 

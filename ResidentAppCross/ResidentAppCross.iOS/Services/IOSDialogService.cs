@@ -139,7 +139,7 @@ namespace ResidentAppCross.iOS.Services
                         tableView.ReloadData();
                     };
 							var view = arg as UIView;
-							if (arg != null && selectionTable.PopoverPresentationController !=null) {
+							if (view != null && selectionTable.PopoverPresentationController != null) {
 								selectionTable.PopoverPresentationController.SourceView = view;
 								selectionTable.PopoverPresentationController.SourceRect = view.Bounds;
 							}

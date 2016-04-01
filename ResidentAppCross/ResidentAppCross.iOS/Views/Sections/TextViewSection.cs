@@ -10,6 +10,7 @@ namespace ResidentAppCross.iOS
 {
 	public partial class TextViewSection : SectionViewBase, IFormTapListener, IFormEventsListener, ISoftKeyboardEventsListener
     {
+
 	    public TextViewSection()
 	    {
 	    }
@@ -19,21 +20,25 @@ namespace ResidentAppCross.iOS
             
 		}
 
+	    public bool Editable
+	    {
+	        get { return TextView.Editable; }
+	        set
+	        {
+                TextView.Editable = value; 
+	            TextView.Layer.BorderColor = PrefferedBorderColor;
+            }
+        }
+
 	    public void SetEditable(bool editable)
 	    {
-	        TextView.Editable = editable;
-	        if (editable)
-	        {
-	            TextViewContainer.BackgroundColor = AppTheme.SecondaryBackgoundColor;
-	        }
-	        else
-	        {
-	            TextViewContainer.BackgroundColor = AppTheme.DeepBackgroundColor;
-	        }
+	        Editable = editable;
 	    }
 
-	    public IScrollableView ScrollableParent => ParentController as IScrollableView;
+	    private CGColor PrefferedBorderColor
+	        => TextView.Editable ? AppTheme.SecondaryBackgoundColor.CGColor : AppTheme.DeepBackgroundColor.CGColor;
 
+	    public IScrollableView ScrollableParent => ParentController as IScrollableView;
 
 	    public UIView TextViewContainer => _textViewContainer;
 	    public UITextView TextView => _textView;
@@ -47,7 +52,14 @@ namespace ResidentAppCross.iOS
 	    public override void AwakeFromNib()
 	    {
 	        base.AwakeFromNib();
-	      
+            HeaderLabel.Font = AppFonts.SectionHeader;
+	        HeightConstraint.Constant = AppTheme.CommentsSectionHeight;
+            TextView.Layer.CornerRadius = 6.0f;
+            TextView.Layer.BorderColor = PrefferedBorderColor;
+            TextView.Layer.BorderWidth = 1f;
+            TextView.ClipsToBounds = true;
+            TextViewContainer.BackgroundColor = UIColor.Clear;
+	        HeaderLabel.Text = AppStrings.DefaultTextViewHeaderText;
 	    }
 
         public void FormDidDisappear()
@@ -56,16 +68,6 @@ namespace ResidentAppCross.iOS
 
         public void FormDidAppear()
         {
-        }
-
-	    public override void WillMoveToSuperview(UIView newsuper)
-	    {
-	        HeaderLabel.Font = AppFonts.SectionHeaderFont;
-            TextView.Layer.CornerRadius = 6.0f;
-            TextView.Layer.BorderColor = AppTheme.SecondaryBackgoundColor.CGColor;
-            TextView.Layer.BorderWidth = 1f;
-            TextView.ClipsToBounds = true;
-            TextViewContainer.BackgroundColor = UIColor.Clear;
         }
 
 	    public void FormWillAppear()

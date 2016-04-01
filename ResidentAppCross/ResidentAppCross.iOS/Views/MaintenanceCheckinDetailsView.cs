@@ -4,6 +4,7 @@ using System.Text;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using ResidentAppCross.iOS.Views.Attributes;
+using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
@@ -27,10 +28,6 @@ namespace ResidentAppCross.iOS.Views
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
-                    _headerSection.MainLabel.Text = "Checkin";
-                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
-                    _headerSection.SubLabel.Text = $"State -> {ViewModel.Checkin.StatusId}";
                 }
                 return _headerSection;
             }
@@ -58,9 +55,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeaderLabel.Text = "Details";
-                    _commentsSection.SetEditable(false);
-                    _commentsSection.HeightConstraint.Constant = AppTheme.CommentsSectionHeight;
+                    _commentsSection.Editable = false;
                 }
                 return _commentsSection;
             }
@@ -74,7 +69,10 @@ namespace ResidentAppCross.iOS.Views
             set.Bind(CommentsSection.TextView).To(w => w.Checkin.Comments);
             set.Apply();
             PhotosSection.BindViewModel(ViewModel.CheckinPhotos);
-
+            HeaderSection.MainLabel.Text = "Check In";
+            HeaderSection.SubLabel.Text = $"State changed to {ViewModel.Checkin.StatusId}";
+            HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.HeaderIconByStatus(ViewModel.Checkin.StatusId), SharedResources.Size.L);
+            HeaderSection.LogoImage.TintColor = MaintenanceRequestStyling.ColorByStatus(ViewModel.Checkin.StatusId);
         }
 
         public override void GetContent(List<UIView> content)
@@ -104,7 +102,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromFile("PoliceIcon");
+                    
                     _headerSection.MainLabel.Text = "Checkin";
                     _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
                     _headerSection.SubLabel.Text = $"State -> {ViewModel.Checkin.StatusId}";
@@ -151,6 +149,9 @@ namespace ResidentAppCross.iOS.Views
             set.Bind(CommentsSection.TextView).To(w => w.Checkin.Comments);
             set.Apply();
             PhotosSection.BindViewModel(ViewModel.CheckinPhotos);
+
+            _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(IncidentReportStyling.HeaderIconByStatus(ViewModel.Checkin.StatusId), SharedResources.Size.L);
+            _headerSection.LogoImage.TintColor = IncidentReportStyling.ColorByStatus(ViewModel.Checkin.StatusId);
 
         }
 
