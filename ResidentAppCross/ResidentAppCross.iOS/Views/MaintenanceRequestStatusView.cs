@@ -316,18 +316,21 @@ namespace ResidentAppCross.iOS
             b.Bind(PetStatusSection.Selector).For(s => s.SelectedSegment).To(vm => vm.Request.PetStatus);
 
             //Tenant section
-            b.Bind(TenantDataSection.TenantNameLabel).For(t => t.Text).To(vm => vm.Request.TenantFullName);
+            b.Bind(TenantDataSection.TenantNameLabel).For(t => t.Text).To(vm => vm.Request.User.FullName);
+            b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.User.PhoneNumber);
+            
+
 
             //Date section
             b.Bind(ScheduleSection.Button).To(vm => vm.ScheduleCommand);
 
-            //b.Bind(TenantDataSection.AddressLabel).For(t => t.Text).To(vm => vm.UnitAddressString);
-            //b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.TenantPhone)
-            //b.Bind(TenantDataSection.TenantAvatar)
+            b.Bind(TenantDataSection.AddressLabel).For(t => t.Text).To(vm => vm.UnitAddressString);
+            //b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.User.PhoneNumber);
+            //b.Bind(TenantDataSection.TenantAvatar).For(t=>t.Image).To(vm=>vm.Request.User.ImageUrl)
 
             //Entrance Permission section
 
-            //b.Bind(EntrancePermissionSection.Switch).For(s => s.On).To(vm => vm.Request.EntrancePermission);
+            b.Bind(EntrancePermissionSection.Switch).For(s => s.On).To(vm => vm.Request.PermissionToEnter);
 
             b.Apply();
 

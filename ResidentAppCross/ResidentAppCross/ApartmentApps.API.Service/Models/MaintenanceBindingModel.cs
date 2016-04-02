@@ -12,28 +12,6 @@ namespace ApartmentApps.Client.Models
 {
     public partial class MaintenanceBindingModel
     {
-        private string _buildingAddress;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string BuildingAddress
-        {
-            get { return this._buildingAddress; }
-            set { this._buildingAddress = value; }
-        }
-        
-        private string _buildingCity;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string BuildingCity
-        {
-            get { return this._buildingCity; }
-            set { this._buildingCity = value; }
-        }
-        
         private string _buildingName;
         
         /// <summary>
@@ -43,28 +21,6 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._buildingName; }
             set { this._buildingName = value; }
-        }
-        
-        private string _buildingPostalCode;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string BuildingPostalCode
-        {
-            get { return this._buildingPostalCode; }
-            set { this._buildingPostalCode = value; }
-        }
-        
-        private string _buildingState;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string BuildingState
-        {
-            get { return this._buildingState; }
-            set { this._buildingState = value; }
         }
         
         private IList<MaintenanceCheckinBindingModel> _checkins;
@@ -98,6 +54,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._name; }
             set { this._name = value; }
+        }
+        
+        private bool? _permissionToEnter;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? PermissionToEnter
+        {
+            get { return this._permissionToEnter; }
+            set { this._permissionToEnter = value; }
         }
         
         private int? _petStatus;
@@ -144,17 +111,6 @@ namespace ApartmentApps.Client.Models
             set { this._status = value; }
         }
         
-        private string _tenantFullName;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string TenantFullName
-        {
-            get { return this._tenantFullName; }
-            set { this._tenantFullName = value; }
-        }
-        
         private string _unitName;
         
         /// <summary>
@@ -164,6 +120,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._unitName; }
             set { this._unitName = value; }
+        }
+        
+        private UserBindingModel _user;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public UserBindingModel User
+        {
+            get { return this._user; }
+            set { this._user = value; }
         }
         
         private string _userId;
@@ -204,30 +171,10 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
-                JToken buildingAddressValue = inputObject["BuildingAddress"];
-                if (buildingAddressValue != null && buildingAddressValue.Type != JTokenType.Null)
-                {
-                    this.BuildingAddress = ((string)buildingAddressValue);
-                }
-                JToken buildingCityValue = inputObject["BuildingCity"];
-                if (buildingCityValue != null && buildingCityValue.Type != JTokenType.Null)
-                {
-                    this.BuildingCity = ((string)buildingCityValue);
-                }
                 JToken buildingNameValue = inputObject["BuildingName"];
                 if (buildingNameValue != null && buildingNameValue.Type != JTokenType.Null)
                 {
                     this.BuildingName = ((string)buildingNameValue);
-                }
-                JToken buildingPostalCodeValue = inputObject["BuildingPostalCode"];
-                if (buildingPostalCodeValue != null && buildingPostalCodeValue.Type != JTokenType.Null)
-                {
-                    this.BuildingPostalCode = ((string)buildingPostalCodeValue);
-                }
-                JToken buildingStateValue = inputObject["BuildingState"];
-                if (buildingStateValue != null && buildingStateValue.Type != JTokenType.Null)
-                {
-                    this.BuildingState = ((string)buildingStateValue);
                 }
                 JToken checkinsSequence = ((JToken)inputObject["Checkins"]);
                 if (checkinsSequence != null && checkinsSequence.Type != JTokenType.Null)
@@ -248,6 +195,11 @@ namespace ApartmentApps.Client.Models
                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                 {
                     this.Name = ((string)nameValue);
+                }
+                JToken permissionToEnterValue = inputObject["PermissionToEnter"];
+                if (permissionToEnterValue != null && permissionToEnterValue.Type != JTokenType.Null)
+                {
+                    this.PermissionToEnter = ((bool)permissionToEnterValue);
                 }
                 JToken petStatusValue = inputObject["PetStatus"];
                 if (petStatusValue != null && petStatusValue.Type != JTokenType.Null)
@@ -272,15 +224,17 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Status = ((string)statusValue);
                 }
-                JToken tenantFullNameValue = inputObject["TenantFullName"];
-                if (tenantFullNameValue != null && tenantFullNameValue.Type != JTokenType.Null)
-                {
-                    this.TenantFullName = ((string)tenantFullNameValue);
-                }
                 JToken unitNameValue = inputObject["UnitName"];
                 if (unitNameValue != null && unitNameValue.Type != JTokenType.Null)
                 {
                     this.UnitName = ((string)unitNameValue);
+                }
+                JToken userValue = inputObject["User"];
+                if (userValue != null && userValue.Type != JTokenType.Null)
+                {
+                    UserBindingModel userBindingModel = new UserBindingModel();
+                    userBindingModel.DeserializeJson(userValue);
+                    this.User = userBindingModel;
                 }
                 JToken userIdValue = inputObject["UserId"];
                 if (userIdValue != null && userIdValue.Type != JTokenType.Null)

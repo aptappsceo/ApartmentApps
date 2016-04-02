@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -91,16 +92,18 @@ namespace ApartmentApps.API.Service.Controllers
 
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
             //var rp = (RolePrincipal) User;
-            return new UserInfoViewModel
+            return new UserInfoViewModel()
             {
                 Roles = await UserManager.GetRolesAsync(User.Identity.GetUserId()),
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
-                ImageUrl = _blobStorage.GetPhotoUrl(CurrentUser.ImageUrl),
-                ImageThumbnailUrl = _blobStorage.GetPhotoUrl(CurrentUser.ImageThumbnailUrl),
+                ImageUrl = _blobStorage.GetPhotoUrl(CurrentUser.ImageUrl) ?? $"http://www.gravatar.com/avatar/{ModelExtensions.HashEmailForGravatar(CurrentUser.Email.ToLower())}.jpg",
+                ImageThumbnailUrl = _blobStorage.GetPhotoUrl(CurrentUser.ImageThumbnailUrl) ?? $"http://www.gravatar.com/avatar/{ModelExtensions.HashEmailForGravatar(CurrentUser.Email.ToLower())}.jpg",
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
         }
+
+
 
         // POST api/Account/Logout
         [Route("Logout")]

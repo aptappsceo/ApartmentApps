@@ -42,6 +42,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private ObservableCollection<MaintenanceCheckinBindingModel> _checkins;
         private MaintenanceCheckinBindingModel _selectedCheckin;
         private string _tenantAvatarUrl;
+        private string _telephoneNumber;
 
         public MaintenanceRequestStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService, ILoginManager loginManager)
         {
@@ -167,10 +168,16 @@ namespace ResidentAppCross.ViewModels.Screens
                 ForbidStart = CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Complete;
                 Checkins.Clear();
                 Checkins.AddRange(Request.Checkins.OrderByDescending(x=>x.Date));
-                UnitAddressString = $"{Request?.BuildingName} {Request?.BuildingState} {Request?.BuildingCity} {Request?.BuildingPostalCode}";
+                UnitAddressString = Request.BuildingName;
+            TelephoneNumber = Request.User.PhoneNumber;
             this.Publish(new MaintenanceRequestStatusUpdated(this));
 
         }).OnStart("Loading Request...").OnFail(ex=> { Close(this); });
+        public string TelephoneNumber
+        {
+            get { return _telephoneNumber; }
+            set { SetProperty(ref _telephoneNumber, value); }
+        }
 
         public string TenantAvatarUrl
         {

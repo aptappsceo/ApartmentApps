@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.Data;
 
@@ -18,7 +19,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public string Comments { get; set; }
         public string IncidentType { get; set; }
         public IEnumerable<string> Photos { get; set; }
-        public string Requester { get; set; }
+        public UserBindingModel Requester { get; set; }
         public string RequesterId { get; set; }
         public DateTime CreatedOn { get; set; }
         public string UnitName { get; set; }
@@ -33,9 +34,9 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public string StatusId { get; set; }
         public DateTime Date { get; set; }
         public string Comments { get; set; }
-        public string OfficerName { get; set; }
         public List<ImageReference> Photos { get; set; }
-        public string OfficerPhoneNumber { get; set; }
+  
+        public UserBindingModel Officer { get; set; }
     }
 
     [System.Web.Http.RoutePrefix("api/Courtesy")]
@@ -61,12 +62,14 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 var propertyId = this.CurrentUser.PropertyId;
 
                 return
-                    Context.IncidentReports.Include(r => r.IncidentReportStatus).Where(p => p.User.PropertyId == propertyId).Select(
+                    Context.IncidentReports.Include(r => r.IncidentReportStatus)
+                    .Where(p => p.User.PropertyId == propertyId).ToArray().Select(
                         x => new IncidentIndexBindingModel()
                         {
                             Title = x.IncidentType.ToString(),
                             Comments = x.Comments,
                             RequestDate = x.CreatedOn,
+                            ReportedBy = x.User.ToUserBindingModel(BlobStorageService),
                             StatusId = x.StatusId,
                             Id = x.Id
                         }).ToArray();
@@ -91,11 +94,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 var response = new IncidentReportBindingModel()
                 {
                     Comments = result.Comments,
-                    Requester = result.User.FirstName + " " + result.User.LastName,
-                    RequesterId = result.UserId,
-                    RequesterPhoneNumber = result.User.PhoneNumber,
-                    BuildingName = result.User.Tenant?.Unit?.Building?.Name,
-                    UnitName = result.User.Tenant?.Unit?.Name,
+
+                    Requester = result.User.ToUserBindingModel(BlobStorageService),
                     Status = result.StatusId,
                     CreatedOn = result.CreatedOn,
                     IncidentType = result.IncidentType.ToString(),
@@ -104,8 +104,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
                         StatusId = x.StatusId,
                         Date = x.CreatedOn,
                         Comments = x.Comments,
-                        OfficerName = x.Officer.UserName,
-                        OfficerPhoneNumber = x.Officer.PhoneNumber,
+                        Officer = x.Officer.ToUserBindingModel(BlobStorageService),
+                     
                         
                         Photos = Context.ImageReferences.Where(r => r.GroupId == x.GroupId).ToList()
                     }).ToArray(),
@@ -170,7 +170,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                         .Any(x=>x.CreatedOn.DayOfYear == today.DayOfYear),
                     AcceptableCheckinCodes = new List<string>()
                     {
-                        $"http://apartmentapps.com/location={p.LocationId}"
+                        $"http://apartmentapps.com?location={p.LocationId}"
                     }
                 });
         }
@@ -212,5 +212,6 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public string StatusId { get; set; }
         public int Id { get; set; }
         public DateTime RequestDate { get; set; }
+        public UserBindingModel ReportedBy { get; set; }
     }
 }

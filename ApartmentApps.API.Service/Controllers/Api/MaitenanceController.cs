@@ -32,18 +32,16 @@ namespace ApartmentApps.API.Service.Controllers
             public string UserId { get; set; }
             public string Name { get; set; }
             public string Message { get; set; }
-            public string BuildingName { get; set; }
-            public string BuildingAddress { get; set; }
-            public string BuildingState { get; set; }
-            public string BuildingCity { get; set; }
+        
             public IEnumerable<string> Photos { get; set; }
-            public string BuildingPostalCode { get; set; }
             public string UnitName { get; set; }
             public string Status { get; set; }
-            public string TenantFullName { get; set; }
             public DateTime? ScheduleDate { get; set; }
             public int PetStatus { get; set; }
             public MaintenanceCheckinBindingModel[] Checkins { get; set; }
+            public UserBindingModel User { get; set; }
+            public string BuildingName { get; set; }
+            public bool PermissionToEnter { get; set; }
         }
 
         public class MaintenanceIndexBindingModel
@@ -53,6 +51,7 @@ namespace ApartmentApps.API.Service.Controllers
             public string StatusId { get; set; }
             public int Id { get; set; }
             public DateTime RequestDate { get; set; }
+            public UserBindingModel SubmissionBy { get; set; }
         }
 
         public class MaintenanceCheckinBindingModel
@@ -60,8 +59,8 @@ namespace ApartmentApps.API.Service.Controllers
             public string StatusId { get; set; }
             public DateTime Date { get; set; }
             public string Comments { get; set; }
-            public string WorkerName { get; set; }
             public List<ImageReference> Photos { get; set; }
+            public UserBindingModel Worker { get; set; }
         }
 
         [System.Web.Http.HttpGet]
@@ -71,12 +70,14 @@ namespace ApartmentApps.API.Service.Controllers
          
                 var propertyId = this.CurrentUser.PropertyId;
                 return
-                    Context.MaitenanceRequests.Include(r=>r.MaitenanceRequestType).Where(p => p.User.PropertyId == propertyId).Select(
+                    Context.MaitenanceRequests.Include(r=>r.MaitenanceRequestType)
+                    .Where(p => p.User.PropertyId == propertyId).ToArray().Select(
                         x => new MaintenanceIndexBindingModel()
                         {
                             Title = x.MaitenanceRequestType.Name,
                             RequestDate = x.SubmissionDate,
                             Comments = x.Message,
+                            SubmissionBy = x.User.ToUserBindingModel(BlobStorageService),
                             StatusId = x.StatusId,
                             Id = x.Id
                         }).ToArray();
@@ -97,16 +98,12 @@ namespace ApartmentApps.API.Service.Controllers
 
                 var response = new MaintenanceBindingModel
                 {
-                    UserName = result.User.UserName,
+                    User = result.User.ToUserBindingModel(BlobStorageService),
                     Status = result.StatusId,
-                    TenantFullName = result.User.FirstName + " " + result.User.LastName,
-                    UserId = result.UserId,
-                    BuildingAddress = result.User.Tenant?.Address,
-                    BuildingCity= result.User.Tenant?.City,
-                    BuildingPostalCode= result.User.Tenant?.PostalCode,
-                    BuildingState= result.User.Tenant?.State,
                     Name = result.MaitenanceRequestType.Name,
                     PetStatus = result.PetStatus,
+                    BuildingName = result.Unit?.Building?.Name + " " + result.Unit?.Name,
+                    PermissionToEnter = result.PermissionToEnter,
                     Checkins = result.Checkins.ToArray().Select(x=>
                     {
                         var imageReferences = Context.ImageReferences.Where(r => r.GroupId == x.GroupId).ToList();
@@ -121,12 +118,12 @@ namespace ApartmentApps.API.Service.Controllers
                             StatusId = x.StatusId,
                             Date = x.Date,
                             Comments = x.Comments,
-                            WorkerName = x.Worker.UserName,
+                            Worker = x.Worker.ToUserBindingModel(BlobStorageService),
                             Photos = imageReferences
                         };
                     }).ToArray(),
                     ScheduleDate = result.ScheduleDate,
-                    Message = result.Message, BuildingName = result.Unit?.Building?.Name, UnitName = result.Unit?.Name,
+                    Message = result.Message,
                     Photos = photos.Select(key=> BlobStorageService.GetPhotoUrl(key.Url))
                 };
                 return response;
@@ -134,6 +131,7 @@ namespace ApartmentApps.API.Service.Controllers
            
         }
 
+       
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("ScheduleRequest")]
         public void ScheduleRequest(int id, DateTime scheduleDate)
