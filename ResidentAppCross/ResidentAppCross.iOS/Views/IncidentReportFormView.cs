@@ -104,7 +104,8 @@ namespace ResidentAppCross.iOS
             base.BindForm();
 
 
-            HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.PolicePlus, SharedResources.Size.S);
+            HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.PolicePlus, SharedResources.Size.L);
+            HeaderSection.LogoImage.TintColor = AppTheme.CreateColor;
             HeaderSection.MainLabel.Text = "Report Incident";
             HeaderSection.SubLabel.Text = "Fill the information below";
             IncidentReportTypeSegment.Label.Text = "Incident Type";

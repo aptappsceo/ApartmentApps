@@ -61,8 +61,6 @@ namespace ResidentAppCross.iOS
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromFile("PoliceIcon");
-                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
                 }
                 return _headerSection;
             }
@@ -92,8 +90,6 @@ namespace ResidentAppCross.iOS
                 if (_scheduleSection == null)
                 {
                     _scheduleSection = Formals.Create<LabelWithButtonSection>();
-                    _scheduleSection.Label.Text = "Report Date";
-                    _scheduleSection.HeightConstraint.Constant = 40;
                 }
                 return _scheduleSection;
             }
@@ -107,8 +103,6 @@ namespace ResidentAppCross.iOS
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeightConstraint.Constant = 170;
-                    _commentsSection.HeaderLabel.Text = "Details & Comments";
                 }
                 return _commentsSection;
             }
@@ -133,7 +127,6 @@ namespace ResidentAppCross.iOS
                 if (_footerSection == null)
                 {
                     _footerSection = Formals.Create<ButtonToolbarSection>();
-                    _footerSection.HeightConstraint.Constant = 120;
                 }
                 return _footerSection;
             }
@@ -148,8 +141,7 @@ namespace ResidentAppCross.iOS
                     _entrancePermissionSection = Formals.Create<ToggleSection>();
                     _entrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
                     _entrancePermissionSection.SubHeaderLabel.Text =
-                        "Do you give a permission for tech guys to enter your apartment when you are not at home?";
-                    _entrancePermissionSection.HeightConstraint.Constant = 130;
+                        "Do you give a permission for the officer to enter your apartment when you are not at home?";
                     _entrancePermissionSection.Editable = false;
 
                 }
@@ -164,11 +156,7 @@ namespace ResidentAppCross.iOS
                 if (_tenantDataSection == null)
                 {
                     _tenantDataSection = Formals.Create<TenantDataSection>();
-                    _tenantDataSection.HeaderLabel.Text = "Unit Information";
-                    _tenantDataSection.AddressLabel.Text = "795 E DRAGRAM TUCSON AZ 85705 USA";
-                    _tenantDataSection.PhoneLabel.Text = "+1 777 777 777";
-                    _tenantDataSection.TenantAvatar.Image = UIImage.FromBundle("OfficerIcon");
-                    _tenantDataSection.HeightConstraint.Constant = AppTheme.TenantDataSectionHeight;
+                    _tenantDataSection.TenantAvatar.Image = UIImage.FromFile("avatar-placeholder.png");
                 }
                 return _tenantDataSection;
             }
@@ -187,49 +175,38 @@ namespace ResidentAppCross.iOS
                     var timelineStartLine = UIImage.FromFile("TimelineStart.png");
                     var timelineEndLine = UIImage.FromFile("TimelineEnd.png");
 
-                    var tableDataBinding = new TableDataBinding<UITableViewCell, IncidentCheckinBindingModel>() //Define cell type and data type as type args
+                    var tableDataBinding = new TableDataBinding<HistoryItemCell, IncidentCheckinBindingModel>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = item.StatusId;
-                            cell.ImageView.Image = UIImage.FromBundle("OfficerIcon");
-                            cell.DetailTextLabel.Text = item.Date?.ToString("g");
-                            cell.TextLabel.MinimumScaleFactor = 0.2f;
+                            cell.MainLabel.Text = item.StatusId;
+                            cell.DateLabel.Text = item.Date?.ToString("g");
+
+                            SharedResources.Icons timelineIconType;
 
                             if (ViewModel.Checkins.Count == 1)
-                                cell.ImageView.Image = timelineUndefinedStatusIcon;
+                                timelineIconType = SharedResources.Icons.Empty;
                             else if (index == 0)
-                                cell.ImageView.Image = timelineEndLine;
+                                timelineIconType = SharedResources.Icons.TimelineTop;
                             else if (index == ViewModel.Checkins.Count - 1)
-                                cell.ImageView.Image = timelineStartLine;
+                                timelineIconType = SharedResources.Icons.TimelineBottom;
                             else
-                                cell.ImageView.Image = timelineMidLine;
+                                timelineIconType = SharedResources.Icons.TimelineMiddle; ;
+
+                            cell.IconView.Image = AppTheme.GetTemplateIcon(timelineIconType, SharedResources.Size.S, true);
+                            cell.TintColor = AppTheme.SecondaryBackgoundColor;
 
 
 
-                            //cell.ImageView.Alpha = ViewModel.Checkins.Count == 1 ? 0f : 1f;
-                            UIImageView anotherImageView = cell.ImageView.Subviews.OfType<UIImageView>().FirstOrDefault();
-
-                            if (anotherImageView == null)
-                            {
-                                anotherImageView = new UIImageView(cell.ImageView.Frame)
-                                {
-                                    AutoresizingMask = UIViewAutoresizing.FlexibleMargins,
-                                    // AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
-                                    ContentMode = UIViewContentMode.ScaleAspectFill
-                                };
-
-                                cell.ImageView.Add(anotherImageView);
-                            }
-
-                            if (index == 0)
-                                anotherImageView.Frame = anotherImageView.Frame.WithSize(30f, 30f);
-                            else
-                                anotherImageView.Frame = anotherImageView.Frame.WithSize(24f, 24f);
-
-                            anotherImageView.Image = timelineUndefinedStatusIcon;
-
-
+                            //                            cell.IconView.SetLayer(AppTheme.GetTemplateIcon(MaintenanceRequestStyling.StateIconByStatus(item.StatusId), SharedResources.Size.S),
+                            //                                MaintenanceRequestStyling.ColorByStatus(item.StatusId),12f,12f);
+                            var backgroundPad = index == 0 ? 6f : 10f;
+                            var iconPad = index == 0 ? 12f : 16f;
+                            cell.IconView.SetBackgroundLayer(AppTheme.GetTemplateIcon(SharedResources.Icons.Circle, SharedResources.Size.S, true),
+                                IncidentReportStyling.ColorByStatus(item.StatusId), backgroundPad, backgroundPad);
+                            cell.IconView.SetBackgroundRounded(AppTheme.SecondaryBackgoundColor);
+                            cell.IconView.SetIconLayerLayer(AppTheme.GetTemplateIcon(IncidentReportStyling.StateIconByStatus(item.StatusId), SharedResources.Size.S, true),
+                                UIColor.White, iconPad, iconPad);
                         },
                         ItemSelected = item =>
                         {
@@ -237,7 +214,7 @@ namespace ResidentAppCross.iOS
                             ViewModel.ShowCheckinDetailsCommand.Execute(null);
                         }, //When accessory button clicked
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_IncidentDetailsCheckinsTable"), //Define how to create cell, if reusables not found
+                        CellSelector = () => new HistoryItemCell("UITableViewCell_IncidentDetailsCheckinsTable"), //Define how to create cell, if reusables not found
                         CellIdentifier = "UITableViewCell_IncidentDetailsCheckinsTable"
                     };
 
@@ -276,10 +253,26 @@ namespace ResidentAppCross.iOS
         public override void BindForm()
         {
             base.BindForm();
+            ScheduleSection.Label.Text = "Report Date";
 
 
             this.OnViewModelEventMainThread<IncidentReportStatusUpdated>(_ =>
             {
+                if (ViewModel.Request != null)
+                {
+                    HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(IncidentReportStyling.HeaderIconByStatus(ViewModel.Request.Status),SharedResources.Size.L);
+                    HeaderSection.LogoImage.TintColor = IncidentReportStyling.ColorByStatus(ViewModel.Request.Status);
+                    if (!string.IsNullOrEmpty(ViewModel.Request.Requester.ImageUrl))
+                    {
+                        TenantDataSection.TenantAvatar.SetImageWithAsyncIndicator(ViewModel.Request.Requester.ImageUrl,
+                            UIImage.FromFile("avatar-placeholder.png"));
+                    }
+                    else
+                    {
+                        TenantDataSection.TenantAvatar.Image = UIImage.FromFile("avatar-placeholder.png");
+                    }
+
+                }
                 CheckinsSection.ReloadData();
                 RefreshContent();
                 UpdateFooter();
@@ -352,7 +345,7 @@ namespace ResidentAppCross.iOS
                 switch (i)
                 {
                     case IncidentReportStatusDisplayMode.Status:
-                        return SharedResources.Icons.Info;
+                        return SharedResources.Icons.Details;
                     case IncidentReportStatusDisplayMode.History:
                         return SharedResources.Icons.Past;
                     default:
@@ -407,8 +400,6 @@ namespace ResidentAppCross.iOS
                 SectionContainerGesturesEnabled = false;
                 content.Add(CheckinsSection);
             }
-
-      
         }
 
         public override void LayoutContent()

@@ -65,7 +65,7 @@ namespace ResidentAppCross.iOS
                 {
                     _typeSelectionSection = new UITabBar().WithHeight(49,1000);
                     _typeSelectionSection.TranslatesAutoresizingMaskIntoConstraints = false;
-                    _typeSelectionSection.BarStyle = UIBarStyle.BlackOpaque;
+                    _typeSelectionSection.BarStyle = UIBarStyle.Black;
                     _typeSelectionSection.BarTintColor = AppTheme.SecondaryBackgoundColor;
                    // _typeSelectionSection.SelectedImageTintColor = UIColor.Red;
                     _typeSelectionSection.TintColor = UIColor.White;
@@ -156,10 +156,8 @@ namespace ResidentAppCross.iOS
                 if(_tenantDataSection == null)
                 {
                     _tenantDataSection = Formals.Create<TenantDataSection>();
-                    _tenantDataSection.HeaderLabel.Text = "Unit Information";
-                    _tenantDataSection.AddressLabel.Text = "795 E DRAGRAM TUCSON AZ 85705 USA";
-                    _tenantDataSection.PhoneLabel.Text = "+1 777 777 777";
-                    _tenantDataSection.TenantAvatar.SetImageWithAsyncIndicator(ViewModel.TenantAvatarUrl,UIImage.FromFile("avatar-placeholder.png"));
+                    _tenantDataSection.TenantAvatar.Image =UIImage.FromFile("avatar-placeholder.png");
+
                 }
                 return _tenantDataSection;
             }
@@ -231,7 +229,6 @@ namespace ResidentAppCross.iOS
 
                     _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
                     _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
-                    _tableSection.BackgroundColor = UIColor.White;
                     _tableSection.Source = source;
                     _tableSection.ReloadData();
 
@@ -257,6 +254,11 @@ namespace ResidentAppCross.iOS
             if (request == null) return;
             HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.HeaderIconByStatus(ViewModel.Request.Status), SharedResources.Size.L);
             HeaderSection.LogoImage.TintColor = MaintenanceRequestStyling.ColorByStatus(ViewModel.Request.Status);
+            if(!string.IsNullOrEmpty(ViewModel.Request.User.ImageUrl))
+            TenantDataSection.TenantAvatar.SetImageWithAsyncIndicator(ViewModel.Request.User.ImageUrl, UIImage.FromFile("avatar-placeholder.png"));
+            else
+                TenantDataSection.TenantAvatar.Image = UIImage.FromFile("avatar-placeholder.png");
+
         }
 
         public override void BindForm()
@@ -314,8 +316,10 @@ namespace ResidentAppCross.iOS
             //Tenant section
             b.Bind(TenantDataSection.TenantNameLabel).For(t => t.Text).To(vm => vm.Request.User.FullName);
             b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.User.PhoneNumber);
+            b.Bind(TenantDataSection.AddressLabel)
+                .For(t => t.Text)
+                .To(vm => vm.Request.BuildingName);
             
-
 
             //Date section
             b.Bind(ScheduleSection.Button).To(vm => vm.ScheduleCommand);
@@ -346,7 +350,7 @@ namespace ResidentAppCross.iOS
                     switch (i)
                     {
                         case MaintenanceRequestStatusDisplayMode.Status:
-                            return SharedResources.Icons.Info;
+                            return SharedResources.Icons.Details;
                         case MaintenanceRequestStatusDisplayMode.History:
                             return SharedResources.Icons.Past;
                         default:
@@ -402,7 +406,6 @@ namespace ResidentAppCross.iOS
                 SectionContainerGesturesEnabled = false;
                 content.Add(CheckinsSection);
             }
-            TenantDataSection.TenantAvatar.ToRounded(UIColor.DarkGray, 4f);
         }
 
         public override void LayoutContent()
@@ -421,7 +424,7 @@ namespace ResidentAppCross.iOS
 
         public HistoryItemCell(string cellId) : base(UITableViewCellStyle.Default, cellId)
         {
-            float imageSize = 44f;
+            float imageSize = 45f;
             float textualContentPadding = imageSize + 8f + 8f;
             var container = new UIView(ContentView.Frame)
             {
@@ -450,7 +453,7 @@ namespace ResidentAppCross.iOS
             AccessoryView = uiImageView;
 
             IconView = new UILayeredIconView(new CGRect(8f, 0f, imageSize, imageSize));
-
+        
             container.AddSubview(MainLabel);
             container.AddSubview(DateLabel);
             container.AddSubview(IconView);

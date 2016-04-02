@@ -117,10 +117,9 @@ namespace ResidentAppCross.iOS
         public override MKAnnotationView GetViewForAnnotation(MKMapView mapView, IMKAnnotation annotation)
         {
             MKAnnotationView annotationView = null;
-            var templateIcon = AppTheme.GetIcon(SharedResources.Icons.Location, ResidentAppCross.Resources.SharedResources.Size.S, true);
 
-            var unCompleteIcon = templateIcon.TintBlack(AppTheme.InProgressColor);
-            var completeIcon = templateIcon.TintBlack(AppTheme.CompleteColor);
+            var unCompleteIcon = AppTheme.GetIcon(SharedResources.Icons.LocationQuestion, ResidentAppCross.Resources.SharedResources.Size.S).TintBlack(AppTheme.InProgressColor);
+            var completeIcon = AppTheme.GetIcon(SharedResources.Icons.LocationOk, ResidentAppCross.Resources.SharedResources.Size.S).TintBlack(AppTheme.CompleteColor);
 
             if (annotation is MKUserLocation)
                 return null;

@@ -29,8 +29,29 @@ namespace ResidentAppCross.iOS.Views
         private TableDataBinding<FilterTableCell, RequestsIndexFilter> _tableFilterBinding;
         private GenericTableSource _tableItemSource;
         private GenericTableSource _tableFiltersSource;
+        private Dictionary<string, UIImage> _statusImages;
 
         public override string Title => "Maintenance Requests";
+
+        public Dictionary<string, UIImage> StatusImages
+        {
+            get { return _statusImages ?? (_statusImages = new Dictionary<string, UIImage>()); }
+            set  { _statusImages = value; }
+        }
+
+        public UIImage GetImageByStatus(string status)
+        {
+            UIImage img;
+            if (!StatusImages.TryGetValue(status, out img))
+            {
+                img =
+                    StatusImages[status] =
+                        AppTheme.GetTemplateIcon(MaintenanceRequestStyling.ListIconByStatus(status),
+                            SharedResources.Size.S);
+            }
+            return img;
+        }
+
 
         public TableDataBinding<TicketItemCell, MaintenanceIndexBindingModel> TableItemsBinding
         {
@@ -43,12 +64,24 @@ namespace ResidentAppCross.iOS.Views
                         Bind = (cell, item,index) => //What to do when cell is created for item
                         {
                             cell.MainLabel.Text = "Unit 1234";
-                            cell.SubLabel.Text = $"{item.Title} - {item.StatusId}";
-                            cell.IconView.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.ListIconByStatus(item.StatusId), SharedResources.Size.S);
+
+                            cell.SubLabel.Text = $"{item.Title}";
+
+                            if (item.StatusId == "Scheduled")
+                            {
+                                cell.NotesLabel.Text = $"Scheduled for 28/1/2 12:00 PM";
+                            }
+                            else
+                            {
+                                cell.NotesLabel.Text = $"{item.StatusId} with no comments";
+                            }
+
+                            cell.IconView.Image = GetImageByStatus(item.StatusId);
                             cell.IconView.TintColor = MaintenanceRequestStyling.ColorByStatus(item.StatusId);
-                            cell.DateLabel.Text = "24/1/2 6:64 PM";;
+                            cell.DateLabel.Text = "24/1/2 6:64 PM";
+
                         },
-                        CellHeight = (item, index) => { return TicketItemCell.EstimatedHeight; },
+                        CellHeight = (item, index) => { return TicketItemCell.FullHeight; },
                         ItemSelected = item =>
                         {
                             ViewModel.SelectedRequest = item;
@@ -137,9 +170,6 @@ namespace ResidentAppCross.iOS.Views
                     _tableSection.Source = TableFiltersSource;
                     _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine;
                     _tableSection.ReloadData();
-                    _tableSection.Table.BackgroundView = null;
-                    _tableSection.Table.BackgroundColor = UIColor.Clear;
-                    _tableSection.BackgroundColor = UIColor.Clear;
                 }
                 return _tableSection;
             }
@@ -153,7 +183,6 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _callToActionSection = Formals.Create<CallToActionSection>();
                     _callToActionSection.MainButton.SetTitle("Scan QR Code", UIControlState.Normal);
-                    _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
                 }
                 return _callToActionSection;
             }
@@ -279,10 +308,19 @@ namespace ResidentAppCross.iOS.Views
             };
 
 
-            SubLabel = new UILabel(new CGRect(textualContentPadding, 30 + 9, textualContentWith, 30f))
+            SubLabel = new UILabel(new CGRect(textualContentPadding, 30 + 9, textualContentWith, 20f))
             {
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
                 Font = AppFonts.CellDetails
+            };
+
+            NotesLabel = new UILabel(new CGRect(14f, 55 + 9, container.Frame.Width-14f-8f, 20f))
+            {
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
+                Font = AppFonts.CellNote,
+                TextColor = UIColor.DarkGray,
+                Alpha = 0.6f,
+
             };
 
             DateLabel = new UILabel(new CGRect(textualContentPadding, 9, textualContentWith, 30f))
@@ -293,6 +331,7 @@ namespace ResidentAppCross.iOS.Views
                 Alpha = 0.6f,
                 TextAlignment = UITextAlignment.Right
             };
+
             //            var uiImageView = new UIImageView(new CGRect(0, 13, 22, 22))
             //            {
             //                Image = AppTheme.GetIcon(SharedResources.Icons.Forward, SharedResources.Size.S),
@@ -326,16 +365,19 @@ namespace ResidentAppCross.iOS.Views
             container.AddSubview(SubLabel);
             container.AddSubview(DateLabel);
             container.AddSubview(IconView);
+            container.AddSubview(NotesLabel);
         }
 
-        public override UITableViewCellSelectionStyle SelectionStyle => UITableViewCellSelectionStyle.Blue;
+        public UILabel NotesLabel { get; set; }
 
+        public override UITableViewCellSelectionStyle SelectionStyle => UITableViewCellSelectionStyle.Blue;
 
         public UILabel MainLabel { get; set; }
         public UILayeredIconView IconView { get; set; }
         public UILabel SubLabel { get; set; }
         public UILabel DateLabel { get; set; }
-        public static float EstimatedHeight = 75f;
+        public static float FullHeight = 90f;
+        public static float ReducedHeight = 75f;
     }
 
 

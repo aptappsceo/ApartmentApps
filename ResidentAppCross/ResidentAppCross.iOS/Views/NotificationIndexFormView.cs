@@ -190,12 +190,11 @@ namespace ResidentAppCross.iOS.Views
             var uiItems =
                 items.Select(i =>
                 {
-                    var imageSelector = itemImageSelector(i);
-                    var fromBundle = AppTheme.GetTemplateIcon(itemImageSelector(i),SharedResources.Size.S);
+                    var fromBundle = AppTheme.GetTemplateIcon(itemImageSelector(i),SharedResources.Size.XS);
                     var uiTabBarItem = new UITabBarItem(
                         itemTitleSelector(i),
                         //null,
-                        fromBundle.ImageToFitSize(new CGSize(25, 25)), index++)
+                        fromBundle, index++)
                     {
                         BadgeValue = itemBadgeSelector(i)
                     };

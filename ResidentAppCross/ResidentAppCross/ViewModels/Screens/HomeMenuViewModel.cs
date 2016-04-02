@@ -34,33 +34,24 @@ namespace ResidentAppCross
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Resident Requests",
-                    Icon = SharedResources.Icons.MaintenanceList,
+                    Icon = SharedResources.Icons.MaintenanceFolder,
                     BadgeLabel = "??",
                     Command = RequestsIndexCommand
                 });
             }
 
-            if (loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
-            {
-                MenuItems.Add(new HomeMenuItemViewModel()
-                {
-                    Name = "Configure Property",
-                    Icon = SharedResources.Icons.LocationConfigure,
-                    Command = ConfigurePropertyCommand
-                });
-            }
 			if (loginManager.UserInfo.Roles.Contains("Officer") || loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Incident Reports",
-                    Icon = SharedResources.Icons.IncidentList,
+                    Icon = SharedResources.Icons.PoliceFolder,
                     Command = IncidentsIndexCommand
                 });
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Checkins",
-                    Icon = SharedResources.Icons.Checkin,
+                    Icon = SharedResources.Icons.LocationOk,
                     Command = new MvxCommand(() =>
                     {
                         ShowViewModel<CourtesyOfficerCheckinsViewModel>();
@@ -68,6 +59,17 @@ namespace ResidentAppCross
                 });
 
             }
+
+            if (loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
+            {
+                MenuItems.Add(new HomeMenuItemViewModel()
+                {
+                    Name = "Configure Property",
+                    Icon = SharedResources.Icons.HomeConfig,
+                    Command = ConfigurePropertyCommand
+                });
+            }
+
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Notifications",
@@ -91,7 +93,7 @@ namespace ResidentAppCross
 				MenuItems.Add(new HomeMenuItemViewModel()
 					{
 						Name = "Pay Rent",
-						Icon = SharedResources.Icons.Payment,
+						Icon = SharedResources.Icons.Wallet,
 						Command = PayRentCommand
 					});
 				MenuItems.Add(new HomeMenuItemViewModel()

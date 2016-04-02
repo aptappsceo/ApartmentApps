@@ -344,9 +344,35 @@ namespace ResidentAppCross.iOS
                 case IncidentReportStatus.Paused:
                     return AppTheme.PausedColor;
                 case IncidentReportStatus.Open:
-                    return AppTheme.PendingColor;
+                    return AppTheme.InProgressColor;
                 case IncidentReportStatus.Reported:
                     return AppTheme.PendingColor;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(val), val, null);
+            }
+        }
+        public static SharedResources.Icons StateIconByStatus(string status)
+        {
+            IncidentReportStatus val;
+            if (!Enum.TryParse(status, out val))
+            {
+                throw new Exception("Unrecognized Report Status: " + status);
+            }
+            return StateIconByStatus(val);
+        }
+
+        public static SharedResources.Icons StateIconByStatus(IncidentReportStatus val)
+        {
+            switch (val)
+            {
+                case IncidentReportStatus.Complete:
+                    return SharedResources.Icons.Ok;
+                case IncidentReportStatus.Paused:
+                    return SharedResources.Icons.Pause;
+                case IncidentReportStatus.Open:
+                    return SharedResources.Icons.Play;
+                case IncidentReportStatus.Reported:
+                    return SharedResources.Icons.QuestionMark;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(val), val, null);
             }

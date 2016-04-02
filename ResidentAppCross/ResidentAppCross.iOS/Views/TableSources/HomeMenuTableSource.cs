@@ -23,9 +23,8 @@ namespace ResidentAppCross.iOS.Views
             }
             var item = Items[indexPath.Row];
             cell.MainLabel.Text = item.Name;
-
             cell.IconView.Image = AppTheme.GetTemplateIcon(item.Icon, SharedResources.Size.S,true);
-            cell.IconView.TintColor = AppTheme.SecondaryBackgoundColor;
+            cell.IconView.TintColor = AppTheme.FormControlColor;
             return cell;
         }
 

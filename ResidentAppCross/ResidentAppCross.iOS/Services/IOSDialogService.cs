@@ -77,7 +77,6 @@ namespace ResidentAppCross.iOS.Services
                         EdgesForExtendedLayout = UIRectEdge.None,
                         Title = title
                     };
-
                     var tableView = selectionTable.TableView;
 
                     var tableDataBinding = new TableDataBinding<UITableViewCell, T>()
@@ -90,7 +89,7 @@ namespace ResidentAppCross.iOS.Services
                         },
                         ItemSelected = item =>
                         {
-                            selectionTable.DismissModalViewController(true);
+                            RootController.PopViewController(true);
                             waitForCompleteEvent.Set();
                             result = item;
                         },
@@ -116,9 +115,8 @@ namespace ResidentAppCross.iOS.Services
                         AutocorrectionType = UITextAutocorrectionType.Yes,
                         KeyboardType = UIKeyboardType.WebSearch
                     };
-
-                    tableView.TableHeaderView = searchBar;
-                    searchBar.SizeToFit();
+//                    tableView.TableHeaderView = searchBar;
+ //                   searchBar.SizeToFit();
                     searchBar.Placeholder = "Search...";
                     searchBar.OnEditingStopped += (sender, args) =>
                     {
@@ -145,7 +143,13 @@ namespace ResidentAppCross.iOS.Services
 								selectionTable.PopoverPresentationController.SourceRect = view.Bounds;
 							}
 
-                    TopController.PresentModalViewController(selectionTable, true);
+                           tableView.BackgroundColor = UIColor.Blue;
+                    selectionTable.EdgesForExtendedLayout = UIRectEdge.None;
+                    NavbarStyling.ApplyToNavigationController(RootController);
+                    StatusBarStyling.Apply(selectionTable);
+                    tableView.BackgroundColor = AppTheme.SecondaryBackgoundColor;
+                    RootController.PushViewController(selectionTable, true);
+
                 });
 
                 waitForCompleteEvent.WaitOne();

@@ -29,8 +29,13 @@ namespace ResidentAppCross.iOS
 	        PhoneIcon.Image = AppTheme.GetIcon(SharedResources.Icons.Call, SharedResources.Size.S);
 	    }
 
+	    public override void WillMoveToSuperview(UIView newsuper)
+	    {
+	        base.WillMoveToSuperview(newsuper);
+            TenantAvatar.ToRounded(AppTheme.DeepBackgroundColor, 2f);
+        }
 
-	    public UILabel AddressLabel => _addressLabel;
+        public UILabel AddressLabel => _addressLabel;
 	    public UILabel HeaderLabel => _headerLabel;
 	    public UIImageView PhoneIcon => _phoneIcon;
 	    public UILabel PhoneLabel => _phoneLabel;
