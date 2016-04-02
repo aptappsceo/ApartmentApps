@@ -170,7 +170,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                         .Any(x=>x.CreatedOn.DayOfYear == today.DayOfYear),
                     AcceptableCheckinCodes = new List<string>()
                     {
-                        $"http://apartmentapps.com/location={p.LocationId}"
+                        $"http://apartmentapps.com?location={p.LocationId}"
                     }
                 });
         }
