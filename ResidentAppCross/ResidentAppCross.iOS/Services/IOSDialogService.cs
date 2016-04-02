@@ -21,6 +21,7 @@ using ResidentAppCross.Extensions;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.TableSources;
+using ResidentAppCross.Resources;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
 using SCLAlertViewLib;
@@ -332,6 +333,18 @@ namespace ResidentAppCross.iOS.Services
                 });
                 PhotoPickEvent.WaitOne();
                 return PhotoData;
+            });
+        }
+
+        public void OpenNotification(string title, string subtitle, string ok)
+        {
+            TopController.InvokeOnMainThread(() =>
+            {
+                var alert = new SCLAlertView();
+                alert.ShowAnimationType = SCLAlertViewShowAnimation.FadeIn;
+                alert.HideAnimationType = SCLAlertViewHideAnimation.FadeOut;
+                //alert.CustomViewColor = AppTheme.SecondaryBackgoundColor;
+                alert.ShowInfo(TopController,title, subtitle, ok,0);
             });
         }
 

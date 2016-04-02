@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ResidentAppCross.Resources;
 
 namespace ResidentAppCross.Services
 {
@@ -13,5 +14,6 @@ namespace ResidentAppCross.Services
         Task<DateTime?> OpenDateTimeDialog(string title);
         Task<DateTime?> OpenDateDialog(string title);
         Task<byte[]> OpenImageDialog();
+        void OpenNotification(string title, string subtitle, string ok);
     }
 }

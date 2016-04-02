@@ -10,6 +10,7 @@ using Foundation;
 using MvvmCross.Plugins.PictureChooser.iOS;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.TableSources;
+using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
@@ -182,7 +183,7 @@ namespace ResidentAppCross.iOS.Views
 
     public static class UITabBarExtensions
     {
-        public static void BindTo<T>(this UITabBar tabbar, IList<T> items, Func<T,string> itemTitleSelector, Func<T, string> itemImageSelector, Func<T,string> itemBadgeSelector, Action<T> itemSelectedHandler, T selectedItem)
+        public static void BindTo<T>(this UITabBar tabbar, IList<T> items, Func<T,string> itemTitleSelector, Func<T, SharedResources.Icons> itemImageSelector, Func<T,string> itemBadgeSelector, Action<T> itemSelectedHandler, T selectedItem)
         {
             var index = 0;
             UITabBarItem selectedUiItem = null;
@@ -190,9 +191,11 @@ namespace ResidentAppCross.iOS.Views
                 items.Select(i =>
                 {
                     var imageSelector = itemImageSelector(i);
-                    var fromBundle = UIImage.FromBundle(imageSelector) ?? UIImage.FromFile(imageSelector);
-                    var uiTabBarItem = new UITabBarItem(itemTitleSelector(i),
-                        fromBundle.ImageToFitSize(new CGSize(30, 30)), index++)
+                    var fromBundle = AppTheme.GetTemplateIcon(itemImageSelector(i),SharedResources.Size.S);
+                    var uiTabBarItem = new UITabBarItem(
+                        itemTitleSelector(i),
+                        //null,
+                        fromBundle.ImageToFitSize(new CGSize(25, 25)), index++)
                     {
                         BadgeValue = itemBadgeSelector(i)
                     };

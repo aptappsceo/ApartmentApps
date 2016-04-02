@@ -30,7 +30,7 @@ namespace ResidentAppCross.iOS.Views
         private GenericTableSource _tableItemSource;
         private GenericTableSource _tableFiltersSource;
 
-        public override string Title => "Request Index";
+        public override string Title => "Maintenance Requests";
 
         public TableDataBinding<TicketItemCell, MaintenanceIndexBindingModel> TableItemsBinding
         {
@@ -194,7 +194,7 @@ namespace ResidentAppCross.iOS.Views
             base.GetContent(content);
 
             content.Add(TableSection);
-            content.Add(CallToActionSection);
+            //content.Add(CallToActionSection);
         }
 
         public void SetTableToDisplayFilters()
@@ -224,9 +224,12 @@ namespace ResidentAppCross.iOS.Views
 //
         public override void LayoutContent()
         {
-            View.AddConstraints(TableSection.AtTopOf(View), TableSection.AtLeftOf(View), TableSection.AtRightOf(View));
+            View.AddConstraints(TableSection.AtTopOf(View), 
+                TableSection.AtLeftOf(View), 
+                TableSection.AtRightOf(View),
+                TableSection.AtBottomOf(View));
 
-            View.AddConstraints(CallToActionSection.Below(TableSection), CallToActionSection.AtLeftOf(View), CallToActionSection.AtRightOf(View), CallToActionSection.AtBottomOf(View));
+            //View.AddConstraints(CallToActionSection.Below(TableSection), CallToActionSection.AtLeftOf(View), CallToActionSection.AtRightOf(View), CallToActionSection.AtBottomOf(View));
         }
     }
 
@@ -389,7 +392,7 @@ namespace ResidentAppCross.iOS.Views
                 case MaintenanceRequestStatus.Paused:
                     return SharedResources.Icons.MaintenancePause;
                 case MaintenanceRequestStatus.Scheduled:
-                    return SharedResources.Icons.MaintenanceScheduled;
+                    return SharedResources.Icons.MaintenanceCalendar;
                 case MaintenanceRequestStatus.Started:
                     return SharedResources.Icons.MaintenancePlay;
                 case MaintenanceRequestStatus.Submitted:

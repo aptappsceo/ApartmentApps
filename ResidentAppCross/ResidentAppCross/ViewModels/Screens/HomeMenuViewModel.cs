@@ -29,7 +29,6 @@ namespace ResidentAppCross
             _imageService = imageService;
             _dialogService = dialogService;
             Data = data;
-
 			if (loginManager.UserInfo.Roles.Contains("Maintenance") || loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
                 MenuItems.Add(new HomeMenuItemViewModel()
@@ -92,13 +91,13 @@ namespace ResidentAppCross
 				MenuItems.Add(new HomeMenuItemViewModel()
 					{
 						Name = "Pay Rent",
-						//Icon = SharedResources.Icons.PayIcon,
+						Icon = SharedResources.Icons.Payment,
 						Command = PayRentCommand
 					});
 				MenuItems.Add(new HomeMenuItemViewModel()
 					{
 						Name = "Community Partners",
-						//Icon = SharedResources.Icons.PartnersIcon,
+						Icon = SharedResources.Icons.Partners,
 						Command = CommunityPartnersCommand
 					});
 			}

@@ -36,6 +36,8 @@ namespace ResidentAppCross.iOS
 	    private GenericTableSource _tableFiltersSource;
 
 
+	    public override string Title => "Incident Reports";
+
 	    public TableDataBinding<TicketItemCell, IncidentIndexBindingModel> TableItemsBinding
         {
             get

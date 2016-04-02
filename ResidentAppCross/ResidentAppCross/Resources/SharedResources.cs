@@ -23,6 +23,8 @@ namespace ResidentAppCross.Resources
             Settings,
             Calendar,
             Ok,
+            Info,
+            Past,
             Pause,
             Play,
             QuestionMark,
@@ -59,6 +61,11 @@ namespace ResidentAppCross.Resources
             PolicePlay,
             PolicePause,
             PoliceQuestion,
+            Call,
+            Happy,
+            Partners,
+            Payment,
+            MaintenanceCalendar
         }
 
         public enum Size

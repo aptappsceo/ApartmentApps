@@ -119,8 +119,8 @@ namespace ResidentAppCross.iOS
             MKAnnotationView annotationView = null;
             var templateIcon = AppTheme.GetIcon(SharedResources.Icons.Location, ResidentAppCross.Resources.SharedResources.Size.S, true);
 
-            var unCompleteIcon = templateIcon.TintBlack(AppTheme.SecondaryBackgoundColor);
-            var completeIcon = templateIcon.TintBlack(UIColor.Green);
+            var unCompleteIcon = templateIcon.TintBlack(AppTheme.InProgressColor);
+            var completeIcon = templateIcon.TintBlack(AppTheme.CompleteColor);
 
             if (annotation is MKUserLocation)
                 return null;

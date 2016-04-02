@@ -2,6 +2,7 @@ using Foundation;
 using System;
 using System.CodeDom.Compiler;
 using ResidentAppCross.iOS.Views;
+using ResidentAppCross.Resources;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -24,6 +25,8 @@ namespace ResidentAppCross.iOS
 	        AddressLabel.Font = AppFonts.CellHeader;
 	        TenantNameLabel.Font = AppFonts.CellHeader;
 	        PhoneLabel.Font = AppFonts.Note;
+            TenantAvatar.ContentMode = UIViewContentMode.ScaleAspectFill;
+	        PhoneIcon.Image = AppTheme.GetIcon(SharedResources.Icons.Call, SharedResources.Size.S);
 	    }
 
 

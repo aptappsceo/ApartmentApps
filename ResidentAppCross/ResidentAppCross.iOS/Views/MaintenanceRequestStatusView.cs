@@ -64,11 +64,11 @@ namespace ResidentAppCross.iOS
                 if (_typeSelectionSection == null)
                 {
                     _typeSelectionSection = new UITabBar().WithHeight(49,1000);
-                    _typeSelectionSection.BarStyle = UIBarStyle.BlackOpaque;
                     _typeSelectionSection.TranslatesAutoresizingMaskIntoConstraints = false;
+                    _typeSelectionSection.BarStyle = UIBarStyle.BlackOpaque;
                     _typeSelectionSection.BarTintColor = AppTheme.SecondaryBackgoundColor;
-                    _typeSelectionSection.SelectedImageTintColor = UIColor.White;
-                    _typeSelectionSection.TintColor = new UIColor(0.8f,0.8f,0.8f,1);
+                   // _typeSelectionSection.SelectedImageTintColor = UIColor.Red;
+                    _typeSelectionSection.TintColor = UIColor.White;
                 }
                 return _typeSelectionSection;
             }
@@ -173,11 +173,6 @@ namespace ResidentAppCross.iOS
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
 
-                    var timelineUndefinedStatusIcon = UIImage.FromBundle("TimelineStatusIcon.png");
-                    var timelineMidLine = UIImage.FromFile("TimelineMid.png");
-                    var timelineStartLine = UIImage.FromFile("TimelineStart.png");
-                    var timelineEndLine = UIImage.FromFile("TimelineEnd.png");
-
                     var tableDataBinding = new TableDataBinding<HistoryItemCell, MaintenanceCheckinBindingModel>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
@@ -236,6 +231,7 @@ namespace ResidentAppCross.iOS
 
                     _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
                     _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
+                    _tableSection.BackgroundColor = UIColor.White;
                     _tableSection.Source = source;
                     _tableSection.ReloadData();
 
@@ -344,11 +340,22 @@ namespace ResidentAppCross.iOS
                 });
             });
 
-            TabSection.BindTo(new List<MaintenanceRequestStatusDisplayMode>() {MaintenanceRequestStatusDisplayMode.Status, MaintenanceRequestStatusDisplayMode.History},i=>i.ToString(),i=>"MaintenaceIcon",i=>null,
+            TabSection.BindTo(new List<MaintenanceRequestStatusDisplayMode>() {MaintenanceRequestStatusDisplayMode.Status, MaintenanceRequestStatusDisplayMode.History},i=>i.ToString(),
                 i =>
                 {
+                    switch (i)
+                    {
+                        case MaintenanceRequestStatusDisplayMode.Status:
+                            return SharedResources.Icons.Info;
+                        case MaintenanceRequestStatusDisplayMode.History:
+                            return SharedResources.Icons.Past;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(i), i, null);
+                    }
+                }, i => null, i =>
+                {
                     this.DisplayModel = i;
-                      RefreshContent();
+                    RefreshContent();
                 }, MaintenanceRequestStatusDisplayMode.Status);
 
 
@@ -395,7 +402,7 @@ namespace ResidentAppCross.iOS
                 SectionContainerGesturesEnabled = false;
                 content.Add(CheckinsSection);
             }
-            TenantDataSection.TenantAvatar.ToRounded(UIColor.DarkGray,4f);
+            TenantDataSection.TenantAvatar.ToRounded(UIColor.DarkGray, 4f);
         }
 
         public override void LayoutContent()
@@ -414,7 +421,6 @@ namespace ResidentAppCross.iOS
 
         public HistoryItemCell(string cellId) : base(UITableViewCellStyle.Default, cellId)
         {
-
             float imageSize = 44f;
             float textualContentPadding = imageSize + 8f + 8f;
             var container = new UIView(ContentView.Frame)
@@ -428,24 +434,17 @@ namespace ResidentAppCross.iOS
 
             MainLabel = new UILabel(new CGRect(textualContentPadding, 6, textualContentWith, 16f))
             {
-                AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellDetails
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth, Font = AppFonts.CellDetails
             };
 
             DateLabel = new UILabel(new CGRect(textualContentPadding, 24, textualContentWith, 12f))
             {
-                AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellNoteSmall,
-                TextColor = UIColor.DarkGray,
-                Alpha = 0.6f,
-                TextAlignment = UITextAlignment.Left
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth, Font = AppFonts.CellNoteSmall, TextColor = UIColor.DarkGray, Alpha = 0.6f, TextAlignment = UITextAlignment.Left
             };
 
             var uiImageView = new UIImageView(new CGRect(0, 0, 22, 22))
             {
-                Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Forward, SharedResources.Size.S),
-                TintColor = AppTheme.SecondaryBackgoundColor.ColorWithAlpha(0.5f),
-                ContentMode = UIViewContentMode.ScaleAspectFit
+                Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Forward, SharedResources.Size.S), TintColor = AppTheme.SecondaryBackgoundColor.ColorWithAlpha(0.5f), ContentMode = UIViewContentMode.ScaleAspectFit
             };
 
             AccessoryView = uiImageView;
@@ -466,5 +465,4 @@ namespace ResidentAppCross.iOS
         public UILabel DateLabel { get; set; }
         public static float EstimatedHeight = 44f;
     }
-
 }

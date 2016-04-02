@@ -14,6 +14,7 @@ using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.PhotoGallery;
 using ResidentAppCross.iOS.Views.TableSources;
+using ResidentAppCross.Resources;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
@@ -77,8 +78,8 @@ namespace ResidentAppCross.iOS
                     _typeSelectionSection.BarStyle = UIBarStyle.BlackOpaque;
                     _typeSelectionSection.TranslatesAutoresizingMaskIntoConstraints = false;
                     _typeSelectionSection.BarTintColor = AppTheme.SecondaryBackgoundColor;
-                    _typeSelectionSection.SelectedImageTintColor = UIColor.White;
-                    _typeSelectionSection.TintColor = new UIColor(0.8f, 0.8f, 0.8f, 1);
+                  //  _typeSelectionSection.SelectedImageTintColor = UIColor.White;
+                    _typeSelectionSection.TintColor = UIColor.White;
                 }
                 return _typeSelectionSection;
             }
@@ -346,7 +347,18 @@ namespace ResidentAppCross.iOS
             b.Apply();
 
 
-            TabSection.BindTo(new List<IncidentReportStatusDisplayMode>() { IncidentReportStatusDisplayMode.Status, IncidentReportStatusDisplayMode.History }, i => i.ToString(), i => "PoliceIcon", i => null,
+            TabSection.BindTo(new List<IncidentReportStatusDisplayMode>() { IncidentReportStatusDisplayMode.Status, IncidentReportStatusDisplayMode.History }, i => i.ToString(), i =>
+            {
+                switch (i)
+                {
+                    case IncidentReportStatusDisplayMode.Status:
+                        return SharedResources.Icons.Info;
+                    case IncidentReportStatusDisplayMode.History:
+                        return SharedResources.Icons.Past;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(i), i, null);
+                }
+            }, i => null,
               i =>
               {
                   this.DisplayMode = i;

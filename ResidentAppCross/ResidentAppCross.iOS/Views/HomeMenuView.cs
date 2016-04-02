@@ -86,6 +86,7 @@ namespace ResidentAppCross.iOS
         public override void ViewWillLayoutSubviews()
         {
             base.ViewWillLayoutSubviews();
+            UsernameAvatarImage.ContentMode = UIViewContentMode.ScaleAspectFill;
             UsernameAvatarImage.ToRounded(UIColor.White);
         }
 
