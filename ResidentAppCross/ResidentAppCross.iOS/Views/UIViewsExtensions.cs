@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using CoreGraphics;
+using CoreImage;
 using Foundation;
 using MvvmCross.Plugins.PictureChooser.iOS;
 using Photos;
@@ -146,6 +147,157 @@ namespace ResidentAppCross.iOS.Views
             }
 
             return null;
+        }
+
+        public static UIImage InvertImage(this UIImage image)
+        {
+            CIFilter filter = CIFilter.FromName("CIColorInvert");
+            filter.SetDefaults();
+            filter.SetValueForKey(image.CIImage,new NSString("inputImage"));
+            return new UIImage(filter.OutputImage);
+        }
+
+        public static UIImage TintBlack(this UIImage image, UIColor uiColor)
+        {
+
+            var color = uiColor.CGColor;
+            var imageSize = image.Size;
+            UIGraphics.BeginImageContext(imageSize);
+            var context = UIGraphics.GetCurrentContext();
+
+            // flip the image
+            context.ScaleCTM(1.0f, -1.0f);
+            context.TranslateCTM(0.0f, -imageSize.Height);
+
+            // multiply blend mode
+            var rect = new CGRect(0, 0, imageSize.Width, imageSize.Height);
+            context.SetBlendMode(CGBlendMode.Multiply);
+            context.ClipToMask(rect, image.CGImage);
+            context.SetFillColor(color);
+            context.FillRect(rect);
+
+            //create uiimage
+            var newImage = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
+
+            return newImage;
+        }
+    }
+
+
+    public class UILayeredIconView : UIImageView
+    {
+        private UILayeredIconLayer _backgroundLayer;
+        private UILayeredIconLayer _iconLayer;
+
+        public UILayeredIconView(CGRect frame) : base(frame)
+        {
+        }
+
+        public UILayeredIconView()
+        {
+        }
+
+        protected internal UILayeredIconView(IntPtr handle) : base(handle)
+        {
+        }
+
+
+        public UILayeredIconLayer BackgroundLayer
+        {
+            get
+            {
+                if (_backgroundLayer == null)
+                {
+                    _backgroundLayer = new UILayeredIconLayer();
+                    AddSubview(_backgroundLayer.View);
+                }
+                return _backgroundLayer;
+            }
+            set
+            {
+                if(value == null) _backgroundLayer?.View?.RemoveFromSuperview();
+                _backgroundLayer = value;
+            }
+        }
+
+        public UILayeredIconLayer IconLayer
+        {
+            get
+            {
+                if (_iconLayer == null)
+                {
+                    _iconLayer = new UILayeredIconLayer();
+                    AddSubview(_iconLayer.View);
+                }
+                return _iconLayer;
+            }
+            set
+            {
+                if(value == null) _iconLayer?.View?.RemoveFromSuperview();
+                _iconLayer = value;
+            }
+        }
+
+        public UILayeredIconLayer MainIconLayer { get; set; }
+
+        public void SetBackgroundLayer(UIImage image, UIColor tintColor = null, float padH = 0, float padV = 0)
+        {
+
+            BackgroundLayer.Image = image;
+            BackgroundLayer.TintColor = tintColor;
+            BackgroundLayer.Padding = new CGSize(padH, padV);
+            BackgroundLayer.View.Frame = Bounds.PadInside(padH, padV);
+        }
+
+        public void SetBackgroundRounded(UIColor color)
+        {
+            BackgroundLayer.View.ToRounded(color,2f);
+        }
+
+        public void SetIconLayerLayer(UIImage image, UIColor tintColor = null, float padH = 0, float padV = 0)
+        {
+            IconLayer.Image = image;
+            IconLayer.TintColor = tintColor;
+            IconLayer.Padding = new CGSize(padH, padV);
+            IconLayer.View.Frame = Bounds.PadInside(padH, padV);
+        }
+
+        public override void WillMoveToSuperview(UIView newsuper)
+        {
+            base.WillMoveToSuperview(newsuper);
+        }
+
+    }
+
+    public class UILayeredIconLayer
+    {
+        private UIImageView _view;
+        private UIImage _image;
+
+        public UIImage Image
+        {
+            get { return View.Image; }
+            set { View.Image = value; }
+        }
+
+        public UIImageView View
+        {
+            get { return _view ?? (_view = new UIImageView()); }
+            set { _view = value; }
+        }
+
+        public UIColor TintColor
+        {
+            get { return View.TintColor; }
+            set { View.TintColor = value; }
+        }
+
+        public CGSize Padding { get; set; }
+
+        public static UILayeredIconLayer Create(UIImage image)
+        {
+            return new UILayeredIconLayer() { Image = image };
         }
     }
 }

@@ -2,6 +2,7 @@ using Foundation;
 using System;
 using System.CodeDom.Compiler;
 using System.Linq;
+using ResidentAppCross.iOS.Views;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -27,6 +28,12 @@ namespace ResidentAppCross.iOS
             ButtonBar.AddArrangedSubview(button);
         
 	        return button;
+	    }
+
+	    public override void AwakeFromNib()
+	    {
+	        base.AwakeFromNib();
+	        HeightConstraint.Constant = AppTheme.ButtonToolbarSectionHeight;
 	    }
 
 	    public void ClearButtons()

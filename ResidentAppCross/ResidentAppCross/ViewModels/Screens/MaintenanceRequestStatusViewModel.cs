@@ -174,7 +174,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
         public string TenantAvatarUrl
         {
-            get { return _tenantAvatarUrl; }
+            get { return _loginManager.UserInfo.ImageUrl; }
             set { SetProperty(ref _tenantAvatarUrl, value); }
         }
 

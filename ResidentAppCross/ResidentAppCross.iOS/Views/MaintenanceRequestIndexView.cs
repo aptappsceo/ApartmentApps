@@ -42,13 +42,14 @@ namespace ResidentAppCross.iOS.Views
                     {
                         Bind = (cell, item,index) => //What to do when cell is created for item
                         {
-                            cell.MainLabel.Text = item.Comments;
+                            cell.MainLabel.Text = "Unit 1234";
                             cell.SubLabel.Text = $"{item.Title} - {item.StatusId}";
-                            cell.IconView.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.IconByStatus(item.StatusId), SharedResources.Size.S);
+                            cell.IconView.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.ListIconByStatus(item.StatusId), SharedResources.Size.S);
                             cell.IconView.TintColor = MaintenanceRequestStyling.ColorByStatus(item.StatusId);
                             cell.DateLabel.Text = "24/1/2 6:64 PM";;
                         },
-                        CellHeight = (item, index) => { return 75; }, ItemSelected = item =>
+                        CellHeight = (item, index) => { return TicketItemCell.EstimatedHeight; },
+                        ItemSelected = item =>
                         {
                             ViewModel.SelectedRequest = item;
                             ViewModel.OpenSelectedRequestCommand.Execute(null);
@@ -74,7 +75,6 @@ namespace ResidentAppCross.iOS.Views
                         Bind = (cell, item, index) => //What to do when cell is created for item
                         {
                             cell.MainLabel.Text = $"{item.Title} ({ViewModel.Requests.Count(r => item.FilterExpression(r))})";
-
                             cell.IconView.Image = AppTheme.GetTemplateIcon(item.Icon, SharedResources.Size.S);
                             cell.IconView.TintColor = AppTheme.PrimaryIconColor;
                         },
@@ -135,8 +135,11 @@ namespace ResidentAppCross.iOS.Views
                     _tableSection = Formals.Create<TableSection>();
                     _tableSection.Table.AllowsSelection = true;
                     _tableSection.Source = TableFiltersSource;
-                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.DoubleLineEtched;
+                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine;
                     _tableSection.ReloadData();
+                    _tableSection.Table.BackgroundView = null;
+                    _tableSection.Table.BackgroundColor = UIColor.Clear;
+                    _tableSection.BackgroundColor = UIColor.Clear;
                 }
                 return _tableSection;
             }
@@ -167,7 +170,7 @@ namespace ResidentAppCross.iOS.Views
         public override void BindForm()
         {
             base.BindForm();
-
+            View.BackgroundColor = AppTheme.DeepBackgroundColor;
             //Update table data when collection changes. Heads up for Main Thread!
 
             this.OnViewModelEventMainThread<RequestsIndexFiltersUpdatedEvent>(_ =>
@@ -257,57 +260,96 @@ namespace ResidentAppCross.iOS.Views
         {
 
             float imageSize = 55f;
-            float textualContentPadding = 15f + imageSize + 8f;
-
-            MainLabel = new UILabel(new CGRect(textualContentPadding, 5, ContentView.Frame.Width, 24f))
+            float textualContentPadding = imageSize + 8f + 8f;
+            var container = new UIView(ContentView.Frame)
             {
-                AutoresizingMask = UIViewAutoresizing.FlexibleWidth
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
             };
 
-            MainLabel.Font = UIFont.PreferredHeadline;
-
-            SubLabel = new UILabel(new CGRect(textualContentPadding, 5+24-2, ContentView.Frame.Width, 24f))
+            ContentView.AddSubview(container);
+            nfloat textualContentPaddingRight = 8f;
+            var textualContentWith = container.Frame.Width - textualContentPadding - textualContentPaddingRight;
+            MainLabel = new UILabel(new CGRect(textualContentPadding, 9, textualContentWith, 30f))
             {
-                AutoresizingMask = UIViewAutoresizing.FlexibleWidth
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
+                Font = AppFonts.CellHeader
             };
 
-            SubLabel.Font = UIFont.PreferredSubheadline;
 
-            DateLabel = new UILabel(new CGRect(textualContentPadding, 24+5+24-2, ContentView.Frame.Width, 20f))
+            SubLabel = new UILabel(new CGRect(textualContentPadding, 30 + 9, textualContentWith, 30f))
             {
-                AutoresizingMask = UIViewAutoresizing.FlexibleWidth
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
+                Font = AppFonts.CellDetails
             };
 
-            DateLabel.Font = UIFont.PreferredCaption2;
+            DateLabel = new UILabel(new CGRect(textualContentPadding, 9, textualContentWith, 30f))
+            {
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
+                Font = AppFonts.CellNote,
+                TextColor = UIColor.DarkGray,
+                Alpha = 0.6f,
+                TextAlignment = UITextAlignment.Right
+            };
+            //            var uiImageView = new UIImageView(new CGRect(0, 13, 22, 22))
+            //            {
+            //                Image = AppTheme.GetIcon(SharedResources.Icons.Forward, SharedResources.Size.S),
+            //                TintColor= AppTheme.SecondaryBackgoundColor,
+            //                ContentMode = UIViewContentMode.ScaleAspectFit
+            //            };
+            //
+            //            var accessoryContainer = new UIView(new CGRect(0, 0, 22, 75f))
+            //            {
+            //            };
+            //            AccessoryView = accessoryContainer;
+            //            accessoryContainer.Add(uiImageView);
 
-            IconView = new UIImageView(new CGRect(15f, 0, imageSize, imageSize).PadInside(6f, 6f));
 
-            ContentView.AddSubview(MainLabel);
-            ContentView.AddSubview(SubLabel);
-            ContentView.AddSubview(DateLabel);
-            ContentView.AddSubview(IconView);
+            var uiImageView = new UIImageView(new CGRect(0, 0, 22, 22))
+            {
+                Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Forward, SharedResources.Size.S),
+                Alpha = 0.5f,
+                TintColor= AppTheme.SecondaryBackgoundColor,
+                ContentMode = UIViewContentMode.ScaleAspectFit
+            };
+
+            AccessoryView = uiImageView;
+
+
+            IconView = new UILayeredIconView(new CGRect(8f, 9f, imageSize, imageSize).PadInside(6f, 6f));
+
+         //   ContentView?.Shadow(UIColor.Black,new CGSize(2, 2),0.5f,2f);
+         //   AccessoryView.BackgroundColor = UIColor.White;
+            container.AddSubview(MainLabel);
+            container.AddSubview(SubLabel);
+            container.AddSubview(DateLabel);
+            container.AddSubview(IconView);
         }
 
+        public override UITableViewCellSelectionStyle SelectionStyle => UITableViewCellSelectionStyle.Blue;
+
+
         public UILabel MainLabel { get; set; }
-        public UIImageView IconView { get; set; }
+        public UILayeredIconView IconView { get; set; }
         public UILabel SubLabel { get; set; }
         public UILabel DateLabel { get; set; }
+        public static float EstimatedHeight = 75f;
     }
 
 
     public static class MaintenanceRequestStyling
     {
-        public static SharedResources.Icons IconByStatus(string status)
+        public static SharedResources.Icons ListIconByStatus(string status)
         {
             MaintenanceRequestStatus val;
             if (!Enum.TryParse(status, out val))
             {
                 throw new Exception("Unrecognized Maintenance Request Status: " + status);
             }
-            return IconByStatus(val);
+            return ListIconByStatus(val);
         }
 
-        public static SharedResources.Icons IconByStatus(MaintenanceRequestStatus val)
+
+        public static SharedResources.Icons ListIconByStatus(MaintenanceRequestStatus val)
         {
             switch (val)
             {
@@ -321,6 +363,67 @@ namespace ResidentAppCross.iOS.Views
                     return SharedResources.Icons.MaintenanceInProgress;
                 case MaintenanceRequestStatus.Submitted:
                     return SharedResources.Icons.MaintenancePending;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(val), val, null);
+            }
+        }
+
+
+        public static SharedResources.Icons HeaderIconByStatus(string status)
+        {
+            MaintenanceRequestStatus val;
+            if (!Enum.TryParse(status, out val))
+            {
+                throw new Exception("Unrecognized Maintenance Request Status: " + status);
+            }
+            return HeaderIconByStatus(val);
+        }
+
+
+        public static SharedResources.Icons HeaderIconByStatus(MaintenanceRequestStatus val)
+        {
+            switch (val)
+            {
+                case MaintenanceRequestStatus.Complete:
+                    return SharedResources.Icons.MaintenanceOk;
+                case MaintenanceRequestStatus.Paused:
+                    return SharedResources.Icons.MaintenancePause;
+                case MaintenanceRequestStatus.Scheduled:
+                    return SharedResources.Icons.MaintenanceScheduled;
+                case MaintenanceRequestStatus.Started:
+                    return SharedResources.Icons.MaintenancePlay;
+                case MaintenanceRequestStatus.Submitted:
+                    return SharedResources.Icons.MaintenanceExclamation;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(val), val, null);
+            }
+        }
+
+
+        public static SharedResources.Icons StateIconByStatus(string status)
+        {
+            MaintenanceRequestStatus val;
+            if (!Enum.TryParse(status, out val))
+            {
+                throw new Exception("Unrecognized Maintenance Request Status: " + status);
+            }
+            return StateIconByStatus(val);
+        }
+
+        public static SharedResources.Icons StateIconByStatus(MaintenanceRequestStatus val)
+        {
+            switch (val)
+            {
+                case MaintenanceRequestStatus.Complete:
+                    return SharedResources.Icons.Ok;
+                case MaintenanceRequestStatus.Paused:
+                    return SharedResources.Icons.Pause;
+                case MaintenanceRequestStatus.Scheduled:
+                    return SharedResources.Icons.Calendar;
+                case MaintenanceRequestStatus.Started:
+                    return SharedResources.Icons.Play;
+                case MaintenanceRequestStatus.Submitted:
+                    return SharedResources.Icons.Comment;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(val), val, null);
             }

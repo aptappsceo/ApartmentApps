@@ -5,6 +5,7 @@ using MapKit;
 using MvvmCross.Binding.BindingContext;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
+using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
@@ -33,7 +34,7 @@ namespace ResidentAppCross.iOS
                     _mapSection.HeightConstraint.Constant = 400;
                     _mapSection.HeaderLabel.Text = "Checkin Locations";
                     CLLocationCoordinate2D coords = new CLLocationCoordinate2D(48.857, 2.351);
-                    MKCoordinateSpan span = new MKCoordinateSpan(_mapSection.MilesToLatitudeDegrees(0.01), _mapSection.MilesToLongitudeDegrees(0.1, coords.Latitude));
+                    MKCoordinateSpan span = new MKCoordinateSpan(_mapSection.MilesToLatitudeDegrees(0.01), _mapSection.MilesToLongitudeDegrees(0.01, coords.Latitude));
                     _mapSection.MapView.Region = new MKCoordinateRegion(coords, span);
                     _mapSection.MapView.ShowsUserLocation = true;
 
@@ -116,6 +117,10 @@ namespace ResidentAppCross.iOS
         public override MKAnnotationView GetViewForAnnotation(MKMapView mapView, IMKAnnotation annotation)
         {
             MKAnnotationView annotationView = null;
+            var templateIcon = AppTheme.GetIcon(SharedResources.Icons.Location, ResidentAppCross.Resources.SharedResources.Size.S, true);
+
+            var unCompleteIcon = templateIcon.TintBlack(AppTheme.SecondaryBackgoundColor);
+            var completeIcon = templateIcon.TintBlack(UIColor.Green);
 
             if (annotation is MKUserLocation)
                 return null;
@@ -130,14 +135,11 @@ namespace ResidentAppCross.iOS
                     annotationView = new MKAnnotationView(annotation, annotationId);
                 if (checkinAnnotation._house.Complete == true)
                 {
-					annotationView.Image = AppTheme.GetTemplateIcon("Location", ResidentAppCross.Resources.SharedResources.Size.S,true);
-					annotationView.TintColor = UIColor.Green;
-
+                    annotationView.Image = completeIcon;
                 }
                 else
                 {
-					annotationView.Image = AppTheme.GetTemplateIcon("Location", ResidentAppCross.Resources.SharedResources.Size.S,false);
-					annotationView.TintColor = UIColor.Blue;
+                    annotationView.Image = unCompleteIcon;
                 }
                
                 annotationView.CanShowCallout = true;

@@ -1,6 +1,7 @@
 using Foundation;
 using System;
 using System.CodeDom.Compiler;
+using ResidentAppCross.iOS.Views;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -20,12 +21,17 @@ namespace ResidentAppCross.iOS
 
         public bool Editable
         {
-            get { return _editable; }
-            set
-            {
-                _editable = value;
-                Switch.Enabled = value;
-            }
+            get { return Switch.Enabled; }
+            set { Switch.Enabled = value; }
+        }
+
+        public override void AwakeFromNib()
+        {
+            base.AwakeFromNib();
+            HeightConstraint.Constant = AppTheme.SwitchSectionHeight;
+            HeaderLabel.Font = AppFonts.SectionHeader;
+            SubHeaderLabel.Font = AppFonts.Note;
+            Switch.OnTintColor = AppTheme.FormControlColor;
         }
 
         public UISwitch Switch => _switch;

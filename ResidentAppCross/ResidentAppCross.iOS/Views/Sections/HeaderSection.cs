@@ -1,6 +1,8 @@
 using Foundation;
 using System;
 using System.CodeDom.Compiler;
+using System.Diagnostics;
+using ResidentAppCross.iOS.Views;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -18,6 +20,13 @@ namespace ResidentAppCross.iOS
 	    {
 	    }
 
+	    public override void AwakeFromNib()
+	    {
+	        base.AwakeFromNib();
+	        HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
+	        MainLabel.Font = AppFonts.FormHeadline;
+	        SubLabel.Font = AppFonts.FormSubheadline;
+	    }
 
 	    public UIImageView LogoImage => LogoImageView;
 	    public UILabel MainLabel => HeaderLabel;

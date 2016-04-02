@@ -11,6 +11,7 @@ using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.PhotoGallery;
 using ResidentAppCross.iOS.Views.TableSources;
+using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels;
 using UIKit;
 
@@ -53,10 +54,6 @@ namespace ResidentAppCross.iOS.Views
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
-                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
-                    _headerSection.MainLabel.Text = "Request";
-                    _headerSection.SubLabel.Text = "Fill the information below";
                 }
                 return _headerSection;
             }
@@ -69,8 +66,6 @@ namespace ResidentAppCross.iOS.Views
                 if (_requestTypeSection == null)
                 {
                     _requestTypeSection = Formals.Create<LabelWithButtonSection>();
-                    _requestTypeSection.Label.Text = "Request Type *";
-                    _requestTypeSection.HeightConstraint.Constant = AppTheme.LabelWithButtonSectionHeight;
                 }
                 return _requestTypeSection;
             }
@@ -83,10 +78,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_petStatusSection == null)
                 {
                     _petStatusSection = Formals.Create<SegmentSelectionSection>();
-                    _petStatusSection.Selector.RemoveAllSegments();
-                    _petStatusSection.HeightConstraint.Constant = AppTheme.SegmentSectionHeight;
                     _petStatusSection.Editable = true;
-                    _petStatusSection.Selector.ControlStyle = UISegmentedControlStyle.Bezeled;
                 }
                 return _petStatusSection;
             }
@@ -99,9 +91,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeightConstraint.Constant = AppTheme.CommentsSectionHeight;
-                    _commentsSection.HeaderLabel.Text = "Details & Comments";
-                    _commentsSection.SetEditable(true);
+                    _commentsSection.Editable = true;
                 }
                 return _commentsSection;
             }
@@ -119,7 +109,6 @@ namespace ResidentAppCross.iOS.Views
             }
         }
 
-
         public ToggleSection EntrancePermissionSection
         {
             get
@@ -127,12 +116,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_entrancePermissionSection == null)
                 {
                     _entrancePermissionSection = Formals.Create<ToggleSection>();
-                    _entrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
-                    _entrancePermissionSection.SubHeaderLabel.Text =
-                        "Do you give a permission for tech guys to enter your apartment when you are not at home?";
-                    _entrancePermissionSection.HeightConstraint.Constant = 120;
                     _entrancePermissionSection.Editable = true;
-
                 }
                 return _entrancePermissionSection;
             }
@@ -142,6 +126,14 @@ namespace ResidentAppCross.iOS.Views
         {
             base.BindForm();
 
+
+            HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.MaintenancePlus, SharedResources.Size.L);
+            HeaderSection.LogoImage.TintColor = AppTheme.CreateColor;
+            HeaderSection.MainLabel.Text = "Request";
+            HeaderSection.SubLabel.Text = "Fill the information below";
+            RequestTypeSection.Label.Text = "Request Type";
+            EntrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
+            EntrancePermissionSection.SubHeaderLabel.Text = "Do you give a permission for tech guys to enter your apartment when you are not at home?";
             var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
 
             //Header Section
@@ -151,7 +143,7 @@ namespace ResidentAppCross.iOS.Views
             //Request type section
 
             b.Bind(RequestTypeSection.Button).For("Title").To(vm => vm.SelectRequestTypeActionTitle);
-            b.Bind(RequestTypeSection.Button).To(vm => vm.SelectRequestTypeCommand);
+			b.Bind(RequestTypeSection.Button).To(vm => vm.SelectRequestTypeCommand).CommandParameter(RequestTypeSection.Button);
 
             //Comments Section
 
@@ -176,7 +168,39 @@ namespace ResidentAppCross.iOS.Views
         public override void GetContent(List<UIView> content)
         {
             base.GetContent(content);
+
+            
+
+
             content.Add(HeaderSection);
+
+//            var section = Formals.Create<LabelWithButtonSection>();
+//
+//            section.Label.Text = "#49557F";
+//            section.Button.SetTitleColor(AppTheme.ColorFromHex(0x49557F), UIControlState.Normal);
+//            content.Add(section);
+//
+//            section = Formals.Create<LabelWithButtonSection>();
+//            section.Label.Text = "#70A0AF";
+//            section.Button.SetTitleColor(AppTheme.ColorFromHex(0x70A0AF), UIControlState.Normal);
+//            content.Add(section);
+//
+//            section = Formals.Create<LabelWithButtonSection>();
+//            section.Label.Text = "#A0C1B9";
+//            section.Button.SetTitleColor(AppTheme.ColorFromHex(0xA0C1B9), UIControlState.Normal);
+//            content.Add(section);
+//
+//            section = Formals.Create<LabelWithButtonSection>();
+//            section.Label.Text = "#424C55";
+//            section.Button.SetTitleColor(AppTheme.ColorFromHex(0x424C55), UIControlState.Normal);
+//            content.Add(section);
+//
+//            section = Formals.Create<LabelWithButtonSection>();
+//            section.Label.Text = "#D1CCDC";
+//            section.Button.SetTitleColor(AppTheme.ColorFromHex(0xD1CCDC), UIControlState.Normal);
+//            content.Add(section);
+//
+
             content.Add(RequestTypeSection);
             content.Add(CommentsSection);
             content.Add(PhotoSection);

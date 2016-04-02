@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Client.Models;
 using Foundation;
@@ -10,6 +11,8 @@ using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
+using ResidentAppCross.Resources;
+using SDWebImage;
 using MaintenanceRequestStatus = ResidentAppCross.ViewModels.Screens.MaintenanceRequestStatus;
 
 namespace ResidentAppCross.iOS
@@ -49,8 +52,6 @@ namespace ResidentAppCross.iOS
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromFile("MaintenanceIcon");
-                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
                 }
                 return _headerSection;
             }
@@ -80,8 +81,6 @@ namespace ResidentAppCross.iOS
                 if (_scheduleSection == null)
                 {
                     _scheduleSection = Formals.Create<LabelWithButtonSection>();
-                    _scheduleSection.Label.Text = "Repair Date";
-                    _scheduleSection.HeightConstraint.Constant = 60;
                 }
                 return _scheduleSection;
             }
@@ -94,10 +93,7 @@ namespace ResidentAppCross.iOS
                 if (_petStatusSection == null)
                 {
                     _petStatusSection = Formals.Create<SegmentSelectionSection>();
-                    _petStatusSection.Selector.RemoveAllSegments();
-                    _petStatusSection.HeightConstraint.Constant = 120;
                     _petStatusSection.Editable = false;
-                    _petStatusSection.Selector.ControlStyle = UISegmentedControlStyle.Bezeled;
                 }
                 return _petStatusSection;
             }
@@ -110,8 +106,6 @@ namespace ResidentAppCross.iOS
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeightConstraint.Constant = 200;
-                    _commentsSection.HeaderLabel.Text = "Details & Comments";
                 }
                 return _commentsSection;
             }
@@ -124,6 +118,7 @@ namespace ResidentAppCross.iOS
                 if (_photoSection == null)
                 {
                     _photoSection = Formals.Create<PhotoGallerySection>();
+                    _photoSection.Editable = false;
                 }
                 return _photoSection;
             }
@@ -136,7 +131,6 @@ namespace ResidentAppCross.iOS
                 if (_footerSection == null)
                 {
                     _footerSection = Formals.Create<ButtonToolbarSection>();
-                    _footerSection.HeightConstraint.Constant = 60;
                 }
                 return _footerSection;
             }
@@ -149,12 +143,7 @@ namespace ResidentAppCross.iOS
                 if (_entrancePermissionSection == null)
                 {
                     _entrancePermissionSection = Formals.Create<ToggleSection>();
-                    _entrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
-                    _entrancePermissionSection.SubHeaderLabel.Text =
-                        "Do you give a permission for tech guys to enter your apartment when you are not at home?";
-                    _entrancePermissionSection.HeightConstraint.Constant = 160;
                     _entrancePermissionSection.Editable = false;
-
                 }
                 return _entrancePermissionSection;
             }
@@ -170,9 +159,7 @@ namespace ResidentAppCross.iOS
                     _tenantDataSection.HeaderLabel.Text = "Unit Information";
                     _tenantDataSection.AddressLabel.Text = "795 E DRAGRAM TUCSON AZ 85705 USA";
                     _tenantDataSection.PhoneLabel.Text = "+1 777 777 777";
-                    _tenantDataSection.TenantAvatar.Image = UIImage.FromBundle("OfficerIcon");
-
-                    _tenantDataSection.HeightConstraint.Constant = 180;;
+                    _tenantDataSection.TenantAvatar.SetImageWithAsyncIndicator(ViewModel.TenantAvatarUrl,UIImage.FromFile("avatar-placeholder.png"));
                 }
                 return _tenantDataSection;
             }
@@ -191,47 +178,40 @@ namespace ResidentAppCross.iOS
                     var timelineStartLine = UIImage.FromFile("TimelineStart.png");
                     var timelineEndLine = UIImage.FromFile("TimelineEnd.png");
 
-                    var tableDataBinding = new TableDataBinding<UITableViewCell, MaintenanceCheckinBindingModel>() //Define cell type and data type as type args
+                    var tableDataBinding = new TableDataBinding<HistoryItemCell, MaintenanceCheckinBindingModel>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = item.StatusId;
-                            cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
-                            cell.DetailTextLabel.Text = item.Date?.ToString("g");
-                            cell.TextLabel.MinimumScaleFactor = 0.2f;
+                            cell.MainLabel.Text = item.StatusId;
+                            cell.DateLabel.Text = item.Date?.ToString("g");
+
+                            SharedResources.Icons timelineIconType;
 
                             if (ViewModel.Checkins.Count == 1)
-                                cell.ImageView.Image = timelineUndefinedStatusIcon;
+                                timelineIconType = SharedResources.Icons.Empty;
                             else if (index == 0)
-                                cell.ImageView.Image = timelineEndLine;
+                                timelineIconType = SharedResources.Icons.TimelineTop;
                             else if (index == ViewModel.Checkins.Count - 1)
-                                cell.ImageView.Image = timelineStartLine;
+                                timelineIconType = SharedResources.Icons.TimelineBottom;
                             else
-                                cell.ImageView.Image = timelineMidLine;
+                                timelineIconType = SharedResources.Icons.TimelineMiddle; ;
+
+                            cell.IconView.Image = AppTheme.GetTemplateIcon(timelineIconType, SharedResources.Size.S, true);
+                            cell.TintColor = AppTheme.SecondaryBackgoundColor;
 
                             
 
-                            //cell.ImageView.Alpha = ViewModel.Checkins.Count == 1 ? 0f : 1f;
-                            UIImageView anotherImageView = cell.ImageView.Subviews.OfType<UIImageView>().FirstOrDefault();
+                            //                            cell.IconView.SetLayer(AppTheme.GetTemplateIcon(MaintenanceRequestStyling.StateIconByStatus(item.StatusId), SharedResources.Size.S),
+                            //                                MaintenanceRequestStyling.ColorByStatus(item.StatusId),12f,12f);
+                            var backgroundPad = index == 0 ? 6f : 10f;
+                            var iconPad = index == 0 ? 12f : 16f;
+                            cell.IconView.SetBackgroundLayer(AppTheme.GetTemplateIcon(SharedResources.Icons.Circle, SharedResources.Size.S, true),
+                                MaintenanceRequestStyling.ColorByStatus(item.StatusId), backgroundPad, backgroundPad);
+                            cell.IconView.SetBackgroundRounded(AppTheme.SecondaryBackgoundColor);
+                            cell.IconView.SetIconLayerLayer(AppTheme.GetTemplateIcon(MaintenanceRequestStyling.StateIconByStatus(item.StatusId), SharedResources.Size.S, true),
+                                UIColor.White, iconPad, iconPad);
 
-                            if (anotherImageView == null)
-                            {
-                                anotherImageView = new UIImageView(cell.ImageView.Frame)
-                                {
-                                    AutoresizingMask = UIViewAutoresizing.FlexibleMargins,
-                                    // AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
-                                    ContentMode = UIViewContentMode.ScaleAspectFill
-                                };
 
-                                cell.ImageView.Add(anotherImageView);
-                            }
-
-                            if (index == 0)
-                                anotherImageView.Frame = anotherImageView.Frame.WithSize(30f, 30f);
-                            else
-                                anotherImageView.Frame = anotherImageView.Frame.WithSize(24f, 24f);
-
-                            anotherImageView.Image = timelineUndefinedStatusIcon;
 
 
                         },
@@ -241,7 +221,7 @@ namespace ResidentAppCross.iOS
                             ViewModel.ShowCheckinDetailsCommand.Execute(null);
                         }, //When accessory button clicked
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_MaintenanceStatusCheckinsTable"), //Define how to create cell, if reusables not found
+                        CellSelector = () => new HistoryItemCell("UITableViewCell_MaintenanceStatusCheckinsTable"), //Define how to create cell, if reusables not found
                         CellIdentifier = "UITableViewCell_MaintenanceStatusCheckinsTable"
                     };
 
@@ -255,7 +235,6 @@ namespace ResidentAppCross.iOS
                     };
 
                     _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
-
                     _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
                     _tableSection.Source = source;
                     _tableSection.ReloadData();
@@ -264,7 +243,6 @@ namespace ResidentAppCross.iOS
                 return _tableSection;
             }
         }
-
 
         public UIButton FooterPauseButton { get; set; }
         public UIButton FooterFinishButton { get; set; }
@@ -280,12 +258,21 @@ namespace ResidentAppCross.iOS
 
         public void OnRequestChanged(MaintenanceBindingModel request)
         {
-
+            if (request == null) return;
+            HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.HeaderIconByStatus(ViewModel.Request.Status), SharedResources.Size.L);
+            HeaderSection.LogoImage.TintColor = MaintenanceRequestStyling.ColorByStatus(ViewModel.Request.Status);
         }
 
         public override void BindForm()
         {
             base.BindForm();
+
+
+            ScheduleSection.Label.Text = "Repair Date";
+            EntrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
+            EntrancePermissionSection.SubHeaderLabel.Text =
+                "Do you give a permission for tech guys to enter your apartment when you are not at home?";
+
             var b = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
 
             //Schedule Section
@@ -405,6 +392,7 @@ namespace ResidentAppCross.iOS
                 SectionContainerGesturesEnabled = false;
                 content.Add(CheckinsSection);
             }
+            TenantDataSection.TenantAvatar.ToRounded(UIColor.DarkGray,4f);
         }
 
         public override void LayoutContent()
@@ -416,4 +404,64 @@ namespace ResidentAppCross.iOS
             }
         }
     }
+
+    public class HistoryItemCell : UITableViewCell
+    {
+        public const string CellIdentifier = "HistoryItemCell";
+
+        public HistoryItemCell(string cellId) : base(UITableViewCellStyle.Default, cellId)
+        {
+
+            float imageSize = 44f;
+            float textualContentPadding = imageSize + 8f + 8f;
+            var container = new UIView(ContentView.Frame)
+            {
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+            };
+
+            ContentView.AddSubview(container);
+            nfloat textualContentPaddingRight = 8f;
+            var textualContentWith = container.Frame.Width - textualContentPadding - textualContentPaddingRight;
+
+            MainLabel = new UILabel(new CGRect(textualContentPadding, 6, textualContentWith, 16f))
+            {
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
+                Font = AppFonts.CellDetails
+            };
+
+            DateLabel = new UILabel(new CGRect(textualContentPadding, 24, textualContentWith, 12f))
+            {
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
+                Font = AppFonts.CellNoteSmall,
+                TextColor = UIColor.DarkGray,
+                Alpha = 0.6f,
+                TextAlignment = UITextAlignment.Left
+            };
+
+            var uiImageView = new UIImageView(new CGRect(0, 0, 22, 22))
+            {
+                Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Forward, SharedResources.Size.S),
+                TintColor = AppTheme.SecondaryBackgoundColor.ColorWithAlpha(0.5f),
+                ContentMode = UIViewContentMode.ScaleAspectFit
+            };
+
+            AccessoryView = uiImageView;
+
+            IconView = new UILayeredIconView(new CGRect(8f, 0f, imageSize, imageSize));
+
+            container.AddSubview(MainLabel);
+            container.AddSubview(DateLabel);
+            container.AddSubview(IconView);
+        }
+
+        public override UITableViewCellSelectionStyle SelectionStyle => UITableViewCellSelectionStyle.Blue;
+
+
+        public UILabel MainLabel { get; set; }
+        public UILayeredIconView IconView { get; set; }
+        public UILabel SubLabel { get; set; }
+        public UILabel DateLabel { get; set; }
+        public static float EstimatedHeight = 44f;
+    }
+
 }

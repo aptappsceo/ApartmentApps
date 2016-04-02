@@ -45,12 +45,15 @@ namespace ResidentAppCross.iOS
             AppTitleLabel.Text = AppString.ApplicationTitle;
             AppVersionLabel.Text = "Version "+NSBundle.MainBundle.InfoDictionary["CFBundleShortVersionString"];
 
+
+
         }
 
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);
             _textFieldsContainer.Layer.CornerRadius = 8f;
+            //ViewModel.TryAutologinCommand?.Execute(null);
         }
 
         public override void ViewDidLoad()
@@ -122,7 +125,11 @@ namespace ResidentAppCross.iOS
                        ViewModel.Password = "Asdf1234!";
                        ViewModel.LoginCommand.Execute(null);
                    }));
-              
+                if (controller.PopoverPresentationController != null)
+                {
+                    controller.PopoverPresentationController.SourceView = ForgotPasswordButton;
+                    controller.PopoverPresentationController.SourceRect = ForgotPasswordButton.Bounds;
+                }
                 this.PresentViewController(controller, true, () => { });
             };
 
@@ -142,5 +149,6 @@ namespace ResidentAppCross.iOS
             // Perform any additional setup after loading the view, typically from a nib.
         }
 
+        
     }
 }
