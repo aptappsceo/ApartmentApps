@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
@@ -9,7 +8,6 @@
             <connections>
                 <outlet property="_birthdayField" destination="gOL-jw-755" id="3t8-Qe-Xu6"/>
                 <outlet property="_emailTextField" destination="DvQ-NW-cBx" id="CKi-tB-5Ld"/>
-                <outlet property="_firstLastNameTextField" destination="beW-MD-q0r" id="dQt-fg-6y4"/>
                 <outlet property="_passwordConfirmationField" destination="GgW-V3-XuE" id="ogL-tU-unZ"/>
                 <outlet property="_passwordField" destination="Y8K-8i-Rjy" id="64S-aA-DFo"/>
                 <outlet property="_signUpButton" destination="k1u-gg-eAo" id="ISD-7q-QZt"/>
@@ -24,34 +22,34 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tXv-DD-u6F">
                     <rect key="frame" x="20" y="20" width="560" height="384"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First &amp; Last Name *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="beW-MD-q0r" userLabel="FirstLastNameTextField">
-                            <rect key="frame" x="0.0" y="0.0" width="560" height="48"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="Unq-ZP-W38"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DvQ-NW-cBx" userLabel="EmailTextField">
-                            <rect key="frame" x="0.0" y="56" width="560" height="48"/>
+                            <rect key="frame" x="0.0" y="0.0" width="560" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="NOg-zU-wXa"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Birthday *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gOL-jw-755" userLabel="BirthdayField">
-                            <rect key="frame" x="0.0" y="112" width="560" height="48"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gOL-jw-755" userLabel="PhoneNumber">
+                            <rect key="frame" x="0.0" y="56" width="560" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="ql7-Sw-YZU"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9w7-qd-Spn" userLabel="UsernameField">
-                            <rect key="frame" x="0.0" y="168" width="560" height="48"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9w7-qd-Spn" userLabel="FirstNameField">
+                            <rect key="frame" x="0.0" y="112" width="560" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="xcn-4f-nwo"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gIh-Dr-HUK" userLabel="LastNameField">
+                            <rect key="frame" x="0.0" y="168" width="560" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="G9T-rj-XQ4"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>

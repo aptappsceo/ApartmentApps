@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using ApartmentApps.Api;
@@ -26,8 +28,119 @@ namespace ApartmentApps.API.Service.Models
         public string PostalCode { get; set; }
     }
 
+    public class MaintenanceBindingModel
+    {
+        public string UserName { get; set; }
+        public string UserId { get; set; }
+        public string Name { get; set; }
+        public string Message { get; set; }
+
+        public IEnumerable<string> Photos { get; set; }
+        public string UnitName { get; set; }
+        public string Status { get; set; }
+        public DateTime? ScheduleDate { get; set; }
+        public int PetStatus { get; set; }
+        public MaintenanceCheckinBindingModel[] Checkins { get; set; }
+        public UserBindingModel User { get; set; }
+        public string BuildingName { get; set; }
+        public bool PermissionToEnter { get; set; }
+    }
+
+    public class MaintenanceIndexBindingModel
+    {
+        public string Title { get; set; }
+        public string Comments { get; set; }
+        public string StatusId { get; set; }
+        public int Id { get; set; }
+        public DateTime RequestDate { get; set; }
+        public UserBindingModel SubmissionBy { get; set; }
+        public MaintenanceCheckinBindingModel LatestCheckin { get; set; }
+        public string UnitName { get; set; }
+        public string BuildingName { get; set; }
+    }
+    public class CourtesyCheckinBindingModel
+    {
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+        public string Label { get; set; }
+        public List<string> AcceptableCheckinCodes { get; set; }
+        public int Id { get; set; }
+        public bool Complete { get; set; }
+    }
+
+    public class IncidentReportBindingModel
+    {
+        public string Comments { get; set; }
+        public string IncidentType { get; set; }
+        public IEnumerable<string> Photos { get; set; }
+        public UserBindingModel Requester { get; set; }
+        public string RequesterId { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string UnitName { get; set; }
+        public string BuildingName { get; set; }
+        public string Status { get; set; }
+
+        public IncidentCheckinBindingModel[] Checkins { get; set; }
+        public string RequesterPhoneNumber { get; set; }
+    }
+    public class IncidentCheckinBindingModel
+    {
+        public string StatusId { get; set; }
+        public DateTime Date { get; set; }
+        public string Comments { get; set; }
+        public List<ImageReference> Photos { get; set; }
+
+        public UserBindingModel Officer { get; set; }
+    }
+
+    public class IncidentIndexBindingModel
+    {
+        public string Title { get; set; }
+        public string Comments { get; set; }
+        public string StatusId { get; set; }
+        public int Id { get; set; }
+        public DateTime RequestDate { get; set; }
+        public UserBindingModel ReportedBy { get; set; }
+        public string UnitName { get; set; }
+        public string BuildingName { get; set; }
+        public IncidentCheckinBindingModel LatestCheckin { get; set; }
+    }
+    public class MaintenanceCheckinBindingModel
+    {
+        public string StatusId { get; set; }
+        public DateTime Date { get; set; }
+        public string Comments { get; set; }
+        public List<ImageReference> Photos { get; set; }
+        public UserBindingModel Worker { get; set; }
+    }
+
     public static class ModelExtensions
     {
+               public static IncidentCheckinBindingModel ToIncidentCheckinBindingModel(this IncidentReportCheckin x, IBlobStorageService blob)
+        {
+
+            return new IncidentCheckinBindingModel
+            {
+                StatusId = x.StatusId,
+                Date = x.CreatedOn,
+                Comments = x.Comments,
+                Officer= x.Officer.ToUserBindingModel(blob),
+                Photos = blob.GetImages(x.GroupId).ToList(),
+                
+            };
+        }
+        public static MaintenanceCheckinBindingModel ToMaintenanceCheckinBindingModel(this MaintenanceRequestCheckin x, IBlobStorageService blob)
+        {
+       
+            return new MaintenanceCheckinBindingModel
+            {
+                StatusId = x.StatusId,
+                Date = x.Date,
+                Comments = x.Comments,
+                Worker = x.Worker.ToUserBindingModel(blob),
+                Photos = blob.GetImages(x.GroupId).ToList()
+            };
+        }
         public static UserBindingModel ToUserBindingModel(this ApplicationUser user, IBlobStorageService blobService)
         {
             return new UserBindingModel()
