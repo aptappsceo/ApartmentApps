@@ -51,6 +51,11 @@ namespace ApartmentApps.Client
             get; 
         }
         
+        ILookups Lookups
+        {
+            get; 
+        }
+        
         IMaitenance Maitenance
         {
             get; 
@@ -62,11 +67,6 @@ namespace ApartmentApps.Client
         }
         
         IRegister Register
-        {
-            get; 
-        }
-        
-        IValues Values
         {
             get; 
         }
