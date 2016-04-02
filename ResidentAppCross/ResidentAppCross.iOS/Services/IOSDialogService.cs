@@ -46,14 +46,13 @@ namespace ResidentAppCross.iOS.Services
         public IMvxMainThreadDispatcher Dispatcher
             => _dispatcher ?? (_dispatcher = MvxSingleton<IMvxMainThreadDispatcher>.Instance);
 
-
-
 		public Task<T> OpenSearchableTableSelectionDialog<T>(IList<T> items, string title, Func<T,string> itemTitleSelector, Func<T, string> itemSubtitleSelector = null, object arg = null)
         {
             return Task.Factory.StartNew(() =>
             {
 
                 T result = default(T);
+
                 UITableViewController selectionTable = null;
 
                 ManualResetEvent waitForCompleteEvent = new ManualResetEvent(false);

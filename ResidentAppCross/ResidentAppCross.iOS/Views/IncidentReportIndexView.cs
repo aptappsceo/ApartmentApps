@@ -34,11 +34,33 @@ namespace ResidentAppCross.iOS
 	    private TableDataBinding<FilterTableCell, IncidentIndexFilter> _tableFilterBinding;
 	    private GenericTableSource _tableItemSource;
 	    private GenericTableSource _tableFiltersSource;
+	    private Dictionary<string, UIImage> _statusImages;
 
 
 	    public override string Title => "Incident Reports";
 
-	    public TableDataBinding<TicketItemCell, IncidentIndexBindingModel> TableItemsBinding
+
+        public Dictionary<string, UIImage> StatusImages
+        {
+            get { return _statusImages ?? (_statusImages = new Dictionary<string, UIImage>()); }
+            set { _statusImages = value; }
+        }
+
+        public UIImage GetImageByStatus(string status)
+        {
+            UIImage img;
+            if (!StatusImages.TryGetValue(status, out img))
+            {
+                img =
+                    StatusImages[status] =
+                        AppTheme.GetTemplateIcon(MaintenanceRequestStyling.ListIconByStatus(status),
+                            SharedResources.Size.S);
+            }
+            return img;
+        }
+
+
+        public TableDataBinding<TicketItemCell, IncidentIndexBindingModel> TableItemsBinding
         {
             get
             {
@@ -48,13 +70,24 @@ namespace ResidentAppCross.iOS
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
                         {
-                            cell.MainLabel.Text = item.Comments;
-                            cell.SubLabel.Text = $"{item.Title} - {item.StatusId}";
-                            cell.IconView.Image = AppTheme.GetTemplateIcon(IncidentReportStyling.ListIconByStatus(item.StatusId), SharedResources.Size.S);
+                            cell.MainLabel.Text = "Unit " + item.UnitName;
+
+                            cell.SubLabel.Text = $"{item.Title}";
+
+                            if (!string.IsNullOrEmpty(item.LatestCheckin.Comments))
+                            {
+                                cell.NotesLabel.Text = $"{item.StatusId}: item.LatestCheckin.Comments";
+                            }
+                            else
+                            {
+                                cell.NotesLabel.Text = $"{item.StatusId} with no comments";
+                            }
+
+                            cell.IconView.Image = GetImageByStatus(item.StatusId);
                             cell.IconView.TintColor = IncidentReportStyling.ColorByStatus(item.StatusId);
-                            cell.DateLabel.Text = "24/1/2 6:64 PM"; ;
+                            cell.DateLabel.Text = item.LatestCheckin?.Date?.ToString("g");
                         },
-                        CellHeight = (item, index) => { return 75; },
+                        CellHeight = (item, index) => { return TicketItemCell.FullHeight; },
                         ItemSelected = item =>
                         {
                             ViewModel.SelectedIncident = item;

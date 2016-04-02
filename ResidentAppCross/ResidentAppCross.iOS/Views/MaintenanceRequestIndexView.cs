@@ -63,22 +63,34 @@ namespace ResidentAppCross.iOS.Views
                     {
                         Bind = (cell, item,index) => //What to do when cell is created for item
                         {
-                            cell.MainLabel.Text = "Unit 1234";
+
+                            cell.MainLabel.Text = "Unit "+item.UnitName;
 
                             cell.SubLabel.Text = $"{item.Title}";
 
+                            cell.IconView.Image = GetImageByStatus(item.StatusId);
+                            cell.IconView.TintColor = MaintenanceRequestStyling.ColorByStatus(item.StatusId);
+                            cell.DateLabel.Text = item.LatestCheckin?.Date?.ToString("g");
+
                             if (item.StatusId == "Scheduled")
                             {
-                                cell.NotesLabel.Text = $"Scheduled for 28/1/2 12:00 PM";
+                                cell.NotesLabel.Text = $"{item.LatestCheckin?.Comments}";
+                            }
+                            else if (!string.IsNullOrEmpty(item.LatestCheckin?.Comments))
+                            {
+                                cell.NotesLabel.Text = $"{item.StatusId}: {item.LatestCheckin.Comments}";
+                            }
+                            else if (item.LatestCheckin == null)
+                            {
+                                cell.NotesLabel.Text = $"Submitted: " + item.Comments;
+                                cell.DateLabel.Text = item.RequestDate?.ToString("g");
                             }
                             else
                             {
                                 cell.NotesLabel.Text = $"{item.StatusId} with no comments";
                             }
 
-                            cell.IconView.Image = GetImageByStatus(item.StatusId);
-                            cell.IconView.TintColor = MaintenanceRequestStyling.ColorByStatus(item.StatusId);
-                            cell.DateLabel.Text = "24/1/2 6:64 PM";
+                         
 
                         },
                         CellHeight = (item, index) => { return TicketItemCell.FullHeight; },
