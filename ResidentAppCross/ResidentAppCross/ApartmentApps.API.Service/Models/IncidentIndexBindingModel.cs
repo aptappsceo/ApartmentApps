@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using ApartmentApps.Client.Models;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
@@ -29,6 +30,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._id; }
             set { this._id = value; }
+        }
+        
+        private UserBindingModel _reportedBy;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public UserBindingModel ReportedBy
+        {
+            get { return this._reportedBy; }
+            set { this._reportedBy = value; }
         }
         
         private DateTimeOffset? _requestDate;
@@ -87,6 +99,13 @@ namespace ApartmentApps.Client.Models
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((int)idValue);
+                }
+                JToken reportedByValue = inputObject["ReportedBy"];
+                if (reportedByValue != null && reportedByValue.Type != JTokenType.Null)
+                {
+                    UserBindingModel userBindingModel = new UserBindingModel();
+                    userBindingModel.DeserializeJson(reportedByValue);
+                    this.ReportedBy = userBindingModel;
                 }
                 JToken requestDateValue = inputObject["RequestDate"];
                 if (requestDateValue != null && requestDateValue.Type != JTokenType.Null)

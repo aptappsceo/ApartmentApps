@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using ApartmentApps.Client.Models;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
@@ -53,6 +54,17 @@ namespace ApartmentApps.Client.Models
             set { this._statusId = value; }
         }
         
+        private UserBindingModel _submissionBy;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public UserBindingModel SubmissionBy
+        {
+            get { return this._submissionBy; }
+            set { this._submissionBy = value; }
+        }
+        
         private string _title;
         
         /// <summary>
@@ -98,6 +110,13 @@ namespace ApartmentApps.Client.Models
                 if (statusIdValue != null && statusIdValue.Type != JTokenType.Null)
                 {
                     this.StatusId = ((string)statusIdValue);
+                }
+                JToken submissionByValue = inputObject["SubmissionBy"];
+                if (submissionByValue != null && submissionByValue.Type != JTokenType.Null)
+                {
+                    UserBindingModel userBindingModel = new UserBindingModel();
+                    userBindingModel.DeserializeJson(submissionByValue);
+                    this.SubmissionBy = userBindingModel;
                 }
                 JToken titleValue = inputObject["Title"];
                 if (titleValue != null && titleValue.Type != JTokenType.Null)

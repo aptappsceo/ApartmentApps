@@ -326,9 +326,9 @@ namespace ResidentAppCross.iOS
             b.Bind(HeaderSection.SubLabel).For(l => l.Text).To(vm => vm.Request.Status);
 
             //Tenant section
-            //b.Bind(TenantDataSection.TenantNameLabel).For(t => t.Text).To(vm => vm.Request.TenantFullName);
-            b.Bind(TenantDataSection.AddressLabel).For(t => t.Text).To(vm => vm.UnitAddressString);
-            //b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.);
+            b.Bind(TenantDataSection.TenantNameLabel).For(t => t.Text).To(vm => vm.Request.Requester.FullName);
+            b.Bind(TenantDataSection.AddressLabel).For(t => t.Text).To(vm => vm.Request.BuildingName);
+            b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.Requester.PhoneNumber);
 
             //Date section
             //b.Bind(ScheduleSection.Button).To(vm => vm.ScheduleCommand);

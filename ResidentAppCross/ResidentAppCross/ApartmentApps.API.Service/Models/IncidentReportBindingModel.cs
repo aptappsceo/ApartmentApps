@@ -78,12 +78,12 @@ namespace ApartmentApps.Client.Models
             set { this._photos = value; }
         }
         
-        private string _requester;
+        private UserBindingModel _requester;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Requester
+        public UserBindingModel Requester
         {
             get { return this._requester; }
             set { this._requester = value; }
@@ -190,7 +190,9 @@ namespace ApartmentApps.Client.Models
                 JToken requesterValue = inputObject["Requester"];
                 if (requesterValue != null && requesterValue.Type != JTokenType.Null)
                 {
-                    this.Requester = ((string)requesterValue);
+                    UserBindingModel userBindingModel = new UserBindingModel();
+                    userBindingModel.DeserializeJson(requesterValue);
+                    this.Requester = userBindingModel;
                 }
                 JToken requesterIdValue = inputObject["RequesterId"];
                 if (requesterIdValue != null && requesterIdValue.Type != JTokenType.Null)

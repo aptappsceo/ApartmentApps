@@ -34,26 +34,15 @@ namespace ApartmentApps.Client.Models
             set { this._date = value; }
         }
         
-        private string _officerName;
+        private UserBindingModel _officer;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string OfficerName
+        public UserBindingModel Officer
         {
-            get { return this._officerName; }
-            set { this._officerName = value; }
-        }
-        
-        private string _officerPhoneNumber;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string OfficerPhoneNumber
-        {
-            get { return this._officerPhoneNumber; }
-            set { this._officerPhoneNumber = value; }
+            get { return this._officer; }
+            set { this._officer = value; }
         }
         
         private IList<ImageReference> _photos;
@@ -103,15 +92,12 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Date = ((DateTimeOffset)dateValue);
                 }
-                JToken officerNameValue = inputObject["OfficerName"];
-                if (officerNameValue != null && officerNameValue.Type != JTokenType.Null)
+                JToken officerValue = inputObject["Officer"];
+                if (officerValue != null && officerValue.Type != JTokenType.Null)
                 {
-                    this.OfficerName = ((string)officerNameValue);
-                }
-                JToken officerPhoneNumberValue = inputObject["OfficerPhoneNumber"];
-                if (officerPhoneNumberValue != null && officerPhoneNumberValue.Type != JTokenType.Null)
-                {
-                    this.OfficerPhoneNumber = ((string)officerPhoneNumberValue);
+                    UserBindingModel userBindingModel = new UserBindingModel();
+                    userBindingModel.DeserializeJson(officerValue);
+                    this.Officer = userBindingModel;
                 }
                 JToken photosSequence = ((JToken)inputObject["Photos"]);
                 if (photosSequence != null && photosSequence.Type != JTokenType.Null)

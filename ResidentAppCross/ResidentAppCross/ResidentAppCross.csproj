@@ -33,7 +33,6 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ViewModels\AparmentAppsDelegating.cs" />
     <Compile Include="ApartmentApps.API.Service\Account.cs" />
     <Compile Include="ApartmentApps.API.Service\AccountExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Alerts.cs" />
@@ -107,6 +106,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\Tenant.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Unit.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\UserAlert.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\UserBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\UserInfoViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\UserLoginInfoViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Notifiations.cs" />
@@ -115,6 +115,7 @@
     <Compile Include="ApartmentApps.API.Service\RegisterExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Values.cs" />
     <Compile Include="ApartmentApps.API.Service\ValuesExtensions.cs" />
+    <Compile Include="ViewModels\AparmentAppsDelegating.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\StubCommands.cs" />
     <Compile Include="Commands\TaskCommand.cs" />

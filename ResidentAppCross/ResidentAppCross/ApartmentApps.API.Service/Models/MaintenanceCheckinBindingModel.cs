@@ -56,15 +56,15 @@ namespace ApartmentApps.Client.Models
             set { this._statusId = value; }
         }
         
-        private string _workerName;
+        private UserBindingModel _worker;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string WorkerName
+        public UserBindingModel Worker
         {
-            get { return this._workerName; }
-            set { this._workerName = value; }
+            get { return this._worker; }
+            set { this._worker = value; }
         }
         
         /// <summary>
@@ -108,10 +108,12 @@ namespace ApartmentApps.Client.Models
                 {
                     this.StatusId = ((string)statusIdValue);
                 }
-                JToken workerNameValue = inputObject["WorkerName"];
-                if (workerNameValue != null && workerNameValue.Type != JTokenType.Null)
+                JToken workerValue = inputObject["Worker"];
+                if (workerValue != null && workerValue.Type != JTokenType.Null)
                 {
-                    this.WorkerName = ((string)workerNameValue);
+                    UserBindingModel userBindingModel = new UserBindingModel();
+                    userBindingModel.DeserializeJson(workerValue);
+                    this.Worker = userBindingModel;
                 }
             }
         }
