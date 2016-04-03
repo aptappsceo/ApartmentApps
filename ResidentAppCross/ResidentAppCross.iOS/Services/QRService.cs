@@ -32,7 +32,7 @@ namespace ResidentAppCross.iOS.Services
             {
                 return new QRData()
                 {
-                    Data = "Simulated Text",
+                    Data = "http://www.apartmentapps.com?coloc=17",
                     ImageData = new byte[0],
                     Timestamp = DateTime.Now.Ticks
                 }; 
