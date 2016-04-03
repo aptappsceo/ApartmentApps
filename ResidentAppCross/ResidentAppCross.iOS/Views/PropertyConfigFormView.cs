@@ -15,6 +15,9 @@ using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
+using Cirrious.FluentLayouts.Touch.Extensions;
+using Cirrious.FluentLayouts.Touch;
+using Cirrious.FluentLayouts.Touch.RowSet;
 
 namespace ResidentAppCross.iOS.Views
 {
@@ -42,6 +45,7 @@ namespace ResidentAppCross.iOS.Views
                     _segmentSelectionSection.Selector.RemoveAllSegments();
                     _segmentSelectionSection.Selector.InsertSegment("Map", 0, false);
                     _segmentSelectionSection.Selector.InsertSegment("List", 1, false);
+                    _segmentSelectionSection.Selector.SelectedSegment = 0;
                 }
                 return _segmentSelectionSection;
             }
@@ -92,25 +96,70 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
 
-                    var tableDataBinding = new TableDataBinding<UITableViewCell, MaintenanceIndexBindingModel>() //Define cell type and data type as type args
+                    var timelineUndefinedStatusIcon = UIImage.FromBundle("TimelineStatusIcon.png");
+                    var timelineMidLine = UIImage.FromFile("TimelineMid.png");
+                    var timelineStartLine = UIImage.FromFile("TimelineStart.png");
+                    var timelineEndLine = UIImage.FromFile("TimelineEnd.png");
+
+                    var tableDataBinding = new TableDataBinding<UITableViewCell, LocationBindingModel>() //Define cell type and data type as type args
                     {
-                        Bind = (cell, item,index) => //What to do when cell is created for item
+                        Bind = (cell, item, index) => //What to do when cell is created for item
                         {
-                            cell.TextLabel.Text = item.Title;
-                            cell.DetailTextLabel.Text = item.Comments;
-                            cell.ImageView.Image = UIImage.FromBundle("MaintenaceIcon");
+                            cell.TextLabel.Text = item.Name;
+                            cell.ImageView.Image = UIImage.FromBundle("OfficerIcon");
+                            cell.DetailTextLabel.Text = item.Type;
                             cell.TextLabel.MinimumScaleFactor = 0.2f;
+
+                            //if (ViewModel.Locations.Count == 1)
+                            //    cell.ImageView.Image = timelineUndefinedStatusIcon;
+                            //else if (index == 0)
+                            //    cell.ImageView.Image = timelineEndLine;
+                            //else if (index == ViewModel.Checkins.Count - 1)
+                            //    cell.ImageView.Image = timelineStartLine;
+                            //else
+                            //    cell.ImageView.Image = timelineMidLine;
+
+
+
+                            //cell.ImageView.Alpha = ViewModel.Checkins.Count == 1 ? 0f : 1f;
+                            UIImageView anotherImageView = cell.ImageView.Subviews.OfType<UIImageView>().FirstOrDefault();
+
+                            if (anotherImageView == null)
+                            {
+                                anotherImageView = new UIImageView(cell.ImageView.Frame)
+                                {
+                                    AutoresizingMask = UIViewAutoresizing.FlexibleMargins,
+                                    // AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
+                                    ContentMode = UIViewContentMode.ScaleAspectFill
+                                };
+
+                                cell.ImageView.Add(anotherImageView);
+                            }
+
+                            if (index == 0)
+                                anotherImageView.Frame = anotherImageView.Frame.WithSize(30f, 30f);
+                            else
+                                anotherImageView.Frame = anotherImageView.Frame.WithSize(24f, 24f);
+
+                            anotherImageView.Image = timelineUndefinedStatusIcon;
+
 
                         },
                         ItemSelected = item =>
                         {
-                            //ViewModel.SelectedRequest = item;
-                            //ViewModel.OpenSelectedRequestCommand.Execute(null);
+                           // ViewModel.SelectedCheckin = item;
+                          //  ViewModel.ShowCheckinDetailsCommand.Execute(null);
                         }, //When accessory button clicked
                         AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
-                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell"), //Define how to create cell, if reusables not found
+                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Subtitle, "UITableViewCell_IncidentDetailsCheckinsTable"), //Define how to create cell, if reusables not found
+                        CellIdentifier = "UITableViewCell_IncidentDetailsCheckinsTable"
                     };
 
+                    tableDataBinding.AddAction(new TableCellAction<LocationBindingModel>()
+                    {
+                        Title = "Delete",
+                        Handler = (item)=>ViewModel.DeleteCommand.Execute(item)
+                    });
                     var source = new GenericTableSource()
                     {
                         Items = ViewModel.Locations, //Deliver data
@@ -119,6 +168,7 @@ namespace ResidentAppCross.iOS.Views
                         ItemsFocusableByDefault = true
                     };
 
+                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 
                     _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
                     _tableSection.Source = source;
@@ -127,8 +177,15 @@ namespace ResidentAppCross.iOS.Views
                 }
                 return _tableSection;
             }
+        
         }
-
+        public override void LayoutContent()
+        {
+            base.LayoutContent();
+            if (SegmentSelectionSection.Selector.SelectedSegment == 1)
+                SectionsContainer.AddConstraints(TableSection.WithSameHeight(SectionsContainer));
+       
+        }
         //bind
 
         public override void BindForm()
@@ -147,9 +204,11 @@ namespace ResidentAppCross.iOS.Views
                     CurrentLocationUpdated = true;
                 }
             };
+
             b.Bind(AddLocationButton).To(p => p.AddLocationCommand);
             _manager = new LocationsAnnotationManager(this.MapSection.MapView);
             b.Bind(_manager).For(m => m.ItemsSource).To(vm => vm.Locations);
+            b.Bind(TableSection.Source).To(vm => vm.Locations);
             SegmentSelectionSection.Selector.ValueChanged += (sender, args) => RefreshContent();
             b.Apply();
             ViewModel.UpdateLocations.Execute(null);
@@ -187,10 +246,10 @@ namespace ResidentAppCross.iOS.Views
 
             content.Add(HeaderSection);
             content.Add(SegmentSelectionSection);
-            content.Add(MapSection);
+          
             if (SegmentSelectionSection.Selector.SelectedSegment == 0)
             {
-                
+                content.Add(MapSection);
             }
             else
             {
@@ -198,6 +257,7 @@ namespace ResidentAppCross.iOS.Views
             }
            
             content.Add(ButtonToolbarSection);
+            TableSection.ReloadData();
         }
 
 

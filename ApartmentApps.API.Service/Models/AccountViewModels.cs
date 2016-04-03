@@ -35,6 +35,9 @@ namespace ApartmentApps.API.Service.Models
         public IList<string> Roles { get; set; }
         public string ImageUrl { get; set; }
         public string ImageThumbnailUrl { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName { get; set; }
     }
 
     public class UserLoginInfoViewModel

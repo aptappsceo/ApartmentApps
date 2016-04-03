@@ -97,6 +97,9 @@ namespace ApartmentApps.API.Service.Controllers
                 Roles = await UserManager.GetRolesAsync(User.Identity.GetUserId()),
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
+                FirstName = CurrentUser.FirstName,
+                LastName = CurrentUser.LastName,
+                FullName = CurrentUser.FirstName + " " + CurrentUser.LastName,
                 ImageUrl = _blobStorage.GetPhotoUrl(CurrentUser.ImageUrl) ?? $"http://www.gravatar.com/avatar/{ModelExtensions.HashEmailForGravatar(CurrentUser.Email.ToLower())}.jpg",
                 ImageThumbnailUrl = _blobStorage.GetPhotoUrl(CurrentUser.ImageThumbnailUrl) ?? $"http://www.gravatar.com/avatar/{ModelExtensions.HashEmailForGravatar(CurrentUser.Email.ToLower())}.jpg",
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null

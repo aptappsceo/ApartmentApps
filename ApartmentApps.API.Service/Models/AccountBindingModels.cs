@@ -157,8 +157,7 @@ namespace ApartmentApps.API.Service.Models
                 PhoneNumber = user.PhoneNumber,
                 Address = user.Tenant?.Address,
                 City = user.Tenant?.City,
-                PostalCode = user.Tenant?.PostalCode,
-
+                PostalCode = user.Tenant?.PostalCode
             };
         }
 
