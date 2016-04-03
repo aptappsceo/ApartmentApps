@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignUpFormView">
             <connections>
-                <outlet property="_birthdayField" destination="gOL-jw-755" id="3t8-Qe-Xu6"/>
-                <outlet property="_emailTextField" destination="DvQ-NW-cBx" id="CKi-tB-5Ld"/>
-                <outlet property="_passwordConfirmationField" destination="GgW-V3-XuE" id="ogL-tU-unZ"/>
-                <outlet property="_passwordField" destination="Y8K-8i-Rjy" id="64S-aA-DFo"/>
+                <outlet property="_emailTextField" destination="DvQ-NW-cBx" id="jKW-xX-yWO"/>
+                <outlet property="_firstNameField" destination="9w7-qd-Spn" id="anB-0b-68Y"/>
+                <outlet property="_lastNameField" destination="gIh-Dr-HUK" id="Gw3-O7-q7A"/>
+                <outlet property="_passwordConfirmationField" destination="GgW-V3-XuE" id="vTF-7R-5RV"/>
+                <outlet property="_passwordField" destination="Y8K-8i-Rjy" id="vVB-MN-9Tc"/>
+                <outlet property="_phoneNumberField" destination="gOL-jw-755" id="rNl-Na-iUt"/>
                 <outlet property="_signUpButton" destination="k1u-gg-eAo" id="ISD-7q-QZt"/>
                 <outlet property="_usernameField" destination="9w7-qd-Spn" id="hbd-jf-8um"/>
                 <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
