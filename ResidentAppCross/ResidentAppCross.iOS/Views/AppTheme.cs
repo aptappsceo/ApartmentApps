@@ -58,7 +58,7 @@ namespace ResidentAppCross.iOS.Views
         public static float HeaderSectionHeight = 80;
         public static float CallToActionSectionHeight = 60;
         public static float CommentsSectionHeight = 160;
-        public static float TenantDataSectionHeight = 220;
+        public static float TenantDataSectionHeight = 230;
         public static float FormSectionVerticalSpacing = 8f;
         public static float SegmentSectionHeight = 80f;
         public static float SegmentSectionHeightReduced = 50f;
