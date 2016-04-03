@@ -14,7 +14,6 @@
                 <outlet property="_passwordField" destination="Y8K-8i-Rjy" id="vVB-MN-9Tc"/>
                 <outlet property="_phoneNumberField" destination="gOL-jw-755" id="rNl-Na-iUt"/>
                 <outlet property="_signUpButton" destination="k1u-gg-eAo" id="ISD-7q-QZt"/>
-                <outlet property="_usernameField" destination="9w7-qd-Spn" id="hbd-jf-8um"/>
                 <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
             </connections>
         </placeholder>
