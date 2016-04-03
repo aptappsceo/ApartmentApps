@@ -80,6 +80,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
             return Context.UserAlerts.Where(p => p.UserId == CurrentUser.Id).Select(p =>
                  new AlertBindingModel
                  {
+                     Id = p.Id,
                      CreatedOn = p.CreatedOn,
                      Message = p.Message,
                      Title = p.Title,
@@ -100,5 +101,6 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public string Type { get; set; }
         public int RelatedId { get; set; }
         public bool HasRead { get; set; }
+        public int Id { get; set; }
     }
 }

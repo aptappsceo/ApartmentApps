@@ -100,8 +100,8 @@
     <Compile Include="ApartmentApps.API.Service\Models\PropertyAddonType.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PropertyEntrataInfo.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PropertyYardiInfo.cs" />
-    <Compile Include="ApartmentApps.API.Service\Models\RegisterBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\RegisterExternalBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\RegisterFromPhoneBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\RemoveLoginBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\SetPasswordBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\StringCollection.cs" />

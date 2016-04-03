@@ -60,6 +60,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
             var result = await Context.IncidentReports
                 .Include(p => p.User.Tenant)
+                .Include(p => p.Unit)
                 .Include(p => p.User.Tenant.Unit)
                 .Include(p => p.User.Tenant.Unit.Building)
                 .Include(p => p.Checkins)
@@ -75,6 +76,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 Requester = result.User.ToUserBindingModel(BlobStorageService),
                 Status = result.StatusId,
                 CreatedOn = result.CreatedOn,
+                UnitId = result.UnitId,
+                UnitName = result.Unit?.Name,
                 IncidentType = result.IncidentType.ToString(),
                 Checkins = result.Checkins.ToArray().Select(x => new IncidentCheckinBindingModel
                 {
@@ -93,6 +96,20 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
         }
 
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("AssignUnitToIncidentReport")]
+        public void AssignUnitToIncidentReport(int id, int unitId)
+        {
+            var propertyId = CurrentUser.PropertyId.Value;
+            var incidentReport = Context.IncidentReports.Include(p => p.User).FirstOrDefault(p=>p.User.PropertyId == propertyId && p.Id == id);
+
+            if (incidentReport != null)
+            {
+                incidentReport.UnitId = unitId;
+                Context.SaveChanges();
+            }
+            
+        }
 
 
         [System.Web.Http.HttpPost]

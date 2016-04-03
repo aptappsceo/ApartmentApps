@@ -55,11 +55,7 @@ namespace PlaygroundConsole
         {
             var client = new App.ApartmentAppsClient();
             var login = await client.LoginAsync("micahosborne@gmail.com", "Asdf1234!");
-            JsonToken token;
-            foreach (var item in client.Values.Get())
-            {
-                Console.WriteLine("VALUE = " + item);
-            }
+
             //var url = "http://apartmentappsapiservice.azurewebsites.net";
             //var x = new HttpClient();
 

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class RegisterBindingModel
+    public partial class RegisterFromPhoneBindingModel
     {
         private string _confirmPassword;
         
@@ -31,6 +31,28 @@ namespace ApartmentApps.Client.Models
             set { this._email = value; }
         }
         
+        private string _firstName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string FirstName
+        {
+            get { return this._firstName; }
+            set { this._firstName = value; }
+        }
+        
+        private string _lastName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string LastName
+        {
+            get { return this._lastName; }
+            set { this._lastName = value; }
+        }
+        
         private string _password;
         
         /// <summary>
@@ -42,18 +64,30 @@ namespace ApartmentApps.Client.Models
             set { this._password = value; }
         }
         
+        private string _phoneNumber;
+        
         /// <summary>
-        /// Initializes a new instance of the RegisterBindingModel class.
+        /// Optional.
         /// </summary>
-        public RegisterBindingModel()
+        public string PhoneNumber
+        {
+            get { return this._phoneNumber; }
+            set { this._phoneNumber = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RegisterFromPhoneBindingModel
+        /// class.
+        /// </summary>
+        public RegisterFromPhoneBindingModel()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the RegisterBindingModel class with
-        /// required arguments.
+        /// Initializes a new instance of the RegisterFromPhoneBindingModel
+        /// class with required arguments.
         /// </summary>
-        public RegisterBindingModel(string email, string password)
+        public RegisterFromPhoneBindingModel(string email, string password)
             : this()
         {
             if (email == null)
@@ -72,7 +106,7 @@ namespace ApartmentApps.Client.Models
         /// Serialize the object
         /// </summary>
         /// <returns>
-        /// Returns the json model for the type RegisterBindingModel
+        /// Returns the json model for the type RegisterFromPhoneBindingModel
         /// </returns>
         public virtual JToken SerializeJson(JToken outputObject)
         {
@@ -96,9 +130,21 @@ namespace ApartmentApps.Client.Models
             {
                 outputObject["Email"] = this.Email;
             }
+            if (this.FirstName != null)
+            {
+                outputObject["FirstName"] = this.FirstName;
+            }
+            if (this.LastName != null)
+            {
+                outputObject["LastName"] = this.LastName;
+            }
             if (this.Password != null)
             {
                 outputObject["Password"] = this.Password;
+            }
+            if (this.PhoneNumber != null)
+            {
+                outputObject["PhoneNumber"] = this.PhoneNumber;
             }
             return outputObject;
         }
