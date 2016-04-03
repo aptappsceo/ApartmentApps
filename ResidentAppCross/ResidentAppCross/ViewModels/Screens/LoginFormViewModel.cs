@@ -57,8 +57,13 @@ namespace ResidentAppCross
             {
                 return this.TaskCommand(async context =>
                 {
+#if DEBUG
                     var username = string.IsNullOrEmpty(Username) ? "micahosborne@gmail.com" : Username;
                     var password = string.IsNullOrEmpty(Password) ? "Asdf1234!" : Password;
+#else
+                    var username =  Username;
+                    var password =  Password;
+#endif
                     if (!await LoginManager.LoginAsync(username, password))
                     {
                         context.FailTask("Invalid login or password!");

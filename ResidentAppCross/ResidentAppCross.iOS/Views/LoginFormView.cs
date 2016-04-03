@@ -71,7 +71,7 @@ namespace ResidentAppCross.iOS
 
             
             ForgotPasswordButton.SetTitle("Selected Endpoint: Azure",UIControlState.Selected | UIControlState.Normal | UIControlState.Focused);
-
+#if DEBUG
             ForgotPasswordButton.TouchUpInside += (sender, args) =>
             {
                 var controller = new UIAlertController();
@@ -132,7 +132,7 @@ namespace ResidentAppCross.iOS
                 }
                 this.PresentViewController(controller, true, () => { });
             };
-
+#endif
             LoginTextField.ShouldReturn += (textField) =>
             {
                 PasswordTextField.BecomeFirstResponder();
