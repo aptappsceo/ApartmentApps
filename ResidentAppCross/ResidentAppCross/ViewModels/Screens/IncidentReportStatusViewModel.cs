@@ -291,6 +291,30 @@ namespace ResidentAppCross.ViewModels.Screens
             if (SelectedCheckin == null) return;
             ShowViewModel<IncidentReportCheckinDetailsViewModel>(vm => vm.Checkin = SelectedCheckin);
         });
+
+        public ICommand SetUnitCommand
+        {
+            get
+            {
+                return new MvxCommand(async () =>
+                {
+                    var units = await _appService.Lookups.GetUnitsAsync();
+                    var selected = await _dialogService.OpenSearchableTableSelectionDialog(units,"Select Unit", p=>p.Value);
+                    await Task.Delay(TimeSpan.FromMilliseconds(300));
+                   
+                    this.TaskCommand(async context =>
+                    {
+                        await _appService.Courtesy.AssignUnitToIncidentReportAsync(Request.Id.Value, Convert.ToInt32(selected.Key));
+                    })
+                    .OnStart("Applying...")
+                    .OnComplete("Unit Set!", () => UpdateIncidentReport.Execute(null))
+                    .Execute(null);
+
+                });
+
+
+            }
+        }
     }
 
     public class IncidentReportStatusUpdated : MvxMessage

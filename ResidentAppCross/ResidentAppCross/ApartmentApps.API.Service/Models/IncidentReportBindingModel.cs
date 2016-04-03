@@ -56,6 +56,17 @@ namespace ApartmentApps.Client.Models
             set { this._createdOn = value; }
         }
         
+        private int? _id;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private string _incidentType;
         
         /// <summary>
@@ -140,7 +151,7 @@ namespace ApartmentApps.Client.Models
         /// </summary>
         public string UnitName
         {
-            get { return this._unitName; }
+            get { return this._unitName ?? "None"; }
             set { this._unitName = value; }
         }
         
@@ -184,6 +195,11 @@ namespace ApartmentApps.Client.Models
                 if (createdOnValue != null && createdOnValue.Type != JTokenType.Null)
                 {
                     this.CreatedOn = ((DateTimeOffset)createdOnValue);
+                }
+                JToken idValue = inputObject["Id"];
+                if (idValue != null && idValue.Type != JTokenType.Null)
+                {
+                    this.Id = ((int)idValue);
                 }
                 JToken incidentTypeValue = inputObject["IncidentType"];
                 if (incidentTypeValue != null && incidentTypeValue.Type != JTokenType.Null)

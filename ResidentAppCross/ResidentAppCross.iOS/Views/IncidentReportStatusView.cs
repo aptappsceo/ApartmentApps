@@ -84,13 +84,14 @@ namespace ResidentAppCross.iOS
             }
         }
 
-        public LabelWithButtonSection ScheduleSection
+        public LabelWithButtonSection UnitSection
         {
             get
             {
                 if (_scheduleSection == null)
                 {
                     _scheduleSection = Formals.Create<LabelWithButtonSection>();
+                    _scheduleSection.Label.Text = "Unit";
                 }
                 return _scheduleSection;
             }
@@ -270,8 +271,8 @@ namespace ResidentAppCross.iOS
         public override void BindForm()
         {
             base.BindForm();
-            ScheduleSection.Label.Text = "Report Date";
-
+            //UnitSection.Label.Text = "Report Date";
+            
 
             this.OnViewModelEventMainThread<IncidentReportStatusUpdated>(_ =>
             {
@@ -302,8 +303,8 @@ namespace ResidentAppCross.iOS
 
 
             //Schedule Section
-            b.Bind(ScheduleSection.Button).For("Title").To(vm => vm.CreatedOnLabel);
-
+            b.Bind(UnitSection.Button).For("Title").To(vm => vm.Request.UnitName);
+            b.Bind(UnitSection.Button).To(vm => vm.SetUnitCommand);
             //Footer Section
 
             var style = new UIViewStyle()
@@ -342,7 +343,7 @@ namespace ResidentAppCross.iOS
             b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.Requester.PhoneNumber);
 
             //Date section
-            //b.Bind(ScheduleSection.Button).To(vm => vm.ScheduleCommand);
+            //b.Bind(UnitSection.Button).To(vm => vm.ScheduleCommand);
 
 
             //b.Bind(TenantDataSection.AddressLabel).For(t => t.Text).To(vm => vm.UnitAddressString);
@@ -405,7 +406,7 @@ namespace ResidentAppCross.iOS
             {
                 SectionContainerGesturesEnabled = true;
                 content.Add(HeaderSection);
-                content.Add(ScheduleSection);
+                content.Add(UnitSection);
                 content.Add(TenantDataSection);
                 content.Add(CommentsSection);
                 content.Add(PhotoSection);

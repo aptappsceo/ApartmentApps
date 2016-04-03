@@ -72,7 +72,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
             var response = new IncidentReportBindingModel()
             {
                 Comments = result.Comments,
-
+                Id = result.Id,
                 Requester = result.User.ToUserBindingModel(BlobStorageService),
                 Status = result.StatusId,
                 CreatedOn = result.CreatedOn,
@@ -85,8 +85,6 @@ namespace ApartmentApps.API.Service.Controllers.Api
                     Date = x.CreatedOn,
                     Comments = x.Comments,
                     Officer = x.Officer.ToUserBindingModel(BlobStorageService),
-
-
                     Photos = Context.ImageReferences.Where(r => r.GroupId == x.GroupId).ToList()
                 }).ToArray(),
                 Photos = photos.Select(key => BlobStorageService.GetPhotoUrl(key.Url))

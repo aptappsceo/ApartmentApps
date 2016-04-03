@@ -2,6 +2,7 @@ using System.Data.Entity;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -23,6 +24,7 @@ namespace ApartmentApps.Portal
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType<DbContext, ApplicationDbContext>(
              new HierarchicalLifetimeManager());
+            container.RegisterType<IBlobStorageService, BlobStorageService>(new HierarchicalLifetimeManager());
             container.RegisterType<UserManager<ApplicationUser>>(
                 new HierarchicalLifetimeManager());
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(

@@ -83,6 +83,7 @@ namespace ApartmentApps.API.Service.Models
         public IncidentCheckinBindingModel[] Checkins { get; set; }
         public string RequesterPhoneNumber { get; set; }
         public int? UnitId { get; set; }
+        public int Id { get; set; }
     }
     public class IncidentCheckinBindingModel
     {
