@@ -1028,4 +1028,106 @@
   <ItemGroup>
     <BundleResource Include="Resources\132_Maintenance_Filled%402x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Past.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Past%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Info%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Call%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Call.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceCalendar%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_MaintenanceCalendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Happy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Happy%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Partners.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Partners%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Payment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Payment%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_PoliceFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_PoliceFolder%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenanceFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MaintenanceFolder%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Wallet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_HomeConfig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_HomeConfig%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_LocationConfig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_LocationConfig%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_LocationOk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_LocationOk%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_LocationQuestion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_LocationQuestion%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Wallet%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\25_Details%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\25_Past.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\25_Past%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\25_Past%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\25_Details.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\25_Details%402x.png" />
+  </ItemGroup>
 </Project>

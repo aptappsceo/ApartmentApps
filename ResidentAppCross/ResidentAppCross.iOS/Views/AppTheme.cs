@@ -25,11 +25,23 @@ namespace ResidentAppCross.iOS.Views
         public static UIColor SecondaryForegroundColor => _secondaryForegroundColor ?? (_secondaryForegroundColor = UIColor.White);
         public static UIColor PrimaryIconColor => _primaryIconColor ?? (_primaryIconColor = ColorFromRGB(20, 92, 153));
 
-        public static UIColor CompleteColor => _completeColor ?? (_completeColor = ColorFromHex(0x10a201));
-        public static UIColor InProgressColor => _inProgressColor ?? (_inProgressColor = ColorFromHex(0x289edb));
-        public static UIColor PausedColor => _pausedColor ?? (_pausedColor = ColorFromHex(0xff972e));
-        public static UIColor ScheduledColor => _scheduledColor ?? (_scheduledColor = ColorFromHex(0x872eff));
-        public static UIColor PendingColor => _pendingColor ?? (_pendingColor = ColorFromHex(0xfe5335));
+//        public static int CompleteColorHex = 0x10a201;
+//        public static int InProgressColorHex = 0x289edb;
+//        public static int PausedColorHex = 0xff972e;
+//        public static int ScheduledColorHex = 0x872eff;
+//        public static int PendingColorHex = 0xfe5335;
+
+        public static int CompleteColorHex = 0x14991a;
+        public static int InProgressColorHex = 0x148899;
+        public static int PausedColorHex = 0x997e14;
+        public static int ScheduledColorHex = 0x531499;
+        public static int PendingColorHex = 0x992d14;
+
+        public static UIColor CompleteColor => _completeColor ?? (_completeColor = ColorFromHex(CompleteColorHex));
+        public static UIColor InProgressColor => _inProgressColor ?? (_inProgressColor = ColorFromHex(InProgressColorHex));
+        public static UIColor PausedColor => _pausedColor ?? (_pausedColor = ColorFromHex(PausedColorHex));
+        public static UIColor ScheduledColor => _scheduledColor ?? (_scheduledColor = ColorFromHex(ScheduledColorHex));
+        public static UIColor PendingColor => _pendingColor ?? (_pendingColor = ColorFromHex(PendingColorHex));
 
       
 
@@ -100,7 +112,7 @@ namespace ResidentAppCross.iOS.Views
                     path = "44_" + path;
                     break;
                 case SharedResources.Size.XS:
-                    path = "44_" + path;
+                    path = "25_" + path;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(size), size, null);

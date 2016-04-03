@@ -37,8 +37,8 @@ namespace ResidentAppCross.iOS
                 var imageEdgeInsets = new UIEdgeInsets(iconsPadding, iconsPadding, iconsPadding, iconsPadding);
                 var titleEdgeInsets = new UIEdgeInsets(0, 32f, 0, 0);
 
-                UsernameLabel.Font = UIFont.PreferredTitle2;
-                EditProfileButton.Font = UIFont.PreferredCaption2;
+                UsernameLabel.Font = AppFonts.SectionHeader;
+                EditProfileButton.Font = AppFonts.Note;
 
                 SignOutButton.SetRightIcon(exitIcon, false);
                 SignOutButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
@@ -86,6 +86,7 @@ namespace ResidentAppCross.iOS
         public override void ViewWillLayoutSubviews()
         {
             base.ViewWillLayoutSubviews();
+            UsernameAvatarImage.ContentMode = UIViewContentMode.ScaleAspectFill;
             UsernameAvatarImage.ToRounded(UIColor.White);
         }
 

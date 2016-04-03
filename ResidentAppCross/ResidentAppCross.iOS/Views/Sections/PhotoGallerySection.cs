@@ -55,7 +55,7 @@ namespace ResidentAppCross.iOS
 	    {
 	        base.AwakeFromNib();
 	        HeaderLabel.Font = AppFonts.SectionHeader;
-	        AddPhotoButton.Font = AppFonts.SectionHeader;
+	        AddPhotoButton.Font = AppFonts.CellHeader;
             AddPhotoButton.SetTitleColor(AppTheme.FormControlColor, UIControlState.Normal);
 
         }

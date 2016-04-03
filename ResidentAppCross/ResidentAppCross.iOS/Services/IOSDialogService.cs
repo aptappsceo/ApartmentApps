@@ -21,6 +21,7 @@ using ResidentAppCross.Extensions;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.TableSources;
+using ResidentAppCross.Resources;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
 using SCLAlertViewLib;
@@ -45,14 +46,13 @@ namespace ResidentAppCross.iOS.Services
         public IMvxMainThreadDispatcher Dispatcher
             => _dispatcher ?? (_dispatcher = MvxSingleton<IMvxMainThreadDispatcher>.Instance);
 
-
-
 		public Task<T> OpenSearchableTableSelectionDialog<T>(IList<T> items, string title, Func<T,string> itemTitleSelector, Func<T, string> itemSubtitleSelector = null, object arg = null)
         {
             return Task.Factory.StartNew(() =>
             {
 
                 T result = default(T);
+
                 UITableViewController selectionTable = null;
 
                 ManualResetEvent waitForCompleteEvent = new ManualResetEvent(false);
@@ -76,7 +76,6 @@ namespace ResidentAppCross.iOS.Services
                         EdgesForExtendedLayout = UIRectEdge.None,
                         Title = title
                     };
-
                     var tableView = selectionTable.TableView;
 
                     var tableDataBinding = new TableDataBinding<UITableViewCell, T>()
@@ -89,7 +88,7 @@ namespace ResidentAppCross.iOS.Services
                         },
                         ItemSelected = item =>
                         {
-                            selectionTable.DismissModalViewController(true);
+                            RootController.PopViewController(true);
                             waitForCompleteEvent.Set();
                             result = item;
                         },
@@ -115,9 +114,8 @@ namespace ResidentAppCross.iOS.Services
                         AutocorrectionType = UITextAutocorrectionType.Yes,
                         KeyboardType = UIKeyboardType.WebSearch
                     };
-
-                    tableView.TableHeaderView = searchBar;
-                    searchBar.SizeToFit();
+//                    tableView.TableHeaderView = searchBar;
+ //                   searchBar.SizeToFit();
                     searchBar.Placeholder = "Search...";
                     searchBar.OnEditingStopped += (sender, args) =>
                     {
@@ -144,7 +142,13 @@ namespace ResidentAppCross.iOS.Services
 								selectionTable.PopoverPresentationController.SourceRect = view.Bounds;
 							}
 
-                    TopController.PresentModalViewController(selectionTable, true);
+                           tableView.BackgroundColor = UIColor.Blue;
+                    selectionTable.EdgesForExtendedLayout = UIRectEdge.None;
+                    NavbarStyling.ApplyToNavigationController(RootController);
+                    StatusBarStyling.Apply(selectionTable);
+                    tableView.BackgroundColor = AppTheme.SecondaryBackgoundColor;
+                    RootController.PushViewController(selectionTable, true);
+
                 });
 
                 waitForCompleteEvent.WaitOne();
@@ -332,6 +336,18 @@ namespace ResidentAppCross.iOS.Services
                 });
                 PhotoPickEvent.WaitOne();
                 return PhotoData;
+            });
+        }
+
+        public void OpenNotification(string title, string subtitle, string ok)
+        {
+            TopController.InvokeOnMainThread(() =>
+            {
+                var alert = new SCLAlertView();
+                alert.ShowAnimationType = SCLAlertViewShowAnimation.FadeIn;
+                alert.HideAnimationType = SCLAlertViewHideAnimation.FadeOut;
+                //alert.CustomViewColor = AppTheme.SecondaryBackgoundColor;
+                alert.ShowInfo(TopController,title, subtitle, ok,0);
             });
         }
 
