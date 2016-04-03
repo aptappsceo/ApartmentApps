@@ -411,7 +411,7 @@ namespace ResidentAppCross.iOS
                 content.Add(TenantDataSection);
                 content.Add(CommentsSection);
                 content.Add(PhotoSection);
-                content.Add(EntrancePermissionSection);
+                //content.Add(EntrancePermissionSection);
 
                 if (!FooterFinishButton.Hidden || !FooterPauseButton.Hidden || !FooterStartButton.Hidden)
                 {
