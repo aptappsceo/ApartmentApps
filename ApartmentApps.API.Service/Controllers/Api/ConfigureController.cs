@@ -12,8 +12,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
     public class LocationBindingModel
     {
         public string Name { get; set; }
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public string Type { get; set; }
         public int Id { get; set; }
     }
@@ -26,7 +26,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("AddLocation")]
-        public void AddLocation(string qrCode, decimal latitude, decimal longitude, string label = null)
+        public void AddLocation(string qrCode, double latitude, double longitude, string label = null)
         {
 
             string url = qrCode;

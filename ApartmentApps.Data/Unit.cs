@@ -22,9 +22,9 @@ namespace ApartmentApps.Data
 
         public string Name { get; set; }
 
-        public decimal Latitude { get; set; }
+        public double Latitude { get; set; }
         
-        public decimal Longitude { get; set; }
+        public double Longitude { get; set; }
     }
 
     public partial class CourtesyOfficerLocation
@@ -43,9 +43,9 @@ namespace ApartmentApps.Data
         [ForeignKey("PropertyId")]
         public Property Property { get; set; }
 
-        public decimal Latitude { get; set; }
+        public double Latitude { get; set; }
 
-        public decimal Longitude { get; set; }
+        public double Longitude { get; set; }
 
         public virtual ICollection<CourtesyOfficerCheckin> CourtesyOfficerCheckins { get; set; } 
     }

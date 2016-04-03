@@ -60,8 +60,8 @@ namespace ApartmentApps.API.Service.Models
     }
     public class CourtesyCheckinBindingModel
     {
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public string Label { get; set; }
         public List<string> AcceptableCheckinCodes { get; set; }
         public int Id { get; set; }
