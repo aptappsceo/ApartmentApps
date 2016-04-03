@@ -24,10 +24,18 @@ namespace ResidentAppCross.ViewModels.Screens
                 if (_checkinPhotos == null)
                 {
                     _checkinPhotos = new ImageBundleViewModel();
-                    _checkinPhotos.RawImages.AddRange(Checkin.Photos.Select(p=>new ImageBundleItemViewModel()
+                    try
                     {
-                        Uri = new Uri(p.Url)
-                    }));
+                        _checkinPhotos.RawImages.AddRange(Checkin.Photos.Select(p => new ImageBundleItemViewModel()
+                        {
+                            Uri = new Uri(p.Url)
+                        }));
+                    }
+                    catch (Exception ex)
+                    {
+                        this.FailTaskWithPrompt("Some of the Photos could not be loaded.");
+                    }
+
                 }
                 return _checkinPhotos;
             }

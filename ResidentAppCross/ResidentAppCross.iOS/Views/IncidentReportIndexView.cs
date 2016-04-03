@@ -53,7 +53,7 @@ namespace ResidentAppCross.iOS
             {
                 img =
                     StatusImages[status] =
-                        AppTheme.GetTemplateIcon(MaintenanceRequestStyling.ListIconByStatus(status),
+                        AppTheme.GetTemplateIcon(IncidentReportStyling.ListIconByStatus(status),
                             SharedResources.Size.S);
             }
             return img;
@@ -74,9 +74,9 @@ namespace ResidentAppCross.iOS
 
                             cell.SubLabel.Text = $"{item.Title}";
 
-                            if (!string.IsNullOrEmpty(item.LatestCheckin.Comments))
+                            if (!string.IsNullOrEmpty(item.LatestCheckin.Comments.Trim()))
                             {
-                                cell.NotesLabel.Text = $"{item.StatusId}: item.LatestCheckin.Comments";
+                                cell.NotesLabel.Text = $"{item.StatusId}: {item.LatestCheckin.Comments}";
                             }
                             else
                             {

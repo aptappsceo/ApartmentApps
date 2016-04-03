@@ -42,9 +42,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_filterSection == null)
                 {
                     _filterSection = Formals.Create<SegmentSelectionSection>();
-                    _filterSection.HeightConstraint.Constant = 60;
                     _filterSection.HideTitle(true);
-                    _filterSection.Selector.RemoveAllSegments();
                 }
                 return _filterSection;
             }
@@ -54,6 +52,21 @@ namespace ResidentAppCross.iOS.Views
         {
             get
             {
+
+                var maintenanceReadIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.MessageMaintenanceRead,
+                    SharedResources.Size.S);
+                var maintenanceUnReadIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.MessageMaintenance,
+                    SharedResources.Size.S);
+
+                var policeUnReadIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.MessagePolice,
+                    SharedResources.Size.S);
+
+                var policeReadIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.MessagePoliceRead,
+                    SharedResources.Size.S);
+
+                
+
+
                 if (_tableSection == null)
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
@@ -64,9 +77,36 @@ namespace ResidentAppCross.iOS.Views
                         {
                             cell.TextLabel.Text = item.Title;
                             cell.DetailTextLabel.Text = item.Message;
-                            cell.ImageView.Image = item.Type == "Maintenance" ? UIImage.FromBundle("MaintenaceIcon") : UIImage.FromFile("TimelineStatusIcon.png");
+
+                            if (item.Type == "Maintenance")
+                            {
+                                if (item.HasRead ?? false)
+                                {
+                                    cell.ImageView.Image = maintenanceReadIcon;
+                                }
+                                else
+                                {
+                                    cell.ImageView.Image = maintenanceUnReadIcon;
+                                }
+                            } else if (item.Type == "Courtesy")
+                            {
+                                if (item.HasRead ?? false)
+                                {
+                                    cell.ImageView.Image = policeReadIcon;
+                                }
+                                else
+                                {
+                                    cell.ImageView.Image = policeUnReadIcon;
+                                }
+                            }
+                            else
+                            {
+                                cell.ImageView.Image = null;
+                            }
+
                             cell.TextLabel.MinimumScaleFactor = 0.2f;
                         },
+
                         ItemSelected = item =>
                         {
                             ViewModel.SelectedNotification = item;

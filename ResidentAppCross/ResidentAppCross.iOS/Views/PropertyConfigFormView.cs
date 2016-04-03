@@ -18,6 +18,7 @@ using UIKit;
 using Cirrious.FluentLayouts.Touch.Extensions;
 using Cirrious.FluentLayouts.Touch;
 using Cirrious.FluentLayouts.Touch.RowSet;
+using ResidentAppCross.Resources;
 
 namespace ResidentAppCross.iOS.Views
 {
@@ -40,12 +41,8 @@ namespace ResidentAppCross.iOS.Views
                 if (_segmentSelectionSection == null)
                 {
                     _segmentSelectionSection = Formals.Create<SegmentSelectionSection>();
-                    _segmentSelectionSection.HeightConstraint.Constant = 60;
-                    _segmentSelectionSection.HideTitle(true);
-                    _segmentSelectionSection.Selector.RemoveAllSegments();
-                    _segmentSelectionSection.Selector.InsertSegment("Map", 0, false);
-                    _segmentSelectionSection.Selector.InsertSegment("List", 1, false);
-                    _segmentSelectionSection.Selector.SelectedSegment = 0;
+                    _segmentSelectionSection.Label.Text = "Switch";
+                    //_segmentSelectionSection.HideTitle(true);
                 }
                 return _segmentSelectionSection;
             }
@@ -61,10 +58,10 @@ namespace ResidentAppCross.iOS.Views
                 {
 
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.HeightConstraint.Constant = 100;
                     _headerSection.MainLabel.Text = "Property";
                     _headerSection.SubLabel.Text = "Configuration";
-                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
+                    _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.HomeConfig, SharedResources.Size.L);
+                    _headerSection.LogoImage.TintColor = AppTheme.SecondaryBackgoundColor;
                 }
                 
                 return _headerSection;
@@ -77,12 +74,12 @@ namespace ResidentAppCross.iOS.Views
                 if (_mapSection == null)
                 {
                     _mapSection = Formals.Create<MapSection>();
-                    _mapSection.HeightConstraint.Constant = 400;
-                    _mapSection.HeaderLabel.Text = "This is map";
+                    _mapSection.HeaderLabel.Text = "Property Map";
                     CLLocationCoordinate2D coords = new CLLocationCoordinate2D(48.857, 2.351);
                     MKCoordinateSpan span = new MKCoordinateSpan(_mapSection.MilesToLatitudeDegrees(0.1), _mapSection.MilesToLongitudeDegrees(0.1, coords.Latitude));
                     _mapSection.MapView.Region = new MKCoordinateRegion(coords, span);
                     _mapSection.MapView.ShowsUserLocation = true;
+                    _mapSection.HeightConstraint.Constant = 400;
 
                 }
                 return _mapSection;
@@ -95,55 +92,16 @@ namespace ResidentAppCross.iOS.Views
                 if (_tableSection == null)
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
-
-                    var timelineUndefinedStatusIcon = UIImage.FromBundle("TimelineStatusIcon.png");
-                    var timelineMidLine = UIImage.FromFile("TimelineMid.png");
-                    var timelineStartLine = UIImage.FromFile("TimelineStart.png");
-                    var timelineEndLine = UIImage.FromFile("TimelineEnd.png");
-
+                    var locationIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.Location, SharedResources.Size.S,
+                        true);
                     var tableDataBinding = new TableDataBinding<UITableViewCell, LocationBindingModel>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
                         {
                             cell.TextLabel.Text = item.Name;
-                            cell.ImageView.Image = UIImage.FromBundle("OfficerIcon");
+                            cell.ImageView.Image = locationIcon;
+                            cell.ImageView.TintColor = AppTheme.InProgressColor;
                             cell.DetailTextLabel.Text = item.Type;
-                            cell.TextLabel.MinimumScaleFactor = 0.2f;
-
-                            //if (ViewModel.Locations.Count == 1)
-                            //    cell.ImageView.Image = timelineUndefinedStatusIcon;
-                            //else if (index == 0)
-                            //    cell.ImageView.Image = timelineEndLine;
-                            //else if (index == ViewModel.Checkins.Count - 1)
-                            //    cell.ImageView.Image = timelineStartLine;
-                            //else
-                            //    cell.ImageView.Image = timelineMidLine;
-
-
-
-                            //cell.ImageView.Alpha = ViewModel.Checkins.Count == 1 ? 0f : 1f;
-                            UIImageView anotherImageView = cell.ImageView.Subviews.OfType<UIImageView>().FirstOrDefault();
-
-                            if (anotherImageView == null)
-                            {
-                                anotherImageView = new UIImageView(cell.ImageView.Frame)
-                                {
-                                    AutoresizingMask = UIViewAutoresizing.FlexibleMargins,
-                                    // AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
-                                    ContentMode = UIViewContentMode.ScaleAspectFill
-                                };
-
-                                cell.ImageView.Add(anotherImageView);
-                            }
-
-                            if (index == 0)
-                                anotherImageView.Frame = anotherImageView.Frame.WithSize(30f, 30f);
-                            else
-                                anotherImageView.Frame = anotherImageView.Frame.WithSize(24f, 24f);
-
-                            anotherImageView.Image = timelineUndefinedStatusIcon;
-
-
                         },
                         ItemSelected = item =>
                         {
@@ -169,23 +127,20 @@ namespace ResidentAppCross.iOS.Views
                     };
 
                     _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
-
                     _tableSection.Table.AllowsSelection = true; //Step 1. Look at the end of BindForm method for step 2
                     _tableSection.Source = source;
+                    _tableSection.HeightConstraint.Constant = 450;
                     _tableSection.ReloadData();
-
+                    _tableSection.LayoutMargins = new UIEdgeInsets(8f,8f,8f,8f);
                 }
                 return _tableSection;
             }
         
         }
-        public override void LayoutContent()
-        {
-            base.LayoutContent();
-            if (SegmentSelectionSection.Selector.SelectedSegment == 1)
-                SectionsContainer.AddConstraints(TableSection.WithSameHeight(SectionsContainer));
-       
-        }
+
+
+        public override UIView HeaderView => HeaderSection;
+
         //bind
 
         public override void BindForm()
@@ -209,8 +164,11 @@ namespace ResidentAppCross.iOS.Views
             _manager = new LocationsAnnotationManager(this.MapSection.MapView);
             b.Bind(_manager).For(m => m.ItemsSource).To(vm => vm.Locations);
             b.Bind(TableSection.Source).To(vm => vm.Locations);
-            SegmentSelectionSection.Selector.ValueChanged += (sender, args) => RefreshContent();
+
+            SegmentSelectionSection.BindTo(new List<string>() {"Map","List"},x=>x,x=>RefreshContent(),0);
+
             b.Apply();
+
             ViewModel.UpdateLocations.Execute(null);
         }
 
@@ -223,7 +181,6 @@ namespace ResidentAppCross.iOS.Views
                 if (_toolbarSection == null)
                 {
                     _toolbarSection = Formals.Create<ButtonToolbarSection>();
-                    _toolbarSection.HeightConstraint.Constant = 80;
                 }
                 return _toolbarSection;
             }
@@ -244,7 +201,6 @@ namespace ResidentAppCross.iOS.Views
         {
             base.GetContent(content);
 
-            content.Add(HeaderSection);
             content.Add(SegmentSelectionSection);
           
             if (SegmentSelectionSection.Selector.SelectedSegment == 0)
@@ -255,11 +211,10 @@ namespace ResidentAppCross.iOS.Views
             {
                 content.Add(TableSection);
             }
-           
-            content.Add(ButtonToolbarSection);
             TableSection.ReloadData();
         }
 
+        public override UIView FooterView => ButtonToolbarSection;
 
         //add to contents
     }

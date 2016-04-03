@@ -51,6 +51,7 @@ namespace ResidentAppCross.iOS
         private TenantDataSection _tenantDataSection;
         private UITabBar _typeSelectionSection;
         private TableSection _tableSection;
+        private Dictionary<string, UIImage> _historyStatusImages;
 
         public override string Title => "Incident Details";
 
@@ -162,6 +163,26 @@ namespace ResidentAppCross.iOS
             }
         }
 
+        public Dictionary<string, UIImage> HistoryStatusImages
+        {
+            get { return _historyStatusImages ?? (_historyStatusImages = new Dictionary<string, UIImage>()); }
+            set { _historyStatusImages = value; }
+        }
+
+        public UIImage GetHistoryImageByStatus(string status)
+        {
+            UIImage img;
+            if (!HistoryStatusImages.TryGetValue(status, out img))
+            {
+                img =
+                    HistoryStatusImages[status] =
+                        AppTheme.GetTemplateIcon(IncidentReportStyling.StateIconByStatus(status),
+                            SharedResources.Size.S,true);
+            }
+            return img;
+        }
+
+
         public TableSection CheckinsSection
         {
             get
@@ -170,10 +191,11 @@ namespace ResidentAppCross.iOS
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
 
-                    var timelineUndefinedStatusIcon = UIImage.FromBundle("TimelineStatusIcon.png");
-                    var timelineMidLine = UIImage.FromFile("TimelineMid.png");
-                    var timelineStartLine = UIImage.FromFile("TimelineStart.png");
-                    var timelineEndLine = UIImage.FromFile("TimelineEnd.png");
+                    var tlEmpty = AppTheme.GetTemplateIcon(SharedResources.Icons.Empty, SharedResources.Size.S, true);
+                    var tlTop = AppTheme.GetTemplateIcon(SharedResources.Icons.TimelineTop, SharedResources.Size.S, true);
+                    var tlBottom = AppTheme.GetTemplateIcon(SharedResources.Icons.TimelineBottom, SharedResources.Size.S, true);
+                    var tlMid = AppTheme.GetTemplateIcon(SharedResources.Icons.TimelineMiddle, SharedResources.Size.S, true);
+                    var circleIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.Circle, SharedResources.Size.S, true);
 
                     var tableDataBinding = new TableDataBinding<HistoryItemCell, IncidentCheckinBindingModel>() //Define cell type and data type as type args
                     {
@@ -182,18 +204,15 @@ namespace ResidentAppCross.iOS
                             cell.MainLabel.Text = item.StatusId;
                             cell.DateLabel.Text = item.Date?.ToString("g");
 
-                            SharedResources.Icons timelineIconType;
-
                             if (ViewModel.Checkins.Count == 1)
-                                timelineIconType = SharedResources.Icons.Empty;
+                                cell.IconView.Image = tlEmpty;
                             else if (index == 0)
-                                timelineIconType = SharedResources.Icons.TimelineTop;
+                                cell.IconView.Image = tlTop;
                             else if (index == ViewModel.Checkins.Count - 1)
-                                timelineIconType = SharedResources.Icons.TimelineBottom;
+                                cell.IconView.Image = tlBottom;
                             else
-                                timelineIconType = SharedResources.Icons.TimelineMiddle; ;
+                                cell.IconView.Image = tlMid;
 
-                            cell.IconView.Image = AppTheme.GetTemplateIcon(timelineIconType, SharedResources.Size.S, true);
                             cell.TintColor = AppTheme.SecondaryBackgoundColor;
 
 
@@ -202,11 +221,9 @@ namespace ResidentAppCross.iOS
                             //                                MaintenanceRequestStyling.ColorByStatus(item.StatusId),12f,12f);
                             var backgroundPad = index == 0 ? 6f : 10f;
                             var iconPad = index == 0 ? 12f : 16f;
-                            cell.IconView.SetBackgroundLayer(AppTheme.GetTemplateIcon(SharedResources.Icons.Circle, SharedResources.Size.S, true),
-                                IncidentReportStyling.ColorByStatus(item.StatusId), backgroundPad, backgroundPad);
+                            cell.IconView.SetBackgroundLayer(circleIcon, IncidentReportStyling.ColorByStatus(item.StatusId), backgroundPad, backgroundPad);
                             cell.IconView.SetBackgroundRounded(AppTheme.SecondaryBackgoundColor);
-                            cell.IconView.SetIconLayerLayer(AppTheme.GetTemplateIcon(IncidentReportStyling.StateIconByStatus(item.StatusId), SharedResources.Size.S, true),
-                                UIColor.White, iconPad, iconPad);
+                            cell.IconView.SetIconLayerLayer(GetHistoryImageByStatus(item.StatusId), UIColor.White, iconPad, iconPad);
                         },
                         ItemSelected = item =>
                         {
@@ -285,7 +302,7 @@ namespace ResidentAppCross.iOS
 
 
             //Schedule Section
-            b.Bind(ScheduleSection.Button).For("Title").To(vm => vm.Request.CreatedOn);
+            b.Bind(ScheduleSection.Button).For("Title").To(vm => vm.CreatedOnLabel);
 
             //Footer Section
 

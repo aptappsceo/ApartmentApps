@@ -73,7 +73,12 @@ namespace ResidentAppCross.Resources
             LocationOk,
             LocationQuestion,
             Wallet,
-            Details
+            Details,
+            Inbox,
+            MessageMaintenance,
+            MessageMaintenanceRead,
+            MessagePolice,
+            MessagePoliceRead
         }
 
         public enum Size

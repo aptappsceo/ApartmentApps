@@ -1,6 +1,7 @@
 using Foundation;
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.Interfaces;
@@ -36,8 +37,9 @@ namespace ResidentAppCross.iOS
 
         public void HideTitle(bool hide)
 	    {
-	        _headerHeightConstraint.Constant = hide ? 0 : 60;
-	        _headerTitle.Hidden = hide;
+	        _headerHeightConstraint.Constant = hide ? 0 : 30;
+            HeightConstraint.Constant = hide ? AppTheme.SegmentSectionHeightReduced : AppTheme.SegmentSectionHeight;
+            _headerTitle.Hidden = hide;
 	    }
 
 	    public bool Editable
@@ -50,7 +52,7 @@ namespace ResidentAppCross.iOS
 	        }
 	    }
 
-	    public void BindTo<T>(ObservableCollection<T> items, Func<T,string> keySelector, Action<T> itemSelected, int startIndex)
+	    public void BindTo<T>(IList<T> items, Func<T,string> keySelector, Action<T> itemSelected, int startIndex)
 	    {
 	        if (BindingDisposable != null)
 	        {

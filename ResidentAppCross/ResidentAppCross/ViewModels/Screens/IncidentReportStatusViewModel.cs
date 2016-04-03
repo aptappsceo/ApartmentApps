@@ -71,6 +71,7 @@ namespace ResidentAppCross.ViewModels.Screens
             set { SetProperty(ref _selectedCheckin, value); }
         }
 
+        public string CreatedOnLabel => Request?.CreatedOn?.ToString("g");
 
         public IncidentReportStatus CurrentMaintenanceRequestStatus
         {
@@ -110,6 +111,7 @@ namespace ResidentAppCross.ViewModels.Screens
             UnitAddressString = $"Building - {Request?.BuildingName} Unit - {Request?.UnitName}";
             Checkins.Clear();
             Checkins.AddRange(Request.Checkins.OrderByDescending(x => x.Date));
+            RaisePropertyChanged(nameof(CreatedOnLabel));
             this.Publish(new IncidentReportStatusUpdated(this));
 
         }).OnStart("Loading incident details...").OnFail(ex => { Close(this); });

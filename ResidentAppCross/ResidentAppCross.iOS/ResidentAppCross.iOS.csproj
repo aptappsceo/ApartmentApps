@@ -1130,4 +1130,46 @@
   <ItemGroup>
     <BundleResource Include="Resources\25_Details%402x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_LocationOk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_LocationOk%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Inbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_Inbox%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MessageMaintenance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MessageMaintenance%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MessageMaintenanceRead.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MessageMaintenanceRead%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MessagePolice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MessagePolice%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MessagePoliceRead.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\44_MessagePoliceRead%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_HomeConfig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_HomeConfig%402x.png" />
+  </ItemGroup>
 </Project>

@@ -42,6 +42,7 @@ namespace ResidentAppCross.iOS
         private TenantDataSection _tenantDataSection;
         private UITabBar _typeSelectionSection;
         private TableSection _tableSection;
+        private Dictionary<string, UIImage> _historyStatusImages;
 
         public override string Title => "Maintenance Request";
 
@@ -171,6 +172,12 @@ namespace ResidentAppCross.iOS
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
 
+                    var tlEmpty = AppTheme.GetTemplateIcon(SharedResources.Icons.Empty, SharedResources.Size.S, true);
+                    var tlTop = AppTheme.GetTemplateIcon(SharedResources.Icons.TimelineTop, SharedResources.Size.S, true);
+                    var tlBottom = AppTheme.GetTemplateIcon(SharedResources.Icons.TimelineBottom, SharedResources.Size.S, true);
+                    var tlMid = AppTheme.GetTemplateIcon(SharedResources.Icons.TimelineMiddle, SharedResources.Size.S, true);
+                    var circleIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.Circle, SharedResources.Size.S, true);
+
                     var tableDataBinding = new TableDataBinding<HistoryItemCell, MaintenanceCheckinBindingModel>() //Define cell type and data type as type args
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
@@ -178,18 +185,15 @@ namespace ResidentAppCross.iOS
                             cell.MainLabel.Text = item.StatusId;
                             cell.DateLabel.Text = item.Date?.ToString("g");
 
-                            SharedResources.Icons timelineIconType;
-
                             if (ViewModel.Checkins.Count == 1)
-                                timelineIconType = SharedResources.Icons.Empty;
+                                cell.IconView.Image = tlEmpty;
                             else if (index == 0)
-                                timelineIconType = SharedResources.Icons.TimelineTop;
+                                cell.IconView.Image = tlTop;
                             else if (index == ViewModel.Checkins.Count - 1)
-                                timelineIconType = SharedResources.Icons.TimelineBottom;
+                                cell.IconView.Image = tlBottom;
                             else
-                                timelineIconType = SharedResources.Icons.TimelineMiddle; ;
+                                cell.IconView.Image = tlMid;
 
-                            cell.IconView.Image = AppTheme.GetTemplateIcon(timelineIconType, SharedResources.Size.S, true);
                             cell.TintColor = AppTheme.SecondaryBackgoundColor;
 
                             
@@ -198,11 +202,9 @@ namespace ResidentAppCross.iOS
                             //                                MaintenanceRequestStyling.ColorByStatus(item.StatusId),12f,12f);
                             var backgroundPad = index == 0 ? 6f : 10f;
                             var iconPad = index == 0 ? 12f : 16f;
-                            cell.IconView.SetBackgroundLayer(AppTheme.GetTemplateIcon(SharedResources.Icons.Circle, SharedResources.Size.S, true),
-                                MaintenanceRequestStyling.ColorByStatus(item.StatusId), backgroundPad, backgroundPad);
+                            cell.IconView.SetBackgroundLayer(circleIcon, MaintenanceRequestStyling.ColorByStatus(item.StatusId), backgroundPad, backgroundPad);
                             cell.IconView.SetBackgroundRounded(AppTheme.SecondaryBackgoundColor);
-                            cell.IconView.SetIconLayerLayer(AppTheme.GetTemplateIcon(MaintenanceRequestStyling.StateIconByStatus(item.StatusId), SharedResources.Size.S, true),
-                                UIColor.White, iconPad, iconPad);
+                            cell.IconView.SetIconLayerLayer(GetHistoryImageByStatus(item.StatusId),UIColor.White, iconPad, iconPad);
 
 
 
@@ -240,6 +242,26 @@ namespace ResidentAppCross.iOS
         public UIButton FooterPauseButton { get; set; }
         public UIButton FooterFinishButton { get; set; }
         public UIButton FooterStartButton { get; set; }
+
+        public Dictionary<string, UIImage> HistoryStatusImages
+        {
+            get { return _historyStatusImages ?? (_historyStatusImages = new Dictionary<string, UIImage>()); }
+            set { _historyStatusImages = value; }
+        }
+
+        public UIImage GetHistoryImageByStatus(string status)
+        {
+            UIImage img;
+            if (!HistoryStatusImages.TryGetValue(status, out img))
+            {
+                img =
+                    HistoryStatusImages[status] =
+                        AppTheme.GetTemplateIcon(MaintenanceRequestStyling.StateIconByStatus(status),
+                            SharedResources.Size.S, true);
+            }
+            return img;
+        }
+
 
         public void UpdateFooter()
         {

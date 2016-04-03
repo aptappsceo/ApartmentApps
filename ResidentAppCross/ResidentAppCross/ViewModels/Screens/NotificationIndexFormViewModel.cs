@@ -74,8 +74,13 @@ namespace ResidentAppCross.ViewModels.Screens
 
         public ICommand OpenSelectedNotificationDetailsCommand => new MvxCommand(() =>
         {
-            if (SelectedNotification == null) return;
-            if (SelectedNotification.RelatedId == null) return;
+            if (SelectedNotification?.RelatedId == null) return;
+
+            Task.Run(async () =>
+            {
+                //DO IT HERE. Mark Message as read
+            });
+
 
             if (SelectedNotification.Type == "Maintenance")
             {
@@ -86,7 +91,10 @@ namespace ResidentAppCross.ViewModels.Screens
             }
             else
             {
-                
+                ShowViewModel<IncidentReportStatusViewModel>(vm =>
+                {
+                    vm.IncidentReportId = SelectedNotification.RelatedId.Value;
+                });
             }
             //ShowViewModel<NotificationDetailsFormViewModel>();
         });
@@ -101,7 +109,7 @@ namespace ResidentAppCross.ViewModels.Screens
             var defaultStatusFilter = new NotificationStatusFilter()
             {
                 Title = "Unread",
-                FilterExpression = item => item.HasRead.HasValue && item.HasRead.Value
+                FilterExpression = item => !item.HasRead.HasValue || !item.HasRead.Value
             };
 
             NotificationStatusFilters.Add(defaultStatusFilter);

@@ -67,6 +67,7 @@ namespace ResidentAppCross.iOS
                 {
                     _incidentReportTypeSegment = Formals.Create<SegmentSelectionSection>();
                     _incidentReportTypeSegment.Editable = true;
+                    _incidentReportTypeSegment.Selector.ApportionsSegmentWidthsByContent = true;
                 }
                 return _incidentReportTypeSegment;
             }

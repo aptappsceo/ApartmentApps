@@ -69,12 +69,11 @@ namespace ResidentAppCross.iOS
             {
                 if (_headerSection == null)
                 {
-
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.HeightConstraint.Constant = 100;
                     _headerSection.MainLabel.Text = "Courtesy Officer";
                     _headerSection.SubLabel.Text = "Checkins";
-                    _headerSection.LogoImage.Image = UIImage.FromBundle("MaintenaceIcon");
+                    _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.LocationOk, SharedResources.Size.L);
+                    _headerSection.LogoImage.TintColor = AppTheme.SecondaryBackgoundColor;
                 }
                 
                 return _headerSection;
@@ -99,7 +98,6 @@ namespace ResidentAppCross.iOS
                 {
                     _callToActionSection = Formals.Create<CallToActionSection>();
                     _callToActionSection.MainButton.SetTitle("Scan QR Code", UIControlState.Normal);
-                    _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
                 }
                 return _callToActionSection;
             }

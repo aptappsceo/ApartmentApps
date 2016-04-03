@@ -73,7 +73,7 @@ namespace ResidentAppCross
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Notifications",
-                Icon = SharedResources.Icons.Alerts,
+                Icon = SharedResources.Icons.Inbox,
                 Command = AlertsCommand
             });
 
@@ -198,7 +198,7 @@ namespace ResidentAppCross
         public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);
 
         public string ProfileImageUrl => this._loginManager.UserInfo.ImageUrl;
-        public string Username => _loginManager.UserInfo.Email;
+        public string Username => _loginManager.UserInfo.FullName;
     }
 
     public class UserInfoUpdated : MvxMessage
