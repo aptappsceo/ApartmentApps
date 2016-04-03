@@ -92,10 +92,10 @@ namespace ResidentAppCross.ViewModels.Screens
             });
             if (!response.Response.IsSuccessStatusCode)
             {
-                
                 context.FailTask(response.Response.ReasonPhrase);
+
             }
-        });
+			}).OnStart("Signing Up");
         public ICommand SelectBirthdayCommand => new MvxCommand(async () =>
         {
             var date = await _dialogService.OpenDateDialog("Birthday");
