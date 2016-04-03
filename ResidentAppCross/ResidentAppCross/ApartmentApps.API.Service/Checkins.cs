@@ -149,7 +149,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<object>> PostWithOperationResponseAsync(int locationId, double? latitude = null, double? longitude = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<string>> PostWithOperationResponseAsync(int locationId, double? latitude = null, double? longitude = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -220,7 +220,7 @@ namespace ApartmentApps.Client
             HttpStatusCode statusCode = httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            if (statusCode != HttpStatusCode.NoContent)
+            if (statusCode != HttpStatusCode.OK)
             {
                 HttpOperationException<object> ex = new HttpOperationException<object>();
                 ex.Request = httpRequest;
@@ -234,13 +234,25 @@ namespace ApartmentApps.Client
             }
             
             // Create Result
-            HttpOperationResponse<object> result = new HttpOperationResponse<object>();
+            HttpOperationResponse<string> result = new HttpOperationResponse<string>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             
             // Deserialize Response
-            object resultModel = default(object);
-            result.Body = resultModel;
+            if (statusCode == HttpStatusCode.OK)
+            {
+                string resultModel = default(string);
+                JToken responseDoc = null;
+                if (string.IsNullOrEmpty(responseContent) == false)
+                {
+                    responseDoc = JToken.Parse(responseContent);
+                }
+                if (responseDoc != null)
+                {
+                    resultModel = responseDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                }
+                result.Body = resultModel;
+            }
             
             if (shouldTrace)
             {

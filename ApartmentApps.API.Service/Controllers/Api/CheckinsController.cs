@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
+using System.Web.Http;
 using ApartmentApps.Api;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.Data;
@@ -12,7 +12,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
     [System.Web.Http.Authorize()]
     public class CheckinsController : ApartmentAppsApiController
     {
-        [HttpGet]
+        [System.Web.Mvc.HttpGet]
         public IEnumerable<CourtesyCheckinBindingModel> Get()
         {
             var propertyId = CurrentUser.PropertyId.Value;
@@ -33,14 +33,14 @@ namespace ApartmentApps.API.Service.Controllers.Api
                     }
                 });
         }
-        [HttpPost]
-        public void Post(int locationId, double latitude= 0, double longitude = 0)
+        [System.Web.Mvc.HttpPost]
+        public IHttpActionResult Post(int locationId, double latitude= 0, double longitude = 0)
         {
             var location = Context.CourtesyOfficerLocations.FirstOrDefault(p => p.Id == locationId);
             if (location == null)
             {
-                this.BadRequest("Location not found.");
-                return;
+
+                return this.BadRequest("Location not found.");
             }
             var distanceToCheckin = DistanceCalcs.DistanceInFeet(location.Latitude, location.Longitude, latitude, longitude);
             if (distanceToCheckin < 100)
@@ -54,9 +54,9 @@ namespace ApartmentApps.API.Service.Controllers.Api
                     GroupId = Guid.NewGuid(),
                 });
                 Context.SaveChanges();
-                return;
+                return Ok();
             }
-            this.BadRequest($"You must be within 100 ft. You are currently {distanceToCheckin} ft.");
+            return this.BadRequest($"You must be within 100 ft. You are currently {distanceToCheckin} ft.");
         }
         public class DistanceCalcs
         {

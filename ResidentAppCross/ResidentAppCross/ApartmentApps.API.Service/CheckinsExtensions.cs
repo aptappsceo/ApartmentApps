@@ -50,7 +50,7 @@ namespace ApartmentApps.Client
         /// <param name='longitude'>
         /// Optional.
         /// </param>
-        public static object Post(this ICheckins operations, int locationId, double? latitude = null, double? longitude = null)
+        public static string Post(this ICheckins operations, int locationId, double? latitude = null, double? longitude = null)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -74,9 +74,9 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<object> PostAsync(this ICheckins operations, int locationId, double? latitude = null, double? longitude = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<string> PostAsync(this ICheckins operations, int locationId, double? latitude = null, double? longitude = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<object> result = await operations.PostWithOperationResponseAsync(locationId, latitude, longitude, cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<string> result = await operations.PostWithOperationResponseAsync(locationId, latitude, longitude, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
     }

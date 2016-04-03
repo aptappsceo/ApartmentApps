@@ -30,6 +30,6 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostWithOperationResponseAsync(int locationId, double? latitude = null, double? longitude = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<string>> PostWithOperationResponseAsync(int locationId, double? latitude = null, double? longitude = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }
