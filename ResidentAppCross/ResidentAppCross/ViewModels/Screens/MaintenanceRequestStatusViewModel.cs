@@ -351,7 +351,8 @@ namespace ResidentAppCross.ViewModels.Screens
                 }).OnStart("Scheduling...").OnComplete("Maintenance Scheduled!",()=>UpdateMaintenanceRequest.Execute(null));
             }
         }
-
+        public bool CanUpdateRequest => _loginManager.UserInfo.Roles.Contains("Maintenance") ||
+                                     !_loginManager.UserInfo.Roles.Contains("PropertyAdmin");
         public ICommand ScheduleCommand
         {
             get
@@ -360,7 +361,8 @@ namespace ResidentAppCross.ViewModels.Screens
                 {
                     if (CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Complete ||
                         CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started) return;
-
+                    if (!_loginManager.UserInfo.Roles.Contains("Maintenance") &&
+                        !_loginManager.UserInfo.Roles.Contains("PropertyAdmin")) return;
                     var date = await _dialogService.OpenDateTimeDialog("hello");
                     await Task.Delay(TimeSpan.FromMilliseconds(300));
                     if (!date.HasValue) return;

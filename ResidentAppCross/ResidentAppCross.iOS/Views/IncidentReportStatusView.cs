@@ -272,7 +272,7 @@ namespace ResidentAppCross.iOS
         {
             base.BindForm();
             //UnitSection.Label.Text = "Report Date";
-            
+       
 
             this.OnViewModelEventMainThread<IncidentReportStatusUpdated>(_ =>
             {
@@ -304,7 +304,8 @@ namespace ResidentAppCross.iOS
 
             //Schedule Section
             b.Bind(UnitSection.Button).For("Title").To(vm => vm.Request.UnitName);
-            b.Bind(UnitSection.Button).To(vm => vm.SetUnitCommand);
+            if (this.ViewModel.CanUpdateRequest)
+                b.Bind(UnitSection.Button).To(vm => vm.SetUnitCommand);
             //Footer Section
 
             var style = new UIViewStyle()
@@ -413,7 +414,11 @@ namespace ResidentAppCross.iOS
                 content.Add(EntrancePermissionSection);
 
                 if (!FooterFinishButton.Hidden || !FooterPauseButton.Hidden || !FooterStartButton.Hidden)
-                    content.Add(FooterSection);
+                {
+                    if (ViewModel.CanUpdateRequest)
+                        content.Add(FooterSection);
+                }
+                    
             }
             else
             {

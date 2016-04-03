@@ -11,6 +11,7 @@ using MvvmCross.Core.ViewModels;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Extensions;
+using ResidentAppCross.ServiceClient;
 using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels.Screens
@@ -22,6 +23,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private IImageService _imageService;
         private IQRService _qrService;
         private IDialogService _dialogService;
+        private readonly ILoginManager _loginManager;
 
         private string _comments;
         private DateTime _newRepairDate;
@@ -35,13 +37,17 @@ namespace ResidentAppCross.ViewModels.Screens
         private ObservableCollection<IncidentCheckinBindingModel> _checkins;
         private IncidentCheckinBindingModel _selectedCheckin;
 
-        public IncidentReportStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService)
+        public IncidentReportStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService, ILoginManager loginManager)
         {
             _appService = appService;
             _imageService = imageService;
             _qrService = qrService;
             _dialogService = dialogService;
+            _loginManager = loginManager;
         }
+
+        public bool CanUpdateRequest => _loginManager.UserInfo.Roles.Contains("Maintenance") ||
+                                        _loginManager.UserInfo.Roles.Contains("PropertyAdmin");
 
         public int IncidentReportId
         {
@@ -140,6 +146,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
                 return new MvxCommand(() =>
                 {
+                    if (!CanUpdateRequest) return;
                     ShowViewModel<CheckinFormViewModel>(vm =>
                     {
                         vm.HeaderText = "Incident Report";
@@ -190,6 +197,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
                 return new MvxCommand(() =>
                 {
+                    if (!CanUpdateRequest) return;
                     ShowViewModel<CheckinFormViewModel>(vm =>
                     {
                         vm.HeaderText = "Incident Report";
@@ -238,6 +246,7 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 return new MvxCommand(() =>
                 {
+                    if (!CanUpdateRequest) return;
                     ShowViewModel<CheckinFormViewModel>(vm =>
                     {
                         vm.HeaderText = "Incident Report";
@@ -298,6 +307,8 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 return new MvxCommand(async () =>
                 {
+                    if (!CanUpdateRequest) return;
+
                     var units = await _appService.Lookups.GetUnitsAsync();
                     var selected = await _dialogService.OpenSearchableTableSelectionDialog(units,"Select Unit", p=>p.Value);
                     await Task.Delay(TimeSpan.FromMilliseconds(300));
