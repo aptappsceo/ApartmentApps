@@ -41,28 +41,13 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
 			photoCell.ImageView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
 			photoCell.LayoutIfNeeded ();
 			photoCell.LayoutSubviews ();
+
 			if (photo.Data != null)
             {
-                photoCell.ImageView.Image = photo.Data.ToImage();
-            }
-            else
+                photoCell.SetImage(photo.Data.ToImage());
+            } else if(photo.Uri != null)
             {
-                var imageUrl = photo.Uri.ToString();
-
-                if (photoCell.LoadingUrl != imageUrl)
-                {
-                    photoCell.ImageView.SetImageWithAsyncIndicator(imageUrl,UIImage.FromFile("avatar-placeholder.png"));
-                    photoCell.LoadingUrl = imageUrl;
-                }
-//                photoCell.ImageView.SetImage(
-//                    url: new NSUrl(photo.Uri.ToString()),
-//					placeholder: UIImage.FromBundle("HouseIcon"),
-//					completedBlock: (image, error, type, url) =>{
-//						photoCell.LayoutIfNeeded ();
-//						photoCell.LayoutSubviews ();
-//					}
-//
-//                );
+                photoCell.SetImageFromUrl(photo.Uri.ToString());
             }
 
             return photoCell;

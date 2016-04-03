@@ -33,6 +33,7 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(async () =>
                 {
                     if(ShouldScanQr) QRScanResult = await _qrService.ScanAsync();
+                    await Task.Delay(500);
                     ActionCommand?.Execute(null);
                 });
             }

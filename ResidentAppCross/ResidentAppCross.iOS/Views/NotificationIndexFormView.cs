@@ -88,7 +88,7 @@ namespace ResidentAppCross.iOS.Views
                                 {
                                     cell.ImageView.Image = maintenanceUnReadIcon;
                                 }
-                            } else if (item.Type == "Courtesy")
+                            } else if (item.Type == "Incident")
                             {
                                 if (item.HasRead ?? false)
                                 {
@@ -171,7 +171,7 @@ namespace ResidentAppCross.iOS.Views
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);
-            ViewModel.UpdateNotificationsCommand.Execute(null);
+        //    ViewModel.UpdateNotificationsCommand.Execute(null);
         }
 
         public override void BindForm()
@@ -193,6 +193,7 @@ namespace ResidentAppCross.iOS.Views
             {
                 SectionsContainer.RemoveGestureRecognizer(uiGestureRecognizer);
             }
+
         }
 
         public override void GetContent(List<UIView> content)
@@ -230,7 +231,7 @@ namespace ResidentAppCross.iOS.Views
             var uiItems =
                 items.Select(i =>
                 {
-                    var fromBundle = AppTheme.GetTemplateIcon(itemImageSelector(i),SharedResources.Size.XS);
+                    var fromBundle = AppTheme.GetIcon(itemImageSelector(i),SharedResources.Size.XS);
                     var uiTabBarItem = new UITabBarItem(
                         itemTitleSelector(i),
                         //null,
