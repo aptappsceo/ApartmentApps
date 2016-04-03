@@ -76,7 +76,7 @@ namespace ResidentAppCross.iOS.Views
                             {
                                 cell.NotesLabel.Text = $"{item.LatestCheckin?.Comments}";
                             }
-                            else if (!string.IsNullOrEmpty(item.LatestCheckin?.Comments))
+                            else if (!string.IsNullOrEmpty(item.LatestCheckin?.Comments?.Trim()))
                             {
                                 cell.NotesLabel.Text = $"{item.StatusId}: {item.LatestCheckin.Comments}";
                             }

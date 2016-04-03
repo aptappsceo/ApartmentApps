@@ -36,7 +36,7 @@ namespace ResidentAppCross.iOS
 	    }
 
 	    private CGColor PrefferedBorderColor
-	        => TextView.Editable ? AppTheme.SecondaryBackgoundColor.CGColor : AppTheme.DeepBackgroundColor.CGColor;
+	        => TextView.Editable ? AppTheme.FormControlColor.CGColor : AppTheme.DeepBackgroundColor.CGColor;
 
 	    public IScrollableView ScrollableParent => ParentController as IScrollableView;
 
@@ -58,6 +58,7 @@ namespace ResidentAppCross.iOS
             TextView.Layer.BorderColor = PrefferedBorderColor;
             TextView.Layer.BorderWidth = 1f;
             TextView.ClipsToBounds = true;
+	        TextView.Font = AppFonts.CellHeader;
             TextViewContainer.BackgroundColor = UIColor.Clear;
 	        HeaderLabel.Text = AppStrings.DefaultTextViewHeaderText;
 	    }

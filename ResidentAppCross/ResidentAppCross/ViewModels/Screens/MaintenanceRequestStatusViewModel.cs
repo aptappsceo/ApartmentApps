@@ -290,6 +290,7 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(async () =>
                 {
                     var qr = await _qrService.ScanAsync();
+                    await Task.Delay(TimeSpan.FromMilliseconds(300));
 
                     var data = qr?.Data;
                    
@@ -357,7 +358,11 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 return new MvxCommand(async () =>
                 {
+                    if (CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Complete ||
+                        CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started) return;
+
                     var date = await _dialogService.OpenDateTimeDialog("hello");
+                    await Task.Delay(TimeSpan.FromMilliseconds(300));
                     if (!date.HasValue) return;
                     this.TaskCommand(async context =>
                     {

@@ -2,6 +2,7 @@ using Foundation;
 using System;
 using System.CodeDom.Compiler;
 using MapKit;
+using ResidentAppCross.iOS.Views;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -20,8 +21,16 @@ namespace ResidentAppCross.iOS
 	    public MKMapView MapView => _mapView;
 	    public UILabel HeaderLabel => _headerLabel;
 
+	    public override void AwakeFromNib()
+	    {
+	        base.AwakeFromNib();
+	        HeaderLabel.Font = AppFonts.SectionHeader;
+	        MapView.Layer.BorderWidth = 2f;
+	        MapView.Layer.BorderColor = UIColor.LightGray.CGColor;
+	        MapView.Layer.MasksToBounds = false;
+	    }
 
-        public double MilesToLatitudeDegrees(double miles)
+	    public double MilesToLatitudeDegrees(double miles)
         {
             double earthRadius = 3960.0; // in miles
             double radiansToDegrees = 180.0 / Math.PI;

@@ -1,5 +1,7 @@
 using CoreGraphics;
 using Foundation;
+using MvvmCross.Platform;
+using ResidentAppCross.Services;
 using UIKit;
 
 namespace ResidentAppCross.iOS.Views.PhotoGallery
@@ -39,6 +41,14 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
             //ImageView.BackgroundColor = UIColor.Blue;
             this.ContentView.AddSubview(this.ImageView);
             ClipsToBounds = false;
+
+            this.AddGestureRecognizer(new UITapGestureRecognizer(() =>
+            {
+                if (string.IsNullOrEmpty(LoadingUrl)) return;
+                Mvx.Resolve<IDialogService>().OpenImageFullScreenFromUrl(LoadingUrl);
+            }));
+
+
         }
     }
 }

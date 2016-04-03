@@ -410,7 +410,9 @@ namespace ResidentAppCross.iOS
                 content.Add(CommentsSection);
                 content.Add(PhotoSection);
                 content.Add(EntrancePermissionSection);
-                content.Add(FooterSection);
+
+                if (!FooterFinishButton.Hidden || !FooterPauseButton.Hidden || !FooterStartButton.Hidden)
+                    content.Add(FooterSection);
             }
             else
             {

@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
@@ -114,8 +115,8 @@ namespace ResidentAppCross.iOS.Services
                         AutocorrectionType = UITextAutocorrectionType.Yes,
                         KeyboardType = UIKeyboardType.WebSearch
                     };
-//                    tableView.TableHeaderView = searchBar;
- //                   searchBar.SizeToFit();
+                    tableView.TableHeaderView = searchBar;
+                    searchBar.SizeToFit();
                     searchBar.Placeholder = "Search...";
                     searchBar.OnEditingStopped += (sender, args) =>
                     {
@@ -348,6 +349,37 @@ namespace ResidentAppCross.iOS.Services
                 alert.HideAnimationType = SCLAlertViewHideAnimation.FadeOut;
                 //alert.CustomViewColor = AppTheme.SecondaryBackgoundColor;
                 alert.ShowInfo(TopController,title, subtitle, ok,0);
+            });
+        }
+
+        public void OpenImageFullScreen(object imageObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OpenImageFullScreenFromUrl(string url)
+        {
+            TopController.InvokeOnMainThread(() =>
+            {
+                var controller = new UIViewController();
+                controller.EdgesForExtendedLayout = UIRectEdge.None;
+                NavbarStyling.ApplyToNavigationController(RootController);
+                StatusBarStyling.Apply(controller);
+
+                var imageView = new UIImageView();
+                controller.View.Add(imageView);
+                controller.View.BackgroundColor = imageView.BackgroundColor = UIColor.Black;
+                controller.View.AddConstraints(
+                    imageView.AtRightOf(controller.View),
+                    imageView.AtLeftOf(controller.View),
+                    imageView.AtTopOf(controller.View),
+                    imageView.AtBottomOf(controller.View));
+                imageView.ContentMode = UIViewContentMode.ScaleAspectFit;
+                imageView.SetImageWithAsyncIndicator(url,UIImage.FromFile("avatar-placeholder.png"));
+                imageView.TranslatesAutoresizingMaskIntoConstraints = false;
+
+                RootController.PushViewController(controller,true);
+
             });
         }
 

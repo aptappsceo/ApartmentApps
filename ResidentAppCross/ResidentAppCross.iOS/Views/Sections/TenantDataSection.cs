@@ -23,7 +23,7 @@ namespace ResidentAppCross.iOS
 	        HeightConstraint.Constant = AppTheme.TenantDataSectionHeight;
 	        HeaderLabel.Font = AppFonts.SectionHeader;
 	        AddressLabel.Font = AppFonts.CellHeader;
-	        TenantNameLabel.Font = AppFonts.CellHeader;
+	        TenantNameLabel.Font = AppFonts.SectionHeader;
 	        PhoneLabel.Font = AppFonts.Note;
             TenantAvatar.ContentMode = UIViewContentMode.ScaleAspectFill;
 	        PhoneIcon.Image = AppTheme.GetIcon(SharedResources.Icons.Call, SharedResources.Size.S);

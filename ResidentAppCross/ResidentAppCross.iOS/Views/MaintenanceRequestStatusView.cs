@@ -421,6 +421,8 @@ namespace ResidentAppCross.iOS
                 content.Add(PhotoSection);
                 content.Add(PetStatusSection);
                 content.Add(EntrancePermissionSection);
+
+                if(!FooterFinishButton.Hidden || !FooterPauseButton.Hidden || !FooterStartButton.Hidden)
                 content.Add(ActionsSection);
             }
             else
