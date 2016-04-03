@@ -28,12 +28,13 @@ namespace ApartmentApps.API.Service.Controllers.Api
                         .Any(x=>x.CreatedOn.DayOfYear == today.DayOfYear),
                     AcceptableCheckinCodes = new List<string>()
                     {
-                        $"http://apartmentapps.com?location={p.LocationId}"
+                        $"http://apartmentapps.com?location={p.LocationId}",
+                        $"http://www.apartmentapps.com?coloc={p.LocationId}"
                     }
                 });
         }
         [HttpPost]
-        public void Post(int locationId)
+        public void Post(int locationId, decimal latitude= 0, decimal longitude = 0)
         {
             Context.CourtesyOfficerCheckins.Add(new CourtesyOfficerCheckin()
             {
@@ -42,8 +43,6 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 OfficerId = CurrentUser.Id,
                 CreatedOn = CurrentUser.TimeZone.Now(),
                 GroupId = Guid.NewGuid(),
-                
-
             });
             Context.SaveChanges();
         } 

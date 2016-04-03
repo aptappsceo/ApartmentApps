@@ -151,7 +151,7 @@ namespace ApartmentApps.Client.Models
         /// </summary>
         public string UnitName
         {
-            get { return this._unitName ?? "None"; }
+            get { return this._unitName; }
             set { this._unitName = value; }
         }
         

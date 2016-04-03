@@ -140,10 +140,16 @@ namespace ApartmentApps.Client
         /// <param name='locationId'>
         /// Required.
         /// </param>
+        /// <param name='latitude'>
+        /// Optional.
+        /// </param>
+        /// <param name='longitude'>
+        /// Optional.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<object>> PostWithOperationResponseAsync(int locationId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<object>> PostWithOperationResponseAsync(int locationId, double? latitude = null, double? longitude = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -153,6 +159,8 @@ namespace ApartmentApps.Client
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("locationId", locationId);
+                tracingParameters.Add("latitude", latitude);
+                tracingParameters.Add("longitude", longitude);
                 ServiceClientTracing.Enter(invocationId, this, "PostAsync", tracingParameters);
             }
             
@@ -161,6 +169,14 @@ namespace ApartmentApps.Client
             url = url + "/api/Checkins";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("locationId=" + Uri.EscapeDataString(locationId.ToString()));
+            if (latitude != null)
+            {
+                queryParameters.Add("latitude=" + Uri.EscapeDataString(latitude.Value.ToString()));
+            }
+            if (longitude != null)
+            {
+                queryParameters.Add("longitude=" + Uri.EscapeDataString(longitude.Value.ToString()));
+            }
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

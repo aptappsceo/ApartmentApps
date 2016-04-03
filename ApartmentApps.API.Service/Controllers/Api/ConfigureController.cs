@@ -46,6 +46,17 @@ namespace ApartmentApps.API.Service.Controllers.Api
                         unit.Latitude = latitude;
                         unit.Longitude = longitude;
                     }
+                } else if (parameters["coloc"] != null)
+                {
+                    var courtesyOfficerLocation = new CourtesyOfficerLocation()
+                    {
+                        PropertyId = propertyId,
+                        Latitude = latitude,
+                        Longitude = longitude,
+                        LocationId = parameters["coloc"],
+                        Label = label ?? "Location " + (Context.CourtesyOfficerLocations.Count(p => p.PropertyId == propertyId) + 1)
+                    };
+                    Context.CourtesyOfficerLocations.Add(courtesyOfficerLocation);
                 }
                 else
                 {

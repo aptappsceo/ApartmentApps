@@ -21,9 +21,15 @@ namespace ApartmentApps.Client
         /// <param name='locationId'>
         /// Required.
         /// </param>
+        /// <param name='latitude'>
+        /// Optional.
+        /// </param>
+        /// <param name='longitude'>
+        /// Optional.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostWithOperationResponseAsync(int locationId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<object>> PostWithOperationResponseAsync(int locationId, double? latitude = null, double? longitude = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

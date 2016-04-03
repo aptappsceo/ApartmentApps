@@ -77,7 +77,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         [HttpGet]
         public IEnumerable<AlertBindingModel> Get()
         {
-            return Context.UserAlerts.Where(p => p.UserId == CurrentUser.Id).Select(p =>
+            return Context.UserAlerts.Where(p => p.UserId == CurrentUser.Id).OrderByDescending(p=>p.CreatedOn).Select(p =>
                  new AlertBindingModel
                  {
                      Id = p.Id,

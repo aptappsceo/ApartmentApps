@@ -44,11 +44,17 @@ namespace ApartmentApps.Client
         /// <param name='locationId'>
         /// Required.
         /// </param>
-        public static object Post(this ICheckins operations, int locationId)
+        /// <param name='latitude'>
+        /// Optional.
+        /// </param>
+        /// <param name='longitude'>
+        /// Optional.
+        /// </param>
+        public static object Post(this ICheckins operations, int locationId, double? latitude = null, double? longitude = null)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ICheckins)s).PostAsync(locationId);
+                return ((ICheckins)s).PostAsync(locationId, latitude, longitude);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -59,12 +65,18 @@ namespace ApartmentApps.Client
         /// <param name='locationId'>
         /// Required.
         /// </param>
+        /// <param name='latitude'>
+        /// Optional.
+        /// </param>
+        /// <param name='longitude'>
+        /// Optional.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<object> PostAsync(this ICheckins operations, int locationId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<object> PostAsync(this ICheckins operations, int locationId, double? latitude = null, double? longitude = null, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<object> result = await operations.PostWithOperationResponseAsync(locationId, cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<object> result = await operations.PostWithOperationResponseAsync(locationId, latitude, longitude, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
     }

@@ -74,7 +74,7 @@ namespace ResidentAppCross.ViewModels.Screens
 								context.FailTask(data + " - This is not a valid qr code.");
                                 return;
                             }
-                            var result = await ApiService.Checkins.PostWithOperationResponseAsync(location.Id.Value);
+                            var result = await ApiService.Checkins.PostWithOperationResponseAsync(location.Id.Value,_currentLocation.Latitude,_currentLocation.Longitude);
                             if (!result.Response.IsSuccessStatusCode)
                             {
                                 context.FailTask(result.Response.ReasonPhrase);
