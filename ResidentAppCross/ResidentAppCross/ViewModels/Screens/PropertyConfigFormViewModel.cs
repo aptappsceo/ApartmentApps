@@ -88,5 +88,15 @@ namespace ResidentAppCross.ViewModels.Screens
 
         public QRData ScanResult { get; set; }
         public ObservableCollection<LocationBindingModel> Locations { get; set; } = new ObservableCollection<LocationBindingModel>();
+        public ICommand DeleteCommand => new MvxCommand<LocationBindingModel>( (loc) =>
+        {
+            this.TaskCommand(async context =>
+            {
+                await this.ApiService.Configure.DeleteLocationAsync(loc.Id.Value, loc.Type);
+            }).OnStart("Deleting...").OnComplete("Deleted", () =>
+            {
+                UpdateLocations.Execute(null);
+            }).Execute(null);
+        });
     }
 }

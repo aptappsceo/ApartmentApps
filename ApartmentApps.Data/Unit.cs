@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace ApartmentApps.Data
 {
@@ -62,6 +63,11 @@ namespace ApartmentApps.Data
         public Guid GroupId { get; set; }
         
         public string Comments { get; set; }
+        public int? UnitId { get; set; }
+
+        [ForeignKey("UnitId")]
+        public virtual Unit Unit { get; set; }
+
 
         public IncidentType IncidentType { get; set; }
         public DateTime CreatedOn { get; set; }
@@ -72,6 +78,12 @@ namespace ApartmentApps.Data
         public virtual ICollection<IncidentReportCheckin> Checkins { get; set; }
 
         public DateTime? CompletionDate { get; set; }
+        [NotMapped]
+        public IncidentReportCheckin LatestCheckin
+        {
+            get { return Checkins.OrderByDescending(p => p.CreatedOn).FirstOrDefault(); }
+        }
+
     }
 
     public enum IncidentType

@@ -68,6 +68,13 @@ namespace ApartmentApps.Client
             get { return this._courtesy; }
         }
         
+        private ILookups _lookups;
+        
+        public virtual ILookups Lookups
+        {
+            get { return this._lookups; }
+        }
+        
         private IMaitenance _maitenance;
         
         public virtual IMaitenance Maitenance
@@ -89,13 +96,6 @@ namespace ApartmentApps.Client
             get { return this._register; }
         }
         
-        private IValues _values;
-        
-        public virtual IValues Values
-        {
-            get { return this._values; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the ApartmentAppsAPIService class.
         /// </summary>
@@ -107,10 +107,10 @@ namespace ApartmentApps.Client
             this._checkins = new Checkins(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
+            this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
-            this._values = new Values(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
         
@@ -129,10 +129,10 @@ namespace ApartmentApps.Client
             this._checkins = new Checkins(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
+            this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
-            this._values = new Values(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
         
@@ -154,10 +154,10 @@ namespace ApartmentApps.Client
             this._checkins = new Checkins(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
+            this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
-            this._values = new Values(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
         

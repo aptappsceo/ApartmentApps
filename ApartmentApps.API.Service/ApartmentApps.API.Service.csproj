@@ -264,12 +264,13 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
     <Compile Include="Controllers\Api\ApartmentAppsApiController.cs" />
+    <Compile Include="Controllers\Api\CheckinsController.cs" />
     <Compile Include="Controllers\Api\ConfigureController.cs" />
     <Compile Include="Controllers\Api\CourtesyController.cs" />
     <Compile Include="Controllers\Api\MaitenanceController.cs" />
     <Compile Include="Controllers\Api\NotifiationsController.cs" />
     <Compile Include="Controllers\Api\RegisterController.cs" />
-    <Compile Include="Controllers\Api\ValuesController.cs" />
+    <Compile Include="Controllers\Api\LookupsController.cs" />
     <Compile Include="Controllers\MobileClientViewApi\GeneralViewsController.cs" />
     <Compile Include="DateUtil.cs" />
     <Compile Include="Global.asax.cs">

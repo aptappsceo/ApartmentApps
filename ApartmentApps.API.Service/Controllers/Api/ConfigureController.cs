@@ -102,7 +102,13 @@ namespace ApartmentApps.API.Service.Controllers.Api
             //if (CurrentUser.PropertyId == null) return;
             //using (var ctx = new ApplicationDbContext())
             //{
-            //    var propertyId = CurrentUser.PropertyId.Value;
+               var propertyId = CurrentUser.PropertyId.Value;
+            if (type.ToLower() == "checkin")
+            {
+                Context.CourtesyOfficerLocations.Remove(
+                    Context.CourtesyOfficerLocations.First(p => p.PropertyId == propertyId && p.Id == id));
+                Context.SaveChanges();
+            }
             //    var item = ctx.CourtesyOfficerLocations.FirstOrDefault(p => p.Id == id && p.PropertyId == propertyId);
             //    ctx.CourtesyOfficerLocations.Remove(item);
             //    ctx.SaveChanges();

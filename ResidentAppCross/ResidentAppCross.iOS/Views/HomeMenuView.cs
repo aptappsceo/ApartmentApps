@@ -28,6 +28,8 @@ namespace ResidentAppCross.iOS
 
                 var set = this.CreateBindingSet<HomeMenuView, HomeMenuViewModel>();
                 set.Bind(UsernameLabel).For(l => l.Text).To(vm => vm.Username);
+                set.Bind(EditProfileButton).To(vm => vm.EditProfileCommand);
+                set.Bind(SignOutButton).To(vm => vm.SignOutCommand);
                 set.Apply();
 
                 var exitIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.Exit, SharedResources.Size.S);
@@ -37,9 +39,12 @@ namespace ResidentAppCross.iOS
                 var imageEdgeInsets = new UIEdgeInsets(iconsPadding, iconsPadding, iconsPadding, iconsPadding);
                 var titleEdgeInsets = new UIEdgeInsets(0, 32f, 0, 0);
 
-                UsernameLabel.Font = UIFont.PreferredTitle2;
-                EditProfileButton.Font = UIFont.PreferredCaption2;
+                UsernameLabel.Font = AppFonts.SectionHeader;
+                EditProfileButton.Font = AppFonts.Note;
 
+
+                MenuTable.Source = new HomeMenuTableSource() { Items = ViewModel.MenuItems.ToArray() };
+                MenuTable.SeparatorStyle = UITableViewCellSeparatorStyle.None;
                 SignOutButton.SetRightIcon(exitIcon, false);
                 SignOutButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
                 SignOutButton.TitleEdgeInsets = titleEdgeInsets;
@@ -74,18 +79,14 @@ namespace ResidentAppCross.iOS
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			MenuTable.Source = new HomeMenuTableSource() { Items = ViewModel.MenuItems.ToArray() };
-		    MenuTable.SeparatorStyle = UITableViewCellSeparatorStyle.None;
-		    var set = this.CreateBindingSet<HomeMenuView, HomeMenuViewModel>();
-		    set.Bind(EditProfileButton).To(vm => vm.EditProfileCommand);
-		    set.Bind(SignOutButton).To(vm => vm.SignOutCommand);
-            set.Apply();
+
 		}
 
 
         public override void ViewWillLayoutSubviews()
         {
             base.ViewWillLayoutSubviews();
+            UsernameAvatarImage.ContentMode = UIViewContentMode.ScaleAspectFill;
             UsernameAvatarImage.ToRounded(UIColor.White);
         }
 

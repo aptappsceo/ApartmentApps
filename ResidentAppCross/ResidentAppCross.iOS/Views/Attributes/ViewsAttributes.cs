@@ -28,6 +28,14 @@ namespace ResidentAppCross.iOS.Views.Attributes
             if (Hidden) return;
             UIApplication.SharedApplication.SetStatusBarStyle(Style, Animated);
         }
+
+        public static void Apply(UIViewController controller, bool animated = true, bool hidden = false, UIStatusBarStyle style = UIStatusBarStyle.BlackOpaque)
+        {
+            UIApplication.SharedApplication.SetStatusBarHidden(hidden, animated);
+            if (hidden) return;
+            UIApplication.SharedApplication.SetStatusBarStyle(style, animated);
+            
+        }
     }
 
     public class NavbarStyling : ViewAttribute

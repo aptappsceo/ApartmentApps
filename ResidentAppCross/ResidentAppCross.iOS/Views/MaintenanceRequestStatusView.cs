@@ -42,6 +42,7 @@ namespace ResidentAppCross.iOS
         private TenantDataSection _tenantDataSection;
         private UITabBar _typeSelectionSection;
         private TableSection _tableSection;
+        private Dictionary<string, UIImage> _historyStatusImages;
 
         public override string Title => "Maintenance Request";
 
@@ -64,11 +65,11 @@ namespace ResidentAppCross.iOS
                 if (_typeSelectionSection == null)
                 {
                     _typeSelectionSection = new UITabBar().WithHeight(49,1000);
-                    _typeSelectionSection.BarStyle = UIBarStyle.BlackOpaque;
                     _typeSelectionSection.TranslatesAutoresizingMaskIntoConstraints = false;
+                    _typeSelectionSection.BarStyle = UIBarStyle.Black;
                     _typeSelectionSection.BarTintColor = AppTheme.SecondaryBackgoundColor;
-                    _typeSelectionSection.SelectedImageTintColor = UIColor.White;
-                    _typeSelectionSection.TintColor = new UIColor(0.8f,0.8f,0.8f,1);
+                   // _typeSelectionSection.SelectedImageTintColor = UIColor.Red;
+                    _typeSelectionSection.TintColor = UIColor.White;
                 }
                 return _typeSelectionSection;
             }
@@ -156,10 +157,8 @@ namespace ResidentAppCross.iOS
                 if(_tenantDataSection == null)
                 {
                     _tenantDataSection = Formals.Create<TenantDataSection>();
-                    _tenantDataSection.HeaderLabel.Text = "Unit Information";
-                    _tenantDataSection.AddressLabel.Text = "795 E DRAGRAM TUCSON AZ 85705 USA";
-                    _tenantDataSection.PhoneLabel.Text = "+1 777 777 777";
-                    _tenantDataSection.TenantAvatar.SetImageWithAsyncIndicator(ViewModel.TenantAvatarUrl,UIImage.FromFile("avatar-placeholder.png"));
+                    _tenantDataSection.TenantAvatar.Image =UIImage.FromFile("avatar-placeholder.png");
+
                 }
                 return _tenantDataSection;
             }
@@ -173,10 +172,11 @@ namespace ResidentAppCross.iOS
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
 
-                    var timelineUndefinedStatusIcon = UIImage.FromBundle("TimelineStatusIcon.png");
-                    var timelineMidLine = UIImage.FromFile("TimelineMid.png");
-                    var timelineStartLine = UIImage.FromFile("TimelineStart.png");
-                    var timelineEndLine = UIImage.FromFile("TimelineEnd.png");
+                    var tlEmpty = AppTheme.GetTemplateIcon(SharedResources.Icons.Empty, SharedResources.Size.S, true);
+                    var tlTop = AppTheme.GetTemplateIcon(SharedResources.Icons.TimelineTop, SharedResources.Size.S, true);
+                    var tlBottom = AppTheme.GetTemplateIcon(SharedResources.Icons.TimelineBottom, SharedResources.Size.S, true);
+                    var tlMid = AppTheme.GetTemplateIcon(SharedResources.Icons.TimelineMiddle, SharedResources.Size.S, true);
+                    var circleIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.Circle, SharedResources.Size.S, true);
 
                     var tableDataBinding = new TableDataBinding<HistoryItemCell, MaintenanceCheckinBindingModel>() //Define cell type and data type as type args
                     {
@@ -185,18 +185,15 @@ namespace ResidentAppCross.iOS
                             cell.MainLabel.Text = item.StatusId;
                             cell.DateLabel.Text = item.Date?.ToString("g");
 
-                            SharedResources.Icons timelineIconType;
-
                             if (ViewModel.Checkins.Count == 1)
-                                timelineIconType = SharedResources.Icons.Empty;
+                                cell.IconView.Image = tlEmpty;
                             else if (index == 0)
-                                timelineIconType = SharedResources.Icons.TimelineTop;
+                                cell.IconView.Image = tlTop;
                             else if (index == ViewModel.Checkins.Count - 1)
-                                timelineIconType = SharedResources.Icons.TimelineBottom;
+                                cell.IconView.Image = tlBottom;
                             else
-                                timelineIconType = SharedResources.Icons.TimelineMiddle; ;
+                                cell.IconView.Image = tlMid;
 
-                            cell.IconView.Image = AppTheme.GetTemplateIcon(timelineIconType, SharedResources.Size.S, true);
                             cell.TintColor = AppTheme.SecondaryBackgoundColor;
 
                             
@@ -205,11 +202,9 @@ namespace ResidentAppCross.iOS
                             //                                MaintenanceRequestStyling.ColorByStatus(item.StatusId),12f,12f);
                             var backgroundPad = index == 0 ? 6f : 10f;
                             var iconPad = index == 0 ? 12f : 16f;
-                            cell.IconView.SetBackgroundLayer(AppTheme.GetTemplateIcon(SharedResources.Icons.Circle, SharedResources.Size.S, true),
-                                MaintenanceRequestStyling.ColorByStatus(item.StatusId), backgroundPad, backgroundPad);
+                            cell.IconView.SetBackgroundLayer(circleIcon, MaintenanceRequestStyling.ColorByStatus(item.StatusId), backgroundPad, backgroundPad);
                             cell.IconView.SetBackgroundRounded(AppTheme.SecondaryBackgoundColor);
-                            cell.IconView.SetIconLayerLayer(AppTheme.GetTemplateIcon(MaintenanceRequestStyling.StateIconByStatus(item.StatusId), SharedResources.Size.S, true),
-                                UIColor.White, iconPad, iconPad);
+                            cell.IconView.SetIconLayerLayer(GetHistoryImageByStatus(item.StatusId),UIColor.White, iconPad, iconPad);
 
 
 
@@ -248,6 +243,26 @@ namespace ResidentAppCross.iOS
         public UIButton FooterFinishButton { get; set; }
         public UIButton FooterStartButton { get; set; }
 
+        public Dictionary<string, UIImage> HistoryStatusImages
+        {
+            get { return _historyStatusImages ?? (_historyStatusImages = new Dictionary<string, UIImage>()); }
+            set { _historyStatusImages = value; }
+        }
+
+        public UIImage GetHistoryImageByStatus(string status)
+        {
+            UIImage img;
+            if (!HistoryStatusImages.TryGetValue(status, out img))
+            {
+                img =
+                    HistoryStatusImages[status] =
+                        AppTheme.GetTemplateIcon(MaintenanceRequestStyling.StateIconByStatus(status),
+                            SharedResources.Size.S, true);
+            }
+            return img;
+        }
+
+
         public void UpdateFooter()
         {
             var status = ViewModel.CurrentMaintenanceRequestStatus;
@@ -261,6 +276,11 @@ namespace ResidentAppCross.iOS
             if (request == null) return;
             HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.HeaderIconByStatus(ViewModel.Request.Status), SharedResources.Size.L);
             HeaderSection.LogoImage.TintColor = MaintenanceRequestStyling.ColorByStatus(ViewModel.Request.Status);
+            if(!string.IsNullOrEmpty(ViewModel.Request.User.ImageUrl))
+            TenantDataSection.TenantAvatar.SetImageWithAsyncIndicator(ViewModel.Request.User.ImageUrl, UIImage.FromFile("avatar-placeholder.png"));
+            else
+                TenantDataSection.TenantAvatar.Image = UIImage.FromFile("avatar-placeholder.png");
+
         }
 
         public override void BindForm()
@@ -318,8 +338,10 @@ namespace ResidentAppCross.iOS
             //Tenant section
             b.Bind(TenantDataSection.TenantNameLabel).For(t => t.Text).To(vm => vm.Request.User.FullName);
             b.Bind(TenantDataSection.PhoneLabel).For(t => t.Text).To(vm => vm.Request.User.PhoneNumber);
+            b.Bind(TenantDataSection.AddressLabel)
+                .For(t => t.Text)
+                .To(vm => vm.Request.BuildingName);
             
-
 
             //Date section
             b.Bind(ScheduleSection.Button).To(vm => vm.ScheduleCommand);
@@ -344,11 +366,22 @@ namespace ResidentAppCross.iOS
                 });
             });
 
-            TabSection.BindTo(new List<MaintenanceRequestStatusDisplayMode>() {MaintenanceRequestStatusDisplayMode.Status, MaintenanceRequestStatusDisplayMode.History},i=>i.ToString(),i=>"MaintenaceIcon",i=>null,
+            TabSection.BindTo(new List<MaintenanceRequestStatusDisplayMode>() {MaintenanceRequestStatusDisplayMode.Status, MaintenanceRequestStatusDisplayMode.History},i=>i.ToString(),
                 i =>
                 {
+                    switch (i)
+                    {
+                        case MaintenanceRequestStatusDisplayMode.Status:
+                            return SharedResources.Icons.Details;
+                        case MaintenanceRequestStatusDisplayMode.History:
+                            return SharedResources.Icons.Past;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(i), i, null);
+                    }
+                }, i => null, i =>
+                {
                     this.DisplayModel = i;
-                      RefreshContent();
+                    RefreshContent();
                 }, MaintenanceRequestStatusDisplayMode.Status);
 
 
@@ -395,7 +428,6 @@ namespace ResidentAppCross.iOS
                 SectionContainerGesturesEnabled = false;
                 content.Add(CheckinsSection);
             }
-            TenantDataSection.TenantAvatar.ToRounded(UIColor.DarkGray,4f);
         }
 
         public override void LayoutContent()
@@ -414,8 +446,7 @@ namespace ResidentAppCross.iOS
 
         public HistoryItemCell(string cellId) : base(UITableViewCellStyle.Default, cellId)
         {
-
-            float imageSize = 44f;
+            float imageSize = 45f;
             float textualContentPadding = imageSize + 8f + 8f;
             var container = new UIView(ContentView.Frame)
             {
@@ -428,30 +459,23 @@ namespace ResidentAppCross.iOS
 
             MainLabel = new UILabel(new CGRect(textualContentPadding, 6, textualContentWith, 16f))
             {
-                AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellDetails
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth, Font = AppFonts.CellDetails
             };
 
             DateLabel = new UILabel(new CGRect(textualContentPadding, 24, textualContentWith, 12f))
             {
-                AutoresizingMask = UIViewAutoresizing.FlexibleWidth,
-                Font = AppFonts.CellNoteSmall,
-                TextColor = UIColor.DarkGray,
-                Alpha = 0.6f,
-                TextAlignment = UITextAlignment.Left
+                AutoresizingMask = UIViewAutoresizing.FlexibleWidth, Font = AppFonts.CellNoteSmall, TextColor = UIColor.DarkGray, Alpha = 0.6f, TextAlignment = UITextAlignment.Left
             };
 
             var uiImageView = new UIImageView(new CGRect(0, 0, 22, 22))
             {
-                Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Forward, SharedResources.Size.S),
-                TintColor = AppTheme.SecondaryBackgoundColor.ColorWithAlpha(0.5f),
-                ContentMode = UIViewContentMode.ScaleAspectFit
+                Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Forward, SharedResources.Size.S), TintColor = AppTheme.SecondaryBackgoundColor.ColorWithAlpha(0.5f), ContentMode = UIViewContentMode.ScaleAspectFit
             };
 
             AccessoryView = uiImageView;
 
             IconView = new UILayeredIconView(new CGRect(8f, 0f, imageSize, imageSize));
-
+        
             container.AddSubview(MainLabel);
             container.AddSubview(DateLabel);
             container.AddSubview(IconView);
@@ -466,5 +490,4 @@ namespace ResidentAppCross.iOS
         public UILabel DateLabel { get; set; }
         public static float EstimatedHeight = 44f;
     }
-
 }

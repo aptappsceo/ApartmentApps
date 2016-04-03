@@ -15,14 +15,18 @@ namespace ApartmentApps.API.Service.Controllers
         {
             get { return HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
         }
+
+        private ApplicationUser _currentUser;
         public ApplicationUser CurrentUser
         {
             get
             {
                 var username = User.Identity.Name;
-                
-                var user = Context.Users.FirstOrDefault(p=>p.UserName == username);
-                return user;//user.Email
+                if (_currentUser == null)
+                {
+                    _currentUser = Context.Users.FirstOrDefault(p => p.UserName == username);
+                }
+                return _currentUser;//user.Email
             }
         }
 

@@ -29,39 +29,29 @@ namespace ResidentAppCross
             _imageService = imageService;
             _dialogService = dialogService;
             Data = data;
-
 			if (loginManager.UserInfo.Roles.Contains("Maintenance") || loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Resident Requests",
-                    Icon = SharedResources.Icons.MaintenanceList,
+                    Icon = SharedResources.Icons.MaintenanceFolder,
                     BadgeLabel = "??",
                     Command = RequestsIndexCommand
                 });
             }
 
-            if (loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
-            {
-                MenuItems.Add(new HomeMenuItemViewModel()
-                {
-                    Name = "Configure Property",
-                    Icon = SharedResources.Icons.LocationConfigure,
-                    Command = ConfigurePropertyCommand
-                });
-            }
 			if (loginManager.UserInfo.Roles.Contains("Officer") || loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Incident Reports",
-                    Icon = SharedResources.Icons.IncidentList,
+                    Icon = SharedResources.Icons.PoliceFolder,
                     Command = IncidentsIndexCommand
                 });
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Checkins",
-                    Icon = SharedResources.Icons.Checkin,
+                    Icon = SharedResources.Icons.LocationOk,
                     Command = new MvxCommand(() =>
                     {
                         ShowViewModel<CourtesyOfficerCheckinsViewModel>();
@@ -69,10 +59,21 @@ namespace ResidentAppCross
                 });
 
             }
+
+            if (loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
+            {
+                MenuItems.Add(new HomeMenuItemViewModel()
+                {
+                    Name = "Configure Property",
+                    Icon = SharedResources.Icons.HomeConfig,
+                    Command = ConfigurePropertyCommand
+                });
+            }
+
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Notifications",
-                Icon = SharedResources.Icons.Alerts,
+                Icon = SharedResources.Icons.Inbox,
                 Command = AlertsCommand
             });
 
@@ -92,13 +93,13 @@ namespace ResidentAppCross
 				MenuItems.Add(new HomeMenuItemViewModel()
 					{
 						Name = "Pay Rent",
-						//Icon = SharedResources.Icons.PayIcon,
+						Icon = SharedResources.Icons.Wallet,
 						Command = PayRentCommand
 					});
 				MenuItems.Add(new HomeMenuItemViewModel()
 					{
 						Name = "Community Partners",
-						//Icon = SharedResources.Icons.PartnersIcon,
+						Icon = SharedResources.Icons.Partners,
 						Command = CommunityPartnersCommand
 					});
 			}
@@ -197,7 +198,7 @@ namespace ResidentAppCross
         public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);
 
         public string ProfileImageUrl => this._loginManager.UserInfo.ImageUrl;
-        public string Username => _loginManager.UserInfo.Email;
+        public string Username => _loginManager.UserInfo.FullName;
     }
 
     public class UserInfoUpdated : MvxMessage

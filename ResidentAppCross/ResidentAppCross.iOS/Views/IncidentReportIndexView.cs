@@ -34,9 +34,33 @@ namespace ResidentAppCross.iOS
 	    private TableDataBinding<FilterTableCell, IncidentIndexFilter> _tableFilterBinding;
 	    private GenericTableSource _tableItemSource;
 	    private GenericTableSource _tableFiltersSource;
+	    private Dictionary<string, UIImage> _statusImages;
 
 
-	    public TableDataBinding<TicketItemCell, IncidentIndexBindingModel> TableItemsBinding
+	    public override string Title => "Incident Reports";
+
+
+        public Dictionary<string, UIImage> StatusImages
+        {
+            get { return _statusImages ?? (_statusImages = new Dictionary<string, UIImage>()); }
+            set { _statusImages = value; }
+        }
+
+        public UIImage GetImageByStatus(string status)
+        {
+            UIImage img;
+            if (!StatusImages.TryGetValue(status, out img))
+            {
+                img =
+                    StatusImages[status] =
+                        AppTheme.GetTemplateIcon(IncidentReportStyling.ListIconByStatus(status),
+                            SharedResources.Size.S);
+            }
+            return img;
+        }
+
+
+        public TableDataBinding<TicketItemCell, IncidentIndexBindingModel> TableItemsBinding
         {
             get
             {
@@ -46,13 +70,24 @@ namespace ResidentAppCross.iOS
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
                         {
-                            cell.MainLabel.Text = item.Comments;
-                            cell.SubLabel.Text = $"{item.Title} - {item.StatusId}";
-                            cell.IconView.Image = AppTheme.GetTemplateIcon(IncidentReportStyling.ListIconByStatus(item.StatusId), SharedResources.Size.S);
+                            cell.MainLabel.Text = "Unit " + item.UnitName;
+
+                            cell.SubLabel.Text = $"{item.Title}";
+
+                            if (!string.IsNullOrEmpty(item.LatestCheckin.Comments.Trim()))
+                            {
+                                cell.NotesLabel.Text = $"{item.StatusId}: {item.LatestCheckin.Comments}";
+                            }
+                            else
+                            {
+                                cell.NotesLabel.Text = $"{item.StatusId} with no comments";
+                            }
+
+                            cell.IconView.Image = GetImageByStatus(item.StatusId);
                             cell.IconView.TintColor = IncidentReportStyling.ColorByStatus(item.StatusId);
-                            cell.DateLabel.Text = "24/1/2 6:64 PM"; ;
+                            cell.DateLabel.Text = item.LatestCheckin?.Date?.ToString("g");
                         },
-                        CellHeight = (item, index) => { return 75; },
+                        CellHeight = (item, index) => { return TicketItemCell.FullHeight; },
                         ItemSelected = item =>
                         {
                             ViewModel.SelectedIncident = item;
@@ -342,9 +377,35 @@ namespace ResidentAppCross.iOS
                 case IncidentReportStatus.Paused:
                     return AppTheme.PausedColor;
                 case IncidentReportStatus.Open:
-                    return AppTheme.PendingColor;
+                    return AppTheme.InProgressColor;
                 case IncidentReportStatus.Reported:
                     return AppTheme.PendingColor;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(val), val, null);
+            }
+        }
+        public static SharedResources.Icons StateIconByStatus(string status)
+        {
+            IncidentReportStatus val;
+            if (!Enum.TryParse(status, out val))
+            {
+                throw new Exception("Unrecognized Report Status: " + status);
+            }
+            return StateIconByStatus(val);
+        }
+
+        public static SharedResources.Icons StateIconByStatus(IncidentReportStatus val)
+        {
+            switch (val)
+            {
+                case IncidentReportStatus.Complete:
+                    return SharedResources.Icons.Ok;
+                case IncidentReportStatus.Paused:
+                    return SharedResources.Icons.Pause;
+                case IncidentReportStatus.Open:
+                    return SharedResources.Icons.Play;
+                case IncidentReportStatus.Reported:
+                    return SharedResources.Icons.QuestionMark;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(val), val, null);
             }

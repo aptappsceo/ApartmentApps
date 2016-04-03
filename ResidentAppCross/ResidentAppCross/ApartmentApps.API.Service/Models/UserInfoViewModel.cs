@@ -22,6 +22,28 @@ namespace ApartmentApps.Client.Models
             set { this._email = value; }
         }
         
+        private string _firstName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string FirstName
+        {
+            get { return this._firstName; }
+            set { this._firstName = value; }
+        }
+        
+        private string _fullName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string FullName
+        {
+            get { return this._fullName; }
+            set { this._fullName = value; }
+        }
+        
         private bool? _hasRegistered;
         
         /// <summary>
@@ -53,6 +75,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._imageUrl; }
             set { this._imageUrl = value; }
+        }
+        
+        private string _lastName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string LastName
+        {
+            get { return this._lastName; }
+            set { this._lastName = value; }
         }
         
         private string _loginProvider;
@@ -97,6 +130,16 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Email = ((string)emailValue);
                 }
+                JToken firstNameValue = inputObject["FirstName"];
+                if (firstNameValue != null && firstNameValue.Type != JTokenType.Null)
+                {
+                    this.FirstName = ((string)firstNameValue);
+                }
+                JToken fullNameValue = inputObject["FullName"];
+                if (fullNameValue != null && fullNameValue.Type != JTokenType.Null)
+                {
+                    this.FullName = ((string)fullNameValue);
+                }
                 JToken hasRegisteredValue = inputObject["HasRegistered"];
                 if (hasRegisteredValue != null && hasRegisteredValue.Type != JTokenType.Null)
                 {
@@ -111,6 +154,11 @@ namespace ApartmentApps.Client.Models
                 if (imageUrlValue != null && imageUrlValue.Type != JTokenType.Null)
                 {
                     this.ImageUrl = ((string)imageUrlValue);
+                }
+                JToken lastNameValue = inputObject["LastName"];
+                if (lastNameValue != null && lastNameValue.Type != JTokenType.Null)
+                {
+                    this.LastName = ((string)lastNameValue);
                 }
                 JToken loginProviderValue = inputObject["LoginProvider"];
                 if (loginProviderValue != null && loginProviderValue.Type != JTokenType.Null)

@@ -71,6 +71,7 @@ namespace ResidentAppCross.ViewModels.Screens
             set { SetProperty(ref _selectedCheckin, value); }
         }
 
+        public string CreatedOnLabel => Request?.CreatedOn?.ToString("g");
 
         public IncidentReportStatus CurrentMaintenanceRequestStatus
         {
@@ -109,7 +110,8 @@ namespace ResidentAppCross.ViewModels.Screens
 
             UnitAddressString = $"Building - {Request?.BuildingName} Unit - {Request?.UnitName}";
             Checkins.Clear();
-            Checkins.AddRange(Request.Checkins);
+            Checkins.AddRange(Request.Checkins.OrderByDescending(x => x.Date));
+            RaisePropertyChanged(nameof(CreatedOnLabel));
             this.Publish(new IncidentReportStatusUpdated(this));
 
         }).OnStart("Loading incident details...").OnFail(ex => { Close(this); });
@@ -143,7 +145,7 @@ namespace ResidentAppCross.ViewModels.Screens
                         vm.HeaderText = "Incident Report";
                         vm.SubHeaderText = "Close";
                         vm.ActionText = "Close Incident";
-                        //vm.ShouldScanQr = true;
+                        vm.ShouldScanQr = false;
                         vm.ActionCommand = this.TaskCommand(async context =>
                         {
 //                            var data = vm.QRScanResult?.Data;

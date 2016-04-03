@@ -10,6 +10,7 @@ using Foundation;
 using MvvmCross.Plugins.PictureChooser.iOS;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.TableSources;
+using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
@@ -41,9 +42,7 @@ namespace ResidentAppCross.iOS.Views
                 if (_filterSection == null)
                 {
                     _filterSection = Formals.Create<SegmentSelectionSection>();
-                    _filterSection.HeightConstraint.Constant = 60;
                     _filterSection.HideTitle(true);
-                    _filterSection.Selector.RemoveAllSegments();
                 }
                 return _filterSection;
             }
@@ -53,6 +52,21 @@ namespace ResidentAppCross.iOS.Views
         {
             get
             {
+
+                var maintenanceReadIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.MessageMaintenanceRead,
+                    SharedResources.Size.S);
+                var maintenanceUnReadIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.MessageMaintenance,
+                    SharedResources.Size.S);
+
+                var policeUnReadIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.MessagePolice,
+                    SharedResources.Size.S);
+
+                var policeReadIcon = AppTheme.GetTemplateIcon(SharedResources.Icons.MessagePoliceRead,
+                    SharedResources.Size.S);
+
+                
+
+
                 if (_tableSection == null)
                 {
                     _tableSection = Formals.Create<TableSection>(); //Create as usually. 
@@ -63,9 +77,36 @@ namespace ResidentAppCross.iOS.Views
                         {
                             cell.TextLabel.Text = item.Title;
                             cell.DetailTextLabel.Text = item.Message;
-                            cell.ImageView.Image = item.Type == "Maintenance" ? UIImage.FromBundle("MaintenaceIcon") : UIImage.FromFile("TimelineStatusIcon.png");
+
+                            if (item.Type == "Maintenance")
+                            {
+                                if (item.HasRead ?? false)
+                                {
+                                    cell.ImageView.Image = maintenanceReadIcon;
+                                }
+                                else
+                                {
+                                    cell.ImageView.Image = maintenanceUnReadIcon;
+                                }
+                            } else if (item.Type == "Courtesy")
+                            {
+                                if (item.HasRead ?? false)
+                                {
+                                    cell.ImageView.Image = policeReadIcon;
+                                }
+                                else
+                                {
+                                    cell.ImageView.Image = policeUnReadIcon;
+                                }
+                            }
+                            else
+                            {
+                                cell.ImageView.Image = null;
+                            }
+
                             cell.TextLabel.MinimumScaleFactor = 0.2f;
                         },
+
                         ItemSelected = item =>
                         {
                             ViewModel.SelectedNotification = item;
@@ -182,17 +223,18 @@ namespace ResidentAppCross.iOS.Views
 
     public static class UITabBarExtensions
     {
-        public static void BindTo<T>(this UITabBar tabbar, IList<T> items, Func<T,string> itemTitleSelector, Func<T, string> itemImageSelector, Func<T,string> itemBadgeSelector, Action<T> itemSelectedHandler, T selectedItem)
+        public static void BindTo<T>(this UITabBar tabbar, IList<T> items, Func<T,string> itemTitleSelector, Func<T, SharedResources.Icons> itemImageSelector, Func<T,string> itemBadgeSelector, Action<T> itemSelectedHandler, T selectedItem)
         {
             var index = 0;
             UITabBarItem selectedUiItem = null;
             var uiItems =
                 items.Select(i =>
                 {
-                    var imageSelector = itemImageSelector(i);
-                    var fromBundle = UIImage.FromBundle(imageSelector) ?? UIImage.FromFile(imageSelector);
-                    var uiTabBarItem = new UITabBarItem(itemTitleSelector(i),
-                        fromBundle.ImageToFitSize(new CGSize(30, 30)), index++)
+                    var fromBundle = AppTheme.GetTemplateIcon(itemImageSelector(i),SharedResources.Size.XS);
+                    var uiTabBarItem = new UITabBarItem(
+                        itemTitleSelector(i),
+                        //null,
+                        fromBundle, index++)
                     {
                         BadgeValue = itemBadgeSelector(i)
                     };

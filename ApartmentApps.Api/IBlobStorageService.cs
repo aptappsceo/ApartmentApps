@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApartmentApps.Data;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
@@ -17,17 +18,20 @@ namespace ApartmentApps.Api
     {
         string UploadPhoto(byte[] data, string photoKey);
         string GetPhotoUrl(string filename);
+        IEnumerable<ImageReference> GetImages(Guid groupId);
     }
 
     public class BlobStorageService : IBlobStorageService
     {
+        private readonly ApplicationDbContext _context;
 
         CloudStorageAccount _storageAccount;
         CloudBlobClient _blobClient;
         CloudBlobContainer _photoBlobContainer;
 
-        public BlobStorageService()
+        public BlobStorageService(ApplicationDbContext context)
         {
+            _context = context;
             _storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=apartmentapps;AccountKey=AfGlM/AKQ6p62MlWtR1gRdezYflU9BUL8n19J4Dtkjkb5xgP3by0/N64uDP1i3hG1CXWtjVpWZ6WAUIDYMmI4w==;BlobEndpoint=https://apartmentapps.blob.core.windows.net/;TableEndpoint=https://apartmentapps.table.core.windows.net/;QueueEndpoint=https://apartmentapps.queue.core.windows.net/;FileEndpoint=https://apartmentapps.file.core.windows.net/");
             _blobClient = _storageAccount.CreateCloudBlobClient();
 
@@ -70,6 +74,17 @@ namespace ApartmentApps.Api
 
         }
 
+        public IEnumerable<ImageReference> GetImages(Guid groupId)
+        {
+            var imageReferences = _context.ImageReferences.Where(r => r.GroupId == groupId).ToList();
+            foreach (var reference in imageReferences)
+            {
+                reference.Url = GetPhotoUrl(reference.Url); //This call replaces RELATIVE url with ABSOLUTE url. ( STORAGE SERVICE + IMAGE URL)
+                                                            //This is done to make URLs independent from the service, which is used to store them.                            
+                                                            //It needs some cleanup later maybe
+                yield return reference;
+            }
+        }
         public string GetPhotoUrl(string filename)
         {
             if (filename == null) return null;

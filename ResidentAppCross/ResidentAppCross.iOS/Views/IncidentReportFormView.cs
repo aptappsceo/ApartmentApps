@@ -12,6 +12,7 @@ using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
 using ResidentAppCross.iOS.Views.Sections.CollectionSections;
 using ResidentAppCross.iOS.Views.TableSources;
+using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
@@ -53,10 +54,6 @@ namespace ResidentAppCross.iOS
                 if (_headerSection == null)
                 {
                     _headerSection = Formals.Create<HeaderSection>();
-                    _headerSection.LogoImage.Image = UIImage.FromFile("PoliceIcon");
-                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
-                    _headerSection.MainLabel.Text = "Report Incident";
-                    _headerSection.SubLabel.Text = "Fill the information below";
                 }
                 return _headerSection;
             }
@@ -69,11 +66,8 @@ namespace ResidentAppCross.iOS
                 if (_incidentReportTypeSegment == null)
                 {
                     _incidentReportTypeSegment = Formals.Create<SegmentSelectionSection>();
-                    _incidentReportTypeSegment.Selector.RemoveAllSegments();
-                    _incidentReportTypeSegment.Label.Text = "Incident Type";
-                    _incidentReportTypeSegment.HeightConstraint.Constant = 80;
                     _incidentReportTypeSegment.Editable = true;
-                    _incidentReportTypeSegment.Selector.ControlStyle = UISegmentedControlStyle.Bezeled;
+                    _incidentReportTypeSegment.Selector.ApportionsSegmentWidthsByContent = true;
                 }
                 return _incidentReportTypeSegment;
             }
@@ -86,9 +80,7 @@ namespace ResidentAppCross.iOS
                 if (_commentsSection == null)
                 {
                     _commentsSection = Formals.Create<TextViewSection>();
-                    _commentsSection.HeightConstraint.Constant = 170;
-                    _commentsSection.HeaderLabel.Text = "Details & Comments";
-                    _commentsSection.SetEditable(true);
+                    _commentsSection.Editable = true;
                 }
                 return _commentsSection;
             }
@@ -111,6 +103,13 @@ namespace ResidentAppCross.iOS
         public override void BindForm()
         {
             base.BindForm();
+
+
+            HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.PolicePlus, SharedResources.Size.L);
+            HeaderSection.LogoImage.TintColor = AppTheme.CreateColor;
+            HeaderSection.MainLabel.Text = "Report Incident";
+            HeaderSection.SubLabel.Text = "Fill the information below";
+            IncidentReportTypeSegment.Label.Text = "Incident Type";
 
             var b = this.CreateBindingSet<IncidentReportFormView, IncidentReportFormViewModel>();
 

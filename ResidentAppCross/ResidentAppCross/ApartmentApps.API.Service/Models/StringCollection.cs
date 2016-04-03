@@ -37,18 +37,5 @@ namespace ApartmentApps.Client.Models
             }
             return outputObject;
         }
-        
-        /// <summary>
-        /// Deserialize the object
-        /// </summary>
-        public static IList<string> DeserializeJson(JToken inputObject)
-        {
-            IList<string> deserializedObject = new List<string>();
-            foreach (JToken iListValue in ((JArray)inputObject))
-            {
-                deserializedObject.Add(((string)iListValue));
-            }
-            return deserializedObject;
-        }
     }
 }

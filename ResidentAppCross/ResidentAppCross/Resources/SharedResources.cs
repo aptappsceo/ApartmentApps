@@ -10,6 +10,8 @@ namespace ResidentAppCross.Resources
     {
         public enum Icons
         {
+            MaintenanceFolder,
+            PoliceFolder,
             Alerts,
             Checkin,
             Exit,
@@ -23,6 +25,8 @@ namespace ResidentAppCross.Resources
             Settings,
             Calendar,
             Ok,
+            Info,
+            Past,
             Pause,
             Play,
             QuestionMark,
@@ -59,6 +63,22 @@ namespace ResidentAppCross.Resources
             PolicePlay,
             PolicePause,
             PoliceQuestion,
+            Call,
+            Happy,
+            Partners,
+            Payment,
+            MaintenanceCalendar,
+            HomeConfig,
+            LocationConfig,
+            LocationOk,
+            LocationQuestion,
+            Wallet,
+            Details,
+            Inbox,
+            MessageMaintenance,
+            MessageMaintenanceRead,
+            MessagePolice,
+            MessagePoliceRead
         }
 
         public enum Size

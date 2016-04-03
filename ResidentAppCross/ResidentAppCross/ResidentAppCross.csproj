@@ -51,10 +51,12 @@
     <Compile Include="ApartmentApps.API.Service\ICheckins.cs" />
     <Compile Include="ApartmentApps.API.Service\IConfigure.cs" />
     <Compile Include="ApartmentApps.API.Service\ICourtesy.cs" />
+    <Compile Include="ApartmentApps.API.Service\ILookups.cs" />
     <Compile Include="ApartmentApps.API.Service\IMaitenance.cs" />
     <Compile Include="ApartmentApps.API.Service\INotifiations.cs" />
     <Compile Include="ApartmentApps.API.Service\IRegister.cs" />
-    <Compile Include="ApartmentApps.API.Service\IValues.cs" />
+    <Compile Include="ApartmentApps.API.Service\Lookups.cs" />
+    <Compile Include="ApartmentApps.API.Service\LookupsExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Maitenance.cs" />
     <Compile Include="ApartmentApps.API.Service\MaitenanceExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AddExternalLoginBindingModel.cs" />
@@ -113,8 +115,6 @@
     <Compile Include="ApartmentApps.API.Service\NotifiationsExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Register.cs" />
     <Compile Include="ApartmentApps.API.Service\RegisterExtensions.cs" />
-    <Compile Include="ApartmentApps.API.Service\Values.cs" />
-    <Compile Include="ApartmentApps.API.Service\ValuesExtensions.cs" />
     <Compile Include="ViewModels\AparmentAppsDelegating.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\StubCommands.cs" />

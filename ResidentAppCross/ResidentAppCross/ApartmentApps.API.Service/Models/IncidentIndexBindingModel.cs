@@ -10,6 +10,17 @@ namespace ApartmentApps.Client.Models
 {
     public partial class IncidentIndexBindingModel
     {
+        private string _buildingName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string BuildingName
+        {
+            get { return this._buildingName; }
+            set { this._buildingName = value; }
+        }
+        
         private string _comments;
         
         /// <summary>
@@ -30,6 +41,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._id; }
             set { this._id = value; }
+        }
+        
+        private IncidentCheckinBindingModel _latestCheckin;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IncidentCheckinBindingModel LatestCheckin
+        {
+            get { return this._latestCheckin; }
+            set { this._latestCheckin = value; }
         }
         
         private UserBindingModel _reportedBy;
@@ -76,6 +98,17 @@ namespace ApartmentApps.Client.Models
             set { this._title = value; }
         }
         
+        private string _unitName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string UnitName
+        {
+            get { return this._unitName; }
+            set { this._unitName = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the IncidentIndexBindingModel class.
         /// </summary>
@@ -90,6 +123,11 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken buildingNameValue = inputObject["BuildingName"];
+                if (buildingNameValue != null && buildingNameValue.Type != JTokenType.Null)
+                {
+                    this.BuildingName = ((string)buildingNameValue);
+                }
                 JToken commentsValue = inputObject["Comments"];
                 if (commentsValue != null && commentsValue.Type != JTokenType.Null)
                 {
@@ -99,6 +137,13 @@ namespace ApartmentApps.Client.Models
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((int)idValue);
+                }
+                JToken latestCheckinValue = inputObject["LatestCheckin"];
+                if (latestCheckinValue != null && latestCheckinValue.Type != JTokenType.Null)
+                {
+                    IncidentCheckinBindingModel incidentCheckinBindingModel = new IncidentCheckinBindingModel();
+                    incidentCheckinBindingModel.DeserializeJson(latestCheckinValue);
+                    this.LatestCheckin = incidentCheckinBindingModel;
                 }
                 JToken reportedByValue = inputObject["ReportedBy"];
                 if (reportedByValue != null && reportedByValue.Type != JTokenType.Null)
@@ -121,6 +166,11 @@ namespace ApartmentApps.Client.Models
                 if (titleValue != null && titleValue.Type != JTokenType.Null)
                 {
                     this.Title = ((string)titleValue);
+                }
+                JToken unitNameValue = inputObject["UnitName"];
+                if (unitNameValue != null && unitNameValue.Type != JTokenType.Null)
+                {
+                    this.UnitName = ((string)unitNameValue);
                 }
             }
         }
