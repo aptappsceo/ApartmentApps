@@ -31,6 +31,17 @@ namespace ApartmentApps.Client.Models
             set { this._hasRead = value; }
         }
         
+        private int? _id;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private string _message;
         
         /// <summary>
@@ -98,6 +109,11 @@ namespace ApartmentApps.Client.Models
                 if (hasReadValue != null && hasReadValue.Type != JTokenType.Null)
                 {
                     this.HasRead = ((bool)hasReadValue);
+                }
+                JToken idValue = inputObject["Id"];
+                if (idValue != null && idValue.Type != JTokenType.Null)
+                {
+                    this.Id = ((int)idValue);
                 }
                 JToken messageValue = inputObject["Message"];
                 if (messageValue != null && messageValue.Type != JTokenType.Null)

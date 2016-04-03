@@ -122,6 +122,17 @@ namespace ApartmentApps.Client.Models
             set { this._status = value; }
         }
         
+        private int? _unitId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? UnitId
+        {
+            get { return this._unitId; }
+            set { this._unitId = value; }
+        }
+        
         private string _unitName;
         
         /// <summary>
@@ -208,6 +219,11 @@ namespace ApartmentApps.Client.Models
                 if (statusValue != null && statusValue.Type != JTokenType.Null)
                 {
                     this.Status = ((string)statusValue);
+                }
+                JToken unitIdValue = inputObject["UnitId"];
+                if (unitIdValue != null && unitIdValue.Type != JTokenType.Null)
+                {
+                    this.UnitId = ((int)unitIdValue);
                 }
                 JToken unitNameValue = inputObject["UnitName"];
                 if (unitNameValue != null && unitNameValue.Type != JTokenType.Null)

@@ -84,7 +84,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<string>> RegisterWithOperationResponseAsync(RegisterBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<string>> RegisterExternalWithOperationResponseAsync(RegisterExternalBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='model'>
         /// Required.
@@ -92,7 +92,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<string>> RegisterExternalWithOperationResponseAsync(RegisterExternalBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<string>> RegisterFromPhoneWithOperationResponseAsync(RegisterFromPhoneBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='model'>
         /// Required.

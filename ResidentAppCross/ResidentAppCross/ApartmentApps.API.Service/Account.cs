@@ -864,7 +864,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<string>> RegisterWithOperationResponseAsync(RegisterBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<string>> RegisterExternalWithOperationResponseAsync(RegisterExternalBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Validate
             if (model == null)
@@ -880,12 +880,12 @@ namespace ApartmentApps.Client
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("model", model);
-                ServiceClientTracing.Enter(invocationId, this, "RegisterAsync", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "RegisterExternalAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/api/Account/Register";
+            url = url + "/api/Account/RegisterExternal";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -981,7 +981,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<string>> RegisterExternalWithOperationResponseAsync(RegisterExternalBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<string>> RegisterFromPhoneWithOperationResponseAsync(RegisterFromPhoneBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Validate
             if (model == null)
@@ -997,12 +997,12 @@ namespace ApartmentApps.Client
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("model", model);
-                ServiceClientTracing.Enter(invocationId, this, "RegisterExternalAsync", tracingParameters);
+                ServiceClientTracing.Enter(invocationId, this, "RegisterFromPhoneAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/api/Account/RegisterExternal";
+            url = url + "/api/Account/Register";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

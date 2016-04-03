@@ -136,7 +136,7 @@ namespace ApartmentApps.Api
         public void IncidentReportSubmited( IncidentReport incidentReport)
         {
             if (incidentReport.User.PropertyId != null)
-                SendAlert(incidentReport.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", incidentReport.Comments, "Maintenance", incidentReport.Id);
+                SendAlert(incidentReport.User.PropertyId.Value, "Officer", "An incident report has been submitted", incidentReport.Comments, "Incident", incidentReport.Id);
         }
 
         public void IncidentReportCheckin( IncidentReportCheckin incidentReportCheckin,
@@ -144,7 +144,7 @@ namespace ApartmentApps.Api
         {
             if (incidentReport.User?.PropertyId != null)
             {
-                SendAlert(incidentReport.User, $"Incident Report {incidentReport.StatusId}", incidentReport.Comments, "Maintenance", incidentReport.Id);
+                SendAlert(incidentReport.User, $"Incident Report {incidentReport.StatusId}", incidentReport.Comments, "Incident", incidentReport.Id);
             }
         }
     }

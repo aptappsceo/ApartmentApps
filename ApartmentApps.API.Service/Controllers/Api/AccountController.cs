@@ -360,6 +360,29 @@ namespace ApartmentApps.API.Service.Controllers
             return logins;
         }
 
+
+        // POST api/Account/Register
+        [AllowAnonymous]
+        [Route("Register")]
+        public async Task<IHttpActionResult> RegisterFromPhone(RegisterFromPhoneBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            // TODO
+            //var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+            //IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            //if (!result.Succeeded)
+            //{
+            //    return GetErrorResult(result);
+            //}
+
+            return Ok();
+        }
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]

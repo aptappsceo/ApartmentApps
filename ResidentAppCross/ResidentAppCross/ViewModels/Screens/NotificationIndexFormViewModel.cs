@@ -77,7 +77,10 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             if (SelectedNotification?.RelatedId == null) return;
 
-            Task.Run(()=> _service.Alerts.PostWithOperationResponseAsync(0));
+
+            var alertId = SelectedNotification?.Id;
+            if (alertId.HasValue)
+                Task.Run(()=> _service.Alerts.PostWithOperationResponseAsync(alertId.Value));
 
             if (SelectedNotification.Type == "Maintenance")
             {
@@ -125,7 +128,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private void UpdateFilters()
         {
             FilteredNotifications.Clear();
-            FilteredNotifications.AddRange(Notifications.Where(item => (CurrentNotificationStatusFilter?.FilterExpression(item) ?? true)));
+            FilteredNotifications.AddRange(Notifications.Where(item => (CurrentNotificationStatusFilter?.FilterExpression(item) ?? true)).OrderBy(n=>n.CreatedOn));
             this.Publish(new NotificationFiltersUpdatedEvent(this));
         }
 

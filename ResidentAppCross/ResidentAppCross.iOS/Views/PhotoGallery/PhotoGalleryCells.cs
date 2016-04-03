@@ -34,7 +34,7 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
             }
         }
 
-        public string LoadingUrl { get; set; }
+        public string CurrentUrl { get; set; }
         private void Initialize()
         {
             this.ImageView = new UIImageView (this.ContentView.Bounds);
@@ -45,8 +45,8 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
 
             this.AddGestureRecognizer(new UITapGestureRecognizer(() =>
             {
-                if (string.IsNullOrEmpty(LoadingUrl)) return;
-                Mvx.Resolve<IDialogService>().OpenImageFullScreenFromUrl(LoadingUrl);
+                if (string.IsNullOrEmpty(CurrentUrl)) return;
+                Mvx.Resolve<IDialogService>().OpenImageFullScreenFromUrl(CurrentUrl);
             }));
 
 
@@ -56,12 +56,12 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
         {
             ActivityIndicator?.RemoveFromSuperview();
             ImageView.Image = image;
-            LoadingUrl = null;
+            CurrentUrl = null;
         }
 
         public void SetImageFromUrl(string loadingUrl)
         {
-            if (loadingUrl == LoadingUrl) return;
+            if (loadingUrl == CurrentUrl) return;
             ActivityIndicator?.RemoveFromSuperview();
             ActivityIndicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.White);
             ActivityIndicator.Color = UIColor.White;
@@ -87,8 +87,6 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
                 });
             
         }
-
-        public string CurrentUrl { get; set; }
 
         public UIActivityIndicatorView ActivityIndicator { get; set; }
     }

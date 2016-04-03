@@ -171,7 +171,7 @@ namespace ResidentAppCross.iOS.Views
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);
-        //    ViewModel.UpdateNotificationsCommand.Execute(null);
+            ViewModel.UpdateNotificationsCommand.Execute(null);
         }
 
         public override void BindForm()

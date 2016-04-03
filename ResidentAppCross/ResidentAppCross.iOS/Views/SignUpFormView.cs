@@ -33,22 +33,16 @@ namespace ResidentAppCross.iOS
             EdgesForExtendedLayout = UIRectEdge.None;
 
             var set = this.CreateBindingSet<SignUpFormView, SignUpFormViewModel>();
-
-	        //set.Bind(_firstLastNameTextField).For(f => f.Text).TwoWay().To(vm => vm.FirstLastName);
+	        set.Bind(_firstNameField).For(f => f.Text).TwoWay().To(vm => vm.FirstName);
+	        set.Bind(_lastNameField).For(f => f.Text).TwoWay().To(vm => vm.LastName);
 	        set.Bind(_emailTextField).For(f => f.Text).TwoWay().To(vm => vm.Email);
-	        //set.Bind(_birthdayField).For(f => f.Text).TwoWay().To(vm => vm.BirthdayTitle);
-	        //set.Bind(_usernameField).For(f => f.Text).TwoWay().To(vm => vm.Username);
+	        set.Bind(_phoneNumberField).For(f => f.Text).TwoWay().To(vm => vm.PhoneNumber);
 	        set.Bind(_passwordField).For(f => f.Text).TwoWay().To(vm => vm.Password);
 	        set.Bind(_passwordConfirmationField).For(f => f.Text).TwoWay().To(vm => vm.PasswordConfirmation);
 	        set.Bind(_signUpButton).To(vm => vm.SignUpCommand);
             set.Apply();
 
-//            _birthdayField.EditingDidBegin += (sender, args) =>
-//            {
-////                _birthdayField.ResignFirstResponder();
-////                _birthdayField.EndEditing(true);
-//                ViewModel.SelectBirthdayCommand.Execute(null);
-//            };
+         
 
 	    }
 

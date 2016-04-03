@@ -20,6 +20,42 @@ namespace ApartmentApps.Client
         /// <param name='id'>
         /// Required.
         /// </param>
+        /// <param name='unitId'>
+        /// Required.
+        /// </param>
+        public static object AssignUnitToIncidentReport(this ICourtesy operations, int id, int unitId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ICourtesy)s).AssignUnitToIncidentReportAsync(id, unitId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.ICourtesy.
+        /// </param>
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='unitId'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<object> AssignUnitToIncidentReportAsync(this ICourtesy operations, int id, int unitId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<object> result = await operations.AssignUnitToIncidentReportWithOperationResponseAsync(id, unitId, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.ICourtesy.
+        /// </param>
+        /// <param name='id'>
+        /// Required.
+        /// </param>
         /// <param name='comments'>
         /// Required.
         /// </param>

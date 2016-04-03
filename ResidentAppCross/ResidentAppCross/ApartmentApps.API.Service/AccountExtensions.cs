@@ -248,36 +248,6 @@ namespace ApartmentApps.Client
         /// <param name='model'>
         /// Required.
         /// </param>
-        public static string Register(this IAccount operations, RegisterBindingModel model)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IAccount)s).RegisterAsync(model);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the ApartmentApps.Client.IAccount.
-        /// </param>
-        /// <param name='model'>
-        /// Required.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        public static async Task<string> RegisterAsync(this IAccount operations, RegisterBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Microsoft.Rest.HttpOperationResponse<string> result = await operations.RegisterWithOperationResponseAsync(model, cancellationToken).ConfigureAwait(false);
-            return result.Body;
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the ApartmentApps.Client.IAccount.
-        /// </param>
-        /// <param name='model'>
-        /// Required.
-        /// </param>
         public static string RegisterExternal(this IAccount operations, RegisterExternalBindingModel model)
         {
             return Task.Factory.StartNew((object s) => 
@@ -299,6 +269,36 @@ namespace ApartmentApps.Client
         public static async Task<string> RegisterExternalAsync(this IAccount operations, RegisterExternalBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             Microsoft.Rest.HttpOperationResponse<string> result = await operations.RegisterExternalWithOperationResponseAsync(model, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IAccount.
+        /// </param>
+        /// <param name='model'>
+        /// Required.
+        /// </param>
+        public static string RegisterFromPhone(this IAccount operations, RegisterFromPhoneBindingModel model)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAccount)s).RegisterFromPhoneAsync(model);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IAccount.
+        /// </param>
+        /// <param name='model'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<string> RegisterFromPhoneAsync(this IAccount operations, RegisterFromPhoneBindingModel model, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<string> result = await operations.RegisterFromPhoneWithOperationResponseAsync(model, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         

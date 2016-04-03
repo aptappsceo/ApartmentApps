@@ -16,6 +16,17 @@ namespace ApartmentApps.Client
         /// <param name='id'>
         /// Required.
         /// </param>
+        /// <param name='unitId'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> AssignUnitToIncidentReportWithOperationResponseAsync(int id, int unitId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='id'>
+        /// Required.
+        /// </param>
         /// <param name='comments'>
         /// Required.
         /// </param>
