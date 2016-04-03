@@ -22,13 +22,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="isn-dJ-KTo">
-                    <rect key="frame" x="8" y="38" width="584" height="554"/>
+                    <rect key="frame" x="8" y="46" width="584" height="546"/>
                 </mapView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="prw-hP-J3K" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="IuN-Or-DT6"/>
-                <constraint firstItem="isn-dJ-KTo" firstAttribute="top" secondItem="prw-hP-J3K" secondAttribute="bottom" id="aFG-IF-U3s"/>
+                <constraint firstItem="isn-dJ-KTo" firstAttribute="top" secondItem="prw-hP-J3K" secondAttribute="bottom" constant="8" symbolic="YES" id="aFG-IF-U3s"/>
                 <constraint firstAttribute="trailingMargin" secondItem="prw-hP-J3K" secondAttribute="trailing" id="b0F-M0-GEA"/>
                 <constraint firstItem="prw-hP-J3K" firstAttribute="top" secondItem="1" secondAttribute="topMargin" id="cha-1v-xcC"/>
                 <constraint firstAttribute="bottomMargin" secondItem="isn-dJ-KTo" secondAttribute="bottom" id="eQz-oR-iC0"/>
