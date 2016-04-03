@@ -128,7 +128,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private void UpdateFilters()
         {
             FilteredNotifications.Clear();
-            FilteredNotifications.AddRange(Notifications.Where(item => (CurrentNotificationStatusFilter?.FilterExpression(item) ?? true)).OrderBy(n=>n.CreatedOn));
+            FilteredNotifications.AddRange(Notifications.Where(item => (CurrentNotificationStatusFilter?.FilterExpression(item) ?? true)));
             this.Publish(new NotificationFiltersUpdatedEvent(this));
         }
 
