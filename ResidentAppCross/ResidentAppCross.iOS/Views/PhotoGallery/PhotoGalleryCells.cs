@@ -2,6 +2,7 @@ using CoreGraphics;
 using Foundation;
 using MvvmCross.Platform;
 using ResidentAppCross.Services;
+using SDWebImage;
 using UIKit;
 
 namespace ResidentAppCross.iOS.Views.PhotoGallery
@@ -33,7 +34,7 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
             }
         }
 
-        public string LoadingUrl { get; set; }
+        public string CurrentUrl { get; set; }
         private void Initialize()
         {
             this.ImageView = new UIImageView (this.ContentView.Bounds);
@@ -44,11 +45,49 @@ namespace ResidentAppCross.iOS.Views.PhotoGallery
 
             this.AddGestureRecognizer(new UITapGestureRecognizer(() =>
             {
-                if (string.IsNullOrEmpty(LoadingUrl)) return;
-                Mvx.Resolve<IDialogService>().OpenImageFullScreenFromUrl(LoadingUrl);
+                if (string.IsNullOrEmpty(CurrentUrl)) return;
+                Mvx.Resolve<IDialogService>().OpenImageFullScreenFromUrl(CurrentUrl);
             }));
 
 
         }
+
+        public void SetImage(UIImage image)
+        {
+            ActivityIndicator?.RemoveFromSuperview();
+            ImageView.Image = image;
+            CurrentUrl = null;
+        }
+
+        public void SetImageFromUrl(string loadingUrl)
+        {
+            if (loadingUrl == CurrentUrl) return;
+            ActivityIndicator?.RemoveFromSuperview();
+            ActivityIndicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.White);
+            ActivityIndicator.Color = UIColor.White;
+            ActivityIndicator.BackgroundColor = UIColor.Black.ColorWithAlpha(0.7f);
+            ImageView.AddSubview(ActivityIndicator);
+            ActivityIndicator.Frame = ImageView.Bounds;
+            ActivityIndicator.HidesWhenStopped = true;
+            ActivityIndicator.StartAnimating();
+
+            //using (var data = NSData.FromUrl(new NSUrl(ViewModel.ProfileImageUrl)))
+            CurrentUrl = loadingUrl;
+            ImageView.SetImage(
+                url: new NSUrl(loadingUrl),
+                placeholder: UIImage.FromFile("avatar-placeholder.png"),
+                completedBlock: (image, error, type, url) =>
+                {
+                    UIView.Animate(0.4f, () =>
+                    {
+                        ActivityIndicator.Alpha = 0;
+
+                    }, () => { ActivityIndicator.RemoveFromSuperview(); });
+                    //activityIndicator.RemoveFromSuperview();
+                });
+            
+        }
+
+        public UIActivityIndicatorView ActivityIndicator { get; set; }
     }
 }

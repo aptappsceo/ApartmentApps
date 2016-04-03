@@ -70,17 +70,17 @@ namespace ResidentAppCross.ViewModels.Screens
             var task = await _service.Alerts.GetWithOperationResponseAsync();
             Notifications.Clear();
             Notifications.AddRange(task.Body);
+            UpdateFilters();
         });
 
         public ICommand OpenSelectedNotificationDetailsCommand => new MvxCommand(() =>
         {
             if (SelectedNotification?.RelatedId == null) return;
 
-            Task.Run(async () =>
-            {
-                //DO IT HERE. Mark Message as read
-            });
 
+            var alertId = SelectedNotification?.Id;
+            if (alertId.HasValue)
+                Task.Run(()=> _service.Alerts.PostWithOperationResponseAsync(alertId.Value));
 
             if (SelectedNotification.Type == "Maintenance")
             {
@@ -123,17 +123,13 @@ namespace ResidentAppCross.ViewModels.Screens
             CurrentNotificationStatusFilter = defaultStatusFilter;
 
             UpdateNotificationsCommand.Execute(null);
-            UpdateFilters();
         }
 
         private void UpdateFilters()
         {
-
             FilteredNotifications.Clear();
-            FilteredNotifications.AddRange(Notifications.Where(item => (CurrentNotificationStatusFilter?.FilterExpression(item) ?? true)));
-
+            FilteredNotifications.AddRange(Notifications.Where(item => (CurrentNotificationStatusFilter?.FilterExpression(item) ?? true)).OrderBy(n=>n.CreatedOn));
             this.Publish(new NotificationFiltersUpdatedEvent(this));
-
         }
 
     }
