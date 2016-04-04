@@ -314,15 +314,19 @@ namespace ResidentAppCross.iOS
                 ForegroundColor = AppTheme.SecondaryForegroundColor,
                 FontSize = 23.0f
             };
+			if (ViewModel.CanUpdateRequest) {
+				FooterPauseButton = FooterSection.AddButton("Pause", style);
+				FooterFinishButton = FooterSection.AddButton("Close", style);
+				FooterStartButton = FooterSection.AddButton("Open", style);
+
+				b.Bind(FooterPauseButton).To(vm => vm.PauseIncidentCommmand);
+				b.Bind(FooterFinishButton).To(vm => vm.CloseIncidentCommand);
+				b.Bind(FooterStartButton).To(vm => vm.OpenIncidentCommand);
+			}
+
+          
 
 
-            FooterPauseButton = FooterSection.AddButton("Pause", style);
-            FooterFinishButton = FooterSection.AddButton("Close", style);
-            FooterStartButton = FooterSection.AddButton("Open", style);
-
-            b.Bind(FooterPauseButton).To(vm => vm.PauseIncidentCommmand);
-            b.Bind(FooterFinishButton).To(vm => vm.CloseIncidentCommand);
-            b.Bind(FooterStartButton).To(vm => vm.OpenIncidentCommand);
 
             //Comments section
 
