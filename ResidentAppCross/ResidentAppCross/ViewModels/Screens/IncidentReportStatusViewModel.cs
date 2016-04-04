@@ -46,7 +46,7 @@ namespace ResidentAppCross.ViewModels.Screens
             _loginManager = loginManager;
         }
 
-        public bool CanUpdateRequest => _loginManager.UserInfo.Roles.Contains("Maintenance") ||
+        public bool CanUpdateRequest => _loginManager.UserInfo.Roles.Contains("Officer") ||
                                         _loginManager.UserInfo.Roles.Contains("PropertyAdmin");
 
         public int IncidentReportId

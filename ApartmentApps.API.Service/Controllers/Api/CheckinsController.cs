@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using ApartmentApps.Api;
 using ApartmentApps.API.Service.Models;
@@ -34,12 +37,12 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 });
         }
         [System.Web.Mvc.HttpPost]
-        public IHttpActionResult Post(int locationId, double latitude= 0, double longitude = 0)
+        public async Task<IHttpActionResult> Post(int locationId, double latitude= 0, double longitude = 0)
         {
-            var location = Context.CourtesyOfficerLocations.FirstOrDefault(p => p.Id == locationId);
+            var location = await Context.CourtesyOfficerLocations.FirstOrDefaultAsync(p => p.Id == locationId);
             if (location == null)
             {
-
+                return this.Content(HttpStatusCode.BadRequest, "Location not found.");
                 return this.BadRequest("Location not found.");
             }
             var distanceToCheckin = DistanceCalcs.DistanceInFeet(location.Latitude, location.Longitude, latitude, longitude);
@@ -56,6 +59,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 Context.SaveChanges();
                 return Ok();
             }
+
+            return this.Content(HttpStatusCode.BadRequest, $"You must be within 100 ft. You are currently {distanceToCheckin} ft.");
             return this.BadRequest($"You must be within 100 ft. You are currently {distanceToCheckin} ft.");
         }
         public class DistanceCalcs
