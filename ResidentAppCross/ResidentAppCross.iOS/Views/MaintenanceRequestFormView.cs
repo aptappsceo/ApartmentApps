@@ -46,6 +46,18 @@ namespace ResidentAppCross.iOS.Views
 
         public override string Title => "Maintenance";
 
+        public LabelWithButtonSection UnitSection
+        {
+            get
+            {
+                if (_scheduleSection == null)
+                {
+                    _scheduleSection = Formals.Create<LabelWithButtonSection>();
+                    _scheduleSection.Label.Text = "Unit";
+                }
+                return _scheduleSection;
+            }
+        }
 
         public HeaderSection HeaderSection
         {
@@ -144,6 +156,11 @@ namespace ResidentAppCross.iOS.Views
 
             b.Bind(RequestTypeSection.Button).For("Title").To(vm => vm.SelectRequestTypeActionTitle);
 			b.Bind(RequestTypeSection.Button).To(vm => vm.SelectRequestTypeCommand).CommandParameter(RequestTypeSection.Button);
+            if (ViewModel.ShouldSelectUnit) {
+            	b.Bind(UnitSection.Button).For("Title").To(vm => vm.SelectedUnitTitle);
+	    	b.Bind(UnitSection.Button).To(vm => vm.SetUnitCommand).CommandParameter(UnitSection.Button);	
+            }
+            
 
             //Comments Section
 
@@ -200,7 +217,11 @@ namespace ResidentAppCross.iOS.Views
 //            section.Button.SetTitleColor(AppTheme.ColorFromHex(0xD1CCDC), UIControlState.Normal);
 //            content.Add(section);
 //
-
+		if (ViewModel.ShouldSelectUnit) {
+			
+			content.Add(UnitSection);
+		}
+	    
             content.Add(RequestTypeSection);
             content.Add(CommentsSection);
             content.Add(PhotoSection);
