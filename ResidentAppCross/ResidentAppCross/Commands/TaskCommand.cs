@@ -66,6 +66,11 @@ namespace ResidentAppCross.Commands
 
                 await _execute(this);
             }
+			catch (Microsoft.Rest.HttpOperationException ex) {
+				var message = await ex.Response.Content.ReadAsStringAsync ();
+				Dispatcher.RequestMainThreadAction(()=> { _owner.FailTaskWithPrompt(message,ExceptionHandler);});
+
+			}
             catch (Exception ex)
             {
                 Dispatcher.RequestMainThreadAction(()=> { ProcessFail(ex); });
