@@ -315,14 +315,18 @@ namespace ResidentAppCross.iOS
                 FontSize = 23.0f
             };
 
+				FooterPauseButton = FooterSection.AddButton("Pause", style);
+				FooterFinishButton = FooterSection.AddButton("Close", style);
+				FooterStartButton = FooterSection.AddButton("Open", style);
+			if (ViewModel.CanUpdateRequest) {
+				b.Bind(FooterPauseButton).To(vm => vm.PauseIncidentCommmand);
+				b.Bind(FooterFinishButton).To(vm => vm.CloseIncidentCommand);
+				b.Bind(FooterStartButton).To(vm => vm.OpenIncidentCommand);
+			}
 
-            FooterPauseButton = FooterSection.AddButton("Pause", style);
-            FooterFinishButton = FooterSection.AddButton("Close", style);
-            FooterStartButton = FooterSection.AddButton("Open", style);
+          
 
-            b.Bind(FooterPauseButton).To(vm => vm.PauseIncidentCommmand);
-            b.Bind(FooterFinishButton).To(vm => vm.CloseIncidentCommand);
-            b.Bind(FooterStartButton).To(vm => vm.OpenIncidentCommand);
+
 
             //Comments section
 
