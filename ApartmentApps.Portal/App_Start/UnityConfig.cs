@@ -31,6 +31,7 @@ namespace ApartmentApps.Portal
                 new HierarchicalLifetimeManager());
             container.RegisterType<IAuthenticationManager>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().Authentication));
           
+            
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
