@@ -16,7 +16,7 @@ using ResidentAppCross.Events;
 using ResidentAppCross.Extensions;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels.Screens;
-
+using ResidentAppCross.ServiceClient;
 namespace ResidentAppCross.ViewModels
 {
 
@@ -34,13 +34,15 @@ namespace ResidentAppCross.ViewModels
 
         private string _title;
         private LookupPairModel _selectedRequestType;
+		private LookupPairModel _selectedUnit;
+		private string _selectedUnitTitle;
         private string _comments;
         private string _requestTypeSearchText;
         private int? _selectedPetStatus;
         private string _selectRequestTypeActionTitle;
         private bool _entrancePermission;
         
-        public LookupValuePair SelectedUnit {
+		public LookupPairModel SelectedUnit {
         	get{
         		return _selectedUnit;
         	}
@@ -48,7 +50,7 @@ namespace ResidentAppCross.ViewModels
         		SetProperty(ref _selectedUnit, value, "SelectedUnit");
         	}
         }
-         public LookupValuePair SelectedUnitTitle {
+         public string SelectedUnitTitle {
         	get{
         		return _selectedUnitTitle;
         	}
@@ -72,13 +74,14 @@ namespace ResidentAppCross.ViewModels
 
 
             }
-        }private ILoginManager loginService;
-        public MaintenanceRequestFormViewModel(IApartmentAppsAPIService service, IImageService imageService, IDialogService dialogService, ILoginManager _loginService)
+        }private ILoginManager _loginService;
+        public MaintenanceRequestFormViewModel(IApartmentAppsAPIService service, IImageService imageService, IDialogService dialogService, ILoginManager loginService)
         {
             _service = service;
             _imageService = imageService;
             _dialogService = dialogService;
-        }   _loginService = loginService;
+			_loginService = loginService;
+        }  
 
         public override void Start()
         {
@@ -221,7 +224,7 @@ namespace ResidentAppCross.ViewModels
                         MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
                         Images =
                             images,
-                        UnitId = ShouldSelectUnit ? Convert.ToInt32(SelectedUnit.Key) : null
+							UnitId = ShouldSelectUnit ? (int?)Convert.ToInt32(SelectedUnit.Key) : null
                         
                     };
 

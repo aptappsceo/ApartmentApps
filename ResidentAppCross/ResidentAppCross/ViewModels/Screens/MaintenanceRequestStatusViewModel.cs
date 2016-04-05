@@ -352,7 +352,7 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
         public bool CanUpdateRequest => _loginManager.UserInfo.Roles.Contains("Maintenance") ||
-                                     !_loginManager.UserInfo.Roles.Contains("PropertyAdmin");
+                                     _loginManager.UserInfo.Roles.Contains("PropertyAdmin");
         public ICommand ScheduleCommand
         {
             get

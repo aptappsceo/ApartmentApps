@@ -45,17 +45,17 @@ namespace ResidentAppCross.iOS.Views
         }
 
         public override string Title => "Maintenance";
-
+		private LabelWithButtonSection _unitSection;
         public LabelWithButtonSection UnitSection
         {
             get
             {
-                if (_scheduleSection == null)
+				if (_unitSection == null)
                 {
-                    _scheduleSection = Formals.Create<LabelWithButtonSection>();
-                    _scheduleSection.Label.Text = "Unit";
+					_unitSection = Formals.Create<LabelWithButtonSection>();
+					_unitSection.Label.Text = "Unit";
                 }
-                return _scheduleSection;
+				return _unitSection;
             }
         }
 
