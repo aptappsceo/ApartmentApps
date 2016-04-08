@@ -37,6 +37,10 @@
     <MandroidI18n>
     </MandroidI18n>
     <Debugger>Xamarin</Debugger>
+    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
+    <BundleAssemblies>False</BundleAssemblies>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -51,6 +55,9 @@
     <Reference Include="AndHUD">
       <HintPath>..\..\Components\AndHUD-1.3.1\lib\android\AndHUD.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>..\..\packages\Microsoft.Rest.ClientRuntime.0.9.6\lib\portable-net403+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Android.Export" />
     <Reference Include="MvvmCross.Plugins.Location, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\MonoAndroid\MvvmCross.Plugins.Location.dll</HintPath>
@@ -59,6 +66,9 @@
     <Reference Include="MvvmCross.Plugins.Location.Droid, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\MonoAndroid\MvvmCross.Plugins.Location.Droid.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="PhotoView">
+      <HintPath>..\..\Components\PhotoView-1.2.4\lib\android\PhotoView.dll</HintPath>
     </Reference>
     <Reference Include="RoundedImageView">
       <HintPath>..\..\Components\RoundedImageView-2.2.0\lib\android\RoundedImageView.dll</HintPath>
@@ -146,12 +156,24 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="Ui\BindableWebView.cs" />
+    <Compile Include="Views\AwesomeSiniExtensions\AndroidUIExtensions.cs" />
+    <Compile Include="Views\AwesomeSiniExtensions\FormFragment.cs" />
+    <Compile Include="Views\AwesomeSiniExtensions\NotificationDialog.cs" />
+    <Compile Include="Views\AwesomeSiniExtensions\PhotoViewerDialog.cs" />
+    <Compile Include="Views\AwesomeSiniExtensions\SpinnerSelectionSectionAdapter.cs" />
     <Compile Include="Views\Screens\GenericWebView.cs" />
+    <Compile Include="Views\Screens\TestFormViewModel.cs" />
     <Compile Include="Views\Screens\LoginFormView.cs" />
     <Compile Include="Views\Screens\HomeMenuView.cs" />
     <Compile Include="Views\Screens\MaintenanceRequestTypeSelectionView.cs" />
     <Compile Include="Views\Screens\MaintenanceRequestView.cs" />
     <Compile Include="Views\Screens\QRScannerView.cs" />
+    <Compile Include="Views\Sections\HeaderSection.cs" />
+    <Compile Include="Views\Sections\LabelWithButtonSection.cs" />
+    <Compile Include="Views\Sections\LabelWithLabelSection.cs" />
+    <Compile Include="Views\Sections\PhotoGallerySection.cs" />
+    <Compile Include="Views\Sections\SpinnerSelectionSection.cs" />
+    <Compile Include="Views\Sections\TextViewSection.cs" />
     <Compile Include="Views\ViewBase.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +202,9 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\QRScannerViewLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SpinnerSelectionSectionItem.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -292,6 +317,10 @@
     <XamarinComponentReference Include="AutoFitTextView">
       <Version>0.2.1.0</Version>
       <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="PhotoView">
+      <Visible>False</Visible>
+      <Version>1.2.4</Version>
     </XamarinComponentReference>
     <XamarinComponentReference Include="RoundedImageView">
       <Version>2.2.1</Version>
@@ -485,8 +514,30 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\sections\" />
     <Folder Include="Resources\values-sw320dp\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\L_LocationOk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\L_LocationOk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\L_Gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\logo_03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\Ok.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\L_Ok.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

@@ -42,22 +42,22 @@ namespace MyApp.Droid.Ui.Controls
             get { return _contentUrl; }
             set
             {
-                if (string.IsNullOrEmpty(value)) return;
-                _contentUrl = value;
-
-                var authorizationKey = App.ApartmentAppsClient.AparmentAppsDelegating.AuthorizationKey;
-                if (!string.IsNullOrEmpty(authorizationKey))
-                {
-                    LoadUrl(_contentUrl, new Dictionary<string, string>()
-                    {
-                        {"Authorization", "Bearer " + authorizationKey}
-                    });
-                }
-                else
-                {
-                    LoadUrl(_contentUrl);
-                }
-                UpdatedHtmlContent();
+//                if (string.IsNullOrEmpty(value)) return;
+//                _contentUrl = value;
+//
+//                var authorizationKey = App.ApartmentAppsClient.AparmentAppsDelegating.AuthorizationKey;
+//                if (!string.IsNullOrEmpty(authorizationKey))
+//                {
+//                    LoadUrl(_contentUrl, new Dictionary<string, string>()
+//                    {
+//                        {"Authorization", "Bearer " + authorizationKey}
+//                    });
+//                }
+//                else
+//                {
+//                    LoadUrl(_contentUrl);
+//                }
+//                UpdatedHtmlContent();
             }
         }
 

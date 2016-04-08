@@ -13,7 +13,14 @@ using ResidentAppCross.Interfaces;
 namespace ResidentAppCross.Droid.Views
 {
 
-   
+    public abstract class ViewBase<T> : ViewBase where T : IMvxViewModel
+    {
+        public new T ViewModel
+        {
+            get { return (T)base.ViewModel; }
+            set { base.ViewModel = value; }
+        }
+    }
 
     public abstract class ViewBase : MvxActivity, IDisposableContainer
     {
@@ -53,13 +60,6 @@ namespace ResidentAppCross.Droid.Views
 
         public List<IDisposable> Disposables { get; set; } = new List<IDisposable>();
     }
-
-
-    public abstract class ViewBase<T> : MvxActivity<T> where T : class, IMvxViewModel
-    {
-        
-    }
-
 
     public static class ViewExtensions
     {

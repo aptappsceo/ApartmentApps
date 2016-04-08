@@ -7,11 +7,20 @@
     <item name="android:gravity" >center</item>
     <item name="android:textSize" >30dp</item>
   </style>
-  <style name="badge_danger" >
+  
+    <style name="badge_danger" >
     <item name="android:layout_width" >fill_parent</item>
     <item name="android:layout_height" >wrap_content</item>
     <item name="android:textColor" >#ffffff</item>
     <item name="android:gravity" >center</item>
     <item name="android:textSize" >30dp</item>
+  </style>
+  
+  <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+    <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+
   </style>
 </resources>
