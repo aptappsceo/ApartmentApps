@@ -33,7 +33,7 @@ namespace ApartmentApps.Portal.Controllers
             if (endDate == null)
                 endDate = CurrentUser.TimeZone.Now();
 
-            return View(new DashboardBindingModel {
+            return View("Index2", new DashboardBindingModel {
                 StartDate = startDate,
                 EndDate = endDate,
                 NumberEntered = WorkOrdersByRange(startDate, endDate, currentPropertyId).Count(p=>p.StatusId == "Submitted"),
@@ -45,6 +45,8 @@ namespace ApartmentApps.Portal.Controllers
                 WorkOrdersPerEmployee = WorkOrdersByRange(startDate, endDate, currentPropertyId).GroupBy(p=>p.User)
             });
         }
+
+
 
         private IQueryable<MaitenanceRequest> WorkOrdersByRange(DateTime? startDate, DateTime? endDate, int? currentPropertyId)
         {

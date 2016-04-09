@@ -6,4 +6,10 @@ namespace ApartmentApps.Api
     {
         bool Filter(ApplicationUser user);
     }
+
+    public interface IPropertyContext
+    {
+        int PropertyId { get; }
+
+    }
 }
