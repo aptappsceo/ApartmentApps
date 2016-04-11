@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -23,11 +24,8 @@ namespace ApartmentApps.Portal.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
-        {
-        }
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager , IBlobStorageService blobStorage)
+  
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager , IBlobStorageService blobStorage, IUserContext userContext, PropertyContext context) : base(context, userContext)
         {
             _blobStorage = blobStorage;
             UserManager = userManager;
@@ -248,7 +246,7 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult ChangeProperty(int id)
         {
             CurrentUser.PropertyId = id;
-            db.SaveChanges();
+            Context.SaveChanges();
             ViewBag.Property = Property;
             return RedirectToAction("Index", "Dashboard");
         }

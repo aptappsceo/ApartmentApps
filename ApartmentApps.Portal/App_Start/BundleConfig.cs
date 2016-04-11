@@ -35,6 +35,16 @@ namespace ApartmentApps.Portal
             bundles.Add(new ScriptBundle("~/plugins/pace").Include(
                       "~/Scripts/plugins/pace/pace.min.js"));
 
+            bundles.Add(new ScriptBundle("~/plugins/flot")
+                    .Include("~/Scripts/plugins/flot/jquery.flot.js")
+                    .Include("~/Scripts/plugins/flot/jquery.flot.tooltip.min.js")
+                    .Include("~/Scripts/plugins/flot/jquery.flot.resize.js")
+                    .Include("~/Scripts/plugins/flot/jquery.flot.pie.js")
+                    .Include("~/Scripts/plugins/flot/jquery.flot.time.js")
+    
+                    
+                      );
+
             // CSS style (bootstrap/inspinia)
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",

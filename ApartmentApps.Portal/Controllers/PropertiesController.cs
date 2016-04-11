@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace ApartmentApps.Portal.Controllers
@@ -19,6 +20,11 @@ namespace ApartmentApps.Portal.Controllers
     {
         
         private ApplicationUserManager _userManager;
+
+        public PropertiesController(PropertyContext context, IUserContext userContext, ApplicationUserManager userManager) : base(context, userContext)
+        {
+            _userManager = userManager;
+        }
 
         public ApplicationUserManager UserManager
         {
@@ -36,13 +42,13 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult Index()
         {
             
-            var properties = db.Properties.Include(p => p.Corporation);
+            var properties = Context.Properties.GetAll();
             return View(properties.ToList());
         }
 
         public async Task<ActionResult> ImportEntrata(int id)
         {
-            var result = await ServiceExtensions.GetServices().OfType<EntrataIntegration>().First().ImportData(UserManager, db.Properties.Find(id));
+            var result = await ServiceExtensions.GetServices().OfType<EntrataIntegration>().First().ImportData(UserManager, Context.Properties.Find(id));
             return RedirectToAction("Index");
         }
         // GET: /Properties/Details/5
@@ -52,7 +58,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = db.Properties.Find(id);
+            Property property = Context.Properties.Find(id);
             if (property == null)
             {
                 return HttpNotFound();
@@ -63,7 +69,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /Properties/Create
         public ActionResult Create()
         {
-            ViewBag.CorporationId = new SelectList(db.Corporations, "Id", "Name");
+            ViewBag.CorporationId = new SelectList(Context.Corporations, "Id", "Name");
             return View();
         }
 
@@ -76,12 +82,12 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Properties.Add(property);
-                db.SaveChanges();
+                Context.Properties.Add(property);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CorporationId = new SelectList(db.Corporations, "Id", "Name", property.CorporationId);
+            ViewBag.CorporationId = new SelectList(Context.Corporations, "Id", "Name", property.CorporationId);
             return View(property);
         }
 
@@ -92,12 +98,12 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = db.Properties.Find(id);
+            Property property = Context.Properties.Find(id);
             if (property == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CorporationId = new SelectList(db.Corporations, "Id", "Name", property.CorporationId);
+            ViewBag.CorporationId = new SelectList(Context.Corporations, "Id", "Name", property.CorporationId);
             return View(property);
         }
 
@@ -110,11 +116,11 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(property).State = EntityState.Modified;
-                db.SaveChanges();
+                Context.Entry(property);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CorporationId = new SelectList(db.Corporations, "Id", "Name", property.CorporationId);
+            ViewBag.CorporationId = new SelectList(Context.Corporations, "Id", "Name", property.CorporationId);
             return View(property);
         }
 
@@ -125,7 +131,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = db.Properties.Find(id);
+            Property property = Context.Properties.Find(id);
             if (property == null)
             {
                 return HttpNotFound();
@@ -138,19 +144,12 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Property property = db.Properties.Find(id);
-            db.Properties.Remove(property);
-            db.SaveChanges();
+            Property property = Context.Properties.Find(id);
+            Context.Properties.Remove(property);
+            Context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+      
     }
 }

@@ -21,6 +21,7 @@ using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.API.Service.Results;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.API.Service.Controllers
 {
@@ -49,7 +50,7 @@ namespace ApartmentApps.API.Service.Controllers
         private ApplicationUserManager _userManager;
 
 
-        public AccountController(ApplicationUserManager userManager, ApplicationDbContext context, IBlobStorageService blobStorage) : base(context)
+        public AccountController(ApplicationUserManager userManager, PropertyContext context, IBlobStorageService blobStorage, IUserContext userContext) : base(context,userContext)
         {
             _blobStorage = blobStorage;
             UserManager = userManager;

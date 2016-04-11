@@ -20,16 +20,17 @@ namespace ApartmentApps.Api
         IMaintenanceRequestCheckinEvent,
         IDataImporter
     {
+
         public ApplicationDbContext Context { get; set; }
 
-        public EntrataIntegration(ApplicationDbContext context)
+        public EntrataIntegration(ApplicationDbContext context, IUserContext userContext) : base(userContext)
         {
             Context = context;
         }
 
-        public override bool Filter(ApplicationUser user)
+        public override bool Filter()
         {
-            return user.Property.EntrataInfo != null;
+            return UserContext.CurrentUser.Property.EntrataInfo != null;
         }
 
         public async Task<bool> ImportData(ICreateUser createUser, Property property)
@@ -65,7 +66,8 @@ namespace ApartmentApps.Api
                     unit = new Unit()
                     {
                         Name = item.UnitNumber,
-                        BuildingId = building.Id
+                        BuildingId = building.Id,
+                        PropertyId = property.Id
                     };
                     Context.Units.Add(unit);
                     await Context.SaveChangesAsync();
@@ -99,8 +101,8 @@ namespace ApartmentApps.Api
                     tenantInfo = new Tenant();
                     Context.Tenants.Add(tenantInfo);
                 }
-                
-               
+
+                tenantInfo.PropertyId = property.Id;
                 tenantInfo.BuildingName = item.BuildingName;
                 tenantInfo.City = item.City;
                 tenantInfo.Email = item.Email;

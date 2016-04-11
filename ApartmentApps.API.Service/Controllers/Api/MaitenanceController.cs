@@ -12,6 +12,7 @@ using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.API.Service.Controllers
 {
@@ -30,11 +31,8 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("List")]
         public IEnumerable<MaintenanceIndexBindingModel> ListRequests()
         {
-
-            var propertyId = this.CurrentUser.PropertyId;
             return
-                Context.MaitenanceRequests.Include(r => r.MaitenanceRequestType)
-                .Where(p => p.User.PropertyId == propertyId).OrderByDescending(p => p.SubmissionDate).ToArray().Select(
+                Context.MaitenanceRequests.GetAll().OrderByDescending(p => p.SubmissionDate).ToArray().Select(
                     x => new MaintenanceIndexBindingModel()
                     {
                         Title = x.MaitenanceRequestType.Name,
@@ -52,10 +50,10 @@ namespace ApartmentApps.API.Service.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetRequest")]
-        public async Task<MaintenanceBindingModel> Get(int id)
+        public MaintenanceBindingModel Get(int id)
         {
-            var result = await Context.MaitenanceRequests
-                .FirstOrDefaultAsync(p => p.Id == id);
+            var result = Context.MaitenanceRequests
+                .Find(id);
             var photos = Context.ImageReferences.Where(r => r.GroupId == result.GroupId).ToList();
 
             var response = new MaintenanceBindingModel
@@ -89,7 +87,7 @@ namespace ApartmentApps.API.Service.Controllers
         public void SubmitRequest(MaitenanceRequestModel request)
         {
             var images = request.Images?.Select(Convert.FromBase64String).ToList();
-            MaintenanceService.SubmitRequest(CurrentUser, request.Comments, request.MaitenanceRequestTypeId, request.PetStatus, request.PermissionToEnter, images, request.UnitId);
+            MaintenanceService.SubmitRequest(request.Comments, request.MaitenanceRequestTypeId, request.PetStatus, request.PermissionToEnter, images, request.UnitId);
         }
 
         [System.Web.Http.HttpPost]
@@ -118,7 +116,7 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("GetMaitenanceRequestTypes")]
         public IEnumerable<LookupPairModel> GetMaitenanceRequestTypes()
         {
-            return Context.MaitenanceRequestTypes.Select(x => new LookupPairModel() { Key = x.Id.ToString(), Value = x.Name }).ToArray();
+            return Context.MaitenanceRequestTypes.GetAll().Select(x => new LookupPairModel() { Key = x.Id.ToString(), Value = x.Name }).ToArray();
         }
 
         [System.Web.Http.HttpGet]
@@ -135,7 +133,7 @@ namespace ApartmentApps.API.Service.Controllers
             return null;
         }
 
-        public MaitenanceController(IMaintenanceService maintenanceService, IBlobStorageService blobStorageService, ApplicationDbContext context) : base(context)
+        public MaitenanceController(IMaintenanceService maintenanceService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
             MaintenanceService = maintenanceService;
             BlobStorageService = blobStorageService;

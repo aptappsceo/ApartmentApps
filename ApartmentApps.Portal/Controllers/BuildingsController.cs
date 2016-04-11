@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -16,6 +18,10 @@ namespace ApartmentApps.Portal.Controllers
        
 
         // GET: /Buildings/
+        public BuildingsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        {
+        }
+
         public ActionResult Index()
         {
             var buildings = Property.Buildings;
@@ -54,8 +60,8 @@ namespace ApartmentApps.Portal.Controllers
             building.PropertyId = Property.Id;
             if (ModelState.IsValid)
             {
-                db.Buildings.Add(building);
-                db.SaveChanges();
+                Context.Buildings.Add(building);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -89,8 +95,8 @@ namespace ApartmentApps.Portal.Controllers
             building.PropertyId = Property.Id;
             if (ModelState.IsValid)
             {
-                db.Entry(building).State = EntityState.Modified;
-                db.SaveChanges();
+                Context.Entry(building);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
             //ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", building.PropertyId);
@@ -119,18 +125,11 @@ namespace ApartmentApps.Portal.Controllers
         {
             Building building = Property.Buildings.FirstOrDefault(p => p.Id == id);
             
-            db.Buildings.Remove(building);
-            db.SaveChanges();
+            Context.Buildings.Remove(building);
+            Context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+       
     }
 }

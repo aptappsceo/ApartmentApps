@@ -1,42 +1,45 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Api
 {
     public class MaintenanceService : IMaintenanceService
     {
-        public ApplicationDbContext Context { get; set; }
+        public PropertyContext Context { get; set; }
 
         private IBlobStorageService _blobStorageService;
+        private readonly IUserContext _userContext;
 
-        public MaintenanceService(IBlobStorageService blobStorageService, ApplicationDbContext context)
+        public MaintenanceService(IBlobStorageService blobStorageService, PropertyContext context, IUserContext userContext)
         {
             Context = context;
             _blobStorageService = blobStorageService;
+            _userContext = userContext;
         }
 
-        public int SubmitRequest(ApplicationUser user, string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)
+        public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)
         {
 
             var maitenanceRequest = new MaitenanceRequest()
             {
                 PermissionToEnter = permissionToEnter,
                 PetStatus = petStatus,
-                UserId = user.Id,
+                UserId = _userContext.UserId,
+                User =  _userContext.CurrentUser,
                 Message = comments,
                 UnitId = unitId,
                 MaitenanceRequestTypeId = requestTypeId,
                 StatusId = "Submitted",
-                SubmissionDate = user.TimeZone.Now(),
+                SubmissionDate = _userContext.CurrentUser.TimeZone.Now(),
                 GroupId = Guid.NewGuid()
             };
-            var localCtxUser = Context.Users.Find(user.Id);
+        
             if (maitenanceRequest.UnitId == 0)
             {
-                if (user.Tenant?.UnitId != null)
-                    maitenanceRequest.UnitId = user.Tenant.UnitId.Value;
+                if (_userContext.CurrentUser.Tenant?.UnitId != null)
+                    maitenanceRequest.UnitId = _userContext.CurrentUser.Tenant.UnitId.Value;
             }
             if (maitenanceRequest.UnitId == 0)
                 maitenanceRequest.UnitId = null;
@@ -45,7 +48,7 @@ namespace ApartmentApps.Api
             if (images != null)
                 foreach (var image in images)
                 {
-                    var imageKey = $"{Guid.NewGuid()}.{user.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
+                    var imageKey = $"{Guid.NewGuid()}.{_userContext.CurrentUser.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
                     var filename = _blobStorageService.UploadPhoto(image, imageKey);
                     Context.ImageReferences.Add(new ImageReference()
                     {
@@ -56,7 +59,7 @@ namespace ApartmentApps.Api
                 }
 
             Context.SaveChanges();
-            this.InvokeEvent<IMaintenanceSubmissionEvent>(localCtxUser, _ => _.MaintenanceRequestSubmited(maitenanceRequest));
+            this.InvokeEvent<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
 
             return maitenanceRequest.Id;
 
@@ -76,6 +79,7 @@ namespace ApartmentApps.Api
                 Comments = comments,
                 StatusId = status,
                 WorkerId = worker.Id,
+               
                 Date = worker.TimeZone.Now(),
                 GroupId = Guid.NewGuid()
             };
@@ -101,7 +105,7 @@ namespace ApartmentApps.Api
                 request.CompletionDate = worker.TimeZone.Now();
             }
             Context.SaveChanges();
-            this.InvokeEvent<IMaintenanceRequestCheckinEvent>(worker, _ => _.MaintenanceRequestCheckin(checkin, request));
+            this.InvokeEvent<IMaintenanceRequestCheckinEvent>( _ => _.MaintenanceRequestCheckin(checkin, request));
 
             return true;
 
@@ -129,18 +133,6 @@ namespace ApartmentApps.Api
 
             Checkin(currentUser, id,
                 $"Schedule date set to {scheduleDate.DayOfWeek} at {scheduleDate.Hour}:{scheduleDate.Minute}", "Scheduled", null);
-        }
-    }
-
-    public static class DateTimeUtil
-    {
-        public static DateTime Now(this TimeZoneInfo zone, DateTime time)
-        {
-            return TimeZoneInfo.ConvertTime(time, zone);
-        }
-        public static DateTime Now(this TimeZoneInfo zone)
-        {
-            return TimeZoneInfo.ConvertTime(DateTime.UtcNow, zone);
         }
     }
 }

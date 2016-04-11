@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -15,12 +17,16 @@ namespace ApartmentApps.Portal.Controllers
     {
 
         // GET: /PropertyYardiInfo/
-        public ActionResult Index()
+        public PropertyYardiInfoController(PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
-            var propertyyardiinfoes = db.PropertyYardiInfos.Include(p => p.Property);
-            return View(propertyyardiinfoes.ToList());
         }
 
+        public ActionResult Index()
+        {
+            var propertyyardiinfoes = Context.PropertyYardiInfos.GetAll();
+            return View(propertyyardiinfoes.ToList());
+        }
+       
         // GET: /PropertyYardiInfo/Details/5
         public ActionResult Details(int? id)
         {
@@ -28,7 +34,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PropertyYardiInfo propertyYardiInfo = db.PropertyYardiInfos.Find(id);
+            PropertyYardiInfo propertyYardiInfo = Context.PropertyYardiInfos.Find(id);
             if (propertyYardiInfo == null)
             {
                 return HttpNotFound();
@@ -39,7 +45,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /PropertyYardiInfo/Create
         public ActionResult Create()
         {
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name");
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name");
             return View();
         }
 
@@ -52,12 +58,12 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PropertyYardiInfos.Add(propertyYardiInfo);
-                db.SaveChanges();
+                Context.PropertyYardiInfos.Add(propertyYardiInfo);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", propertyYardiInfo.PropertyId);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", propertyYardiInfo.PropertyId);
             return View(propertyYardiInfo);
         }
 
@@ -68,12 +74,12 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PropertyYardiInfo propertyYardiInfo = db.PropertyYardiInfos.Find(id);
+            PropertyYardiInfo propertyYardiInfo = Context.PropertyYardiInfos.Find(id);
             if (propertyYardiInfo == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", propertyYardiInfo.PropertyId);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", propertyYardiInfo.PropertyId);
             return View(propertyYardiInfo);
         }
 
@@ -86,11 +92,11 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(propertyYardiInfo).State = EntityState.Modified;
-                db.SaveChanges();
+                Context.Entry(propertyYardiInfo);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", propertyYardiInfo.PropertyId);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", propertyYardiInfo.PropertyId);
             return View(propertyYardiInfo);
         }
 
@@ -101,7 +107,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PropertyYardiInfo propertyYardiInfo = db.PropertyYardiInfos.Find(id);
+            PropertyYardiInfo propertyYardiInfo = Context.PropertyYardiInfos.Find(id);
             if (propertyYardiInfo == null)
             {
                 return HttpNotFound();
@@ -114,19 +120,10 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PropertyYardiInfo propertyYardiInfo = db.PropertyYardiInfos.Find(id);
-            db.PropertyYardiInfos.Remove(propertyYardiInfo);
-            db.SaveChanges();
+            PropertyYardiInfo propertyYardiInfo = Context.PropertyYardiInfos.Find(id);
+            Context.PropertyYardiInfos.Remove(propertyYardiInfo);
+            Context.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

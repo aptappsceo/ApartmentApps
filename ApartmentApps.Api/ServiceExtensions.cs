@@ -13,12 +13,12 @@ namespace ApartmentApps.Api
         public static Func<IEnumerable<IService>> GetServices { get; set; }
 
 
-        public static void InvokeEvent<TEventInterface>( ApplicationUser user, Action<TEventInterface> evt) where TEventInterface : class
+        public static void InvokeEvent<TEventInterface>( Action<TEventInterface> evt) where TEventInterface : class
         {
-            InvokeEvent<TEventInterface>(null,  user, evt);
+            InvokeEvent<TEventInterface>(null, evt);
         }
 
-        public static void InvokeEvent<TEventInterface>(this IService service, ApplicationUser user, Action<TEventInterface> evt) where TEventInterface : class
+        public static void InvokeEvent<TEventInterface>(this IService service, Action<TEventInterface> evt) where TEventInterface : class
         {
             foreach (var item in GetServices())
             {
@@ -27,7 +27,7 @@ namespace ApartmentApps.Api
                 var filter = item as IAddonFilter;
                 if (filter != null)
                 {
-                    if (!filter.Filter(user))
+                    if (!filter.Filter())
                     {
                         continue;
                     }

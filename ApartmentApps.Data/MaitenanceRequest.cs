@@ -6,21 +6,7 @@ using System.Linq;
 
 namespace ApartmentApps.Data
 {
-    public partial class ImageReference   
-    {
-
-        [Key]
-        public int Id { get; set; }
-
-        public string Url { get; set; }
-
-        public string ThumbnailUrl { get; set; }
-
-        public Guid GroupId { get; set; }
-
-    }
-
-    public partial class MaitenanceRequest
+    public partial class MaitenanceRequest : PropertyEntity
     {
         [Key]
         public int Id { get; set; }
@@ -68,40 +54,5 @@ namespace ApartmentApps.Data
 
         [NotMapped]
         public TimeSpan? TimeToComplete => CompletionDate?.Subtract(SubmissionDate);
-    }
-
-    public class MaintenanceRequestCheckin
-    {
-        [Key]
-        public int Id { get; set; }
-        public string WorkerId { get; set; }
-
-        [ForeignKey("WorkerId")]
-        public virtual ApplicationUser Worker { get; set; }
-
-        public string StatusId { get; set; }
-        [ForeignKey("StatusId")]
-        public virtual MaintenanceRequestStatus Status { get; set; }
-
-        public int MaitenanceRequestId { get; set; }
-        [ForeignKey("MaitenanceRequestId")]
-        public virtual MaitenanceRequest MaitenanceRequest { get; set; }
-
-        public string Comments { get; set; }
-
-        public DateTime Date { get; set; }
-        public Guid GroupId { get; set; }
-    }
-
-    public class MaintenanceRequestStatus
-    {
-        [Key]
-        public string Name { get; set; }
-    }
-
-    public class IncidentReportStatus
-    {
-        [Key]
-        public string Name { get; set; }
     }
 }

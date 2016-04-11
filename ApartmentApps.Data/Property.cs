@@ -45,31 +45,4 @@ namespace ApartmentApps.Data
         public virtual PropertyEntrataInfo EntrataInfo { get; set; }
         public virtual PropertyYardiInfo YardiInfo { get; set; }
     }
-
-    public class PropertyEntrataInfo
-    {
-        [Key, ForeignKey("Property")]
-        public int PropertyId { get; set; }
-
-        public virtual Property Property { get; set; }
-        public string Endpoint { get; set; }
-
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string EntrataPropertyId { get; set; }
-    }
-
-    public class PropertyYardiInfo
-    {
-        [Key, ForeignKey("Property")]
-        public int PropertyId { get; set; }
-
-        public virtual Property Property { get; set; }
-        public string Endpoint { get; set; }
-
-        public string Username { get; set; }
-        public string Password { get; set; }
-
-        public string YardiPropertyId { get; set; }
-    }
 }

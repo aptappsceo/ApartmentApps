@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -15,9 +17,13 @@ namespace ApartmentApps.Portal.Controllers
     
 
         // GET: /ApplicationUsers/
+        public ApplicationUsersController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        {
+        }
+
         public ActionResult Index()
         {
-            var applicationusers = db.Users.Include(a => a.Property).Include(a => a.Tenant).Where(p=>p.PropertyId == PropertyId);
+            var applicationusers = Context.Users.GetAll();
             return View(applicationusers.ToList());
         }
         
@@ -28,7 +34,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.Users.Find(id);
+            ApplicationUser applicationUser = Context.Users.Find(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -39,9 +45,9 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /ApplicationUsers/Create
         public ActionResult Create()
         {
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name");
-            ViewBag.Id = new SelectList(db.Tenants, "UserId", "ThirdPartyId");
-            ViewBag.Roles = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name");
+            ViewBag.Id = new SelectList(Context.Tenants, "UserId", "ThirdPartyId");
+            ViewBag.Roles = new SelectList(Context.Roles, "Id", "Name");
             return View();
         }
 
@@ -55,13 +61,13 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(applicationUser);
-                db.SaveChanges();
+                Context.Users.Add(applicationUser);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", applicationUser.PropertyId);
-            ViewBag.Id = new SelectList(db.Tenants, "UserId", "ThirdPartyId", applicationUser.Id);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", applicationUser.PropertyId);
+            ViewBag.Id = new SelectList(Context.Tenants, "UserId", "ThirdPartyId", applicationUser.Id);
            
             return View(applicationUser);
         }
@@ -73,13 +79,13 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.Users.Find(id);
+            ApplicationUser applicationUser = Context.Users.Find(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", applicationUser.PropertyId);
-            ViewBag.Id = new SelectList(db.Tenants, "UserId", "ThirdPartyId", applicationUser.Id);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", applicationUser.PropertyId);
+            ViewBag.Id = new SelectList(Context.Tenants, "UserId", "ThirdPartyId", applicationUser.Id);
             return View(applicationUser);
         }
 
@@ -92,12 +98,12 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(applicationUser).State = EntityState.Modified;
-                db.SaveChanges();
+                Context.Entry(applicationUser);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", applicationUser.PropertyId);
-            ViewBag.Id = new SelectList(db.Tenants, "UserId", "ThirdPartyId", applicationUser.Id);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", applicationUser.PropertyId);
+            ViewBag.Id = new SelectList(Context.Tenants, "UserId", "ThirdPartyId", applicationUser.Id);
             return View(applicationUser);
         }
 
@@ -108,7 +114,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.Users.Find(id);
+            ApplicationUser applicationUser = Context.Users.Find(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -121,19 +127,12 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            ApplicationUser applicationUser = db.Users.Find(id);
-            db.Users.Remove(applicationUser);
-            db.SaveChanges();
+            ApplicationUser applicationUser = Context.Users.Find(id);
+            Context.Users.Remove(applicationUser);
+            Context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+    
     }
 }

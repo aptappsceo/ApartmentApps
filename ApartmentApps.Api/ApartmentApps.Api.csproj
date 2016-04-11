@@ -157,10 +157,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repositories\BuildingsRepository.cs" />
     <Compile Include="CourtesyService.cs" />
+    <Compile Include="DateTimeUtil.cs" />
     <Compile Include="IBlobStorageService.cs" />
+    <Compile Include="Repositories\IBuildingsRepository.cs" />
     <Compile Include="ICourtesyService.cs" />
+    <Compile Include="Repositories\IncidentReportRepository.cs" />
+    <Compile Include="Repositories\MaintenanceRepository.cs" />
     <Compile Include="Notifications.cs" />
+    <Compile Include="Repositories\PropertyRepository.cs" />
     <Compile Include="ServiceExtensions.cs" />
     <Compile Include="EntrataIntegration.cs" />
     <Compile Include="IAddonFilter.cs" />
@@ -175,6 +181,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyIntegrationAddon.cs" />
     <Compile Include="AlertsService.cs" />
+    <Compile Include="Repositories\UnitRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="YardiIntegration.cs" />
   </ItemGroup>
   <ItemGroup>

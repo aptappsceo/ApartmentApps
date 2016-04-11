@@ -2,6 +2,8 @@ using System.Data.Entity;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.IoC;
+using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -71,8 +73,8 @@ namespace ApartmentApps.Portal.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<DbContext>().To<ApplicationDbContext>().InRequestScope();
-            kernel.Bind<IBlobStorageService>().To<BlobStorageService>().InRequestScope();
+            Register.RegisterServices(kernel);
+            kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
             kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();
             kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
 

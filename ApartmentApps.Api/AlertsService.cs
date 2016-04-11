@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 using Microsoft.Azure.NotificationHubs;
 
 namespace ApartmentApps.Api
@@ -74,10 +75,10 @@ namespace ApartmentApps.Api
     /// </summary>
     public class AlertsService : IService, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent
     {
-        public ApplicationDbContext Context { get; set; }
+        public PropertyContext Context { get; set; }
         private IPushNotifiationHandler _pushHandler;
 
-        public AlertsService(IPushNotifiationHandler pushHandler, ApplicationDbContext context)
+        public AlertsService(IPushNotifiationHandler pushHandler, PropertyContext context)
         {
             Context = context;
             _pushHandler = pushHandler;
@@ -115,7 +116,7 @@ namespace ApartmentApps.Api
         }
         public void SendAlert( int propertyId, string role, string title, string message, string type, int relatedId = 0)
         {
-            foreach (var item in Context.Users.Include(p=>p.Property).Where(x => x.PropertyId == propertyId && x.Roles.Any(p => p.RoleId == role)))
+            foreach (var item in Context.Users.Where(x => x.Roles.Any(p => p.RoleId == role)))
             {
                 Context.UserAlerts.Add(new UserAlert()
                 {

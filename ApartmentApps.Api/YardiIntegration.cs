@@ -7,10 +7,11 @@ namespace ApartmentApps.Api
     /// </summary>
     public class YardiIntegration : PropertyIntegrationAddon, IMaintenanceRequestCheckinEvent, IMaintenanceSubmissionEvent
     {
-        public override bool Filter(ApplicationUser user)
+       
+        public override bool Filter()
         {
 
-            return user.Property.YardiInfo != null;
+            return UserContext.CurrentUser.Property.YardiInfo != null;
         }
 
         public void MaintenanceRequestSubmited( MaitenanceRequest maitenanceRequest)
@@ -21,6 +22,10 @@ namespace ApartmentApps.Api
         public void MaintenanceRequestCheckin( MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
         {
             
+        }
+
+        public YardiIntegration(IUserContext userContext) : base(userContext)
+        {
         }
     }
 }

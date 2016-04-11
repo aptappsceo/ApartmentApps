@@ -8,6 +8,7 @@ using ApartmentApps.Api;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
@@ -21,7 +22,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public IBlobStorageService BlobStorageService { get; set; }
         public ICourtesyService CourtesyService { get; set; }
 
-        public CourtesyController(ICourtesyService courtesyService, IBlobStorageService blobStorageService, ApplicationDbContext context) : base(context)
+        public CourtesyController(ICourtesyService courtesyService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
             CourtesyService = courtesyService;
             BlobStorageService = blobStorageService;
@@ -36,7 +37,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
             var propertyId = this.CurrentUser.PropertyId;
 
             return
-                Context.IncidentReports.Include(r => r.IncidentReportStatus)
+                Context.IncidentReports
                 .Where(p => p.User.PropertyId == propertyId).OrderByDescending(p => p.CreatedOn).ToArray().Select(
                     x => new IncidentIndexBindingModel()
                     {
@@ -54,17 +55,11 @@ namespace ApartmentApps.API.Service.Controllers.Api
         }
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetIncidentReport")]
-        public async Task<IncidentReportBindingModel> Get(int id)
+        public IncidentReportBindingModel Get(int id)
         {
 
 
-            var result = await Context.IncidentReports
-                .Include(p => p.User.Tenant)
-                .Include(p => p.Unit)
-                .Include(p => p.User.Tenant.Unit)
-                .Include(p => p.User.Tenant.Unit.Building)
-                .Include(p => p.Checkins)
-                .FirstOrDefaultAsync(p => p.Id == id);
+            var result =  Context.IncidentReports.Find(id);
             //var userId = CurrentUser.UserName;
             //var user = Db.Users.FirstOrDefault(p => p.UserName == userId);
             var photos = Context.ImageReferences.Where(r => r.GroupId == result.GroupId).ToList();
@@ -98,9 +93,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         [System.Web.Http.Route("AssignUnitToIncidentReport")]
         public void AssignUnitToIncidentReport(int id, int unitId)
         {
-            var propertyId = CurrentUser.PropertyId.Value;
-            var incidentReport = Context.IncidentReports.Include(p => p.User).FirstOrDefault(p=>p.User.PropertyId == propertyId && p.Id == id);
-
+            var incidentReport = Context.IncidentReports.Find(id);
             if (incidentReport != null)
             {
                 incidentReport.UnitId = unitId;

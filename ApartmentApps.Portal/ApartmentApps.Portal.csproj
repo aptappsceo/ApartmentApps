@@ -474,6 +474,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\ApartmentAppsWebPortal - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ApartmentAppsWebPortal - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ApartmentAppsWebPortalDev - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ApartmentAppsWebPortalDev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />
@@ -490,6 +492,15 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\plugins\flot\curvedLines.js" />
+    <Content Include="Scripts\plugins\flot\excanvas.min.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.pie.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.resize.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.spline.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.symbol.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.time.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.tooltip.min.js" />
     <Content Include="Scripts\plugins\metisMenu\metisMenu.min.js" />
     <Content Include="Scripts\plugins\pace\pace.min.js" />
     <Content Include="Scripts\plugins\slimscroll\jquery.slimscroll.min.js" />
@@ -603,6 +614,7 @@
     <Content Include="Views\IdentityUserRole\Index.cshtml" />
     <Content Include="Views\UserManagement\Index.cshtml" />
     <Content Include="Views\UserManagement\EditUser.cshtml" />
+    <Content Include="Views\Dashboard\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -623,6 +635,10 @@
     <ProjectReference Include="..\ApartmentApps.Data\ApartmentApps.Data.csproj">
       <Project>{69A819D5-3037-4E56-90E4-A9EDFF41B88A}</Project>
       <Name>ApartmentApps.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.IoC\ApartmentApps.IoC.csproj">
+      <Project>{A7A41793-D1A8-4FF3-BAFD-207C43E73F32}</Project>
+      <Name>ApartmentApps.IoC</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

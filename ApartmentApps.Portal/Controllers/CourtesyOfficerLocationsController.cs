@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -15,9 +17,13 @@ namespace ApartmentApps.Portal.Controllers
 
 
         // GET: /CourtesyOfficerLocations/
+        public CourtesyOfficerLocationsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        {
+        }
+
         public ActionResult Index()
         {
-            var courtesyofficerlocations = db.CourtesyOfficerLocations.Include(c => c.Property).Where(p=>p.PropertyId == PropertyId);
+            var courtesyofficerlocations = Context.CourtesyOfficerLocations.GetAll();
             return View(courtesyofficerlocations.ToList());
         }
 
@@ -28,7 +34,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CourtesyOfficerLocation courtesyOfficerLocation = db.CourtesyOfficerLocations.FirstOrDefault(p => p.PropertyId == PropertyId);
+            CourtesyOfficerLocation courtesyOfficerLocation = Context.CourtesyOfficerLocations.Find(id);
             if (courtesyOfficerLocation == null)
             {
                 return HttpNotFound();
@@ -39,7 +45,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /CourtesyOfficerLocations/Create
         public ActionResult Create()
         {
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name");
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name");
             return View();
         }
 	
@@ -53,12 +59,12 @@ namespace ApartmentApps.Portal.Controllers
             if (ModelState.IsValid)
             {
                 courtesyOfficerLocation.PropertyId = PropertyId;
-                db.CourtesyOfficerLocations.Add(courtesyOfficerLocation);
-                db.SaveChanges();
+                Context.CourtesyOfficerLocations.Add(courtesyOfficerLocation);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", courtesyOfficerLocation.PropertyId);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", courtesyOfficerLocation.PropertyId);
             return View(courtesyOfficerLocation);
         }
 
@@ -69,7 +75,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CourtesyOfficerLocation courtesyOfficerLocation = db.CourtesyOfficerLocations.FirstOrDefault(p=>p.PropertyId == PropertyId);
+            CourtesyOfficerLocation courtesyOfficerLocation = Context.CourtesyOfficerLocations.Find(id);
             
             if (courtesyOfficerLocation == null)
             {
@@ -89,11 +95,11 @@ namespace ApartmentApps.Portal.Controllers
             if (ModelState.IsValid)
             {
                 courtesyOfficerLocation.PropertyId = PropertyId;
-                db.Entry(courtesyOfficerLocation).State = EntityState.Modified;
-                db.SaveChanges();
+                Context.Entry(courtesyOfficerLocation);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", courtesyOfficerLocation.PropertyId);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", courtesyOfficerLocation.PropertyId);
             return View(courtesyOfficerLocation);
         }
 
@@ -104,7 +110,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CourtesyOfficerLocation courtesyOfficerLocation = db.CourtesyOfficerLocations.FirstOrDefault(p => p.PropertyId == PropertyId);
+            CourtesyOfficerLocation courtesyOfficerLocation = Context.CourtesyOfficerLocations.Find(id);
             if (courtesyOfficerLocation == null)
             {
                 return HttpNotFound();
@@ -117,19 +123,12 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CourtesyOfficerLocation courtesyOfficerLocation = db.CourtesyOfficerLocations.FirstOrDefault(p => p.PropertyId == PropertyId);
-            db.CourtesyOfficerLocations.Remove(courtesyOfficerLocation);
-            db.SaveChanges();
+            CourtesyOfficerLocation courtesyOfficerLocation = Context.CourtesyOfficerLocations.Find(id);
+            Context.CourtesyOfficerLocations.Remove(courtesyOfficerLocation);
+            Context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+      
     }
 }

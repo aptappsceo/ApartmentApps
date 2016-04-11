@@ -1,7 +1,11 @@
 using System.Data.Entity;
+using System.Linq;
+using System.Security.Principal;
 using System.Web.Http;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
+using ApartmentApps.IoC;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -73,16 +77,12 @@ namespace ApartmentApps.API.Service.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IPushNotifiationHandler>()
-                .To<AzurePushNotificationHandler>().InRequestScope();
 
-            kernel.Bind<IService>().To<AlertsService>().InRequestScope();
-            kernel.Bind<IBlobStorageService>().To<BlobStorageService>().InRequestScope();
+            Register.RegisterServices(kernel);
 
-            kernel.Bind<IMaintenanceService>().To<MaintenanceService>().InRequestScope();
-            kernel.Bind<ICourtesyService>().To<CourtesyService>().InRequestScope();
-            //kernel.Bind<DbContext>().To<ApplicationDbContext>().InRequestScope();
-            kernel.Bind<ApplicationDbContext>().ToSelf().InRequestScope();
+            kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
+
+    
             kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
 
 
@@ -94,5 +94,38 @@ namespace ApartmentApps.API.Service.App_Start
             ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
             GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
         }        
+    }
+    public class WebUserContext : IUserContext
+    {
+        private readonly ApplicationDbContext _db;
+        private ApplicationUser _user;
+
+        public WebUserContext(ApplicationDbContext context)
+        {
+            _db = context;
+        }
+
+        public ApplicationUser CurrentUser
+        {
+            get
+            {
+
+                return _user ?? (_user = _db.Users.FirstOrDefault(p => p.Email == Email));
+            }
+        }
+
+        public IIdentity User => System.Web.HttpContext.Current.User.Identity;
+
+        public string UserId => CurrentUser.Id;
+        public string Email => User.GetUserName();
+        public string Name => CurrentUser.FirstName + " " + CurrentUser.LastName;
+        public int PropertyId
+        {
+            get
+            {
+                if (CurrentUser.PropertyId != null) return CurrentUser.PropertyId.Value;
+                return 1;
+            }
+        }
     }
 }

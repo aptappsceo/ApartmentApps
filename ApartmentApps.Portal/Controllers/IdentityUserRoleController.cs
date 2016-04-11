@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Portal.Controllers
@@ -43,15 +45,19 @@ namespace ApartmentApps.Portal.Controllers
         // POST: /IdentityUserRole/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        public IdentityUserRoleController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        {
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "RoleId,UserId")] IdentityUserRole identityUserRole2)
         {
             if (ModelState.IsValid)
             {
-                var user = db.Users.Find(identityUserRole2.UserId);
+                var user = Context.Users.Find(identityUserRole2.UserId);
                 user.Roles.Add(identityUserRole2);
-                db.SaveChanges();
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
 

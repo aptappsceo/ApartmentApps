@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -16,9 +18,13 @@ namespace ApartmentApps.Portal.Controllers
       
 
         // GET: /Units/
+        public UnitsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        {
+        }
+
         public ActionResult Index()
         {
-            var units = db.Units.Include(u => u.Building).Where(p=>p.Building.PropertyId == Property.Id);
+            var units = Context.Units.ToArray();
             return View(units.ToList());
         }
 
@@ -29,7 +35,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Unit unit = db.Units.Find(id);
+            Unit unit = Context.Units.Find(id);
             if (unit == null)
             {
                 return HttpNotFound();
@@ -40,7 +46,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /Units/Create
         public ActionResult Create()
         {
-            ViewBag.BuildingId = new SelectList(db.Buildings.Where(p=>p.PropertyId == Property.Id), "Id", "Name");
+            ViewBag.BuildingId = new SelectList(Context.Buildings, "Id", "Name");
             return View();
         }
 
@@ -53,12 +59,12 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Units.Add(unit);
-                db.SaveChanges();
+                Context.Units.Add(unit);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BuildingId = new SelectList(db.Buildings, "Id", "Name", unit.BuildingId);
+            ViewBag.BuildingId = new SelectList(Context.Buildings, "Id", "Name", unit.BuildingId);
             return View(unit);
         }
 
@@ -69,12 +75,12 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Unit unit = db.Units.Find(id);
+            Unit unit = Context.Units.Find(id);
             if (unit == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.BuildingId = new SelectList(db.Buildings, "Id", "Name", unit.BuildingId);
+            ViewBag.BuildingId = new SelectList(Context.Buildings, "Id", "Name", unit.BuildingId);
             return View(unit);
         }
 
@@ -87,11 +93,11 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(unit).State = EntityState.Modified;
-                db.SaveChanges();
+                Context.Entry(unit);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BuildingId = new SelectList(db.Buildings, "Id", "Name", unit.BuildingId);
+            ViewBag.BuildingId = new SelectList(Context.Buildings, "Id", "Name", unit.BuildingId);
             return View(unit);
         }
 
@@ -102,7 +108,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Unit unit = db.Units.Find(id);
+            Unit unit = Context.Units.Find(id);
             if (unit == null)
             {
                 return HttpNotFound();
@@ -115,19 +121,10 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Unit unit = db.Units.Find(id);
-            db.Units.Remove(unit);
-            db.SaveChanges();
+            Unit unit = Context.Units.Find(id);
+            Context.Units.Remove(unit);
+            Context.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

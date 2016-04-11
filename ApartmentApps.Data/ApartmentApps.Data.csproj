@@ -85,12 +85,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="ApplicationDbContext2.cs" />
     <Compile Include="Building.cs" />
     <Compile Include="BuildingMetadata.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Corporation.cs" />
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="CorporationMetadata.cs" />
+    <Compile Include="CourtesyOfficerCheckin.cs" />
+    <Compile Include="CourtesyOfficerLocation.cs" />
+    <Compile Include="ImageReference.cs" />
+    <Compile Include="IncidentReport.cs" />
+    <Compile Include="IncidentReportCheckin.cs" />
+    <Compile Include="IncidentReportStatus.cs" />
+    <Compile Include="IncidentType.cs" />
+    <Compile Include="IPropertyEntity.cs" />
+    <Compile Include="MaintenanceRequestCheckin.cs" />
+    <Compile Include="MaintenanceRequestStatus.cs" />
     <Compile Include="MaitenanceAction.cs" />
     <Compile Include="MaitenanceActionType.cs" />
     <Compile Include="MaitenanceRequest.cs" />
@@ -101,11 +112,17 @@
     <Compile Include="Property.cs" />
     <Compile Include="PropertyAddon.cs" />
     <Compile Include="PropertyAddonType.cs" />
+    <Compile Include="PropertyContext.cs" />
+    <Compile Include="PropertyEntrataInfo.cs" />
     <Compile Include="PropertyMetadata.cs" />
+    <Compile Include="PropertyYardiInfo.cs" />
+    <Compile Include="Repository\BaseRepository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Tenant.cs" />
     <Compile Include="TenantMetadata.cs" />
     <Compile Include="Unit.cs" />
     <Compile Include="UnitMetadata.cs" />
+    <Compile Include="UserAlert.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

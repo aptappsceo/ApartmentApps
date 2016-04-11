@@ -5,8 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using ApartmentApps.Api;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.API.Service.Controllers
 {
@@ -20,7 +22,7 @@ namespace ApartmentApps.API.Service.Controllers
         public IEnumerable<LookupPairModel> GetUnits()
         {
             var propertyId = CurrentUser.PropertyId.Value;
-            return Context.Units.Include(p=>p.Building).Where(p => p.Building.PropertyId == propertyId).OrderBy(p=>p.Building.Name).ThenBy(p=>p.Name).ToArray().Select(p => new LookupPairModel()
+            return Context.Units.Where(p => p.Building.PropertyId == propertyId).OrderBy(p=>p.Building.Name).ThenBy(p=>p.Name).ToArray().Select(p => new LookupPairModel()
             {
                 Key = p.Id.ToString(),
                 Value = $"Building - {p.Building?.Name} Unit - {p.Name}"
@@ -28,7 +30,7 @@ namespace ApartmentApps.API.Service.Controllers
            
         }
 
-        public LookupsController(ApplicationDbContext context) : base(context)
+        public LookupsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
         }
     }

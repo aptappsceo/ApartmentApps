@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -16,9 +18,13 @@ namespace ApartmentApps.Portal.Controllers
         
 
         // GET: /PropertyEntrataInfo/
+        public PropertyEntrataInfoController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        {
+        }
+
         public ActionResult Index()
         {
-            var propertyentratainfoes = db.PropertyEntrataInfos.Include(p => p.Property);
+            var propertyentratainfoes = Context.PropertyEntrataInfos.GetAll();
             return View(propertyentratainfoes.ToList());
         }
 
@@ -29,7 +35,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PropertyEntrataInfo propertyEntrataInfo = db.PropertyEntrataInfos.Find(id);
+            PropertyEntrataInfo propertyEntrataInfo = Context.PropertyEntrataInfos.Find(id);
             if (propertyEntrataInfo == null)
             {
                 return HttpNotFound();
@@ -40,7 +46,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /PropertyEntrataInfo/Create
         public ActionResult Create()
         {
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name");
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name");
             return View();
         }
 
@@ -53,12 +59,12 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PropertyEntrataInfos.Add(propertyEntrataInfo);
-                db.SaveChanges();
+                Context.PropertyEntrataInfos.Add(propertyEntrataInfo);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", propertyEntrataInfo.PropertyId);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", propertyEntrataInfo.PropertyId);
             return View(propertyEntrataInfo);
         }
 
@@ -69,12 +75,12 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PropertyEntrataInfo propertyEntrataInfo = db.PropertyEntrataInfos.Find(id);
+            PropertyEntrataInfo propertyEntrataInfo = Context.PropertyEntrataInfos.Find(id);
             if (propertyEntrataInfo == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", propertyEntrataInfo.PropertyId);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", propertyEntrataInfo.PropertyId);
             return View(propertyEntrataInfo);
         }
 
@@ -87,11 +93,11 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(propertyEntrataInfo).State = EntityState.Modified;
-                db.SaveChanges();
+                Context.Entry(propertyEntrataInfo);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PropertyId = new SelectList(db.Properties, "Id", "Name", propertyEntrataInfo.PropertyId);
+            ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", propertyEntrataInfo.PropertyId);
             return View(propertyEntrataInfo);
         }
 
@@ -102,7 +108,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PropertyEntrataInfo propertyEntrataInfo = db.PropertyEntrataInfos.Find(id);
+            PropertyEntrataInfo propertyEntrataInfo = Context.PropertyEntrataInfos.Find(id);
             if (propertyEntrataInfo == null)
             {
                 return HttpNotFound();
@@ -115,19 +121,11 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PropertyEntrataInfo propertyEntrataInfo = db.PropertyEntrataInfos.Find(id);
-            db.PropertyEntrataInfos.Remove(propertyEntrataInfo);
-            db.SaveChanges();
+            PropertyEntrataInfo propertyEntrataInfo = Context.PropertyEntrataInfos.Find(id);
+            Context.PropertyEntrataInfos.Remove(propertyEntrataInfo);
+            Context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

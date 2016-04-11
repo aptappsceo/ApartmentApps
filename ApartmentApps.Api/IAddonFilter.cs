@@ -4,12 +4,15 @@ namespace ApartmentApps.Api
 {
     public interface IAddonFilter
     {
-        bool Filter(ApplicationUser user);
+        bool Filter();
     }
 
-    public interface IPropertyContext
+    public interface IUserContext
     {
+        string UserId { get; }
+        string Email { get;  }
+        string Name { get;  }
         int PropertyId { get; }
-
+        ApplicationUser CurrentUser { get; }
     }
 }

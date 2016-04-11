@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -15,9 +17,13 @@ namespace ApartmentApps.Portal.Controllers
       
 
         // GET: /MaitenanceRequests/
+        public MaitenanceRequestsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        {
+        }
+
         public ActionResult Index()
         {
-            var maitenancerequests = db.MaitenanceRequests.Include(m => m.MaitenanceRequestType).Include(m => m.Status).Include(m => m.Unit).Include(m => m.User);
+            var maitenancerequests = Context.MaitenanceRequests.GetAll();
             return View(maitenancerequests.ToList());
         }
 
@@ -28,7 +34,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MaitenanceRequest maitenanceRequest = db.MaitenanceRequests.Find(id);
+            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
             if (maitenanceRequest == null)
             {
                 return HttpNotFound();
@@ -39,10 +45,10 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /MaitenanceRequests/Create
         public ActionResult Create()
         {
-            ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name");
-            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name");
-            ViewBag.UnitId = new SelectList(db.Units.Where(p => p.Building.PropertyId == CurrentUser.PropertyId), "Id", "Name");
-            ViewBag.UserId = new SelectList(db.Users.Where(p => p.PropertyId == CurrentUser.PropertyId), "Id", "FirstName");
+            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name");
+            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name");
+            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name");
+            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "FirstName");
             return View();
         }
 
@@ -55,15 +61,15 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.MaitenanceRequests.Add(maitenanceRequest);
-                db.SaveChanges();
+                Context.MaitenanceRequests.Add(maitenanceRequest);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(db.Units.Where(p => p.Building.PropertyId == CurrentUser.PropertyId), "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(db.Users.Where(p => p.PropertyId == CurrentUser.PropertyId), "Id", "FirstName", maitenanceRequest.UserId);
+            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
+            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "FirstName", maitenanceRequest.UserId);
             return View(maitenanceRequest);
         }
 
@@ -74,15 +80,15 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MaitenanceRequest maitenanceRequest = db.MaitenanceRequests.Find(id);
+            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
             if (maitenanceRequest == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(db.Units.Where(p=>p.Building.PropertyId == CurrentUser.PropertyId), "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == CurrentUser.PropertyId), "Id", "FirstName", maitenanceRequest.UserId);
+            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
+            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(Context.Units, "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(Context.Users, "Id", "FirstName", maitenanceRequest.UserId);
             return View(maitenanceRequest);
         }
 
@@ -95,14 +101,14 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(maitenanceRequest).State = EntityState.Modified;
-                db.SaveChanges();
+                Context.Entry(maitenanceRequest);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MaitenanceRequestTypeId = new SelectList(db.MaitenanceRequestTypes, "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(db.MaintenanceRequestStatuses, "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(db.Units.Where(p => p.Building.PropertyId == CurrentUser.PropertyId), "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(db.Users.Where(p=>p.PropertyId == CurrentUser.PropertyId), "Id", "FirstName", maitenanceRequest.UserId);
+            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
+            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "FirstName", maitenanceRequest.UserId);
             return View(maitenanceRequest);
         }
 
@@ -113,7 +119,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MaitenanceRequest maitenanceRequest = db.MaitenanceRequests.Find(id);
+            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
             if (maitenanceRequest == null)
             {
                 return HttpNotFound();
@@ -126,19 +132,11 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            MaitenanceRequest maitenanceRequest = db.MaitenanceRequests.Find(id);
-            db.MaitenanceRequests.Remove(maitenanceRequest);
-            db.SaveChanges();
+            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
+            Context.MaitenanceRequests.Remove(maitenanceRequest);
+            Context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

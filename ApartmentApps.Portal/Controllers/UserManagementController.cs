@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -29,6 +31,13 @@ namespace ApartmentApps.Portal.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        public UserManagementController(PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(context, userContext)
+        {
+            _signInManager = signInManager;
+            _userManager = userManager;
+        }
+
         public ApplicationSignInManager SignInManager
         {
             get
@@ -54,26 +63,22 @@ namespace ApartmentApps.Portal.Controllers
         }
 
 
-        public UserManagementController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
+   
 
         // GET: UserManagement
         public ActionResult Index()
         {
-            var applicationusers = db.Users.Include(a => a.Property).Include(a => a.Tenant).Where(p => p.PropertyId == PropertyId);
+            var applicationusers = Context.Users;
             return View(applicationusers.ToList());
         }
 
         public ActionResult EditUser(string id = null)
         {
-            var user = db.Users.Include(p=>p.Roles).FirstOrDefault(p => p.PropertyId == PropertyId && p.Id == id);
+            var user = Context.Users.Find(id);
 
             var userModel = new UserModel()
             {
-                RolesList = db.Roles.Select(p=>p.Id).ToList(),
+                RolesList = Context.Roles.Select(p=>p.Id).ToList(),
                 
             };
             // If we aren't an admin we shouldn't be able to create admin accounts
@@ -99,7 +104,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = db.Users.FirstOrDefault(p=>p.PropertyId == PropertyId && p.Id == model.Id );
+                var user = Context.Users.Find(model.Id);
                 var newUser = false;
                 if (user == null)
                 {
@@ -145,7 +150,7 @@ namespace ApartmentApps.Portal.Controllers
                 }
                 else
                 {
-                    await db.SaveChangesAsync();
+                    Context.SaveChanges();
                 }
 
              

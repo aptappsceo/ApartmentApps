@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Api
 {
     public class CourtesyService : ICourtesyService
     {
-        public ApplicationDbContext Context { get; set; }
+        public PropertyContext Context { get; set; }
         private IBlobStorageService _blobStorageService;
 
-        public CourtesyService(IBlobStorageService blobStorageService, ApplicationDbContext context)
+        public CourtesyService(IBlobStorageService blobStorageService, PropertyContext context)
         {
             Context = context;
             _blobStorageService = blobStorageService;
@@ -27,7 +28,7 @@ namespace ApartmentApps.Api
                 CreatedOn = user.TimeZone.Now(),
                 GroupId = Guid.NewGuid()
             };
-            var localCtxUser = Context.Users.Find(user.Id);
+           
 
             Context.IncidentReports.Add(incidentReport);
 
@@ -44,7 +45,7 @@ namespace ApartmentApps.Api
             }
 
             Context.SaveChanges();
-            this.InvokeEvent<IIncidentReportSubmissionEvent>(localCtxUser, _ => _.IncidentReportSubmited(incidentReport));
+            this.InvokeEvent<IIncidentReportSubmissionEvent>( _ => _.IncidentReportSubmited(incidentReport));
 
             return incidentReport.Id;
 
@@ -85,7 +86,7 @@ namespace ApartmentApps.Api
                 incidentReport.CompletionDate = officer.TimeZone.Now();
             }
             Context.SaveChanges();
-            this.InvokeEvent<IIncidentReportCheckinEvent>(officer, _ => _.IncidentReportCheckin(checkin, incidentReport));
+            this.InvokeEvent<IIncidentReportCheckinEvent>( _ => _.IncidentReportCheckin(checkin, incidentReport));
             return true;
 
         }

@@ -5,7 +5,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
@@ -20,7 +22,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
     [Authorize(Roles = "PropertyAdmin")]
     public class ConfigureController : ApartmentAppsApiController
     {
-        public ConfigureController(ApplicationDbContext context) : base(context)
+        public ConfigureController(PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
         }
 
@@ -40,7 +42,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 if (parameters["unitid"] != null)
                 {
                     var unitId = Convert.ToInt32(parameters["unitid"]);
-                    var unit = Context.Units.FirstOrDefault(p => p.Id == unitId);
+                    var unit = Context.Units.Find(unitId);
                     if (unit != null)
                     {
                         unit.Latitude = latitude;
@@ -54,7 +56,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                         Latitude = latitude,
                         Longitude = longitude,
                         LocationId = parameters["coloc"],
-                        Label = label ?? "Location " + (Context.CourtesyOfficerLocations.Count(p => p.PropertyId == propertyId) + 1)
+                        Label = label ?? "Location " + (Context.CourtesyOfficerLocations.Count() + 1)
                     };
                     Context.CourtesyOfficerLocations.Add(courtesyOfficerLocation);
                 }
@@ -66,7 +68,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                         Latitude = latitude,
                         Longitude = longitude,
                         LocationId = parameters["location"],
-                        Label = label ?? "Location " + (Context.CourtesyOfficerLocations.Count(p => p.PropertyId == propertyId) + 1)
+                        Label = label ?? "Location " + (Context.CourtesyOfficerLocations.Count() + 1)
                     };
                     Context.CourtesyOfficerLocations.Add(courtesyOfficerLocation);
                 }
@@ -78,12 +80,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         [System.Web.Http.Route("GetLocations")]
         public IEnumerable<LocationBindingModel> GetLocations()
         {
-            //if (CurrentUser.PropertyId == null)
-            //return Enumerable.Empty<LocationBindingModel>();
-
-            var propertyId = CurrentUser.PropertyId.Value;
-
-            foreach (var item in Context.CourtesyOfficerLocations.Where(p => p.PropertyId == propertyId).Select(p => new LocationBindingModel()
+            foreach (var item in Context.CourtesyOfficerLocations.GetAll().Select(p => new LocationBindingModel()
             {
                 Id = p.Id,
                 Type = "Checkin",
@@ -92,7 +89,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 Name = p.Label
             }))
             yield return item;
-            foreach (var item in Context.Units.Include(p => p.Building).Where(p => p.Longitude > 0 && p.Latitude > 0 && p.Building.PropertyId == propertyId))
+            foreach (var item in Context.Units.Where(p => p.Longitude > 0 && p.Latitude > 0))
             {
                 yield return new LocationBindingModel()
                 {
@@ -113,11 +110,11 @@ namespace ApartmentApps.API.Service.Controllers.Api
             //if (CurrentUser.PropertyId == null) return;
             //using (var ctx = new ApplicationDbContext())
             //{
-               var propertyId = CurrentUser.PropertyId.Value;
+              
             if (type.ToLower() == "checkin")
             {
                 Context.CourtesyOfficerLocations.Remove(
-                    Context.CourtesyOfficerLocations.First(p => p.PropertyId == propertyId && p.Id == id));
+                    Context.CourtesyOfficerLocations.Find(id));
                 Context.SaveChanges();
             }
             //    var item = ctx.CourtesyOfficerLocations.FirstOrDefault(p => p.Id == id && p.PropertyId == propertyId);

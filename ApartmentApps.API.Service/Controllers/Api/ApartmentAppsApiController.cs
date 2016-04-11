@@ -1,7 +1,9 @@
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -9,30 +11,21 @@ namespace ApartmentApps.API.Service.Controllers
 {
     public class ApartmentAppsApiController : ApiController
     {
-        public ApplicationDbContext Context { get; }
+        public PropertyContext Context { get; }
+        public IUserContext UserContext { get; set; }
 
-        public ApplicationUserManager UserManager
-        {
-            get { return HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-        }
+        //public ApplicationUserManager UserManager
+        //{
+        //    get { return HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+        //}
 
-        private ApplicationUser _currentUser;
-        public ApplicationUser CurrentUser
-        {
-            get
-            {
-                var username = User.Identity.Name;
-                if (_currentUser == null)
-                {
-                    _currentUser = Context.Users.FirstOrDefault(p => p.UserName == username);
-                }
-                return _currentUser;//user.Email
-            }
-        }
 
-        public ApartmentAppsApiController(ApplicationDbContext context)
+        public ApplicationUser CurrentUser => UserContext.CurrentUser;
+
+        public ApartmentAppsApiController(PropertyContext context, IUserContext userContext)
         {
             Context = context;
+            UserContext = userContext;
         }
     }
 }

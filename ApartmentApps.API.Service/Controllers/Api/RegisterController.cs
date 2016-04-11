@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.Azure.NotificationHubs.Messaging;
 
@@ -18,7 +19,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
     {
         private NotificationHubClient hub;
 
-        public RegisterController(ApplicationDbContext context) : base(context)
+        public RegisterController(PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
             hub = Notifications.Instance.Hub;
         }

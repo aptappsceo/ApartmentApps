@@ -6,7 +6,7 @@ namespace ApartmentApps.Api
 {
     public interface IMaintenanceService : IService
     {
-        int SubmitRequest(ApplicationUser user1, string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0);
+        int SubmitRequest(string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0);
         bool PauseRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images);
         bool CompleteRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images);
         void StartRequest(ApplicationUser worker, int id, string comments, List<byte[]> images);

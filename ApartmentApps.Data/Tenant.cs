@@ -1,9 +1,19 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApartmentApps.Data
 {
-    public partial class Tenant
+    public class PropertyEntity : IPropertyEntity
+    {
+        [DefaultValue(1)]
+        public int? PropertyId { get; set; } = 1;
+
+        [ForeignKey("PropertyId")]
+        public virtual Property Property { get; set; }
+    }
+
+    public partial class Tenant : PropertyEntity
     {
         [Key, ForeignKey("User")]
         public string UserId { get; set; }
@@ -38,6 +48,5 @@ namespace ApartmentApps.Data
         public string Gender { get; set; }
 
         public string MiddleName { get; set; }
-
     }
 }

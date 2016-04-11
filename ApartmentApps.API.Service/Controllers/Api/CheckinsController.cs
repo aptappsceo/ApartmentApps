@@ -8,6 +8,7 @@ using System.Web.Http;
 using ApartmentApps.Api;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
@@ -18,9 +19,9 @@ namespace ApartmentApps.API.Service.Controllers.Api
         [System.Web.Mvc.HttpGet]
         public IEnumerable<CourtesyCheckinBindingModel> Get()
         {
-            var propertyId = CurrentUser.PropertyId.Value;
+       
             var today = CurrentUser.TimeZone.Now();
-            return Context.CourtesyOfficerLocations.Where(p => p.PropertyId == propertyId).ToArray()
+            return Context.CourtesyOfficerLocations.GetAll().ToArray()
                 .Select(p => new CourtesyCheckinBindingModel
                 {
                     Latitude = p.Latitude,
@@ -37,13 +38,13 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 });
         }
         [System.Web.Mvc.HttpPost]
-        public async Task<IHttpActionResult> Post(int locationId, double latitude= 0, double longitude = 0)
+        public IHttpActionResult Post(int locationId, double latitude= 0, double longitude = 0)
         {
-            var location = await Context.CourtesyOfficerLocations.FirstOrDefaultAsync(p => p.Id == locationId);
+            var location = Context.CourtesyOfficerLocations.Find(locationId);
             if (location == null)
             {
-                return this.Content(HttpStatusCode.BadRequest, "Location not found.");
-                return this.BadRequest("Location not found.");
+                return this.Content(HttpStatusCode.BadRequest, $"Location {locationId} not found.");
+                ///return this.BadRequest("Location not found.");
             }
             var distanceToCheckin = DistanceCalcs.DistanceInFeet(location.Latitude, location.Longitude, latitude, longitude);
             if (distanceToCheckin < 100)
@@ -121,7 +122,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 return (rad / Math.PI * 180.0);
             }
         }
-        public CheckinsController(ApplicationDbContext context) : base(context)
+        public CheckinsController(PropertyContext context, IUserContext userContext) : base(context,userContext)
         {
         }
     }

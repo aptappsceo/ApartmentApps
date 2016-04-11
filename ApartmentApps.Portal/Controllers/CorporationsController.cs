@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -15,9 +17,13 @@ namespace ApartmentApps.Portal.Controllers
     
 
         // GET: /Corporations/
+        public CorporationsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        {
+        }
+
         public ActionResult Index()
         {
-            return View(db.Corporations.ToList());
+            return View(Context.Corporations.ToList());
         }
 
         // GET: /Corporations/Details/5
@@ -27,7 +33,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Corporation corporation = db.Corporations.Find(id);
+            Corporation corporation = Context.Corporations.Find(id);
             if (corporation == null)
             {
                 return HttpNotFound();
@@ -50,8 +56,8 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Corporations.Add(corporation);
-                db.SaveChanges();
+                Context.Corporations.Add(corporation);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +71,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Corporation corporation = db.Corporations.Find(id);
+            Corporation corporation = Context.Corporations.Find(id);
             if (corporation == null)
             {
                 return HttpNotFound();
@@ -82,8 +88,8 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(corporation).State = EntityState.Modified;
-                db.SaveChanges();
+                Context.Entry(corporation);
+                Context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(corporation);
@@ -96,7 +102,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Corporation corporation = db.Corporations.Find(id);
+            Corporation corporation = Context.Corporations.Find(id);
             if (corporation == null)
             {
                 return HttpNotFound();
@@ -109,19 +115,11 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Corporation corporation = db.Corporations.Find(id);
-            db.Corporations.Remove(corporation);
-            db.SaveChanges();
+            Corporation corporation = Context.Corporations.Find(id);
+            Context.Corporations.Remove(corporation);
+            Context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

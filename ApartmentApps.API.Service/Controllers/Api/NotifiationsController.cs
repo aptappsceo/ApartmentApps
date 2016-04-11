@@ -9,12 +9,13 @@ using System.Web.Http;
 
 using ApartmentApps.Api;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
     public class NotifiationsController : ApartmentAppsApiController
     {
-        public NotifiationsController(ApplicationDbContext context) : base(context)
+        public NotifiationsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
         }
 
@@ -63,7 +64,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
     [RoutePrefix("api/Alerts")]
     public class AlertsController : ApartmentAppsApiController
     {
-        public AlertsController(ApplicationDbContext context) : base(context)
+        public AlertsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
         }
 
