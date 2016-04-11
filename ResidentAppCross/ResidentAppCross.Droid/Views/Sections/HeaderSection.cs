@@ -9,12 +9,17 @@ using Android.Graphics.Drawables;
 using Android.Graphics.Drawables.Shapes;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.Content;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Java.Lang;
+using MvvmCross.Platform;
+using MvvmCross.Platform.Droid.Platform;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
+using ResidentAppCross.Resources;
 using ZXing.Rendering;
+using BindingFlags = System.Reflection.BindingFlags;
 
 namespace ResidentAppCross.Droid.Views.Sections
 {
@@ -194,6 +199,18 @@ namespace ResidentAppCross.Droid.Views.Sections
 
         public static Color SecondaryBackgoundColor { get; set; } = Color.ParseColor("#145c99");
         public static Color DeepBackgroundColor { get; set; } = Color.ParseColor("#e4e4e4");
+
+        public static Drawable GetIcon(SharedResources.Icons icon, SharedResources.Size size)
+        {
+            var iconname = $"{size}_{icon}";
+            var context = DroidApplication.Instance;
+
+            //THE MOTHER OF ALL HACKS
+            var fieldInfo = typeof (Resource.Drawable).GetField(iconname, BindingFlags.Static | BindingFlags.Public);
+            int identifier = (int)fieldInfo.GetValue(null);
+
+            return ContextCompat.GetDrawable(context, identifier);
+        }
     }
 
     public static class AppFonts
@@ -206,12 +223,32 @@ namespace ResidentAppCross.Droid.Views.Sections
         public static AppFont SectionSubHeadlineInvert = new AppFont() {Color = Color.White, SpSize = 16};
         public static AppFont TextViewBody = new AppFont() {Color = Color.Black, SpSize = 16};
         public static AppFont ApplicationTitleLargeInvert = new AppFont() {Color = Color.White, SpSize = 22};
-        public static AppFont DialogButton = new AppFont() { Color = Color.White, SpSize = 14 };
-        public static AppFont DialogHeadline = new AppFont() { Color = Color.DarkGray, SpSize = 18 };
-        public static AppFont DialogSubHeadline = new AppFont() { Color = Color.DarkGray, SpSize = 16 };
-
+        public static AppFont DialogButton = new AppFont() {Color = Color.White, SpSize = 14};
+        public static AppFont DialogHeadline = new AppFont() {Color = Color.DarkGray, SpSize = 18};
+        public static AppFont ListItemTitle = new AppFont() {Color = Color.Black, SpSize = 14 };
+        public static AppFont ListItemCounter = new AppFont() {Color = Color.White, SpSize = 12, Style = TypefaceStyle.Bold};
+        public static AppFont DialogSubHeadline = new AppFont() {Color = Color.DarkGray, SpSize = 16};
     }
 
+    public static class AppBitmaps
+    {
+        public static Bitmap ColorToWhite(Color color)
+        {
+            var bitmap = Bitmap.CreateBitmap(4, 4, Bitmap.Config.Argb4444);
+
+            for (int x = 0; x < 4; x++)
+            {
+                for (int y = 0; y < 4; y++)
+                {
+                    //if(y >= 2) 
+                    bitmap.SetPixel(x, y, y >= 2 ? Color.White : color);
+                }
+            }
+
+            bitmap.HasMipMap = false;
+            return bitmap;
+        }
+    }
 
     public static class AppShapes
     {
@@ -240,8 +277,6 @@ namespace ResidentAppCross.Droid.Views.Sections
         }
 
 
-
-
         public static GradientDrawable OfColor(this GradientDrawable g, Color r)
         {
             g.SetColor(r);
@@ -256,31 +291,48 @@ namespace ResidentAppCross.Droid.Views.Sections
 
         public static GradientDrawable WithRoundedTop(this GradientDrawable g, int rad = 8)
         {
-            g.SetCornerRadii(GetCornerRadiiDp(rad,rad,0,0));
+            g.SetCornerRadii(GetCornerRadiiDp(rad, rad, 0, 0));
             return g;
         }
 
         public static GradientDrawable WithRoundedBottom(this GradientDrawable g, int rad = 8)
         {
-            g.SetCornerRadii(GetCornerRadiiDp(0,0,rad,rad));
+            g.SetCornerRadii(GetCornerRadiiDp(0, 0, rad, rad));
             return g;
         }
 
         public static GradientDrawable WithRoundedCorners(this GradientDrawable g, int rad = 8)
         {
-            g.SetCornerRadii(GetCornerRadiiDp(rad,rad,rad,rad));
+            g.SetCornerRadii(GetCornerRadiiDp(rad, rad, rad, rad));
             return g;
         }
 
-
-
         public static float[] GetCornerRadiiDp(int topLeft, int topRight, int bottomRight, int bottomLeft)
         {
-            var tl = topLeft.ToPx();
-            var tr = topRight.ToPx();
-            var br = bottomRight.ToPx();
-            var bl = bottomLeft.ToPx();
-            return new float[] {tl, tl, tr, tr, br, br, bl , bl };
+            return GetCornerRadiiPx(topLeft.ToPx(), topRight.ToPx(), bottomRight.ToPx(), bottomLeft.ToPx());
+        }
+
+        public static float[] GetCornerRadiiPx(int topLeft, int topRight, int bottomRight, int bottomLeft)
+        {
+            return new float[]
+            {
+                topLeft, topLeft, topRight, topRight, bottomRight, bottomRight, bottomLeft, bottomLeft
+            };
+        }
+    }
+
+    public static class AppDrawables
+    {
+        private static readonly Dictionary<Color,ColorDrawable> ColorDrawables = new Dictionary<Color, ColorDrawable>(); 
+
+        public static ColorDrawable ByColor(Color c)
+        {
+            ColorDrawable d;
+            if (!ColorDrawables.TryGetValue(c, out d))
+            {
+                d = ColorDrawables[c] = new ColorDrawable(c);
+            }
+            return d;
         }
     }
 

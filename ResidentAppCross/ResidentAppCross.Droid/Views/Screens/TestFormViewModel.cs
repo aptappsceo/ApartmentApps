@@ -16,7 +16,7 @@ using Orientation = Android.Widget.Orientation;
 
 namespace ResidentAppCross.Droid.Views
 {
-    [Activity(Label = "Apartment Apps", MainLauncher = false, Icon = "@drawable/accounticon", NoHistory = false,WindowSoftInputMode = SoftInput.StateVisible | SoftInput.AdjustResize)]
+    [Activity(Label = "Apartment Apps", MainLauncher = true, Icon = "@drawable/accounticon", NoHistory = false,WindowSoftInputMode = SoftInput.StateVisible | SoftInput.AdjustResize)]
     public class TestFormView : ViewBase<TestFormViewModel>
     {
         private FrameLayout _screenLayout;
@@ -195,7 +195,7 @@ namespace ResidentAppCross.Droid.Views
                     _screenLayout = new FrameLayout(this)
                     {
                         Id = 1234 ,
-                    }.WithBackground(AppTheme.DeepBackgroundColor).WithDimensionsMatchParent();
+                    }.WithBackgroundColor(AppTheme.DeepBackgroundColor).WithDimensionsMatchParent();
                 }
                 return _screenLayout;
             }

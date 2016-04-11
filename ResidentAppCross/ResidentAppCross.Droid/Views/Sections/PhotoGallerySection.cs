@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
@@ -10,6 +7,7 @@ using Android.Graphics.Drawables.Shapes;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V4.Content;
+using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Views.Animations;
@@ -18,10 +16,8 @@ using Grantland.Widget;
 using Java.Net;
 using Java.Util;
 using MvvmCross.Platform;
-using MvvmCross.Platform.Droid.Platform;
 using MvvmCross.Platform.Droid.Views;
 using MvvmCross.Platform.Platform;
-using MvvmCross.Plugins.PictureChooser;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
@@ -38,7 +34,7 @@ namespace ResidentAppCross.Droid.Views.Sections
         private string _headerText;
         private string _buttonText;
         private LinearLayout _headerlineContainer;
-        private GridView _photosContainer;
+        private RecyclerView _photosContainer;
 
         public PhotoGallerySection(Context context) : base(context)
         {
@@ -49,41 +45,44 @@ namespace ResidentAppCross.Droid.Views.Sections
 
         public override ViewGroup ContentView => SectionContainer;
 
-        public GridView PhotosContainer
+        public RecyclerView PhotosContainer
         {
             get
             {
                 if (_photosContainer == null)
                 {
-                    _photosContainer = new GridView(Context)
+                    _photosContainer = new RecyclerView(Context)
                     {
+                        
                     }
                     .WithWidthMatchParent()
                         .WithHeight(120);
+                    _photosContainer.VerticalScrollBarEnabled = true;
+                    _photosContainer.SetLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.Horizontal));
 
-                    _photosContainer.SetNumColumns(3);
-                    _photosContainer.SetDrawSelectorOnTop(true);
-                    _photosContainer.StretchMode = StretchMode.StretchColumnWidth;
-                    _photosContainer.Focusable = true;
-                    _photosContainer.Clickable = true;
-                    _photosContainer.SetGravity(GravityFlags.Center);
-                    _photosContainer.SetColumnWidth(100.ToPx());
-                    _photosContainer.SetVerticalSpacing(5.ToPx());
-                    _photosContainer.SetHorizontalSpacing(5.ToPx());
-                    _photosContainer.EnsureLinearLayoutParams().TopMargin = 8.ToPx();
-
-                    _photosContainer.ItemClick += (sender, args) =>
-                    {
-                        var image = Photos.RawImages[(int)args.Id];
-                        if (image.Data != null)
-                        {
-                            Mvx.Resolve<IDialogService>().OpenImageFullScreen(image.Data);
-                        }
-                        else if(image.Uri != null)
-                        {
-                            Mvx.Resolve<IDialogService>().OpenImageFullScreenFromUrl(image.Uri.ToString());
-                        }
-                    };
+//                    _photosContainer.SetNumColumns(3);
+//                    _photosContainer.SetDrawSelectorOnTop(true);
+//                    _photosContainer.StretchMode = StretchMode.StretchColumnWidth;
+//                    _photosContainer.Focusable = true;
+//                    _photosContainer.Clickable = true;
+//                    _photosContainer.SetGravity(GravityFlags.Center);
+//                    _photosContainer.SetColumnWidth(100.ToPx());
+//                    _photosContainer.SetVerticalSpacing(5.ToPx());
+//                    _photosContainer.SetHorizontalSpacing(5.ToPx());
+//                    _photosContainer.EnsureLinearLayoutParams().TopMargin = 8.ToPx();
+//
+//                    _photosContainer.ItemClick += (sender, args) =>
+//                    {
+//                        var image = Photos.RawImages[(int)args.Id];
+//                        if (image.Data != null)
+//                        {
+//                            Mvx.Resolve<IDialogService>().OpenImageFullScreen(image.Data);
+//                        }
+//                        else if(image.Uri != null)
+//                        {
+//                            Mvx.Resolve<IDialogService>().OpenImageFullScreenFromUrl(image.Uri.ToString());
+//                        }
+//                    };
 
                 }
                 return _photosContainer;
@@ -176,14 +175,14 @@ namespace ResidentAppCross.Droid.Views.Sections
             }
         }
 
-        public ImageGalleryAdapter Adapter { get; private set; }
+        public PhotoGalleryAdapter Adapter { get; private set; }
         public ImageBundleViewModel Photos { get; private set; }
 
         public void BindTo(ImageBundleViewModel bundle)
         {
             Photos = bundle;
-            Adapter = new ImageGalleryAdapter(Context,bundle);
-            PhotosContainer.Adapter = Adapter;
+            Adapter = new PhotoGalleryAdapter(bundle);
+            PhotosContainer.SetAdapter(Adapter);
         }
 
         public Button Button
@@ -200,7 +199,7 @@ namespace ResidentAppCross.Droid.Views.Sections
                               .WithFont(AppFonts.SectionSubHeadlineInvert)
                               .WithWidthWrapContent()
                               .WithHeightMatchParent()
-                              .WithBackground(AppTheme.SecondaryBackgoundColor);
+                              .WithBackgroundColor(AppTheme.SecondaryBackgoundColor);
                     _button.Text = _buttonText;
                     _button.Click += async (sender, args) =>
                     {
@@ -226,90 +225,21 @@ namespace ResidentAppCross.Droid.Views.Sections
 
     }
 
-    public class AndroidDialogService : IDialogService
+    public class PhotoGalleryAdapter : RecyclerView.Adapter
     {
 
-        private Application _droidApp;
-        private IMvxPictureChooserTask _pictureChooserTask;
-
-        public Activity CurrentTopActivity => Mvx.Resolve<IMvxAndroidCurrentTopActivity>().Activity;
-
-        public IMvxPictureChooserTask PictureChooserTask
-        {
-            get { return _pictureChooserTask ?? (_pictureChooserTask = Mvx.Resolve<IMvxPictureChooserTask>()); }
-            set { _pictureChooserTask = value; }
-        }
-
-        public AndroidDialogService(Application droidApp)
-        {
-            _droidApp = droidApp;
-        }
-
-        public Task<T> OpenSearchableTableSelectionDialog<T>(IList<T> items, string title, Func<T, string> itemTitleSelector,
-            Func<T, string> itemSubtitleSelector = null, object arg = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<DateTime?> OpenDateTimeDialog(string title)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<DateTime?> OpenDateDialog(string title)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static int ImageDialogResult = 288823;
-
-        public async Task<byte[]> OpenImageDialog()
-        {
-            var stream = await PictureChooserTask.ChoosePictureFromLibrary(1024, 62);
-            if (stream == null) return null;
-            byte[] buffer = new byte[stream.Length];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
-
-        public void OpenNotification(string title, string subtitle, string ok)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OpenImageFullScreen(object imageObject)
-        {
-            var data = imageObject as byte[];
-            var frag = new PhotoViewerDialog() {CurrentData = data};
-            frag.Show(CurrentTopActivity.FragmentManager, "Photo Viewer");
-        }
-
-        public void OpenImageFullScreenFromUrl(string url)
-        {
-            var frag = new PhotoViewerDialog() { CurrentUrl = url };
-            frag.Show(CurrentTopActivity.FragmentManager, "Photo Viewer");
-        }
-
-    
-    }
-
-    public class ImageGalleryAdapter : BaseAdapter
-    {
-
-        private Context mContext;
         private ImageBundleViewModel photos;
 
-        public ImageGalleryAdapter(Context c, ImageBundleViewModel misFotos)
+        public PhotoGalleryAdapter(ImageBundleViewModel misFotos)
         {
-            mContext = c;
             photos = misFotos;
+        }
+
+        public int? ItemHeight;
+
+        public Object GetItem(int position)
+        {
+            return null;
         }
 
         public int GetCount()
@@ -317,42 +247,52 @@ namespace ResidentAppCross.Droid.Views.Sections
             return photos.RawImages.Count;
         }
 
-        public override Object GetItem(int position)
-        {
-            return position;
-        }
-
         public override long GetItemId(int position)
         {
             return position;
         }
 
-        public override View GetView(int position, View convertView, ViewGroup parent)
+        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            AsyncImageView aiView;
-            if (convertView == null)
-            {
-                aiView = new AsyncImageView(mContext).WithWidth(100).WithHeight(100);
-            }
-            else {
-                aiView = (AsyncImageView)convertView;
-            }
-
+            var view = (holder as GenericViewHolder<AsyncImageView>)?.View;
+            if (view == null) return;
             var photo = photos.RawImages[position];
-            if(photo.Uri != null)
-                aiView.SetImage(photo.Uri.ToString(),null);
+            if (photo.Uri != null)
+            { 
+                view.SetImage(photo.Uri.ToString(), null);
+            }
             else if (photo.Data != null)
             {
-                aiView.SetImage(photo.Data);
+                view.SetImage(photo.Data);
             }
-            return aiView;
         }
 
-        public override int Count => photos.RawImages.Count;
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            var item = new AsyncImageView(parent.Context).WithHeightWrapContent().WithWidth(150);
+            var viewHolder = new GenericViewHolder<AsyncImageView>(item);
+            return viewHolder;
+        }
+
+        public override int ItemCount => photos.RawImages.Count;
+
     }
 
 
-    public class AsyncImageView : RelativeLayout
+    public class GenericViewHolder<T> : RecyclerView.ViewHolder where T : class
+    {
+        public T View { get; set; }
+
+        public GenericViewHolder(View itemView) : base(itemView)
+        {
+            var view = itemView as T;
+            if(view == null) throw new Exception("Fuck");
+            View = view;
+        }
+
+    }
+
+    public class AsyncImageView : FrameLayout
     {
         private ImageView _imageView;
         private ProgressBar _progressBar;
@@ -369,7 +309,8 @@ namespace ResidentAppCross.Droid.Views.Sections
             {
                 if (_progressBar == null)
                 {
-                    _progressBar = new ProgressBar(Context).WithRelativeCopyOfParent();
+                    _progressBar = new ProgressBar(Context);
+                    _progressBar.WithDimensionsMatchParent();
                     _progressBar.ProgressDrawable = new ColorDrawable(Color.White);
                     _progressBar.Background = new ShapeDrawable(new OvalShape())
                     {
@@ -392,7 +333,7 @@ namespace ResidentAppCross.Droid.Views.Sections
             {
                 if (_imageView == null)
                 {
-                    _imageView = new ImageView(Context).WithRelativeCopyOfParent();
+                    _imageView = new ImageView(Context).WithDimensionsWrapContent();
                     _imageView.SetScaleType(ImageView.ScaleType.FitCenter);
                     _imageView.SetPadding(0, 0, 0, 0);
                     //_imageView.Visibility = ViewStates.Gone;;

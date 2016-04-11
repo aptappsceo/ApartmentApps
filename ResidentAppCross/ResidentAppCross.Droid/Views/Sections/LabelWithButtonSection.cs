@@ -103,7 +103,7 @@ namespace ResidentAppCross.Droid.Views.Sections
                         .WithFont(AppFonts.SectionSubHeadlineInvert)
                         .WithWidthWrapContent()
                         .WithHeightMatchParent()
-                        .WithBackground(AppTheme.SecondaryBackgoundColor);
+                        .WithBackgroundColor(AppTheme.SecondaryBackgoundColor);
                     _button.Text = _buttonText;
                 }
                 return _button;

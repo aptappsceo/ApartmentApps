@@ -17,7 +17,7 @@ namespace ResidentAppCross.Droid.Views
 {
     [Activity(
         Label = "Authentication", 
-        MainLauncher = true, 
+        MainLauncher = false, 
         Icon = "@drawable/accounticon",
         NoHistory = true)]
     public class LoginFormView : ViewBase<LoginFormViewModel>
@@ -73,7 +73,7 @@ namespace ResidentAppCross.Droid.Views
                     _mainLayout = new LinearLayout(this);
                     _mainLayout.Orientation = Orientation.Vertical;
                     _mainLayout.WeightSum = 1f;
-                    _mainLayout.WithDimensionsMatchParent().WithDrawableBackground(ContextCompat.GetDrawable(this,Resource.Drawable.background));
+                    _mainLayout.WithDimensionsMatchParent().WithBackground(ContextCompat.GetDrawable(this,Resource.Drawable.background));
                     
                     _mainLayout.AddView(HeaderContainer);
                     _mainLayout.AddView(BodyOuterContainer);
@@ -136,7 +136,7 @@ namespace ResidentAppCross.Droid.Views
                         .WithWidthMatchParent()
                         .WithHeightWrapContent();
                     _bodyContainer.AddView(LoginFieldView);
-                    _bodyContainer.AddView(new View(this).WithWidth(FormWidth).WithHeight(1).WithBackground(Color.LightGray).WithLinearGravity(GravityFlags.Center));
+                    _bodyContainer.AddView(new View(this).WithWidth(FormWidth).WithHeight(1).WithBackgroundColor(Color.LightGray).WithLinearGravity(GravityFlags.Center));
                     _bodyContainer.AddView(PasswordFieldView);
                     _bodyContainer.AddView(LoginButtonView);
 
@@ -210,7 +210,7 @@ namespace ResidentAppCross.Droid.Views
                     {
                         Hint = "Username..."
                     }
-                        .WithDrawableBackground(AppShapes.GetBox.WithRoundedTop())
+                        .WithBackground(AppShapes.GetBox.WithRoundedTop())
                         .WithHeight(44)
                         .WithPaddingDp(8,0,8,0)
                         .WithWidth(FormWidth)
@@ -234,7 +234,7 @@ namespace ResidentAppCross.Droid.Views
                     {
                         Hint = "Password..."
                     }
-                        .WithDrawableBackground(AppShapes.GetBox.WithRoundedBottom())
+                        .WithBackground(AppShapes.GetBox.WithRoundedBottom())
                         .WithHeight(44)
                         .WithPaddingDp(8, 0, 8, 0)
                         .WithWidth(FormWidth)
@@ -261,7 +261,7 @@ namespace ResidentAppCross.Droid.Views
                         Gravity = GravityFlags.Center,
                         Text = "Log in"
                     }
-                    .WithBackground(AppTheme.SecondaryBackgoundColor)
+                    .WithBackgroundColor(AppTheme.SecondaryBackgoundColor)
                     .WithPaddingDp(0,0,0,0)
                     .WithLinearGravity(GravityFlags.CenterHorizontal)
                     .WithWidth(FormWidth)

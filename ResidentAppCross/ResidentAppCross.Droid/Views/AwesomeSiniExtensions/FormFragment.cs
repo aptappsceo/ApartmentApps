@@ -256,7 +256,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
                     {
 
                     }.WithLinearWeight(1f)
-                        .WithBackground(AppTheme.DeepBackgroundColor)
+                        .WithBackgroundColor(AppTheme.DeepBackgroundColor)
                         .WithWidthMatchParent();
                     //.WithHeightMatchParent();
                 }
@@ -275,7 +275,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
                     {
                         Orientation = Orientation.Vertical
                     }
-                        .WithBackground(AppTheme.DeepBackgroundColor)
+                        .WithBackgroundColor(AppTheme.DeepBackgroundColor)
                         .WithWidthMatchParent()
                         .WithHeightWrapContent();
                         
@@ -347,11 +347,19 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return MainContainer;
         }
 
+        public event Action OnBind;
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
             BindForm();
+            OnOnBind();
             RefreshContent();
+        }
+
+        protected virtual void OnOnBind()
+        {
+            OnBind?.Invoke();
         }
     }
 

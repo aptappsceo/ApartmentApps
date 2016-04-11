@@ -67,9 +67,15 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return view;
         }
 
+        public static T WithHeightPx<T>(this T view, int pxHeight) where T : View
+        {
+            view.EnsureLayoutParams().Height = pxHeight;
+            return view;
+        }
+
         public static T WithHeight<T>(this T view, int dpHeight) where T : View
         {
-            view.EnsureLayoutParams().Height = dpHeight.ToPx();
+            view.WithHeightPx(dpHeight.ToPx());
             return view;
         }
 
@@ -115,21 +121,178 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return view;
         }
 
+        public static T WithRelativeMargins<T>(this T view, int leftDp, int topDp, int rightDp, int bottomDp) where T : View
+        {
+            var p = view.EnsureRelativeLayoutParams();
+            p.BottomMargin = bottomDp.ToPx();
+            p.TopMargin = topDp.ToPx();
+            p.LeftMargin = leftDp.ToPx();
+            p.RightMargin = rightDp.ToPx();
+            return view;
+        }
+
         public static T WithLinearWeight<T>(this T view, float weight) where T : View
         {
             view.EnsureLinearLayoutParams().Weight = weight;
             return view;
         }
 
-        public static T WithBackground<T>(this T view, Color color) where T : View
+        public static T WithBackgroundColor<T>(this T view, Color color) where T : View
         {
-            view.Background = new ColorDrawable(color);
+            view.Background = AppDrawables.ByColor(color);//new ColorDrawable(color);
             return view;
         }
 
-        public static T WithDrawableBackground<T>(this T view, Drawable background) where T : View
+        public static T WithBackground<T>(this T view, Drawable background) where T : View
         {
             view.Background = background;
+            return view;
+        }
+
+        public static T WithRelativeBelow<T>(this T view, View what) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.Below, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeAbove<T>(this T view, View what) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.Above, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeParentAlign<T>(this T view, bool align) where T : View
+        {
+            view.EnsureRelativeLayoutParams().AlignWithParent = align;
+            return view;
+        }
+
+        public static T WithoutParentAlign<T>(this T view) where T : View
+        {
+            view.EnsureRelativeLayoutParams().AlignWithParent = false;
+            return view;
+        }
+
+        public static int IdCounter = 1;
+
+        public static T WithUniqueId<T>(this T view) where T : View
+        {
+            if(view.Id == -1) view.Id = IdCounter++;
+            return view;
+        }
+
+        public static T WithRelativeAlignTop<T>(this T view, View what) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignTop, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeAlignBottom<T>(this T view, View what) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignBottom, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeAlignLeft<T>(this T view, View what) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignLeft, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeAlignRight<T>(this T view, View what) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignRight, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeAlignBaseline<T>(this T view, View what) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignBaseline, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeAlignStart<T>(this T view, View what) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignStart, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeAlignEnd<T>(this T view, View what) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignEnd, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeRightOf<T>(this T view, View what) where T : View
+        {
+
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.RightOf, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeLeftOf<T>(this T view, View what) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.LeftOf, what.WithUniqueId().Id);
+            return view;
+        }
+
+        public static T WithRelativeAlignParentTop<T>(this T view) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignParentTop);
+            return view;
+        }
+
+        public static T WithRelativeAlignParentBottom<T>(this T view) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignParentBottom);
+            return view;
+        }
+
+        public static T WithRelativeAlignParentLeft<T>(this T view) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignParentLeft);
+            return view;
+        }
+
+        public static T WithRelativeAlignParentRight<T>(this T view) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignParentRight);
+            return view;
+        }
+
+        public static T WithRelativeAlignParentEnd<T>(this T view) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignParentEnd);
+            return view;
+        }
+
+        public static T WithRelativeAlignParentStart<T>(this T view) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.AlignParentStart);
+            return view;
+        }
+
+        public static T WithRelativeCenterInParent<T>(this T view) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.CenterInParent);
+            return view;
+        }
+
+        public static T WithRelativeCenterHorisontal<T>(this T view) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.CenterHorizontal);
+            return view;
+        }
+
+        public static T WithRelativeCenterVertical<T>(this T view) where T : View
+        {
+            view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.CenterVertical);
+            return view;
+        }
+
+        public static T AddTo<T>(this T view, ViewGroup parent) where T : View
+        {
+            parent.AddView(view);
             return view;
         }
 
@@ -143,6 +306,8 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             layout.AddRule(LayoutRules.AlignParentRight);
             return view;
         }
+
+        
 
         public static int ToPx(this int dPixels)
         {
@@ -167,6 +332,11 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return (view.LayoutParameters as LinearLayout.LayoutParams) ?? (LinearLayout.LayoutParams)(view.LayoutParameters = new LinearLayout.LayoutParams(view.EnsureLayoutParams()));
         }
 
+        public static FrameLayout.LayoutParams EnsureFrameLayoutParams(this View view)
+        {
+            return (view.LayoutParameters as FrameLayout.LayoutParams) ?? (FrameLayout.LayoutParams)(view.LayoutParameters = new FrameLayout.LayoutParams(view.EnsureLayoutParams()));
+        }
+
         public static RelativeLayout.LayoutParams EnsureRelativeLayoutParams(this View view)
         {
             return (view.LayoutParameters as RelativeLayout.LayoutParams) ?? (RelativeLayout.LayoutParams)(view.LayoutParameters = new RelativeLayout.LayoutParams(view.EnsureLayoutParams()));
@@ -176,6 +346,13 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
         {
             view.SetTextColor(font.Color);
             view.SetTextSizeSp(font.SpSize);
+            view.SetTypeface(font.Typeface,font.Style);
+            return view;
+        }
+
+        public static T WithFontColor<T>(this T view, Color c) where T : TextView
+        {
+            view.SetTextColor(c);
             return view;
         }
 
@@ -209,15 +386,26 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             });
         }
 
+        public static BitmapDrawable ToDrawable(this Bitmap bitmap)
+        {
+            return new BitmapDrawable(bitmap);
+        }
 
+        public static BitmapDrawable WithFilter(this BitmapDrawable drawable, bool filter = true)
+        {
+            drawable.SetFilterBitmap(filter);
+            return drawable;
 
+        }
     }
 
 
-    public struct AppFont
+    public class AppFont
     {
         public int SpSize { get; set; }
         public Color Color { get; set; }
+        public TypefaceStyle Style { get; set; } = TypefaceStyle.Normal; 
+        public Typeface Typeface { get; set; } 
     }
 
     public class SpinnerSelectionSectionAdapter<T> : ArrayAdapter<T>

@@ -59,7 +59,8 @@ namespace ResidentAppCross.Droid
     [Application]
     public class DroidApplication : Application
     {
-
+        private static ISharedPreferencesEditor _preferencesEditor;
+        private static ISharedPreferences _preferences;
 
 
         protected DroidApplication(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
@@ -68,12 +69,24 @@ namespace ResidentAppCross.Droid
 
         public DroidApplication()
         {
-
+            SetTheme(Android.Resource.Style.ThemeMaterialLight);
         }
 
 
-        public static ISharedPreferences Preferences => Instance?.GetSharedPreferences("MyPreferences", FileCreationMode.Private);
-        public static ISharedPreferencesEditor PreferencesEditor => Preferences?.Edit();
+        public static ISharedPreferences Preferences
+        {
+            get { return _preferences ?? (_preferences = Instance?.GetSharedPreferences("AA_PREFERENCES", FileCreationMode.Private)); }
+            set { _preferences = value; }
+        }
+
+    
+
+        public static ISharedPreferencesEditor PreferencesEditor
+        {
+            get { return _preferencesEditor ?? (_preferencesEditor = Preferences.Edit()); }
+            set { _preferencesEditor = value; }
+        }
+
 
         public override void OnCreate()
         {
