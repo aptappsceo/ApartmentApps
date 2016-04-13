@@ -1,23 +1,28 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Android.App;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
+using Android.OS;
 using Android.Views;
 using Android.Widget;
 using MvvmCross.Binding.BindingContext;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Droid.Shared.Attributes;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
 using Orientation = Android.Widget.Orientation;
 
+/*
+
 namespace ResidentAppCross.Droid.Views
 {
-    [Activity(Label = "Apartment Apps", MainLauncher = true, Icon = "@drawable/accounticon", NoHistory = false,WindowSoftInputMode = SoftInput.StateVisible | SoftInput.AdjustResize)]
-    public class TestFormView : ViewBase<TestFormViewModel>
+    [Activity(Label = "Apartment Apps", MainLauncher = false, Icon = "@drawable/accounticon", NoHistory = false,WindowSoftInputMode = SoftInput.StateVisible | SoftInput.AdjustResize)]
+    public class TestFormView : ViewBase
     {
         private FrameLayout _screenLayout;
 
@@ -28,13 +33,13 @@ namespace ResidentAppCross.Droid.Views
 
             SetContentView(ScreenLayout);
 
-
             var tx = FragmentManager.BeginTransaction();
 
             tx.Add(ScreenLayout.Id,new TestForm(), "form");
 
             tx.Commit();
 
+*/
 
 //            //ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
 //            //SetContentView(Resource.Layout.LoginViewLayout);
@@ -184,7 +189,7 @@ namespace ResidentAppCross.Droid.Views
 //
 //            photoGallerySection.BindTo(imageBundle);
 //            layout.AddView(photoGallerySection.ContentView);
-        }
+/*        }
 
         public FrameLayout ScreenLayout
         {
@@ -201,5 +206,6 @@ namespace ResidentAppCross.Droid.Views
             }
             set { _screenLayout = value; }
         }
+
     }
-}
+}*/

@@ -7,13 +7,15 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Droid.Support.V7.Fragging.Fragments;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.ViewModels;
+using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 {
 
-    public class TestForm : FormFragment
+    public class TestForm : FormFragment<TestFormViewModel>
     {
         private HeaderSection _headerSection;
         private PhotoGallerySection _photosSection;
@@ -204,13 +206,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
         }
     }
 
-
-    public class FormFragment<T> : FormFragment where T : IMvxViewModel
-    {
-        public T ViewModel { get; set; }
-    }
-
-    public class FormFragment : Fragment
+    public class FormFragment<T> : MvxFragment<T> where T : class, IMvxViewModel
     {
         private List<View> _content;
         private LinearLayout _sectionContainer;
@@ -325,16 +321,15 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
         }
 
-        public virtual void BindForm()
-        {
-            
-        }
+        public virtual void BindForm() { }
 
         public ViewBase Parent => Activity as ViewBase;
 
-        public override void OnCreate(Bundle savedInstanceState)
+        public override void OnViewModelSet()
         {
-            base.OnCreate(savedInstanceState);
+            base.OnViewModelSet();
+            BindForm();
+            RefreshContent();
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -347,20 +342,6 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return MainContainer;
         }
 
-        public event Action OnBind;
-
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
-            BindForm();
-            OnOnBind();
-            RefreshContent();
-        }
-
-        protected virtual void OnOnBind()
-        {
-            OnBind?.Invoke();
-        }
     }
 
 }

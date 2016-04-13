@@ -4,7 +4,10 @@ using Android.Content;
 using Android.Runtime;
 using Android.Util;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Core.Views;
 using MvvmCross.Droid.Platform;
+using MvvmCross.Droid.Shared.Presenter;
+using MvvmCross.Droid.Views;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Converters;
 using MvvmCross.Platform.Plugins;
@@ -35,6 +38,17 @@ namespace ResidentAppCross.Droid
 
         }
 
+        protected override IMvxAndroidViewPresenter CreateViewPresenter()
+        {
+            var presenter = new MvxFragmentsPresenter(AndroidViewAssemblies);
+            return presenter;
+        }
+
+        protected override IMvxViewDispatcher CreateViewDispatcher()
+        {
+            return base.CreateViewDispatcher();
+        }
+
         protected override void InitializeIoC()
         {
             base.InitializeIoC();
@@ -62,24 +76,19 @@ namespace ResidentAppCross.Droid
         private static ISharedPreferencesEditor _preferencesEditor;
         private static ISharedPreferences _preferences;
 
-
         protected DroidApplication(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
         {
         }
 
         public DroidApplication()
         {
-            SetTheme(Android.Resource.Style.ThemeMaterialLight);
         }
-
 
         public static ISharedPreferences Preferences
         {
             get { return _preferences ?? (_preferences = Instance?.GetSharedPreferences("AA_PREFERENCES", FileCreationMode.Private)); }
             set { _preferences = value; }
         }
-
-    
 
         public static ISharedPreferencesEditor PreferencesEditor
         {
@@ -95,7 +104,6 @@ namespace ResidentAppCross.Droid
             App.ApartmentAppsClient.SetAuthToken = (v) => AuthToken = v;
             base.OnCreate();
         }
-   
 
         public static DroidApplication Instance { get; set; }
 

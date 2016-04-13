@@ -131,6 +131,8 @@
     <Compile Include="Services\IQRService.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\ViewModelConfigurator.cs" />
+    <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\DevelopmentViewModel1.cs" />
     <Compile Include="ViewModels\Screens\IncidentReportCheckinDetailsViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceCheckinDetailsViewModel.cs" />
     <Compile Include="ViewModels\Data\BadgeType.cs" />

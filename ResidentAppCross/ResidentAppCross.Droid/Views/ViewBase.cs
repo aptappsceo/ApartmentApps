@@ -4,9 +4,11 @@ using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
+using Android.Support.V4.App;
 using AndroidHUD;
 using MvvmCross.Binding.Droid.Target;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Droid.Support.V7.Fragging;
 using MvvmCross.Droid.Views;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;
@@ -26,7 +28,7 @@ namespace ResidentAppCross.Droid.Views
         }
     }
 
-    public abstract class ViewBase : MvxActivity, IDisposableContainer
+    public abstract class ViewBase : MvxFragmentActivity, IDisposableContainer
     {
         private IMvxMessenger _eventAggregator;
 
@@ -36,7 +38,6 @@ namespace ResidentAppCross.Droid.Views
             set { _eventAggregator = value; }
         }
 
-
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -45,7 +46,6 @@ namespace ResidentAppCross.Droid.Views
             this.OnViewModelEvent<TaskFailed>(evt => this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted));
             this.OnViewModelEvent<TaskProgressUpdated>(evt => this.SetTaskProgress(evt.ShouldPrompt, evt.Label));
         }
-
 
         protected override void OnDestroy()
         {

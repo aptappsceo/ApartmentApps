@@ -29,7 +29,8 @@ public class App : MvxApplication
         //Mvx.RegisterType<ICalculation, Calculation>();
         Mvx.ConstructAndRegisterSingleton<IImageService, ImageService>();
         Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
-        //Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
+
+        Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
         
         //Mvx.RegisterSingleton<ILocationService,LocationService>();
         var client = new ApartmentAppsClient();
@@ -44,6 +45,8 @@ public class App : MvxApplication
         //else
         //{
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
+        Mvx.ConstructAndRegisterSingleton<HomeMenuViewModel, HomeMenuViewModel>();
+
         //}
 
     }

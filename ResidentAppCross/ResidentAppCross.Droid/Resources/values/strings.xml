@@ -2,4 +2,7 @@
 <resources>
 	<string name="hello">Hello World, Click Me!</string>
 	<string name="app_name">ResidentAppCross.Droid</string>
+	<string name="default_title">Title</string>
+	<string name="drawer_open">Open</string>
+	<string name="drawer_close">Close</string>
 </resources>

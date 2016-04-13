@@ -11,7 +11,7 @@ using MvvmCross.Core.Platform;
 using MvvmCross.Droid.Views;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
-
+/*
 
 namespace ResidentAppCross.Droid.Views
 {
@@ -294,4 +294,4 @@ namespace ResidentAppCross.Droid.Views
             set { _applicationVersionView = value; }
         }
     }
-}
+}*/

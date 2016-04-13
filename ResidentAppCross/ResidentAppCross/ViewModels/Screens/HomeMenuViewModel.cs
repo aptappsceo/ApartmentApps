@@ -29,46 +29,77 @@ namespace ResidentAppCross
             _imageService = imageService;
             _dialogService = dialogService;
             Data = data;
-			if (loginManager.UserInfo.Roles.Contains("Maintenance") || loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
-            {
-                MenuItems.Add(new HomeMenuItemViewModel()
-                {
-                    Name = "Resident Requests",
-                    Icon = SharedResources.Icons.MaintenanceFolder,
-                    BadgeLabel = "??",
-                    Command = RequestsIndexCommand
-                });
-            }
+	
+           UpdateMenuItems2();
+        }
 
-			if (loginManager.UserInfo.Roles.Contains("Officer") || loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
+        public void UpdateMenuItems2()
+        {
+            MenuItems.Clear();
+        
+            MenuItems.Add(new HomeMenuItemViewModel()
             {
-                MenuItems.Add(new HomeMenuItemViewModel()
-                {
-                    Name = "Incident Reports",
-                    Icon = SharedResources.Icons.PoliceFolder,
-                    Command = IncidentsIndexCommand
-                });
-                MenuItems.Add(new HomeMenuItemViewModel()
-                {
-                    Name = "Checkins",
-                    Icon = SharedResources.Icons.LocationOk,
-                    Command = new MvxCommand(() =>
-                    {
-                        ShowViewModel<CourtesyOfficerCheckinsViewModel>();
-                    })
-                });
+                Name = "Fragment 2",
+                Icon = SharedResources.Icons.MaintenanceFolder,
+                BadgeLabel = "??",
+                Command = new MvxCommand(() => { ShowViewModel<Fragment2ViewModel>(); })
 
-            }
-
-            if (loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
+            });
+    
+            MenuItems.Add(new HomeMenuItemViewModel()
             {
-                MenuItems.Add(new HomeMenuItemViewModel()
+                Name = "Material Design",
+                Icon = SharedResources.Icons.PoliceFolder,
+                Command = new MvxCommand(()=> { ShowViewModel<DevelopmentViewModel1>(); })
+            });
+
+            this.Publish(new HomeMenuUpdatedEvent(this));
+
+        }
+
+        public void UpdateMenuItems()
+        {
+            MenuItems.Clear();
+            //	if (loginManager.UserInfo.Roles.Contains("Maintenance") || loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
+            //    {
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "Resident Requests",
+                Icon = SharedResources.Icons.MaintenanceFolder,
+                BadgeLabel = "??",
+                Command = RequestsIndexCommand
+            });
+            //     }
+
+            //	if (loginManager.UserInfo.Roles.Contains("Officer") || loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
+            //    {
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "Incident Reports",
+                Icon = SharedResources.Icons.PoliceFolder,
+                Command = IncidentsIndexCommand
+            });
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "Checkins",
+                Icon = SharedResources.Icons.LocationOk,
+                Command = new MvxCommand(() =>
                 {
-                    Name = "Configure Property",
-                    Icon = SharedResources.Icons.HomeConfig,
-                    Command = ConfigurePropertyCommand
-                });
-            }
+                    ShowViewModel<CourtesyOfficerCheckinsViewModel>();
+                })
+            });
+
+            //    }
+
+            //    if (loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
+            //    {
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "Configure Property",
+                Icon = SharedResources.Icons.HomeConfig,
+                Command = ConfigurePropertyCommand
+            });
+            //   }
 
             MenuItems.Add(new HomeMenuItemViewModel()
             {
@@ -89,21 +120,22 @@ namespace ResidentAppCross
                 Icon = SharedResources.Icons.Police,
                 Command = RequestCourtesyOfficerCommand
             });
-			if (loginManager.UserInfo.Roles.Contains ("Resident")) {
-				MenuItems.Add(new HomeMenuItemViewModel()
-					{
-						Name = "Pay Rent",
-						Icon = SharedResources.Icons.Wallet,
-						Command = PayRentCommand
-					});
-				MenuItems.Add(new HomeMenuItemViewModel()
-					{
-						Name = "Community Partners",
-						Icon = SharedResources.Icons.Partners,
-						Command = CommunityPartnersCommand
-					});
-			}
-           
+            //	if (loginManager.UserInfo.Roles.Contains ("Resident")) {
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "Pay Rent",
+                Icon = SharedResources.Icons.Wallet,
+                Command = PayRentCommand
+            });
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "Community Partners",
+                Icon = SharedResources.Icons.Partners,
+                Command = CommunityPartnersCommand
+            });
+
+            this.Publish(new HomeMenuUpdatedEvent(this));
+            //		}
         }
 
         public ICommand AlertsCommand
@@ -208,4 +240,12 @@ namespace ResidentAppCross
 
         }
     }
+
+    public class HomeMenuUpdatedEvent : MvxMessage
+    {
+        public HomeMenuUpdatedEvent(object sender) : base(sender)
+        {
+        }
+    }
+
 }

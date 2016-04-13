@@ -1,5 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#0288d1</color>
+    <dimen name="LoginScreenFormIconSize">10dp</dimen>
+    <dimen name="LoginScreenFormTextSize">10dp</dimen>
+
+
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+
+    </style>
+
   <style name="button_text" >
     <item name="android:layout_width" >fill_parent</item>
     <item name="android:layout_height" >wrap_content</item>
@@ -7,15 +16,15 @@
     <item name="android:gravity" >center</item>
     <item name="android:textSize" >30dp</item>
   </style>
-  
-    <style name="badge_danger" >
+
+  <style name="badge_danger" >
     <item name="android:layout_width" >fill_parent</item>
     <item name="android:layout_height" >wrap_content</item>
     <item name="android:textColor" >#ffffff</item>
     <item name="android:gravity" >center</item>
     <item name="android:textSize" >30dp</item>
   </style>
-  
+
   <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
     <item name="android:textColor">#ffffff</item>
   </style>
@@ -24,15 +33,13 @@
 
   </style>
 
-  <style name="AppTheme" parent="android:Theme.Material">
-    <!-- Main theme colors -->
-    <!--   your app branding color for the app bar -->
-  </style>
 
-  <color name="primary">#2196F3</color>
-  <color name="primary_dark">#2196F3</color>
-  <color name="primary">#2196F3</color>
-  <dimen name="LoginScreenFormTextSize">35dp</dimen>
-  <dimen name="LoginScreenFormIconSize">89dp</dimen>
+  <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+      <item name="windowNoTitle">true</item>
+      <item name="windowActionBar">false</item>
+      <item name="colorPrimary">@color/colorPrimary</item>
+      <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+      <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
 </resources>
