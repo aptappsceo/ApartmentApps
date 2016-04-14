@@ -12,7 +12,7 @@ namespace ResidentAppCross.ViewModels
         public override void Start()
         {
             base.Start();
-            ShowViewModel<DevelopmentViewModel1>();
+            ShowViewModel<LoginFormViewModel>();
         }
 
     }

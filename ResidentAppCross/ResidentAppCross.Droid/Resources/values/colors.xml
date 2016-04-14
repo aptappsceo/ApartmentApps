@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#3f51b5</color>
+  <color name="colorPrimary">#3F51B5</color>
   <color name="colorPrimaryDark">#303F9F</color>
-  <color name="textColorPrimary">#E8EAF6</color>
-  <color name="windowBackground">#E8EAF6</color>
+  <color name="textColorPrimary">#FFFFFF</color>
+  <color name="windowBackground">#f9f9f9</color>
   <color name="navigationBarColor">#000000</color>
-  <color name="colorAccent">#C51162</color>
+  <color name="colorAccent">#448AFF</color>
+
+  <color name="primary">#3F51B5</color>
+  <color name="primary_dark">#303F9F</color>
+  <color name="primary_light">#C5CAE9</color>
+  <color name="accent">#448AFF</color>
+  <color name="primary_text_body">#212121</color>
+  <color name="secondary_text_body">#727272</color>
+  <color name="window_background">#f9f9f9</color>
+  <color name="primary_text">#ffffff</color>
+  <color name="divider">#B6B6B6</color>
 </resources>

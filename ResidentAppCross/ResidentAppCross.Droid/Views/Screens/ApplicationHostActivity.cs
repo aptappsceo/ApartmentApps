@@ -1,6 +1,7 @@
 using System;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -24,6 +25,7 @@ using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Components.Navigation;
 using ResidentAppCross.Droid.Views.Components.NavigationDrawer;
+using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.ViewModels;
 using ActionBar = Android.Support.V7.App.ActionBar;
 using Fragment = Android.Support.V4.App.Fragment;
@@ -148,6 +150,10 @@ namespace ResidentAppCross.Droid.Views
     public class ContentFragment<T> : MvxFragment<T> where T: class, IMvxViewModel
     {
 
+        public ContentFragment()
+        {
+        }
+
         public virtual Fragment HeaderFragment { get; set; }
 
         private ActionBar _toolbar;
@@ -164,12 +170,7 @@ namespace ResidentAppCross.Droid.Views
             get { return _toolbar ?? (_toolbar = MainActivity.SupportActionBar); }
             set { _toolbar = value; }
         }
-
-
-        public ContentFragment()
-        {
-        }
-
+        
         public virtual int LayoutId { get; set; }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -186,6 +187,24 @@ namespace ResidentAppCross.Droid.Views
         {
             return this.BindingInflate(LayoutId, null);
         }
+
+        public override void OnViewModelSet()
+        {
+            base.OnViewModelSet();
+            if (ViewModel != null && Layout != null) Bind();
+        }
+
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+            if (ViewModel != null && Layout != null) Bind();
+        }
+
+        public virtual void Bind()
+        {
+            
+        }
+
     }
 
     [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary)]
@@ -199,6 +218,57 @@ namespace ResidentAppCross.Droid.Views
     {
         public override int LayoutId => Resource.Layout.fragment_2;
     }
+
+    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary)]
+    public class LoginFormViewFragment: ContentFragment<LoginFormViewModel>
+    {
+        private EditText _emailInput;
+        private EditText _passwordInput;
+        private TextInputLayout _emailContainer;
+        private TextInputLayout _passwordContainer;
+        public override int LayoutId => Resource.Layout.login_form_view_fragment;
+
+        public EditText EmailInput
+        {
+            get { return _emailInput ?? (_emailInput = Layout.FindViewById<EditText>(Resource.Id.input_email)); }
+            set { _emailInput = value; }
+        }
+
+        public EditText PasswordInput
+        {
+            get { return _passwordInput ?? (_passwordInput = Layout.FindViewById<EditText>(Resource.Id.input_password)); }
+            set { _passwordInput = value; }
+        }
+
+
+        public TextInputLayout EmailContainer
+        {
+            get { return _emailContainer ?? (_emailContainer = Layout.FindViewById<TextInputLayout>(Resource.Id.input_email_layout)); }
+            set { _emailContainer = value; }
+        }
+
+        public TextInputLayout PasswordContainer
+        {
+            get { return _passwordContainer ?? (_passwordContainer = Layout.FindViewById<TextInputLayout>(Resource.Id.input_password_layout)); }
+            set { _passwordContainer = value; }
+        }
+
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+            EmailContainer.Background = AppShapes.GetBox.WithRoundedTop().OfColor(Color.White);
+            PasswordContainer.Background = AppShapes.GetBox.WithRoundedBottom().OfColor(Color.White);
+        }
+
+        public override void Bind()
+        {
+            base.Bind();
+
+        }
+    }
+
+
+
 
     [MvxFragment(typeof (ApplicationViewModel), Resource.Id.application_host_container_primary)]
     public class MaterialPlaygroundFragment1 : ContentFragment<DevelopmentViewModel1>
@@ -214,7 +284,6 @@ namespace ResidentAppCross.Droid.Views
             get { return _toolbarToggle ?? (_toolbarToggle = Layout.FindViewById<Switch>(Resource.Id.show_toolbar_switch)); }
             set { _toolbarToggle = value; }
         }
-
 
         public override void OnViewModelSet()
         {
