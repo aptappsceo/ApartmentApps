@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Security;
 using ApartmentApps.Api;
+using ApartmentApps.Api.BindingModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -371,17 +372,18 @@ namespace ApartmentApps.API.Service.Controllers
             {
                 return BadRequest(ModelState);
             }
-            // TODO
-            //var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = Context.Users.FirstOrDefault(p => p.PhoneNumber == model.PhoneNumber || p.Email == model.Email);
+            if (user != null && model.Password == model.ConfirmPassword)
+            {
+                var result = await UserManager.ChangePasswordAsync(user.Id, "temp", model.Password);
+                if (result.Succeeded)
+                {
+                    return Ok();
+                }
+                return BadRequest("This account has already been set-up.");
+            }
 
-            //IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-            //if (!result.Succeeded)
-            //{
-            //    return GetErrorResult(result);
-            //}
-
-            return Ok();
+            return BadRequest("You have not been found in the system. Please contact your property manager.");
         }
 
         // POST api/Account/Register

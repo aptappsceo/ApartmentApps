@@ -43,14 +43,19 @@ namespace ApartmentApps.Api
                     ThumbnailUrl = filename
                 });
             }
-
+          
             Context.SaveChanges();
+
+            Checkin(user, incidentReport.Id, incidentReport.Comments, incidentReport.StatusId, null,
+              incidentReport.GroupId);
+
             this.InvokeEvent<IIncidentReportSubmissionEvent>( _ => _.IncidentReportSubmited(incidentReport));
 
             return incidentReport.Id;
 
         }
-        private bool Checkin(ApplicationUser officer, int reportId, string comments, string status, List<byte[]> photos)
+
+        private bool Checkin(ApplicationUser officer, int reportId, string comments, string status, List<byte[]> photos, Guid? groupId = null)
         {
 
             var checkin = new IncidentReportCheckin()
@@ -60,12 +65,12 @@ namespace ApartmentApps.Api
                 StatusId = status,
                 OfficerId = officer.Id,
                 CreatedOn = officer.TimeZone.Now(),
-                GroupId = Guid.NewGuid(),
+                GroupId = groupId ?? Guid.NewGuid(),
 
             };
 
             Context.IncidentReportCheckins.Add(checkin);
-            if (photos != null)
+            if (photos != null && groupId == null)
                 foreach (var image in photos)
                 {
                     var imageKey = $"{Guid.NewGuid()}.{officer.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();

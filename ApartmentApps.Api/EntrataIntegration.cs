@@ -77,7 +77,7 @@ namespace ApartmentApps.Api
 
                 if (user == null)
                 {
-                    user = await createUser.CreateUser(item.Email, item.FirstName[0].ToString().ToLower() + item.LastName.ToLower(), item.FirstName, item.LastName);
+                    user = await createUser.CreateUser(item.Email, "temp", item.FirstName, item.LastName);
                 }
                 if (user == null)
                 {
@@ -93,6 +93,7 @@ namespace ApartmentApps.Api
                     });
 
                 }
+                //user.PhoneNumber = item.
                
                
                 var tenantInfo = await Context.Tenants.FirstOrDefaultAsync(p => p.UserId == user.Id);

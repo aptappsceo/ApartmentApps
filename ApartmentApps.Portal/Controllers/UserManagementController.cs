@@ -108,10 +108,12 @@ namespace ApartmentApps.Portal.Controllers
                 var newUser = false;
                 if (user == null)
                 {
+                   
                     user = new ApplicationUser
                     {
                         
                     };
+                   
                     newUser = true;
                 }
                 else
@@ -135,7 +137,7 @@ namespace ApartmentApps.Portal.Controllers
                 }
                 if (newUser)
                 {
-                    var result = await UserManager.CreateAsync(user, model.Password);
+                    var result = await UserManager.CreateAsync(user, "temp");
                     if (result.Succeeded)
                     {
 

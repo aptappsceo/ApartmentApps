@@ -157,6 +157,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BindingModels\Class1.cs" />
     <Compile Include="Repositories\BuildingsRepository.cs" />
     <Compile Include="CourtesyService.cs" />
     <Compile Include="DateTimeUtil.cs" />

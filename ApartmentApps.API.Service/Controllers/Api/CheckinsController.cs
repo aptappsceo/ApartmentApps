@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using ApartmentApps.Api;
+using ApartmentApps.Api.BindingModels;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;

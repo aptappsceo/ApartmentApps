@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ApartmentApps.Data
 {
-    public partial class MaitenanceRequest : PropertyEntity
+    public partial class MaitenanceRequest : PropertyEntity, IImageContainer, IFeedItem
     {
         [Key]
         public int Id { get; set; }
@@ -18,6 +18,7 @@ namespace ApartmentApps.Data
         public bool PermissionToEnter { get; set; }
 
         public Guid GroupId { get; set; }
+        public string Description { get { return string.Empty; } }
 
         // 0 = false, 1= yes, 2 = yes contained
         public int PetStatus { get; set; }
@@ -27,8 +28,12 @@ namespace ApartmentApps.Data
         [ForeignKey("UnitId")]
         public virtual Unit Unit { get; set; }
 
+        DateTime IFeedItem.CreatedOn => SubmissionDate;
+
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
+
+        IEnumerable<IFeedItem> IFeedItem.ChildFeedItems => Checkins;
 
         [ForeignKey("MaitenanceRequestTypeId")]
         public virtual MaitenanceRequestType MaitenanceRequestType { get; set; }

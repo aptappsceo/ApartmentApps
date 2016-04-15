@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using ApartmentApps.Api;
+using ApartmentApps.Api.BindingModels;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.Data;

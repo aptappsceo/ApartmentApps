@@ -45,6 +45,9 @@ namespace ApartmentApps.Api
                 maitenanceRequest.UnitId = null;
 
             Context.MaitenanceRequests.Add(maitenanceRequest);
+
+            
+
             if (images != null)
                 foreach (var image in images)
                 {
@@ -59,6 +62,10 @@ namespace ApartmentApps.Api
                 }
 
             Context.SaveChanges();
+
+            Checkin(_userContext.CurrentUser, maitenanceRequest.Id, maitenanceRequest.Message,
+                maitenanceRequest.StatusId, null, maitenanceRequest.GroupId);
+
             this.InvokeEvent<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
 
             return maitenanceRequest.Id;
@@ -70,7 +77,7 @@ namespace ApartmentApps.Api
             return Checkin(worker, requestId, comments, "Paused", images);
         }
 
-        private bool Checkin(ApplicationUser worker, int requestId, string comments, string status, List<byte[]> photos)
+        private bool Checkin(ApplicationUser worker, int requestId, string comments, string status, List<byte[]> photos, Guid? groupId = null)
         {
 
             var checkin = new MaintenanceRequestCheckin
@@ -81,9 +88,9 @@ namespace ApartmentApps.Api
                 WorkerId = worker.Id,
                
                 Date = worker.TimeZone.Now(),
-                GroupId = Guid.NewGuid()
+                GroupId = groupId ?? Guid.NewGuid()
             };
-            if (photos != null)
+            if (photos != null && groupId == null)
                 foreach (var image in photos)
                 {
                     var imageKey = $"{Guid.NewGuid()}.{worker.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();

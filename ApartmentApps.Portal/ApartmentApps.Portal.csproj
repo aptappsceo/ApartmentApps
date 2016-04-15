@@ -228,6 +228,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdentityUserRoleController.cs" />
+    <Compile Include="Controllers\IncidentReportsController.cs" />
     <Compile Include="Controllers\MaitenanceRequestsController.cs" />
     <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\PropertyEntrataInfoController.cs" />
@@ -615,6 +616,11 @@
     <Content Include="Views\UserManagement\Index.cshtml" />
     <Content Include="Views\UserManagement\EditUser.cshtml" />
     <Content Include="Views\Dashboard\Index2.cshtml" />
+    <Content Include="Views\IncidentReports\Create.cshtml" />
+    <Content Include="Views\IncidentReports\Delete.cshtml" />
+    <Content Include="Views\IncidentReports\Details.cshtml" />
+    <Content Include="Views\IncidentReports\Edit.cshtml" />
+    <Content Include="Views\IncidentReports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -659,7 +665,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61984</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58736/</IISUrl>
+          <IISUrl>http://localhost:58737/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

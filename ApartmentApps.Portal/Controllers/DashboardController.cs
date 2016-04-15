@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 
@@ -19,17 +20,23 @@ namespace ApartmentApps.Portal.Controllers
         public IQueryable<MaitenanceRequest> Entered { get; set; }
         public IQueryable<MaitenanceRequest> Outstanding { get; set; }
         public IQueryable<MaitenanceRequest> Completed { get; set; }
-        public IQueryable<IGrouping<ApplicationUser, MaitenanceRequest>> WorkOrdersPerEmployee { get; set; }
+        public object[] WorkOrdersPerEmployee { get; set; }
         public int IncidentReportsNew { get; set; }
         public int IncidentReportsOutstanding { get; set; }
         public int IncidentReportsComplete { get; set; }
+        public int MaintenanceTotalOutstanding { get; set; }
+        public int IncidentReportsTotalOutstanding { get; set; }
+        public int MaintenanceScheduledToday { get; set; }
+        public IEnumerable<FeedItemBindingModel> FeedItems { get; set; }
     }
 
     public class DashboardController : AAController
     {
+        public IFeedSerivce FeedService { get; set; }
         // GET: Dashboard
-        public DashboardController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public DashboardController(PropertyContext context, IUserContext userContext, IFeedSerivce feedService) : base(context, userContext)
         {
+            FeedService = feedService;
         }
 
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
@@ -50,11 +57,17 @@ namespace ApartmentApps.Portal.Controllers
                 IncidentReportsNew = IncidentsByRange(startDate, endDate).Count(p=>p.StatusId == "Reported"),
                 IncidentReportsOutstanding = IncidentsByRange(startDate, endDate).Count(p=>p.StatusId != "Reported" && p.StatusId != "Complete"),
                 IncidentReportsComplete = IncidentsByRange(startDate, endDate).Count(p=>p.StatusId == "Complete"),
-
+                MaintenanceTotalOutstanding = Context.MaitenanceRequests.Count(p=>p.StatusId != "Complete"),
+                MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p=>p.ScheduleDate > DateTime.Now && p.ScheduleDate < DateTime.Now.AddDays(1) && p.StatusId == "Scheduled"),
+                IncidentReportsTotalOutstanding = Context.IncidentReports.Count(x=>x.StatusId != "Complete"),
+                FeedItems = FeedService.GetAll(),
                 //Entered = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId == "Submitted"),
                 //Outstanding = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId != "Complete"),
                 //Completed = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId == "Complete"),
-                //WorkOrdersPerEmployee = WorkOrdersByRange(startDate, endDate, currentPropertyId).GroupBy(p=>p.User)
+                WorkOrdersPerEmployee = WorkOrdersByRange(startDate, endDate).Where(p=>p.StatusId == "Complete")
+                    .GroupBy(p=>p.User)
+                    .Select(p=>new { label = p.Key.FirstName + " " + p.Key.LastName, data = p.Count() })
+                    .ToArray()
             });
         }
 

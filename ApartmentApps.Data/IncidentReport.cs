@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ApartmentApps.Data
 {
-    public class IncidentReport : PropertyEntity
+    public class IncidentReport : PropertyEntity, IImageContainer, IFeedItem
     {
         [Key] 
         public int Id { get; set; }
@@ -14,10 +14,15 @@ namespace ApartmentApps.Data
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 
+        IEnumerable<IFeedItem> IFeedItem.ChildFeedItems => Checkins;
+
+        string IFeedItem.Message => Comments;
+
         public string UserId { get; set; }
 
         public Guid GroupId { get; set; }
-        
+        public string Description => string.Empty;
+
         public string Comments { get; set; }
         public int? UnitId { get; set; }
 

@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.BindingModels;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.API.Service.Providers;

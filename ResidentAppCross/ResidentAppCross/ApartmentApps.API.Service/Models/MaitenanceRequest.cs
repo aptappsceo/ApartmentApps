@@ -10,7 +10,8 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class MaitenanceRequest
+
+    public partial class MaitenanceRequest 
     {
         private IList<MaintenanceRequestCheckin> _checkins;
         

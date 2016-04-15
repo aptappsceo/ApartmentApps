@@ -1,10 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApartmentApps.Data
 {
-    public class CourtesyOfficerCheckin : PropertyEntity
+    public interface IImageContainer
+    {
+        Guid GroupId { get; set; }
+    }
+    public class CourtesyOfficerCheckin : PropertyEntity, IImageContainer , IFeedItem
     {
         [Key]
         public int Id { get; set; }
@@ -19,8 +24,18 @@ namespace ApartmentApps.Data
 
         public DateTime CreatedOn { get; set; }
 
+        ApplicationUser IFeedItem.User => Officer;
+
+        IEnumerable<IFeedItem> IFeedItem.ChildFeedItems
+        {
+            get { yield break; }
+        }
+
+        string IFeedItem.Message => this.Comments;
+
         public string Comments { get; set; }
 
         public Guid GroupId { get; set; }
+        public string Description => $"checked in at location {CourtesyOfficerLocation.Label}";
     }
 }

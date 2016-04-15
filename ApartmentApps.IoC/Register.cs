@@ -62,7 +62,7 @@ namespace ApartmentApps.IoC
             kernel.Bind<IMaintenanceService>().To<MaintenanceService>().InRequestScope();
             kernel.Bind<ICourtesyService>().To<CourtesyService>().InRequestScope();
             kernel.Bind<DbContext>().ToMethod(_ => _.Kernel.Get<ApplicationDbContext>()).InRequestScope();
-
+            kernel.Bind<IFeedSerivce>().To<FeedSerivce>().InRequestScope();
 
         }
     }

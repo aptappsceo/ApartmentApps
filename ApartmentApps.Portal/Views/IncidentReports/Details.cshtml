@@ -1,0 +1,130 @@
+﻿@model ApartmentApps.Data.IncidentReport
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Details</h2>
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("List", "Index")
+            </li>
+            <li class="active">
+                <strong>Details</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Details IncidentReport</h5>
+                </div>
+                <div class="ibox-content">
+
+
+				    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IncidentReportStatus.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncidentReportStatus.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Property.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Property.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.ImageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.ImageUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IncidentType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncidentType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompletionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompletionDate)
+        </dd>
+
+    </dl>
+
+
+	    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

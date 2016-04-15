@@ -17,7 +17,7 @@ namespace ApartmentApps.Data
         public virtual IDbSet<PropertyEntrataInfo> PropertyEntrataInfos { get; set; }
         public virtual IDbSet<PropertyYardiInfo> PropertyYardiInfos { get; set; }
 
-        public virtual IDbSet<ApplicationUser> Users { get; set; }
+        public virtual IDbSet<ApplicationUser> ApplicationUsers { get; set; }
         public virtual IDbSet<IdentityRole> Roles { get; set; }
         public ApplicationDbContext2()
         {
@@ -49,5 +49,6 @@ namespace ApartmentApps.Data
         public virtual IDbSet<IncidentReportCheckin> IncidentReportCheckins { get; set; }
         public virtual IDbSet<IncidentReportStatus> IncidentReportStatuses { get; set; }
 
+        public System.Data.Entity.DbSet<ApartmentApps.Data.IncidentReportStatus> IncidentReportStatus { get; set; }
     }
 }
