@@ -123,7 +123,10 @@ namespace ResidentAppCross.ViewModels.Screens
                     this.Publish(new IncidentsIndexUpdateStarted(this));
                     var requests = await _service.Courtesy.ListRequestsAsync();
                     Incidents.Clear();
-                    Incidents.AddRange(requests);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Incidents.AddRange(requests);
+                    }
                     UpdateFilters();
                     this.Publish(new IncidentsIndexUpdateFinished(this));
 

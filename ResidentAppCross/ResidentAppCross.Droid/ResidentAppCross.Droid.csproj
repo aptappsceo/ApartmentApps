@@ -212,18 +212,20 @@
     <Compile Include="Views\AwesomeSiniExtensions\NotificationDialog.cs" />
     <Compile Include="Views\AwesomeSiniExtensions\PhotoViewerDialog.cs" />
     <Compile Include="Views\AwesomeSiniExtensions\SpinnerSelectionSectionAdapter.cs" />
-    <Compile Include="Views\Components\Navigation\HomeMenuView.cs" />
+    <Compile Include="Views\Components\Navigation\HomeMenuNavigationView.cs" />
     <Compile Include="Views\Components\Navigation\NavigationDrawerAdapter.cs" />
     <Compile Include="Views\Components\Navigation\NavigationDrawerFragment.cs" />
     <Compile Include="Views\Screens\ApplicationHostActivity.cs" />
     <Compile Include="Views\Screens\GenericWebView.cs" />
     <Compile Include="Views\Screens\MaintenanceRequestFormView.cs" />
+    <Compile Include="Views\Screens\MaterialPlaygroundFragment1.cs" />
     <Compile Include="Views\Screens\TestFormViewModel.cs" />
     <Compile Include="Views\Screens\LoginFormView.cs" />
     <Compile Include="Views\Screens\HomeMenuView.cs" />
     <Compile Include="Views\Screens\MaintenanceRequestTypeSelectionView.cs" />
     <Compile Include="Views\Screens\MaintenanceRequestView.cs" />
     <Compile Include="Views\Screens\QRScannerView.cs" />
+    <Compile Include="Views\Screens\ViewFragment.cs" />
     <Compile Include="Views\Sections\AndroidDialogService.cs" />
     <Compile Include="Views\Sections\HeaderSection.cs" />
     <Compile Include="Views\Sections\LabelWithButtonSection.cs" />
@@ -729,7 +731,13 @@
     <AndroidResource Include="Resources\drawable\Message.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\login_form_view_fragment.xml" />
+    <AndroidResource Include="Resources\layout\login_form_view.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\home_menu_view.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\incident_report_index_view.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.2.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.2.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

@@ -183,6 +183,14 @@ namespace ResidentAppCross.Droid.Views.Sections
         }
     }
 
+    public class AppFont
+    {
+        public int SpSize { get; set; }
+        public Color Color { get; set; }
+        public TypefaceStyle Style { get; set; } = TypefaceStyle.Normal;
+        public Typeface Typeface { get; set; }
+    }
+
     public static class AppTheme
     {
         public static int ButtonToolbarSectionHeight = 60;

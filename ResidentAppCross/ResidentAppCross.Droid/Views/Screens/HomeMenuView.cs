@@ -10,6 +10,7 @@ using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V4.Content;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using FlyOutMenu;
@@ -316,7 +317,7 @@ namespace ResidentAppCross.Droid.Views
 //        }
 //    }
 
-    public class IconTitleBadgeListAdapter<T> : BaseAdapter
+    public class IconTitleBadgeListAdapter<T> : RecyclerView.Adapter
     {
         private IList<T> _items;
 
@@ -335,37 +336,43 @@ namespace ResidentAppCross.Droid.Views
             set { _items = value; }
         }
 
-        public override Object GetItem(int position)
-        {
-            var item = Items[position] as Object;
-            return item;
-        }
-
         public override long GetItemId(int position)
         {
             return IdSelector?.Invoke(Items[position]) ?? position;
         }
 
-        public override View GetView(int position, View convertView, ViewGroup parent)
+        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            var view = convertView as ImageTextCounterListItem ?? new ImageTextCounterListItem(parent.Context);
-
+            var view = (holder as ImageTextCounterListItemViewHolder).Item;
             var item = Items[position];
             view.Title = TitleSelector?.Invoke(item);
             view.Icon = IconSelector?.Invoke(item) ?? SharedResources.Icons.LocationOk;
             view.CounterTitle = BadgeSelector?.Invoke(item);
 
-            if (IconColorSelector != null) view.IconColor = IconColorSelector(item);    
-            if (BackgroundColorSelector != null) view.BackgroundColor = BackgroundColorSelector(item);    
-            if (BadgeForegroundColorSelector != null) view.BadgeForegroundColor = BadgeForegroundColorSelector(item);    
-            if (BadgeBackgroundColorSelector != null) view.BadgeBackgroundColor = BadgeBackgroundColorSelector(item);    
-
-            return view;
+            if (IconColorSelector != null) view.IconColor = IconColorSelector(item);
+            if (BackgroundColorSelector != null) view.BackgroundColor = BackgroundColorSelector(item);
+            if (BadgeForegroundColorSelector != null) view.BadgeForegroundColor = BadgeForegroundColorSelector(item);
+            if (BadgeBackgroundColorSelector != null) view.BadgeBackgroundColor = BadgeBackgroundColorSelector(item);
         }
 
-        public override int Count => Items.Count;
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            return new ImageTextCounterListItemViewHolder(new ImageTextCounterListItem(parent.Context));
+        }
+
+        public override int ItemCount => Items.Count;
+
     }
-    
+
+
+    public class ImageTextCounterListItemViewHolder : RecyclerView.ViewHolder
+    {
+        public ImageTextCounterListItem Item { get; set; }
+        public ImageTextCounterListItemViewHolder(View itemView) : base(itemView)
+        {
+            Item = itemView as ImageTextCounterListItem;
+        }
+    }
 
     public class ImageTextCounterListItem : RelativeLayout
     {

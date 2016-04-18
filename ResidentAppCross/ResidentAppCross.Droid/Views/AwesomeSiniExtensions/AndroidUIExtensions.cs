@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Android.App;
 using Android.Content;
@@ -8,6 +9,7 @@ using Android.Content.Res;
 using Android.Database;
 using Android.Graphics;
 using Android.Graphics.Drawables;
+using Android.OS;
 using Android.Runtime;
 using Android.Text;
 using Android.Text.Style;
@@ -25,8 +27,6 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
     //This mess with ViewGroup.BlahBlah.SomeInteger is so annoying
     public static class AndroidUIExtensions
     {
-
-
         public static T WithDimensionsMatchParent<T>(this T view) where T : View
         {
             var ensureLayoutParams = view.EnsureLayoutParams();
@@ -92,7 +92,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             view.EnsureLayoutParams().Width = dpWidth.ToPx();
             return view;
         }
-        
+
         public static T WithStandardPadding<T>(this T view) where T : View
         {
             view.WithPaddingDp(8, 4, 8, 4);
@@ -111,7 +111,8 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return view;
         }
 
-        public static T WithLinearMargins<T>(this T view, int leftDp, int topDp, int rightDp, int bottomDp) where T : View
+        public static T WithLinearMargins<T>(this T view, int leftDp, int topDp, int rightDp, int bottomDp)
+            where T : View
         {
             var p = view.EnsureLinearLayoutParams();
             p.BottomMargin = bottomDp.ToPx();
@@ -121,7 +122,8 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return view;
         }
 
-        public static T WithRelativeMargins<T>(this T view, int leftDp, int topDp, int rightDp, int bottomDp) where T : View
+        public static T WithRelativeMargins<T>(this T view, int leftDp, int topDp, int rightDp, int bottomDp)
+            where T : View
         {
             var p = view.EnsureRelativeLayoutParams();
             p.BottomMargin = bottomDp.ToPx();
@@ -139,7 +141,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
         public static T WithBackgroundColor<T>(this T view, Color color) where T : View
         {
-            view.Background = AppDrawables.ByColor(color);//new ColorDrawable(color);
+            view.Background = AppDrawables.ByColor(color); //new ColorDrawable(color);
             return view;
         }
 
@@ -177,7 +179,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
         public static T WithUniqueId<T>(this T view) where T : View
         {
-            if(view.Id == -1) view.Id = IdCounter++;
+            if (view.Id == -1) view.Id = IdCounter++;
             return view;
         }
 
@@ -225,7 +227,6 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
         public static T WithRelativeRightOf<T>(this T view, View what) where T : View
         {
-
             view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.RightOf, what.WithUniqueId().Id);
             return view;
         }
@@ -307,12 +308,12 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return view;
         }
 
-        
 
         public static int ToPx(this int dPixels)
         {
-            return 
-                (int) TypedValue.ApplyDimension(ComplexUnitType.Dip, dPixels, Application.Context.Resources.DisplayMetrics);
+            return
+                (int)
+                    TypedValue.ApplyDimension(ComplexUnitType.Dip, dPixels, Application.Context.Resources.DisplayMetrics);
 //            var scale = Application.Context.Resources.DisplayMetrics.Density;
 //            return (int)(dPixels * scale + 0.5f);
         }
@@ -324,29 +325,35 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
         public static ViewGroup.LayoutParams EnsureLayoutParams(this View view)
         {
-            return view.LayoutParameters ?? (view.LayoutParameters = new ViewGroup.LayoutParams(0,0));
+            return view.LayoutParameters ?? (view.LayoutParameters = new ViewGroup.LayoutParams(0, 0));
         }
 
         public static LinearLayout.LayoutParams EnsureLinearLayoutParams(this View view)
         {
-            return (view.LayoutParameters as LinearLayout.LayoutParams) ?? (LinearLayout.LayoutParams)(view.LayoutParameters = new LinearLayout.LayoutParams(view.EnsureLayoutParams()));
+            return (view.LayoutParameters as LinearLayout.LayoutParams) ??
+                   (LinearLayout.LayoutParams)
+                       (view.LayoutParameters = new LinearLayout.LayoutParams(view.EnsureLayoutParams()));
         }
 
         public static FrameLayout.LayoutParams EnsureFrameLayoutParams(this View view)
         {
-            return (view.LayoutParameters as FrameLayout.LayoutParams) ?? (FrameLayout.LayoutParams)(view.LayoutParameters = new FrameLayout.LayoutParams(view.EnsureLayoutParams()));
+            return (view.LayoutParameters as FrameLayout.LayoutParams) ??
+                   (FrameLayout.LayoutParams)
+                       (view.LayoutParameters = new FrameLayout.LayoutParams(view.EnsureLayoutParams()));
         }
 
         public static RelativeLayout.LayoutParams EnsureRelativeLayoutParams(this View view)
         {
-            return (view.LayoutParameters as RelativeLayout.LayoutParams) ?? (RelativeLayout.LayoutParams)(view.LayoutParameters = new RelativeLayout.LayoutParams(view.EnsureLayoutParams()));
+            return (view.LayoutParameters as RelativeLayout.LayoutParams) ??
+                   (RelativeLayout.LayoutParams)
+                       (view.LayoutParameters = new RelativeLayout.LayoutParams(view.EnsureLayoutParams()));
         }
 
         public static T WithFont<T>(this T view, AppFont font) where T : TextView
         {
             view.SetTextColor(font.Color);
             view.SetTextSizeSp(font.SpSize);
-            view.SetTypeface(font.Typeface,font.Style);
+            view.SetTypeface(font.Typeface, font.Style);
             return view;
         }
 
@@ -357,9 +364,10 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
         }
 
 
-        public static IDisposable BindTo<T>(this Spinner spinner, IList<T> items, Func<T,string> titleSelector,Context context)
+        public static IDisposable BindTo<T>(this Spinner spinner, IList<T> items, Func<T, string> titleSelector,
+            Context context)
         {
-            var adapter = new SpinnerSelectionSectionAdapter<T>(context,-1)
+            var adapter = new SpinnerSelectionSectionAdapter<T>(context, -1)
             {
                 TitleSelector = titleSelector
             };
@@ -373,16 +381,14 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
             spinner.Adapter = adapter;
 
-            EventHandler<AdapterView.ItemSelectedEventArgs> selectedAction = (sender, args) =>
-            {
-               Console.WriteLine("selected " + spinner.SelectedItem);
-            };
+            EventHandler<AdapterView.ItemSelectedEventArgs> selectedAction =
+                (sender, args) => { Console.WriteLine("selected " + spinner.SelectedItem); };
 
             spinner.ItemSelected += selectedAction;
 
             return new Disposable(() =>
             {
-               // spinner.ItemSelected -= selectedAction;
+                // spinner.ItemSelected -= selectedAction;
             });
         }
 
@@ -395,22 +401,92 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
         {
             drawable.SetFilterBitmap(filter);
             return drawable;
+        }
+    }
 
+    public class Outlet : Attribute
+    {
+        public void Locate(object target, PropertyInfo property, View layout)
+        {
+            View result = null;
+
+            //var resolutionName = property.Name.ToLowerUnderscored();
+            var resolutionName = property.Name;
+            int resolutionId = 0;
+
+            try
+            {
+                resolutionId = resolutionName.AsId();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    $"Outlet ERROR: {property.DeclaringType.Name}.{property.Name} cannot map ID {resolutionName}. Ensure that layout contains view with such ID, Rebuild and try again.");
+            }
+            result = layout.Id == resolutionId ? layout : layout.FindViewById(resolutionId);
+
+            if (result == null)
+            {
+                throw new Exception(
+                    $"Outlet ERROR: {property.DeclaringType.Name}.{property.Name} cannot find view with id mapping: {resolutionName} -> {resolutionId}");
+            }
+
+            if (!property.PropertyType.IsInstanceOfType(result))
+            {
+                Console.WriteLine(
+                    "Outlet WARNING: Type mismatch on outlet: {0}.{1} is of type {2} but identified view is {3} (not instance of {2}",
+                    property.DeclaringType.Name, property.Name, property.PropertyType.Name, result.GetType().Name);
+            }
+
+            property.SetValue(target, result);
+        }
+    }
+
+    public static class StringExtensions
+    {
+        public static string ToLowerUnderscored(this string str)
+        {
+            return
+                string.Concat(str.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString()))
+                    .ToLowerInvariant();
+        }
+
+        public static int AsLayoutId(this string str)
+        {
+            var fieldInfo = typeof (Resource.Layout).GetField(str, BindingFlags.Static | BindingFlags.Public);
+            return (int) fieldInfo.GetValue(null);
+        }
+
+        public static int AsId(this string str)
+        {
+            var fieldInfo = typeof (Resource.Id).GetField(str, BindingFlags.Static | BindingFlags.Public);
+            return (int) fieldInfo.GetValue(null);
+        }
+    }
+
+    public static class OutletExtensions
+    {
+        public static void LocateOutlets(this View layout)
+        {
+            layout.LocateOutlets(layout);
+        }
+
+        public static void LocateOutlets(this View layout, object outletContainer)
+        {
+
+
+
+            foreach (var propertyInfo in outletContainer.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                var outlet = propertyInfo.GetCustomAttributes(typeof (Outlet), false).FirstOrDefault() as Outlet;
+                outlet?.Locate(outletContainer, propertyInfo, layout);
+            }
         }
     }
 
 
-    public class AppFont
-    {
-        public int SpSize { get; set; }
-        public Color Color { get; set; }
-        public TypefaceStyle Style { get; set; } = TypefaceStyle.Normal; 
-        public Typeface Typeface { get; set; } 
-    }
-
     public class SpinnerSelectionSectionAdapter<T> : ArrayAdapter<T>
     {
-
         public Func<T, string> TitleSelector { get; set; }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
@@ -430,7 +506,6 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
                     .WithHeightWrapContent();
                 textview.SetSingleLine(true);
                 textview.Ellipsize = TextUtils.TruncateAt.Marquee;
-
             }
             else
             {
@@ -449,39 +524,42 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return textview;
         }
 
-
         #region Trololo constructors
 
         public SpinnerSelectionSectionAdapter(IntPtr handle, JniHandleOwnership transfer) : base(handle, transfer)
         {
         }
 
-        public SpinnerSelectionSectionAdapter(Context context, int textViewResourceId) : base(context, textViewResourceId)
+        public SpinnerSelectionSectionAdapter(Context context, int textViewResourceId)
+            : base(context, textViewResourceId)
         {
         }
 
-        public SpinnerSelectionSectionAdapter(Context context, int resource, int textViewResourceId) : base(context, resource, textViewResourceId)
+        public SpinnerSelectionSectionAdapter(Context context, int resource, int textViewResourceId)
+            : base(context, resource, textViewResourceId)
         {
         }
 
-        public SpinnerSelectionSectionAdapter(Context context, int textViewResourceId, T[] objects) : base(context, textViewResourceId, objects)
+        public SpinnerSelectionSectionAdapter(Context context, int textViewResourceId, T[] objects)
+            : base(context, textViewResourceId, objects)
         {
         }
 
-        public SpinnerSelectionSectionAdapter(Context context, int resource, int textViewResourceId, T[] objects) : base(context, resource, textViewResourceId, objects)
+        public SpinnerSelectionSectionAdapter(Context context, int resource, int textViewResourceId, T[] objects)
+            : base(context, resource, textViewResourceId, objects)
         {
         }
 
-        public SpinnerSelectionSectionAdapter(Context context, int textViewResourceId, IList<T> objects) : base(context, textViewResourceId, objects)
+        public SpinnerSelectionSectionAdapter(Context context, int textViewResourceId, IList<T> objects)
+            : base(context, textViewResourceId, objects)
         {
         }
 
-        public SpinnerSelectionSectionAdapter(Context context, int resource, int textViewResourceId, IList<T> objects) : base(context, resource, textViewResourceId, objects)
+        public SpinnerSelectionSectionAdapter(Context context, int resource, int textViewResourceId, IList<T> objects)
+            : base(context, resource, textViewResourceId, objects)
         {
         }
 
         #endregion
     }
-
-
 }
