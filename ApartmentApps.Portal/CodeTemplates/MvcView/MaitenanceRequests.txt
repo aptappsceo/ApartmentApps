@@ -1,0 +1,13 @@
+   	Id
+	UserId
+	MaitenanceRequestTypeId
+	PermissionToEnter
+	GroupId
+	PetStatus
+	UnitId
+	ScheduleDate
+	Message
+	StatusId
+	SubmissionDate
+	CompletionDate
+	PropertyId

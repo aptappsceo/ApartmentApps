@@ -1,0 +1,80 @@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+   
+    <div class="form-horizontal">
+
+	 		 
+			@Html.HiddenFor(model => model.Id)
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("WorkerId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("StatusId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("MaitenanceRequestId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Comments", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Date", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("GroupId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PropertyId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.MaitenanceRequest)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Property)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Status)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Worker)
+            </div>
+		    
+
+
+@Html.ValidationSummary(true)
+	</div>
+	}

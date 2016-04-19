@@ -1,0 +1,8 @@
+   	Id
+	WorkerId
+	StatusId
+	MaitenanceRequestId
+	Comments
+	Date
+	GroupId
+	PropertyId

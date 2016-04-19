@@ -1,0 +1,8 @@
+   	Id
+	OfficerId
+	Comments
+	GroupId
+	CreatedOn
+	IncidentReportId
+	StatusId
+	PropertyId

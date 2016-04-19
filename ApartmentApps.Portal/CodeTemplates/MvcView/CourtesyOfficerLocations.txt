@@ -1,0 +1,6 @@
+   	Id
+	Label
+	LocationId
+	Latitude
+	Longitude
+	PropertyId

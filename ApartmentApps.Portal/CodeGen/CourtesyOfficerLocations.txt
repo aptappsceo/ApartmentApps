@@ -1,0 +1,56 @@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+   
+    <div class="form-horizontal">
+
+	 		 
+			@Html.HiddenFor(model => model.Id)
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Label", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("LocationId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Latitude", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Longitude", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PropertyId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.CourtesyOfficerCheckins)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Property)
+            </div>
+		    
+
+
+@Html.ValidationSummary(true)
+	</div>
+	}

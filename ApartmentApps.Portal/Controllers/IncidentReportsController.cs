@@ -87,7 +87,7 @@ namespace ApartmentApps.Portal.Controllers
             ViewBag.StatusId = new SelectList(Context.IncidentReportStatuses.GetAll(), "Name", "Name", incidentReport.StatusId);
             ViewBag.PropertyId = new SelectList(Context.Properties.GetAll(), "Id", "Name", incidentReport.PropertyId);
             ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", incidentReport.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "ImageUrl", incidentReport.UserId);
+            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "Username", incidentReport.UserId);
             return View(incidentReport);
         }
 
@@ -107,7 +107,7 @@ namespace ApartmentApps.Portal.Controllers
             ViewBag.StatusId = new SelectList(Context.IncidentReportStatuses.GetAll(), "Name", "Name", incidentReport.StatusId);
             ViewBag.PropertyId = new SelectList(Context.Properties.GetAll(), "Id", "Name", incidentReport.PropertyId);
             ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", incidentReport.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "ImageUrl", incidentReport.UserId);
+            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "Username", incidentReport.UserId);
             return View(incidentReport);
         }
 

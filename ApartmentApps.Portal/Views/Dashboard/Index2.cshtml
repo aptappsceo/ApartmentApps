@@ -98,8 +98,14 @@
                                 <div class="media-body ">
                                     <small class="pull-right">@item.CreatedOn.ToShortDateString()</small>
                                     <strong>@item.User.FirstName @item.User.LastName</strong> @item.Description <br>
-                                    <small class="text-muted">Today 5:60 pm - 12.06.2014</small>
-
+                                    <small class="text-muted">@Html.Timeago(item.CreatedOn)</small>
+                                    @if (!string.IsNullOrEmpty(item.Message))
+                                    {
+                                        <div class="well">
+                                            @item.Message
+                                        </div>
+                                    }
+                                 
                                 </div>
                             </div>
                         }

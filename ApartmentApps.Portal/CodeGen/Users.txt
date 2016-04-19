@@ -1,0 +1,164 @@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+   
+    <div class="form-horizontal">
+
+	 		 
+			@Html.HiddenFor(model => model.Id)
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("ImageUrl", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("ImageThumbnailUrl", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("FirstName", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("LastName", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PropertyId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("DevicePlatform", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("DeviceToken", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Email", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("EmailConfirmed", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PasswordHash", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("SecurityStamp", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PhoneNumber", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PhoneNumberConfirmed", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("TwoFactorEnabled", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("LockoutEndDateUtc", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("LockoutEnabled", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("AccessFailedCount", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("UserName", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Claims)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Logins)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.MaitenanceRequests)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Property)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Roles)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Tenant)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.UserAlerts)
+            </div>
+		    
+
+
+@Html.ValidationSummary(true)
+	</div>
+	}

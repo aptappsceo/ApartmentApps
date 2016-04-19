@@ -1,0 +1,10 @@
+   	Id
+	UserId
+	GroupId
+	Comments
+	UnitId
+	IncidentType
+	CreatedOn
+	StatusId
+	CompletionDate
+	PropertyId

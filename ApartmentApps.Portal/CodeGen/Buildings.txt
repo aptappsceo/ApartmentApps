@@ -1,0 +1,42 @@
+ 
+ 
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+   
+    <div class="form-horizontal">
+
+	 		 
+			@Html.HiddenFor(model => model.Id)
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Name", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PropertyId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Property)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Units)
+            </div>
+		    
+
+
+@Html.ValidationSummary(true)
+	</div>
+	}

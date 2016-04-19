@@ -1,0 +1,7 @@
+   	Id
+	OfficerId
+	CourtesyOfficerLocationId
+	CreatedOn
+	Comments
+	GroupId
+	PropertyId

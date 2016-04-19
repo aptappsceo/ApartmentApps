@@ -1,0 +1,5 @@
+   	PropertyId
+	Endpoint
+	Username
+	Password
+	YardiPropertyId

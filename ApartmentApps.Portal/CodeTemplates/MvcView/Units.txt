@@ -1,0 +1,6 @@
+   	Id
+	BuildingId
+	Name
+	Latitude
+	Longitude
+	PropertyId

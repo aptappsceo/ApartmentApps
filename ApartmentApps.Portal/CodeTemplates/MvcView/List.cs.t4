@@ -36,7 +36,7 @@ if (!String.IsNullOrEmpty(LayoutPageFile)) {
 <#
 } else {
 #>
-
+@using GridMvc.Html
 @{
     Layout = null;
 }
@@ -65,72 +65,38 @@ if (!String.IsNullOrEmpty(LayoutPageFile)) {
 					</div>
                 </div>
                 <div class="ibox-content">
-
-<table class="table table-striped">
-    <tr>
+			@Html.Grid(Model).Columns(columns =>
+               {
 <#
 IEnumerable<PropertyMetadata> properties = ModelMetadata.Properties;
 foreach (PropertyMetadata property in properties) {
     if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
-#>
-<#
         // This is a temporary work around until core scaffolding provides support for independent associations.
         if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
             continue;
         }
 #>
-        <th>
-            @Html.DisplayNameFor(model => model.<#= GetValueExpression(property) #>)
-        </th>
+                   columns.Add(model => model.<#= GetValueExpression(property) #>)
+						.Titled(Html.DisplayNameFor(model => model.<#= GetValueExpression(property) #>).ToString())
+						.Filterable(true)
+						.Sortable(true)
+						;
 <#
     }
 }
-#>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-<#
-foreach (PropertyMetadata property in properties) {
-    if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey) {
-#>
-<#
-        // This is a temporary work around until core scaffolding provides support for independent associations.
-        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
-            continue;
-        }
-#>
-        <td>
-            @Html.DisplayFor(modelItem => <#= "item." + GetValueExpression(property) #>)
-        </td>
-<#
-    }
-}
-
 string pkName = GetPrimaryKeyName();
-if (pkName != null) {
 #>
-        <td>
-			@Html.ActionLink("Details", "Details", new { id=item.<#= pkName #> }, new { @class = "btn btn-primary btn-sm"})
-            @Html.ActionLink("Edit", "Edit", new { id=item.<#= pkName #> }, new { @class = "btn btn-white btn-sm"})
-            @Html.ActionLink("Delete", "Delete", new { id=item.<#= pkName #> }, new { @class = "btn btn-white btn-sm"})
-        </td>
-<#
-} else {
-#>
-        <td>
-			@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-primary btn-sm"})
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-white btn-sm"})
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-white btn-sm"})
-        </td>
-<#
-}
-#>
-    </tr>
-}
+				columns.Add()
+					.Encoded(false)
+					.Sanitized(false)
+					.RenderValueAs(item => @Html.ActionLink("Edit", "Edit", new { id = item.<#= pkName #> }, new { @class = "" }));
+				columns.Add()
+					.Encoded(false)
+					.Sanitized(false)
+					.RenderValueAs(item => @Html.ActionLink("Delete", "Delete", new { id = item.<#= pkName#> }, new { @class = "" }));
 
-</table>
+			}).WithPaging(10)
+
 
                 </div>
             </div>

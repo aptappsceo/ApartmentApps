@@ -1,0 +1,79 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".txt" #>
+<#@ Assembly Name="$(SolutionDir)ApartmentApps.Data\bin\Debug\EntityFramework.dll" #>
+<#@ Assembly Name="$(SolutionDir)ApartmentApps.Data\bin\Debug\Microsoft.Owin.dll" #>
+<#@ Assembly Name="$(SolutionDir)ApartmentApps.Data\bin\Debug\Owin.dll" #>
+<#@ Assembly Name="$(SolutionDir)ApartmentApps.Data\bin\Debug\EntityFramework.SqlServer.dll" #>
+<#@ Assembly Name="$(SolutionDir)ApartmentApps.Data\bin\Debug\Microsoft.AspNet.Identity.Core.dll" #>
+<#@ Assembly Name="$(SolutionDir)ApartmentApps.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll" #>
+<#@ Assembly Name="$(SolutionDir)ApartmentApps.Data\bin\Debug\Microsoft.AspNet.Identity.Owin.dll" #>
+<#@ Assembly Name="$(SolutionDir)ApartmentApps.Data\bin\Debug\ApartmentApps.Data.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Data.Entity.Infrastructure" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="ApartmentApps.Data" #> 
+<#@ include file="EF.Utility.CS.ttinclude"#>
+<#@ include file="MultiOutput.tt"#>
+<#
+/*
+	var sb = new StringBuilder();
+    using (var writer = new XmlTextWriter(@"c:\Db.edmx", Encoding.Unicode))
+    {
+		EdmxWriter.WriteEdmx(new ApplicationDbContext(), writer);  
+    }
+	*/
+    MetadataLoader loader = new MetadataLoader(this);
+
+    var edmItems = loader.CreateEdmItemCollection(@"c:\Db.edmx");
+    var container = edmItems.OfType<EntityContainer>().FirstOrDefault();
+	 
+#>
+<# foreach (var es in container.BaseEntitySets.OfType<EntitySet>())
+{
+
+    View(es);
+	SaveOutput(es.Name + ".txt");
+} #>
+
+
+
+<#+ public void View(EntitySet entity)
+{ #>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+   
+    <div class="form-horizontal">
+
+	 <#+ foreach (var property in entity.ElementType.Members)
+{
+
+    bool isNavProperty = entity.ElementType.NavigationProperties.Contains(property.Name);
+    bool isKey = entity.ElementType.KeyMembers.Contains(property.Name);
+    #>
+		<#+ if (isKey) { #> 
+			@Html.HiddenFor(model => model.<#= property.Name #>)
+		<#+ } else if (isNavProperty) { #>
+			<div class="form-group">
+                @Html.DropDownList(model => model.<#= property.Name #>)
+            </div>
+		<#+ } else { #>
+			<div class="form-group">
+					@Html.EditorFor("<#= property.Name #>", String.Empty)
+            </div>
+		<#+ } #>
+    
+
+
+<#+ } #>
+@Html.ValidationSummary(true)
+	</div>
+	}
+<#+ } #>

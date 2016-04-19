@@ -1,0 +1,9 @@
+   	Id
+	UserId
+	CreatedOn
+	Title
+	Message
+	Type
+	RelatedId
+	HasRead
+	PropertyId

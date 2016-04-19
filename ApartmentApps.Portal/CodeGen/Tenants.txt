@@ -1,0 +1,116 @@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+   
+    <div class="form-horizontal">
+
+	 		 
+			@Html.HiddenFor(model => model.UserId)
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("UnitId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("ThirdPartyId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("FirstName", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("LastName", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("UnitNumber", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("BuildingName", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Address", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("City", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("State", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PostalCode", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Email", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Gender", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("MiddleName", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PropertyId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Property)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Unit)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.User)
+            </div>
+		    
+
+
+@Html.ValidationSummary(true)
+	</div>
+	}

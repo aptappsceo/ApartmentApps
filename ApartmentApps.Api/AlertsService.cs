@@ -42,6 +42,10 @@ namespace ApartmentApps.Api
             {
                 yield return ToFeedItemBindingModel(item);
             }
+            foreach (var item in _context.MaintenanceRequestCheckins.OrderByDescending(p => p.Date).Take(10).Cast<IFeedItem>())
+            {
+                yield return ToFeedItemBindingModel(item);
+            }
         }
 
         private FeedItemBindingModel ToFeedItemBindingModel(IFeedItem item)

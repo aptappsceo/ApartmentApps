@@ -1,0 +1,122 @@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+   
+    <div class="form-horizontal">
+
+	 		 
+			@Html.HiddenFor(model => model.Id)
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("UserId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("MaitenanceRequestTypeId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PermissionToEnter", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("GroupId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PetStatus", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("UnitId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("ScheduleDate", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("Message", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("StatusId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("SubmissionDate", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("CompletionDate", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+					@Html.EditorFor("PropertyId", String.Empty)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Checkins)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.MaitenanceRequestType)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Property)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Status)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.Unit)
+            </div>
+		    
+
+
+					<div class="form-group">
+                @Html.DropDownList(model => model.User)
+            </div>
+		    
+
+
+@Html.ValidationSummary(true)
+	</div>
+	}

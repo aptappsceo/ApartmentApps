@@ -1,19 +1,5 @@
-﻿@model IEnumerable<ApartmentApps.Data.IncidentReport>
-
-@{
-    ViewBag.Title = "Index";
-}
-
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-4">
-        <h2>Index</h2>
-        <ol class="breadcrumb">
-            <li class="active">
-                <strong>IncidentReport</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+﻿@using GridMvc.Html
+@model IEnumerable<ApartmentApps.Data.IncidentReport>
 
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -27,77 +13,54 @@
 					</div>
                 </div>
                 <div class="ibox-content">
+			@Html.Grid(Model.ToList()).Columns(columns =>
+       {
+           //             columns.Add(model => model.IncidentReportStatus.Name)
+           //.Titled(Html.DisplayNameFor(model => model.IncidentReportStatus.Name).ToString())
+           //.Filterable(true)
+           //.Sortable(true)
+           //;
+           //             columns.Add(model => model.Property.Name)
+           //.Titled(Html.DisplayNameFor(model => model.Property.Name).ToString())
+           //.Filterable(true)
+           //.Sortable(true)
+           //;
+           //             columns.Add(model => model.Unit.Name)
+           //.Titled(Html.DisplayNameFor(model => model.Unit.Name).ToString())
+           //.Filterable(true)
+           //.Sortable(true)
+           //;
+           columns.Add(model => model.IncidentType)
+                .Titled(Html.DisplayNameFor(model => model.IncidentType).ToString())
+                .Filterable(true)
+                .Sortable(true)
+                ;
+           columns.Add(model => model.Comments)
+               .Titled(Html.DisplayNameFor(model => model.Comments).ToString())
+               .Filterable(true)
+               .Sortable(true)
+               ;
+           columns.Add(model => model.CreatedOn)
+                .Titled(Html.DisplayNameFor(model => model.CreatedOn).ToString())
+                .Filterable(true)
+                .Sortable(true)
+                ;
+           columns.Add(model => model.CompletionDate)
+                .Titled(Html.DisplayNameFor(model => model.CompletionDate).ToString())
+                .Filterable(true)
+                .Sortable(true)
+                ;
+           columns.Add()
+               .Encoded(false)
+               .Sanitized(false)
+               .RenderValueAs(item => @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "" }));
+           columns.Add()
+               .Encoded(false)
+               .Sanitized(false)
+               .RenderValueAs(item => @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "" }));
 
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IncidentReportStatus.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Property.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Unit.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.ImageUrl)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GroupId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comments)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IncidentType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompletionDate)
-        </th>
-        <th></th>
-    </tr>
+       }).WithPaging(10)
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IncidentReportStatus.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Unit.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.ImageUrl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GroupId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comments)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IncidentType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompletionDate)
-        </td>
-        <td>
-			@Html.ActionLink("Details", "Details", new { id=item.Id }, new { @class = "btn btn-primary btn-sm"})
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { @class = "btn btn-white btn-sm"})
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn btn-white btn-sm"})
-        </td>
-    </tr>
-}
-
-</table>
 
                 </div>
             </div>

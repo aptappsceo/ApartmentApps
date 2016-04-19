@@ -5,6 +5,15 @@ namespace ApartmentApps.Portal.Helpers
 {
     public static class HMTLHelperExtensions
     {
+        public static MvcHtmlString Timeago(this HtmlHelper helper, DateTime dateTime)
+        {
+            var tag = new TagBuilder("abbr");
+            tag.AddCssClass("timeago");
+            tag.Attributes.Add("title", dateTime.ToString("s") + "Z");
+            tag.SetInnerText(dateTime.ToString());
+
+            return MvcHtmlString.Create(tag.ToString());
+        }
         public static string IsSelected(this HtmlHelper html, string controller = null, string action = null, string cssClass = null)
         {
 

@@ -1,0 +1,118 @@
+﻿@using GridMvc.Html
+@model IEnumerable<ApartmentApps.Data.IncidentReport>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>List of IncidentReport</h5>
+					<div class="ibox-tools">
+						@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-xs"})
+					</div>
+                </div>
+                <div class="ibox-content">
+			@Html.Grid(Model).Columns(columns =>
+               {
+        <th>
+            @Html.DisplayNameFor(model => model.IncidentReportStatus.Name)
+        </th>
+
+                   columns.Add(fmodel => model.IncidentReportStatus.Name)
+						.Titled(Html.DisplayNameFor(model => model.IncidentReportStatus.Name))
+						.Filterable(true)
+						.Sortable(true)
+						;
+        <th>
+            @Html.DisplayNameFor(model => model.Property.Name)
+        </th>
+
+                   columns.Add(fmodel => model.Property.Name)
+						.Titled(Html.DisplayNameFor(model => model.Property.Name))
+						.Filterable(true)
+						.Sortable(true)
+						;
+        <th>
+            @Html.DisplayNameFor(model => model.Unit.Name)
+        </th>
+
+                   columns.Add(fmodel => model.Unit.Name)
+						.Titled(Html.DisplayNameFor(model => model.Unit.Name))
+						.Filterable(true)
+						.Sortable(true)
+						;
+        <th>
+            @Html.DisplayNameFor(model => model.User.ImageUrl)
+        </th>
+
+                   columns.Add(fmodel => model.User.ImageUrl)
+						.Titled(Html.DisplayNameFor(model => model.User.ImageUrl))
+						.Filterable(true)
+						.Sortable(true)
+						;
+        <th>
+            @Html.DisplayNameFor(model => model.GroupId)
+        </th>
+
+                   columns.Add(fmodel => model.GroupId)
+						.Titled(Html.DisplayNameFor(model => model.GroupId))
+						.Filterable(true)
+						.Sortable(true)
+						;
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+
+                   columns.Add(fmodel => model.Comments)
+						.Titled(Html.DisplayNameFor(model => model.Comments))
+						.Filterable(true)
+						.Sortable(true)
+						;
+        <th>
+            @Html.DisplayNameFor(model => model.IncidentType)
+        </th>
+
+                   columns.Add(fmodel => model.IncidentType)
+						.Titled(Html.DisplayNameFor(model => model.IncidentType))
+						.Filterable(true)
+						.Sortable(true)
+						;
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </th>
+
+                   columns.Add(fmodel => model.CreatedOn)
+						.Titled(Html.DisplayNameFor(model => model.CreatedOn))
+						.Filterable(true)
+						.Sortable(true)
+						;
+        <th>
+            @Html.DisplayNameFor(model => model.CompletionDate)
+        </th>
+
+                   columns.Add(fmodel => model.CompletionDate)
+						.Titled(Html.DisplayNameFor(model => model.CompletionDate))
+						.Filterable(true)
+						.Sortable(true)
+						;
+				columns.Add()
+					.Encoded(false)
+					.Sanitized(false)
+					.RenderValueAs(item => @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "" }));
+				columns.Add()
+					.Encoded(false)
+					.Sanitized(false)
+					.RenderValueAs(item => @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "" }));
+
+			}).WithPaging(10)
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+
