@@ -120,6 +120,10 @@
     <Reference Include="PhotoView">
       <HintPath>..\..\Components\PhotoView-1.2.4\lib\android\PhotoView.dll</HintPath>
     </Reference>
+    <Reference Include="RecyclerViewAnimators, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RecyclerViewAnimators.2.1.0.0\lib\MonoAndroid403\RecyclerViewAnimators.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RoundedImageView">
       <HintPath>..\..\Components\RoundedImageView-2.2.0\lib\android\RoundedImageView.dll</HintPath>
     </Reference>
@@ -165,6 +169,10 @@
     </Reference>
     <Reference Include="Xamarin.Android.Support.v7.AppCompat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Android.Support.v7.AppCompat.23.2.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.CardView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Android.Support.v7.CardView.23.3.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.CardView.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Android.Support.v7.RecyclerView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -217,6 +225,7 @@
     <Compile Include="Views\Components\Navigation\NavigationDrawerFragment.cs" />
     <Compile Include="Views\Screens\ApplicationHostActivity.cs" />
     <Compile Include="Views\Screens\GenericWebView.cs" />
+    <Compile Include="Views\Screens\IncidentReportStatusView.cs" />
     <Compile Include="Views\Screens\MaintenanceRequestFormView.cs" />
     <Compile Include="Views\Screens\MaterialPlaygroundFragment1.cs" />
     <Compile Include="Views\Screens\TestFormViewModel.cs" />
@@ -738,6 +747,27 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\incident_report_index_view.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\S_MaintenanceCalendar.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\ticket_index_item.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\incident_report_status_view.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\incident_report_status_history_page.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\header_section.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\ticket_status_section.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\text_section.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.2.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.2.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

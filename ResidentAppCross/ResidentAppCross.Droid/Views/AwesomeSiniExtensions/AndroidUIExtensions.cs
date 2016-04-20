@@ -402,6 +402,50 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             drawable.SetFilterBitmap(filter);
             return drawable;
         }
+
+        public static GradientDrawable OfColor(this GradientDrawable g, Color r)
+        {
+            g.SetColor(r);
+            return g;
+        }
+
+        public static GradientDrawable OfStroke(this GradientDrawable g, Color r, int widthDp)
+        {
+            g.SetStroke(widthDp.ToPx(), r);
+            return g;
+        }
+
+        public static GradientDrawable WithRoundedTop(this GradientDrawable g, int rad = 8)
+        {
+            g.SetCornerRadii(GetCornerRadiiDp(rad, rad, 0, 0));
+            return g;
+        }
+
+        public static GradientDrawable WithRoundedBottom(this GradientDrawable g, int rad = 8)
+        {
+            g.SetCornerRadii(GetCornerRadiiDp(0, 0, rad, rad));
+            return g;
+        }
+
+        public static GradientDrawable WithRoundedCorners(this GradientDrawable g, int rad = 8)
+        {
+            g.SetCornerRadii(GetCornerRadiiDp(rad, rad, rad, rad));
+            return g;
+        }
+
+        public static float[] GetCornerRadiiDp(int topLeft, int topRight, int bottomRight, int bottomLeft)
+        {
+            return GetCornerRadiiPx(topLeft.ToPx(), topRight.ToPx(), bottomRight.ToPx(), bottomLeft.ToPx());
+        }
+
+        public static float[] GetCornerRadiiPx(int topLeft, int topRight, int bottomRight, int bottomLeft)
+        {
+            return new float[]
+            {
+                topLeft, topLeft, topRight, topRight, bottomRight, bottomRight, bottomLeft, bottomLeft
+            };
+        }
+
     }
 
     public class Outlet : Attribute
@@ -433,9 +477,10 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
             if (!property.PropertyType.IsInstanceOfType(result))
             {
-                Console.WriteLine(
-                    "Outlet WARNING: Type mismatch on outlet: {0}.{1} is of type {2} but identified view is {3} (not instance of {2}",
-                    property.DeclaringType.Name, property.Name, property.PropertyType.Name, result.GetType().Name);
+
+                throw new Exception(string.Format("Outlet WARNING: Type mismatch on outlet: {0}.{1} is of type {2} but identified view is {3} (not instance of {2})",
+                    property.DeclaringType.Name, property.Name, property.PropertyType.Name, result.GetType().Name));
+
             }
 
             property.SetValue(target, result);

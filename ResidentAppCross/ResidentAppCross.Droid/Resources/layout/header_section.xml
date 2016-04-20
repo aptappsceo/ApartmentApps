@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:background="#aaaaaa"
+    android:padding="4dp"
+    android:layout_width="match_parent"
+    android:layout_height="72dp">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/TitleLabel"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="6dp"
+        android:text="Maintenance Request"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+        android:textColor="@color/primary_text_body" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/SubtitleLabel"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/TitleLabel"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Please fill the information below"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/secondary_text_body" />
+
+
+    <ImageView
+        android:id="@+id/IconView"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="4dp"
+        android:scaleType="fitXY"
+        android:cropToPadding="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/S_MaintenanceCalendar"
+        android:tint="@color/primary_text_body"
+        />
+
+
+</RelativeLayout>

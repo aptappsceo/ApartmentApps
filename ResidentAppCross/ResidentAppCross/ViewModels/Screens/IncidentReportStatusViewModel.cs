@@ -36,6 +36,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private string _unitAddressString;
         private ObservableCollection<IncidentCheckinBindingModel> _checkins;
         private IncidentCheckinBindingModel _selectedCheckin;
+        private string _lastRevisionDate;
 
         public IncidentReportStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService, ILoginManager loginManager)
         {
@@ -77,6 +78,12 @@ namespace ResidentAppCross.ViewModels.Screens
             set { SetProperty(ref _selectedCheckin, value); }
         }
 
+        public string LastRevisionDate
+        {
+            get { return _lastRevisionDate; }
+            set { SetProperty(ref _lastRevisionDate,value); }
+        }
+
         public string CreatedOnLabel => Request?.CreatedOn?.ToString("g");
 
         public IncidentReportStatus CurrentMaintenanceRequestStatus
@@ -115,8 +122,12 @@ namespace ResidentAppCross.ViewModels.Screens
             }));
 
             UnitAddressString = $"Building - {Request?.BuildingName} Unit - {Request?.UnitName}";
+            LastRevisionDate = Request?.Checkins?.FirstOrDefault()?.Date?.ToString("g");
+
             Checkins.Clear();
             Checkins.AddRange(Request.Checkins.OrderByDescending(x => x.Date));
+
+
             RaisePropertyChanged(nameof(CreatedOnLabel));
             this.Publish(new IncidentReportStatusUpdated(this));
 

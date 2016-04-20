@@ -5,7 +5,9 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
+using Android.Support.V4.App;
 using Android.Support.V4.Content;
+using Android.Support.V4.View;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
@@ -16,6 +18,8 @@ using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.Platform;
 using MvvmCross.Droid.Shared.Attributes;
 using MvvmCross.Droid.Views;
+using RecyclerViewAnimators.Adapters;
+using RecyclerViewAnimators.Animators;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Resources;
@@ -63,6 +67,11 @@ namespace ResidentAppCross.Droid.Views
     }
 
 
+
+
+
+
+
     [MvxFragment(typeof(ApplicationViewModel),Resource.Id.application_host_container_primary)]
     public class IncidentReportIndexView : ViewFragment<IncidentReportIndexViewModel>
     {
@@ -70,36 +79,29 @@ namespace ResidentAppCross.Droid.Views
         [Outlet]
         public RecyclerView ListContainer { get; set; }
 
-
         public override void Bind()
         {
             base.Bind();
-            var adapter = new IconTitleBadgeListAdapter<IncidentIndexBindingModel>()
-            {
-                BackgroundColorSelector = i=>Color.White,
-                BadgeBackgroundColorSelector = i=>Color.Blue,
-                BadgeForegroundColorSelector = i=>Color.White,
-                BadgeSelector = i=>"+1",
-                IconSelector = i=>SharedResources.Icons.Police,
-                IdSelector = i=>i.Id ?? 0,
-                IconColorSelector = i=>Color.Blue,
-                TitleSelector = i=>i.Comments,
-                Items = ViewModel.Incidents
-            };
-            ListContainer.SetItemViewCacheSize(15);
-            ListContainer.SetAdapter(adapter);
-            ListContainer.SetLayoutManager(new LinearLayoutManager(Context,LinearLayoutManager.Vertical,false));
 
-            this.OnViewModelEvent<IncidentsIndexFiltersUpdatedEvent>(evt =>
+            var adapter = new TicketIndexAdapter<IncidentIndexBindingModel>()
             {
-                adapter.NotifyDataSetChanged();
-            });
+                Items = ViewModel.Incidents,
+                TitleSelector = i=>i.Title
+            };
+
+            adapter.DetailsClicked += model =>
+            {
+                ViewModel.SelectedIncident = model;
+                ViewModel.OpenSelectedIncidentCommand.Execute(null);
+            };
+
+            ListContainer.SetAdapter(new AlphaInAnimationAdapter(adapter));
+            ListContainer.SetLayoutManager(new LinearLayoutManager(Context,LinearLayoutManager.Vertical,false));
+            ListContainer.SetItemAnimator(new SlideInLeftAnimator());
 
             ViewModel.UpdateIncidentsCommand.Execute(null);
+
         }
-
-
-
 
     }
 

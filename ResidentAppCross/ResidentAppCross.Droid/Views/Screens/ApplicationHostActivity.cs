@@ -7,6 +7,7 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
@@ -14,6 +15,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using ImageViews.Rounded;
+using Java.Lang;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Droid.Shared.Caching;
 using MvvmCross.Droid.Support.V7.AppCompat;
@@ -24,12 +26,15 @@ using ResidentAppCross.Droid.Views.Components.NavigationDrawer;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.ViewModels;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
+using Math = System.Math;
+using Object = Java.Lang.Object;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace ResidentAppCross.Droid.Views
 {
     [Activity(Label = "Apartment Apps", 
         MainLauncher = true, 
+        NoHistory = false,
         WindowSoftInputMode = SoftInput.AdjustResize | SoftInput.StateHidden)]
     public class ApplicationHostActivity : MvxCachingFragmentCompatActivity<ApplicationViewModel>
     {
@@ -114,6 +119,10 @@ namespace ResidentAppCross.Droid.Views
                 DrawerLayout.CloseDrawers();
             };
 
+//            var frame = FindViewById<FrameLayout>(Resource.Id.application_host_container_primary);
+//            CoordinatorLayout.LayoutParams prms=(CoordinatorLayout.LayoutParams)frame.LayoutParameters;
+//            prms.Behavior = new SlideUpOnSnackbarBehaviour();
+//            frame.RequestLayout();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -139,4 +148,35 @@ namespace ResidentAppCross.Droid.Views
         }
 
     }
+
+    public class SlideUpOnSnackbarBehaviour : AppBarLayout.ScrollingViewBehavior
+    {
+        public SlideUpOnSnackbarBehaviour(Context context, IAttributeSet attrs) : base(context, attrs)
+        {
+        }
+
+        public SlideUpOnSnackbarBehaviour()
+        {
+        }
+
+        public override bool LayoutDependsOn(CoordinatorLayout parent, Object child, View dependency)
+        {
+            return dependency is Snackbar.SnackbarLayout || base.LayoutDependsOn(parent,child,dependency);
+        }
+
+        public override bool OnDependentViewChanged(CoordinatorLayout parent, Object child, View dependency)
+        {
+            if (dependency is Snackbar.SnackbarLayout)
+            {
+                var view = child as View;
+                float translationY = Math.Min(0, dependency.TranslationY - dependency.Height);
+                return true;
+            }
+            else
+            {
+                return base.OnDependentViewChanged(parent, child, dependency);
+            }
+        }
+    }
+
 }

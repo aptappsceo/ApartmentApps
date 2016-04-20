@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 
@@ -9,6 +11,7 @@ using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
@@ -374,6 +377,106 @@ namespace ResidentAppCross.Droid.Views
         }
     }
 
+
+
+    public class TicketIndexAdapter<T> : GenericRecyclerAdapter<TicketIndexItemViewHolder>
+    {
+        private ObservableCollection<T> _items;
+
+        public Func<T,string> TitleSelector { get; set; }
+
+        public ObservableCollection<T> Items
+        {
+            get { return _items; }
+            set
+            {
+                _items = value;
+
+                _items.CollectionChanged += (sender, args) =>
+                {
+                    switch (args.Action)
+                    {
+                        case NotifyCollectionChangedAction.Add:
+                            this.NotifyItemInserted(args.NewStartingIndex);
+                            break;
+                        case NotifyCollectionChangedAction.Remove:
+                            NotifyItemRemoved(args.OldStartingIndex);
+                            break;
+                        case NotifyCollectionChangedAction.Replace:
+                            NotifyItemChanged(args.OldStartingIndex);
+                            break;
+                        case NotifyCollectionChangedAction.Move:
+                            NotifyItemMoved(args.OldStartingIndex,args.NewStartingIndex);
+                            break;
+                        case NotifyCollectionChangedAction.Reset:
+                            NotifyDataSetChanged();
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                };
+            }
+        }
+
+        public override void OnBind(TicketIndexItemViewHolder holder, int position)
+        {
+            var item = Items[position];
+            holder.DetailsLabel.Text = TitleSelector?.Invoke(item);
+            holder.TitleLabel.Text = "Unit 1234";
+            holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
+        }
+
+        public event Action<T> DetailsClicked;
+
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            var ticketIndexItemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.ticket_index_item, parent, false);
+            return new TicketIndexItemViewHolder(ticketIndexItemView);
+        }
+
+        public override int ItemCount => Items.Count;
+
+        protected virtual void OnDetailsClicked(T obj)
+        {
+            DetailsClicked?.Invoke(obj);
+        }
+    }
+
+    public abstract class GenericRecyclerAdapter<TViewHolder> : RecyclerView.Adapter where TViewHolder : RecyclerView.ViewHolder
+    {
+        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
+        {
+            OnBind((TViewHolder) holder, position);
+        }
+
+        public abstract void OnBind(TViewHolder holder, int position);
+    }
+
+    public class TicketIndexItemViewHolder : RecyclerView.ViewHolder
+    {
+        [Outlet]
+        public AppCompatImageView IconView { get; set; }
+
+        [Outlet]
+        public AppCompatTextView TitleLabel { get; set; }
+
+        [Outlet]
+        public AppCompatTextView DetailsLabel { get; set; }
+
+        [Outlet]
+        public AppCompatTextView DateLabel { get; set; }
+
+        [Outlet]
+        public AppCompatButton DetailsButton { get; set; }
+
+        public TicketIndexItemViewHolder(View itemView) : base(itemView)
+        {
+            itemView.LocateOutlets(this);
+        }
+    }
+
+
     public class ImageTextCounterListItem : RelativeLayout
     {
         private ImageView _icon;
@@ -401,11 +504,7 @@ namespace ResidentAppCross.Droid.Views
             {
                 if (_icon == null)
                 {
-                    _icon = new ImageView(Context)
-                        .WithRelativeMargins(8,8,8,0)
-                        .WithRelativeAlignParentLeft()
-                        .WithPaddingDp(1,1,1,1)
-                        .WithDimensions(32);
+                    _icon = new ImageView(Context).WithRelativeMargins(8, 8, 8, 0).WithRelativeAlignParentLeft().WithPaddingDp(1, 1, 1, 1).WithDimensions(32);
                     _icon.SetScaleType(ImageView.ScaleType.CenterInside);
                 }
                 return _icon;
@@ -419,11 +518,7 @@ namespace ResidentAppCross.Droid.Views
             {
                 if (_label == null)
                 {
-                    _label = new TextView(Context)
-                        .WithDimensionsWrapContent()
-                        .WithRelativeRightOf(IconView)
-                        .WithRelativeAlignBaseline(Counter)
-                        .WithFont(AppFonts.ListItemTitle);
+                    _label = new TextView(Context).WithDimensionsWrapContent().WithRelativeRightOf(IconView).WithRelativeAlignBaseline(Counter).WithFont(AppFonts.ListItemTitle);
                 }
                 return _label;
             }
@@ -439,12 +534,7 @@ namespace ResidentAppCross.Droid.Views
                     _counter = new TextView(Context)
                     {
                         Gravity = GravityFlags.Center
-                    }
-                    .WithDimensions(32)
-                    .WithRelativeAlignParentRight()
-                    .WithRelativeMargins(0,8,8,0)
-                    .WithBackground(AppShapes.GetBox.WithRoundedCorners().OfColor(AppTheme.SecondaryBackgoundColor))
-                    .WithFont(AppFonts.ListItemCounter);
+                    }.WithDimensions(32).WithRelativeAlignParentRight().WithRelativeMargins(0, 8, 8, 0).WithBackground(AppShapes.GetBox.WithRoundedCorners().OfColor(AppTheme.SecondaryBackgoundColor)).WithFont(AppFonts.ListItemCounter);
                 }
                 return _counter;
             }
@@ -467,7 +557,7 @@ namespace ResidentAppCross.Droid.Views
             set
             {
                 _icon1 = value;
-                IconView.SetImageDrawable(AppTheme.GetIcon(value,SharedResources.Size.S));
+                IconView.SetImageDrawable(AppTheme.GetIcon(value, SharedResources.Size.S));
             }
         }
 
@@ -476,7 +566,7 @@ namespace ResidentAppCross.Droid.Views
             get { return _iconColor; }
             set
             {
-                _iconColor = value; 
+                _iconColor = value;
                 IconView.SetColorFilter(value);
             }
         }
@@ -506,7 +596,7 @@ namespace ResidentAppCross.Droid.Views
             get { return _backgroundColor; }
             set
             {
-                _backgroundColor = value; 
+                _backgroundColor = value;
                 this.WithBackgroundColor(value);
             }
         }
