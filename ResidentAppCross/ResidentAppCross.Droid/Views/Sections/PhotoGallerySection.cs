@@ -484,7 +484,7 @@ namespace ResidentAppCross.Droid.Views.Sections
         public static int MaxMemory = (int)(Runtime.GetRuntime().MaxMemory() / 1024);
 
         // Use 1/8th of the available memory for this memory cache.
-        public static int CacheSize = MaxMemory / 8;
+        public static int CacheSize = MaxMemory / 6;
 
         public static LruCache BitmapCache = new LruCache(CacheSize);
 
