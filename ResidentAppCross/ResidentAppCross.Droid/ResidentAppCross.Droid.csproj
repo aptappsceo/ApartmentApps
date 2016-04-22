@@ -224,6 +224,7 @@
     <Compile Include="Views\Components\Navigation\NavigationDrawerAdapter.cs" />
     <Compile Include="Views\Components\Navigation\NavigationDrawerFragment.cs" />
     <Compile Include="Views\Screens\ApplicationHostActivity.cs" />
+    <Compile Include="Views\Screens\GallerySection.cs" />
     <Compile Include="Views\Screens\GenericWebView.cs" />
     <Compile Include="Views\Screens\IncidentReportStatusView.cs" />
     <Compile Include="Views\Screens\MaintenanceRequestFormView.cs" />
@@ -695,22 +696,13 @@
     <AndroidResource Include="Resources\layout\application_host.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\fragment_1.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\fragment_2.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\fragment_3.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\values-v21\styles.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\toolbar.xml" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\drawable\ic_android_black_24dp.xml" />
+    <AndroidResource Include="Resources\drawable\ic_android_black_24dp.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Search.xml" />
@@ -758,9 +750,6 @@
     <AndroidResource Include="Resources\layout\incident_report_status_view.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\incident_report_status_history_page.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\header_section.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -768,6 +757,27 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\text_section.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\gallery_section.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\ticket_history_item.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\CircleFilled.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\TimelineMid.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\TimelineBottom.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\TimelineTop.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\unit_information_section.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.2.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.2.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

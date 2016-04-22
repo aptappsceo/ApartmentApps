@@ -384,6 +384,9 @@ namespace ResidentAppCross.Droid.Views
         private ObservableCollection<T> _items;
 
         public Func<T,string> TitleSelector { get; set; }
+        public Func<T,string> DetailsSelector { get; set; }
+        public Func<T,string> SubTitleSelector { get; set; }
+        public Func<T,string> DateSelector { get; set; }
 
         public ObservableCollection<T> Items
         {
@@ -422,8 +425,10 @@ namespace ResidentAppCross.Droid.Views
         public override void OnBind(TicketIndexItemViewHolder holder, int position)
         {
             var item = Items[position];
-            holder.DetailsLabel.Text = TitleSelector?.Invoke(item);
-            holder.TitleLabel.Text = "Unit 1234";
+            holder.DetailsLabel.Text = DetailsSelector?.Invoke(item) ?? "Details Info";
+            holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "Unit #4582";
+            holder.TypeLabel.Text = SubTitleSelector?.Invoke(item) ?? "Subtitle";
+            holder.DateLabel.Text = DateSelector?.Invoke(item) ?? "00/00/00 00:00 AM";
             holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
         }
 
@@ -436,6 +441,96 @@ namespace ResidentAppCross.Droid.Views
         }
 
         public override int ItemCount => Items.Count;
+
+        protected virtual void OnDetailsClicked(T obj)
+        {
+            DetailsClicked?.Invoke(obj);
+        }
+    }
+
+    public class TicketHistoryAdapter<T> : GenericRecyclerAdapter<TicketHistoryItemViewHolder>
+    {
+        private ObservableCollection<T> _items;
+
+        public Func<T,string> TitleSelector { get; set; }
+        public Func<T,string> SubtitleSelector { get; set; }
+
+        public ObservableCollection<T> Items
+        {
+            get { return _items; }
+            set
+            {
+                _items = value;
+                _items.CollectionChanged += OnItemsOnCollectionChanged;
+
+            }
+        }
+
+        private void OnItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    this.NotifyItemInserted(args.NewStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    NotifyItemRemoved(args.OldStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    NotifyItemChanged(args.OldStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    NotifyItemMoved(args.OldStartingIndex, args.NewStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    NotifyDataSetChanged();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public override void OnBind(TicketHistoryItemViewHolder holder, int position)
+        {
+            var item = Items[position];
+            holder.TitleLabel.Text = TitleSelector?.Invoke(item);
+            holder.SubtitleLabel.Text = SubtitleSelector?.Invoke(item);
+
+            holder.IconView.Visibility = ViewStates.Gone;
+
+            if (Items.Count == 1)
+            {
+                holder.PipeIconView.Visibility = ViewStates.Gone;
+            }
+            else if (position == 0)
+            {
+                holder.PipeIconView.Visibility = ViewStates.Visible;
+                holder.PipeIconView.SetImageResource(Resource.Drawable.TimelineTop);
+
+            }
+            else if (position == Items.Count-1)
+            {
+                holder.PipeIconView.Visibility = ViewStates.Visible;
+                holder.PipeIconView.SetImageResource(Resource.Drawable.TimelineBottom);
+            }
+            else
+            {
+                holder.PipeIconView.Visibility = ViewStates.Visible;
+                holder.PipeIconView.SetImageResource(Resource.Drawable.TimelineMid);
+            }
+
+            //      holder.SubtitleLabel.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
+        }
+
+        public event Action<T> DetailsClicked;
+
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            var ticketHistoryItemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.ticket_history_item, parent, false);
+            return new TicketHistoryItemViewHolder(ticketHistoryItemView);
+        }
+
+        public override int ItemCount => Items?.Count ?? 0;
 
         protected virtual void OnDetailsClicked(T obj)
         {
@@ -468,9 +563,32 @@ namespace ResidentAppCross.Droid.Views
         public AppCompatTextView DateLabel { get; set; }
 
         [Outlet]
+        public AppCompatTextView TypeLabel { get; set; }
+
+        [Outlet]
         public AppCompatButton DetailsButton { get; set; }
 
         public TicketIndexItemViewHolder(View itemView) : base(itemView)
+        {
+            itemView.LocateOutlets(this);
+        }
+    }
+
+    public class TicketHistoryItemViewHolder : RecyclerView.ViewHolder
+    {
+        [Outlet]
+        public ImageView PipeIconView { get; set; }
+
+        [Outlet]
+        public RoundedImageView IconView{ get; set; }
+
+        [Outlet]
+        public AppCompatTextView TitleLabel { get; set; }
+
+        [Outlet]
+        public AppCompatTextView SubtitleLabel { get; set; }
+
+        public TicketHistoryItemViewHolder(View itemView) : base(itemView)
         {
             itemView.LocateOutlets(this);
         }

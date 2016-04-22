@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Dynamic;
 using System.Linq;
+using Android.App;
 using Android.Content;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.App;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using MvvmCross.Binding.Droid.BindingContext;
@@ -22,12 +22,61 @@ using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Events;
 using ResidentAppCross.Interfaces;
-using ResidentAppCross.ViewModels;
 using MvvmCross.Droid.Shared.Attributes;
 using MvvmCross.Platform.Core;
+using ResidentAppCross.Droid.Views.Sections;
+using ActionBar = Android.Support.V7.App.ActionBar;
 
 namespace ResidentAppCross.Droid.Views
 {
+
+
+    public class UnitInformationSection : FragmentSection
+    {
+        private string _avatarUrl;
+        private AsyncImageView _avatarView;
+
+        [Outlet]
+        public FrameLayout AvatarViewContainer { get; set; }
+
+        [Outlet]
+        public TextView NameLabel { get; set; }
+
+        [Outlet]
+        public TextView AddressLabel { get; set; }
+
+        [Outlet]
+        public TextView PhoneLabel { get; set; }
+
+        [Outlet]
+        public TextView EmailLabel { get; set; }
+
+        public AsyncImageView AvatarView
+        {
+            get
+            {
+                if (_avatarView == null)
+                {
+                    _avatarView = new AsyncImageView(Context)
+                    {
+                    }.WithDimensionsMatchParent().AddTo(AvatarViewContainer);
+                    _avatarView.PhotoView.IsOval = true;
+                }
+                return _avatarView;
+            }
+            set { _avatarView = value; }
+        }
+
+        public string AvatarUrl
+        {
+            get { return _avatarUrl; }
+            set
+            {
+                _avatarUrl = value;
+                if (_avatarUrl != null) AvatarView.SetImage(value, new ColorDrawable(Color.White));
+            }
+        }
+    }
 
     public class HeaderSection : FragmentSection
     {
@@ -50,7 +99,7 @@ namespace ResidentAppCross.Droid.Views
         public TextView StatusLabel { get; set; }
 
         [Outlet]
-        public TextView LastRevisionLabel { get; set; }
+        public TextView CreatedOnLabel { get; set; }
     }
 
 
@@ -82,21 +131,15 @@ namespace ResidentAppCross.Droid.Views
             View.LocateOutlets(this);
         }
 
+        public virtual void OnInflated()
+        {
+        }
     }
 
     public class SectionViewFragment<T> : ViewFragment<T> where T : class, IMvxViewModel
     {
         private List<FragmentSection> _content;
         private ViewGroup _sectionContainer;
-
-        protected T CreateSection<T>() where T : FragmentSection
-        {
-            var instance = (T)Activator.CreateInstance(typeof(T));
-            instance.Context = Context;
-            instance.ParentLayout = (ViewGroup) Layout.FindViewById(instance.ContainerId);
-            instance.Inflate();
-            return instance;
-        }
 
         public ViewGroup SectionContainer
         {
@@ -131,6 +174,16 @@ namespace ResidentAppCross.Droid.Views
             RefreshContent();
         }
 
+        public override void OnDestroyView()
+        {
+            base.OnDestroyView();
+            foreach (var prop in GetType().GetProperties().Where(m => typeof(FragmentSection).IsAssignableFrom(m.PropertyType)))
+            {
+                prop.SetValue(this, null);
+            }
+            Content.Clear();
+        }
+
         public override void InitializeView(ViewGroup layout, Bundle savedInstanceState)
         {
             base.InitializeView(layout, savedInstanceState);
@@ -140,6 +193,7 @@ namespace ResidentAppCross.Droid.Views
                 instance.Context = Context;
                 instance.ParentLayout = (ViewGroup)Layout.FindViewById(instance.ContainerId);
                 instance.Inflate();
+                instance.OnInflated();
                 prop.SetValue(this, instance);
             }
         }
@@ -159,6 +213,7 @@ namespace ResidentAppCross.Droid.Views
             foreach (var fragmentSection in Content)
             {
                 SectionContainer.AddView(fragmentSection.View);
+                SectionContainer.AddView(new View(Context).WithHeight(2).WithWidthMatchParent());
             }
         }
 
@@ -209,7 +264,7 @@ namespace ResidentAppCross.Droid.Views
             set { _toolbar = value; }
         }
 
-        public virtual int LayoutId => GetType().Name.ToLowerUnderscored().AsLayoutId();
+        public virtual int LayoutId => GetType().MatchingLayoutId();
 
         public override void OnStop()
         {
@@ -284,30 +339,114 @@ namespace ResidentAppCross.Droid.Views
             set { _dispatcher = value; }
         }
 
+        private static NotificationDialog _progressDialog;
+
+        public static NotificationDialog CurrentDialog
+        {
+            get { return _progressDialog; }
+            set { _progressDialog = value; }
+        }
+
+        public static NotificationDialog GetOrCreateDialog(Activity targetActivity)
+        {
+
+            if (targetActivity == null) return null;
+
+
+            if (targetActivity == CurrentDialog?.SourceActivity)
+            {
+                return CurrentDialog;
+            }
+
+
+            DismissCurrentDialog();
+            CurrentDialog = new NotificationDialog()
+            {
+                SourceActivity = targetActivity
+            };
+
+            CurrentDialog.Show(targetActivity.FragmentManager, "notification");
+            CurrentDialog.OnceOnDismiss(() => CurrentDialog = null);
+            return CurrentDialog;
+            ///CurrentDialog = ;
+        }
+
+        public static void DismissCurrentDialog()
+        {
+            CurrentDialog?.Dismiss();
+            CurrentDialog = null;
+        }
+
         public static void SetTaskRunning(this ViewFragment view, string label, bool block = true)
         {
-            //Toast.MakeText(view.MainActivity, label, ToastLength.Long);
-            Snackbar.Make(view.Layout, label, Snackbar.LengthLong).Show();
+
+            if (block && !string.IsNullOrEmpty(label))
+            {
+                var dialog = GetOrCreateDialog(view.MainActivity);
+                dialog.Mode = NotificationDialogMode.Progress;
+                dialog.TitleText = label;
+                dialog.SubTitleText = "Please, Wait";
+                dialog.ShouldDismissWhenClickedOutside = false;
+            }
+            else
+            {
+                DismissCurrentDialog();
+            }
+
+            //if(block) AndHUD.Shared.Show(view, label, -1, MaskType.Black, centered: true);
         }
 
         public static void SetTaskProgress(this ViewFragment view, bool prompt, string label)
         {
-            //Toast.MakeText(view.MainActivity, label, ToastLength.Long);
-            Snackbar.Make(view.Layout, label, Snackbar.LengthLong).Show();
+            if (prompt && !string.IsNullOrEmpty(label))
+            {
+                var dialog = GetOrCreateDialog(view.MainActivity);
+                dialog.Mode = NotificationDialogMode.Progress;
+                dialog.TitleText = label;
+                dialog.SubTitleText = "Please, Wait";
+                dialog.ShouldDismissWhenClickedOutside = false;
+            }
+            else
+            {
+                DismissCurrentDialog();
+            }
         }
 
         public static void SetTaskComplete(this ViewFragment view, bool prompt, string label = null, Action onPrompted = null)
         {
-            Snackbar.Make(view.Layout, label, Snackbar.LengthLong).Show();
-            //Toast.MakeText(view.MainActivity, label, ToastLength.Long);
-            onPrompted?.Invoke();
+
+            if (prompt && !string.IsNullOrEmpty(label))
+            {
+                var dialog = GetOrCreateDialog(view.MainActivity);
+                dialog.Mode = NotificationDialogMode.Complete;
+                dialog.TitleText = label;
+                dialog.SubTitleText = null;
+                dialog.ShouldDismissWhenClickedOutside = true;
+                dialog.OnceOnDismiss(onPrompted);
+                dialog.SetActions(new[] { new NotificationDialogItem() { Action = () => { }, Title = "Ok", ShouldDismiss = true } });
+            }
+            else
+            {
+                DismissCurrentDialog();
+            }
+
         }
 
         public static void SetTaskFailed(this ViewFragment view, bool prompt, string label = null, Exception reason = null, Action<Exception> onPrompted = null)
         {
-            Snackbar.Make(view.Layout, label, Snackbar.LengthLong).Show();
-            //Toast.MakeText(view.MainActivity, label, ToastLength.Long);
-            onPrompted?.Invoke(reason);
+            if (prompt && !string.IsNullOrEmpty(label))
+            {
+                var dialog = GetOrCreateDialog(view.MainActivity);
+                dialog.Mode = NotificationDialogMode.Failed;
+                dialog.TitleText = "Oops!";
+                dialog.SubTitleText = label;
+                dialog.ShouldDismissWhenClickedOutside = true;
+                if (onPrompted != null) dialog.OnceOnDismiss(() => onPrompted?.Invoke(reason));
+            }
+            else
+            {
+                DismissCurrentDialog();
+            }
         }
 
 

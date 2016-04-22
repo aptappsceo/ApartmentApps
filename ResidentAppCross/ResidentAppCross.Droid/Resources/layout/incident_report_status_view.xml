@@ -25,7 +25,7 @@
         android:layout_height="match_parent">
 
         <android.support.v4.widget.NestedScrollView
-            android:id="@+id/IncidentReportStatusView_StatusPage"
+            android:id="@+id/StatusPage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -44,9 +44,13 @@
 
         </android.support.v4.widget.NestedScrollView>
 
-        <include
-        android:id="@+id/IncidentReportStatusView_HistoryPage"
-        layout="@layout/incident_report_status_history_page"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/HistoryPage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+        </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.view.ViewPager>
 

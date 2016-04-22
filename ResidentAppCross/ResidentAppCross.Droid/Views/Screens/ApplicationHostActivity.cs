@@ -81,7 +81,7 @@ namespace ResidentAppCross.Droid.Views
         public override void OnBeforeFragmentChanging(IMvxCachedFragmentInfo fragmentInfo, FragmentTransaction transaction)
         {
             base.OnBeforeFragmentChanging(fragmentInfo, transaction);
-            transaction.SetCustomAnimations(Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight);
+            transaction.SetCustomAnimations(Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight,Android.Resource.Animation.FadeIn, Android.Resource.Animation.FadeOut);
         }
 
         protected override void OnViewModelSet()
@@ -147,6 +147,16 @@ namespace ResidentAppCross.Droid.Views
             base.OnFragmentChanging(fragmentInfo, transaction);
         }
 
+        public override void OnBackPressed()
+        {
+            if (SupportFragmentManager.BackStackEntryCount >= 1)
+            {
+                SupportFragmentManager.PopBackStackImmediate();
+                if (!FragmentCacheConfiguration.EnableOnFragmentPoppedCallback)
+                    return;
+                OnFragmentPopped(GetCurrentCacheableFragmentsInfo());
+            }
+        }
     }
 
     public class SlideUpOnSnackbarBehaviour : AppBarLayout.ScrollingViewBehavior

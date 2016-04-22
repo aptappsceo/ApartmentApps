@@ -7,12 +7,15 @@ using Android.Graphics.Drawables.Shapes;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V4.Content;
+using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
 using Grantland.Widget;
+using ImageViews.Rounded;
+using Java.Lang;
 using Java.Net;
 using Java.Util;
 using MvvmCross.Platform;
@@ -21,8 +24,10 @@ using MvvmCross.Platform.Platform;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
+using Exception = System.Exception;
 using IOException = Java.IO.IOException;
 using Object = Java.Lang.Object;
+using Space = Android.Widget.Space;
 
 namespace ResidentAppCross.Droid.Views.Sections
 {
@@ -292,14 +297,69 @@ namespace ResidentAppCross.Droid.Views.Sections
 
     }
 
+    public class AspectAwareImageView : RoundedImageView
+    {
+        private float _aspectRatio;
+
+        public AspectAwareImageView(Context context, IAttributeSet attrs) : base(context, attrs)
+        {
+        }
+
+        public AspectAwareImageView(Context context) : base(context)
+        {
+        }
+
+        public ImageMeasureMode MeasureMode { get; set; }
+
+        protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
+        {
+            base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
+            switch (MeasureMode)
+            {
+                case ImageMeasureMode.Default:
+                    return;
+                    break;
+                case ImageMeasureMode.VerticalLayout:
+                    int measuredWidth = MeasuredWidth;
+                    SetMeasuredDimension(measuredWidth, (int)(measuredWidth / AspectRatio));
+                    break;
+                case ImageMeasureMode.HorisontalLayout:
+                    int measuredHeight = MeasuredHeight;
+                    SetMeasuredDimension((int)(measuredHeight * AspectRatio), measuredHeight);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public float AspectRatio
+        {
+            get { return _aspectRatio; }
+            set
+            {
+                _aspectRatio = value; 
+                RequestLayout();
+            }
+        }
+
+        public enum ImageMeasureMode
+        {
+            Default,
+            VerticalLayout,
+            HorisontalLayout
+        }
+
+    }
+
     public class AsyncImageView : FrameLayout
     {
-        private ImageView _imageView;
+        private AspectAwareImageView _imageView;
         private ProgressBar _progressBar;
+        private AspectAwareImageView.ImageMeasureMode _usageMode;
 
         public AsyncImageView(Context context) : base(context)
         {
-            this.AddView(ImageView);
+            this.AddView(PhotoView);
             this.AddView(ProgressBar);
         }
 
@@ -310,14 +370,15 @@ namespace ResidentAppCross.Droid.Views.Sections
                 if (_progressBar == null)
                 {
                     _progressBar = new ProgressBar(Context);
-                    _progressBar.WithDimensionsMatchParent();
-                    _progressBar.ProgressDrawable = new ColorDrawable(Color.White);
+                    _progressBar.EnsureFrameLayoutParams().Gravity = GravityFlags.CenterHorizontal | GravityFlags.CenterVertical;
+                    _progressBar.WithDimensions(40);
+                    _progressBar.ProgressDrawable = new ColorDrawable(Resources.GetColor(Resource.Color.accent));
                     _progressBar.Background = new ShapeDrawable(new OvalShape())
                     {
                         Bounds = new Rect(0, 0, 20, 20),
                         Paint =
                         {
-                            Color = AppTheme.SecondaryBackgoundColor
+                            Color = Resources.GetColor(Resource.Color.primary)
                         }
                     };
                     _progressBar.Alpha = 0.8f;
@@ -327,20 +388,33 @@ namespace ResidentAppCross.Droid.Views.Sections
             set { _progressBar = value; }
         }
 
-        public ImageView ImageView
+        public AspectAwareImageView PhotoView
         {
             get
             {
                 if (_imageView == null)
                 {
-                    _imageView = new ImageView(Context).WithDimensionsWrapContent();
-                    _imageView.SetScaleType(ImageView.ScaleType.FitCenter);
-                    _imageView.SetPadding(0, 0, 0, 0);
+                    _imageView = new AspectAwareImageView(Context)
+                    {
+                        MeasureMode = UsageMode
+                    }.WithDimensionsWrapContent();
+                    _imageView.SetScaleType(UsageMode == AspectAwareImageView.ImageMeasureMode.Default ? ImageView.ScaleType.FitCenter : ImageView.ScaleType.FitXy);
+                    _imageView.WithPaddingDp(1, 1, 1, 1);
                     //_imageView.Visibility = ViewStates.Gone;;
                 }
                 return _imageView;
             }
             set { _imageView = value; }
+        }
+
+        public AspectAwareImageView.ImageMeasureMode UsageMode
+        {
+            get { return _usageMode; }
+            set
+            {
+                _usageMode = value;
+                PhotoView.MeasureMode = UsageMode;
+            }
         }
 
         public void SetImage(string src, int placeholderId)
@@ -354,15 +428,12 @@ namespace ResidentAppCross.Droid.Views.Sections
 
             ProgressBar.Alpha = 0;
 
-            var iAnimate = ImageView.Animate();
-            iAnimate.SetDuration(300);
-            iAnimate.Alpha(0);
-
+            var iAnimate = PhotoView.Animate();
             var pAnimate = ProgressBar.Animate();
+            iAnimate.SetDuration(300);
             pAnimate.SetDuration(300);
-            //animate.SetInterpolator(new AccelerateInterpolator(0.3f));
+            iAnimate.Alpha(0);
             pAnimate.Alpha(0.8f);
-           
             iAnimate.Start();
             pAnimate.Start();
 
@@ -371,18 +442,17 @@ namespace ResidentAppCross.Droid.Views.Sections
             {
                 return;
             }
-                
-            ImageView.SetImageBitmap(image);
 
-            iAnimate = ImageView.Animate();
-            iAnimate.SetDuration(300);
-            iAnimate.Alpha(1);
+            PhotoView.AspectRatio = image.Width / (float)image.Height;
+            PhotoView.SetImageBitmap(image);
 
+            iAnimate.Cancel(); pAnimate.Cancel();
+            iAnimate = PhotoView.Animate();
             pAnimate = ProgressBar.Animate();
+            iAnimate.SetDuration(300);
             pAnimate.SetDuration(300);
-            //animate.SetInterpolator(new AccelerateInterpolator(0.3f));
+            iAnimate.Alpha(1f);
             pAnimate.Alpha(0f);
-
             iAnimate.Start();
             pAnimate.Start();
 
@@ -391,23 +461,50 @@ namespace ResidentAppCross.Droid.Views.Sections
         public void SetImage(byte[] data)
         {
             ProgressBar.Alpha = 0;
-            ImageView.SetImageBitmap(data.ToBitmap());
+            var bitmap = data.ToBitmap();
+            PhotoView.AspectRatio = bitmap.Width/(float)bitmap.Height;
+            PhotoView.SetImageBitmap(bitmap);
+            RequestLayout();
         }
-    }
 
+        public void SetImage(Bitmap bitmap)
+        {
+            ProgressBar.Alpha = 0;
+            PhotoView.AspectRatio = bitmap.Width/(float)bitmap.Height;
+            PhotoView.SetImageBitmap(bitmap);
+            RequestLayout();
+        }
+
+        
+    }
 
     public static class ImageExtensions
     {
 
+        public static int MaxMemory = (int)(Runtime.GetRuntime().MaxMemory() / 1024);
+
+        // Use 1/8th of the available memory for this memory cache.
+        public static int CacheSize = MaxMemory / 8;
+
+        public static LruCache BitmapCache = new LruCache(CacheSize);
+
         public static Bitmap GetBitmapFromURL(string src)
         {
+
+            var bitmapObject = BitmapCache.Get(src);
+            if (bitmapObject != null)
+            {
+                return bitmapObject as Bitmap;
+            }
+
             try
             {
                 URL url = new URL(src);
-                HttpURLConnection connection = (HttpURLConnection)url.OpenConnection();
+                HttpURLConnection connection = (HttpURLConnection) url.OpenConnection();
                 connection.DoInput = true;
                 connection.Connect();
                 Bitmap myBitmap = BitmapFactory.DecodeStream(connection.InputStream);
+                BitmapCache.Put(src, myBitmap);
                 return myBitmap;
             }
             catch (IOException e)
@@ -419,8 +516,7 @@ namespace ResidentAppCross.Droid.Views.Sections
 
         public static Bitmap ToBitmap(this byte[] data)
         {
-            return BitmapFactory.DecodeByteArray(data, 0, data.Length, new BitmapFactory.Options { InMutable = true });
+            return BitmapFactory.DecodeByteArray(data, 0, data.Length, new BitmapFactory.Options {InMutable = true});
         }
     }
-
 }

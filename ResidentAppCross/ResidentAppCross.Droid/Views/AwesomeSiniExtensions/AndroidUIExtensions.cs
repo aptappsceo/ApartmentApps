@@ -507,6 +507,14 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             var fieldInfo = typeof (Resource.Id).GetField(str, BindingFlags.Static | BindingFlags.Public);
             return (int) fieldInfo.GetValue(null);
         }
+
+        public static int MatchingLayoutId(this Type type)
+        {
+            return type.Name.ToLowerUnderscored().AsLayoutId();
+        }
+
+        
+
     }
 
     public static class OutletExtensions
@@ -518,9 +526,6 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
         public static void LocateOutlets(this View layout, object outletContainer)
         {
-
-
-
             foreach (var propertyInfo in outletContainer.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 var outlet = propertyInfo.GetCustomAttributes(typeof (Outlet), false).FirstOrDefault() as Outlet;
