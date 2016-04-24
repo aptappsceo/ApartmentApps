@@ -2,7 +2,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="4dp"
+    android:padding="@dimen/default_section_padding"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,7 +10,6 @@
         android:id="@+id/GallerySectionEmptyContainer"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatTextView
@@ -24,16 +23,24 @@
             android:text="No Photos Attached"
             />
 
-        <View
+        <android.support.v7.widget.AppCompatButton
+            android:visibility="invisible"
+            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"
+            android:layout_height="@dimen/small_button_height"
+            android:background="@color/accent"
+            android:text="ADD PHOTO"
+            />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/AddPhotoButton1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/accent"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:layout_height="@dimen/small_button_height"
+            android:backgroundTint="@color/accent"
             android:text="ADD PHOTO"
             />
 
@@ -42,6 +49,8 @@
     <RelativeLayout
         android:id="@+id/GallerySectionGalleryContainer"
         android:layout_width="match_parent"
+        android:visibility="gone"
+
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
@@ -54,11 +63,13 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/AddPhotoButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/accent"
             android:layout_alignParentEnd="true"
-            android:alpha="0.5"
+            android:layout_width="wrap_content"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:layout_height="@dimen/small_button_height"
+            android:backgroundTint="@color/accent"
+
             android:layout_alignBottom="@+id/ImageContainer"
             android:layout_margin="4dp"
             android:text="ADD PHOTO"

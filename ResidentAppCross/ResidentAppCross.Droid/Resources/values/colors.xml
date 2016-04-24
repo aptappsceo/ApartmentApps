@@ -16,4 +16,15 @@
   <color name="window_background">#f9f9f9</color>
   <color name="primary_text">#ffffff</color>
   <color name="divider">#B6B6B6</color>
+
+  <!--300-->
+  <color name="semantic_create">#A1887F</color>
+  <color name="semantic_pause">#FFD54F</color>
+  <color name="semantic_schedule">#9575CD</color>
+  <color name="semantic_inprogress">#4FC3F7</color>
+  <color name="semantic_complete">#81C784</color>
+
+
+
+
 </resources>

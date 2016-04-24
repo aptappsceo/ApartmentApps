@@ -18,6 +18,7 @@ using MvvmCross.Platform;
 using MvvmCross.Platform.Droid.Platform;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Resources;
+using ResidentAppCross.ViewModels.Screens;
 using ZXing.Rendering;
 using BindingFlags = System.Reflection.BindingFlags;
 
@@ -219,6 +220,26 @@ namespace ResidentAppCross.Droid.Views.Sections
 
             return ContextCompat.GetDrawable(context, identifier);
         }
+
+        public static int ColorResByMaintenanceState(MaintenanceRequestStatus status)
+        {
+            switch (status)
+            {
+                case MaintenanceRequestStatus.Complete:
+                    return Resource.Color.semantic_complete;
+                case MaintenanceRequestStatus.Paused:
+                    return Resource.Color.semantic_pause;
+                case MaintenanceRequestStatus.Scheduled:
+                    return Resource.Color.semantic_schedule;
+                case MaintenanceRequestStatus.Started:
+                    return Resource.Color.semantic_inprogress;
+                case MaintenanceRequestStatus.Submitted:
+                    return Resource.Color.semantic_create;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+            }
+        }
+
     }
 
     public static class AppFonts

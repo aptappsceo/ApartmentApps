@@ -8,23 +8,18 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Support.V4.View;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AndroidHUD;
-using ApartmentApps.Client.Models;
 using Java.Util;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.Platform;
 using MvvmCross.Droid.Shared.Attributes;
 using MvvmCross.Droid.Views;
-using RecyclerViewAnimators.Adapters;
-using RecyclerViewAnimators.Animators;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels;
-using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross.Droid.Views
 {
@@ -61,95 +56,6 @@ namespace ResidentAppCross.Droid.Views
     {
 
     }
-
-    [MvxFragment(typeof(ApplicationViewModel),Resource.Id.application_host_container_primary)]
-    public class IncidentReportIndexView : ViewFragment<IncidentReportIndexViewModel>
-    {
-
-        [Outlet]
-        public RecyclerView ListContainer { get; set; }
-
-        public override void Bind()
-        {
-            base.Bind();
-
-            var adapter = new TicketIndexAdapter<IncidentIndexBindingModel>()
-            {
-                Items = ViewModel.Incidents,
-                TitleSelector = i=>i.Title
-            };
-
-            adapter.DetailsClicked += model =>
-            {
-                ViewModel.SelectedIncident = model;
-                ViewModel.OpenSelectedIncidentCommand.Execute(null);
-            };
-
-            ListContainer.SetAdapter(new AlphaInAnimationAdapter(adapter));
-            ListContainer.SetLayoutManager(new LinearLayoutManager(Context,LinearLayoutManager.Vertical,false));
-            ListContainer.SetItemAnimator(new SlideInLeftAnimator());
-
-            ViewModel.UpdateIncidentsCommand.Execute(null);
-
-        }
-
-    }
-
-    [MvxFragment(typeof(ApplicationViewModel),Resource.Id.application_host_container_primary)]
-    public class MaintenanceRequestIndexView : ViewFragment<MaintenanceRequestIndexViewModel>
-    {
-
-        [Outlet]
-        public RecyclerView ListContainer { get; set; }
-
-        public override int LayoutId => typeof (IncidentReportIndexView).MatchingLayoutId();
-
-        public override void Bind()
-        {
-            base.Bind();
-
-            var adapter = new TicketIndexAdapter<MaintenanceIndexBindingModel>()
-            {
-                Items = ViewModel.Requests,
-                TitleSelector = i=>i.UnitName,
-                SubTitleSelector = i=>i.Title,
-                DetailsSelector = i =>
-                {
-                    if (i.StatusId == "Scheduled")
-                    {
-                        return i.LatestCheckin.Comments;
-                    } else if (i.LatestCheckin == null)
-                    {
-                        return $"Submitted: {i.Comments}";
-                    }
-                    else if (string.IsNullOrEmpty(i.LatestCheckin.Comments))
-                    {
-                        return $"{i.StatusId} with no comments.";
-                    }
-                    else
-                    {
-                        return $"{i.StatusId}: {i.LatestCheckin.Comments}";
-                    }
-                },
-                DateSelector = i => i.LatestCheckin?.Date?.ToString("g") ?? i.RequestDate?.ToString("g") ?? "-"
-            };
-
-            adapter.DetailsClicked += model =>
-            {
-                ViewModel.SelectedRequest = model;
-                ViewModel.OpenSelectedRequestCommand.Execute(null);
-            };
-
-            ListContainer.SetAdapter(new AlphaInAnimationAdapter(adapter));
-            ListContainer.SetLayoutManager(new LinearLayoutManager(Context,LinearLayoutManager.Vertical,false));
-            ListContainer.SetItemAnimator(new SlideInLeftAnimator());
-
-            ViewModel.UpdateRequestsCommand.Execute(null);
-
-        }
-
-    }
-
 }
 
 /*

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,14 +13,18 @@ using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.Widget;
 using Android.Text;
 using Android.Text.Style;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using ImageViews.Rounded;
+using MvvmCross.Platform;
+using MvvmCross.Platform.Core;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Interfaces;
+using BindingFlags = System.Reflection.BindingFlags;
 using Object = Java.Lang.Object;
 
 namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
@@ -531,6 +537,56 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
                 var outlet = propertyInfo.GetCustomAttributes(typeof (Outlet), false).FirstOrDefault() as Outlet;
                 outlet?.Locate(outletContainer, propertyInfo, layout);
             }
+        }
+    }
+
+    public static class AdapterExtensions
+    {
+        private static IMvxMainThreadDispatcher _dispatcher;
+
+        public static IMvxMainThreadDispatcher Dispatcher
+        {
+            get { return _dispatcher ?? (_dispatcher = Mvx.Resolve<IMvxMainThreadDispatcher>()); }
+            set { _dispatcher = value; }
+        }
+
+        public static IDisposable BindToCollection<T>(this RecyclerView.Adapter adapter, ObservableCollection<T> c)
+        {
+            NotifyCollectionChangedEventHandler cOnCollectionChanged = (sender, args) =>
+            {
+                Dispatcher.RequestMainThreadAction(() =>
+                {
+                    switch (args.Action)
+                    {
+                        case NotifyCollectionChangedAction.Add:
+                            adapter.NotifyDataSetChanged();
+
+                            // adapter.NotifyItemInserted(args.NewStartingIndex);
+                            break;
+                        case NotifyCollectionChangedAction.Remove:
+                            adapter.NotifyDataSetChanged();
+
+                            //  adapter.NotifyItemRemoved(args.OldStartingIndex);
+                            break;
+                        case NotifyCollectionChangedAction.Replace:
+                          //  adapter.NotifyItemChanged(args.OldStartingIndex);
+                            break;
+                        case NotifyCollectionChangedAction.Move:
+                          //  adapter.NotifyItemMoved(args.OldStartingIndex, args.NewStartingIndex);
+                            break;
+                        case NotifyCollectionChangedAction.Reset:
+                            adapter.NotifyDataSetChanged();
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                });
+            };
+            c.CollectionChanged += cOnCollectionChanged;
+            return new Disposable(() =>
+            {
+                c.CollectionChanged -= cOnCollectionChanged;
+            });
         }
     }
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:padding="@dimen/default_section_padding"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello"
+        android:layout_gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/secondary_text_body" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_weight="1"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="World"
+        android:layout_height="@dimen/small_button_height"
+        android:layout_gravity="center_vertical"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/Button"
+        android:layout_width="wrap_content"
+        android:text="World"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:layout_height="@dimen/small_button_height"
+        android:includeFontPadding="false"
+        android:layout_gravity="center_vertical"/>
+
+</LinearLayout>

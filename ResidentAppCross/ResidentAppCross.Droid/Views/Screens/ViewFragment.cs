@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
@@ -11,6 +12,7 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.App;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using MvvmCross.Binding.Droid.BindingContext;
@@ -61,6 +63,7 @@ namespace ResidentAppCross.Droid.Views
                     {
                     }.WithDimensionsMatchParent().AddTo(AvatarViewContainer);
                     _avatarView.PhotoView.IsOval = true;
+                    _avatarView.PhotoView.SetScaleType(ImageView.ScaleType.CenterCrop);
                 }
                 return _avatarView;
             }
@@ -73,7 +76,7 @@ namespace ResidentAppCross.Droid.Views
             set
             {
                 _avatarUrl = value;
-                if (_avatarUrl != null) AvatarView.SetImage(value, new ColorDrawable(Color.White));
+                //if (_avatarUrl != null) AvatarView.SetImage(value, new ColorDrawable(Color.White));
             }
         }
     }
@@ -88,6 +91,112 @@ namespace ResidentAppCross.Droid.Views
 
         [Outlet]
         public ImageView IconView { get; set; }
+    }
+
+    public class ActionBarSection : FragmentSection
+    {
+        [Outlet]
+        public ViewGroup ButtonContainer { get; set; }
+
+        public void SetItems(params ActionBarItem[] items)
+        {
+            Items = items;
+            ButtonContainer.RemoveAllViews();
+            foreach (var item in items)
+            {
+                var item1 = item;
+                var buttonItem = new AppCompatButton(Context)
+                {
+                    Hint = "Hint?",
+                    Text = item.Title
+                }.WithLinearWeight(1).WithHeightWrapContent().AddTo(ButtonContainer);
+                buttonItem.SupportBackgroundTintList = ColorStateList.ValueOf(Context.Resources.GetColor(Resource.Color.accent));
+                item.Button = buttonItem;
+                buttonItem.Click += (sender, args) => item1.Action?.Invoke();
+            }
+            Update();
+        }
+
+        public void Update()
+        {
+            foreach (var item in Items)
+            {
+                if (item.IsAvailable?.Invoke() ?? true)
+                {
+                    item.Button.Visibility = ViewStates.Visible;
+                }
+                else
+                {
+                    item.Button.Visibility = ViewStates.Gone;
+                }
+            }
+        }
+
+        public ActionBarItem[] Items { get; private set; }
+
+
+        public class ActionBarItem
+        {
+            public string Title { get; set; }
+            public Action Action { get; set; }
+            public Func<bool> IsAvailable { get; set; }
+            public Button Button { get; set; }
+        }
+
+    }
+
+    public class RadioSection : FragmentSection
+    {
+
+        [Outlet]
+        public TextView Label { get; set; }
+
+        [Outlet]
+        public RadioGroup RadioContainer { get; set; }
+
+        public void BindToList<T>(IList<T> items, Func<T, string> titleSelector, Action<T> selectionChanged)
+        {
+            RadioContainer.RemoveAllViews();
+            for (int index = 0; index < items.Count; index++)
+            {
+                var item = items[index];
+                var uiItem = new AppCompatRadioButton(Context)
+                {
+                    Id = index,
+                    Text = titleSelector?.Invoke(item),
+                    Checked = index == 0
+                }
+                    .WithWidthMatchParent()
+                    .WithHeightWrapContent()
+                    .AddTo(RadioContainer);
+            }
+
+            RadioContainer.CheckedChange += (sender, args) =>
+            {
+                selectionChanged?.Invoke(items[args.CheckedId]);
+            };
+        }
+    }
+
+    public class LabelButtonSection : FragmentSection
+    {
+        [Outlet]
+        public TextView Label { get; set; }
+
+        [Outlet]
+        public Button Button { get; set; }
+    }
+
+    public class SwitchSection : FragmentSection
+    {
+        [Outlet]
+        public TextView Label { get; set; }
+
+        [Outlet]
+        public TextView SubtitleLabel { get; set; }
+
+        [Outlet]
+        public SwitchCompat Switch { get; set; }
     }
 
     public class TicketStatusSection : FragmentSection
@@ -140,6 +249,8 @@ namespace ResidentAppCross.Droid.Views
     {
         private List<FragmentSection> _content;
         private ViewGroup _sectionContainer;
+
+        public static int DefaultLayoutId = Resource.Layout.default_section_view;
 
         public ViewGroup SectionContainer
         {
@@ -233,10 +344,7 @@ namespace ResidentAppCross.Droid.Views
 
         public ViewFragment()
         {
-            this.OnViewModelEvent<TaskStarted>(evt => this.SetTaskRunning(evt.Label));
-            this.OnViewModelEvent<TaskComplete>(evt => this.SetTaskComplete(evt.ShouldPrompt, evt.Label, evt.OnPrompted));
-            this.OnViewModelEvent<TaskFailed>(evt => this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted));
-            this.OnViewModelEvent<TaskProgressUpdated>(evt => this.SetTaskProgress(evt.ShouldPrompt, evt.Label));
+           
         }
 
         private IMvxMessenger _eventAggregator;
@@ -266,6 +374,15 @@ namespace ResidentAppCross.Droid.Views
 
         public virtual int LayoutId => GetType().MatchingLayoutId();
 
+        public override void OnStart()
+        {
+            base.OnStart();
+//            this.OnViewModelEvent<TaskStarted>(evt => this.SetTaskRunning(evt.Label));
+//            this.OnViewModelEvent<TaskComplete>(evt => this.SetTaskComplete(evt.ShouldPrompt, evt.Label, evt.OnPrompted));
+//            this.OnViewModelEvent<TaskFailed>(evt => this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted));
+//            this.OnViewModelEvent<TaskProgressUpdated>(evt => this.SetTaskProgress(evt.ShouldPrompt, evt.Label));
+        }
+
         public override void OnStop()
         {
             base.OnStop();
@@ -277,6 +394,8 @@ namespace ResidentAppCross.Droid.Views
             }
             this.DisposeContainer();
         }
+
+
 
         public virtual void UnBind()
         {

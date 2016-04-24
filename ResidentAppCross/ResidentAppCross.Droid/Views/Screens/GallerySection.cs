@@ -2,18 +2,31 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
+using Android.Gms.Maps;
 using Android.Graphics;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using MvvmCross.Platform;
 using RecyclerViewAnimators.Adapters;
 using RecyclerViewAnimators.Animators;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
+using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
 
 namespace ResidentAppCross.Droid.Views
 {
+
+    public class MapSection : FragmentSection
+    {
+        [Outlet]
+        public MapView Map { get; set; }
+        [Outlet]
+        public TextView Label { get; set; }
+    }
+
     public class GallerySection : FragmentSection
     {
         [Outlet]
@@ -52,6 +65,29 @@ namespace ResidentAppCross.Droid.Views
         {
             Adapter.Items = vm?.RawImages;
             UpdateContainers();
+
+            AddPhotoButton1.Click += async (sender, args) =>
+            {
+                await AddPhoto();
+            };
+
+            AddPhotoButton2.Click += async (sender, args) =>
+            {
+                await AddPhoto();
+            };
+            vm.RawImages.CollectionChanged += (sender, args) => View.Post(UpdateContainers);
+
+        }
+
+        public async Task AddPhoto()
+        {
+            var service = Mvx.Resolve<IDialogService>();
+            var photo = await service.OpenImageDialog();
+            if (photo != null)
+            {
+                Adapter.Items.Add(new ImageBundleItemViewModel() { Data = photo });
+            }
+            UpdateContainers();
         }
 
         private void UpdateContainers()
@@ -80,38 +116,9 @@ namespace ResidentAppCross.Droid.Views
                 set
                 {
                     _items = value;
-                    if (_items != null)
-                    {
-                        _items.CollectionChanged += OnItemsOnCollectionChanged;
-                    }
-                    NotifyDataSetChanged();
+                    this.BindToCollection(_items);
                 }
             }
-
-            private void OnItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
-            {
-                switch (args.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        this.NotifyItemInserted(args.NewStartingIndex);
-                        break;
-                    case NotifyCollectionChangedAction.Remove:
-                        NotifyItemRemoved(args.OldStartingIndex);
-                        break;
-                    case NotifyCollectionChangedAction.Replace:
-                        NotifyItemChanged(args.OldStartingIndex);
-                        break;
-                    case NotifyCollectionChangedAction.Move:
-                        NotifyItemMoved(args.OldStartingIndex, args.NewStartingIndex);
-                        break;
-                    case NotifyCollectionChangedAction.Reset:
-                        NotifyDataSetChanged();
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-
 
             //public int? ItemHeight;
 

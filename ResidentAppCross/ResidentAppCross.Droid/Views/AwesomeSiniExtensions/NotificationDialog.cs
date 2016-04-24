@@ -1,17 +1,113 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using RecyclerViewAnimators.Animators;
 using ResidentAppCross.Droid.Views.Sections;
+using ResidentAppCross.Extensions;
 
 namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 {
+    public class SearchDialog<T> : DialogFragment
+    {
+        private IList<T> _items;
+
+        [Outlet]
+        public EditText SearchInput { get; set; }
+        [Outlet]
+        public RecyclerView SearchOutput { get; set; }
+
+        public Func<T, string> TitleSelector { get; set; }
+        public Action<T> OnItemSelected { get; set; }
+        private ObservableCollection<T> _filteredItems;
+
+        public IList<T> Items
+        {
+            get { return _items ?? (_items = new List<T>()); }
+            set { _items = value; }
+        }
+
+        public ObservableCollection<T> FilteredItems
+        {
+            get { return _filteredItems ?? (_filteredItems = new ObservableCollection<T>()); }
+            set { _filteredItems = value; }
+        }
+
+        public override void OnStart()
+        {
+            base.OnStart();
+            Dialog?.Window?.SetBackgroundDrawable(new ColorDrawable(Color.Transparent));
+            Dialog?.Window?.SetLayout(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+        }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            SetStyle(DialogFragmentStyle.NoFrame, Android.Resource.Style.ThemeDeviceDefaultDialog);
+        }
+
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            CurrentContext = inflater.Context;
+            var view = inflater.Inflate(Resource.Layout.search_dialog_layout, container, false);
+            view.LocateOutlets(this);
+            InitializeUI();
+            return view;
+        }
+
+        private void InitializeUI()
+        {
+
+            var adapter = new IconTitleBadgeListAdapter<T>()
+            {
+                TitleSelector = TitleSelector
+            };
+
+            adapter.Items = FilteredItems;
+            adapter.BindToCollection(FilteredItems);
+
+            adapter.ItemSelected += obj =>
+            {
+                OnItemSelected?.Invoke(obj);
+                Dismiss();
+            };
+
+
+            SearchOutput.SetLayoutManager(new LinearLayoutManager(CurrentContext,LinearLayoutManager.Vertical, false));
+            SearchOutput.SetItemAnimator(new SlideInLeftAnimator());
+            SearchOutput.SetAdapter(adapter);
+            SearchInput.TextChanged += (sender, args) => UpdateSearch();
+            UpdateSearch();
+
+        }
+
+        public void UpdateSearch()
+        {
+            FilteredItems.Clear();
+            var query = SearchInput.Text.ToLowerInvariant();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                FilteredItems.AddRange(Items.Where(t => TitleSelector(t).ToLowerInvariant().Contains(query)));
+            }
+            else
+            {
+                FilteredItems.AddRange(Items);
+            }
+
+        }
+
+        public Context CurrentContext { get; set; }
+    }
+
     public class NotificationDialog : DialogFragment
     {
         private RelativeLayout _dialogContainer;
@@ -395,6 +491,8 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
                 {
                     case NotificationDialogMode.Progress:
                         return Resource.Drawable.L_Gear;
+                    case NotificationDialogMode.Failed:
+                        return Resource.Drawable.L_Ok;
                     case NotificationDialogMode.Complete:
                         return Resource.Drawable.L_Ok;
                     default:

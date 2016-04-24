@@ -360,7 +360,13 @@ namespace ResidentAppCross.Droid.Views
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            return new ImageTextCounterListItemViewHolder(new ImageTextCounterListItem(parent.Context));
+            var imageTextCounterListItem = new ImageTextCounterListItem(parent.Context);
+            var imageTextCounterListItemViewHolder = new ImageTextCounterListItemViewHolder(imageTextCounterListItem);
+            imageTextCounterListItem.Click += (sender, args) =>
+            {
+                ItemSelected?.Invoke(Items[imageTextCounterListItemViewHolder.AdapterPosition]);
+            };
+            return imageTextCounterListItemViewHolder;
         }
 
         public override int ItemCount => Items.Count;
@@ -387,6 +393,8 @@ namespace ResidentAppCross.Droid.Views
         public Func<T,string> DetailsSelector { get; set; }
         public Func<T,string> SubTitleSelector { get; set; }
         public Func<T,string> DateSelector { get; set; }
+        public Func<T,Color> ColorSelector { get; set; }
+        public Func<T,int> ColorResourceSelector { get; set; }
 
         public ObservableCollection<T> Items
         {
@@ -394,31 +402,7 @@ namespace ResidentAppCross.Droid.Views
             set
             {
                 _items = value;
-
-                _items.CollectionChanged += (sender, args) =>
-                {
-                    switch (args.Action)
-                    {
-                        case NotifyCollectionChangedAction.Add:
-                            this.NotifyItemInserted(args.NewStartingIndex);
-                            break;
-                        case NotifyCollectionChangedAction.Remove:
-                            NotifyItemRemoved(args.OldStartingIndex);
-                            break;
-                        case NotifyCollectionChangedAction.Replace:
-                            NotifyItemChanged(args.OldStartingIndex);
-                            break;
-                        case NotifyCollectionChangedAction.Move:
-                            NotifyItemMoved(args.OldStartingIndex,args.NewStartingIndex);
-                            break;
-                        case NotifyCollectionChangedAction.Reset:
-                            NotifyDataSetChanged();
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-
-                };
+                this.BindToCollection(Items);
             }
         }
 
@@ -430,6 +414,24 @@ namespace ResidentAppCross.Droid.Views
             holder.TypeLabel.Text = SubTitleSelector?.Invoke(item) ?? "Subtitle";
             holder.DateLabel.Text = DateSelector?.Invoke(item) ?? "00/00/00 00:00 AM";
             holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
+
+
+            if (ColorSelector != null)
+            {
+            holder.IconView.SetBackgroundColor(ColorSelector(item));
+            holder.TopLine.SetBackgroundColor(ColorSelector(item));
+                
+            }
+            else if (ColorResourceSelector != null)
+            {
+                holder.IconView.SetBackgroundResource(ColorResourceSelector(item));
+                holder.TopLine.SetBackgroundResource(ColorResourceSelector(item));
+            }
+            else
+            {
+                holder.IconView.SetBackgroundColor(Color.DarkSlateGray);
+                holder.TopLine.SetBackgroundColor(Color.DarkSlateGray);
+            }
         }
 
         public event Action<T> DetailsClicked;
@@ -461,32 +463,7 @@ namespace ResidentAppCross.Droid.Views
             set
             {
                 _items = value;
-                _items.CollectionChanged += OnItemsOnCollectionChanged;
-
-            }
-        }
-
-        private void OnItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
-        {
-            switch (args.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    this.NotifyItemInserted(args.NewStartingIndex);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    NotifyItemRemoved(args.OldStartingIndex);
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    NotifyItemChanged(args.OldStartingIndex);
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    NotifyItemMoved(args.OldStartingIndex, args.NewStartingIndex);
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    NotifyDataSetChanged();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                this.BindToCollection(_items);
             }
         }
 
@@ -496,28 +473,47 @@ namespace ResidentAppCross.Droid.Views
             holder.TitleLabel.Text = TitleSelector?.Invoke(item);
             holder.SubtitleLabel.Text = SubtitleSelector?.Invoke(item);
 
-            holder.IconView.Visibility = ViewStates.Gone;
-
+            //holder.IconView.Visibility = ViewStates.Gone;
+            holder.PipeIconView.Visibility = ViewStates.Gone;
+            holder.IconView.MutatesBackground = false;
             if (Items.Count == 1)
             {
-                holder.PipeIconView.Visibility = ViewStates.Gone;
+                holder.IconView.SetBackgroundColor(Color.Transparent);
+                //holder.IconView.SetImageResource();
             }
             else if (position == 0)
             {
-                holder.PipeIconView.Visibility = ViewStates.Visible;
-                holder.PipeIconView.SetImageResource(Resource.Drawable.TimelineTop);
-
+                holder.IconView.SetBackgroundResource(Resource.Drawable.TimelineTop);
             }
             else if (position == Items.Count-1)
             {
-                holder.PipeIconView.Visibility = ViewStates.Visible;
-                holder.PipeIconView.SetImageResource(Resource.Drawable.TimelineBottom);
+                holder.IconView.SetBackgroundResource(Resource.Drawable.TimelineBottom);
             }
             else
             {
-                holder.PipeIconView.Visibility = ViewStates.Visible;
-                holder.PipeIconView.SetImageResource(Resource.Drawable.TimelineMid);
+                holder.IconView.SetBackgroundResource(Resource.Drawable.TimelineMid);
             }
+
+            //            if (Items.Count == 1)
+            //            {
+            //                holder.PipeIconView.Visibility = ViewStates.Gone;
+            //            }
+            //            else if (position == 0)
+            //            {
+            //                holder.PipeIconView.Visibility = ViewStates.Visible;
+            //                holder.PipeIconView.SetBackgroundResource(Resource.Drawable.TimelineTop);
+            //
+            //            }
+            //            else if (position == Items.Count-1)
+            //            {
+            //                holder.PipeIconView.Visibility = ViewStates.Visible;
+            //                holder.PipeIconView.SetBackgroundResource(Resource.Drawable.TimelineBottom);
+            //            }
+            //            else
+            //            {
+            //                holder.PipeIconView.Visibility = ViewStates.Visible;
+            //                holder.PipeIconView.SetBackgroundResource(Resource.Drawable.TimelineMid);
+            //            }
 
             //      holder.SubtitleLabel.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
         }
@@ -552,6 +548,9 @@ namespace ResidentAppCross.Droid.Views
     {
         [Outlet]
         public AppCompatImageView IconView { get; set; }
+
+        [Outlet]
+        public View TopLine { get; set; }
 
         [Outlet]
         public AppCompatTextView TitleLabel { get; set; }

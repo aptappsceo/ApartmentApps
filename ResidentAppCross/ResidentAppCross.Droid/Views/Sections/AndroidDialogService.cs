@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
 using MvvmCross.Platform;
+using MvvmCross.Platform.Core;
 using MvvmCross.Platform.Droid.Platform;
 using MvvmCross.Plugins.PictureChooser;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Services;
+using Square.OkHttp;
 
 namespace ResidentAppCross.Droid.Views.Sections
 {
@@ -25,6 +28,8 @@ namespace ResidentAppCross.Droid.Views.Sections
             set { _pictureChooserTask = value; }
         }
 
+        public IMvxMainThreadDispatcher Dispatcher => Mvx.Resolve<IMvxMainThreadDispatcher>();
+
         public AndroidDialogService(Application droidApp)
         {
             _droidApp = droidApp;
@@ -33,7 +38,41 @@ namespace ResidentAppCross.Droid.Views.Sections
         public Task<T> OpenSearchableTableSelectionDialog<T>(IList<T> items, string title, Func<T, string> itemTitleSelector,
             Func<T, string> itemSubtitleSelector = null, object arg = null)
         {
-            throw new NotImplementedException();
+
+            return Task.Factory.StartNew(() =>
+            {
+
+                T result = default(T);
+
+
+                ManualResetEvent waitForCompleteEvent = new ManualResetEvent(false);
+
+                Dispatcher.RequestMainThreadAction(() => { 
+
+                    var frag = new SearchDialog<T>()
+                    {
+                        Items = items,
+                        TitleSelector = itemTitleSelector,
+                    };
+
+                    frag.OnItemSelected += obj =>
+                    {
+                        result = obj;
+                        waitForCompleteEvent.Set();
+                    };
+    
+                    frag.Show(CurrentTopActivity.FragmentManager, "Search Dialog");
+
+
+                });
+
+                waitForCompleteEvent.WaitOne();
+                return result;
+
+            });
+
+
+
         }
 
         public Task<DateTime?> OpenDateTimeDialog(string title)

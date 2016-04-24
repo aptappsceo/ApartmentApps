@@ -6,7 +6,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:background="@color/window_background"
+        android:backgroundTint="@android:color/white"
         android:layout_height="wrap_content"
         android:id="@+id/cv"
         card_view:cardUseCompatPadding="true"
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:background="@color/accent"
+                android:background="@color/semantic_schedule"
                 android:layout_height="2dp">
             </View>
 
@@ -47,7 +47,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="16dp"
                 android:layout_centerHorizontal="true"
-                android:background="@color/accent"
+                android:background="@color/semantic_schedule"
                 android:layout_height="44dp">
 
                 <android.support.v7.widget.AppCompatImageView
@@ -123,15 +123,16 @@
 
             <android.support.v7.widget.AppCompatButton
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
+                android:layout_height="@dimen/small_button_height"
                 android:id="@+id/DetailsButton"
-                android:background="@color/secondary_text_body"
+                android:backgroundTint="@color/secondary_text_body"
                 android:textColor="@color/primary_text"
                 android:layout_alignParentEnd="true"
                 android:text="MORE"
                 android:layout_marginBottom="8dp"
                 android:includeFontPadding="false"
-                android:padding="0dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:layout_below="@+id/DetailsLabel"
                 android:layout_marginEnd="16dp"
                 />

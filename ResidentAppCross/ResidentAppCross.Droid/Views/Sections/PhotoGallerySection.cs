@@ -397,8 +397,8 @@ namespace ResidentAppCross.Droid.Views.Sections
                     _imageView = new AspectAwareImageView(Context)
                     {
                         MeasureMode = UsageMode
-                    }.WithDimensionsWrapContent();
-                    _imageView.SetScaleType(UsageMode == AspectAwareImageView.ImageMeasureMode.Default ? ImageView.ScaleType.FitCenter : ImageView.ScaleType.FitXy);
+                    }.WithDimensionsMatchParent();
+                    _imageView.SetScaleType(ImageView.ScaleType.FitXy);
                     _imageView.WithPaddingDp(1, 1, 1, 1);
                     //_imageView.Visibility = ViewStates.Gone;;
                 }
@@ -460,11 +460,7 @@ namespace ResidentAppCross.Droid.Views.Sections
 
         public void SetImage(byte[] data)
         {
-            ProgressBar.Alpha = 0;
-            var bitmap = data.ToBitmap();
-            PhotoView.AspectRatio = bitmap.Width/(float)bitmap.Height;
-            PhotoView.SetImageBitmap(bitmap);
-            RequestLayout();
+            SetImage(data.ToBitmap());
         }
 
         public void SetImage(Bitmap bitmap)
@@ -484,7 +480,7 @@ namespace ResidentAppCross.Droid.Views.Sections
         public static int MaxMemory = (int)(Runtime.GetRuntime().MaxMemory() / 1024);
 
         // Use 1/8th of the available memory for this memory cache.
-        public static int CacheSize = MaxMemory / 6;
+        public static int CacheSize = MaxMemory / 7;
 
         public static LruCache BitmapCache = new LruCache(CacheSize);
 
@@ -520,3 +516,5 @@ namespace ResidentAppCross.Droid.Views.Sections
         }
     }
 }
+
+
