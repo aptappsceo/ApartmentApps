@@ -18,7 +18,7 @@ namespace ApartmentApps.Api
     {
         string UploadPhoto(byte[] data, string photoKey);
         string GetPhotoUrl(string filename);
-        IEnumerable<ImageReference> GetImages(Guid groupId);
+        IEnumerable<string> GetImages(Guid groupId);
     }
 
     public class BlobStorageService : IBlobStorageService
@@ -74,15 +74,15 @@ namespace ApartmentApps.Api
 
         }
 
-        public IEnumerable<ImageReference> GetImages(Guid groupId)
+        public IEnumerable<string> GetImages(Guid groupId)
         {
             var imageReferences = _context.ImageReferences.Where(r => r.GroupId == groupId).ToList();
             foreach (var reference in imageReferences)
             {
-                reference.Url = GetPhotoUrl(reference.Url); //This call replaces RELATIVE url with ABSOLUTE url. ( STORAGE SERVICE + IMAGE URL)
+                yield return GetPhotoUrl(reference.Url); //This call replaces RELATIVE url with ABSOLUTE url. ( STORAGE SERVICE + IMAGE URL)
                                                             //This is done to make URLs independent from the service, which is used to store them.                            
                                                             //It needs some cleanup later maybe
-                yield return reference;
+      
             }
         }
         public string GetPhotoUrl(string filename)

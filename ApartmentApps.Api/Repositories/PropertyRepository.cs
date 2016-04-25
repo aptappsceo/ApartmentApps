@@ -44,6 +44,10 @@ namespace ApartmentApps.Api
             }
         }
 
+        public void Save()
+        {
+            Context.SaveChanges();
+        }
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
         {
             return GetAll().Where(predicate);
@@ -68,9 +72,14 @@ namespace ApartmentApps.Api
         public TEntity Find(object id)
         {
             var propertyId = UserContext.PropertyId;
-            var result = Context.Set<TEntity>().Find(id);
-            if (propertyId != result.PropertyId) return null;
-            return result;
+            if (id != null)
+            {
+                var result = Context.Set<TEntity>().Find(id);
+
+                if (propertyId != result.PropertyId) return null;
+                return result;
+            }
+            return null;
         }
 
         public int Count()

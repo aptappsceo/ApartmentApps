@@ -5,8 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api;
+using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
 using Ninject.Web.Common;
@@ -15,10 +18,25 @@ namespace ApartmentApps.IoC
 {
     public static class Register
     {
+        public static void RegisterMappable<TModel, TViewModel,TService>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel, TViewModel>
+        {
+            
+           
+            kernel.Bind< IService,
+                IMapper < TModel, TViewModel >,
+                StandardCrudService <TModel, TViewModel>>()
+                .To<TService>().InRequestScope();
+
+            //kernel.Bind<IMapper<TModel, TViewModel>>().To<TService>().InRequestScope();
+                //.ToMethod(_ => _.<StandardCrudService<TModel, TViewModel>>())
+                //.InRequestScope();
+        }
         public static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<Property>().ToMethod(_ => kernel.Get<IUserContext>().CurrentUser.Property).InRequestScope();
             kernel.Bind<PropertyContext>().ToSelf().InRequestScope();
 
+     
             kernel.Bind<IRepository<MaitenanceRequestType>>()
                 .To<BaseRepository<MaitenanceRequestType>>()
                 .InRequestScope();
@@ -33,7 +51,7 @@ namespace ApartmentApps.IoC
 
             kernel.Bind<IRepository<Building>>().To<PropertyRepository<Building>>().InRequestScope();
             kernel.Bind<IRepository<Unit>>().To<UnitRepository>().InRequestScope();
-            kernel.Bind<IRepository<Tenant>>().To<PropertyRepository<Tenant>>().InRequestScope();
+          
             kernel.Bind<IRepository<MaitenanceRequest>>().To<MaintenanceRepository>().InRequestScope();
             kernel.Bind<IRepository<MaintenanceRequestCheckin>>()
                 .To<PropertyRepository<MaintenanceRequestCheckin>>()
@@ -64,6 +82,11 @@ namespace ApartmentApps.IoC
             kernel.Bind<DbContext>().ToMethod(_ => _.Kernel.Get<ApplicationDbContext>()).InRequestScope();
             kernel.Bind<IFeedSerivce>().To<FeedSerivce>().InRequestScope();
 
+            kernel.RegisterMappable<Unit, UnitViewModel, UnitService>();
+            kernel.RegisterMappable<Building, BuildingViewModel, BuildingService>();
+            kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService>();
+            kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService>();
+            kernel.RegisterMappable<IncidentReport, IncidentIndexBindingModel, CourtesyService>();
         }
     }
 }

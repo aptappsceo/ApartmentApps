@@ -7,18 +7,25 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
+    public class BuildingsController : CrudController<BuildingViewModel,Building>
+    {
+        public BuildingsController(IRepository<Building> repository, StandardCrudService<Building, BuildingViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+        {
+        }
+    }
     [Authorize(Roles = "PropertyAdmin")]
-    public class BuildingsController : AAController
+    public class Buildings2Controller : AAController
     {
        
 
         // GET: /Buildings/
-        public BuildingsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public Buildings2Controller(PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
         }
 

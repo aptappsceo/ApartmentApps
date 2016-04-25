@@ -55,6 +55,11 @@ namespace ApartmentApps.Data.Repository
             return GetAll().Count();
         }
 
+        public void Save()
+        {
+            _dbContext.SaveChanges();
+        }
+
         public IEnumerator<TEntity> GetEnumerator()
         {
             return GetAll().GetEnumerator();

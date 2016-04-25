@@ -88,27 +88,27 @@
             <div class="ibox-content">
 
                 <div>
-                    <div class="feed-activity-list">
-                        @foreach (var item in Model.FeedItems)
-                        {
-                            <div class="feed-element">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="@item.User.ImageThumbnailUrl">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">@item.CreatedOn.ToShortDateString()</small>
-                                    <strong>@item.User.FirstName @item.User.LastName</strong> @item.Description <br>
-                                    <small class="text-muted">@Html.Timeago(item.CreatedOn)</small>
-                                    @if (!string.IsNullOrEmpty(item.Message))
-                                    {
-                                        <div class="well">
-                                            @item.Message
-                                        </div>
-                                    }
+                            <div class="feed-activity-list">
+                                @foreach (var item in Model.FeedItems)
+                                {
+                                    <div class="feed-element">
+                                        <a href="profile.html" class="pull-left">
+                                            <img alt="image" class="img-circle" src="@item.User.ImageThumbnailUrl">
+                                        </a>
+                                        <div class="media-body ">
+                                            <small class="pull-right">@item.CreatedOn.ToShortDateString()</small>
+                                            <strong>@item.User.FirstName @item.User.LastName</strong> @item.Description <br>
+                                            <small class="text-muted">@Html.Timeago(item.CreatedOn)</small>
+                                            @if (!string.IsNullOrEmpty(item.Message))
+                                            {
+                                                <div class="well">
+                                                    @item.Message
+                                                </div>
+                                            }
                                  
-                                </div>
-                            </div>
-                        }
+                                        </div>
+                                    </div>
+                                }
                        
                         @*<div class="feed-element">
                             <a href="profile.html" class="pull-left">

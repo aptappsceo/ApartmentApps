@@ -1,19 +1,50 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api
 {
-    public class MaintenanceService : IMaintenanceService
+ 
+   
+    public class MaintenanceService : StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> ,IMaintenanceService
     {
+        public override void ToModel(MaintenanceRequestViewModel viewModel, MaitenanceRequest model)
+        {
+
+        }
+
+        public override void ToViewModel(MaitenanceRequest model, MaintenanceRequestViewModel viewModel)
+        {
+            viewModel.Title = model.MaitenanceRequestType.Name;
+            viewModel.RequestDate = model.SubmissionDate;
+            viewModel.Comments = model.Message;
+            viewModel.SubmissionBy = UserMapper.ToViewModel(model.User);
+            viewModel.StatusId = model.StatusId;
+            viewModel.Id = model.Id;
+            viewModel.UnitName = model.Unit?.Name;
+            viewModel.BuildingName = model.Unit?.Building?.Name;
+            viewModel.LatestCheckin = model.LatestCheckin?.ToMaintenanceCheckinBindingModel(_blobStorageService);
+            viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(_blobStorageService));
+            //if (viewModel.LatestCheckin != null)
+            //{
+            //    viewModel.MainImage = model.Message.T
+            //} 
+        }
+
+        public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
         public PropertyContext Context { get; set; }
 
         private IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
-        public MaintenanceService(IBlobStorageService blobStorageService, PropertyContext context, IUserContext userContext)
+        public MaintenanceService(IMapper<ApplicationUser, UserBindingModel> userMapper,IBlobStorageService blobStorageService, PropertyContext context, IUserContext userContext) : base(context.MaitenanceRequests)
         {
+            UserMapper = userMapper;
             Context = context;
             _blobStorageService = blobStorageService;
             _userContext = userContext;
@@ -38,8 +69,8 @@ namespace ApartmentApps.Api
         
             if (maitenanceRequest.UnitId == 0)
             {
-                if (_userContext.CurrentUser.Tenant?.UnitId != null)
-                    maitenanceRequest.UnitId = _userContext.CurrentUser.Tenant.UnitId.Value;
+                if (_userContext.CurrentUser?.UnitId != null)
+                    maitenanceRequest.UnitId = _userContext.CurrentUser.UnitId.Value;
             }
             if (maitenanceRequest.UnitId == 0)
                 maitenanceRequest.UnitId = null;

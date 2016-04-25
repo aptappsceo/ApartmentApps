@@ -10,7 +10,8 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class Unit
+
+    public partial class Unit 
     {
         private Building _building;
         

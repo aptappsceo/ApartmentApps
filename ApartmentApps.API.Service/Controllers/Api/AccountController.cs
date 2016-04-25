@@ -375,7 +375,7 @@ namespace ApartmentApps.API.Service.Controllers
             var user = Context.Users.FirstOrDefault(p => p.PhoneNumber == model.PhoneNumber || p.Email == model.Email);
             if (user != null && model.Password == model.ConfirmPassword)
             {
-                var result = await UserManager.ChangePasswordAsync(user.Id, "temp", model.Password);
+                var result = await UserManager.ChangePasswordAsync(user.Id, "Temp1234!", model.Password);
                 if (result.Succeeded)
                 {
                     return Ok();

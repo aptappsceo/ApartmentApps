@@ -12,7 +12,7 @@ namespace ApartmentApps.Api
 
         public override IQueryable<MaitenanceRequest> Includes(IDbSet<MaitenanceRequest> set)
         {
-            return set.Include(p => p.User).Include(p=>p.MaitenanceRequestType);
+            return set.Include(p => p.User).Include(p=>p.MaitenanceRequestType).Include(p=>p.Unit);
         }
     }
 }

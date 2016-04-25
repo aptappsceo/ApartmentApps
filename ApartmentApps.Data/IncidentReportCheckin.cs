@@ -7,8 +7,7 @@ namespace ApartmentApps.Data
 {
     public class IncidentReportCheckin : PropertyEntity, IImageContainer, IFeedItem
     {
-        [Key]
-        public int Id { get; set; }
+       
         public string OfficerId { get; set; }
 
         [ForeignKey("OfficerId")]

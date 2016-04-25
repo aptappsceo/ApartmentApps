@@ -271,6 +271,7 @@
     <Compile Include="Controllers\Api\NotifiationsController.cs" />
     <Compile Include="Controllers\Api\RegisterController.cs" />
     <Compile Include="Controllers\Api\LookupsController.cs" />
+    <Compile Include="Controllers\Api\VersionController.cs" />
     <Compile Include="Controllers\MobileClientViewApi\GeneralViewsController.cs" />
     <Compile Include="DateUtil.cs" />
     <Compile Include="Global.asax.cs">

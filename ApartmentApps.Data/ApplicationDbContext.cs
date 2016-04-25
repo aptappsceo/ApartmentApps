@@ -12,7 +12,6 @@ namespace ApartmentApps.Data
         public virtual IDbSet<ImageReference> ImageReferences { get; set; }
         public virtual IDbSet<Building> Buildings { get; set; }
         public virtual IDbSet<Unit> Units { get; set; }
-        public virtual IDbSet<Tenant> Tenants { get; set; }
         public virtual IDbSet<MaitenanceRequest> MaitenanceRequests { get; set; }
         public virtual IDbSet<MaintenanceRequestCheckin> MaintenanceRequestCheckins { get; set; }
         public virtual IDbSet<MaitenanceRequestType> MaitenanceRequestTypes { get; set; }
@@ -28,6 +27,7 @@ namespace ApartmentApps.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             //modelBuilder.Entity<Unit>().Property(p => p.Latitude).HasPrecision(9, 6);
             //modelBuilder.Entity<Unit>().Property(p => p.Longitude).HasPrecision(9, 6);
             //modelBuilder.Entity<CourtesyOfficerLocation>().Property(p => p.Latitude).HasPrecision(9, 6);
@@ -37,6 +37,7 @@ namespace ApartmentApps.Data
         public ApplicationDbContext()
             : base("ApplicationDbContext", throwIfV1Schema: false)
         {
+            
         }
 
         public static ApplicationDbContext Create()

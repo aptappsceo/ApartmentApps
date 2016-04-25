@@ -19,8 +19,6 @@ namespace ApartmentApps.Data
 
         public string ImageThumbnailUrl { get; set; }
 
-        public virtual Tenant Tenant { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -29,6 +27,25 @@ namespace ApartmentApps.Data
 
         [ForeignKey("PropertyId")]
         public virtual Property Property { get; set; }
+
+        public int? UnitId { get; set; }
+
+        [ForeignKey("UnitId")]
+        public virtual Unit Unit { get; set; }
+
+        public string ThirdPartyId { get; set; }
+
+        public string MiddleName { get; set; }
+
+        public string Address { get; set; }
+
+        public string City { get; set; }
+
+        public string State { get; set; }
+
+        public string PostalCode { get; set; }
+
+        public string Gender { get; set; }
 
         [NotMapped]
         public TimeZoneInfo TimeZone => Property.TimeZone ?? TimeZoneInfo.Local;
@@ -39,6 +56,8 @@ namespace ApartmentApps.Data
         public string DevicePlatform { get; set; }
 
         public string DeviceToken { get; set; }
+
+        int IBaseEntity.Id => 0;
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

@@ -1,21 +1,7 @@
-﻿@using GridMvc.Html
-@model IEnumerable<ApartmentApps.Data.Building>
-
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-4">
-        <h2>Index</h2>
-        <ol class="breadcrumb">
-            <li class="active">
-                <strong>Building</strong>
-            </li>
-        </ol>
-    </div>
-</div>
+﻿@using ApartmentApps.Data
+@using Syncfusion.JavaScript.Models
+@using DataSource = Syncfusion.JavaScript.DataSource
+@model IEnumerable<BuildingViewModel>
 
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -29,14 +15,47 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                   @Html.Grid(Model).Columns(columns =>
-                   {
-                       columns.Add(foo => foo.Property.Name).Titled("Property Name").SetWidth(110);
-                       columns.Add(foo => foo.Name).Sortable(true).Filterable(true);
-                       columns.Add().Encoded(false).Sanitized(false).RenderValueAs(item => @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "" }));
-                   }).WithPaging(20)
+                    @(
+                    Html.EJ().Grid<BuildingViewModel>("Grid")
+                    .Datasource(ds => ds.URL(Url.Action("DataSource")).Adaptor(AdaptorType.UrlAdaptor))
+                    //.Datasource(Model.ToArray())
+                    .Mappers(map =>
+                        map
+                        .ExportToExcelAction(Url.Action("ExportToExcel"))
+                        .ExportToPdfAction(Url.Action("ExportToPdf"))
+                        .ExportToWordAction(Url.Action("ExportToWord"))
+                    )
+                     .ToolbarSettings(toolbar =>
+                     {
+                         toolbar.ShowToolbar().ToolbarItems(items =>
+                         {
+                             items.AddTool(ToolBarItems.ExcelExport);
+                             items.AddTool(ToolBarItems.WordExport);
+                             items.AddTool(ToolBarItems.PdfExport);
+                         });
+                     })
+
+                    .FilterSettings(filter => { filter.FilterType(FilterType.Excel).EnableCaseSensitivity(true); })
+                    //.EditSettings(edit => { edit.AllowAdding().AllowDeleting().AllowEditing().EditMode(EditMode.Dialog); })
+                    .EnableToolbarItems(true)
+                    //.ToolbarSettings(_=>_.ToolbarItems(new List<ToolBarItems>() { new Toolbarit}))
+                    .AllowPaging(true)
+                    .AllowGrouping()
+                    .AllowSorting(true)
+                    .AllowFiltering()
+                    .Columns(c =>
+                    {
+                        c.Field(model => model.Name).HeaderText("Unit Name").Add();
+                        c.HeaderText("").Template(Html.ActionLink("Delete","Delete",new { id="{{:Id}}" }).ToString());
+                    })
+                    )
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+

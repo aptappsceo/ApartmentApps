@@ -7,17 +7,27 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class MaitenanceRequestsController : AAController
+    
+    public class MaitenanceRequestsController : CrudController<MaintenanceRequestViewModel, MaitenanceRequest>
+    {
+        public MaitenanceRequestsController(IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+        {
+        }
+
+    }
+    public class MaitenanceRequests2Controller : AAController
     {
       
 
         // GET: /MaitenanceRequests/
-        public MaitenanceRequestsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public MaitenanceRequests2Controller(PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
         }
 

@@ -11,7 +11,12 @@ namespace ApartmentApps.Portal
 
             // Vendor scripts
             bundles.Add(new ScriptBundle("~/bundles/jquery")
-                .Include("~/Scripts/jquery-2.1.1.min.js")
+
+                //.Include("~/Scripts/jquery-2.1.1.min.js")
+                .Include("~/Scripts/jquery-1.10.2.min.js")
+                .Include("~/Scripts/jquery.easing.1.3.min.js")
+                .Include("~/Scripts/jsrender.min.js")
+                .Include("~/Scripts/ej/ej.web.all.min.js")
                 .Include("~/Scripts/jquery.timeago.js")
                 );
 

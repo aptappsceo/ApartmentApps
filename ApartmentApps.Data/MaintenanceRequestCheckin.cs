@@ -20,8 +20,7 @@ namespace ApartmentApps.Data
     public class MaintenanceRequestCheckin : PropertyEntity, IImageContainer, IFeedItem
     {
 
-        [Key]
-        public int Id { get; set; }
+       
         public string WorkerId { get; set; }
 
         [ForeignKey("WorkerId")]

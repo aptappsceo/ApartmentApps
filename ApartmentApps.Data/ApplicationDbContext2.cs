@@ -10,7 +10,7 @@ namespace ApartmentApps.Data
         public virtual IDbSet<Property> Properties { get; set; }
         public virtual DbSet<Building> Buildings { get; set; }
         public virtual IDbSet<Unit> Units { get; set; }
-        public virtual IDbSet<Tenant> Tenants { get; set; }
+     
         public virtual IDbSet<MaitenanceRequest> MaitenanceRequests { get; set; }
         public virtual IDbSet<MaintenanceRequestCheckin> MaintenanceRequestCheckins { get; set; }
         public virtual IDbSet<MaitenanceRequestType> MaitenanceRequestTypes { get; set; }

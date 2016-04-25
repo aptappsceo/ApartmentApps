@@ -4,7 +4,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
+using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api.BindingModels
 {
@@ -17,23 +19,7 @@ namespace ApartmentApps.Api.BindingModels
         public string[] Photos { get; set; }
         public string Description { get; set; }
     }
-    // Models used as parameters to AccountController actions.
-    public class UserBindingModel
-    {
-        public string Id { get; set; }
-        public string ImageUrl { get; set; }
-        public string ImageThumbnailUrl { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string UnitName { get; set; }
-        public string BuildingName { get; set; }
-        public bool IsTenant { get; set; }
-        public string PhoneNumber { get; set; }
-        public string FullName { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
-        public string PostalCode { get; set; }
-    }
+ 
 
     public class MaintenanceBindingModel
     {
@@ -53,7 +39,7 @@ namespace ApartmentApps.Api.BindingModels
         public bool PermissionToEnter { get; set; }
     }
 
-    public class MaintenanceIndexBindingModel
+    public class MaintenanceIndexBindingModel : BaseViewModel
     {
         public string Title { get; set; }
         public string Comments { get; set; }
@@ -102,17 +88,18 @@ namespace ApartmentApps.Api.BindingModels
         public UserBindingModel Officer { get; set; }
     }
 
-    public class IncidentIndexBindingModel
+    public class IncidentIndexBindingModel : BaseViewModel
     {
         public string Title { get; set; }
         public string Comments { get; set; }
         public string StatusId { get; set; }
-        public int Id { get; set; }
+      
         public DateTime RequestDate { get; set; }
         public UserBindingModel ReportedBy { get; set; }
         public string UnitName { get; set; }
         public string BuildingName { get; set; }
         public IncidentCheckinBindingModel LatestCheckin { get; set; }
+        public string Reporter { get; set; }
     }
     public class MaintenanceCheckinBindingModel
     {
@@ -134,7 +121,7 @@ namespace ApartmentApps.Api.BindingModels
                 Date = x.CreatedOn,
                 Comments = x.Comments,
                 Officer = x.Officer.ToUserBindingModel(blob),
-                Photos = blob.GetImages(x.GroupId).ToList(),
+                Photos = blob.GetImages(x.GroupId).Select(s=>new ImageReference() { ThumbnailUrl = s, Url = s}).ToList(),
 
             };
         }
@@ -147,7 +134,7 @@ namespace ApartmentApps.Api.BindingModels
                 Date = x.Date,
                 Comments = x.Comments,
                 Worker = x.Worker.ToUserBindingModel(blob),
-                Photos = blob.GetImages(x.GroupId).ToList()
+                Photos = blob.GetImages(x.GroupId).Select(s => new ImageReference() { ThumbnailUrl = s, Url = s }).ToList()
             };
         }
         public static UserBindingModel ToUserBindingModel(this ApplicationUser user, IBlobStorageService blobService)
@@ -160,13 +147,13 @@ namespace ApartmentApps.Api.BindingModels
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 FullName = user.FirstName + " " + user.LastName,
-                UnitName = user.Tenant?.Unit?.Name,
-                BuildingName = user.Tenant?.Unit?.Building.Name,
-                IsTenant = user.Tenant != null,
+                UnitName = user.Unit?.Name,
+                BuildingName = user.Unit?.Building.Name,
+                IsTenant = user.Unit != null,
                 PhoneNumber = user.PhoneNumber,
-                Address = user.Tenant?.Address,
-                City = user.Tenant?.City,
-                PostalCode = user.Tenant?.PostalCode
+                Address = user?.Address,
+                City = user?.City,
+                PostalCode = user?.PostalCode
             };
         }
 

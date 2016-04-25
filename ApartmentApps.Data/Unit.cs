@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApartmentApps.Data
 {
-    public partial class Unit : PropertyEntity
+    public interface IBaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+        int Id { get; }
+    }
+    public partial class Unit : PropertyEntity, IBaseEntity
+    {
 
         public int BuildingId { get; set; }
 
@@ -16,7 +18,7 @@ namespace ApartmentApps.Data
 
         public virtual ICollection<MaitenanceRequest> MaitenanceRequests { get; set; } 
 
-        public virtual ICollection<Tenant> Tenants { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
 
         public string Name { get; set; }
 

@@ -7,15 +7,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class IncidentReportsController : AAController
+    public class IncidentReportsController : CrudController<IncidentIndexBindingModel, IncidentReport>
+    {
+        public IncidentReportsController(IRepository<IncidentReport> repository, StandardCrudService<IncidentReport, IncidentIndexBindingModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+        {
+        }
+    }
+    public class IncidentReports2Controller : AAController
     {
         
-		public IncidentReportsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+		public IncidentReports2Controller(PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
             
         }

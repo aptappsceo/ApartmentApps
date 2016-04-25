@@ -116,7 +116,10 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                Context.Entry(property);
+                var p = Context.Properties.FirstOrDefault(x => x.Id == property.Id);
+                p.Name = property.Name;
+                p.CorporationId = property.CorporationId;
+                //Context.Entry(property);
                 Context.SaveChanges();
                 return RedirectToAction("Index");
             }

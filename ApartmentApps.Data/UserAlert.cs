@@ -6,8 +6,6 @@ namespace ApartmentApps.Data
 {
     public class UserAlert : PropertyEntity
     {
-        [Key]
-        public int Id { get; set; }
 
         public string UserId { get; set; }
 

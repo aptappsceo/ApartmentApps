@@ -8,8 +8,7 @@ namespace ApartmentApps.Data
 {
     public class IncidentReport : PropertyEntity, IImageContainer, IFeedItem
     {
-        [Key] 
-        public int Id { get; set; }
+     
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,14 +9,13 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/font-awesome/css")
     <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
-
+    <link href="@Url.Content("~/Content/ej/web/default-theme/ej.web.all.min.css")" rel="stylesheet" />
 
 </head>
 <body>
 
     <!-- Wrapper-->
     <div id="wrapper">
-
         <!-- Navigation -->
         @Html.Partial("_Navigation")
 
@@ -39,19 +38,25 @@
     <!-- End wrapper-->
 
     @Scripts.Render("~/bundles/jquery")
-    <script src="jquery.min.js" type="text/javascript"></script>
-    <script src="jquery.timeago.js" type="text/javascript"></script>
+    @*<script src="jquery.min.js" type="text/javascript"></script>
+    <script src="jquery.timeago.js" type="text/javascript"></script>*@
+    <script>
+        jQuery(document).ready(function () {
+            jQuery("abbr.timeago").timeago();
+        });
+    </script>
 
-    jQuery(document).ready(function() {
-    jQuery("abbr.timeago").timeago();
-    });
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/plugins/metsiMenu")
     @Scripts.Render("~/plugins/pace")
     @Scripts.Render("~/plugins/flot")
     @Scripts.Render("~/plugins/slimScroll")
     @Scripts.Render("~/bundles/inspinia")
+
+    @Html.EJ().ScriptManager()
+    
     @RenderSection("scripts", required: false)
+
     <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
 </body>
 </html>

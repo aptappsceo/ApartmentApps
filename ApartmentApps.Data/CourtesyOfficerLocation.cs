@@ -6,9 +6,7 @@ namespace ApartmentApps.Data
 {
     public partial class CourtesyOfficerLocation : PropertyEntity
     {
-        [Key]
-        public int Id { get; set; }
-
+      
         public string Label { get; set; }
 
         ////[Index("IX_LocationAndProperty",1)]

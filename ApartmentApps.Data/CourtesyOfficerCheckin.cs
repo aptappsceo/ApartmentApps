@@ -11,8 +11,7 @@ namespace ApartmentApps.Data
     }
     public class CourtesyOfficerCheckin : PropertyEntity, IImageContainer , IFeedItem
     {
-        [Key]
-        public int Id { get; set; }
+     
         public string OfficerId { get; set; }
         public int CourtesyOfficerLocationId { get; set; }
 

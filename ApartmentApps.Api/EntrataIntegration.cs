@@ -2,6 +2,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 using Entrata.Client;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -22,21 +23,23 @@ namespace ApartmentApps.Api
     {
 
         public ApplicationDbContext Context { get; set; }
+        public PropertyContext PropertyContext { get; set; }
 
-        public EntrataIntegration(ApplicationDbContext context, IUserContext userContext) : base(userContext)
+        public EntrataIntegration(Property property, ApplicationDbContext context,PropertyContext propertyContext, IUserContext userContext) : base(property, userContext)
         {
             Context = context;
+            PropertyContext = propertyContext;
         }
 
         public override bool Filter()
         {
-            return UserContext.CurrentUser.Property.EntrataInfo != null;
+            return PropertyContext.PropertyEntrataInfos.Any();
         }
 
         public async Task<bool> ImportData(ICreateUser createUser, Property property)
         {
             var client = new EntrataClient();
-            var info = property.EntrataInfo;
+            var info = PropertyContext.PropertyEntrataInfos.FirstOrDefault();
             client.EndPoint = info.Endpoint;
             client.Username = info.Username;
             client.Password = info.Password;
@@ -77,7 +80,7 @@ namespace ApartmentApps.Api
 
                 if (user == null)
                 {
-                    user = await createUser.CreateUser(item.Email, "temp", item.FirstName, item.LastName);
+                    user = await createUser.CreateUser(item.Email, "Temp1234!", item.FirstName, item.LastName);
                 }
                 if (user == null)
                 {
@@ -93,30 +96,18 @@ namespace ApartmentApps.Api
                     });
 
                 }
-                //user.PhoneNumber = item.
-               
-               
-                var tenantInfo = await Context.Tenants.FirstOrDefaultAsync(p => p.UserId == user.Id);
-                if (tenantInfo == null)
-                {
-                    tenantInfo = new Tenant();
-                    Context.Tenants.Add(tenantInfo);
-                }
 
-                tenantInfo.PropertyId = property.Id;
-                tenantInfo.BuildingName = item.BuildingName;
-                tenantInfo.City = item.City;
-                tenantInfo.Email = item.Email;
-                tenantInfo.UnitNumber = item.UnitNumber;
-                tenantInfo.FirstName = item.FirstName;
-                tenantInfo.LastName = item.LastName;
-                tenantInfo.Gender = item.Gender;
-                tenantInfo.MiddleName = item.MiddleName;
-                tenantInfo.PostalCode = item.PostalCode;
-                tenantInfo.State = item.State;
-                tenantInfo.UserId = user.Id;
-                tenantInfo.UnitId = unit.Id;
-                tenantInfo.Address = item.Address;
+                user.PropertyId = property.Id;
+                user.City = item.City;
+                user.Email = item.Email;
+                user.FirstName = item.FirstName;
+                user.LastName = item.LastName;
+                user.Gender = item.Gender;
+                user.MiddleName = item.MiddleName;
+                user.PostalCode = item.PostalCode;
+                user.State = item.State;
+                user.UnitId = unit.Id;
+                user.Address = item.Address;
 
                
                 await Context.SaveChangesAsync();

@@ -55,7 +55,7 @@ namespace ApartmentApps.Api
                 User = item.User.ToUserBindingModel(BlobStorageService),
                 CreatedOn = item.CreatedOn,
                 Message = item.Message,
-                Photos = BlobStorageService.GetImages(item.GroupId).Select(p=>p.Url).ToArray(),
+                Photos = BlobStorageService.GetImages(item.GroupId).ToArray(),
                 Description = item.Description
             };
         }

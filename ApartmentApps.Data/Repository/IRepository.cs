@@ -19,7 +19,6 @@ namespace ApartmentApps.Data.Repository
             IRepository<ImageReference> imageReferences, 
             IRepository<Building> buildings, 
             IRepository<Unit> units, 
-            IRepository<Tenant> tenants, 
             IRepository<MaitenanceRequest> maitenanceRequests, 
             IRepository<MaintenanceRequestCheckin> maintenanceRequestCheckins, 
             IRepository<MaitenanceRequestType> maitenanceRequestTypes, 
@@ -41,7 +40,7 @@ namespace ApartmentApps.Data.Repository
             ImageReferences = imageReferences;
             Buildings = buildings;
             Units = units;
-            Tenants = tenants;
+       
             MaitenanceRequests = maitenanceRequests;
             MaintenanceRequestCheckins = maintenanceRequestCheckins;
             MaitenanceRequestTypes = maitenanceRequestTypes;
@@ -68,7 +67,6 @@ namespace ApartmentApps.Data.Repository
         public virtual IRepository<ImageReference> ImageReferences { get; set; }
         public virtual IRepository<Building> Buildings { get; set; }
         public virtual IRepository<Unit> Units { get; set; }
-        public virtual IRepository<Tenant> Tenants { get; set; }
         public virtual IRepository<MaitenanceRequest> MaitenanceRequests { get; set; }
         public virtual IRepository<MaintenanceRequestCheckin> MaintenanceRequestCheckins { get; set; }
         public virtual IRepository<MaitenanceRequestType> MaitenanceRequestTypes { get; set; }
@@ -82,7 +80,15 @@ namespace ApartmentApps.Data.Repository
 
         public void Entry(object obj)
         {
-          this._db.Entry(obj).State = EntityState.Modified;
+            try
+            {
+                this._db.Entry(obj).State = EntityState.Modified;
+            }
+            catch (Exception ex)
+            {
+                
+            }
+          
         }
   
     }
@@ -94,5 +100,6 @@ namespace ApartmentApps.Data.Repository
         IQueryable<T> GetAll();
         T Find(object id);
         int Count();
+        void Save();
     }
 }

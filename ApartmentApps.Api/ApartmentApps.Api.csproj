@@ -184,6 +184,10 @@
     <Compile Include="AlertsService.cs" />
     <Compile Include="Repositories\UnitRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Services\BaseViewModel.cs" />
+    <Compile Include="Services\IMapper.cs" />
+    <Compile Include="Services\StandardCrudService.cs" />
+    <Compile Include="ViewModels\Class1.cs" />
     <Compile Include="YardiIntegration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +207,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">

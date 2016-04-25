@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ApartmentApps.Data
 {
-    [MetadataType(typeof(PropertyMetadata))]
+  
     public class Property
     {
         public TimeZoneInfo TimeZone
@@ -27,8 +27,6 @@ namespace ApartmentApps.Data
         [ForeignKey("CorporationId")]
         public Corporation Corporation { get; set; }
 
-        public virtual ICollection<Tenant> Tenants { get; set; } 
-
         public virtual ICollection<PropertyAddon> PropertyAddons { get; set; }
 
         public virtual ICollection<Building> Buildings { get; set; } 
@@ -42,7 +40,7 @@ namespace ApartmentApps.Data
         public string TimeZoneIdentifier { get; set; }
         public virtual ICollection<ApplicationUser> Users { get; set; }
          
-        public virtual PropertyEntrataInfo EntrataInfo { get; set; }
-        public virtual PropertyYardiInfo YardiInfo { get; set; }
+        //public virtual PropertyEntrataInfo EntrataInfo { get; set; }
+        //public virtual PropertyYardiInfo YardiInfo { get; set; }
     }
 }

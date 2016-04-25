@@ -25,6 +25,12 @@ namespace ApartmentApps.Portal.Controllers
         public string Email { get; set; }
 
         public string Password { get; set; }
+
+        public bool IsTenant { get; set; }
+
+        public int? UnitId { get; set; }
+
+
     }
     [Authorize(Roles = "PropertyAdmin,Admin")]
     public class UserManagementController : AAController
@@ -92,9 +98,13 @@ namespace ApartmentApps.Portal.Controllers
                 userModel.LastName = user.LastName;
                 userModel.Email = user.Email;
                 userModel.Id = user.Id;
+                userModel.PhoneNumber = user.PhoneNumber;
+                userModel.UnitId = user.UnitId;
                 userModel.SelectedRoles = user.Roles.Select(p => p.RoleId).ToList();
 
             }
+            ViewBag.UnitId = new SelectList(Context.Units.OrderBy(p=>p.Name), "Id", "Name", user?.UnitId);
+
             return View(userModel);
         }
     
@@ -127,6 +137,7 @@ namespace ApartmentApps.Portal.Controllers
                 user.Email = model.Email;
                 user.PropertyId = PropertyId;
                 user.UserName = model.Email;
+                user.UnitId = model.UnitId;
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.PhoneNumber = model.PhoneNumber;
@@ -137,7 +148,7 @@ namespace ApartmentApps.Portal.Controllers
                 }
                 if (newUser)
                 {
-                    var result = await UserManager.CreateAsync(user, "temp");
+                    var result = await UserManager.CreateAsync(user, "Temp1234!");
                     if (result.Succeeded)
                     {
 

@@ -1,4 +1,6 @@
 using System.Data.Entity;
+using System.Linq;
+using System.Security.Principal;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
@@ -81,6 +83,39 @@ namespace ApartmentApps.Portal.App_Start
             kernel.Bind<IAuthenticationManager>()
                 .ToMethod(o => HttpContext.Current.GetOwinContext().Authentication)
                 .InRequestScope();
+        }
+    }
+    public class WebUserContext : IUserContext
+    {
+        private readonly ApplicationDbContext _db;
+        private ApplicationUser _user;
+
+        public WebUserContext(ApplicationDbContext context)
+        {
+            _db = context;
+        }
+
+        public ApplicationUser CurrentUser
+        {
+            get
+            {
+
+                return _user ?? (_user = _db.Users.FirstOrDefault(p => p.Email == Email));
+            }
+        }
+
+        public IIdentity User => System.Web.HttpContext.Current.User.Identity;
+
+        public string UserId => CurrentUser.Id;
+        public string Email => User.GetUserName();
+        public string Name => CurrentUser.FirstName + " " + CurrentUser.LastName;
+        public int PropertyId
+        {
+            get
+            {
+                if (CurrentUser.PropertyId != null) return CurrentUser.PropertyId.Value;
+                return 1;
+            }
         }
     }
 }
