@@ -64,7 +64,6 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-
         public ICommand UpdateNotificationsCommand => new MvxCommand(async () =>
         {
             var task = await _service.Alerts.GetWithOperationResponseAsync();

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Android.OS;
 using ResidentAppCross.Services;
 using ZXing.Mobile;
 
@@ -19,6 +21,25 @@ namespace ResidentAppCross.Droid.Services
 
         public async Task<QRData> ScanAsync()
         {
+
+            //Check if emulator and return emulated result
+            string fing = Build.Fingerprint;
+            bool isEmulator = false;
+            if (fing != null)
+            {
+                isEmulator = fing.Contains("vbox") || fing.Contains("generic") || fing.Contains("vsemu");
+            }
+
+            if (isEmulator)
+            {
+                return new QRData()
+                {
+                    Data = "http://www.apartmentapps.com?coloc=17",
+                    ImageData = new byte[0],
+                    Timestamp = DateTime.Now.Ticks
+                };
+            }
+
             var data = await Scanner.Scan(new MobileBarcodeScanningOptions());
 
             return new QRData()

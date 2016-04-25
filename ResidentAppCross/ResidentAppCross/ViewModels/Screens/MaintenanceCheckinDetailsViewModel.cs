@@ -17,24 +17,22 @@ namespace ResidentAppCross.ViewModels.Screens
         public MaintenanceCheckinBindingModel Checkin
         {
             get { return _checkin; }
-            set { SetProperty(ref _checkin, value); }
+            set
+            {
+                SetProperty(ref _checkin, value);
+                var photos = new ImageBundleViewModel();
+                photos.RawImages.AddRange(Checkin.Photos.Select(p => new ImageBundleItemViewModel()
+                {
+                    Uri = new Uri(p.Url)
+                }));
+                CheckinPhotos = photos;
+            }
         }
 
         public ImageBundleViewModel CheckinPhotos
         {
-            get
-            {
-                if (_checkinPhotos == null)
-                {
-                    _checkinPhotos = new ImageBundleViewModel();
-                    _checkinPhotos.RawImages.AddRange(Checkin.Photos.Select(p=>new ImageBundleItemViewModel()
-                    {
-                        Uri = new Uri(p.Url)
-                    }));
-                }
-                return _checkinPhotos;
-            }
-            set { _checkinPhotos = value; }
+            get { return _checkinPhotos; }
+            set { SetProperty(ref _checkinPhotos, value); }
         }
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="#aaaaaa"
+    android:padding="@dimen/default_section_padding"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/HeaderLabel"
+        android:layout_width="wrap_content"
+        android:text="Comments &amp; Details"
+        android:textColor="@color/secondary_text_body"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/InputField"
+        android:layout_width="match_parent"
+        android:textColor="@color/primary_text_body"
+        tools:text="@string/lorem_ipsum"
+        android:layout_marginTop="4dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

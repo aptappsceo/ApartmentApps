@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_home"
+            android:checked="true"
+            android:icon="@drawable/Search"
+            android:title="Item 1"/>
+
+        <item
+            android:id="@+id/drawer_favourite"
+            android:icon="@drawable/Search"
+            android:title="Item 2"/>
+        <item
+            android:id="@+id/drawer_settings"
+            android:icon="@drawable/Search"
+            android:title="Item 3"/>
+
+        <item
+            android:id="@+id/section"
+            android:title="Custom">
+            <menu>
+                <item
+                    android:id="@+id/drawer_oops"
+                    android:icon="@drawable/Search"
+                    android:title="Hell"/>
+
+                <item
+                    android:id="@+id/drawer_downloaded"
+                    android:icon="@drawable/Search"
+                    android:title="Yeah"/>
+            </menu>
+        </item>
+
+    </group>
+</menu>

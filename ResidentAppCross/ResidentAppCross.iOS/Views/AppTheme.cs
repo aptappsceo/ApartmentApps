@@ -4,7 +4,9 @@ using System.Text;
 using CoreGraphics;
 using Foundation;
 using HealthKit;
+using OpenGLES;
 using ResidentAppCross.Resources;
+using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
 namespace ResidentAppCross.iOS.Views
@@ -134,6 +136,8 @@ namespace ResidentAppCross.iOS.Views
             }
          
         }
+
+      
     }
 
     public static class AppString
@@ -209,5 +213,5 @@ namespace ResidentAppCross.iOS.Views
     public static class AppStrings
     {
         public static string DefaultTextViewHeaderText = "Comments & Details";
-    } 
+    }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/ButtonContainer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:padding="@dimen/default_section_padding"
+    android:layout_height="56dp">
+
+    <android.support.v7.widget.AppCompatButton
+        android:backgroundTint="@color/accent"
+        android:textColor="@color/primary_text"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="Button 1"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:backgroundTint="@color/accent"
+        android:textColor="@color/primary_text"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="Button 2"/>
+
+</LinearLayout>

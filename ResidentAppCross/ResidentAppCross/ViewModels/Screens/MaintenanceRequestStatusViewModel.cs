@@ -43,6 +43,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private MaintenanceCheckinBindingModel _selectedCheckin;
         private string _tenantAvatarUrl;
         private string _telephoneNumber;
+        private string _scheduleDateLabel;
 
         public MaintenanceRequestStatusViewModel(IApartmentAppsAPIService appService, IImageService imageService, IQRService qrService, IDialogService dialogService, ILoginManager loginManager)
         {
@@ -170,6 +171,7 @@ namespace ResidentAppCross.ViewModels.Screens
                 Checkins.AddRange(Request.Checkins.OrderByDescending(x=>x.Date));
                 UnitAddressString = Request.BuildingName;
             TelephoneNumber = Request.User.PhoneNumber;
+            ScheduleDateLabel = Request.ScheduleDate?.ToString("g") ?? "-";
             this.Publish(new MaintenanceRequestStatusUpdated(this));
 
         }).OnStart("Loading Request...").OnFail(ex=> { Close(this); });
@@ -230,7 +232,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
                         }).OnStart("Closing Request...");
                     });
-                });
+                }, () => CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started );
 
                 
             }
@@ -278,7 +280,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
                         }).OnStart("Pausing Request...");
                     });
-                });
+                },()=> CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started);
 
             }
         }
@@ -317,7 +319,7 @@ namespace ResidentAppCross.ViewModels.Screens
                         }
                     }).OnStart("Starting...").Execute(null);
 
-                });    
+                },()=> CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Submitted || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Scheduled || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Paused);    
             }
         }
 
@@ -374,7 +376,7 @@ namespace ResidentAppCross.ViewModels.Screens
                     .OnComplete("Maintenance Scheduled!", () => UpdateMaintenanceRequest.Execute(null))
                     .Execute(null);
 
-                });
+                },() => CurrentMaintenanceRequestStatus != MaintenanceRequestStatus.Complete && CurrentMaintenanceRequestStatus != MaintenanceRequestStatus.Started);
 
 
             }
@@ -396,6 +398,12 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             if (SelectedCheckin != null) ShowViewModel<MaintenanceCheckinDetailsViewModel>(vm => vm.Checkin = SelectedCheckin);
         });
+
+        public string ScheduleDateLabel
+        {
+            get { return _scheduleDateLabel; }
+            set { SetProperty(ref _scheduleDateLabel, value); }
+        }
     }
 
     public class PetStatus
@@ -425,4 +433,16 @@ namespace ResidentAppCross.ViewModels.Screens
         Started,
         Submitted
     }
+
+    public static class StringExtensions
+    {
+        public static MaintenanceRequestStatus AsMaintenanceStatus(this string statusId)
+        {
+            MaintenanceRequestStatus result;
+            Enum.TryParse(statusId,out result);
+            return result;
+
+        }
+    }
+
 }
