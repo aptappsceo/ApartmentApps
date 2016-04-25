@@ -25,7 +25,7 @@ namespace ResidentAppCross.Droid
 
 	//		// Get our button from the layout resource,
 	//		// and attach an event to it
-	//		Button button = FindViewById<Button> (Resource.Id.buttonLogin);
+	//		Button button = FindViewById<Label> (Resource.Id.buttonLogin);
 			
 	//		button.Click += delegate {
                 

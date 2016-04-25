@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="nav_drawer_width">260dp</dimen>
+    <dimen name="ticket_status_line_height">32dp</dimen>
+    <dimen name="ticket_status_icon_padding">8dp</dimen>
+    <dimen name="small_button_height">40dp</dimen>
+    <dimen name="default_section_padding">4dp</dimen>
+
+</resources>

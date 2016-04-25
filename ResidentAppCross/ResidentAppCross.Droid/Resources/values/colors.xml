@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!--<color name="colorPrimary">#3F51B5</color>
+  <color name="colorPrimaryDark">#303F9F</color>
+  <color name="textColorPrimary">#FFFFFF</color>
+  <color name="windowBackground">#f9f9f9</color>
+  <color name="navigationBarColor">#000000</color>
+  <color name="colorAccent">#448AFF</color>-->
+
+  <color name="primary">#03A9F4</color>
+  <color name="primary_dark">#0288D1</color>
+  <color name="primary_light">#B3E5FC</color>
+  <color name="accent">#8BC34A</color>
+  <color name="primary_text_body">#212121</color>
+  <color name="secondary_text_body">#727272</color>
+  <color name="window_background">#f9f9f9</color>
+  <color name="primary_text">#ffffff</color>
+  <color name="divider">#B6B6B6</color>
+
+  <!--300-->
+  <color name="semantic_create">#A1887F</color>
+  <color name="semantic_pause">#FFD54F</color>
+  <color name="semantic_schedule">#9575CD</color>
+  <color name="semantic_inprogress">#4FC3F7</color>
+  <color name="semantic_complete">#81C784</color>
+
+
+
+
+</resources>

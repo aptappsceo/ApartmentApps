@@ -127,26 +127,26 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             get
             {
-                return new MvxCommand(async () =>
-                {
-                    this.Publish(new RequestsIndexUpdateStarted(this));
-                    var requests = await _service.Maitenance.ListRequestsAsync();
-                    Requests.Clear();
-                    Requests.AddRange(requests);
-                    UpdateFilters();
-                    this.Publish(new RequestsIndexUpdateFinished(this));
-
-                });
-
-//                return this.TaskCommand(async context =>
+//                return new MvxCommand(async () =>
 //                {
-//
+//                    this.Publish(new RequestsIndexUpdateStarted(this));
 //                    var requests = await _service.Maitenance.ListRequestsAsync();
 //                    Requests.Clear();
 //                    Requests.AddRange(requests);
 //                    UpdateFilters();
-//
-//                }).OnStart("Fetching Requests...");
+//                    this.Publish(new RequestsIndexUpdateFinished(this));
+//                });
+
+              return this.TaskCommand(async context =>
+                                {
+                
+                this.Publish(new RequestsIndexUpdateStarted(this));
+                var requests = await _service.Maitenance.ListRequestsAsync();
+                Requests.Clear();
+                Requests.AddRange(requests);
+                UpdateFilters();
+                this.Publish(new RequestsIndexUpdateFinished(this));
+            }).OnStart("Fetching Requests...");
             }
         }
 

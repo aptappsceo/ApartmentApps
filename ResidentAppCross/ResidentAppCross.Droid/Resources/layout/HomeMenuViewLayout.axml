@@ -17,10 +17,10 @@
         android:id="@+id/avatar_container"
         android:gravity="center"
         android:layout_marginTop="26.0dp"
-        android:background="@drawable/AvatarBackground">
+        android:background="@drawable/avatar_background">
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/avatar_image"
-            android:src="@drawable/AvatarPlaceholder"
+            android:src="@drawable/avatar_placeholder"
             android:scaleType="centerInside"
             android:gravity="center"
             local:riv_corner_radius="30dip"

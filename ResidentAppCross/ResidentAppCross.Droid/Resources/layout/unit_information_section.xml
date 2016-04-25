@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="@dimen/default_section_padding"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/HeaderLabel"
+        android:layout_alignParentStart="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unit Information"
+        android:textColor="@color/secondary_text_body"
+
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
+
+
+
+
+    <LinearLayout
+        android:id="@+id/InformationContainer"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/HeaderLabel"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/NameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Joshua Brewer"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/primary_text_body" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/AddressLabel"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ap. #1026, Block C 5667 Street D"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/primary_text_body" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/PhoneLabel"
+            android:layout_marginTop="4dp"
+
+            android:gravity="center|left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="+1 555 777-999"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/primary_text_body" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/EmailLabel"
+            android:layout_marginTop="4dp"
+            android:drawablePadding="@dimen/ticket_status_icon_padding"
+            android:gravity="center|left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sinitreo@gmail.com"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/primary_text_body" />
+
+
+    </LinearLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        tools:background="@color/cardview_dark_background"
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/AvatarView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignTop="@id/InformationContainer"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/avatar_placeholder"
+        app:riv_oval="true"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@android:color/darker_gray"/>
+
+
+
+</RelativeLayout>

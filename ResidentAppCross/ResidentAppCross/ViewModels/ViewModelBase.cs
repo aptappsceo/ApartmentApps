@@ -43,9 +43,6 @@ namespace ResidentAppCross.ViewModels
             var config = ConfigurationStack.Pop();
             config(this);
         }
-
-
- 
     }
 
     public static class ViewModelExtensions
