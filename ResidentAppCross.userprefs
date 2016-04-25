@@ -1,8 +1,37 @@
-﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.iPhone (4)" />
-  <MonoDevelop.Ide.Workbench />
+﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.Droid/ResidentAppCross.Droid.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
+  <MonoDevelop.Ide.Workbench>
+    <Files>
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/IncidentReportStatusView.cs" Line="321" Column="37" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/IncidentReportStatusViewModel.cs" Line="49" Column="9" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceRequestFormViewModel.cs" Line="231" Column="58" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ServiceClient/ILoginManager.cs" Line="15" Column="11" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenanceRequestFormView.cs" Line="60" Column="10" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceRequestStatusViewModel.cs" Line="169" Column="34" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenanceRequestStatusView.cs" Line="431" Column="46" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/MaitenanceExtensions.cs" Line="345" Column="10" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ResidentAppCross" expanded="True">
+            <Node name="Mobile App" expanded="True">
+              <Node name="ResidentAppCross.iOS" expanded="True" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/micahosborne/ApartmentApps/ResidentAppCross/ResidentAppCross/Commands/TaskCommand.cs" line="71" column="1" />
+      <Breakpoint file="/Users/micahosborne/ApartmentApps/ResidentAppCross/ResidentAppCross/Commands/TaskCommand.cs" line="76" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
