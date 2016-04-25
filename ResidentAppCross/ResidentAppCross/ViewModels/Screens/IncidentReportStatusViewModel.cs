@@ -146,7 +146,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
                 return new MvxCommand(() =>
                 {
-                    if (!CanUpdateRequest) return;
+                    //if (!CanUpdateRequest) return;
                     ShowViewModel<CheckinFormViewModel>(vm =>
                     {
                         vm.HeaderText = "Incident Report";
@@ -197,7 +197,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
                 return new MvxCommand(() =>
                 {
-                    if (!CanUpdateRequest) return;
+                 //   if (!CanUpdateRequest) return;
                     ShowViewModel<CheckinFormViewModel>(vm =>
                     {
                         vm.HeaderText = "Incident Report";

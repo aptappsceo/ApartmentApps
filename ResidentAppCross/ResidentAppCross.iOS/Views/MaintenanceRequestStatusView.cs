@@ -310,15 +310,18 @@ namespace ResidentAppCross.iOS
             FooterPauseButton = ActionsSection.AddButton("Pause", style);
             FooterFinishButton = ActionsSection.AddButton("Finish", style);
             FooterStartButton = ActionsSection.AddButton("Scan QR Code", style);
+			if (ViewModel.CanUpdateRequest) {
+				b.Bind(FooterPauseButton).To(vm => vm.PauseCommmand);
+				b.Bind(FooterFinishButton).To(vm => vm.FinishCommmand);
+				b.Bind(FooterStartButton).To(vm => vm.ScanAndStartCommand);
+				b.Bind(FooterFinishButton).For(but => but.Hidden).To(vm => vm.ForbidComplete);
+				b.Bind(FooterStartButton).For(but => but.Hidden).To(vm => vm.ForbidStart);
+				b.Bind(FooterPauseButton).For(but => but.Hidden).To(vm => vm.ForbidPause);
 
-            b.Bind(FooterPauseButton).To(vm => vm.PauseCommmand);
-            b.Bind(FooterFinishButton).To(vm => vm.FinishCommmand);
-            b.Bind(FooterStartButton).To(vm => vm.ScanAndStartCommand);
+			}
+            
 
-            b.Bind(FooterFinishButton).For(but => but.Hidden).To(vm => vm.ForbidComplete);
-            b.Bind(FooterStartButton).For(but => but.Hidden).To(vm => vm.ForbidStart);
-            b.Bind(FooterPauseButton).For(but => but.Hidden).To(vm => vm.ForbidPause);
-
+        
             //Comments section
             CommentsSection.SetEditable(false);
             b.Bind(CommentsSection.TextView).For(c=>c.Text).To(vm => vm.Request.Message);
@@ -344,6 +347,7 @@ namespace ResidentAppCross.iOS
             
 
             //Date section
+			if (ViewModel.CanUpdateRequest)
             b.Bind(ScheduleSection.Button).To(vm => vm.ScheduleCommand);
 
             b.Bind(TenantDataSection.AddressLabel).For(t => t.Text).To(vm => vm.UnitAddressString);
