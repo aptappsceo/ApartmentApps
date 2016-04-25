@@ -1,4 +1,5 @@
 using Android.Support.V7.Widget;
+using Android.Views;
 using ApartmentApps.Client.Models;
 using MvvmCross.Droid.Shared.Attributes;
 using RecyclerViewAnimators.Adapters;
@@ -71,5 +72,9 @@ namespace ResidentAppCross.Droid.Views
 
         }
 
+        public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
+        {
+            base.OnCreateOptionsMenu(menu, inflater);
+        }
     }
 }

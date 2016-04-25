@@ -21,7 +21,7 @@ using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross.Droid.Views
 {
-    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary)]
+    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
     public class IncidentReportStatusView : SectionViewFragment<IncidentReportStatusViewModel>
     {
         private HeaderSection _headerSection;
@@ -37,48 +37,84 @@ namespace ResidentAppCross.Droid.Views
         
         public HeaderSection HeaderSection { get; set; }
         public TicketStatusSection TicketStatusSection { get; set; }
-        public TextSection TextSection { get; set; }
+        public NoneditableTextSection CommentsSection { get; set; }
         public GallerySection GallerySection { get; set; }
+        public UnitInformationSection UnitInformationSection { get; set; }
+        public ActionBarSection ActionBarSection { get; set; }
 
         public override void Bind()
         {
             base.Bind();
 
+            //Header section
 
+            //Setup stuff everytime we update status
             this.OnViewModelEvent<IncidentReportStatusUpdated>(evt =>
             {
-                GallerySection?.Bind(ImageGalleryUtils.GetTestAsyncImages());
-                HistoryPage.SetAdapter(new TicketHistoryAdapter<IncidentCheckinBindingModel>()
+                ActionBarSection.Update();
+                //UnitInformationSection.AvatarUrl = ViewModel?.Request?.User.ImageUrl;
+            });
+
+            GallerySection?.Bind(ViewModel.Photos);
+
+
+            HistoryPage.SetAdapter(new TicketHistoryAdapter<IncidentCheckinBindingModel>()
+            {
+                Items = ViewModel.Checkins,
+                TitleSelector = s => s.StatusId,
+                SubtitleSelector = s => s.Date?.ToString("g"),
+                ItemSelected = item =>
                 {
-                    Items = ViewModel.Checkins,
-                    TitleSelector = s=>s.StatusId,
-                    SubtitleSelector = s=>s.Date?.ToString("g")
-                });
+                    ViewModel.SelectedCheckin = item;
+                    ViewModel.ShowCheckinDetailsCommand.Execute(null);
+                }
+
             });
 
 
             ModePager.Adapter = new TicketStatusViewPagerAdapter() { PagesLayout = Layout };
+            ModePager.SetCurrentItem(0,false);
             ModeTabs.SetupWithViewPager(ModePager);
             ModeTabs.Invalidate();
 
             HeaderSection.TitleLabel.Text = "Incident Report";
-            HeaderSection.SubtitleLabel.Text = "Blablabla";
+            HeaderSection.SubtitleLabel.Text = "";
 
             var set = this.CreateBindingSet<IncidentReportStatusView, IncidentReportStatusViewModel>();
 
             set.Bind(TicketStatusSection.TypeLabel).For(f => f.Text).To(vm => vm.Request.IncidentType);
             set.Bind(TicketStatusSection.StatusLabel).For(f => f.Text).To(vm => vm.Request.Status);
-            set.Bind(TicketStatusSection.CreatedOnLabel).For(f => f.Text).To(vm => vm.CreatedDate).WithFallback("-");
-
+            TicketStatusSection.CreatedOnLabel.Text = "-";
+            //set.Bind(TicketStatusSection.CreatedOnLabel).For(f => f.Text).To(vm => vm.ScheduleDateLabel).WithFallback("-");
+            set.Bind(CommentsSection.InputField).For(t => t.Text).To(vm => vm.Request.Comments).WithFallback("-");
+            //set.Bind(UnitInformationSection).For(s => s.AvatarUrl).To(vm => vm.Request.User.ImageUrl);
             set.Apply();
 
-            TextSection.TextInput.Focusable = false;
-            TextSection.TextInput.Text = Resources.GetString(Resource.String.lorem_ipsum);
+            //CommentsSection.InputField.Focusable = false;
 
-            HistoryPage.SetLayoutManager(new LinearLayoutManager(Context,LinearLayoutManager.Vertical,false));
+            HistoryPage.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
+
+            ActionBarSection.SetItems(
+                new ActionBarSection.ActionBarItem()
+                {
+                    Title = "Open",
+                    Action = () => ViewModel.OpenIncidentCommand.Execute(null),
+                    IsAvailable = () => ViewModel.Request != null && ViewModel.OpenIncidentCommand.CanExecute(null)
+                }, new ActionBarSection.ActionBarItem()
+                {
+                    Title = "Close",
+                    Action = () => ViewModel.CloseIncidentCommand.Execute(null),
+                    IsAvailable = () => ViewModel.Request != null && ViewModel.CloseIncidentCommand.CanExecute(null)
+                }, new ActionBarSection.ActionBarItem()
+                {
+                    Title = "Pause",
+                    Action = () => ViewModel.PauseIncidentCommmand.Execute(null),
+                    IsAvailable = () => ViewModel.Request != null && ViewModel.PauseIncidentCommmand.CanExecute(null)
+                }
+            );
+
 
         }
-
 
 
         public override void GetContent(List<FragmentSection> sections)
@@ -86,8 +122,14 @@ namespace ResidentAppCross.Droid.Views
             base.GetContent(sections);
             sections.Add(HeaderSection);
             sections.Add(TicketStatusSection);
-            sections.Add(TextSection);
+            sections.Add(UnitInformationSection);
+            sections.Add(CommentsSection);
             sections.Add(GallerySection);
+            if (ViewModel.CanUpdateRequest)
+            {
+                sections.Add(ActionBarSection);
+            }
+
         }
     }
 

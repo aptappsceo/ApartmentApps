@@ -505,6 +505,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
         public static int AsLayoutId(this string str)
         {
             var fieldInfo = typeof (Resource.Layout).GetField(str, BindingFlags.Static | BindingFlags.Public);
+            if(fieldInfo == null) throw new Exception("Unable to locate layout matching "+str);
             return (int) fieldInfo.GetValue(null);
         }
 

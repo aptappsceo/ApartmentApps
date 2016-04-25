@@ -15,9 +15,9 @@ using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using DE.Hdodenhof.Circleimageview;
 using MvvmCross.Binding.Droid.BindingContext;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Droid.Support.V7.Fragging.Fragments;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Droid.Platform;
 using MvvmCross.Plugins.Messenger;
@@ -25,6 +25,7 @@ using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Events;
 using ResidentAppCross.Interfaces;
 using MvvmCross.Droid.Shared.Attributes;
+using MvvmCross.Droid.Support.V4;
 using MvvmCross.Platform.Core;
 using ResidentAppCross.Droid.Views.Sections;
 using ActionBar = Android.Support.V7.App.ActionBar;
@@ -39,7 +40,7 @@ namespace ResidentAppCross.Droid.Views
         private AsyncImageView _avatarView;
 
         [Outlet]
-        public FrameLayout AvatarViewContainer { get; set; }
+        public CircleImageView AvatarView { get; set; }
 
         [Outlet]
         public TextView NameLabel { get; set; }
@@ -53,22 +54,6 @@ namespace ResidentAppCross.Droid.Views
         [Outlet]
         public TextView EmailLabel { get; set; }
 
-        public AsyncImageView AvatarView
-        {
-            get
-            {
-                if (_avatarView == null)
-                {
-                    _avatarView = new AsyncImageView(Context)
-                    {
-                    }.WithDimensionsMatchParent().AddTo(AvatarViewContainer);
-                    _avatarView.PhotoView.IsOval = true;
-                    _avatarView.PhotoView.SetScaleType(ImageView.ScaleType.CenterCrop);
-                }
-                return _avatarView;
-            }
-            set { _avatarView = value; }
-        }
 
         public string AvatarUrl
         {
@@ -76,7 +61,10 @@ namespace ResidentAppCross.Droid.Views
             set
             {
                 _avatarUrl = value;
-                //if (_avatarUrl != null) AvatarView.SetImage(value, new ColorDrawable(Color.White));
+                if (_avatarUrl != null)
+                {
+                    ImageExtensions.GetBitmapWithPicasso(value).Fit().NoFade().Into(AvatarView);
+                }
             }
         }
     }
@@ -218,7 +206,16 @@ namespace ResidentAppCross.Droid.Views
         public TextView HeaderLabel { get; set; }
 
         [Outlet]
-        public EditText TextInput { get; set; }
+        public EditText InputField { get; set; }
+    }
+
+    public class NoneditableTextSection : FragmentSection
+    {
+        [Outlet]
+        public TextView HeaderLabel { get; set; }
+
+        [Outlet]
+        public TextView InputField { get; set; }
     }
 
 
@@ -338,8 +335,18 @@ namespace ResidentAppCross.Droid.Views
             set { this.ViewModel = value; }
         }
     }
-    
-    public class ViewFragment : MvxFragment, IDisposableContainer
+
+    public interface ILifecycleProvider
+    {
+        event Action ResumeEvent;
+        event Action<Bundle> CreateEvent;
+        event Action<Bundle> SaveInstanceState;
+        event Action PauseEvent;
+        event Action DestroyEvent;
+        event Action LowMemoryEvent;
+    }
+
+    public class ViewFragment : MvxFragment, IDisposableContainer, ILifecycleProvider
     {
 
         public ViewFragment()
@@ -395,6 +402,11 @@ namespace ResidentAppCross.Droid.Views
             this.DisposeContainer();
         }
 
+        public override void OnAttach(Context context)
+        {
+            base.OnAttach(context);
+        //    MainActivity.InvalidateOptionsMenu();
+        }
 
 
         public virtual void UnBind()
@@ -406,6 +418,7 @@ namespace ResidentAppCross.Droid.Views
             base.OnCreateView(inflater, container, savedInstanceState);
             var viewFromLayout = CreateViewFromLayout(inflater, container, savedInstanceState);
             Layout = viewFromLayout as ViewGroup;
+            HasOptionsMenu = true;
             return viewFromLayout;
         }
 
@@ -441,6 +454,48 @@ namespace ResidentAppCross.Droid.Views
             
         }
 
+        public override void OnResume()
+        {
+            ResumeEvent?.Invoke();
+            base.OnResume();
+        }
+
+        public override void OnPause()
+        {
+            PauseEvent?.Invoke();
+            base.OnPause();
+        }
+
+        public override void OnDestroy()
+        {
+            DestroyEvent?.Invoke();
+            base.OnDestroy();
+        }
+
+        public override void OnLowMemory()
+        {
+            LowMemoryEvent?.Invoke();
+            base.OnLowMemory();
+        }
+
+        public override void OnSaveInstanceState(Bundle outState)
+        {
+            SaveInstanceState?.Invoke(outState);
+            base.OnSaveInstanceState(outState);
+        }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            CreateEvent?.Invoke(savedInstanceState);
+            base.OnCreate(savedInstanceState);
+        }
+
+        public event Action ResumeEvent;
+        public event Action<Bundle> CreateEvent;
+        public event Action<Bundle> SaveInstanceState;
+        public event Action PauseEvent;
+        public event Action DestroyEvent;
+        public event Action LowMemoryEvent;
     }
 
     public class Generate : Attribute

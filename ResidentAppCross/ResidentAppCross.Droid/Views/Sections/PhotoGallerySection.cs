@@ -19,13 +19,16 @@ using Java.Lang;
 using Java.Net;
 using Java.Util;
 using MvvmCross.Platform;
+using MvvmCross.Platform.Droid.Platform;
 using MvvmCross.Platform.Droid.Views;
 using MvvmCross.Platform.Platform;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
+using Square.Picasso;
 using Exception = System.Exception;
 using IOException = Java.IO.IOException;
+using LruCache = Android.Util.LruCache;
 using Object = Java.Lang.Object;
 using Space = Android.Widget.Space;
 
@@ -276,8 +279,17 @@ namespace ResidentAppCross.Droid.Views.Sections
         {
             var item = new AsyncImageView(parent.Context).WithHeightWrapContent().WithWidth(150);
             var viewHolder = new GenericViewHolder<AsyncImageView>(item);
+
+            item.Click += (sender, args) =>
+            {
+                ItemSelected?.Invoke(photos.RawImages[viewHolder.AdapterPosition]);
+            };
+
             return viewHolder;
+
         }
+
+        public Action<ImageBundleItemViewModel> ItemSelected { get; set; }
 
         public override int ItemCount => photos.RawImages.Count;
 
@@ -479,35 +491,51 @@ namespace ResidentAppCross.Droid.Views.Sections
 
         public static int MaxMemory = (int)(Runtime.GetRuntime().MaxMemory() / 1024);
 
+
+        public static IMvxAndroidCurrentTopActivity TopActivityProvider
+        {
+            get { return _topActivityProvider ?? (_topActivityProvider = Mvx.Resolve<IMvxAndroidCurrentTopActivity>()); }
+            set { _topActivityProvider = value; }
+        }
+
         // Use 1/8th of the available memory for this memory cache.
         public static int CacheSize = MaxMemory / 7;
 
         public static LruCache BitmapCache = new LruCache(CacheSize);
+        private static IMvxAndroidCurrentTopActivity _topActivityProvider;
 
         public static Bitmap GetBitmapFromURL(string src)
         {
 
-            var bitmapObject = BitmapCache.Get(src);
-            if (bitmapObject != null)
-            {
-                return bitmapObject as Bitmap;
-            }
+//            var bitmapObject = BitmapCache.Get(src);
+//            if (bitmapObject != null)
+//            {
+//                return bitmapObject as Bitmap;
+//            }
 
             try
             {
-                URL url = new URL(src);
-                HttpURLConnection connection = (HttpURLConnection) url.OpenConnection();
-                connection.DoInput = true;
-                connection.Connect();
-                Bitmap myBitmap = BitmapFactory.DecodeStream(connection.InputStream);
-                BitmapCache.Put(src, myBitmap);
-                return myBitmap;
+
+
+                return Picasso.With(TopActivityProvider.Activity).Load(src).Get();
+//                URL url = new URL(src);
+//                HttpURLConnection connection = (HttpURLConnection) url.OpenConnection();
+//                connection.DoInput = true;
+//                connection.Connect();
+//                Bitmap myBitmap = BitmapFactory.DecodeStream(connection.InputStream);
+//                BitmapCache.Put(src, myBitmap);
+//                return myBitmap;
             }
             catch (IOException e)
             {
                 // Log exception
                 return null;
             }
+        }
+
+        public static RequestCreator GetBitmapWithPicasso(string str)
+        {
+                return Picasso.With(TopActivityProvider.Activity).Load(str);
         }
 
         public static Bitmap ToBitmap(this byte[] data)

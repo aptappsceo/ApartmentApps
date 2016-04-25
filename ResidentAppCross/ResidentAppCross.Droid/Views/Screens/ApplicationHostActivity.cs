@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Android.App;
 using Android.Content;
+using Android.Gms.Common;
+using Android.Gms.Maps;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
@@ -90,7 +92,7 @@ namespace ResidentAppCross.Droid.Views
         public override void OnBeforeFragmentChanging(IMvxCachedFragmentInfo fragmentInfo, FragmentTransaction transaction)
         {
             base.OnBeforeFragmentChanging(fragmentInfo, transaction);
-            transaction.SetCustomAnimations(Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight,Android.Resource.Animation.FadeIn, Android.Resource.Animation.FadeOut);
+            transaction.SetCustomAnimations(Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight,Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight);
         }
 
         protected override void OnViewModelSet()
@@ -135,6 +137,15 @@ namespace ResidentAppCross.Droid.Views
 
                 DrawerLayout.CloseDrawers();
             };
+
+            try
+            {
+                MapsInitializer.Initialize(this);
+            }
+            catch (GooglePlayServicesNotAvailableException e)
+            {
+                e.PrintStackTrace();
+            }
 
 
             this.OnEvent<TaskStarted>(evt => this.SetTaskRunning(evt.Label));

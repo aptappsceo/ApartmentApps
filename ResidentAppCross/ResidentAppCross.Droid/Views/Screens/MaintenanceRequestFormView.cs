@@ -12,6 +12,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Java.Lang;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Droid.Shared.Attributes;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
@@ -40,7 +41,7 @@ namespace ResidentAppCross.Droid.Views
             base.Bind();
 
             TypeSelectionSection.Label.Text = "Request Type:";
-
+        
             var set = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
             set.Bind(TypeSelectionSection.Button)
                 .For(b => b.Text)
@@ -49,12 +50,13 @@ namespace ResidentAppCross.Droid.Views
 
             set.Bind(EntrancePermissionSection.Switch).For(s => s.Checked).TwoWay().To(vm => vm.EntrancePermission);
             set.Bind(TypeSelectionSection.Button).To(vm => vm.SelectRequestTypeCommand);
-            set.Bind(CommentsSection.TextInput).TwoWay().To(vm => vm.Comments);
+            set.Bind(CommentsSection.InputField).TwoWay().To(vm => vm.Comments);
             set.Apply();
 
             PetTypeSelection.BindToList(ViewModel.PetStatuses, i => i.Title, x => ViewModel.SelectedPetStatus = x.Id);
             PetTypeSelection.Label.Text = "Do you have a pet?";
 
+            PhotoSection.Editable = true;
 
             CommentsSection.HeaderLabel.Text = "Comments & Details:";
 
@@ -82,7 +84,71 @@ namespace ResidentAppCross.Droid.Views
     }
 
     [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
-    public class PropertyConfigForm : SectionViewFragment<PropertyConfigFormViewModel>, IOnMapReadyCallback
+    public class MaintenanceCheckinDetailsView : SectionViewFragment<MaintenanceCheckinDetailsViewModel>
+    {
+        public override int LayoutId => DefaultLayoutId;
+
+        public HeaderSection HeaderSection { get; set; }
+        public NoneditableTextSection CommentsSection { get; set; }
+        public GallerySection PhotoSection { get; set; }
+
+        public override void Bind()
+        {
+            base.Bind();
+
+            HeaderSection.TitleLabel.Text = "Maintenance Checkin";
+            CommentsSection.HeaderLabel.Text = "Comments & Details:";
+            CommentsSection.InputField.Text = ViewModel.Checkin.Comments;
+            HeaderSection.SubtitleLabel.Text = ViewModel.Checkin.StatusId;
+
+            PhotoSection.Bind(ViewModel.CheckinPhotos);
+        }
+
+
+        public override void GetContent(List<FragmentSection> sections)
+        {
+            base.GetContent(sections);
+            sections.Add(HeaderSection);
+            sections.Add(CommentsSection);
+            sections.Add(PhotoSection);
+        }
+    }
+
+    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
+    public class IncidentReportCheckinDetailsView : SectionViewFragment<IncidentReportCheckinDetailsViewModel>
+    {
+        public override int LayoutId => DefaultLayoutId;
+
+        public HeaderSection HeaderSection { get; set; }
+        public NoneditableTextSection CommentsSection { get; set; }
+        public GallerySection PhotoSection { get; set; }
+
+        public override void Bind()
+        {
+            base.Bind();
+
+            HeaderSection.TitleLabel.Text = "Incident Checkin";
+            CommentsSection.InputField.Text = ViewModel.Checkin.Comments;
+            HeaderSection.SubtitleLabel.Text = ViewModel.Checkin.StatusId;
+            CommentsSection.HeaderLabel.Text = "Comments & Details:";
+
+            PhotoSection.Bind(ViewModel.CheckinPhotos);
+
+        }
+
+
+        public override void GetContent(List<FragmentSection> sections)
+        {
+            base.GetContent(sections);
+            sections.Add(HeaderSection);
+            sections.Add(CommentsSection);
+            sections.Add(PhotoSection);
+        }
+    }
+
+
+    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
+    public class PropertyConfigFormView : SectionViewFragment<PropertyConfigFormViewModel>
     {
         public override int LayoutId => DefaultLayoutId;
 
@@ -94,7 +160,10 @@ namespace ResidentAppCross.Droid.Views
         public override void Bind()
         {
             base.Bind();
-            MapSection.Map.GetMapAsync(this);
+            MapSection.SetLifecycleProvider(this);
+            var invoker = new IOnMapReadyMonoInvoker();
+            invoker.MapReady += OnMapReady;
+            MapSection.Map.GetMapAsync(invoker);
         }
 
 
@@ -102,14 +171,33 @@ namespace ResidentAppCross.Droid.Views
         {
             base.GetContent(sections);
             sections.Add(HeaderSection);
-            sections.Add(MapSection);
+            if (Map != null) sections.Add(MapSection);
             sections.Add(TypeSelectionSection);
             sections.Add(ActionBar);
         }
 
         public void OnMapReady(GoogleMap googleMap)
         {
-            Console.WriteLine("blabla");
+            Map = googleMap;
+            googleMap.UiSettings.MyLocationButtonEnabled = false;
+            googleMap.MyLocationEnabled = true;
+
+            CameraUpdate cameraUpdate = CameraUpdateFactory.NewLatLngZoom(new LatLng(43.1, -87.9), 10);
+            googleMap.AnimateCamera(cameraUpdate);
+
+            RefreshContent();
+        }
+
+        public GoogleMap Map { get; set; }
+    }
+
+    public class IOnMapReadyMonoInvoker : Java.Lang.Object, IOnMapReadyCallback
+    {
+        public event Action<GoogleMap> MapReady;
+
+        public void OnMapReady(GoogleMap googleMap)
+        {
+            MapReady?.Invoke(googleMap);
         }
     }
 

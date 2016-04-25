@@ -7,7 +7,6 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Droid.Support.V7.Fragging.Fragments;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;

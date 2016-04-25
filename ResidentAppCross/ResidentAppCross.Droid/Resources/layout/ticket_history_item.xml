@@ -22,10 +22,8 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/IconView"
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/S_MaintenanceCalendar"
             app:riv_border_width="4dp"
             app:riv_oval="true"
             app:riv_border_color="@color/primary"

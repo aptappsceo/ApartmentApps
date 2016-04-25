@@ -193,8 +193,9 @@ namespace ResidentAppCross
 
         public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);
 
-        public string ProfileImageUrl => this._loginManager.UserInfo.ImageUrl;
-        public string Username => _loginManager.UserInfo.FullName;
+        public string ProfileImageUrl => this._loginManager?.UserInfo?.ImageUrl;
+        public string Username => _loginManager?.UserInfo?.FullName;
+        public string Email => _loginManager?.UserInfo?.Email;
     }
 
     public class UserInfoUpdated : MvxMessage

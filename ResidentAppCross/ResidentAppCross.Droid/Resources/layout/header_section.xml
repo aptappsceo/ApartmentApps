@@ -4,6 +4,7 @@
     android:orientation="vertical"
     tools:background="#aaaaaa"
     android:padding="@dimen/default_section_padding"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="72dp">
 
@@ -32,7 +33,7 @@
         android:textColor="@color/secondary_text_body" />
 
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/IconView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,7 +43,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/S_MaintenanceCalendar"
+        app:srcCompat="@drawable/maintenance_calendar_icon"
         android:tint="@color/primary_text_body"
         />
 

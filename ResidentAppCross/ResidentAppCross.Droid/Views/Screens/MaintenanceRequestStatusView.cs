@@ -28,7 +28,7 @@ namespace ResidentAppCross.Droid.Views
         
         public HeaderSection HeaderSection { get; set; }
         public TicketStatusSection TicketStatusSection { get; set; }
-        public TextSection CommentsSection { get; set; }
+        public NoneditableTextSection CommentsSection { get; set; }
         public GallerySection GallerySection { get; set; }
         public UnitInformationSection UnitInformationSection { get; set; }
         public ActionBarSection ActionBarSection { get; set; }
@@ -55,27 +55,35 @@ namespace ResidentAppCross.Droid.Views
             {
                 Items = ViewModel.Checkins,
                 TitleSelector = s => s.StatusId,
-                SubtitleSelector = s => s.Date?.ToString("g")
+                SubtitleSelector = s => s.Date?.ToString("g"),
+                ItemSelected = item =>
+                {
+                    ViewModel.SelectedCheckin = item;
+                    ViewModel.ShowCheckinDetailsCommand.Execute(null);
+                }
+
             });
 
 
             ModePager.Adapter = new TicketStatusViewPagerAdapter() { PagesLayout = Layout };
             ModeTabs.SetupWithViewPager(ModePager);
+            ModePager.SetCurrentItem(0, true);
+            ModePager.ScrollTo(0,0);
             ModeTabs.Invalidate();
 
             HeaderSection.TitleLabel.Text = "Maintenance Request";
-            HeaderSection.SubtitleLabel.Text = "Submitted 12.02.2016 12:20 AM";
+            HeaderSection.SubtitleLabel.Text = "";
 
             var set = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
 
             set.Bind(TicketStatusSection.TypeLabel).For(f => f.Text).To(vm => vm.Request.Name);
             set.Bind(TicketStatusSection.StatusLabel).For(f => f.Text).To(vm => vm.Request.Status);
             set.Bind(TicketStatusSection.CreatedOnLabel).For(f => f.Text).To(vm => vm.ScheduleDateLabel).WithFallback("-");
-            set.Bind(CommentsSection.TextInput).For(t => t.Text).To(vm => vm.Request.Message).WithFallback("-");
+            set.Bind(CommentsSection.InputField).For(t => t.Text).To(vm => vm.Request.Message).WithFallback("-");
             set.Bind(UnitInformationSection).For(s => s.AvatarUrl).To(vm => vm.Request.User.ImageUrl);
             set.Apply();
 
-            CommentsSection.TextInput.Focusable = false;
+            CommentsSection.InputField.Focusable = false;
 
             HistoryPage.SetLayoutManager(new LinearLayoutManager(Context,LinearLayoutManager.Vertical,false));
 
@@ -106,24 +114,20 @@ namespace ResidentAppCross.Droid.Views
 
         }
 
-        public override void OnDestroyView()
-        {
-            base.OnDestroyView();
-        }
 
         public override void GetContent(List<FragmentSection> sections)
         {
             base.GetContent(sections);
             sections.Add(HeaderSection);
             sections.Add(TicketStatusSection);
+            sections.Add(UnitInformationSection);
+            sections.Add(CommentsSection);
+            sections.Add(GallerySection);
             if (ViewModel.CanUpdateRequest)
             {
                 sections.Add(ActionBarSection);
             }
-            sections.Add(UnitInformationSection);
-            sections.Add(CommentsSection);
-            sections.Add(GallerySection);
-            
+
         }
     }
 
@@ -147,13 +151,13 @@ namespace ResidentAppCross.Droid.Views
 
 
             var set = this.CreateBindingSet<CheckinFormView, CheckinFormViewModel>();
-            set.Bind(CommentsSection.TextInput).TwoWay().To(vm => vm.Comments);
+            set.Bind(CommentsSection.InputField).TwoWay().To(vm => vm.Comments);
             set.Apply();
 
             CommentsSection.HeaderLabel.Text = "Comments & Details:";
 
             PhotoSection.Bind(ViewModel.Photos);
-
+            PhotoSection.Editable = true;
             ActionBar.SetItems(new ActionBarSection.ActionBarItem()
             {
                 Action = () => ViewModel.SubmitCheckinCommand.Execute(null),

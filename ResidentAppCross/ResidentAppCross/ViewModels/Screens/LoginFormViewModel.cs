@@ -74,7 +74,7 @@ namespace ResidentAppCross
                     }
                 })
                 .OnStart("Logging In...")
-                .OnComplete("Dis is werking, confirmed", () =>
+                .OnComplete(null, () =>
                 {
                     ShowViewModel<HomeMenuViewModel>();
                 });

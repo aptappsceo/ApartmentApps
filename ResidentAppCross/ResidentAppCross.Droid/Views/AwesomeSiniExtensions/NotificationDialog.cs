@@ -7,15 +7,176 @@ using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
+using Android.Support.Design.Widget;
+using Android.Support.V4.View;
+using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using Java.Lang;
+using Java.Util;
 using RecyclerViewAnimators.Animators;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Extensions;
+using Exception = System.Exception;
+using Object = System.Object;
 
 namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 {
+
+    public class XmlPagerAdapter : PagerAdapter
+    {
+        private List<XmlPagerAdapterItem> _items;
+
+        public View PagesLayout { get; set; }
+
+        public XmlPagerAdapter( View targetLayout, params XmlPagerAdapterItem[] items)
+        {
+            Items = items.ToList();
+            PagesLayout = targetLayout;
+        }
+
+        public List<XmlPagerAdapterItem> Items
+        {
+            get { return _items ?? (_items = new List<XmlPagerAdapterItem>()); }
+            set { _items = value; }
+        }
+
+        public override bool IsViewFromObject(View view, Java.Lang.Object objectValue)
+        {
+            return view == ((View)objectValue);
+        }
+
+        public override int Count => Items.Count;
+
+        public override ICharSequence GetPageTitleFormatted(int position)
+        {
+            return new Java.Lang.String(Items[position].Title);
+        }
+
+        public override Java.Lang.Object InstantiateItem(View container, int position)
+        {
+            return PagesLayout?.FindViewById(Items[position].Id);
+        }
+
+        public class XmlPagerAdapterItem
+        {
+            public int Id { get; set; }
+            public string Title { get; set; }
+        }
+
+
+    }
+
+    public class DateTimePickerDialog : DialogFragment, TimePicker.IOnTimeChangedListener, DatePicker.IOnDateChangedListener
+    {
+
+
+
+//        [Outlet]
+//        public TextViewCompat Label { get; set; }
+        [Outlet]
+        public TimePicker TimePicker { get; set; }
+        [Outlet]
+        public DatePicker DatePicker { get; set; }
+        [Outlet]
+        public Button ShowSelectDateButton { get; set; }
+        [Outlet]
+        public Button ConfirmButton { get; set; }
+        [Outlet]
+        public Button ShowSelectTimeButton { get; set; }
+        [Outlet]
+        public ViewPager DialogPager { get; set; }
+
+        public override void OnStart()
+        {
+            base.OnStart();
+            //Dialog?.Window?.SetBackgroundDrawable(new ColorDrawable(Color.Transparent));
+            //Dialog?.Window?.SetLayout(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+        }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            SetStyle(DialogFragmentStyle.Normal, Resource.Style.MyMaterialTheme);
+        }
+
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            CurrentContext = inflater.Context;
+            Layout = inflater.Inflate(Resource.Layout.date_time_picker_dialog, container, false);
+            Layout.LocateOutlets(this);
+            InitializeUI();
+            return Layout;
+        }
+
+        public View Layout { get; set; }
+
+        private void InitializeUI()
+        {
+
+            //            ModePager.Adapter = new XmlPagerAdapter(Layout,new);
+            //            ModeTabs.SetupWithViewPager(ModePager);
+            //            ModeTabs.Invalidate();
+            
+
+
+            DialogPager.Adapter = new XmlPagerAdapter(Layout, 
+            new XmlPagerAdapter.XmlPagerAdapterItem()
+            {
+                Id = Resource.Id.DatePage,
+                Title = "Date"
+            }, new XmlPagerAdapter.XmlPagerAdapterItem()
+            {
+                Id = Resource.Id.TimePage,
+                Title = "Time"
+            });
+
+
+            TimePicker.SetOnTimeChangedListener(this);
+
+
+
+            SelectedDate = DateTime.Now;
+            SelectedTime = new TimeSpan(SelectedDate.Hour,SelectedDate.Minute,0);
+
+            DatePicker.Init(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, this);
+
+
+            ShowSelectDateButton.Click += (sender, args) =>
+            {
+                DialogPager.SetCurrentItem(0, true);
+            };
+
+            ShowSelectTimeButton.Click += (sender, args) =>
+            {
+                DialogPager.SetCurrentItem(1, true);
+            };
+
+            ConfirmButton.Click += (sender, args) =>
+            {
+                var dateTime = SelectedDate + SelectedTime;
+                DateTimeSelected?.Invoke(dateTime);
+            };
+        }
+
+        public event Action<DateTime> DateTimeSelected;
+        public Context CurrentContext { get; set; }
+
+        public DateTime SelectedDate { get; set; }
+        public void OnTimeChanged(TimePicker view, int hourOfDay, int minute)
+        {
+
+            SelectedTime = new TimeSpan(hourOfDay,minute,0);
+        }
+
+        public TimeSpan SelectedTime { get; set; }
+        public void OnDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+        {
+            SelectedDate = view.DateTime;
+        }
+    }
+
     public class SearchDialog<T> : DialogFragment
     {
         private IList<T> _items;

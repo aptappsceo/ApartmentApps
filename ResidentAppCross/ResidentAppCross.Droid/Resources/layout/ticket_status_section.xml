@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="@dimen/default_section_padding"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <LinearLayout
         android:orientation="vertical"
         android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            app:srcCompat="@drawable/maintenance_calendar_icon"
+            android:layout_height="@dimen/ticket_status_line_height"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:drawablePadding="@dimen/ticket_status_icon_padding"
+            app:srcCompat="@drawable/maintenance_calendar_icon"
+            android:layout_height="@dimen/ticket_status_line_height" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/ticket_status_line_height"
+            app:srcCompat="@drawable/maintenance_calendar_icon"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:paddingStart="0dp"
         android:layout_width="wrap_content"
         android:minWidth="100dp"
         android:layout_height="wrap_content">
@@ -18,8 +43,6 @@
             android:text="Type"
             android:gravity="center"
             android:layout_height="@dimen/ticket_status_line_height"
-            android:drawablePadding="@dimen/ticket_status_icon_padding"
-            android:drawableLeft="@drawable/ic_android_black_24dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/abc_primary_text_material_light" />
 
@@ -27,9 +50,7 @@
             android:layout_width="wrap_content"
             android:text="Status"
             android:gravity="center"
-            android:drawablePadding="@dimen/ticket_status_icon_padding"
 
-            android:drawableLeft="@drawable/ic_android_black_24dp"
             android:layout_height="@dimen/ticket_status_line_height"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/abc_primary_text_material_light" />
@@ -38,9 +59,6 @@
             android:layout_width="wrap_content"
             android:text="Created"
             android:gravity="center"
-            android:drawablePadding="@dimen/ticket_status_icon_padding"
-
-            android:drawableLeft="@drawable/ic_android_black_24dp"
             android:layout_height="@dimen/ticket_status_line_height"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/abc_primary_text_material_light" />

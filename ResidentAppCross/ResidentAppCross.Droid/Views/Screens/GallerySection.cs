@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.Gms.Maps;
 using Android.Graphics;
+using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
@@ -13,11 +14,36 @@ using RecyclerViewAnimators.Adapters;
 using RecyclerViewAnimators.Animators;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
+using ResidentAppCross.Interfaces;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
 
 namespace ResidentAppCross.Droid.Views
 {
+
+    public static class MapViewExtensions
+    {
+        public static void BindLifecycleProvider<TDL>(this MapView map, TDL lifecycle)
+            where TDL : ILifecycleProvider, IDisposableContainer
+        {
+            map.OnCreate(Bundle.Empty);
+            lifecycle.DestroyEvent += map.OnDestroy;
+            lifecycle.PauseEvent += map.OnPause;
+            lifecycle.LowMemoryEvent += map.OnLowMemory;
+            lifecycle.ResumeEvent += map.OnResume;
+            lifecycle.SaveInstanceState += map.OnSaveInstanceState;
+            lifecycle.CreateEvent += map.OnCreate;
+            new Disposable(() =>
+            {
+                lifecycle.DestroyEvent -= map.OnDestroy;
+                lifecycle.PauseEvent -= map.OnPause;
+                lifecycle.LowMemoryEvent -= map.OnLowMemory;
+                lifecycle.ResumeEvent -= map.OnResume;
+                lifecycle.SaveInstanceState -= map.OnSaveInstanceState;
+                lifecycle.CreateEvent -= map.OnCreate;
+            }).DisposeWith(lifecycle);
+        }
+    }
 
     public class MapSection : FragmentSection
     {
@@ -25,10 +51,48 @@ namespace ResidentAppCross.Droid.Views
         public MapView Map { get; set; }
         [Outlet]
         public TextView Label { get; set; }
+
+
+        public void SetLifecycleProvider<TDL>(TDL lifecycle) where TDL : ILifecycleProvider, IDisposableContainer
+        {
+            Map.BindLifecycleProvider(lifecycle);
+        }
+
+        private void OnCreate(Bundle obj)
+        {
+            Map.OnCreate(obj);   
+        }
+
+        private void OnSaveInstance(Bundle obj)
+        {
+            Map.OnSaveInstanceState(obj);
+        }
+
+        private void OnResume()
+        {
+            Map.OnResume();
+        }
+
+        private void OnLowMemory()
+        {
+            Map.OnLowMemory();
+        }
+
+        private void OnPause()
+        {
+            Map.OnPause();
+        }
+
+        private void OnDestroy()
+        {
+            Map.OnDestroy();
+        }
     }
 
     public class GallerySection : FragmentSection
     {
+        private bool _editable;
+
         [Outlet]
         public ViewGroup GallerySectionEmptyContainer { get; set; }
 
@@ -49,15 +113,45 @@ namespace ResidentAppCross.Droid.Views
 
         public GallerySectionAdapter Adapter { get; set; }
 
-
+        public bool Editable
+        {
+            get { return _editable; }
+            set
+            {
+                _editable = value;
+                if (value)
+                {
+                    AddPhotoButton1.Visibility = AddPhotoButton2.Visibility = ViewStates.Visible;
+                }
+                else
+                {
+                    AddPhotoButton1.Visibility = AddPhotoButton2.Visibility = ViewStates.Invisible;
+                }
+            }
+        }
 
         public override void OnInflated()
         {
             base.OnInflated();
             Adapter = new GallerySectionAdapter();
+
+            Adapter.ItemSelected = (item) =>
+            {
+                if (item.Data != null)
+                {
+                    Mvx.Resolve<IDialogService>().OpenImageFullScreen(item.Data);
+                }
+                else if (item.Uri != null)
+                {
+                    Mvx.Resolve<IDialogService>().OpenImageFullScreenFromUrl(item.Uri.ToString());
+                }
+            };
             ImageContainer.SetItemAnimator(new SlideInUpAnimator());
             ImageContainer.SetLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.Horizontal));
             ImageContainer.SetAdapter(new SlideInLeftAnimationAdapter(Adapter));
+
+            Editable = false;
+
             UpdateContainers();
         }
 
@@ -76,6 +170,8 @@ namespace ResidentAppCross.Droid.Views
                 await AddPhoto();
             };
             vm.RawImages.CollectionChanged += (sender, args) => View.Post(UpdateContainers);
+
+         
 
         }
 
@@ -154,8 +250,15 @@ namespace ResidentAppCross.Droid.Views
             {
                 var item = new AsyncImageView(parent.Context) { UsageMode = AspectAwareImageView.ImageMeasureMode.HorisontalLayout }.WithHeightWrapContent().WithWidthWrapContent();
                 var viewHolder = new GenericViewHolder<AsyncImageView>(item);
+                item.Click += (sender, args) =>
+                {
+                    ItemSelected?.Invoke(Items[viewHolder.AdapterPosition]);
+                };
+
                 return viewHolder;
             }
+
+            public Action<ImageBundleItemViewModel> ItemSelected { get; set; }
 
             public override int ItemCount => Items?.Count ?? 0;
 

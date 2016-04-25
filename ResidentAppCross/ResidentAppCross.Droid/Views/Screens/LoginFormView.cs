@@ -8,18 +8,22 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Support.V4.View;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AndroidHUD;
+using ApartmentApps.Client.Models;
 using Java.Util;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.Platform;
 using MvvmCross.Droid.Shared.Attributes;
 using MvvmCross.Droid.Views;
+using RecyclerViewAnimators.Animators;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels;
+using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross.Droid.Views
 {
@@ -50,11 +54,39 @@ namespace ResidentAppCross.Droid.Views
         }
     }
 
+    [MvxFragment(typeof (ApplicationViewModel), Resource.Id.application_host_container_primary)]
+    public class NotificationIndexView : ViewFragment<NotificationIndexFormViewModel>
+    {
+
+        [Outlet] public RecyclerView NotificationContainer { get; set; }
+        public override void Bind()
+        {
+            base.Bind();
+            var adapter = new IconTitleBadgeListAdapter<AlertBindingModel>()
+            {
+                TitleSelector = i=>i.Title
+            };
+
+            adapter.Items = ViewModel.FilteredNotifications;
+            adapter.BindToCollection(ViewModel.FilteredNotifications);
+
+            adapter.ItemSelected += obj =>
+            {
+                ViewModel.SelectedNotification = obj;
+                ViewModel.OpenSelectedNotificationDetailsCommand.Execute(null);
+            };
+
+            NotificationContainer.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
+            NotificationContainer.SetItemAnimator(new SlideInLeftAnimator());
+            NotificationContainer.SetAdapter(adapter);
+
+        }
+
+    }
 
     [MvxFragment(typeof(ApplicationViewModel),Resource.Id.application_host_container_primary)]
     public class HomeMenuView : ViewFragment<HomeMenuViewModel>
     {
-
     }
 }
 

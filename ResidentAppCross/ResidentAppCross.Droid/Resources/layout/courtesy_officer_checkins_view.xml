@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/header_section"
+        android:id="@+id/HeaderSection"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        >
+    </include>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/Map"
+        tools:background="@color/primary"
+        android:layout_below="@id/HeaderSection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:text="SCAN QR CODE"
+        android:id="@+id/CheckinButton"
+        android:layout_alignBottom="@id/Map"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/accent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>

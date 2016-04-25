@@ -77,7 +77,36 @@ namespace ResidentAppCross.Droid.Views.Sections
 
         public Task<DateTime?> OpenDateTimeDialog(string title)
         {
-            throw new NotImplementedException();
+            return Task.Factory.StartNew(() =>
+            {
+
+                DateTime? result = null;
+
+
+                ManualResetEvent waitForCompleteEvent = new ManualResetEvent(false);
+
+                Dispatcher.RequestMainThreadAction(() => {
+
+                    var frag = new DateTimePickerDialog()
+                    {
+                    };
+
+                    frag.DateTimeSelected += obj =>
+                    {
+                        result = obj;
+                        waitForCompleteEvent.Set();
+                        frag.Dismiss();
+                    };
+
+                    frag.Show(CurrentTopActivity.FragmentManager, "Date Time Picker");
+
+                });
+
+                waitForCompleteEvent.WaitOne();
+                return result;
+
+            });
+
         }
 
         public Task<DateTime?> OpenDateDialog(string title)
@@ -87,7 +116,59 @@ namespace ResidentAppCross.Droid.Views.Sections
 
         public static int ImageDialogResult = 288823;
 
-        public async Task<byte[]> OpenImageDialog()
+        public Task<byte[]> OpenImageDialog()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+
+                byte[] result = null;
+
+                ManualResetEvent waitForCompleteEvent = new ManualResetEvent(false);
+
+                Dispatcher.RequestMainThreadAction(() => {
+
+                    var frag = new NotificationDialog();
+                    {
+
+                    };
+
+                    frag.SetActions(new NotificationDialogItem[]
+                    {
+                        new NotificationDialogItem()
+                        {
+                            Action = async () =>
+                            {
+                                result = await OpenImageTakeDialog();
+                                waitForCompleteEvent.Set();
+                            }, Title = "Take Photo",
+                            ShouldDismiss = true
+                        }, new NotificationDialogItem()
+                        {
+                            Action = async () =>
+                            {
+                                result = await OpenImagePickDialog();
+                                waitForCompleteEvent.Set();
+                            }, Title = "Select Photo",
+                            ShouldDismiss = true
+                        }, new NotificationDialogItem()
+                        {
+                            Action = ()=> { },
+                            Title = "Cancel",
+                            ShouldDismiss = true
+                        }, 
+                    });
+
+                    frag.Show(CurrentTopActivity.FragmentManager, "Image Pick Dialog");
+
+                });
+
+                waitForCompleteEvent.WaitOne();
+                return result;
+
+            });
+        }
+
+        public async Task<byte[]> OpenImagePickDialog()
         {
             var stream = await PictureChooserTask.ChoosePictureFromLibrary(1024, 62);
             if (stream == null) return null;
@@ -102,6 +183,24 @@ namespace ResidentAppCross.Droid.Views.Sections
                 return ms.ToArray();
             }
         }
+
+
+        public async Task<byte[]> OpenImageTakeDialog()
+        {
+            var stream = await PictureChooserTask.TakePicture(1024, 62);
+            if (stream == null) return null;
+            byte[] buffer = new byte[stream.Length];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
 
         public void OpenNotification(string title, string subtitle, string ok)
         {

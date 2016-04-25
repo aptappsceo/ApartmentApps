@@ -8,7 +8,7 @@ using Android.Support.V4.App;
 using AndroidHUD;
 using MvvmCross.Binding.Droid.Target;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Droid.Support.V7.Fragging;
+using MvvmCross.Droid.Support.V4;
 using MvvmCross.Droid.Views;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;

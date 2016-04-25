@@ -3,6 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/NavigationHeader"
     android:layout_width="match_parent"
     tools:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,40 +11,41 @@
     android:paddingTop="36dp"
     android:paddingBottom="16dp">
 
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/view2"
+    <de.hdodenhof.circleimageview.CircleImageView
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/AvatarView"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="8dp"
-        android:src="@drawable/AvatarPlaceholder"
-        app:riv_border_color="@color/window_background"
-        app:riv_border_width="8dp"
-        app:riv_corner_radius="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/avatar_placeholder"
         app:riv_oval="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/window_background"/>
 
-    <TextView
-        android:id="@+id/textView4"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/UsernameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Micah Osborne"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/primary_text"
-        android:layout_alignTop="@+id/view2"
-        android:layout_toEndOf="@+id/view2"
+        android:layout_alignTop="@+id/AvatarView"
+        android:layout_toEndOf="@+id/AvatarView"
         android:layout_marginTop="8dp" />
 
-    <TextView
-        android:id="@+id/textView5"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/EmailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="micahosborne@gmail.com"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="@color/primary_text"
-        android:layout_below="@+id/textView4"
-        android:layout_alignStart="@+id/textView4"
+        android:layout_below="@+id/UsernameLabel"
+        android:layout_alignStart="@+id/UsernameLabel"
         android:layout_marginTop="8dp" />
 
 </RelativeLayout>

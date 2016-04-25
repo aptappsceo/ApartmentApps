@@ -478,20 +478,20 @@ namespace ResidentAppCross.Droid.Views
             holder.IconView.MutatesBackground = false;
             if (Items.Count == 1)
             {
-                holder.IconView.SetBackgroundColor(Color.Transparent);
+                holder.IconView.SetImageResource(Color.Transparent);
                 //holder.IconView.SetImageResource();
             }
             else if (position == 0)
             {
-                holder.IconView.SetBackgroundResource(Resource.Drawable.TimelineTop);
+                holder.IconView.SetImageResource(Resource.Drawable.timeline_top);
             }
             else if (position == Items.Count-1)
             {
-                holder.IconView.SetBackgroundResource(Resource.Drawable.TimelineBottom);
+                holder.IconView.SetImageResource(Resource.Drawable.timeline_bottom);
             }
             else
             {
-                holder.IconView.SetBackgroundResource(Resource.Drawable.TimelineMid);
+                holder.IconView.SetImageResource(Resource.Drawable.timeline_mid);
             }
 
             //            if (Items.Count == 1)
@@ -523,8 +523,17 @@ namespace ResidentAppCross.Droid.Views
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             var ticketHistoryItemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.ticket_history_item, parent, false);
-            return new TicketHistoryItemViewHolder(ticketHistoryItemView);
+
+            var ticketHistoryItemViewHolder = new TicketHistoryItemViewHolder(ticketHistoryItemView);
+
+            ticketHistoryItemView.Click += (sender, args) =>
+            {
+                ItemSelected?.Invoke(Items[ticketHistoryItemViewHolder.AdapterPosition]);
+            };
+            return ticketHistoryItemViewHolder;
         }
+
+        public Action<T> ItemSelected { get; set; }
 
         public override int ItemCount => Items?.Count ?? 0;
 

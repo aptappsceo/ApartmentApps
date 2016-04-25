@@ -29,15 +29,22 @@ namespace ResidentAppCross.Droid.Views
                 {
                     if (i.LatestCheckin == null)
                     {
-                        return $"Reported: {i.Comments}";
+                        if (string.IsNullOrEmpty(i.Comments))
+                        {
+                            return $"Submitted with no comments";
+                        }
+                        else
+                        {
+                            return $"Submitted: {i.Comments?.Trim()}";
+                        }
                     }
-                    else if (string.IsNullOrEmpty(i.LatestCheckin.Comments.Trim()))
+                    else if (string.IsNullOrEmpty(i.LatestCheckin?.Comments))
                     {
                         return $"{i.StatusId} with no comments.";
                     }
                     else
                     {
-                        return $"{i.StatusId}: {i.LatestCheckin.Comments.Trim()}";
+                        return $"{i.StatusId}: {i.LatestCheckin?.Comments?.Trim()}";
                     }
                 },
                 DateSelector = i => i.LatestCheckin?.Date?.ToString("g") ?? i.RequestDate?.ToString("g") ?? "-"

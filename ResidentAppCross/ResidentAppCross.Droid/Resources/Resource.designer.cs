@@ -84,6 +84,1608 @@ namespace ResidentAppCross.Droid
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView;
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxBind = global::ResidentAppCross.Droid.Resource.Attribute.MvxBind;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxDropDownItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxGroupItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxLang = global::ResidentAppCross.Droid.Resource.Attribute.MvxLang;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxSource = global::ResidentAppCross.Droid.Resource.Attribute.MvxSource;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Id.MvvmCrossTagId = global::ResidentAppCross.Droid.Resource.Id.MvvmCrossTagId;
+			global::MvvmCross.Droid.FullFragging.Resource.Id.MvxBindingTagUnique = global::ResidentAppCross.Droid.Resource.Id.MvxBindingTagUnique;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxBinding = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxBinding_MvxBind = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding_MvxBind;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxBinding_MvxLang = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding_MvxLang;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxControl = global::ResidentAppCross.Droid.Resource.Styleable.MvxControl;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxControl_MvxTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxControl_MvxTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxExpandableListView = global::ResidentAppCross.Droid.Resource.Styleable.MvxExpandableListView;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxImageView = global::ResidentAppCross.Droid.Resource.Styleable.MvxImageView;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxImageView_MvxSource = global::ResidentAppCross.Droid.Resource.Styleable.MvxImageView_MvxSource;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxListView = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxListView_MvxItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.abc_fade_in = global::ResidentAppCross.Droid.Resource.Animation.abc_fade_in;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.abc_fade_out = global::ResidentAppCross.Droid.Resource.Animation.abc_fade_out;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.abc_grow_fade_in_from_bottom = global::ResidentAppCross.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.abc_popup_enter = global::ResidentAppCross.Droid.Resource.Animation.abc_popup_enter;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.abc_popup_exit = global::ResidentAppCross.Droid.Resource.Animation.abc_popup_exit;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.abc_shrink_fade_out_from_bottom = global::ResidentAppCross.Droid.Resource.Animation.abc_shrink_fade_out_from_bottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.abc_slide_in_bottom = global::ResidentAppCross.Droid.Resource.Animation.abc_slide_in_bottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.abc_slide_in_top = global::ResidentAppCross.Droid.Resource.Animation.abc_slide_in_top;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.abc_slide_out_bottom = global::ResidentAppCross.Droid.Resource.Animation.abc_slide_out_bottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.abc_slide_out_top = global::ResidentAppCross.Droid.Resource.Animation.abc_slide_out_top;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.design_bottom_sheet_slide_in = global::ResidentAppCross.Droid.Resource.Animation.design_bottom_sheet_slide_in;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.design_bottom_sheet_slide_out = global::ResidentAppCross.Droid.Resource.Animation.design_bottom_sheet_slide_out;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.design_fab_in = global::ResidentAppCross.Droid.Resource.Animation.design_fab_in;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.design_fab_out = global::ResidentAppCross.Droid.Resource.Animation.design_fab_out;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.design_snackbar_in = global::ResidentAppCross.Droid.Resource.Animation.design_snackbar_in;
+			global::MvvmCross.Droid.Support.Design.Resource.Animation.design_snackbar_out = global::ResidentAppCross.Droid.Resource.Animation.design_snackbar_out;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.MvxBind = global::ResidentAppCross.Droid.Resource.Attribute.MvxBind;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxDropDownItemTemplate;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxGroupItemTemplate;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.MvxItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxItemTemplate;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.MvxLang = global::ResidentAppCross.Droid.Resource.Attribute.MvxLang;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.MvxSource = global::ResidentAppCross.Droid.Resource.Attribute.MvxSource;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.MvxTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxTemplate;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarDivider = global::ResidentAppCross.Droid.Resource.Attribute.actionBarDivider;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarItemBackground = global::ResidentAppCross.Droid.Resource.Attribute.actionBarItemBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarPopupTheme = global::ResidentAppCross.Droid.Resource.Attribute.actionBarPopupTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarSize = global::ResidentAppCross.Droid.Resource.Attribute.actionBarSize;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarSplitStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionBarSplitStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarTabBarStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionBarTabBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarTabStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionBarTabStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarTabTextStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionBarTabTextStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarTheme = global::ResidentAppCross.Droid.Resource.Attribute.actionBarTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionBarWidgetTheme = global::ResidentAppCross.Droid.Resource.Attribute.actionBarWidgetTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionDropDownStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionDropDownStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionLayout = global::ResidentAppCross.Droid.Resource.Attribute.actionLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionMenuTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.actionMenuTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionMenuTextColor = global::ResidentAppCross.Droid.Resource.Attribute.actionMenuTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeBackground = global::ResidentAppCross.Droid.Resource.Attribute.actionModeBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeCloseButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionModeCloseButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeCloseDrawable = global::ResidentAppCross.Droid.Resource.Attribute.actionModeCloseDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeCopyDrawable = global::ResidentAppCross.Droid.Resource.Attribute.actionModeCopyDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeCutDrawable = global::ResidentAppCross.Droid.Resource.Attribute.actionModeCutDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeFindDrawable = global::ResidentAppCross.Droid.Resource.Attribute.actionModeFindDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModePasteDrawable = global::ResidentAppCross.Droid.Resource.Attribute.actionModePasteDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModePopupWindowStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionModePopupWindowStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeSelectAllDrawable = global::ResidentAppCross.Droid.Resource.Attribute.actionModeSelectAllDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeShareDrawable = global::ResidentAppCross.Droid.Resource.Attribute.actionModeShareDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeSplitBackground = global::ResidentAppCross.Droid.Resource.Attribute.actionModeSplitBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionModeStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionModeWebSearchDrawable = global::ResidentAppCross.Droid.Resource.Attribute.actionModeWebSearchDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionOverflowButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionOverflowButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionOverflowMenuStyle = global::ResidentAppCross.Droid.Resource.Attribute.actionOverflowMenuStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionProviderClass = global::ResidentAppCross.Droid.Resource.Attribute.actionProviderClass;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.actionViewClass = global::ResidentAppCross.Droid.Resource.Attribute.actionViewClass;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.activityChooserViewStyle = global::ResidentAppCross.Droid.Resource.Attribute.activityChooserViewStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.alertDialogButtonGroupStyle = global::ResidentAppCross.Droid.Resource.Attribute.alertDialogButtonGroupStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.alertDialogCenterButtons = global::ResidentAppCross.Droid.Resource.Attribute.alertDialogCenterButtons;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.alertDialogStyle = global::ResidentAppCross.Droid.Resource.Attribute.alertDialogStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.alertDialogTheme = global::ResidentAppCross.Droid.Resource.Attribute.alertDialogTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.allowStacking = global::ResidentAppCross.Droid.Resource.Attribute.allowStacking;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.arrowHeadLength = global::ResidentAppCross.Droid.Resource.Attribute.arrowHeadLength;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.arrowShaftLength = global::ResidentAppCross.Droid.Resource.Attribute.arrowShaftLength;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.autoCompleteTextViewStyle = global::ResidentAppCross.Droid.Resource.Attribute.autoCompleteTextViewStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.background = global::ResidentAppCross.Droid.Resource.Attribute.background;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.backgroundSplit = global::ResidentAppCross.Droid.Resource.Attribute.backgroundSplit;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.backgroundStacked = global::ResidentAppCross.Droid.Resource.Attribute.backgroundStacked;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.backgroundTint = global::ResidentAppCross.Droid.Resource.Attribute.backgroundTint;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.backgroundTintMode = global::ResidentAppCross.Droid.Resource.Attribute.backgroundTintMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.barLength = global::ResidentAppCross.Droid.Resource.Attribute.barLength;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.behavior_hideable = global::ResidentAppCross.Droid.Resource.Attribute.behavior_hideable;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.behavior_overlapTop = global::ResidentAppCross.Droid.Resource.Attribute.behavior_overlapTop;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.behavior_peekHeight = global::ResidentAppCross.Droid.Resource.Attribute.behavior_peekHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.borderWidth = global::ResidentAppCross.Droid.Resource.Attribute.borderWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.borderlessButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.borderlessButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.bottomSheetDialogTheme = global::ResidentAppCross.Droid.Resource.Attribute.bottomSheetDialogTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.bottomSheetStyle = global::ResidentAppCross.Droid.Resource.Attribute.bottomSheetStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.buttonBarButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.buttonBarButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.buttonBarNegativeButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.buttonBarNegativeButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.buttonBarNeutralButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.buttonBarNeutralButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.buttonBarPositiveButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.buttonBarPositiveButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.buttonBarStyle = global::ResidentAppCross.Droid.Resource.Attribute.buttonBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.buttonPanelSideLayout = global::ResidentAppCross.Droid.Resource.Attribute.buttonPanelSideLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.buttonStyle = global::ResidentAppCross.Droid.Resource.Attribute.buttonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.buttonStyleSmall = global::ResidentAppCross.Droid.Resource.Attribute.buttonStyleSmall;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.buttonTint = global::ResidentAppCross.Droid.Resource.Attribute.buttonTint;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.buttonTintMode = global::ResidentAppCross.Droid.Resource.Attribute.buttonTintMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.checkboxStyle = global::ResidentAppCross.Droid.Resource.Attribute.checkboxStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.checkedTextViewStyle = global::ResidentAppCross.Droid.Resource.Attribute.checkedTextViewStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.closeIcon = global::ResidentAppCross.Droid.Resource.Attribute.closeIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.closeItemLayout = global::ResidentAppCross.Droid.Resource.Attribute.closeItemLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.collapseContentDescription = global::ResidentAppCross.Droid.Resource.Attribute.collapseContentDescription;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.collapseIcon = global::ResidentAppCross.Droid.Resource.Attribute.collapseIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.collapsedTitleGravity = global::ResidentAppCross.Droid.Resource.Attribute.collapsedTitleGravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.collapsedTitleTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.collapsedTitleTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.color = global::ResidentAppCross.Droid.Resource.Attribute.color;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.colorAccent = global::ResidentAppCross.Droid.Resource.Attribute.colorAccent;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.colorButtonNormal = global::ResidentAppCross.Droid.Resource.Attribute.colorButtonNormal;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.colorControlActivated = global::ResidentAppCross.Droid.Resource.Attribute.colorControlActivated;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.colorControlHighlight = global::ResidentAppCross.Droid.Resource.Attribute.colorControlHighlight;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.colorControlNormal = global::ResidentAppCross.Droid.Resource.Attribute.colorControlNormal;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.colorPrimary = global::ResidentAppCross.Droid.Resource.Attribute.colorPrimary;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.colorPrimaryDark = global::ResidentAppCross.Droid.Resource.Attribute.colorPrimaryDark;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.colorSwitchThumbNormal = global::ResidentAppCross.Droid.Resource.Attribute.colorSwitchThumbNormal;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.commitIcon = global::ResidentAppCross.Droid.Resource.Attribute.commitIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.contentInsetEnd = global::ResidentAppCross.Droid.Resource.Attribute.contentInsetEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.contentInsetLeft = global::ResidentAppCross.Droid.Resource.Attribute.contentInsetLeft;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.contentInsetRight = global::ResidentAppCross.Droid.Resource.Attribute.contentInsetRight;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.contentInsetStart = global::ResidentAppCross.Droid.Resource.Attribute.contentInsetStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.contentScrim = global::ResidentAppCross.Droid.Resource.Attribute.contentScrim;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.controlBackground = global::ResidentAppCross.Droid.Resource.Attribute.controlBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.counterEnabled = global::ResidentAppCross.Droid.Resource.Attribute.counterEnabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.counterMaxLength = global::ResidentAppCross.Droid.Resource.Attribute.counterMaxLength;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.counterOverflowTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.counterOverflowTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.counterTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.counterTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.customNavigationLayout = global::ResidentAppCross.Droid.Resource.Attribute.customNavigationLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.defaultQueryHint = global::ResidentAppCross.Droid.Resource.Attribute.defaultQueryHint;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.dialogPreferredPadding = global::ResidentAppCross.Droid.Resource.Attribute.dialogPreferredPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.dialogTheme = global::ResidentAppCross.Droid.Resource.Attribute.dialogTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.displayOptions = global::ResidentAppCross.Droid.Resource.Attribute.displayOptions;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.divider = global::ResidentAppCross.Droid.Resource.Attribute.divider;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.dividerHorizontal = global::ResidentAppCross.Droid.Resource.Attribute.dividerHorizontal;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.dividerPadding = global::ResidentAppCross.Droid.Resource.Attribute.dividerPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.dividerVertical = global::ResidentAppCross.Droid.Resource.Attribute.dividerVertical;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.drawableSize = global::ResidentAppCross.Droid.Resource.Attribute.drawableSize;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.drawerArrowStyle = global::ResidentAppCross.Droid.Resource.Attribute.drawerArrowStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.dropDownListViewStyle = global::ResidentAppCross.Droid.Resource.Attribute.dropDownListViewStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.dropdownListPreferredItemHeight = global::ResidentAppCross.Droid.Resource.Attribute.dropdownListPreferredItemHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.editTextBackground = global::ResidentAppCross.Droid.Resource.Attribute.editTextBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.editTextColor = global::ResidentAppCross.Droid.Resource.Attribute.editTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.editTextStyle = global::ResidentAppCross.Droid.Resource.Attribute.editTextStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.elevation = global::ResidentAppCross.Droid.Resource.Attribute.elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.errorEnabled = global::ResidentAppCross.Droid.Resource.Attribute.errorEnabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.errorTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.errorTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.expandActivityOverflowButtonDrawable = global::ResidentAppCross.Droid.Resource.Attribute.expandActivityOverflowButtonDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.expanded = global::ResidentAppCross.Droid.Resource.Attribute.expanded;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.expandedTitleGravity = global::ResidentAppCross.Droid.Resource.Attribute.expandedTitleGravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.expandedTitleMargin = global::ResidentAppCross.Droid.Resource.Attribute.expandedTitleMargin;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.expandedTitleMarginBottom = global::ResidentAppCross.Droid.Resource.Attribute.expandedTitleMarginBottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.expandedTitleMarginEnd = global::ResidentAppCross.Droid.Resource.Attribute.expandedTitleMarginEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.expandedTitleMarginStart = global::ResidentAppCross.Droid.Resource.Attribute.expandedTitleMarginStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.expandedTitleMarginTop = global::ResidentAppCross.Droid.Resource.Attribute.expandedTitleMarginTop;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.expandedTitleTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.expandedTitleTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.fabSize = global::ResidentAppCross.Droid.Resource.Attribute.fabSize;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.foregroundInsidePadding = global::ResidentAppCross.Droid.Resource.Attribute.foregroundInsidePadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.gapBetweenBars = global::ResidentAppCross.Droid.Resource.Attribute.gapBetweenBars;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.goIcon = global::ResidentAppCross.Droid.Resource.Attribute.goIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.headerLayout = global::ResidentAppCross.Droid.Resource.Attribute.headerLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.height = global::ResidentAppCross.Droid.Resource.Attribute.height;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.hideOnContentScroll = global::ResidentAppCross.Droid.Resource.Attribute.hideOnContentScroll;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.hintAnimationEnabled = global::ResidentAppCross.Droid.Resource.Attribute.hintAnimationEnabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.hintEnabled = global::ResidentAppCross.Droid.Resource.Attribute.hintEnabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.hintTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.hintTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.homeAsUpIndicator = global::ResidentAppCross.Droid.Resource.Attribute.homeAsUpIndicator;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.homeLayout = global::ResidentAppCross.Droid.Resource.Attribute.homeLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.icon = global::ResidentAppCross.Droid.Resource.Attribute.icon;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.iconifiedByDefault = global::ResidentAppCross.Droid.Resource.Attribute.iconifiedByDefault;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.imageButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.imageButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.indeterminateProgressStyle = global::ResidentAppCross.Droid.Resource.Attribute.indeterminateProgressStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.initialActivityCount = global::ResidentAppCross.Droid.Resource.Attribute.initialActivityCount;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.insetForeground = global::ResidentAppCross.Droid.Resource.Attribute.insetForeground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.isLightTheme = global::ResidentAppCross.Droid.Resource.Attribute.isLightTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.itemBackground = global::ResidentAppCross.Droid.Resource.Attribute.itemBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.itemIconTint = global::ResidentAppCross.Droid.Resource.Attribute.itemIconTint;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.itemPadding = global::ResidentAppCross.Droid.Resource.Attribute.itemPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.itemTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.itemTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.itemTextColor = global::ResidentAppCross.Droid.Resource.Attribute.itemTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.keylines = global::ResidentAppCross.Droid.Resource.Attribute.keylines;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.layout = global::ResidentAppCross.Droid.Resource.Attribute.layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.layoutManager = global::ResidentAppCross.Droid.Resource.Attribute.layoutManager;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.layout_anchor = global::ResidentAppCross.Droid.Resource.Attribute.layout_anchor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.layout_anchorGravity = global::ResidentAppCross.Droid.Resource.Attribute.layout_anchorGravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.layout_behavior = global::ResidentAppCross.Droid.Resource.Attribute.layout_behavior;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.layout_collapseMode = global::ResidentAppCross.Droid.Resource.Attribute.layout_collapseMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.layout_collapseParallaxMultiplier = global::ResidentAppCross.Droid.Resource.Attribute.layout_collapseParallaxMultiplier;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.layout_keyline = global::ResidentAppCross.Droid.Resource.Attribute.layout_keyline;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.layout_scrollFlags = global::ResidentAppCross.Droid.Resource.Attribute.layout_scrollFlags;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.layout_scrollInterpolator = global::ResidentAppCross.Droid.Resource.Attribute.layout_scrollInterpolator;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.listChoiceBackgroundIndicator = global::ResidentAppCross.Droid.Resource.Attribute.listChoiceBackgroundIndicator;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.listDividerAlertDialog = global::ResidentAppCross.Droid.Resource.Attribute.listDividerAlertDialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.listItemLayout = global::ResidentAppCross.Droid.Resource.Attribute.listItemLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.listLayout = global::ResidentAppCross.Droid.Resource.Attribute.listLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.listPopupWindowStyle = global::ResidentAppCross.Droid.Resource.Attribute.listPopupWindowStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.listPreferredItemHeight = global::ResidentAppCross.Droid.Resource.Attribute.listPreferredItemHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.listPreferredItemHeightLarge = global::ResidentAppCross.Droid.Resource.Attribute.listPreferredItemHeightLarge;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.listPreferredItemHeightSmall = global::ResidentAppCross.Droid.Resource.Attribute.listPreferredItemHeightSmall;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.listPreferredItemPaddingLeft = global::ResidentAppCross.Droid.Resource.Attribute.listPreferredItemPaddingLeft;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.listPreferredItemPaddingRight = global::ResidentAppCross.Droid.Resource.Attribute.listPreferredItemPaddingRight;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.logo = global::ResidentAppCross.Droid.Resource.Attribute.logo;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.logoDescription = global::ResidentAppCross.Droid.Resource.Attribute.logoDescription;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.maxActionInlineWidth = global::ResidentAppCross.Droid.Resource.Attribute.maxActionInlineWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.maxButtonHeight = global::ResidentAppCross.Droid.Resource.Attribute.maxButtonHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.measureWithLargestChild = global::ResidentAppCross.Droid.Resource.Attribute.measureWithLargestChild;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.menu = global::ResidentAppCross.Droid.Resource.Attribute.menu;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.multiChoiceItemLayout = global::ResidentAppCross.Droid.Resource.Attribute.multiChoiceItemLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.navigationContentDescription = global::ResidentAppCross.Droid.Resource.Attribute.navigationContentDescription;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.navigationIcon = global::ResidentAppCross.Droid.Resource.Attribute.navigationIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.navigationMode = global::ResidentAppCross.Droid.Resource.Attribute.navigationMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.overlapAnchor = global::ResidentAppCross.Droid.Resource.Attribute.overlapAnchor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.paddingEnd = global::ResidentAppCross.Droid.Resource.Attribute.paddingEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.paddingStart = global::ResidentAppCross.Droid.Resource.Attribute.paddingStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.panelBackground = global::ResidentAppCross.Droid.Resource.Attribute.panelBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.panelMenuListTheme = global::ResidentAppCross.Droid.Resource.Attribute.panelMenuListTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.panelMenuListWidth = global::ResidentAppCross.Droid.Resource.Attribute.panelMenuListWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.popupMenuStyle = global::ResidentAppCross.Droid.Resource.Attribute.popupMenuStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.popupTheme = global::ResidentAppCross.Droid.Resource.Attribute.popupTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.popupWindowStyle = global::ResidentAppCross.Droid.Resource.Attribute.popupWindowStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.preserveIconSpacing = global::ResidentAppCross.Droid.Resource.Attribute.preserveIconSpacing;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.pressedTranslationZ = global::ResidentAppCross.Droid.Resource.Attribute.pressedTranslationZ;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.progressBarPadding = global::ResidentAppCross.Droid.Resource.Attribute.progressBarPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.progressBarStyle = global::ResidentAppCross.Droid.Resource.Attribute.progressBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.queryBackground = global::ResidentAppCross.Droid.Resource.Attribute.queryBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.queryHint = global::ResidentAppCross.Droid.Resource.Attribute.queryHint;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.radioButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.radioButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.ratingBarStyle = global::ResidentAppCross.Droid.Resource.Attribute.ratingBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.ratingBarStyleIndicator = global::ResidentAppCross.Droid.Resource.Attribute.ratingBarStyleIndicator;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.ratingBarStyleSmall = global::ResidentAppCross.Droid.Resource.Attribute.ratingBarStyleSmall;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.reverseLayout = global::ResidentAppCross.Droid.Resource.Attribute.reverseLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.rippleColor = global::ResidentAppCross.Droid.Resource.Attribute.rippleColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.searchHintIcon = global::ResidentAppCross.Droid.Resource.Attribute.searchHintIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.searchIcon = global::ResidentAppCross.Droid.Resource.Attribute.searchIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.searchViewStyle = global::ResidentAppCross.Droid.Resource.Attribute.searchViewStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.seekBarStyle = global::ResidentAppCross.Droid.Resource.Attribute.seekBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.selectableItemBackground = global::ResidentAppCross.Droid.Resource.Attribute.selectableItemBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.selectableItemBackgroundBorderless = global::ResidentAppCross.Droid.Resource.Attribute.selectableItemBackgroundBorderless;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.showAsAction = global::ResidentAppCross.Droid.Resource.Attribute.showAsAction;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.showDividers = global::ResidentAppCross.Droid.Resource.Attribute.showDividers;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.showText = global::ResidentAppCross.Droid.Resource.Attribute.showText;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.singleChoiceItemLayout = global::ResidentAppCross.Droid.Resource.Attribute.singleChoiceItemLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.spanCount = global::ResidentAppCross.Droid.Resource.Attribute.spanCount;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.spinBars = global::ResidentAppCross.Droid.Resource.Attribute.spinBars;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.spinnerDropDownItemStyle = global::ResidentAppCross.Droid.Resource.Attribute.spinnerDropDownItemStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.spinnerStyle = global::ResidentAppCross.Droid.Resource.Attribute.spinnerStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.splitTrack = global::ResidentAppCross.Droid.Resource.Attribute.splitTrack;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.srcCompat = global::ResidentAppCross.Droid.Resource.Attribute.srcCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.stackFromEnd = global::ResidentAppCross.Droid.Resource.Attribute.stackFromEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.state_above_anchor = global::ResidentAppCross.Droid.Resource.Attribute.state_above_anchor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.statusBarBackground = global::ResidentAppCross.Droid.Resource.Attribute.statusBarBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.statusBarScrim = global::ResidentAppCross.Droid.Resource.Attribute.statusBarScrim;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.submitBackground = global::ResidentAppCross.Droid.Resource.Attribute.submitBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.subtitle = global::ResidentAppCross.Droid.Resource.Attribute.subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.subtitleTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.subtitleTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.subtitleTextColor = global::ResidentAppCross.Droid.Resource.Attribute.subtitleTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.subtitleTextStyle = global::ResidentAppCross.Droid.Resource.Attribute.subtitleTextStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.suggestionRowLayout = global::ResidentAppCross.Droid.Resource.Attribute.suggestionRowLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.switchMinWidth = global::ResidentAppCross.Droid.Resource.Attribute.switchMinWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.switchPadding = global::ResidentAppCross.Droid.Resource.Attribute.switchPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.switchStyle = global::ResidentAppCross.Droid.Resource.Attribute.switchStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.switchTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.switchTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabBackground = global::ResidentAppCross.Droid.Resource.Attribute.tabBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabContentStart = global::ResidentAppCross.Droid.Resource.Attribute.tabContentStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabGravity = global::ResidentAppCross.Droid.Resource.Attribute.tabGravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabIndicatorColor = global::ResidentAppCross.Droid.Resource.Attribute.tabIndicatorColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabIndicatorHeight = global::ResidentAppCross.Droid.Resource.Attribute.tabIndicatorHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabMaxWidth = global::ResidentAppCross.Droid.Resource.Attribute.tabMaxWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabMinWidth = global::ResidentAppCross.Droid.Resource.Attribute.tabMinWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabMode = global::ResidentAppCross.Droid.Resource.Attribute.tabMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabPadding = global::ResidentAppCross.Droid.Resource.Attribute.tabPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabPaddingBottom = global::ResidentAppCross.Droid.Resource.Attribute.tabPaddingBottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabPaddingEnd = global::ResidentAppCross.Droid.Resource.Attribute.tabPaddingEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabPaddingStart = global::ResidentAppCross.Droid.Resource.Attribute.tabPaddingStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabPaddingTop = global::ResidentAppCross.Droid.Resource.Attribute.tabPaddingTop;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabSelectedTextColor = global::ResidentAppCross.Droid.Resource.Attribute.tabSelectedTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.tabTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.tabTextColor = global::ResidentAppCross.Droid.Resource.Attribute.tabTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.textAllCaps = global::ResidentAppCross.Droid.Resource.Attribute.textAllCaps;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.textAppearanceLargePopupMenu = global::ResidentAppCross.Droid.Resource.Attribute.textAppearanceLargePopupMenu;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.textAppearanceListItem = global::ResidentAppCross.Droid.Resource.Attribute.textAppearanceListItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.textAppearanceListItemSmall = global::ResidentAppCross.Droid.Resource.Attribute.textAppearanceListItemSmall;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.textAppearanceSearchResultSubtitle = global::ResidentAppCross.Droid.Resource.Attribute.textAppearanceSearchResultSubtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.textAppearanceSearchResultTitle = global::ResidentAppCross.Droid.Resource.Attribute.textAppearanceSearchResultTitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.textAppearanceSmallPopupMenu = global::ResidentAppCross.Droid.Resource.Attribute.textAppearanceSmallPopupMenu;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.textColorAlertDialogListItem = global::ResidentAppCross.Droid.Resource.Attribute.textColorAlertDialogListItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.textColorError = global::ResidentAppCross.Droid.Resource.Attribute.textColorError;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.textColorSearchUrl = global::ResidentAppCross.Droid.Resource.Attribute.textColorSearchUrl;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.theme = global::ResidentAppCross.Droid.Resource.Attribute.theme;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.thickness = global::ResidentAppCross.Droid.Resource.Attribute.thickness;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.thumbTextPadding = global::ResidentAppCross.Droid.Resource.Attribute.thumbTextPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.title = global::ResidentAppCross.Droid.Resource.Attribute.title;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.titleEnabled = global::ResidentAppCross.Droid.Resource.Attribute.titleEnabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.titleMarginBottom = global::ResidentAppCross.Droid.Resource.Attribute.titleMarginBottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.titleMarginEnd = global::ResidentAppCross.Droid.Resource.Attribute.titleMarginEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.titleMarginStart = global::ResidentAppCross.Droid.Resource.Attribute.titleMarginStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.titleMarginTop = global::ResidentAppCross.Droid.Resource.Attribute.titleMarginTop;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.titleMargins = global::ResidentAppCross.Droid.Resource.Attribute.titleMargins;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.titleTextAppearance = global::ResidentAppCross.Droid.Resource.Attribute.titleTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.titleTextColor = global::ResidentAppCross.Droid.Resource.Attribute.titleTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.titleTextStyle = global::ResidentAppCross.Droid.Resource.Attribute.titleTextStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.toolbarId = global::ResidentAppCross.Droid.Resource.Attribute.toolbarId;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.toolbarNavigationButtonStyle = global::ResidentAppCross.Droid.Resource.Attribute.toolbarNavigationButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.toolbarStyle = global::ResidentAppCross.Droid.Resource.Attribute.toolbarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.track = global::ResidentAppCross.Droid.Resource.Attribute.track;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.useCompatPadding = global::ResidentAppCross.Droid.Resource.Attribute.useCompatPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.voiceIcon = global::ResidentAppCross.Droid.Resource.Attribute.voiceIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.windowActionBar = global::ResidentAppCross.Droid.Resource.Attribute.windowActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.windowActionBarOverlay = global::ResidentAppCross.Droid.Resource.Attribute.windowActionBarOverlay;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.windowActionModeOverlay = global::ResidentAppCross.Droid.Resource.Attribute.windowActionModeOverlay;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.windowFixedHeightMajor = global::ResidentAppCross.Droid.Resource.Attribute.windowFixedHeightMajor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.windowFixedHeightMinor = global::ResidentAppCross.Droid.Resource.Attribute.windowFixedHeightMinor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.windowFixedWidthMajor = global::ResidentAppCross.Droid.Resource.Attribute.windowFixedWidthMajor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.windowFixedWidthMinor = global::ResidentAppCross.Droid.Resource.Attribute.windowFixedWidthMinor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.windowMinWidthMajor = global::ResidentAppCross.Droid.Resource.Attribute.windowMinWidthMajor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.windowMinWidthMinor = global::ResidentAppCross.Droid.Resource.Attribute.windowMinWidthMinor;
+			global::MvvmCross.Droid.Support.Design.Resource.Attribute.windowNoTitle = global::ResidentAppCross.Droid.Resource.Attribute.windowNoTitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Boolean.abc_action_bar_embed_tabs = global::ResidentAppCross.Droid.Resource.Boolean.abc_action_bar_embed_tabs;
+			global::MvvmCross.Droid.Support.Design.Resource.Boolean.abc_action_bar_embed_tabs_pre_jb = global::ResidentAppCross.Droid.Resource.Boolean.abc_action_bar_embed_tabs_pre_jb;
+			global::MvvmCross.Droid.Support.Design.Resource.Boolean.abc_action_bar_expanded_action_views_exclusive = global::ResidentAppCross.Droid.Resource.Boolean.abc_action_bar_expanded_action_views_exclusive;
+			global::MvvmCross.Droid.Support.Design.Resource.Boolean.abc_allow_stacked_button_bar = global::ResidentAppCross.Droid.Resource.Boolean.abc_allow_stacked_button_bar;
+			global::MvvmCross.Droid.Support.Design.Resource.Boolean.abc_config_actionMenuItemAllCaps = global::ResidentAppCross.Droid.Resource.Boolean.abc_config_actionMenuItemAllCaps;
+			global::MvvmCross.Droid.Support.Design.Resource.Boolean.abc_config_allowActionMenuItemTextWithIcon = global::ResidentAppCross.Droid.Resource.Boolean.abc_config_allowActionMenuItemTextWithIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Boolean.abc_config_closeDialogWhenTouchOutside = global::ResidentAppCross.Droid.Resource.Boolean.abc_config_closeDialogWhenTouchOutside;
+			global::MvvmCross.Droid.Support.Design.Resource.Boolean.abc_config_showMenuShortcutsWhenKeyboardPresent = global::ResidentAppCross.Droid.Resource.Boolean.abc_config_showMenuShortcutsWhenKeyboardPresent;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_background_cache_hint_selector_material_dark = global::ResidentAppCross.Droid.Resource.Color.abc_background_cache_hint_selector_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_background_cache_hint_selector_material_light = global::ResidentAppCross.Droid.Resource.Color.abc_background_cache_hint_selector_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_color_highlight_material = global::ResidentAppCross.Droid.Resource.Color.abc_color_highlight_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_input_method_navigation_guard = global::ResidentAppCross.Droid.Resource.Color.abc_input_method_navigation_guard;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_primary_text_disable_only_material_dark = global::ResidentAppCross.Droid.Resource.Color.abc_primary_text_disable_only_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_primary_text_disable_only_material_light = global::ResidentAppCross.Droid.Resource.Color.abc_primary_text_disable_only_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_primary_text_material_dark = global::ResidentAppCross.Droid.Resource.Color.abc_primary_text_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_primary_text_material_light = global::ResidentAppCross.Droid.Resource.Color.abc_primary_text_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_search_url_text = global::ResidentAppCross.Droid.Resource.Color.abc_search_url_text;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_search_url_text_normal = global::ResidentAppCross.Droid.Resource.Color.abc_search_url_text_normal;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_search_url_text_pressed = global::ResidentAppCross.Droid.Resource.Color.abc_search_url_text_pressed;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_search_url_text_selected = global::ResidentAppCross.Droid.Resource.Color.abc_search_url_text_selected;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_secondary_text_material_dark = global::ResidentAppCross.Droid.Resource.Color.abc_secondary_text_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.abc_secondary_text_material_light = global::ResidentAppCross.Droid.Resource.Color.abc_secondary_text_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.accent_material_dark = global::ResidentAppCross.Droid.Resource.Color.accent_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.accent_material_light = global::ResidentAppCross.Droid.Resource.Color.accent_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.background_floating_material_dark = global::ResidentAppCross.Droid.Resource.Color.background_floating_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.background_floating_material_light = global::ResidentAppCross.Droid.Resource.Color.background_floating_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.background_material_dark = global::ResidentAppCross.Droid.Resource.Color.background_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.background_material_light = global::ResidentAppCross.Droid.Resource.Color.background_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.bright_foreground_disabled_material_dark = global::ResidentAppCross.Droid.Resource.Color.bright_foreground_disabled_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.bright_foreground_disabled_material_light = global::ResidentAppCross.Droid.Resource.Color.bright_foreground_disabled_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.bright_foreground_inverse_material_dark = global::ResidentAppCross.Droid.Resource.Color.bright_foreground_inverse_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.bright_foreground_inverse_material_light = global::ResidentAppCross.Droid.Resource.Color.bright_foreground_inverse_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.bright_foreground_material_dark = global::ResidentAppCross.Droid.Resource.Color.bright_foreground_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.bright_foreground_material_light = global::ResidentAppCross.Droid.Resource.Color.bright_foreground_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.button_material_dark = global::ResidentAppCross.Droid.Resource.Color.button_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.button_material_light = global::ResidentAppCross.Droid.Resource.Color.button_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.design_fab_shadow_end_color = global::ResidentAppCross.Droid.Resource.Color.design_fab_shadow_end_color;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.design_fab_shadow_mid_color = global::ResidentAppCross.Droid.Resource.Color.design_fab_shadow_mid_color;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.design_fab_shadow_start_color = global::ResidentAppCross.Droid.Resource.Color.design_fab_shadow_start_color;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.design_fab_stroke_end_inner_color = global::ResidentAppCross.Droid.Resource.Color.design_fab_stroke_end_inner_color;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.design_fab_stroke_end_outer_color = global::ResidentAppCross.Droid.Resource.Color.design_fab_stroke_end_outer_color;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.design_fab_stroke_top_inner_color = global::ResidentAppCross.Droid.Resource.Color.design_fab_stroke_top_inner_color;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.design_fab_stroke_top_outer_color = global::ResidentAppCross.Droid.Resource.Color.design_fab_stroke_top_outer_color;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.design_snackbar_background_color = global::ResidentAppCross.Droid.Resource.Color.design_snackbar_background_color;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.design_textinput_error_color_dark = global::ResidentAppCross.Droid.Resource.Color.design_textinput_error_color_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.design_textinput_error_color_light = global::ResidentAppCross.Droid.Resource.Color.design_textinput_error_color_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.dim_foreground_disabled_material_dark = global::ResidentAppCross.Droid.Resource.Color.dim_foreground_disabled_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.dim_foreground_disabled_material_light = global::ResidentAppCross.Droid.Resource.Color.dim_foreground_disabled_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.dim_foreground_material_dark = global::ResidentAppCross.Droid.Resource.Color.dim_foreground_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.dim_foreground_material_light = global::ResidentAppCross.Droid.Resource.Color.dim_foreground_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.foreground_material_dark = global::ResidentAppCross.Droid.Resource.Color.foreground_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.foreground_material_light = global::ResidentAppCross.Droid.Resource.Color.foreground_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.highlighted_text_material_dark = global::ResidentAppCross.Droid.Resource.Color.highlighted_text_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.highlighted_text_material_light = global::ResidentAppCross.Droid.Resource.Color.highlighted_text_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.hint_foreground_material_dark = global::ResidentAppCross.Droid.Resource.Color.hint_foreground_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.hint_foreground_material_light = global::ResidentAppCross.Droid.Resource.Color.hint_foreground_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_blue_grey_800 = global::ResidentAppCross.Droid.Resource.Color.material_blue_grey_800;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_blue_grey_900 = global::ResidentAppCross.Droid.Resource.Color.material_blue_grey_900;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_blue_grey_950 = global::ResidentAppCross.Droid.Resource.Color.material_blue_grey_950;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_deep_teal_200 = global::ResidentAppCross.Droid.Resource.Color.material_deep_teal_200;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_deep_teal_500 = global::ResidentAppCross.Droid.Resource.Color.material_deep_teal_500;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_grey_100 = global::ResidentAppCross.Droid.Resource.Color.material_grey_100;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_grey_300 = global::ResidentAppCross.Droid.Resource.Color.material_grey_300;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_grey_50 = global::ResidentAppCross.Droid.Resource.Color.material_grey_50;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_grey_600 = global::ResidentAppCross.Droid.Resource.Color.material_grey_600;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_grey_800 = global::ResidentAppCross.Droid.Resource.Color.material_grey_800;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_grey_850 = global::ResidentAppCross.Droid.Resource.Color.material_grey_850;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.material_grey_900 = global::ResidentAppCross.Droid.Resource.Color.material_grey_900;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.primary_dark_material_dark = global::ResidentAppCross.Droid.Resource.Color.primary_dark_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.primary_dark_material_light = global::ResidentAppCross.Droid.Resource.Color.primary_dark_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.primary_material_dark = global::ResidentAppCross.Droid.Resource.Color.primary_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.primary_material_light = global::ResidentAppCross.Droid.Resource.Color.primary_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.primary_text_default_material_dark = global::ResidentAppCross.Droid.Resource.Color.primary_text_default_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.primary_text_default_material_light = global::ResidentAppCross.Droid.Resource.Color.primary_text_default_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.primary_text_disabled_material_dark = global::ResidentAppCross.Droid.Resource.Color.primary_text_disabled_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.primary_text_disabled_material_light = global::ResidentAppCross.Droid.Resource.Color.primary_text_disabled_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.ripple_material_dark = global::ResidentAppCross.Droid.Resource.Color.ripple_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.ripple_material_light = global::ResidentAppCross.Droid.Resource.Color.ripple_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.secondary_text_default_material_dark = global::ResidentAppCross.Droid.Resource.Color.secondary_text_default_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.secondary_text_default_material_light = global::ResidentAppCross.Droid.Resource.Color.secondary_text_default_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.secondary_text_disabled_material_dark = global::ResidentAppCross.Droid.Resource.Color.secondary_text_disabled_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.secondary_text_disabled_material_light = global::ResidentAppCross.Droid.Resource.Color.secondary_text_disabled_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.switch_thumb_disabled_material_dark = global::ResidentAppCross.Droid.Resource.Color.switch_thumb_disabled_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.switch_thumb_disabled_material_light = global::ResidentAppCross.Droid.Resource.Color.switch_thumb_disabled_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.switch_thumb_material_dark = global::ResidentAppCross.Droid.Resource.Color.switch_thumb_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.switch_thumb_material_light = global::ResidentAppCross.Droid.Resource.Color.switch_thumb_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.switch_thumb_normal_material_dark = global::ResidentAppCross.Droid.Resource.Color.switch_thumb_normal_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Color.switch_thumb_normal_material_light = global::ResidentAppCross.Droid.Resource.Color.switch_thumb_normal_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_content_inset_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_content_inset_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_default_height_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_default_height_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_default_padding_end_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_default_padding_end_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_default_padding_start_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_default_padding_start_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_icon_vertical_padding_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_icon_vertical_padding_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_overflow_padding_end_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_overflow_padding_end_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_overflow_padding_start_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_overflow_padding_start_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_progress_bar_size = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_progress_bar_size;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_stacked_max_height = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_stacked_max_height;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_stacked_tab_max_width = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_stacked_tab_max_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_subtitle_bottom_margin_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_subtitle_bottom_margin_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_bar_subtitle_top_margin_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_bar_subtitle_top_margin_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_button_min_height_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_button_min_height_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_button_min_width_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_button_min_width_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_action_button_min_width_overflow_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_action_button_min_width_overflow_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_alert_dialog_button_bar_height = global::ResidentAppCross.Droid.Resource.Dimension.abc_alert_dialog_button_bar_height;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_button_inset_horizontal_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_button_inset_horizontal_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_button_inset_vertical_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_button_inset_vertical_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_button_padding_horizontal_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_button_padding_horizontal_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_button_padding_vertical_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_button_padding_vertical_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_config_prefDialogWidth = global::ResidentAppCross.Droid.Resource.Dimension.abc_config_prefDialogWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_control_corner_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_control_corner_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_control_inset_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_control_inset_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_control_padding_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_control_padding_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dialog_fixed_height_major = global::ResidentAppCross.Droid.Resource.Dimension.abc_dialog_fixed_height_major;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dialog_fixed_height_minor = global::ResidentAppCross.Droid.Resource.Dimension.abc_dialog_fixed_height_minor;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dialog_fixed_width_major = global::ResidentAppCross.Droid.Resource.Dimension.abc_dialog_fixed_width_major;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dialog_fixed_width_minor = global::ResidentAppCross.Droid.Resource.Dimension.abc_dialog_fixed_width_minor;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dialog_list_padding_vertical_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_dialog_list_padding_vertical_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dialog_min_width_major = global::ResidentAppCross.Droid.Resource.Dimension.abc_dialog_min_width_major;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dialog_min_width_minor = global::ResidentAppCross.Droid.Resource.Dimension.abc_dialog_min_width_minor;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dialog_padding_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_dialog_padding_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dialog_padding_top_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_dialog_padding_top_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_disabled_alpha_material_dark = global::ResidentAppCross.Droid.Resource.Dimension.abc_disabled_alpha_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_disabled_alpha_material_light = global::ResidentAppCross.Droid.Resource.Dimension.abc_disabled_alpha_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dropdownitem_icon_width = global::ResidentAppCross.Droid.Resource.Dimension.abc_dropdownitem_icon_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dropdownitem_text_padding_left = global::ResidentAppCross.Droid.Resource.Dimension.abc_dropdownitem_text_padding_left;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_dropdownitem_text_padding_right = global::ResidentAppCross.Droid.Resource.Dimension.abc_dropdownitem_text_padding_right;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_edit_text_inset_bottom_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_edit_text_inset_bottom_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_edit_text_inset_horizontal_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_edit_text_inset_horizontal_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_edit_text_inset_top_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_edit_text_inset_top_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_floating_window_z = global::ResidentAppCross.Droid.Resource.Dimension.abc_floating_window_z;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_list_item_padding_horizontal_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_list_item_padding_horizontal_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_panel_menu_list_width = global::ResidentAppCross.Droid.Resource.Dimension.abc_panel_menu_list_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_search_view_preferred_width = global::ResidentAppCross.Droid.Resource.Dimension.abc_search_view_preferred_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_search_view_text_min_width = global::ResidentAppCross.Droid.Resource.Dimension.abc_search_view_text_min_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_seekbar_track_background_height_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_seekbar_track_background_height_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_seekbar_track_progress_height_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_seekbar_track_progress_height_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_select_dialog_padding_start_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_select_dialog_padding_start_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_switch_padding = global::ResidentAppCross.Droid.Resource.Dimension.abc_switch_padding;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_body_1_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_body_1_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_body_2_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_body_2_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_button_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_button_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_caption_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_caption_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_display_1_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_display_1_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_display_2_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_display_2_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_display_3_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_display_3_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_display_4_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_display_4_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_headline_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_headline_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_large_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_large_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_medium_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_medium_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_menu_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_menu_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_small_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_small_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_subhead_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_subhead_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_subtitle_material_toolbar = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_subtitle_material_toolbar;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_title_material = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_title_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.abc_text_size_title_material_toolbar = global::ResidentAppCross.Droid.Resource.Dimension.abc_text_size_title_material_toolbar;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_appbar_elevation = global::ResidentAppCross.Droid.Resource.Dimension.design_appbar_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_bottom_sheet_modal_elevation = global::ResidentAppCross.Droid.Resource.Dimension.design_bottom_sheet_modal_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_bottom_sheet_modal_peek_height = global::ResidentAppCross.Droid.Resource.Dimension.design_bottom_sheet_modal_peek_height;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_fab_border_width = global::ResidentAppCross.Droid.Resource.Dimension.design_fab_border_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_fab_elevation = global::ResidentAppCross.Droid.Resource.Dimension.design_fab_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_fab_image_size = global::ResidentAppCross.Droid.Resource.Dimension.design_fab_image_size;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_fab_size_mini = global::ResidentAppCross.Droid.Resource.Dimension.design_fab_size_mini;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_fab_size_normal = global::ResidentAppCross.Droid.Resource.Dimension.design_fab_size_normal;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_fab_translation_z_pressed = global::ResidentAppCross.Droid.Resource.Dimension.design_fab_translation_z_pressed;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_navigation_elevation = global::ResidentAppCross.Droid.Resource.Dimension.design_navigation_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_navigation_icon_padding = global::ResidentAppCross.Droid.Resource.Dimension.design_navigation_icon_padding;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_navigation_icon_size = global::ResidentAppCross.Droid.Resource.Dimension.design_navigation_icon_size;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_navigation_max_width = global::ResidentAppCross.Droid.Resource.Dimension.design_navigation_max_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_navigation_padding_bottom = global::ResidentAppCross.Droid.Resource.Dimension.design_navigation_padding_bottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_navigation_separator_vertical_padding = global::ResidentAppCross.Droid.Resource.Dimension.design_navigation_separator_vertical_padding;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_snackbar_action_inline_max_width = global::ResidentAppCross.Droid.Resource.Dimension.design_snackbar_action_inline_max_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_snackbar_background_corner_radius = global::ResidentAppCross.Droid.Resource.Dimension.design_snackbar_background_corner_radius;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_snackbar_elevation = global::ResidentAppCross.Droid.Resource.Dimension.design_snackbar_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_snackbar_extra_spacing_horizontal = global::ResidentAppCross.Droid.Resource.Dimension.design_snackbar_extra_spacing_horizontal;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_snackbar_max_width = global::ResidentAppCross.Droid.Resource.Dimension.design_snackbar_max_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_snackbar_min_width = global::ResidentAppCross.Droid.Resource.Dimension.design_snackbar_min_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_snackbar_padding_horizontal = global::ResidentAppCross.Droid.Resource.Dimension.design_snackbar_padding_horizontal;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_snackbar_padding_vertical = global::ResidentAppCross.Droid.Resource.Dimension.design_snackbar_padding_vertical;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_snackbar_padding_vertical_2lines = global::ResidentAppCross.Droid.Resource.Dimension.design_snackbar_padding_vertical_2lines;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_snackbar_text_size = global::ResidentAppCross.Droid.Resource.Dimension.design_snackbar_text_size;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_tab_max_width = global::ResidentAppCross.Droid.Resource.Dimension.design_tab_max_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_tab_scrollable_min_width = global::ResidentAppCross.Droid.Resource.Dimension.design_tab_scrollable_min_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_tab_text_size = global::ResidentAppCross.Droid.Resource.Dimension.design_tab_text_size;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.design_tab_text_size_2line = global::ResidentAppCross.Droid.Resource.Dimension.design_tab_text_size_2line;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.disabled_alpha_material_dark = global::ResidentAppCross.Droid.Resource.Dimension.disabled_alpha_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.disabled_alpha_material_light = global::ResidentAppCross.Droid.Resource.Dimension.disabled_alpha_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.highlight_alpha_material_colored = global::ResidentAppCross.Droid.Resource.Dimension.highlight_alpha_material_colored;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.highlight_alpha_material_dark = global::ResidentAppCross.Droid.Resource.Dimension.highlight_alpha_material_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.highlight_alpha_material_light = global::ResidentAppCross.Droid.Resource.Dimension.highlight_alpha_material_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame = global::ResidentAppCross.Droid.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity = global::ResidentAppCross.Droid.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.item_touch_helper_swipe_escape_velocity = global::ResidentAppCross.Droid.Resource.Dimension.item_touch_helper_swipe_escape_velocity;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.notification_large_icon_height = global::ResidentAppCross.Droid.Resource.Dimension.notification_large_icon_height;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.notification_large_icon_width = global::ResidentAppCross.Droid.Resource.Dimension.notification_large_icon_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Dimension.notification_subtext_size = global::ResidentAppCross.Droid.Resource.Dimension.notification_subtext_size;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ab_share_pack_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ab_share_pack_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_action_bar_item_background_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_action_bar_item_background_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_borderless_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_borderless_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_check_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_check_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_check_to_on_mtrl_000 = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_000;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_check_to_on_mtrl_015 = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_015;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_colored_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_colored_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_default_mtrl_shape = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_default_mtrl_shape;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_radio_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_radio_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_radio_to_on_mtrl_000 = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_000;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_radio_to_on_mtrl_015 = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_015;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_rating_star_off_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_rating_star_off_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_rating_star_on_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_rating_star_on_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001 = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_btn_switch_to_on_mtrl_00012 = global::ResidentAppCross.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00012;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_cab_background_internal_bg = global::ResidentAppCross.Droid.Resource.Drawable.abc_cab_background_internal_bg;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_cab_background_top_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_cab_background_top_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_cab_background_top_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_cab_background_top_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_control_background_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_control_background_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_dialog_material_background_dark = global::ResidentAppCross.Droid.Resource.Drawable.abc_dialog_material_background_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_dialog_material_background_light = global::ResidentAppCross.Droid.Resource.Drawable.abc_dialog_material_background_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_edit_text_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_edit_text_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_ab_back_mtrl_am_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_ab_back_mtrl_am_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_clear_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_clear_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_commit_search_api_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_commit_search_api_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_go_search_api_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_go_search_api_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_menu_copy_mtrl_am_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_menu_copy_mtrl_am_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_menu_cut_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_menu_cut_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_menu_moreoverflow_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_menu_moreoverflow_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_menu_paste_mtrl_am_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_menu_paste_mtrl_am_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_menu_selectall_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_menu_selectall_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_menu_share_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_menu_share_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_search_api_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_search_api_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_star_black_16dp = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_star_black_16dp;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_star_black_36dp = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_star_black_36dp;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_star_half_black_16dp = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_star_half_black_16dp;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_star_half_black_36dp = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_star_half_black_36dp;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ic_voice_search_api_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_ic_voice_search_api_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_item_background_holo_dark = global::ResidentAppCross.Droid.Resource.Drawable.abc_item_background_holo_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_item_background_holo_light = global::ResidentAppCross.Droid.Resource.Drawable.abc_item_background_holo_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_divider_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_divider_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_focused_holo = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_focused_holo;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_longpressed_holo = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_longpressed_holo;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_pressed_holo_dark = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_pressed_holo_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_pressed_holo_light = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_pressed_holo_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_selector_background_transition_holo_dark = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_selector_background_transition_holo_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_selector_background_transition_holo_light = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_selector_background_transition_holo_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_selector_disabled_holo_dark = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_selector_disabled_holo_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_selector_disabled_holo_light = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_selector_disabled_holo_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_selector_holo_dark = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_selector_holo_dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_list_selector_holo_light = global::ResidentAppCross.Droid.Resource.Drawable.abc_list_selector_holo_light;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_menu_hardkey_panel_mtrl_mult = global::ResidentAppCross.Droid.Resource.Drawable.abc_menu_hardkey_panel_mtrl_mult;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_popup_background_mtrl_mult = global::ResidentAppCross.Droid.Resource.Drawable.abc_popup_background_mtrl_mult;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ratingbar_full_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_ratingbar_full_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ratingbar_indicator_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_ratingbar_indicator_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_ratingbar_small_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_ratingbar_small_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_scrubber_control_off_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_scrubber_control_off_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_000 = global::ResidentAppCross.Droid.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_000;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_005 = global::ResidentAppCross.Droid.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_005;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_scrubber_primary_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_scrubber_primary_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_scrubber_track_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_scrubber_track_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_seekbar_thumb_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_seekbar_thumb_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_seekbar_track_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_seekbar_track_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_spinner_mtrl_am_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_spinner_mtrl_am_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_spinner_textfield_background_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_spinner_textfield_background_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_switch_thumb_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_switch_thumb_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_switch_track_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_switch_track_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_tab_indicator_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_tab_indicator_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_tab_indicator_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_tab_indicator_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_text_cursor_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_text_cursor_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_textfield_activated_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_textfield_activated_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_textfield_default_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_textfield_default_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_textfield_search_activated_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_textfield_search_activated_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_textfield_search_default_mtrl_alpha = global::ResidentAppCross.Droid.Resource.Drawable.abc_textfield_search_default_mtrl_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.abc_textfield_search_material = global::ResidentAppCross.Droid.Resource.Drawable.abc_textfield_search_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.design_fab_background = global::ResidentAppCross.Droid.Resource.Drawable.design_fab_background;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.design_snackbar_background = global::ResidentAppCross.Droid.Resource.Drawable.design_snackbar_background;
+			global::MvvmCross.Droid.Support.Design.Resource.Drawable.notification_template_icon_bg = global::ResidentAppCross.Droid.Resource.Drawable.notification_template_icon_bg;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.MvvmCrossTagId = global::ResidentAppCross.Droid.Resource.Id.MvvmCrossTagId;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.MvxBindingTagUnique = global::ResidentAppCross.Droid.Resource.Id.MvxBindingTagUnique;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action0 = global::ResidentAppCross.Droid.Resource.Id.action0;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_bar = global::ResidentAppCross.Droid.Resource.Id.action_bar;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_bar_activity_content = global::ResidentAppCross.Droid.Resource.Id.action_bar_activity_content;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_bar_container = global::ResidentAppCross.Droid.Resource.Id.action_bar_container;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_bar_root = global::ResidentAppCross.Droid.Resource.Id.action_bar_root;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_bar_spinner = global::ResidentAppCross.Droid.Resource.Id.action_bar_spinner;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_bar_subtitle = global::ResidentAppCross.Droid.Resource.Id.action_bar_subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_bar_title = global::ResidentAppCross.Droid.Resource.Id.action_bar_title;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_context_bar = global::ResidentAppCross.Droid.Resource.Id.action_context_bar;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_divider = global::ResidentAppCross.Droid.Resource.Id.action_divider;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_menu_divider = global::ResidentAppCross.Droid.Resource.Id.action_menu_divider;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_menu_presenter = global::ResidentAppCross.Droid.Resource.Id.action_menu_presenter;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_mode_bar = global::ResidentAppCross.Droid.Resource.Id.action_mode_bar;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_mode_bar_stub = global::ResidentAppCross.Droid.Resource.Id.action_mode_bar_stub;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.action_mode_close_button = global::ResidentAppCross.Droid.Resource.Id.action_mode_close_button;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.activity_chooser_view_content = global::ResidentAppCross.Droid.Resource.Id.activity_chooser_view_content;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.alertTitle = global::ResidentAppCross.Droid.Resource.Id.alertTitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.always = global::ResidentAppCross.Droid.Resource.Id.always;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.beginning = global::ResidentAppCross.Droid.Resource.Id.beginning;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.bottom = global::ResidentAppCross.Droid.Resource.Id.bottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.buttonPanel = global::ResidentAppCross.Droid.Resource.Id.buttonPanel;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.cancel_action = global::ResidentAppCross.Droid.Resource.Id.cancel_action;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.center = global::ResidentAppCross.Droid.Resource.Id.center;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.center_horizontal = global::ResidentAppCross.Droid.Resource.Id.center_horizontal;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.center_vertical = global::ResidentAppCross.Droid.Resource.Id.center_vertical;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.checkbox = global::ResidentAppCross.Droid.Resource.Id.checkbox;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.chronometer = global::ResidentAppCross.Droid.Resource.Id.chronometer;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.clip_horizontal = global::ResidentAppCross.Droid.Resource.Id.clip_horizontal;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.clip_vertical = global::ResidentAppCross.Droid.Resource.Id.clip_vertical;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.collapseActionView = global::ResidentAppCross.Droid.Resource.Id.collapseActionView;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.contentPanel = global::ResidentAppCross.Droid.Resource.Id.contentPanel;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.custom = global::ResidentAppCross.Droid.Resource.Id.custom;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.customPanel = global::ResidentAppCross.Droid.Resource.Id.customPanel;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.decor_content_parent = global::ResidentAppCross.Droid.Resource.Id.decor_content_parent;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.default_activity_button = global::ResidentAppCross.Droid.Resource.Id.default_activity_button;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.design_bottom_sheet = global::ResidentAppCross.Droid.Resource.Id.design_bottom_sheet;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.design_menu_item_action_area = global::ResidentAppCross.Droid.Resource.Id.design_menu_item_action_area;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.design_menu_item_action_area_stub = global::ResidentAppCross.Droid.Resource.Id.design_menu_item_action_area_stub;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.design_menu_item_text = global::ResidentAppCross.Droid.Resource.Id.design_menu_item_text;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.design_navigation_view = global::ResidentAppCross.Droid.Resource.Id.design_navigation_view;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.disableHome = global::ResidentAppCross.Droid.Resource.Id.disableHome;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.edit_query = global::ResidentAppCross.Droid.Resource.Id.edit_query;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.end = global::ResidentAppCross.Droid.Resource.Id.end;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.end_padder = global::ResidentAppCross.Droid.Resource.Id.end_padder;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.enterAlways = global::ResidentAppCross.Droid.Resource.Id.enterAlways;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.enterAlwaysCollapsed = global::ResidentAppCross.Droid.Resource.Id.enterAlwaysCollapsed;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.exitUntilCollapsed = global::ResidentAppCross.Droid.Resource.Id.exitUntilCollapsed;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.expand_activities_button = global::ResidentAppCross.Droid.Resource.Id.expand_activities_button;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.expanded_menu = global::ResidentAppCross.Droid.Resource.Id.expanded_menu;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.fill = global::ResidentAppCross.Droid.Resource.Id.fill;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.fill_horizontal = global::ResidentAppCross.Droid.Resource.Id.fill_horizontal;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.fill_vertical = global::ResidentAppCross.Droid.Resource.Id.fill_vertical;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.@fixed = global::ResidentAppCross.Droid.Resource.Id.@fixed;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.home = global::ResidentAppCross.Droid.Resource.Id.home;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.homeAsUp = global::ResidentAppCross.Droid.Resource.Id.homeAsUp;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.icon = global::ResidentAppCross.Droid.Resource.Id.icon;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.ifRoom = global::ResidentAppCross.Droid.Resource.Id.ifRoom;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.image = global::ResidentAppCross.Droid.Resource.Id.image;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.info = global::ResidentAppCross.Droid.Resource.Id.info;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.item_touch_helper_previous_elevation = global::ResidentAppCross.Droid.Resource.Id.item_touch_helper_previous_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.left = global::ResidentAppCross.Droid.Resource.Id.left;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.line1 = global::ResidentAppCross.Droid.Resource.Id.line1;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.line3 = global::ResidentAppCross.Droid.Resource.Id.line3;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.listMode = global::ResidentAppCross.Droid.Resource.Id.listMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.list_item = global::ResidentAppCross.Droid.Resource.Id.list_item;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.media_actions = global::ResidentAppCross.Droid.Resource.Id.media_actions;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.middle = global::ResidentAppCross.Droid.Resource.Id.middle;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.mini = global::ResidentAppCross.Droid.Resource.Id.mini;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.multiply = global::ResidentAppCross.Droid.Resource.Id.multiply;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.navigation_header_container = global::ResidentAppCross.Droid.Resource.Id.navigation_header_container;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.never = global::ResidentAppCross.Droid.Resource.Id.never;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.none = global::ResidentAppCross.Droid.Resource.Id.none;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.normal = global::ResidentAppCross.Droid.Resource.Id.normal;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.parallax = global::ResidentAppCross.Droid.Resource.Id.parallax;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.parentPanel = global::ResidentAppCross.Droid.Resource.Id.parentPanel;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.pin = global::ResidentAppCross.Droid.Resource.Id.pin;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.progress_circular = global::ResidentAppCross.Droid.Resource.Id.progress_circular;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.progress_horizontal = global::ResidentAppCross.Droid.Resource.Id.progress_horizontal;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.radio = global::ResidentAppCross.Droid.Resource.Id.radio;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.right = global::ResidentAppCross.Droid.Resource.Id.right;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.screen = global::ResidentAppCross.Droid.Resource.Id.screen;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.scroll = global::ResidentAppCross.Droid.Resource.Id.scroll;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.scrollIndicatorDown = global::ResidentAppCross.Droid.Resource.Id.scrollIndicatorDown;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.scrollIndicatorUp = global::ResidentAppCross.Droid.Resource.Id.scrollIndicatorUp;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.scrollView = global::ResidentAppCross.Droid.Resource.Id.scrollView;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.scrollable = global::ResidentAppCross.Droid.Resource.Id.scrollable;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.search_badge = global::ResidentAppCross.Droid.Resource.Id.search_badge;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.search_bar = global::ResidentAppCross.Droid.Resource.Id.search_bar;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.search_button = global::ResidentAppCross.Droid.Resource.Id.search_button;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.search_close_btn = global::ResidentAppCross.Droid.Resource.Id.search_close_btn;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.search_edit_frame = global::ResidentAppCross.Droid.Resource.Id.search_edit_frame;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.search_go_btn = global::ResidentAppCross.Droid.Resource.Id.search_go_btn;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.search_mag_icon = global::ResidentAppCross.Droid.Resource.Id.search_mag_icon;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.search_plate = global::ResidentAppCross.Droid.Resource.Id.search_plate;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.search_src_text = global::ResidentAppCross.Droid.Resource.Id.search_src_text;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.search_voice_btn = global::ResidentAppCross.Droid.Resource.Id.search_voice_btn;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.select_dialog_listview = global::ResidentAppCross.Droid.Resource.Id.select_dialog_listview;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.shortcut = global::ResidentAppCross.Droid.Resource.Id.shortcut;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.showCustom = global::ResidentAppCross.Droid.Resource.Id.showCustom;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.showHome = global::ResidentAppCross.Droid.Resource.Id.showHome;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.showTitle = global::ResidentAppCross.Droid.Resource.Id.showTitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.snackbar_action = global::ResidentAppCross.Droid.Resource.Id.snackbar_action;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.snackbar_text = global::ResidentAppCross.Droid.Resource.Id.snackbar_text;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.snap = global::ResidentAppCross.Droid.Resource.Id.snap;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.spacer = global::ResidentAppCross.Droid.Resource.Id.spacer;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.split_action_bar = global::ResidentAppCross.Droid.Resource.Id.split_action_bar;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.src_atop = global::ResidentAppCross.Droid.Resource.Id.src_atop;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.src_in = global::ResidentAppCross.Droid.Resource.Id.src_in;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.src_over = global::ResidentAppCross.Droid.Resource.Id.src_over;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.start = global::ResidentAppCross.Droid.Resource.Id.start;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.status_bar_latest_event_content = global::ResidentAppCross.Droid.Resource.Id.status_bar_latest_event_content;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.submit_area = global::ResidentAppCross.Droid.Resource.Id.submit_area;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.tabMode = global::ResidentAppCross.Droid.Resource.Id.tabMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.text = global::ResidentAppCross.Droid.Resource.Id.text;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.text2 = global::ResidentAppCross.Droid.Resource.Id.text2;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.textSpacerNoButtons = global::ResidentAppCross.Droid.Resource.Id.textSpacerNoButtons;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.time = global::ResidentAppCross.Droid.Resource.Id.time;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.title = global::ResidentAppCross.Droid.Resource.Id.title;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.title_template = global::ResidentAppCross.Droid.Resource.Id.title_template;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.top = global::ResidentAppCross.Droid.Resource.Id.top;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.topPanel = global::ResidentAppCross.Droid.Resource.Id.topPanel;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.touch_outside = global::ResidentAppCross.Droid.Resource.Id.touch_outside;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.up = global::ResidentAppCross.Droid.Resource.Id.up;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.useLogo = global::ResidentAppCross.Droid.Resource.Id.useLogo;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.view_offset_helper = global::ResidentAppCross.Droid.Resource.Id.view_offset_helper;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.withText = global::ResidentAppCross.Droid.Resource.Id.withText;
+			global::MvvmCross.Droid.Support.Design.Resource.Id.wrap_content = global::ResidentAppCross.Droid.Resource.Id.wrap_content;
+			global::MvvmCross.Droid.Support.Design.Resource.Integer.abc_config_activityDefaultDur = global::ResidentAppCross.Droid.Resource.Integer.abc_config_activityDefaultDur;
+			global::MvvmCross.Droid.Support.Design.Resource.Integer.abc_config_activityShortDur = global::ResidentAppCross.Droid.Resource.Integer.abc_config_activityShortDur;
+			global::MvvmCross.Droid.Support.Design.Resource.Integer.abc_max_action_buttons = global::ResidentAppCross.Droid.Resource.Integer.abc_max_action_buttons;
+			global::MvvmCross.Droid.Support.Design.Resource.Integer.bottom_sheet_slide_duration = global::ResidentAppCross.Droid.Resource.Integer.bottom_sheet_slide_duration;
+			global::MvvmCross.Droid.Support.Design.Resource.Integer.cancel_button_image_alpha = global::ResidentAppCross.Droid.Resource.Integer.cancel_button_image_alpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Integer.design_snackbar_text_max_lines = global::ResidentAppCross.Droid.Resource.Integer.design_snackbar_text_max_lines;
+			global::MvvmCross.Droid.Support.Design.Resource.Integer.status_bar_notification_info_maxnum = global::ResidentAppCross.Droid.Resource.Integer.status_bar_notification_info_maxnum;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_action_bar_title_item = global::ResidentAppCross.Droid.Resource.Layout.abc_action_bar_title_item;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_action_bar_up_container = global::ResidentAppCross.Droid.Resource.Layout.abc_action_bar_up_container;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_action_bar_view_list_nav_layout = global::ResidentAppCross.Droid.Resource.Layout.abc_action_bar_view_list_nav_layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_action_menu_item_layout = global::ResidentAppCross.Droid.Resource.Layout.abc_action_menu_item_layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_action_menu_layout = global::ResidentAppCross.Droid.Resource.Layout.abc_action_menu_layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_action_mode_bar = global::ResidentAppCross.Droid.Resource.Layout.abc_action_mode_bar;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_action_mode_close_item_material = global::ResidentAppCross.Droid.Resource.Layout.abc_action_mode_close_item_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_activity_chooser_view = global::ResidentAppCross.Droid.Resource.Layout.abc_activity_chooser_view;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_activity_chooser_view_list_item = global::ResidentAppCross.Droid.Resource.Layout.abc_activity_chooser_view_list_item;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_alert_dialog_button_bar_material = global::ResidentAppCross.Droid.Resource.Layout.abc_alert_dialog_button_bar_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_alert_dialog_material = global::ResidentAppCross.Droid.Resource.Layout.abc_alert_dialog_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_dialog_title_material = global::ResidentAppCross.Droid.Resource.Layout.abc_dialog_title_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_expanded_menu_layout = global::ResidentAppCross.Droid.Resource.Layout.abc_expanded_menu_layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_list_menu_item_checkbox = global::ResidentAppCross.Droid.Resource.Layout.abc_list_menu_item_checkbox;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_list_menu_item_icon = global::ResidentAppCross.Droid.Resource.Layout.abc_list_menu_item_icon;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_list_menu_item_layout = global::ResidentAppCross.Droid.Resource.Layout.abc_list_menu_item_layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_list_menu_item_radio = global::ResidentAppCross.Droid.Resource.Layout.abc_list_menu_item_radio;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_popup_menu_item_layout = global::ResidentAppCross.Droid.Resource.Layout.abc_popup_menu_item_layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_screen_content_include = global::ResidentAppCross.Droid.Resource.Layout.abc_screen_content_include;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_screen_simple = global::ResidentAppCross.Droid.Resource.Layout.abc_screen_simple;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_screen_simple_overlay_action_mode = global::ResidentAppCross.Droid.Resource.Layout.abc_screen_simple_overlay_action_mode;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_screen_toolbar = global::ResidentAppCross.Droid.Resource.Layout.abc_screen_toolbar;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_search_dropdown_item_icons_2line = global::ResidentAppCross.Droid.Resource.Layout.abc_search_dropdown_item_icons_2line;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_search_view = global::ResidentAppCross.Droid.Resource.Layout.abc_search_view;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.abc_select_dialog_material = global::ResidentAppCross.Droid.Resource.Layout.abc_select_dialog_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_bottom_sheet_dialog = global::ResidentAppCross.Droid.Resource.Layout.design_bottom_sheet_dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_layout_snackbar = global::ResidentAppCross.Droid.Resource.Layout.design_layout_snackbar;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_layout_snackbar_include = global::ResidentAppCross.Droid.Resource.Layout.design_layout_snackbar_include;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_layout_tab_icon = global::ResidentAppCross.Droid.Resource.Layout.design_layout_tab_icon;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_layout_tab_text = global::ResidentAppCross.Droid.Resource.Layout.design_layout_tab_text;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_menu_item_action_area = global::ResidentAppCross.Droid.Resource.Layout.design_menu_item_action_area;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_navigation_item = global::ResidentAppCross.Droid.Resource.Layout.design_navigation_item;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_navigation_item_header = global::ResidentAppCross.Droid.Resource.Layout.design_navigation_item_header;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_navigation_item_separator = global::ResidentAppCross.Droid.Resource.Layout.design_navigation_item_separator;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_navigation_item_subheader = global::ResidentAppCross.Droid.Resource.Layout.design_navigation_item_subheader;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_navigation_menu = global::ResidentAppCross.Droid.Resource.Layout.design_navigation_menu;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.design_navigation_menu_item = global::ResidentAppCross.Droid.Resource.Layout.design_navigation_menu_item;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.notification_media_action = global::ResidentAppCross.Droid.Resource.Layout.notification_media_action;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.notification_media_cancel_action = global::ResidentAppCross.Droid.Resource.Layout.notification_media_cancel_action;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.notification_template_big_media = global::ResidentAppCross.Droid.Resource.Layout.notification_template_big_media;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.notification_template_big_media_narrow = global::ResidentAppCross.Droid.Resource.Layout.notification_template_big_media_narrow;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.notification_template_lines = global::ResidentAppCross.Droid.Resource.Layout.notification_template_lines;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.notification_template_media = global::ResidentAppCross.Droid.Resource.Layout.notification_template_media;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.notification_template_part_chronometer = global::ResidentAppCross.Droid.Resource.Layout.notification_template_part_chronometer;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.notification_template_part_time = global::ResidentAppCross.Droid.Resource.Layout.notification_template_part_time;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.select_dialog_item_material = global::ResidentAppCross.Droid.Resource.Layout.select_dialog_item_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.select_dialog_multichoice_material = global::ResidentAppCross.Droid.Resource.Layout.select_dialog_multichoice_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.select_dialog_singlechoice_material = global::ResidentAppCross.Droid.Resource.Layout.select_dialog_singlechoice_material;
+			global::MvvmCross.Droid.Support.Design.Resource.Layout.support_simple_spinner_dropdown_item = global::ResidentAppCross.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_action_bar_home_description = global::ResidentAppCross.Droid.Resource.String.abc_action_bar_home_description;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_action_bar_home_description_format = global::ResidentAppCross.Droid.Resource.String.abc_action_bar_home_description_format;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_action_bar_home_subtitle_description_format = global::ResidentAppCross.Droid.Resource.String.abc_action_bar_home_subtitle_description_format;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_action_bar_up_description = global::ResidentAppCross.Droid.Resource.String.abc_action_bar_up_description;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_action_menu_overflow_description = global::ResidentAppCross.Droid.Resource.String.abc_action_menu_overflow_description;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_action_mode_done = global::ResidentAppCross.Droid.Resource.String.abc_action_mode_done;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_activity_chooser_view_see_all = global::ResidentAppCross.Droid.Resource.String.abc_activity_chooser_view_see_all;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_activitychooserview_choose_application = global::ResidentAppCross.Droid.Resource.String.abc_activitychooserview_choose_application;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_capital_off = global::ResidentAppCross.Droid.Resource.String.abc_capital_off;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_capital_on = global::ResidentAppCross.Droid.Resource.String.abc_capital_on;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_search_hint = global::ResidentAppCross.Droid.Resource.String.abc_search_hint;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_searchview_description_clear = global::ResidentAppCross.Droid.Resource.String.abc_searchview_description_clear;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_searchview_description_query = global::ResidentAppCross.Droid.Resource.String.abc_searchview_description_query;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_searchview_description_search = global::ResidentAppCross.Droid.Resource.String.abc_searchview_description_search;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_searchview_description_submit = global::ResidentAppCross.Droid.Resource.String.abc_searchview_description_submit;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_searchview_description_voice = global::ResidentAppCross.Droid.Resource.String.abc_searchview_description_voice;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_shareactionprovider_share_with = global::ResidentAppCross.Droid.Resource.String.abc_shareactionprovider_share_with;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_shareactionprovider_share_with_application = global::ResidentAppCross.Droid.Resource.String.abc_shareactionprovider_share_with_application;
+			global::MvvmCross.Droid.Support.Design.Resource.String.abc_toolbar_collapse_description = global::ResidentAppCross.Droid.Resource.String.abc_toolbar_collapse_description;
+			global::MvvmCross.Droid.Support.Design.Resource.String.appbar_scrolling_view_behavior = global::ResidentAppCross.Droid.Resource.String.appbar_scrolling_view_behavior;
+			global::MvvmCross.Droid.Support.Design.Resource.String.bottom_sheet_behavior = global::ResidentAppCross.Droid.Resource.String.bottom_sheet_behavior;
+			global::MvvmCross.Droid.Support.Design.Resource.String.character_counter_pattern = global::ResidentAppCross.Droid.Resource.String.character_counter_pattern;
+			global::MvvmCross.Droid.Support.Design.Resource.String.fab_scroll_shrink_grow_autohide_behavior = global::ResidentAppCross.Droid.Resource.String.fab_scroll_shrink_grow_autohide_behavior;
+			global::MvvmCross.Droid.Support.Design.Resource.String.fab_scroll_translation_autohide_behavior = global::ResidentAppCross.Droid.Resource.String.fab_scroll_translation_autohide_behavior;
+			global::MvvmCross.Droid.Support.Design.Resource.String.status_bar_notification_info_overflow = global::ResidentAppCross.Droid.Resource.String.status_bar_notification_info_overflow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.AlertDialog_AppCompat = global::ResidentAppCross.Droid.Resource.Style.AlertDialog_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.AlertDialog_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.AlertDialog_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Animation_AppCompat_Dialog = global::ResidentAppCross.Droid.Resource.Style.Animation_AppCompat_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Animation_AppCompat_DropDownUp = global::ResidentAppCross.Droid.Resource.Style.Animation_AppCompat_DropDownUp;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Animation_Design_BottomSheetDialog = global::ResidentAppCross.Droid.Resource.Style.Animation_Design_BottomSheetDialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_AlertDialog_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Base_AlertDialog_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_AlertDialog_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Base_AlertDialog_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Animation_AppCompat_Dialog = global::ResidentAppCross.Droid.Resource.Style.Base_Animation_AppCompat_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Animation_AppCompat_DropDownUp = global::ResidentAppCross.Droid.Resource.Style.Base_Animation_AppCompat_DropDownUp;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_DialogWindowTitle_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Base_DialogWindowTitle_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_DialogWindowTitleBackground_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Base_DialogWindowTitleBackground_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Body1 = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Body1;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Body2 = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Body2;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Button = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Button;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Caption = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Caption;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Display1 = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display1;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Display2 = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display2;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Display3 = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display3;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Display4 = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display4;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Headline = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Headline;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Inverse = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Large = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Large;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Large_Inverse = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Large_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Medium = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Medium;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Medium_Inverse = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Medium_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Menu = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Menu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_SearchResult = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Subtitle = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Title = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Small = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Small;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Small_Inverse = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Small_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Subhead = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Subhead;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Subhead_Inverse = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Subhead_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Title = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Title_Inverse = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Title_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Menu = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Menu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Title = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Inverse = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_DropDownItem = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_DropDownItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Large = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Large;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Small = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Small;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_Switch = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Switch;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Title = global::ResidentAppCross.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_CompactMenu = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_CompactMenu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Dialog = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Dialog_Alert = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_Alert;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Dialog_FixedSize = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_FixedSize;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Dialog_MinWidth = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_MinWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_DialogWhenLarge = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_DialogWhenLarge;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Light_DarkActionBar = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Light_DarkActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Light_Dialog = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Light_Dialog_Alert = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_Alert;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Light_Dialog_FixedSize = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_FixedSize;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Light_Dialog_MinWidth = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_MinWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Theme_AppCompat_Light_DialogWhenLarge = global::ResidentAppCross.Droid.Resource.Style.Base_Theme_AppCompat_Light_DialogWhenLarge;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_ThemeOverlay_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Base_ThemeOverlay_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_ThemeOverlay_AppCompat_ActionBar = global::ResidentAppCross.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_ThemeOverlay_AppCompat_Dark = global::ResidentAppCross.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_ThemeOverlay_AppCompat_Dark_ActionBar = global::ResidentAppCross.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dark_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_ThemeOverlay_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V11_Theme_AppCompat_Dialog = global::ResidentAppCross.Droid.Resource.Style.Base_V11_Theme_AppCompat_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V11_Theme_AppCompat_Light_Dialog = global::ResidentAppCross.Droid.Resource.Style.Base_V11_Theme_AppCompat_Light_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V12_Widget_AppCompat_AutoCompleteTextView = global::ResidentAppCross.Droid.Resource.Style.Base_V12_Widget_AppCompat_AutoCompleteTextView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V12_Widget_AppCompat_EditText = global::ResidentAppCross.Droid.Resource.Style.Base_V12_Widget_AppCompat_EditText;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V21_Theme_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Base_V21_Theme_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V21_Theme_AppCompat_Dialog = global::ResidentAppCross.Droid.Resource.Style.Base_V21_Theme_AppCompat_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V21_Theme_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Base_V21_Theme_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V21_Theme_AppCompat_Light_Dialog = global::ResidentAppCross.Droid.Resource.Style.Base_V21_Theme_AppCompat_Light_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V22_Theme_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Base_V22_Theme_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V22_Theme_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Base_V22_Theme_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V23_Theme_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Base_V23_Theme_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V23_Theme_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Base_V23_Theme_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V7_Theme_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Base_V7_Theme_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V7_Theme_AppCompat_Dialog = global::ResidentAppCross.Droid.Resource.Style.Base_V7_Theme_AppCompat_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V7_Theme_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Base_V7_Theme_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V7_Theme_AppCompat_Light_Dialog = global::ResidentAppCross.Droid.Resource.Style.Base_V7_Theme_AppCompat_Light_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V7_Widget_AppCompat_AutoCompleteTextView = global::ResidentAppCross.Droid.Resource.Style.Base_V7_Widget_AppCompat_AutoCompleteTextView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_V7_Widget_AppCompat_EditText = global::ResidentAppCross.Droid.Resource.Style.Base_V7_Widget_AppCompat_EditText;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ActionBar = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ActionBar_Solid = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_Solid;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ActionBar_TabBar = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ActionBar_TabText = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabText;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ActionBar_TabView = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ActionButton = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ActionButton_CloseMode = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton_CloseMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ActionButton_Overflow = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton_Overflow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ActionMode = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ActionMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ActivityChooserView = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ActivityChooserView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_AutoCompleteTextView = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_AutoCompleteTextView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Button = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Button;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Button_Borderless = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Button_Borderless;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Button_Borderless_Colored = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Button_Borderless_Colored;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Button_ButtonBar_AlertDialog = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Button_ButtonBar_AlertDialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Button_Colored = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Button_Colored;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Button_Small = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Button_Small;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ButtonBar = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ButtonBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ButtonBar_AlertDialog = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ButtonBar_AlertDialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_CompoundButton_CheckBox = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_CheckBox;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_CompoundButton_RadioButton = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_RadioButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_CompoundButton_Switch = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_Switch;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle_Common = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle_Common;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_DropDownItem_Spinner = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_DropDownItem_Spinner;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_EditText = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_EditText;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ImageButton = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ImageButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Light_ActionBar = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_Solid = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_Solid;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabBar = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabView = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu_Overflow = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu_Overflow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ListPopupWindow = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ListPopupWindow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ListView = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ListView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ListView_DropDown = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ListView_DropDown;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ListView_Menu = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ListView_Menu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_PopupMenu = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_PopupMenu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_PopupMenu_Overflow = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_PopupMenu_Overflow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_PopupWindow = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_PopupWindow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ProgressBar = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ProgressBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_ProgressBar_Horizontal = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_ProgressBar_Horizontal;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_RatingBar = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_RatingBar_Indicator = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar_Indicator;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_RatingBar_Small = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar_Small;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_SearchView = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_SearchView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_SearchView_ActionBar = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_SearchView_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_SeekBar = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_SeekBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Spinner = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Spinner;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Toolbar = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Base_Widget_Design_TabLayout = global::ResidentAppCross.Droid.Resource.Style.Base_Widget_Design_TabLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Platform_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Platform_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Platform_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Platform_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Platform_ThemeOverlay_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Platform_ThemeOverlay_AppCompat_Dark = global::ResidentAppCross.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Platform_ThemeOverlay_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Platform_V11_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Platform_V11_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Platform_V11_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Platform_V11_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Platform_V14_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Platform_V14_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Platform_V14_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Platform_V14_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Platform_Widget_AppCompat_Spinner = global::ResidentAppCross.Droid.Resource.Style.Platform_Widget_AppCompat_Spinner;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_DialogWindowTitle_AppCompat = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_DialogWindowTitle_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_ActionBar_TitleItem = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_ActionBar_TitleItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_DialogTitle_Icon = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_DialogTitle_Icon;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Text = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Text;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1 = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2 = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Query = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Query;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Text = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Text;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlOverlay_Widget_AppCompat_SearchView_MagIcon = global::ResidentAppCross.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_SearchView_MagIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton = global::ResidentAppCross.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton_Overflow = global::ResidentAppCross.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton_Overflow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Body1 = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Body1;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Body2 = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Body2;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Button = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Button;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Caption = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Caption;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Display1 = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Display1;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Display2 = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Display2;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Display3 = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Display3;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Display4 = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Display4;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Headline = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Headline;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Large = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Large;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Large_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Large_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Subtitle = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Title = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Large = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Large;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Small = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Small;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Medium = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Medium;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Medium_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Medium_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Menu = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Menu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_SearchResult_Subtitle = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_SearchResult_Title = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Small = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Small;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Small_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Small_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Subhead = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Subhead;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Subhead_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Subhead_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Title = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Title_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Title_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Menu = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Menu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_Button = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_Button_Inverse = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_DropDownItem = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_DropDownItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Large = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Large;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Small = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Small;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_Switch = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Switch;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_AppCompat_Widget_TextView_SpinnerItem = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_AppCompat_Widget_TextView_SpinnerItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_Design_CollapsingToolbar_Expanded = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_Design_CollapsingToolbar_Expanded;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_Design_Counter = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_Design_Counter;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_Design_Counter_Overflow = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_Design_Counter_Overflow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_Design_Error = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_Design_Error;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_Design_Hint = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_Design_Hint;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_Design_Snackbar_Message = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_Design_Snackbar_Message;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_Design_Tab = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_Design_Tab;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_StatusBar_EventContent = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_StatusBar_EventContent;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_StatusBar_EventContent_Info = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Info;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_StatusBar_EventContent_Line2 = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Line2;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_StatusBar_EventContent_Time = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Time;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_StatusBar_EventContent_Title = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_Widget_AppCompat_ExpandedMenu_Item = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_Widget_AppCompat_ExpandedMenu_Item;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Subtitle = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Title = global::ResidentAppCross.Droid.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Title;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_CompactMenu = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_CompactMenu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_DayNight = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_DayNight;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_DayNight_DarkActionBar = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_DayNight_DarkActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_DayNight_Dialog = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_DayNight_Dialog_Alert = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog_Alert;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_DayNight_Dialog_MinWidth = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog_MinWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_DayNight_DialogWhenLarge = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_DayNight_DialogWhenLarge;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_DayNight_NoActionBar = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_DayNight_NoActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_Dialog = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_Dialog_Alert = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_Dialog_Alert;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_Dialog_MinWidth = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_Dialog_MinWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_DialogWhenLarge = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_DialogWhenLarge;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_Light_DarkActionBar = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_Light_DarkActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_Light_Dialog = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_Light_Dialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_Light_Dialog_Alert = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_Light_Dialog_Alert;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_Light_Dialog_MinWidth = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_Light_Dialog_MinWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_Light_DialogWhenLarge = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_Light_DialogWhenLarge;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_Light_NoActionBar = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_Light_NoActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_AppCompat_NoActionBar = global::ResidentAppCross.Droid.Resource.Style.Theme_AppCompat_NoActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_Design = global::ResidentAppCross.Droid.Resource.Style.Theme_Design;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_Design_BottomSheetDialog = global::ResidentAppCross.Droid.Resource.Style.Theme_Design_BottomSheetDialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_Design_Light = global::ResidentAppCross.Droid.Resource.Style.Theme_Design_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_Design_Light_BottomSheetDialog = global::ResidentAppCross.Droid.Resource.Style.Theme_Design_Light_BottomSheetDialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_Design_Light_NoActionBar = global::ResidentAppCross.Droid.Resource.Style.Theme_Design_Light_NoActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Theme_Design_NoActionBar = global::ResidentAppCross.Droid.Resource.Style.Theme_Design_NoActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.ThemeOverlay_AppCompat = global::ResidentAppCross.Droid.Resource.Style.ThemeOverlay_AppCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.ThemeOverlay_AppCompat_ActionBar = global::ResidentAppCross.Droid.Resource.Style.ThemeOverlay_AppCompat_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.ThemeOverlay_AppCompat_Dark = global::ResidentAppCross.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar = global::ResidentAppCross.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.ThemeOverlay_AppCompat_Light = global::ResidentAppCross.Droid.Resource.Style.ThemeOverlay_AppCompat_Light;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ActionBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ActionBar_Solid = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ActionBar_Solid;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ActionBar_TabBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ActionBar_TabText = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabText;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ActionBar_TabView = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ActionButton = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ActionButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ActionButton_CloseMode = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ActionButton_CloseMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ActionButton_Overflow = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ActionButton_Overflow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ActionMode = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ActionMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ActivityChooserView = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ActivityChooserView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_AutoCompleteTextView = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_AutoCompleteTextView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Button = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Button;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Button_Borderless = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Button_Borderless;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Button_Borderless_Colored = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Button_Borderless_Colored;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Button_ButtonBar_AlertDialog = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Button_ButtonBar_AlertDialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Button_Colored = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Button_Colored;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Button_Small = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Button_Small;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ButtonBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ButtonBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ButtonBar_AlertDialog = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ButtonBar_AlertDialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_CompoundButton_CheckBox = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_CompoundButton_CheckBox;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_CompoundButton_RadioButton = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_CompoundButton_RadioButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_CompoundButton_Switch = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_CompoundButton_Switch;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_DrawerArrowToggle = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_DrawerArrowToggle;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_DropDownItem_Spinner = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_DropDownItem_Spinner;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_EditText = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_EditText;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ImageButton = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ImageButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid_Inverse = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar_Inverse = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText_Inverse = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView_Inverse = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionButton = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionButton_CloseMode = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton_CloseMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionButton_Overflow = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton_Overflow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActionMode_Inverse = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActionMode_Inverse;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ActivityChooserView = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ActivityChooserView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_AutoCompleteTextView = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_AutoCompleteTextView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_DropDownItem_Spinner = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_DropDownItem_Spinner;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ListPopupWindow = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ListPopupWindow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_ListView_DropDown = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_ListView_DropDown;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_PopupMenu = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_PopupMenu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_PopupMenu_Overflow = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_PopupMenu_Overflow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_SearchView = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_SearchView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Light_Spinner_DropDown_ActionBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Light_Spinner_DropDown_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ListPopupWindow = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ListPopupWindow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ListView = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ListView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ListView_DropDown = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ListView_DropDown;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ListView_Menu = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ListView_Menu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_PopupMenu = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_PopupMenu;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_PopupMenu_Overflow = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_PopupMenu_Overflow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_PopupWindow = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_PopupWindow;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ProgressBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ProgressBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_ProgressBar_Horizontal = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_ProgressBar_Horizontal;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_RatingBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_RatingBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_RatingBar_Indicator = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_RatingBar_Indicator;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_RatingBar_Small = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_RatingBar_Small;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_SearchView = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_SearchView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_SearchView_ActionBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_SearchView_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_SeekBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_SeekBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Spinner = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Spinner;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Spinner_DropDown = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Spinner_Underlined = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Spinner_Underlined;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_TextView_SpinnerItem = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_TextView_SpinnerItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Toolbar = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Toolbar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation = global::ResidentAppCross.Droid.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_Design_AppBarLayout = global::ResidentAppCross.Droid.Resource.Style.Widget_Design_AppBarLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_Design_BottomSheet_Modal = global::ResidentAppCross.Droid.Resource.Style.Widget_Design_BottomSheet_Modal;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_Design_CollapsingToolbar = global::ResidentAppCross.Droid.Resource.Style.Widget_Design_CollapsingToolbar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_Design_CoordinatorLayout = global::ResidentAppCross.Droid.Resource.Style.Widget_Design_CoordinatorLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_Design_FloatingActionButton = global::ResidentAppCross.Droid.Resource.Style.Widget_Design_FloatingActionButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_Design_NavigationView = global::ResidentAppCross.Droid.Resource.Style.Widget_Design_NavigationView;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_Design_ScrimInsetsFrameLayout = global::ResidentAppCross.Droid.Resource.Style.Widget_Design_ScrimInsetsFrameLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_Design_Snackbar = global::ResidentAppCross.Droid.Resource.Style.Widget_Design_Snackbar;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_Design_TabLayout = global::ResidentAppCross.Droid.Resource.Style.Widget_Design_TabLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Style.Widget_Design_TextInputLayout = global::ResidentAppCross.Droid.Resource.Style.Widget_Design_TextInputLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_background = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_background;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_backgroundSplit = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_backgroundSplit;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_backgroundStacked = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_backgroundStacked;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_contentInsetEnd = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_contentInsetEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_contentInsetLeft = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_contentInsetLeft;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_contentInsetRight = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_contentInsetRight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_contentInsetStart = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_contentInsetStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_customNavigationLayout = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_customNavigationLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_displayOptions = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_displayOptions;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_divider = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_divider;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_elevation = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_height = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_height;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_hideOnContentScroll = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_hideOnContentScroll;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_homeAsUpIndicator = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_homeAsUpIndicator;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_homeLayout = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_homeLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_icon = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_icon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_indeterminateProgressStyle = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_indeterminateProgressStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_itemPadding = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_itemPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_logo = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_logo;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_navigationMode = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_navigationMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_popupTheme = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_popupTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_progressBarPadding = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_progressBarPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_progressBarStyle = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_progressBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_subtitle = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_subtitleTextStyle = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_subtitleTextStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_title = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_title;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBar_titleTextStyle = global::ResidentAppCross.Droid.Resource.Styleable.ActionBar_titleTextStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBarLayout = global::ResidentAppCross.Droid.Resource.Styleable.ActionBarLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionBarLayout_android_layout_gravity = global::ResidentAppCross.Droid.Resource.Styleable.ActionBarLayout_android_layout_gravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionMenuItemView = global::ResidentAppCross.Droid.Resource.Styleable.ActionMenuItemView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionMenuItemView_android_minWidth = global::ResidentAppCross.Droid.Resource.Styleable.ActionMenuItemView_android_minWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionMenuView = global::ResidentAppCross.Droid.Resource.Styleable.ActionMenuView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionMode = global::ResidentAppCross.Droid.Resource.Styleable.ActionMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionMode_background = global::ResidentAppCross.Droid.Resource.Styleable.ActionMode_background;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionMode_backgroundSplit = global::ResidentAppCross.Droid.Resource.Styleable.ActionMode_backgroundSplit;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionMode_closeItemLayout = global::ResidentAppCross.Droid.Resource.Styleable.ActionMode_closeItemLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionMode_height = global::ResidentAppCross.Droid.Resource.Styleable.ActionMode_height;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionMode_subtitleTextStyle = global::ResidentAppCross.Droid.Resource.Styleable.ActionMode_subtitleTextStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActionMode_titleTextStyle = global::ResidentAppCross.Droid.Resource.Styleable.ActionMode_titleTextStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActivityChooserView = global::ResidentAppCross.Droid.Resource.Styleable.ActivityChooserView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActivityChooserView_expandActivityOverflowButtonDrawable = global::ResidentAppCross.Droid.Resource.Styleable.ActivityChooserView_expandActivityOverflowButtonDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ActivityChooserView_initialActivityCount = global::ResidentAppCross.Droid.Resource.Styleable.ActivityChooserView_initialActivityCount;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AlertDialog = global::ResidentAppCross.Droid.Resource.Styleable.AlertDialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AlertDialog_android_layout = global::ResidentAppCross.Droid.Resource.Styleable.AlertDialog_android_layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AlertDialog_buttonPanelSideLayout = global::ResidentAppCross.Droid.Resource.Styleable.AlertDialog_buttonPanelSideLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AlertDialog_listItemLayout = global::ResidentAppCross.Droid.Resource.Styleable.AlertDialog_listItemLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AlertDialog_listLayout = global::ResidentAppCross.Droid.Resource.Styleable.AlertDialog_listLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AlertDialog_multiChoiceItemLayout = global::ResidentAppCross.Droid.Resource.Styleable.AlertDialog_multiChoiceItemLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AlertDialog_singleChoiceItemLayout = global::ResidentAppCross.Droid.Resource.Styleable.AlertDialog_singleChoiceItemLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppBarLayout = global::ResidentAppCross.Droid.Resource.Styleable.AppBarLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppBarLayout_android_background = global::ResidentAppCross.Droid.Resource.Styleable.AppBarLayout_android_background;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppBarLayout_elevation = global::ResidentAppCross.Droid.Resource.Styleable.AppBarLayout_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppBarLayout_expanded = global::ResidentAppCross.Droid.Resource.Styleable.AppBarLayout_expanded;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppBarLayout_LayoutParams = global::ResidentAppCross.Droid.Resource.Styleable.AppBarLayout_LayoutParams;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppBarLayout_LayoutParams_layout_scrollFlags = global::ResidentAppCross.Droid.Resource.Styleable.AppBarLayout_LayoutParams_layout_scrollFlags;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppBarLayout_LayoutParams_layout_scrollInterpolator = global::ResidentAppCross.Droid.Resource.Styleable.AppBarLayout_LayoutParams_layout_scrollInterpolator;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatImageView = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatImageView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatImageView_android_src = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatImageView_android_src;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatImageView_srcCompat = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatImageView_srcCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTextView = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTextView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTextView_android_textAppearance = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTextView_android_textAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTextView_textAllCaps = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTextView_textAllCaps;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarDivider = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarDivider;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarItemBackground = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarItemBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarPopupTheme = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarPopupTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarSize = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarSize;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarSplitStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarSplitStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarTabBarStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarTabBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarTabStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarTabStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarTabTextStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarTabTextStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarTheme = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionBarWidgetTheme = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionBarWidgetTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionDropDownStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionDropDownStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionMenuTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionMenuTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionMenuTextColor = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionMenuTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeBackground = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeCloseButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeCloseButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeCloseDrawable = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeCloseDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeCopyDrawable = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeCopyDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeCutDrawable = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeCutDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeFindDrawable = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeFindDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModePasteDrawable = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModePasteDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModePopupWindowStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModePopupWindowStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeSelectAllDrawable = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeSelectAllDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeShareDrawable = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeShareDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeSplitBackground = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeSplitBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionModeWebSearchDrawable = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionModeWebSearchDrawable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionOverflowButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionOverflowButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_actionOverflowMenuStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_actionOverflowMenuStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_activityChooserViewStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_activityChooserViewStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_alertDialogButtonGroupStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_alertDialogButtonGroupStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_alertDialogCenterButtons = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_alertDialogCenterButtons;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_alertDialogStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_alertDialogStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_alertDialogTheme = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_alertDialogTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_android_windowAnimationStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_android_windowAnimationStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_android_windowIsFloating = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_android_windowIsFloating;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_autoCompleteTextViewStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_autoCompleteTextViewStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_borderlessButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_borderlessButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_buttonBarButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_buttonBarButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_buttonBarNegativeButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_buttonBarNegativeButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_buttonBarNeutralButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_buttonBarNeutralButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_buttonBarPositiveButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_buttonBarPositiveButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_buttonBarStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_buttonBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_buttonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_buttonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_buttonStyleSmall = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_buttonStyleSmall;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_checkboxStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_checkboxStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_checkedTextViewStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_checkedTextViewStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_colorAccent = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_colorAccent;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_colorButtonNormal = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_colorButtonNormal;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_colorControlActivated = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_colorControlActivated;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_colorControlHighlight = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_colorControlHighlight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_colorControlNormal = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_colorControlNormal;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_colorPrimary = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_colorPrimary;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_colorPrimaryDark = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_colorPrimaryDark;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_colorSwitchThumbNormal = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_colorSwitchThumbNormal;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_controlBackground = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_controlBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_dialogPreferredPadding = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_dialogPreferredPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_dialogTheme = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_dialogTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_dividerHorizontal = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_dividerHorizontal;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_dividerVertical = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_dividerVertical;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_dropDownListViewStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_dropDownListViewStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_dropdownListPreferredItemHeight = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_dropdownListPreferredItemHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_editTextBackground = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_editTextBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_editTextColor = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_editTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_editTextStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_editTextStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_homeAsUpIndicator = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_homeAsUpIndicator;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_imageButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_imageButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_listDividerAlertDialog = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_listDividerAlertDialog;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_listPopupWindowStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_listPopupWindowStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_listPreferredItemHeight = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_panelBackground = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_panelBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_panelMenuListTheme = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_panelMenuListTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_panelMenuListWidth = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_panelMenuListWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_popupMenuStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_popupMenuStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_popupWindowStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_popupWindowStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_radioButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_radioButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_ratingBarStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_ratingBarStyleIndicator = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyleIndicator;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_ratingBarStyleSmall = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyleSmall;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_searchViewStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_searchViewStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_seekBarStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_seekBarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_selectableItemBackground = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_selectableItemBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_selectableItemBackgroundBorderless = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_selectableItemBackgroundBorderless;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_spinnerDropDownItemStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_spinnerDropDownItemStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_spinnerStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_spinnerStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_switchStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_switchStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_textAppearanceLargePopupMenu = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_textAppearanceLargePopupMenu;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_textAppearanceListItem = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_textAppearanceListItemSmall = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItemSmall;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultSubtitle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultSubtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultTitle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultTitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_textAppearanceSmallPopupMenu = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSmallPopupMenu;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_textColorAlertDialogListItem = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_textColorAlertDialogListItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_textColorSearchUrl = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_textColorSearchUrl;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_toolbarNavigationButtonStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_toolbarNavigationButtonStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_toolbarStyle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_toolbarStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_windowActionBar = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_windowActionBar;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_windowActionBarOverlay = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_windowActionBarOverlay;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_windowActionModeOverlay = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_windowActionModeOverlay;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_windowFixedHeightMajor = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_windowFixedHeightMajor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_windowFixedHeightMinor = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_windowFixedHeightMinor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_windowFixedWidthMajor = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_windowFixedWidthMajor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_windowFixedWidthMinor = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_windowFixedWidthMinor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_windowMinWidthMajor = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_windowMinWidthMajor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_windowMinWidthMinor = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_windowMinWidthMinor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.AppCompatTheme_windowNoTitle = global::ResidentAppCross.Droid.Resource.Styleable.AppCompatTheme_windowNoTitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.BottomSheetBehavior_Params = global::ResidentAppCross.Droid.Resource.Styleable.BottomSheetBehavior_Params;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.BottomSheetBehavior_Params_behavior_hideable = global::ResidentAppCross.Droid.Resource.Styleable.BottomSheetBehavior_Params_behavior_hideable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.BottomSheetBehavior_Params_behavior_peekHeight = global::ResidentAppCross.Droid.Resource.Styleable.BottomSheetBehavior_Params_behavior_peekHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ButtonBarLayout = global::ResidentAppCross.Droid.Resource.Styleable.ButtonBarLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ButtonBarLayout_allowStacking = global::ResidentAppCross.Droid.Resource.Styleable.ButtonBarLayout_allowStacking;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingAppBarLayout_LayoutParams = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseMode = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseParallaxMultiplier = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseParallaxMultiplier;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleGravity = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleGravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_contentScrim = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_contentScrim;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_expandedTitleGravity = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleGravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMargin = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMargin;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginBottom = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginBottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginEnd = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginStart = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginTop = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginTop;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_expandedTitleTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_statusBarScrim = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_statusBarScrim;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_title = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_title;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_titleEnabled = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_titleEnabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CollapsingToolbarLayout_toolbarId = global::ResidentAppCross.Droid.Resource.Styleable.CollapsingToolbarLayout_toolbarId;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CompoundButton = global::ResidentAppCross.Droid.Resource.Styleable.CompoundButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CompoundButton_android_button = global::ResidentAppCross.Droid.Resource.Styleable.CompoundButton_android_button;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CompoundButton_buttonTint = global::ResidentAppCross.Droid.Resource.Styleable.CompoundButton_buttonTint;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CompoundButton_buttonTintMode = global::ResidentAppCross.Droid.Resource.Styleable.CompoundButton_buttonTintMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CoordinatorLayout = global::ResidentAppCross.Droid.Resource.Styleable.CoordinatorLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CoordinatorLayout_keylines = global::ResidentAppCross.Droid.Resource.Styleable.CoordinatorLayout_keylines;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CoordinatorLayout_statusBarBackground = global::ResidentAppCross.Droid.Resource.Styleable.CoordinatorLayout_statusBarBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CoordinatorLayout_LayoutParams = global::ResidentAppCross.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CoordinatorLayout_LayoutParams_android_layout_gravity = global::ResidentAppCross.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_android_layout_gravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_anchor = global::ResidentAppCross.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_anchor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_anchorGravity = global::ResidentAppCross.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_anchorGravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_behavior = global::ResidentAppCross.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_behavior;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_keyline = global::ResidentAppCross.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_keyline;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DesignTheme = global::ResidentAppCross.Droid.Resource.Styleable.DesignTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DesignTheme_bottomSheetDialogTheme = global::ResidentAppCross.Droid.Resource.Styleable.DesignTheme_bottomSheetDialogTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DesignTheme_bottomSheetStyle = global::ResidentAppCross.Droid.Resource.Styleable.DesignTheme_bottomSheetStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DesignTheme_textColorError = global::ResidentAppCross.Droid.Resource.Styleable.DesignTheme_textColorError;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DrawerArrowToggle = global::ResidentAppCross.Droid.Resource.Styleable.DrawerArrowToggle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DrawerArrowToggle_arrowHeadLength = global::ResidentAppCross.Droid.Resource.Styleable.DrawerArrowToggle_arrowHeadLength;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DrawerArrowToggle_arrowShaftLength = global::ResidentAppCross.Droid.Resource.Styleable.DrawerArrowToggle_arrowShaftLength;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DrawerArrowToggle_barLength = global::ResidentAppCross.Droid.Resource.Styleable.DrawerArrowToggle_barLength;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DrawerArrowToggle_color = global::ResidentAppCross.Droid.Resource.Styleable.DrawerArrowToggle_color;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DrawerArrowToggle_drawableSize = global::ResidentAppCross.Droid.Resource.Styleable.DrawerArrowToggle_drawableSize;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DrawerArrowToggle_gapBetweenBars = global::ResidentAppCross.Droid.Resource.Styleable.DrawerArrowToggle_gapBetweenBars;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DrawerArrowToggle_spinBars = global::ResidentAppCross.Droid.Resource.Styleable.DrawerArrowToggle_spinBars;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.DrawerArrowToggle_thickness = global::ResidentAppCross.Droid.Resource.Styleable.DrawerArrowToggle_thickness;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.FloatingActionButton = global::ResidentAppCross.Droid.Resource.Styleable.FloatingActionButton;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.FloatingActionButton_backgroundTint = global::ResidentAppCross.Droid.Resource.Styleable.FloatingActionButton_backgroundTint;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.FloatingActionButton_backgroundTintMode = global::ResidentAppCross.Droid.Resource.Styleable.FloatingActionButton_backgroundTintMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.FloatingActionButton_borderWidth = global::ResidentAppCross.Droid.Resource.Styleable.FloatingActionButton_borderWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.FloatingActionButton_elevation = global::ResidentAppCross.Droid.Resource.Styleable.FloatingActionButton_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.FloatingActionButton_fabSize = global::ResidentAppCross.Droid.Resource.Styleable.FloatingActionButton_fabSize;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.FloatingActionButton_pressedTranslationZ = global::ResidentAppCross.Droid.Resource.Styleable.FloatingActionButton_pressedTranslationZ;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.FloatingActionButton_rippleColor = global::ResidentAppCross.Droid.Resource.Styleable.FloatingActionButton_rippleColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.FloatingActionButton_useCompatPadding = global::ResidentAppCross.Droid.Resource.Styleable.FloatingActionButton_useCompatPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ForegroundLinearLayout = global::ResidentAppCross.Droid.Resource.Styleable.ForegroundLinearLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ForegroundLinearLayout_android_foreground = global::ResidentAppCross.Droid.Resource.Styleable.ForegroundLinearLayout_android_foreground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ForegroundLinearLayout_android_foregroundGravity = global::ResidentAppCross.Droid.Resource.Styleable.ForegroundLinearLayout_android_foregroundGravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ForegroundLinearLayout_foregroundInsidePadding = global::ResidentAppCross.Droid.Resource.Styleable.ForegroundLinearLayout_foregroundInsidePadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_android_baselineAligned = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAligned;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_android_baselineAlignedChildIndex = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAlignedChildIndex;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_android_gravity = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_android_gravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_android_orientation = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_android_orientation;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_android_weightSum = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_android_weightSum;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_divider = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_divider;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_dividerPadding = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_dividerPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_measureWithLargestChild = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_measureWithLargestChild;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_showDividers = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_showDividers;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_Layout = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_Layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_gravity = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_gravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_height = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_height;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_weight = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_weight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_width = global::ResidentAppCross.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_width;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ListPopupWindow = global::ResidentAppCross.Droid.Resource.Styleable.ListPopupWindow;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ListPopupWindow_android_dropDownHorizontalOffset = global::ResidentAppCross.Droid.Resource.Styleable.ListPopupWindow_android_dropDownHorizontalOffset;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ListPopupWindow_android_dropDownVerticalOffset = global::ResidentAppCross.Droid.Resource.Styleable.ListPopupWindow_android_dropDownVerticalOffset;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuGroup = global::ResidentAppCross.Droid.Resource.Styleable.MenuGroup;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuGroup_android_checkableBehavior = global::ResidentAppCross.Droid.Resource.Styleable.MenuGroup_android_checkableBehavior;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuGroup_android_enabled = global::ResidentAppCross.Droid.Resource.Styleable.MenuGroup_android_enabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuGroup_android_id = global::ResidentAppCross.Droid.Resource.Styleable.MenuGroup_android_id;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuGroup_android_menuCategory = global::ResidentAppCross.Droid.Resource.Styleable.MenuGroup_android_menuCategory;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuGroup_android_orderInCategory = global::ResidentAppCross.Droid.Resource.Styleable.MenuGroup_android_orderInCategory;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuGroup_android_visible = global::ResidentAppCross.Droid.Resource.Styleable.MenuGroup_android_visible;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_actionLayout = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_actionLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_actionProviderClass = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_actionProviderClass;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_actionViewClass = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_actionViewClass;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_alphabeticShortcut = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_alphabeticShortcut;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_checkable = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_checkable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_checked = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_checked;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_enabled = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_enabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_icon = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_icon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_id = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_id;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_menuCategory = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_menuCategory;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_numericShortcut = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_numericShortcut;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_onClick = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_onClick;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_orderInCategory = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_orderInCategory;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_title = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_title;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_titleCondensed = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_titleCondensed;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_android_visible = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_android_visible;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuItem_showAsAction = global::ResidentAppCross.Droid.Resource.Styleable.MenuItem_showAsAction;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuView = global::ResidentAppCross.Droid.Resource.Styleable.MenuView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuView_android_headerBackground = global::ResidentAppCross.Droid.Resource.Styleable.MenuView_android_headerBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuView_android_horizontalDivider = global::ResidentAppCross.Droid.Resource.Styleable.MenuView_android_horizontalDivider;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuView_android_itemBackground = global::ResidentAppCross.Droid.Resource.Styleable.MenuView_android_itemBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuView_android_itemIconDisabledAlpha = global::ResidentAppCross.Droid.Resource.Styleable.MenuView_android_itemIconDisabledAlpha;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuView_android_itemTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.MenuView_android_itemTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuView_android_verticalDivider = global::ResidentAppCross.Droid.Resource.Styleable.MenuView_android_verticalDivider;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuView_android_windowAnimationStyle = global::ResidentAppCross.Droid.Resource.Styleable.MenuView_android_windowAnimationStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MenuView_preserveIconSpacing = global::ResidentAppCross.Droid.Resource.Styleable.MenuView_preserveIconSpacing;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxBinding = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxBinding_MvxBind = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding_MvxBind;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxBinding_MvxLang = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding_MvxLang;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxControl = global::ResidentAppCross.Droid.Resource.Styleable.MvxControl;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxControl_MvxTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxControl_MvxTemplate;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxExpandableListView = global::ResidentAppCross.Droid.Resource.Styleable.MvxExpandableListView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxImageView = global::ResidentAppCross.Droid.Resource.Styleable.MvxImageView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxImageView_MvxSource = global::ResidentAppCross.Droid.Resource.Styleable.MvxImageView_MvxSource;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxListView = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.MvxListView_MvxItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView_android_background = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView_android_background;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView_android_fitsSystemWindows = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView_android_fitsSystemWindows;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView_android_maxWidth = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView_android_maxWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView_elevation = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView_headerLayout = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView_headerLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView_itemBackground = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView_itemBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView_itemIconTint = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView_itemIconTint;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView_itemTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView_itemTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView_itemTextColor = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView_itemTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.NavigationView_menu = global::ResidentAppCross.Droid.Resource.Styleable.NavigationView_menu;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.PopupWindow = global::ResidentAppCross.Droid.Resource.Styleable.PopupWindow;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.PopupWindow_android_popupBackground = global::ResidentAppCross.Droid.Resource.Styleable.PopupWindow_android_popupBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.PopupWindow_overlapAnchor = global::ResidentAppCross.Droid.Resource.Styleable.PopupWindow_overlapAnchor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.PopupWindowBackgroundState = global::ResidentAppCross.Droid.Resource.Styleable.PopupWindowBackgroundState;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.PopupWindowBackgroundState_state_above_anchor = global::ResidentAppCross.Droid.Resource.Styleable.PopupWindowBackgroundState_state_above_anchor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.RecyclerView = global::ResidentAppCross.Droid.Resource.Styleable.RecyclerView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.RecyclerView_android_orientation = global::ResidentAppCross.Droid.Resource.Styleable.RecyclerView_android_orientation;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.RecyclerView_layoutManager = global::ResidentAppCross.Droid.Resource.Styleable.RecyclerView_layoutManager;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.RecyclerView_reverseLayout = global::ResidentAppCross.Droid.Resource.Styleable.RecyclerView_reverseLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.RecyclerView_spanCount = global::ResidentAppCross.Droid.Resource.Styleable.RecyclerView_spanCount;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.RecyclerView_stackFromEnd = global::ResidentAppCross.Droid.Resource.Styleable.RecyclerView_stackFromEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ScrimInsetsFrameLayout = global::ResidentAppCross.Droid.Resource.Styleable.ScrimInsetsFrameLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ScrimInsetsFrameLayout_insetForeground = global::ResidentAppCross.Droid.Resource.Styleable.ScrimInsetsFrameLayout_insetForeground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ScrollingViewBehavior_Params = global::ResidentAppCross.Droid.Resource.Styleable.ScrollingViewBehavior_Params;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ScrollingViewBehavior_Params_behavior_overlapTop = global::ResidentAppCross.Droid.Resource.Styleable.ScrollingViewBehavior_Params_behavior_overlapTop;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView = global::ResidentAppCross.Droid.Resource.Styleable.SearchView;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_android_focusable = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_android_focusable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_android_imeOptions = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_android_imeOptions;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_android_inputType = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_android_inputType;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_android_maxWidth = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_android_maxWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_closeIcon = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_closeIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_commitIcon = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_commitIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_defaultQueryHint = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_defaultQueryHint;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_goIcon = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_goIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_iconifiedByDefault = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_iconifiedByDefault;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_layout = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_queryBackground = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_queryBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_queryHint = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_queryHint;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_searchHintIcon = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_searchHintIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_searchIcon = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_searchIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_submitBackground = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_submitBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_suggestionRowLayout = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_suggestionRowLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SearchView_voiceIcon = global::ResidentAppCross.Droid.Resource.Styleable.SearchView_voiceIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SnackbarLayout = global::ResidentAppCross.Droid.Resource.Styleable.SnackbarLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SnackbarLayout_android_maxWidth = global::ResidentAppCross.Droid.Resource.Styleable.SnackbarLayout_android_maxWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SnackbarLayout_elevation = global::ResidentAppCross.Droid.Resource.Styleable.SnackbarLayout_elevation;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SnackbarLayout_maxActionInlineWidth = global::ResidentAppCross.Droid.Resource.Styleable.SnackbarLayout_maxActionInlineWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Spinner = global::ResidentAppCross.Droid.Resource.Styleable.Spinner;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Spinner_android_dropDownWidth = global::ResidentAppCross.Droid.Resource.Styleable.Spinner_android_dropDownWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Spinner_android_entries = global::ResidentAppCross.Droid.Resource.Styleable.Spinner_android_entries;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Spinner_android_popupBackground = global::ResidentAppCross.Droid.Resource.Styleable.Spinner_android_popupBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Spinner_android_prompt = global::ResidentAppCross.Droid.Resource.Styleable.Spinner_android_prompt;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Spinner_popupTheme = global::ResidentAppCross.Droid.Resource.Styleable.Spinner_popupTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat_android_textOff = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat_android_textOff;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat_android_textOn = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat_android_textOn;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat_android_thumb = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat_android_thumb;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat_showText = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat_showText;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat_splitTrack = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat_splitTrack;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat_switchMinWidth = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat_switchMinWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat_switchPadding = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat_switchPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat_switchTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat_switchTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat_thumbTextPadding = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat_thumbTextPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.SwitchCompat_track = global::ResidentAppCross.Droid.Resource.Styleable.SwitchCompat_track;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabItem = global::ResidentAppCross.Droid.Resource.Styleable.TabItem;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabItem_android_icon = global::ResidentAppCross.Droid.Resource.Styleable.TabItem_android_icon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabItem_android_layout = global::ResidentAppCross.Droid.Resource.Styleable.TabItem_android_layout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabItem_android_text = global::ResidentAppCross.Droid.Resource.Styleable.TabItem_android_text;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabBackground = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabBackground;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabContentStart = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabContentStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabGravity = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabGravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabIndicatorColor = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabIndicatorColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabIndicatorHeight = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabIndicatorHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabMaxWidth = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabMaxWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabMinWidth = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabMinWidth;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabMode = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabPadding = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabPadding;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabPaddingBottom = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabPaddingBottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabPaddingEnd = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabPaddingEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabPaddingStart = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabPaddingStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabPaddingTop = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabPaddingTop;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabSelectedTextColor = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabSelectedTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TabLayout_tabTextColor = global::ResidentAppCross.Droid.Resource.Styleable.TabLayout_tabTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.TextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextAppearance_android_shadowColor = global::ResidentAppCross.Droid.Resource.Styleable.TextAppearance_android_shadowColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextAppearance_android_shadowDx = global::ResidentAppCross.Droid.Resource.Styleable.TextAppearance_android_shadowDx;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextAppearance_android_shadowDy = global::ResidentAppCross.Droid.Resource.Styleable.TextAppearance_android_shadowDy;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextAppearance_android_shadowRadius = global::ResidentAppCross.Droid.Resource.Styleable.TextAppearance_android_shadowRadius;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextAppearance_android_textColor = global::ResidentAppCross.Droid.Resource.Styleable.TextAppearance_android_textColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextAppearance_android_textSize = global::ResidentAppCross.Droid.Resource.Styleable.TextAppearance_android_textSize;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextAppearance_android_textStyle = global::ResidentAppCross.Droid.Resource.Styleable.TextAppearance_android_textStyle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextAppearance_android_typeface = global::ResidentAppCross.Droid.Resource.Styleable.TextAppearance_android_typeface;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextAppearance_textAllCaps = global::ResidentAppCross.Droid.Resource.Styleable.TextAppearance_textAllCaps;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_android_hint = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_android_hint;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_android_textColorHint = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_android_textColorHint;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_counterEnabled = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_counterEnabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_counterMaxLength = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_counterMaxLength;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_counterOverflowTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_counterOverflowTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_counterTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_counterTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_errorEnabled = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_errorEnabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_errorTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_errorTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_hintAnimationEnabled = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_hintAnimationEnabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_hintEnabled = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_hintEnabled;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.TextInputLayout_hintTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.TextInputLayout_hintTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_android_gravity = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_android_gravity;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_android_minHeight = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_android_minHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_collapseContentDescription = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_collapseContentDescription;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_collapseIcon = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_collapseIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_contentInsetEnd = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_contentInsetEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_contentInsetLeft = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_contentInsetLeft;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_contentInsetRight = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_contentInsetRight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_contentInsetStart = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_contentInsetStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_logo = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_logo;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_logoDescription = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_logoDescription;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_maxButtonHeight = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_maxButtonHeight;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_navigationContentDescription = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_navigationContentDescription;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_navigationIcon = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_navigationIcon;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_popupTheme = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_popupTheme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_subtitle = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_subtitle;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_subtitleTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_subtitleTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_subtitleTextColor = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_subtitleTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_title = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_title;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_titleMarginBottom = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_titleMarginBottom;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_titleMarginEnd = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_titleMarginEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_titleMarginStart = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_titleMarginStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_titleMarginTop = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_titleMarginTop;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_titleMargins = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_titleMargins;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_titleTextAppearance = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_titleTextAppearance;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.Toolbar_titleTextColor = global::ResidentAppCross.Droid.Resource.Styleable.Toolbar_titleTextColor;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.View = global::ResidentAppCross.Droid.Resource.Styleable.View;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.View_android_focusable = global::ResidentAppCross.Droid.Resource.Styleable.View_android_focusable;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.View_android_theme = global::ResidentAppCross.Droid.Resource.Styleable.View_android_theme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.View_paddingEnd = global::ResidentAppCross.Droid.Resource.Styleable.View_paddingEnd;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.View_paddingStart = global::ResidentAppCross.Droid.Resource.Styleable.View_paddingStart;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.View_theme = global::ResidentAppCross.Droid.Resource.Styleable.View_theme;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewBackgroundHelper = global::ResidentAppCross.Droid.Resource.Styleable.ViewBackgroundHelper;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewBackgroundHelper_android_background = global::ResidentAppCross.Droid.Resource.Styleable.ViewBackgroundHelper_android_background;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewBackgroundHelper_backgroundTint = global::ResidentAppCross.Droid.Resource.Styleable.ViewBackgroundHelper_backgroundTint;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewBackgroundHelper_backgroundTintMode = global::ResidentAppCross.Droid.Resource.Styleable.ViewBackgroundHelper_backgroundTintMode;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewStubCompat = global::ResidentAppCross.Droid.Resource.Styleable.ViewStubCompat;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewStubCompat_android_id = global::ResidentAppCross.Droid.Resource.Styleable.ViewStubCompat_android_id;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewStubCompat_android_inflatedId = global::ResidentAppCross.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
+			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewStubCompat_android_layout = global::ResidentAppCross.Droid.Resource.Styleable.ViewStubCompat_android_layout;
 			global::ZXing.Mobile.Resource.Id.contentFrame = global::ResidentAppCross.Droid.Resource.Id.contentFrame;
 			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::ResidentAppCross.Droid.Resource.Layout.zxingscanneractivitylayout;
 			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::ResidentAppCross.Droid.Resource.Layout.zxingscannerfragmentlayout;
@@ -153,26 +1755,26 @@ namespace ResidentAppCross.Droid
 		public partial class Attribute
 		{
 			
-			// aapt resource value: 0x7f010148
-			public const int MvxBind = 2130772296;
-			
 			// aapt resource value: 0x7f01014c
-			public const int MvxDropDownItemTemplate = 2130772300;
+			public const int MvxBind = 2130772300;
+			
+			// aapt resource value: 0x7f010150
+			public const int MvxDropDownItemTemplate = 2130772304;
+			
+			// aapt resource value: 0x7f010151
+			public const int MvxGroupItemTemplate = 2130772305;
+			
+			// aapt resource value: 0x7f01014f
+			public const int MvxItemTemplate = 2130772303;
 			
 			// aapt resource value: 0x7f01014d
-			public const int MvxGroupItemTemplate = 2130772301;
+			public const int MvxLang = 2130772301;
 			
-			// aapt resource value: 0x7f01014b
-			public const int MvxItemTemplate = 2130772299;
-			
-			// aapt resource value: 0x7f010149
-			public const int MvxLang = 2130772297;
+			// aapt resource value: 0x7f010152
+			public const int MvxSource = 2130772306;
 			
 			// aapt resource value: 0x7f01014e
-			public const int MvxSource = 2130772302;
-			
-			// aapt resource value: 0x7f01014a
-			public const int MvxTemplate = 2130772298;
+			public const int MvxTemplate = 2130772302;
 			
 			// aapt resource value: 0x7f010061
 			public const int actionBarDivider = 2130772065;
@@ -276,41 +1878,41 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f010083
 			public const int activityChooserViewStyle = 2130772099;
 			
-			// aapt resource value: 0x7f010155
-			public const int ahBarColor = 2130772309;
+			// aapt resource value: 0x7f010159
+			public const int ahBarColor = 2130772313;
+			
+			// aapt resource value: 0x7f010161
+			public const int ahBarLength = 2130772321;
+			
+			// aapt resource value: 0x7f010160
+			public const int ahBarWidth = 2130772320;
+			
+			// aapt resource value: 0x7f01015e
+			public const int ahCircleColor = 2130772318;
 			
 			// aapt resource value: 0x7f01015d
-			public const int ahBarLength = 2130772317;
+			public const int ahDelayMillis = 2130772317;
 			
-			// aapt resource value: 0x7f01015c
-			public const int ahBarWidth = 2130772316;
+			// aapt resource value: 0x7f01015f
+			public const int ahRadius = 2130772319;
 			
 			// aapt resource value: 0x7f01015a
-			public const int ahCircleColor = 2130772314;
-			
-			// aapt resource value: 0x7f010159
-			public const int ahDelayMillis = 2130772313;
+			public const int ahRimColor = 2130772314;
 			
 			// aapt resource value: 0x7f01015b
-			public const int ahRadius = 2130772315;
+			public const int ahRimWidth = 2130772315;
+			
+			// aapt resource value: 0x7f01015c
+			public const int ahSpinSpeed = 2130772316;
 			
 			// aapt resource value: 0x7f010156
-			public const int ahRimColor = 2130772310;
+			public const int ahText = 2130772310;
 			
 			// aapt resource value: 0x7f010157
-			public const int ahRimWidth = 2130772311;
+			public const int ahTextColor = 2130772311;
 			
 			// aapt resource value: 0x7f010158
-			public const int ahSpinSpeed = 2130772312;
-			
-			// aapt resource value: 0x7f010152
-			public const int ahText = 2130772306;
-			
-			// aapt resource value: 0x7f010153
-			public const int ahTextColor = 2130772307;
-			
-			// aapt resource value: 0x7f010154
-			public const int ahTextSize = 2130772308;
+			public const int ahTextSize = 2130772312;
 			
 			// aapt resource value: 0x7f0100a6
 			public const int alertDialogButtonGroupStyle = 2130772134;
@@ -452,6 +2054,18 @@ namespace ResidentAppCross.Droid
 			
 			// aapt resource value: 0x7f010013
 			public const int circleCrop = 2130771987;
+			
+			// aapt resource value: 0x7f01013d
+			public const int civ_border_color = 2130772285;
+			
+			// aapt resource value: 0x7f01013e
+			public const int civ_border_overlay = 2130772286;
+			
+			// aapt resource value: 0x7f01013c
+			public const int civ_border_width = 2130772284;
+			
+			// aapt resource value: 0x7f01013f
+			public const int civ_fill_color = 2130772287;
 			
 			// aapt resource value: 0x7f0100d3
 			public const int closeIcon = 2130772179;
@@ -798,8 +2412,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f01011a
 			public const int menu = 2130772250;
 			
-			// aapt resource value: 0x7f01014f
-			public const int minTextSize = 2130772303;
+			// aapt resource value: 0x7f010153
+			public const int minTextSize = 2130772307;
 			
 			// aapt resource value: 0x7f010047
 			public const int multiChoiceItemLayout = 2130772039;
@@ -840,8 +2454,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f010087
 			public const int popupWindowStyle = 2130772103;
 			
-			// aapt resource value: 0x7f010150
-			public const int precision = 2130772304;
+			// aapt resource value: 0x7f010154
+			public const int precision = 2130772308;
 			
 			// aapt resource value: 0x7f0100cc
 			public const int preserveIconSpacing = 2130772172;
@@ -879,41 +2493,41 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f010114
 			public const int rippleColor = 2130772244;
 			
-			// aapt resource value: 0x7f010142
-			public const int riv_border_color = 2130772290;
-			
-			// aapt resource value: 0x7f010141
-			public const int riv_border_width = 2130772289;
-			
-			// aapt resource value: 0x7f01013c
-			public const int riv_corner_radius = 2130772284;
-			
-			// aapt resource value: 0x7f01013f
-			public const int riv_corner_radius_bottom_left = 2130772287;
-			
-			// aapt resource value: 0x7f010140
-			public const int riv_corner_radius_bottom_right = 2130772288;
-			
-			// aapt resource value: 0x7f01013d
-			public const int riv_corner_radius_top_left = 2130772285;
-			
-			// aapt resource value: 0x7f01013e
-			public const int riv_corner_radius_top_right = 2130772286;
-			
-			// aapt resource value: 0x7f010143
-			public const int riv_mutate_background = 2130772291;
-			
-			// aapt resource value: 0x7f010144
-			public const int riv_oval = 2130772292;
+			// aapt resource value: 0x7f010146
+			public const int riv_border_color = 2130772294;
 			
 			// aapt resource value: 0x7f010145
-			public const int riv_tile_mode = 2130772293;
+			public const int riv_border_width = 2130772293;
 			
-			// aapt resource value: 0x7f010146
-			public const int riv_tile_mode_x = 2130772294;
+			// aapt resource value: 0x7f010140
+			public const int riv_corner_radius = 2130772288;
+			
+			// aapt resource value: 0x7f010143
+			public const int riv_corner_radius_bottom_left = 2130772291;
+			
+			// aapt resource value: 0x7f010144
+			public const int riv_corner_radius_bottom_right = 2130772292;
+			
+			// aapt resource value: 0x7f010141
+			public const int riv_corner_radius_top_left = 2130772289;
+			
+			// aapt resource value: 0x7f010142
+			public const int riv_corner_radius_top_right = 2130772290;
 			
 			// aapt resource value: 0x7f010147
-			public const int riv_tile_mode_y = 2130772295;
+			public const int riv_mutate_background = 2130772295;
+			
+			// aapt resource value: 0x7f010148
+			public const int riv_oval = 2130772296;
+			
+			// aapt resource value: 0x7f010149
+			public const int riv_tile_mode = 2130772297;
+			
+			// aapt resource value: 0x7f01014a
+			public const int riv_tile_mode_x = 2130772298;
+			
+			// aapt resource value: 0x7f01014b
+			public const int riv_tile_mode_y = 2130772299;
 			
 			// aapt resource value: 0x7f010016
 			public const int scopeUris = 2130771990;
@@ -948,8 +2562,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f010048
 			public const int singleChoiceItemLayout = 2130772040;
 			
-			// aapt resource value: 0x7f010151
-			public const int sizeToFit = 2130772305;
+			// aapt resource value: 0x7f010155
+			public const int sizeToFit = 2130772309;
 			
 			// aapt resource value: 0x7f010018
 			public const int spanCount = 2130771992;
@@ -2225,13 +3839,13 @@ namespace ResidentAppCross.Droid
 			public const int AppartmentAppsIcon = 2130837582;
 			
 			// aapt resource value: 0x7f02004f
-			public const int AvatarBackground = 2130837583;
+			public const int avatar_background = 2130837583;
 			
 			// aapt resource value: 0x7f020050
-			public const int AvatarBackgroundSource = 2130837584;
+			public const int avatar_placeholder = 2130837584;
 			
 			// aapt resource value: 0x7f020051
-			public const int AvatarPlaceholder = 2130837585;
+			public const int AvatarBackgroundSource = 2130837585;
 			
 			// aapt resource value: 0x7f020052
 			public const int background = 2130837586;
@@ -2387,55 +4001,55 @@ namespace ResidentAppCross.Droid
 			public const int HouseIcon = 2130837636;
 			
 			// aapt resource value: 0x7f020085
-			public const int ic_android_black_24dp = 2130837637;
+			public const int ic_errorstatus = 2130837637;
 			
 			// aapt resource value: 0x7f020086
-			public const int ic_errorstatus = 2130837638;
+			public const int ic_login_50893_0013_forma = 2130837638;
 			
 			// aapt resource value: 0x7f020087
-			public const int ic_login_50893_0013_forma = 2130837639;
+			public const int ic_successstatus = 2130837639;
 			
 			// aapt resource value: 0x7f020088
-			public const int ic_successstatus = 2130837640;
+			public const int Icon = 2130837640;
 			
 			// aapt resource value: 0x7f020089
-			public const int Icon = 2130837641;
+			public const int icon1 = 2130837641;
 			
 			// aapt resource value: 0x7f02008a
-			public const int icon1 = 2130837642;
+			public const int iconelse = 2130837642;
 			
 			// aapt resource value: 0x7f02008b
-			public const int iconelse = 2130837643;
+			public const int L_Gear = 2130837643;
 			
 			// aapt resource value: 0x7f02008c
-			public const int L_Gear = 2130837644;
+			public const int L_LocationOk = 2130837644;
 			
 			// aapt resource value: 0x7f02008d
-			public const int L_LocationOk = 2130837645;
+			public const int L_Ok = 2130837645;
 			
 			// aapt resource value: 0x7f02008e
-			public const int L_Ok = 2130837646;
+			public const int LOGIN = 2130837646;
 			
 			// aapt resource value: 0x7f02008f
-			public const int LOGIN = 2130837647;
+			public const int LoginButton = 2130837647;
 			
 			// aapt resource value: 0x7f020090
-			public const int LoginButton = 2130837648;
+			public const int logo_03 = 2130837648;
 			
 			// aapt resource value: 0x7f020091
-			public const int logo_03 = 2130837649;
+			public const int MaintenaceIcon = 2130837649;
 			
 			// aapt resource value: 0x7f020092
-			public const int MaintenaceIcon = 2130837650;
+			public const int maintenance_calendar_icon = 2130837650;
 			
 			// aapt resource value: 0x7f020093
 			public const int MaintenanceRequestMainIcon = 2130837651;
 			
 			// aapt resource value: 0x7f020094
-			public const int Message = 2130837652;
+			public const int message = 2130837652;
 			
-			// aapt resource value: 0x7f0200ad
-			public const int notification_template_icon_bg = 2130837677;
+			// aapt resource value: 0x7f0200ac
+			public const int notification_template_icon_bg = 2130837676;
 			
 			// aapt resource value: 0x7f020095
 			public const int OfficerIcon = 2130837653;
@@ -2465,49 +4079,46 @@ namespace ResidentAppCross.Droid
 			public const int S_Maintenance = 2130837661;
 			
 			// aapt resource value: 0x7f02009e
-			public const int S_MaintenanceCalendar = 2130837662;
+			public const int S_MaintenanceFolder = 2130837662;
 			
 			// aapt resource value: 0x7f02009f
-			public const int S_MaintenanceFolder = 2130837663;
+			public const int S_Partners = 2130837663;
 			
 			// aapt resource value: 0x7f0200a0
-			public const int S_Partners = 2130837664;
+			public const int S_Police = 2130837664;
 			
 			// aapt resource value: 0x7f0200a1
-			public const int S_Police = 2130837665;
+			public const int S_PoliceFolder = 2130837665;
 			
 			// aapt resource value: 0x7f0200a2
-			public const int S_PoliceFolder = 2130837666;
+			public const int S_Wallet = 2130837666;
 			
 			// aapt resource value: 0x7f0200a3
-			public const int S_Wallet = 2130837667;
+			public const int search = 2130837667;
 			
 			// aapt resource value: 0x7f0200a4
-			public const int Search = 2130837668;
+			public const int SecurityIcon = 2130837668;
 			
 			// aapt resource value: 0x7f0200a5
-			public const int SecurityIcon = 2130837669;
+			public const int SettingsIcon = 2130837669;
 			
 			// aapt resource value: 0x7f0200a6
-			public const int SettingsIcon = 2130837670;
+			public const int SignOutIcon = 2130837670;
 			
 			// aapt resource value: 0x7f0200a7
-			public const int SignOutIcon = 2130837671;
+			public const int timeline_bottom = 2130837671;
 			
 			// aapt resource value: 0x7f0200a8
-			public const int TimelineBottom = 2130837672;
+			public const int timeline_mid = 2130837672;
 			
 			// aapt resource value: 0x7f0200a9
-			public const int TimelineMid = 2130837673;
+			public const int timeline_top = 2130837673;
 			
 			// aapt resource value: 0x7f0200aa
-			public const int TimelineTop = 2130837674;
+			public const int UsernameIcon = 2130837674;
 			
 			// aapt resource value: 0x7f0200ab
-			public const int UsernameIcon = 2130837675;
-			
-			// aapt resource value: 0x7f0200ac
-			public const int WhiteHomeIcon = 2130837676;
+			public const int WhiteHomeIcon = 2130837675;
 			
 			static Drawable()
 			{
@@ -2522,92 +4133,116 @@ namespace ResidentAppCross.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0a008d
-			public const int AddPhotoButton1 = 2131361933;
+			// aapt resource value: 0x7f0a0099
+			public const int AddPhotoButton1 = 2131361945;
 			
-			// aapt resource value: 0x7f0a0090
-			public const int AddPhotoButton2 = 2131361936;
+			// aapt resource value: 0x7f0a009c
+			public const int AddPhotoButton2 = 2131361948;
 			
-			// aapt resource value: 0x7f0a00fd
-			public const int AddressLabel = 2131362045;
+			// aapt resource value: 0x7f0a0109
+			public const int AddressLabel = 2131362057;
 			
-			// aapt resource value: 0x7f0a00c2
-			public const int ApartmentsAppIconView = 2131361986;
+			// aapt resource value: 0x7f0a00ce
+			public const int ApartmentsAppIconView = 2131361998;
 			
-			// aapt resource value: 0x7f0a00fb
-			public const int AvatarViewContainer = 2131362043;
+			// aapt resource value: 0x7f0a0094
+			public const int AvatarView = 2131361940;
 			
-			// aapt resource value: 0x7f0a00b5
-			public const int Button = 2131361973;
+			// aapt resource value: 0x7f0a00c1
+			public const int Button = 2131361985;
 			
 			// aapt resource value: 0x7f0a0079
 			public const int ButtonContainer = 2131361913;
 			
-			// aapt resource value: 0x7f0a00fa
-			public const int CreatedOnLabel = 2131362042;
+			// aapt resource value: 0x7f0a0080
+			public const int CheckinButton = 2131361920;
 			
-			// aapt resource value: 0x7f0a00f8
-			public const int DateLabel = 2131362040;
+			// aapt resource value: 0x7f0a0087
+			public const int ConfirmButton = 2131361927;
 			
-			// aapt resource value: 0x7f0a00f7
-			public const int DetailsButton = 2131362039;
+			// aapt resource value: 0x7f0a0106
+			public const int CreatedOnLabel = 2131362054;
 			
-			// aapt resource value: 0x7f0a00f6
-			public const int DetailsLabel = 2131362038;
+			// aapt resource value: 0x7f0a0104
+			public const int DateLabel = 2131362052;
 			
-			// aapt resource value: 0x7f0a00bd
-			public const int EmailInput = 2131361981;
+			// aapt resource value: 0x7f0a0082
+			public const int DatePage = 2131361922;
 			
-			// aapt resource value: 0x7f0a00ff
-			public const int EmailLabel = 2131362047;
+			// aapt resource value: 0x7f0a0083
+			public const int DatePicker = 2131361923;
+			
+			// aapt resource value: 0x7f0a0103
+			public const int DetailsButton = 2131362051;
+			
+			// aapt resource value: 0x7f0a0102
+			public const int DetailsLabel = 2131362050;
+			
+			// aapt resource value: 0x7f0a0081
+			public const int DialogPager = 2131361921;
 			
 			// aapt resource value: 0x7f0a00c9
-			public const int ForgotPasswordButton = 2131361993;
+			public const int EmailInput = 2131361993;
 			
-			// aapt resource value: 0x7f0a008b
-			public const int GallerySectionEmptyContainer = 2131361931;
-			
-			// aapt resource value: 0x7f0a008e
-			public const int GallerySectionGalleryContainer = 2131361934;
-			
-			// aapt resource value: 0x7f0a008c
-			public const int HeaderLabel = 2131361932;
-			
-			// aapt resource value: 0x7f0a00b3
-			public const int HistoryPage = 2131361971;
-			
-			// aapt resource value: 0x7f0a00f4
-			public const int IconBackground = 2131362036;
-			
-			// aapt resource value: 0x7f0a0094
-			public const int IconView = 2131361940;
-			
-			// aapt resource value: 0x7f0a008f
-			public const int ImageContainer = 2131361935;
-			
-			// aapt resource value: 0x7f0a00b4
-			public const int Label = 2131361972;
-			
-			// aapt resource value: 0x7f0a00af
-			public const int ListContainer = 2131361967;
-			
-			// aapt resource value: 0x7f0a00c0
-			public const int LoginButton = 2131361984;
-			
-			// aapt resource value: 0x7f0a00c3
-			public const int LoginForm = 2131361987;
-			
-			// aapt resource value: 0x7f0a00c1
-			public const int MainContainer = 2131361985;
+			// aapt resource value: 0x7f0a0096
+			public const int EmailLabel = 2131361942;
 			
 			// aapt resource value: 0x7f0a00d5
-			public const int Map = 2131362005;
+			public const int ForgotPasswordButton = 2131362005;
 			
-			// aapt resource value: 0x7f0a00b1
-			public const int ModePager = 2131361969;
+			// aapt resource value: 0x7f0a0097
+			public const int GallerySectionEmptyContainer = 2131361943;
 			
-			// aapt resource value: 0x7f0a00b0
-			public const int ModeTabs = 2131361968;
+			// aapt resource value: 0x7f0a009a
+			public const int GallerySectionGalleryContainer = 2131361946;
+			
+			// aapt resource value: 0x7f0a0098
+			public const int HeaderLabel = 2131361944;
+			
+			// aapt resource value: 0x7f0a007e
+			public const int HeaderSection = 2131361918;
+			
+			// aapt resource value: 0x7f0a00bf
+			public const int HistoryPage = 2131361983;
+			
+			// aapt resource value: 0x7f0a0100
+			public const int IconBackground = 2131362048;
+			
+			// aapt resource value: 0x7f0a00a0
+			public const int IconView = 2131361952;
+			
+			// aapt resource value: 0x7f0a009b
+			public const int ImageContainer = 2131361947;
+			
+			// aapt resource value: 0x7f0a0107
+			public const int InformationContainer = 2131362055;
+			
+			// aapt resource value: 0x7f0a00ea
+			public const int InputField = 2131362026;
+			
+			// aapt resource value: 0x7f0a00c0
+			public const int Label = 2131361984;
+			
+			// aapt resource value: 0x7f0a00bb
+			public const int ListContainer = 2131361979;
+			
+			// aapt resource value: 0x7f0a00cc
+			public const int LoginButton = 2131361996;
+			
+			// aapt resource value: 0x7f0a00cf
+			public const int LoginForm = 2131361999;
+			
+			// aapt resource value: 0x7f0a00cd
+			public const int MainContainer = 2131361997;
+			
+			// aapt resource value: 0x7f0a007f
+			public const int Map = 2131361919;
+			
+			// aapt resource value: 0x7f0a00bd
+			public const int ModePager = 2131361981;
+			
+			// aapt resource value: 0x7f0a00bc
+			public const int ModeTabs = 2131361980;
 			
 			// aapt resource value: 0x7f0a000b
 			public const int MvvmCrossTagId = 2131361803;
@@ -2615,74 +4250,92 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a000c
 			public const int MvxBindingTagUnique = 2131361804;
 			
-			// aapt resource value: 0x7f0a00fc
-			public const int NameLabel = 2131362044;
-			
-			// aapt resource value: 0x7f0a00ca
-			public const int NewHereLabel = 2131361994;
-			
-			// aapt resource value: 0x7f0a00bf
-			public const int PasswordInput = 2131361983;
-			
-			// aapt resource value: 0x7f0a00c7
-			public const int PasswordLoginFormGroup = 2131361991;
-			
-			// aapt resource value: 0x7f0a00fe
-			public const int PhoneLabel = 2131362046;
-			
-			// aapt resource value: 0x7f0a00f1
-			public const int PipeIconView = 2131362033;
-			
-			// aapt resource value: 0x7f0a00ec
-			public const int RadioContainer = 2131362028;
-			
-			// aapt resource value: 0x7f0a00ed
-			public const int SearchInput = 2131362029;
-			
-			// aapt resource value: 0x7f0a00ee
-			public const int SearchOutput = 2131362030;
-			
-			// aapt resource value: 0x7f0a007e
-			public const int SectionContainerDefault = 2131361918;
-			
-			// aapt resource value: 0x7f0a00cb
-			public const int SignUpButton = 2131361995;
-			
-			// aapt resource value: 0x7f0a00f9
-			public const int StatusLabel = 2131362041;
-			
-			// aapt resource value: 0x7f0a00b2
-			public const int StatusPage = 2131361970;
+			// aapt resource value: 0x7f0a0108
+			public const int NameLabel = 2131362056;
 			
 			// aapt resource value: 0x7f0a0093
-			public const int SubtitleLabel = 2131361939;
+			public const int NavigationHeader = 2131361939;
 			
-			// aapt resource value: 0x7f0a00ef
-			public const int Switch = 2131362031;
+			// aapt resource value: 0x7f0a00d6
+			public const int NewHereLabel = 2131362006;
 			
-			// aapt resource value: 0x7f0a00f0
-			public const int TextInput = 2131362032;
+			// aapt resource value: 0x7f0a00eb
+			public const int NotificationContainer = 2131362027;
 			
-			// aapt resource value: 0x7f0a0092
-			public const int TitleLabel = 2131361938;
+			// aapt resource value: 0x7f0a00cb
+			public const int PasswordInput = 2131361995;
 			
-			// aapt resource value: 0x7f0a00f3
-			public const int TopLine = 2131362035;
+			// aapt resource value: 0x7f0a00d3
+			public const int PasswordLoginFormGroup = 2131362003;
 			
-			// aapt resource value: 0x7f0a00f5
-			public const int TypeLabel = 2131362037;
+			// aapt resource value: 0x7f0a010a
+			public const int PhoneLabel = 2131362058;
 			
-			// aapt resource value: 0x7f0a00c6
-			public const int UsernameInput = 2131361990;
+			// aapt resource value: 0x7f0a00fd
+			public const int PipeIconView = 2131362045;
 			
-			// aapt resource value: 0x7f0a00c4
-			public const int UsernameLoginFormGroup = 2131361988;
+			// aapt resource value: 0x7f0a00f9
+			public const int RadioContainer = 2131362041;
 			
-			// aapt resource value: 0x7f0a00cc
-			public const int VersionLabel = 2131361996;
+			// aapt resource value: 0x7f0a00fa
+			public const int SearchInput = 2131362042;
 			
-			// aapt resource value: 0x7f0a00df
-			public const int action0 = 2131362015;
+			// aapt resource value: 0x7f0a00fb
+			public const int SearchOutput = 2131362043;
+			
+			// aapt resource value: 0x7f0a0089
+			public const int SectionContainerDefault = 2131361929;
+			
+			// aapt resource value: 0x7f0a0088
+			public const int ShowSelectDateButton = 2131361928;
+			
+			// aapt resource value: 0x7f0a0084
+			public const int ShowSelectTimeButton = 2131361924;
+			
+			// aapt resource value: 0x7f0a00d7
+			public const int SignUpButton = 2131362007;
+			
+			// aapt resource value: 0x7f0a0105
+			public const int StatusLabel = 2131362053;
+			
+			// aapt resource value: 0x7f0a00be
+			public const int StatusPage = 2131361982;
+			
+			// aapt resource value: 0x7f0a009f
+			public const int SubtitleLabel = 2131361951;
+			
+			// aapt resource value: 0x7f0a00fc
+			public const int Switch = 2131362044;
+			
+			// aapt resource value: 0x7f0a0085
+			public const int TimePage = 2131361925;
+			
+			// aapt resource value: 0x7f0a0086
+			public const int TimePicker = 2131361926;
+			
+			// aapt resource value: 0x7f0a009e
+			public const int TitleLabel = 2131361950;
+			
+			// aapt resource value: 0x7f0a00ff
+			public const int TopLine = 2131362047;
+			
+			// aapt resource value: 0x7f0a0101
+			public const int TypeLabel = 2131362049;
+			
+			// aapt resource value: 0x7f0a00d2
+			public const int UsernameInput = 2131362002;
+			
+			// aapt resource value: 0x7f0a0095
+			public const int UsernameLabel = 2131361941;
+			
+			// aapt resource value: 0x7f0a00d0
+			public const int UsernameLoginFormGroup = 2131362000;
+			
+			// aapt resource value: 0x7f0a00d8
+			public const int VersionLabel = 2131362008;
+			
+			// aapt resource value: 0x7f0a00ec
+			public const int action0 = 2131362028;
 			
 			// aapt resource value: 0x7f0a006a
 			public const int action_bar = 2131361898;
@@ -2708,8 +4361,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a006b
 			public const int action_context_bar = 2131361899;
 			
-			// aapt resource value: 0x7f0a00e3
-			public const int action_divider = 2131362019;
+			// aapt resource value: 0x7f0a00f0
+			public const int action_divider = 2131362032;
 			
 			// aapt resource value: 0x7f0a0003
 			public const int action_menu_divider = 2131361795;
@@ -2725,12 +4378,6 @@ namespace ResidentAppCross.Droid
 			
 			// aapt resource value: 0x7f0a004c
 			public const int action_mode_close_button = 2131361868;
-			
-			// aapt resource value: 0x7f0a0101
-			public const int action_search = 2131362049;
-			
-			// aapt resource value: 0x7f0a0102
-			public const int action_settings = 2131362050;
 			
 			// aapt resource value: 0x7f0a004d
 			public const int activity_chooser_view_content = 2131361869;
@@ -2756,17 +4403,17 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0017
 			public const int auto = 2131361815;
 			
-			// aapt resource value: 0x7f0a009a
-			public const int avatar_container = 2131361946;
+			// aapt resource value: 0x7f0a00a6
+			public const int avatar_container = 2131361958;
 			
-			// aapt resource value: 0x7f0a009b
-			public const int avatar_image = 2131361947;
+			// aapt resource value: 0x7f0a00a7
+			public const int avatar_image = 2131361959;
 			
-			// aapt resource value: 0x7f0a00dc
-			public const int badge = 2131362012;
+			// aapt resource value: 0x7f0a00e7
+			public const int badge = 2131362023;
 			
-			// aapt resource value: 0x7f0a0099
-			public const int badge_text = 2131361945;
+			// aapt resource value: 0x7f0a00a5
+			public const int badge_text = 2131361957;
 			
 			// aapt resource value: 0x7f0a0028
 			public const int beginning = 2131361832;
@@ -2774,14 +4421,14 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0037
 			public const int bottom = 2131361847;
 			
-			// aapt resource value: 0x7f0a00c8
-			public const int button1 = 2131361992;
+			// aapt resource value: 0x7f0a00d4
+			public const int button1 = 2131362004;
 			
 			// aapt resource value: 0x7f0a0054
 			public const int buttonPanel = 2131361876;
 			
-			// aapt resource value: 0x7f0a00e0
-			public const int cancel_action = 2131362016;
+			// aapt resource value: 0x7f0a00ed
+			public const int cancel_action = 2131362029;
 			
 			// aapt resource value: 0x7f0a0038
 			public const int center = 2131361848;
@@ -2795,8 +4442,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0062
 			public const int checkbox = 2131361890;
 			
-			// aapt resource value: 0x7f0a00e6
-			public const int chronometer = 2131362022;
+			// aapt resource value: 0x7f0a00f3
+			public const int chronometer = 2131362035;
 			
 			// aapt resource value: 0x7f0a0047
 			public const int clamp = 2131361863;
@@ -2810,23 +4457,23 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a002c
 			public const int collapseActionView = 2131361836;
 			
-			// aapt resource value: 0x7f0a0096
-			public const int container1 = 2131361942;
+			// aapt resource value: 0x7f0a00a2
+			public const int container1 = 2131361954;
 			
-			// aapt resource value: 0x7f0a0098
-			public const int container2 = 2131361944;
+			// aapt resource value: 0x7f0a00a4
+			public const int container2 = 2131361956;
 			
-			// aapt resource value: 0x7f0a0100
-			public const int contentFrame = 2131362048;
+			// aapt resource value: 0x7f0a010b
+			public const int contentFrame = 2131362059;
 			
 			// aapt resource value: 0x7f0a005a
 			public const int contentPanel = 2131361882;
 			
-			// aapt resource value: 0x7f0a00a3
-			public const int controls_container = 2131361955;
+			// aapt resource value: 0x7f0a00af
+			public const int controls_container = 2131361967;
 			
-			// aapt resource value: 0x7f0a00ac
-			public const int copyright_text = 2131361964;
+			// aapt resource value: 0x7f0a00b8
+			public const int copyright_text = 2131361976;
 			
 			// aapt resource value: 0x7f0a0060
 			public const int custom = 2131361888;
@@ -2834,8 +4481,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a005f
 			public const int customPanel = 2131361887;
 			
-			// aapt resource value: 0x7f0a00f2
-			public const int cv = 2131362034;
+			// aapt resource value: 0x7f0a00fe
+			public const int cv = 2131362046;
 			
 			// aapt resource value: 0x7f0a0018
 			public const int dark = 2131361816;
@@ -2846,53 +4493,53 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0050
 			public const int default_activity_button = 2131361872;
 			
-			// aapt resource value: 0x7f0a0080
-			public const int design_bottom_sheet = 2131361920;
+			// aapt resource value: 0x7f0a008b
+			public const int design_bottom_sheet = 2131361931;
 			
-			// aapt resource value: 0x7f0a0087
-			public const int design_menu_item_action_area = 2131361927;
+			// aapt resource value: 0x7f0a0092
+			public const int design_menu_item_action_area = 2131361938;
 			
-			// aapt resource value: 0x7f0a0086
-			public const int design_menu_item_action_area_stub = 2131361926;
+			// aapt resource value: 0x7f0a0091
+			public const int design_menu_item_action_area_stub = 2131361937;
 			
-			// aapt resource value: 0x7f0a0085
-			public const int design_menu_item_text = 2131361925;
+			// aapt resource value: 0x7f0a0090
+			public const int design_menu_item_text = 2131361936;
 			
-			// aapt resource value: 0x7f0a0084
-			public const int design_navigation_view = 2131361924;
+			// aapt resource value: 0x7f0a008f
+			public const int design_navigation_view = 2131361935;
 			
 			// aapt resource value: 0x7f0a001c
 			public const int disableHome = 2131361820;
 			
-			// aapt resource value: 0x7f0a00de
-			public const int drawerList = 2131362014;
+			// aapt resource value: 0x7f0a00e9
+			public const int drawerList = 2131362025;
 			
-			// aapt resource value: 0x7f0a0108
-			public const int drawer_downloaded = 2131362056;
+			// aapt resource value: 0x7f0a0111
+			public const int drawer_downloaded = 2131362065;
 			
-			// aapt resource value: 0x7f0a0104
-			public const int drawer_favourite = 2131362052;
+			// aapt resource value: 0x7f0a010d
+			public const int drawer_favourite = 2131362061;
 			
-			// aapt resource value: 0x7f0a0103
-			public const int drawer_home = 2131362051;
+			// aapt resource value: 0x7f0a010c
+			public const int drawer_home = 2131362060;
 			
-			// aapt resource value: 0x7f0a0107
-			public const int drawer_oops = 2131362055;
+			// aapt resource value: 0x7f0a0110
+			public const int drawer_oops = 2131362064;
 			
-			// aapt resource value: 0x7f0a0105
-			public const int drawer_settings = 2131362053;
+			// aapt resource value: 0x7f0a010e
+			public const int drawer_settings = 2131362062;
 			
-			// aapt resource value: 0x7f0a00d4
-			public const int editText1 = 2131362004;
+			// aapt resource value: 0x7f0a00e0
+			public const int editText1 = 2131362016;
 			
-			// aapt resource value: 0x7f0a009f
-			public const int edit_account_icon_image = 2131361951;
+			// aapt resource value: 0x7f0a00ab
+			public const int edit_account_icon_image = 2131361963;
 			
-			// aapt resource value: 0x7f0a009e
-			public const int edit_profile_button = 2131361950;
+			// aapt resource value: 0x7f0a00aa
+			public const int edit_profile_button = 2131361962;
 			
-			// aapt resource value: 0x7f0a00a0
-			public const int edit_profile_text = 2131361952;
+			// aapt resource value: 0x7f0a00ac
+			public const int edit_profile_text = 2131361964;
 			
 			// aapt resource value: 0x7f0a006c
 			public const int edit_query = 2131361900;
@@ -2900,8 +4547,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0029
 			public const int end = 2131361833;
 			
-			// aapt resource value: 0x7f0a00eb
-			public const int end_padder = 2131362027;
+			// aapt resource value: 0x7f0a00f8
+			public const int end_padder = 2131362040;
 			
 			// aapt resource value: 0x7f0a0030
 			public const int enterAlways = 2131361840;
@@ -2930,8 +4577,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0045
 			public const int @fixed = 2131361861;
 			
-			// aapt resource value: 0x7f0a00ab
-			public const int footer_container = 2131361963;
+			// aapt resource value: 0x7f0a00b7
+			public const int footer_container = 2131361975;
 			
 			// aapt resource value: 0x7f0a0005
 			public const int home = 2131361797;
@@ -2954,23 +4601,23 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a004f
 			public const int image = 2131361871;
 			
+			// aapt resource value: 0x7f0a00c6
+			public const int imageView = 2131361990;
+			
 			// aapt resource value: 0x7f0a00ba
-			public const int imageView = 2131361978;
+			public const int imageView1 = 2131361978;
 			
-			// aapt resource value: 0x7f0a00ae
-			public const int imageView1 = 2131361966;
+			// aapt resource value: 0x7f0a00d1
+			public const int imageView2 = 2131362001;
 			
-			// aapt resource value: 0x7f0a00c5
-			public const int imageView2 = 2131361989;
+			// aapt resource value: 0x7f0a00f7
+			public const int info = 2131362039;
 			
-			// aapt resource value: 0x7f0a00ea
-			public const int info = 2131362026;
+			// aapt resource value: 0x7f0a00c8
+			public const int input_email_layout = 2131361992;
 			
-			// aapt resource value: 0x7f0a00bc
-			public const int input_email_layout = 2131361980;
-			
-			// aapt resource value: 0x7f0a00be
-			public const int input_password_layout = 2131361982;
+			// aapt resource value: 0x7f0a00ca
+			public const int input_password_layout = 2131361994;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int item_touch_helper_previous_elevation = 2131361792;
@@ -2981,20 +4628,20 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0019
 			public const int light = 2131361817;
 			
-			// aapt resource value: 0x7f0a00e4
-			public const int line1 = 2131362020;
+			// aapt resource value: 0x7f0a00f1
+			public const int line1 = 2131362033;
 			
-			// aapt resource value: 0x7f0a00e8
-			public const int line3 = 2131362024;
+			// aapt resource value: 0x7f0a00f5
+			public const int line3 = 2131362037;
 			
-			// aapt resource value: 0x7f0a00ce
-			public const int linearLayout1 = 2131361998;
+			// aapt resource value: 0x7f0a00da
+			public const int linearLayout1 = 2131362010;
 			
-			// aapt resource value: 0x7f0a00cf
-			public const int linearLayout2 = 2131361999;
+			// aapt resource value: 0x7f0a00db
+			public const int linearLayout2 = 2131362011;
 			
-			// aapt resource value: 0x7f0a00d2
-			public const int linearLayout3 = 2131362002;
+			// aapt resource value: 0x7f0a00de
+			public const int linearLayout3 = 2131362014;
 			
 			// aapt resource value: 0x7f0a001a
 			public const int listMode = 2131361818;
@@ -3002,23 +4649,23 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0051
 			public const int list_item = 2131361873;
 			
-			// aapt resource value: 0x7f0a00b8
-			public const int loadingImage = 2131361976;
+			// aapt resource value: 0x7f0a00c4
+			public const int loadingImage = 2131361988;
 			
-			// aapt resource value: 0x7f0a00b6
-			public const int loadingProgressBar = 2131361974;
+			// aapt resource value: 0x7f0a00c2
+			public const int loadingProgressBar = 2131361986;
 			
-			// aapt resource value: 0x7f0a00b9
-			public const int loadingProgressWheel = 2131361977;
+			// aapt resource value: 0x7f0a00c5
+			public const int loadingProgressWheel = 2131361989;
 			
-			// aapt resource value: 0x7f0a0095
-			public const int main_container = 2131361941;
+			// aapt resource value: 0x7f0a00a1
+			public const int main_container = 2131361953;
 			
-			// aapt resource value: 0x7f0a00d1
-			public const int maintenance_request_view_container = 2131362001;
+			// aapt resource value: 0x7f0a00dd
+			public const int maintenance_request_view_container = 2131362013;
 			
-			// aapt resource value: 0x7f0a00e2
-			public const int media_actions = 2131362018;
+			// aapt resource value: 0x7f0a00ef
+			public const int media_actions = 2131362031;
 			
 			// aapt resource value: 0x7f0a002a
 			public const int middle = 2131361834;
@@ -3032,17 +4679,17 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0023
 			public const int multiply = 2131361827;
 			
-			// aapt resource value: 0x7f0a00a1
-			public const int mvx_home_menu_item_list = 2131361953;
+			// aapt resource value: 0x7f0a00ad
+			public const int mvx_home_menu_item_list = 2131361965;
 			
-			// aapt resource value: 0x7f0a00d0
-			public const int mvx_maintenance_request_type_selection_list = 2131362000;
+			// aapt resource value: 0x7f0a00dc
+			public const int mvx_maintenance_request_type_selection_list = 2131362012;
 			
-			// aapt resource value: 0x7f0a00dd
-			public const int nav_header_container = 2131362013;
+			// aapt resource value: 0x7f0a00e8
+			public const int nav_header_container = 2131362024;
 			
-			// aapt resource value: 0x7f0a0083
-			public const int navigation_header_container = 2131361923;
+			// aapt resource value: 0x7f0a008e
+			public const int navigation_header_container = 2131361934;
 			
 			// aapt resource value: 0x7f0a007d
 			public const int navigation_view = 2131361917;
@@ -3065,11 +4712,11 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0036
 			public const int pin = 2131361846;
 			
-			// aapt resource value: 0x7f0a009c
-			public const int profile_details_container = 2131361948;
+			// aapt resource value: 0x7f0a00a8
+			public const int profile_details_container = 2131361960;
 			
-			// aapt resource value: 0x7f0a009d
-			public const int profile_name_text = 2131361949;
+			// aapt resource value: 0x7f0a00a9
+			public const int profile_name_text = 2131361961;
 			
 			// aapt resource value: 0x7f0a0006
 			public const int progress_circular = 2131361798;
@@ -3080,14 +4727,14 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0064
 			public const int radio = 2131361892;
 			
-			// aapt resource value: 0x7f0a00d8
-			public const int radioButton = 2131362008;
+			// aapt resource value: 0x7f0a00e3
+			public const int radioButton = 2131362019;
 			
-			// aapt resource value: 0x7f0a00d9
-			public const int radioButton2 = 2131362009;
+			// aapt resource value: 0x7f0a00e4
+			public const int radioButton2 = 2131362020;
 			
-			// aapt resource value: 0x7f0a00da
-			public const int radioButton3 = 2131362010;
+			// aapt resource value: 0x7f0a00e5
+			public const int radioButton3 = 2131362021;
 			
 			// aapt resource value: 0x7f0a0049
 			public const int repeat = 2131361865;
@@ -3146,20 +4793,20 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0077
 			public const int search_voice_btn = 2131361911;
 			
-			// aapt resource value: 0x7f0a0106
-			public const int section = 2131362054;
+			// aapt resource value: 0x7f0a010f
+			public const int section = 2131362063;
 			
 			// aapt resource value: 0x7f0a0078
 			public const int select_dialog_listview = 2131361912;
 			
-			// aapt resource value: 0x7f0a00a4
-			public const int settings_button_container = 2131361956;
+			// aapt resource value: 0x7f0a00b0
+			public const int settings_button_container = 2131361968;
 			
-			// aapt resource value: 0x7f0a00a5
-			public const int settings_button_icon_image = 2131361957;
+			// aapt resource value: 0x7f0a00b1
+			public const int settings_button_icon_image = 2131361969;
 			
-			// aapt resource value: 0x7f0a00a6
-			public const int settings_button_text = 2131361958;
+			// aapt resource value: 0x7f0a00b2
+			public const int settings_button_text = 2131361970;
 			
 			// aapt resource value: 0x7f0a0063
 			public const int shortcut = 2131361891;
@@ -3173,32 +4820,32 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0020
 			public const int showTitle = 2131361824;
 			
-			// aapt resource value: 0x7f0a00d6
-			public const int show_toolbar_switch = 2131362006;
+			// aapt resource value: 0x7f0a00e1
+			public const int show_toolbar_switch = 2131362017;
 			
-			// aapt resource value: 0x7f0a00a7
-			public const int signout_button_container = 2131361959;
+			// aapt resource value: 0x7f0a00b3
+			public const int signout_button_container = 2131361971;
 			
-			// aapt resource value: 0x7f0a00a9
-			public const int signout_button_icon_image = 2131361961;
+			// aapt resource value: 0x7f0a00b5
+			public const int signout_button_icon_image = 2131361973;
 			
-			// aapt resource value: 0x7f0a00a8
-			public const int signout_button_text = 2131361960;
+			// aapt resource value: 0x7f0a00b4
+			public const int signout_button_text = 2131361972;
 			
-			// aapt resource value: 0x7f0a0082
-			public const int snackbar_action = 2131361922;
+			// aapt resource value: 0x7f0a008d
+			public const int snackbar_action = 2131361933;
 			
-			// aapt resource value: 0x7f0a0081
-			public const int snackbar_text = 2131361921;
+			// aapt resource value: 0x7f0a008c
+			public const int snackbar_text = 2131361932;
 			
 			// aapt resource value: 0x7f0a0034
 			public const int snap = 2131361844;
 			
-			// aapt resource value: 0x7f0a00a2
-			public const int space1 = 2131361954;
+			// aapt resource value: 0x7f0a00ae
+			public const int space1 = 2131361966;
 			
-			// aapt resource value: 0x7f0a00aa
-			public const int space2 = 2131361962;
+			// aapt resource value: 0x7f0a00b6
+			public const int space2 = 2131361974;
 			
 			// aapt resource value: 0x7f0a0055
 			public const int spacer = 2131361877;
@@ -3221,14 +4868,14 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a003e
 			public const int start = 2131361854;
 			
-			// aapt resource value: 0x7f0a00e1
-			public const int status_bar_latest_event_content = 2131362017;
+			// aapt resource value: 0x7f0a00ee
+			public const int status_bar_latest_event_content = 2131362030;
 			
 			// aapt resource value: 0x7f0a0075
 			public const int submit_area = 2131361909;
 			
-			// aapt resource value: 0x7f0a00db
-			public const int switch1 = 2131362011;
+			// aapt resource value: 0x7f0a00e6
+			public const int switch1 = 2131362022;
 			
 			// aapt resource value: 0x7f0a001b
 			public const int tabMode = 2131361819;
@@ -3236,38 +4883,32 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0011
 			public const int terrain = 2131361809;
 			
-			// aapt resource value: 0x7f0a00e9
-			public const int text = 2131362025;
+			// aapt resource value: 0x7f0a00f6
+			public const int text = 2131362038;
 			
-			// aapt resource value: 0x7f0a00e7
-			public const int text2 = 2131362023;
+			// aapt resource value: 0x7f0a00f4
+			public const int text2 = 2131362036;
 			
 			// aapt resource value: 0x7f0a005d
 			public const int textSpacerNoButtons = 2131361885;
 			
-			// aapt resource value: 0x7f0a00d7
-			public const int textView = 2131362007;
+			// aapt resource value: 0x7f0a00e2
+			public const int textView = 2131362018;
 			
-			// aapt resource value: 0x7f0a00cd
-			public const int textView1 = 2131361997;
+			// aapt resource value: 0x7f0a00d9
+			public const int textView1 = 2131362009;
 			
-			// aapt resource value: 0x7f0a00d3
-			public const int textView2 = 2131362003;
+			// aapt resource value: 0x7f0a00df
+			public const int textView2 = 2131362015;
 			
-			// aapt resource value: 0x7f0a0089
-			public const int textView4 = 2131361929;
+			// aapt resource value: 0x7f0a00c7
+			public const int textView6 = 2131361991;
 			
-			// aapt resource value: 0x7f0a008a
-			public const int textView5 = 2131361930;
+			// aapt resource value: 0x7f0a00c3
+			public const int textViewStatus = 2131361987;
 			
-			// aapt resource value: 0x7f0a00bb
-			public const int textView6 = 2131361979;
-			
-			// aapt resource value: 0x7f0a00b7
-			public const int textViewStatus = 2131361975;
-			
-			// aapt resource value: 0x7f0a00e5
-			public const int time = 2131362021;
+			// aapt resource value: 0x7f0a00f2
+			public const int time = 2131362034;
 			
 			// aapt resource value: 0x7f0a0053
 			public const int title = 2131361875;
@@ -3275,8 +4916,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0058
 			public const int title_template = 2131361880;
 			
-			// aapt resource value: 0x7f0a0097
-			public const int title_text = 2131361943;
+			// aapt resource value: 0x7f0a00a3
+			public const int title_text = 2131361955;
 			
 			// aapt resource value: 0x7f0a007b
 			public const int toolbar = 2131361915;
@@ -3287,8 +4928,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0057
 			public const int topPanel = 2131361879;
 			
-			// aapt resource value: 0x7f0a007f
-			public const int touch_outside = 2131361919;
+			// aapt resource value: 0x7f0a008a
+			public const int touch_outside = 2131361930;
 			
 			// aapt resource value: 0x7f0a0009
 			public const int up = 2131361801;
@@ -3296,17 +4937,14 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0021
 			public const int useLogo = 2131361825;
 			
-			// aapt resource value: 0x7f0a00ad
-			public const int vestion_text = 2131361965;
-			
-			// aapt resource value: 0x7f0a0088
-			public const int view2 = 2131361928;
+			// aapt resource value: 0x7f0a00b9
+			public const int vestion_text = 2131361977;
 			
 			// aapt resource value: 0x7f0a000a
 			public const int view_offset_helper = 2131361802;
 			
-			// aapt resource value: 0x7f0a0091
-			public const int webView1 = 2131361937;
+			// aapt resource value: 0x7f0a009d
+			public const int webView1 = 2131361949;
 			
 			// aapt resource value: 0x7f0a0016
 			public const int wide = 2131361814;
@@ -3449,196 +5087,208 @@ namespace ResidentAppCross.Droid
 			public const int application_host = 2130903066;
 			
 			// aapt resource value: 0x7f03001b
-			public const int default_section_view = 2130903067;
+			public const int courtesy_officer_checkins_view = 2130903067;
 			
 			// aapt resource value: 0x7f03001c
-			public const int design_bottom_sheet_dialog = 2130903068;
+			public const int date_time_picker_dialog = 2130903068;
 			
 			// aapt resource value: 0x7f03001d
-			public const int design_layout_snackbar = 2130903069;
+			public const int default_section_view = 2130903069;
 			
 			// aapt resource value: 0x7f03001e
-			public const int design_layout_snackbar_include = 2130903070;
+			public const int design_bottom_sheet_dialog = 2130903070;
 			
 			// aapt resource value: 0x7f03001f
-			public const int design_layout_tab_icon = 2130903071;
+			public const int design_layout_snackbar = 2130903071;
 			
 			// aapt resource value: 0x7f030020
-			public const int design_layout_tab_text = 2130903072;
+			public const int design_layout_snackbar_include = 2130903072;
 			
 			// aapt resource value: 0x7f030021
-			public const int design_menu_item_action_area = 2130903073;
+			public const int design_layout_tab_icon = 2130903073;
 			
 			// aapt resource value: 0x7f030022
-			public const int design_navigation_item = 2130903074;
+			public const int design_layout_tab_text = 2130903074;
 			
 			// aapt resource value: 0x7f030023
-			public const int design_navigation_item_header = 2130903075;
+			public const int design_menu_item_action_area = 2130903075;
 			
 			// aapt resource value: 0x7f030024
-			public const int design_navigation_item_separator = 2130903076;
+			public const int design_navigation_item = 2130903076;
 			
 			// aapt resource value: 0x7f030025
-			public const int design_navigation_item_subheader = 2130903077;
+			public const int design_navigation_item_header = 2130903077;
 			
 			// aapt resource value: 0x7f030026
-			public const int design_navigation_menu = 2130903078;
+			public const int design_navigation_item_separator = 2130903078;
 			
 			// aapt resource value: 0x7f030027
-			public const int design_navigation_menu_item = 2130903079;
+			public const int design_navigation_item_subheader = 2130903079;
 			
 			// aapt resource value: 0x7f030028
-			public const int drawer_header = 2130903080;
+			public const int design_navigation_menu = 2130903080;
 			
 			// aapt resource value: 0x7f030029
-			public const int gallery_section = 2130903081;
+			public const int design_navigation_menu_item = 2130903081;
 			
 			// aapt resource value: 0x7f03002a
-			public const int GenericWebViewLayout = 2130903082;
+			public const int drawer_header = 2130903082;
 			
 			// aapt resource value: 0x7f03002b
-			public const int header_section = 2130903083;
+			public const int gallery_section = 2130903083;
 			
 			// aapt resource value: 0x7f03002c
-			public const int home_menu_view = 2130903084;
+			public const int GenericWebViewLayout = 2130903084;
 			
 			// aapt resource value: 0x7f03002d
-			public const int HomeMenuItemLayout = 2130903085;
+			public const int header_section = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public const int HomeMenuViewLayout = 2130903086;
+			public const int home_menu_view = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public const int ImageBundleWidgetItemLayout = 2130903087;
+			public const int HomeMenuItemLayout = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public const int ImageBundleWidgetLayout = 2130903088;
+			public const int HomeMenuViewLayout = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public const int incident_report_index_view = 2130903089;
+			public const int ImageBundleWidgetItemLayout = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int incident_report_status_view = 2130903090;
+			public const int ImageBundleWidgetLayout = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public const int label_button_section = 2130903091;
+			public const int incident_report_index_view = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public const int loading = 2130903092;
+			public const int incident_report_status_view = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public const int loadingimage = 2130903093;
+			public const int label_button_section = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public const int loadingprogress = 2130903094;
+			public const int loading = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public const int login_form_view = 2130903095;
+			public const int loadingimage = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public const int LoginViewLayout = 2130903096;
+			public const int loadingprogress = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public const int MaintenanceRequestTypeSelectionItemLayout = 2130903097;
+			public const int login_form_view = 2130903097;
 			
 			// aapt resource value: 0x7f03003a
-			public const int MaintenanceRequestTypeSelectionViewLayout = 2130903098;
+			public const int LoginViewLayout = 2130903098;
 			
 			// aapt resource value: 0x7f03003b
-			public const int MaintenanceRequestViewLayout = 2130903099;
+			public const int MaintenanceRequestTypeSelectionItemLayout = 2130903099;
 			
 			// aapt resource value: 0x7f03003c
-			public const int map_section = 2130903100;
+			public const int MaintenanceRequestTypeSelectionViewLayout = 2130903100;
 			
 			// aapt resource value: 0x7f03003d
-			public const int material_playground_fragment_1 = 2130903101;
+			public const int MaintenanceRequestViewLayout = 2130903101;
 			
 			// aapt resource value: 0x7f03003e
-			public const int mxfragment = 2130903102;
+			public const int map_section = 2130903102;
 			
 			// aapt resource value: 0x7f03003f
-			public const int nav_item_main = 2130903103;
+			public const int material_playground_fragment_1 = 2130903103;
 			
 			// aapt resource value: 0x7f030040
-			public const int nav_main = 2130903104;
+			public const int mxfragment = 2130903104;
 			
 			// aapt resource value: 0x7f030041
-			public const int notification_media_action = 2130903105;
+			public const int nav_item_main = 2130903105;
 			
 			// aapt resource value: 0x7f030042
-			public const int notification_media_cancel_action = 2130903106;
+			public const int nav_main = 2130903106;
 			
 			// aapt resource value: 0x7f030043
-			public const int notification_template_big_media = 2130903107;
+			public const int noneditable_text_section = 2130903107;
 			
 			// aapt resource value: 0x7f030044
-			public const int notification_template_big_media_narrow = 2130903108;
+			public const int notification_index_view = 2130903108;
 			
 			// aapt resource value: 0x7f030045
-			public const int notification_template_lines = 2130903109;
+			public const int notification_media_action = 2130903109;
 			
 			// aapt resource value: 0x7f030046
-			public const int notification_template_media = 2130903110;
+			public const int notification_media_cancel_action = 2130903110;
 			
 			// aapt resource value: 0x7f030047
-			public const int notification_template_part_chronometer = 2130903111;
+			public const int notification_template_big_media = 2130903111;
 			
 			// aapt resource value: 0x7f030048
-			public const int notification_template_part_time = 2130903112;
+			public const int notification_template_big_media_narrow = 2130903112;
 			
 			// aapt resource value: 0x7f030049
-			public const int QRScannerViewLayout = 2130903113;
+			public const int notification_template_lines = 2130903113;
 			
 			// aapt resource value: 0x7f03004a
-			public const int radio_section = 2130903114;
+			public const int notification_template_media = 2130903114;
 			
 			// aapt resource value: 0x7f03004b
-			public const int search_dialog_layout = 2130903115;
+			public const int notification_template_part_chronometer = 2130903115;
 			
 			// aapt resource value: 0x7f03004c
-			public const int select_dialog_item_material = 2130903116;
+			public const int notification_template_part_time = 2130903116;
 			
 			// aapt resource value: 0x7f03004d
-			public const int select_dialog_multichoice_material = 2130903117;
+			public const int QRScannerViewLayout = 2130903117;
 			
 			// aapt resource value: 0x7f03004e
-			public const int select_dialog_singlechoice_material = 2130903118;
+			public const int radio_section = 2130903118;
 			
 			// aapt resource value: 0x7f03004f
-			public const int SpinnerSelectionSectionItem = 2130903119;
+			public const int search_dialog_layout = 2130903119;
 			
 			// aapt resource value: 0x7f030050
-			public const int support_simple_spinner_dropdown_item = 2130903120;
+			public const int select_dialog_item_material = 2130903120;
 			
 			// aapt resource value: 0x7f030051
-			public const int switch_section = 2130903121;
+			public const int select_dialog_multichoice_material = 2130903121;
 			
 			// aapt resource value: 0x7f030052
-			public const int text_section = 2130903122;
+			public const int select_dialog_singlechoice_material = 2130903122;
 			
 			// aapt resource value: 0x7f030053
-			public const int ticket_history_item = 2130903123;
+			public const int SpinnerSelectionSectionItem = 2130903123;
 			
 			// aapt resource value: 0x7f030054
-			public const int ticket_index_item = 2130903124;
+			public const int support_simple_spinner_dropdown_item = 2130903124;
 			
 			// aapt resource value: 0x7f030055
-			public const int ticket_status_section = 2130903125;
+			public const int switch_section = 2130903125;
 			
 			// aapt resource value: 0x7f030056
-			public const int toolbar = 2130903126;
+			public const int text_section = 2130903126;
 			
 			// aapt resource value: 0x7f030057
-			public const int unit_information_section = 2130903127;
+			public const int ticket_history_item = 2130903127;
 			
 			// aapt resource value: 0x7f030058
-			public const int UpperDialogBarLayout = 2130903128;
+			public const int ticket_index_item = 2130903128;
 			
 			// aapt resource value: 0x7f030059
-			public const int zxingscanneractivitylayout = 2130903129;
+			public const int ticket_status_section = 2130903129;
 			
 			// aapt resource value: 0x7f03005a
-			public const int zxingscannerfragmentlayout = 2130903130;
+			public const int toolbar = 2130903130;
+			
+			// aapt resource value: 0x7f03005b
+			public const int unit_information_section = 2130903131;
+			
+			// aapt resource value: 0x7f03005c
+			public const int UpperDialogBarLayout = 2130903132;
+			
+			// aapt resource value: 0x7f03005d
+			public const int zxingscanneractivitylayout = 2130903133;
+			
+			// aapt resource value: 0x7f03005e
+			public const int zxingscannerfragmentlayout = 2130903134;
 			
 			static Layout()
 			{
@@ -3745,8 +5395,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f060031
 			public const int abc_toolbar_collapse_description = 2131099697;
 			
-			// aapt resource value: 0x7f060042
-			public const int app_name = 2131099714;
+			// aapt resource value: 0x7f060044
+			public const int app_name = 2131099716;
 			
 			// aapt resource value: 0x7f060033
 			public const int appbar_scrolling_view_behavior = 2131099699;
@@ -3850,23 +5500,29 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f06001e
 			public const int common_signin_button_text_long = 2131099678;
 			
-			// aapt resource value: 0x7f060043
-			public const int default_title = 2131099715;
+			// aapt resource value: 0x7f060045
+			public const int default_title = 2131099717;
 			
 			// aapt resource value: 0x7f060036
 			public const int define_roundedimageview = 2131099702;
 			
-			// aapt resource value: 0x7f060045
-			public const int drawer_close = 2131099717;
+			// aapt resource value: 0x7f060047
+			public const int drawer_close = 2131099719;
 			
-			// aapt resource value: 0x7f060044
-			public const int drawer_open = 2131099716;
-			
-			// aapt resource value: 0x7f060041
-			public const int hello = 2131099713;
+			// aapt resource value: 0x7f060046
+			public const int drawer_open = 2131099718;
 			
 			// aapt resource value: 0x7f060040
-			public const int library_name = 2131099712;
+			public const int fab_scroll_shrink_grow_autohide_behavior = 2131099712;
+			
+			// aapt resource value: 0x7f060041
+			public const int fab_scroll_translation_autohide_behavior = 2131099713;
+			
+			// aapt resource value: 0x7f060043
+			public const int hello = 2131099715;
+			
+			// aapt resource value: 0x7f060042
+			public const int library_name = 2131099714;
 			
 			// aapt resource value: 0x7f060037
 			public const int library_roundedimageview_author = 2131099703;
@@ -3895,8 +5551,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f06003f
 			public const int library_roundedimageview_repositoryLink = 2131099711;
 			
-			// aapt resource value: 0x7f060046
-			public const int lorem_ipsum = 2131099718;
+			// aapt resource value: 0x7f060048
+			public const int lorem_ipsum = 2131099720;
 			
 			// aapt resource value: 0x7f060032
 			public const int status_bar_notification_info_overflow = 2131099698;
@@ -5667,9 +7323,9 @@ namespace ResidentAppCross.Droid
 			public const int AppCompatTheme_windowNoTitle = 3;
 			
 			public static int[] AutofitTextView = new int[] {
-					2130772303,
-					2130772304,
-					2130772305};
+					2130772307,
+					2130772308,
+					2130772309};
 			
 			// aapt resource value: 0
 			public const int AutofitTextView_minTextSize = 0;
@@ -5749,6 +7405,24 @@ namespace ResidentAppCross.Droid
 			
 			// aapt resource value: 11
 			public const int CardView_contentPaddingTop = 11;
+			
+			public static int[] CircleImageView = new int[] {
+					2130772284,
+					2130772285,
+					2130772286,
+					2130772287};
+			
+			// aapt resource value: 1
+			public const int CircleImageView_civ_border_color = 1;
+			
+			// aapt resource value: 2
+			public const int CircleImageView_civ_border_overlay = 2;
+			
+			// aapt resource value: 0
+			public const int CircleImageView_civ_border_width = 0;
+			
+			// aapt resource value: 3
+			public const int CircleImageView_civ_fill_color = 3;
 			
 			public static int[] CollapsingAppBarLayout_LayoutParams = new int[] {
 					2130772220,
@@ -6241,8 +7915,8 @@ namespace ResidentAppCross.Droid
 			public const int MenuView_preserveIconSpacing = 7;
 			
 			public static int[] MvxBinding = new int[] {
-					2130772296,
-					2130772297};
+					2130772300,
+					2130772301};
 			
 			// aapt resource value: 0
 			public const int MvxBinding_MvxBind = 0;
@@ -6251,26 +7925,26 @@ namespace ResidentAppCross.Droid
 			public const int MvxBinding_MvxLang = 1;
 			
 			public static int[] MvxControl = new int[] {
-					2130772298};
+					2130772302};
 			
 			// aapt resource value: 0
 			public const int MvxControl_MvxTemplate = 0;
 			
 			public static int[] MvxExpandableListView = new int[] {
-					2130772301};
+					2130772305};
 			
 			// aapt resource value: 0
 			public const int MvxExpandableListView_MvxGroupItemTemplate = 0;
 			
 			public static int[] MvxImageView = new int[] {
-					2130772302};
+					2130772306};
 			
 			// aapt resource value: 0
 			public const int MvxImageView_MvxSource = 0;
 			
 			public static int[] MvxListView = new int[] {
-					2130772299,
-					2130772300};
+					2130772303,
+					2130772304};
 			
 			// aapt resource value: 1
 			public const int MvxListView_MvxDropDownItemTemplate = 1;
@@ -6337,10 +8011,6 @@ namespace ResidentAppCross.Droid
 			public const int PopupWindowBackgroundState_state_above_anchor = 0;
 			
 			public static int[] ProgressWheel = new int[] {
-					2130772306,
-					2130772307,
-					2130772308,
-					2130772309,
 					2130772310,
 					2130772311,
 					2130772312,
@@ -6348,7 +8018,11 @@ namespace ResidentAppCross.Droid
 					2130772314,
 					2130772315,
 					2130772316,
-					2130772317};
+					2130772317,
+					2130772318,
+					2130772319,
+					2130772320,
+					2130772321};
 			
 			// aapt resource value: 3
 			public const int ProgressWheel_ahBarColor = 3;
@@ -6410,10 +8084,6 @@ namespace ResidentAppCross.Droid
 			
 			public static int[] RoundedImageView = new int[] {
 					16843037,
-					2130772284,
-					2130772285,
-					2130772286,
-					2130772287,
 					2130772288,
 					2130772289,
 					2130772290,
@@ -6421,7 +8091,11 @@ namespace ResidentAppCross.Droid
 					2130772292,
 					2130772293,
 					2130772294,
-					2130772295};
+					2130772295,
+					2130772296,
+					2130772297,
+					2130772298,
+					2130772299};
 			
 			// aapt resource value: 0
 			public const int RoundedImageView_android_scaleType = 0;

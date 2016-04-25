@@ -23,7 +23,7 @@ namespace ResidentAppCross.Droid.Views
 
             var set = this.CreateBindingSet<IncidentReportFormView, IncidentReportFormViewModel>();
 
-            set.Bind(CommentsSection.TextInput).TwoWay().To(vm => vm.Comments);
+            set.Bind(CommentsSection.InputField).TwoWay().To(vm => vm.Comments);
             set.Apply();
 
             IncidentReportTypeSelection.BindToList(ViewModel.IncidentReportTypes, i => i.Title, x => ViewModel.SelectIncidentReportTypeId = x.Id);
@@ -33,7 +33,7 @@ namespace ResidentAppCross.Droid.Views
             CommentsSection.HeaderLabel.Text = "Comments & Details:";
 
             PhotoSection.Bind(ViewModel.Photos);
-
+            PhotoSection.Editable = true;
             ActionBar.SetItems(new ActionBarSection.ActionBarItem()
             {
                 Action = () => ViewModel.DoneCommand.Execute(null),
@@ -46,9 +46,9 @@ namespace ResidentAppCross.Droid.Views
         {
             base.GetContent(sections);
             sections.Add(HeaderSection);
+            sections.Add(IncidentReportTypeSelection);
             sections.Add(CommentsSection);
             sections.Add(PhotoSection);
-            sections.Add(IncidentReportTypeSelection);
             sections.Add(ActionBar);
         }
     }
