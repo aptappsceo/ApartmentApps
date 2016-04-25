@@ -252,9 +252,9 @@
     <Compile Include="Views\AwesomeSiniExtensions\NotificationDialog.cs" />
     <Compile Include="Views\AwesomeSiniExtensions\PhotoViewerDialog.cs" />
     <Compile Include="Views\AwesomeSiniExtensions\SpinnerSelectionSectionAdapter.cs" />
-    <Compile Include="Views\Components\Navigation\HomeMenuNavigationView.cs" />
-    <Compile Include="Views\Components\Navigation\NavigationDrawerAdapter.cs" />
-    <Compile Include="Views\Components\Navigation\NavigationDrawerFragment.cs" />
+    <Compile Include="Views\HomeMenuNavigationView.cs" />
+    <Compile Include="Views\NavigationDrawerAdapter.cs" />
+    <Compile Include="Views\NavigationDrawerFragment.cs" />
     <Compile Include="Views\Screens\ApplicationHostActivity.cs" />
     <Compile Include="Views\Screens\CourtesyOfficerCheckinsView.cs" />
     <Compile Include="Views\Screens\GallerySection.cs" />
