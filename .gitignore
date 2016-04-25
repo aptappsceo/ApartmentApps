@@ -6,9 +6,9 @@ obj
 /ResidentAppCross/ResidentAppCross.Droid/obj
 /ResidentAppCross/ResidentAppCross.WinPhone/obj
 /ResidentAppCross/ResidentAppCross.iOS/bin
-/ResidentAppCross/ResidentAppCross.Droid/bin
+/ResidentAppCross/ResidentAppCross.Droid-Java/
 /ResidentAppCross/ResidentAppCross.WinPhone/bin
-
+/ResidentAppCross/ResidentAppCross.iOS/bin
 
 packages
 Components
