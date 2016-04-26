@@ -93,14 +93,19 @@ public class App : MvxApplication
             }));
             try
             {
+                Logout();
                 var json = await result.Content.ReadAsStringAsync();
                 var obj = JObject.Parse(json);
                 JToken token;
                 if (obj.TryGetValue("access_token", out token))
                 {
                     AparmentAppsDelegating.AuthorizationKey = token.Value<string>();
-                   
+
                     return true;
+                }
+                else
+                {
+                    AparmentAppsDelegating.AuthorizationKey = null;
                 }
             }
             catch (Exception ex)

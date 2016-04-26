@@ -23,6 +23,28 @@ namespace ApartmentApps.Client.Models
             set { this._accessFailedCount = value; }
         }
         
+        private string _address;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Address
+        {
+            get { return this._address; }
+            set { this._address = value; }
+        }
+        
+        private string _city;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string City
+        {
+            get { return this._city; }
+            set { this._city = value; }
+        }
+        
         private IList<IdentityUserClaim> _claims;
         
         /// <summary>
@@ -87,6 +109,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._firstName; }
             set { this._firstName = value; }
+        }
+        
+        private string _gender;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Gender
+        {
+            get { return this._gender; }
+            set { this._gender = value; }
         }
         
         private string _id;
@@ -177,6 +210,17 @@ namespace ApartmentApps.Client.Models
             set { this._maitenanceRequests = value; }
         }
         
+        private string _middleName;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string MiddleName
+        {
+            get { return this._middleName; }
+            set { this._middleName = value; }
+        }
+        
         private string _passwordHash;
         
         /// <summary>
@@ -208,6 +252,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._phoneNumberConfirmed; }
             set { this._phoneNumberConfirmed = value; }
+        }
+        
+        private string _postalCode;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string PostalCode
+        {
+            get { return this._postalCode; }
+            set { this._postalCode = value; }
         }
         
         private Property _property;
@@ -254,15 +309,26 @@ namespace ApartmentApps.Client.Models
             set { this._securityStamp = value; }
         }
         
-        private Tenant _tenant;
+        private string _state;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public Tenant Tenant
+        public string State
         {
-            get { return this._tenant; }
-            set { this._tenant = value; }
+            get { return this._state; }
+            set { this._state = value; }
+        }
+        
+        private string _thirdPartyId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ThirdPartyId
+        {
+            get { return this._thirdPartyId; }
+            set { this._thirdPartyId = value; }
         }
         
         private string _timeZone;
@@ -285,6 +351,28 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._twoFactorEnabled; }
             set { this._twoFactorEnabled = value; }
+        }
+        
+        private Unit _unit;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public Unit Unit
+        {
+            get { return this._unit; }
+            set { this._unit = value; }
+        }
+        
+        private int? _unitId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? UnitId
+        {
+            get { return this._unitId; }
+            set { this._unitId = value; }
         }
         
         private IList<UserAlert> _userAlerts;
@@ -333,6 +421,16 @@ namespace ApartmentApps.Client.Models
                 {
                     this.AccessFailedCount = ((int)accessFailedCountValue);
                 }
+                JToken addressValue = inputObject["Address"];
+                if (addressValue != null && addressValue.Type != JTokenType.Null)
+                {
+                    this.Address = ((string)addressValue);
+                }
+                JToken cityValue = inputObject["City"];
+                if (cityValue != null && cityValue.Type != JTokenType.Null)
+                {
+                    this.City = ((string)cityValue);
+                }
                 JToken claimsSequence = ((JToken)inputObject["Claims"]);
                 if (claimsSequence != null && claimsSequence.Type != JTokenType.Null)
                 {
@@ -367,6 +465,11 @@ namespace ApartmentApps.Client.Models
                 if (firstNameValue != null && firstNameValue.Type != JTokenType.Null)
                 {
                     this.FirstName = ((string)firstNameValue);
+                }
+                JToken genderValue = inputObject["Gender"];
+                if (genderValue != null && genderValue.Type != JTokenType.Null)
+                {
+                    this.Gender = ((string)genderValue);
                 }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
@@ -418,6 +521,11 @@ namespace ApartmentApps.Client.Models
                         this.MaitenanceRequests.Add(maitenanceRequest);
                     }
                 }
+                JToken middleNameValue = inputObject["MiddleName"];
+                if (middleNameValue != null && middleNameValue.Type != JTokenType.Null)
+                {
+                    this.MiddleName = ((string)middleNameValue);
+                }
                 JToken passwordHashValue = inputObject["PasswordHash"];
                 if (passwordHashValue != null && passwordHashValue.Type != JTokenType.Null)
                 {
@@ -432,6 +540,11 @@ namespace ApartmentApps.Client.Models
                 if (phoneNumberConfirmedValue != null && phoneNumberConfirmedValue.Type != JTokenType.Null)
                 {
                     this.PhoneNumberConfirmed = ((bool)phoneNumberConfirmedValue);
+                }
+                JToken postalCodeValue = inputObject["PostalCode"];
+                if (postalCodeValue != null && postalCodeValue.Type != JTokenType.Null)
+                {
+                    this.PostalCode = ((string)postalCodeValue);
                 }
                 JToken propertyValue = inputObject["Property"];
                 if (propertyValue != null && propertyValue.Type != JTokenType.Null)
@@ -460,12 +573,15 @@ namespace ApartmentApps.Client.Models
                 {
                     this.SecurityStamp = ((string)securityStampValue);
                 }
-                JToken tenantValue = inputObject["Tenant"];
-                if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                JToken stateValue = inputObject["State"];
+                if (stateValue != null && stateValue.Type != JTokenType.Null)
                 {
-                    Tenant tenant = new Tenant();
-                    tenant.DeserializeJson(tenantValue);
-                    this.Tenant = tenant;
+                    this.State = ((string)stateValue);
+                }
+                JToken thirdPartyIdValue = inputObject["ThirdPartyId"];
+                if (thirdPartyIdValue != null && thirdPartyIdValue.Type != JTokenType.Null)
+                {
+                    this.ThirdPartyId = ((string)thirdPartyIdValue);
                 }
                 JToken timeZoneValue = inputObject["TimeZone"];
                 if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
@@ -476,6 +592,18 @@ namespace ApartmentApps.Client.Models
                 if (twoFactorEnabledValue != null && twoFactorEnabledValue.Type != JTokenType.Null)
                 {
                     this.TwoFactorEnabled = ((bool)twoFactorEnabledValue);
+                }
+                JToken unitValue = inputObject["Unit"];
+                if (unitValue != null && unitValue.Type != JTokenType.Null)
+                {
+                    Unit unit = new Unit();
+                    unit.DeserializeJson(unitValue);
+                    this.Unit = unit;
+                }
+                JToken unitIdValue = inputObject["UnitId"];
+                if (unitIdValue != null && unitIdValue.Type != JTokenType.Null)
+                {
+                    this.UnitId = ((int)unitIdValue);
                 }
                 JToken userAlertsSequence = ((JToken)inputObject["UserAlerts"]);
                 if (userAlertsSequence != null && userAlertsSequence.Type != JTokenType.Null)

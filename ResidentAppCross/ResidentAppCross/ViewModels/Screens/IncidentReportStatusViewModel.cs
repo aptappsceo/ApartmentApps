@@ -209,6 +209,7 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(() =>
                 {
                  //   if (!CanUpdateRequest) return;
+                    
                     ShowViewModel<CheckinFormViewModel>(vm =>
                     {
                         vm.HeaderText = "Incident Report";

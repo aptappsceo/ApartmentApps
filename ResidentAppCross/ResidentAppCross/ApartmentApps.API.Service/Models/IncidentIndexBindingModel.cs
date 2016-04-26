@@ -65,6 +65,17 @@ namespace ApartmentApps.Client.Models
             set { this._reportedBy = value; }
         }
         
+        private string _reporter;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Reporter
+        {
+            get { return this._reporter; }
+            set { this._reporter = value; }
+        }
+        
         private DateTimeOffset? _requestDate;
         
         /// <summary>
@@ -151,6 +162,11 @@ namespace ApartmentApps.Client.Models
                     UserBindingModel userBindingModel = new UserBindingModel();
                     userBindingModel.DeserializeJson(reportedByValue);
                     this.ReportedBy = userBindingModel;
+                }
+                JToken reporterValue = inputObject["Reporter"];
+                if (reporterValue != null && reporterValue.Type != JTokenType.Null)
+                {
+                    this.Reporter = ((string)reporterValue);
                 }
                 JToken requestDateValue = inputObject["RequestDate"];
                 if (requestDateValue != null && requestDateValue.Type != JTokenType.Null)

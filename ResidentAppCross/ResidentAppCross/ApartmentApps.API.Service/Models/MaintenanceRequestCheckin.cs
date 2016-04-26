@@ -32,6 +32,17 @@ namespace ApartmentApps.Client.Models
             set { this._date = value; }
         }
         
+        private string _description;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Description
+        {
+            get { return this._description; }
+            set { this._description = value; }
+        }
+        
         private string _groupId;
         
         /// <summary>
@@ -74,6 +85,28 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._maitenanceRequestId; }
             set { this._maitenanceRequestId = value; }
+        }
+        
+        private Property _property;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public Property Property
+        {
+            get { return this._property; }
+            set { this._property = value; }
+        }
+        
+        private int? _propertyId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? PropertyId
+        {
+            get { return this._propertyId; }
+            set { this._propertyId = value; }
         }
         
         private MaintenanceRequestStatus _status;
@@ -144,6 +177,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Date = ((DateTimeOffset)dateValue);
                 }
+                JToken descriptionValue = inputObject["Description"];
+                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                {
+                    this.Description = ((string)descriptionValue);
+                }
                 JToken groupIdValue = inputObject["GroupId"];
                 if (groupIdValue != null && groupIdValue.Type != JTokenType.Null)
                 {
@@ -165,6 +203,18 @@ namespace ApartmentApps.Client.Models
                 if (maitenanceRequestIdValue != null && maitenanceRequestIdValue.Type != JTokenType.Null)
                 {
                     this.MaitenanceRequestId = ((int)maitenanceRequestIdValue);
+                }
+                JToken propertyValue = inputObject["Property"];
+                if (propertyValue != null && propertyValue.Type != JTokenType.Null)
+                {
+                    Property property = new Property();
+                    property.DeserializeJson(propertyValue);
+                    this.Property = property;
+                }
+                JToken propertyIdValue = inputObject["PropertyId"];
+                if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
+                {
+                    this.PropertyId = ((int)propertyIdValue);
                 }
                 JToken statusValue = inputObject["Status"];
                 if (statusValue != null && statusValue.Type != JTokenType.Null)

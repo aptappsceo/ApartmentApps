@@ -30,6 +30,7 @@ namespace ApartmentApps.API.Service.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApartmentAppsApiController
     {
+        private readonly ApplicationDbContext _dbcontext;
         private readonly IBlobStorageService _blobStorage;
 
         [HttpPost]
@@ -51,8 +52,9 @@ namespace ApartmentApps.API.Service.Controllers
         private ApplicationUserManager _userManager;
 
 
-        public AccountController(ApplicationUserManager userManager, PropertyContext context, IBlobStorageService blobStorage, IUserContext userContext) : base(context,userContext)
+        public AccountController(ApplicationDbContext dbcontext,ApplicationUserManager userManager, PropertyContext context, IBlobStorageService blobStorage, IUserContext userContext) : base(context,userContext)
         {
+            _dbcontext = dbcontext;
             _blobStorage = blobStorage;
             UserManager = userManager;
         }
@@ -372,7 +374,11 @@ namespace ApartmentApps.API.Service.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var user = Context.Users.FirstOrDefault(p => p.PhoneNumber == model.PhoneNumber || p.Email == model.Email);
+            var user = _dbcontext.Users.FirstOrDefault(p => p.Email == model.Email);
+            if (user == null)
+            {
+                user = _dbcontext.Users.FirstOrDefault(p => p.PhoneNumber == model.PhoneNumber);
+            }
             if (user != null && model.Password == model.ConfirmPassword)
             {
                 var result = await UserManager.ChangePasswordAsync(user.Id, "Temp1234!", model.Password);
@@ -386,27 +392,27 @@ namespace ApartmentApps.API.Service.Controllers
             return BadRequest("You have not been found in the system. Please contact your property manager.");
         }
 
-        // POST api/Account/Register
-        [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST api/Account/Register
+        //[AllowAnonymous]
+        //[Route("Register")]
+        //public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+        //    var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+        //    IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
+        //    if (!result.Succeeded)
+        //    {
+        //        return GetErrorResult(result);
+        //    }
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
