@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -52,19 +53,31 @@ namespace ResidentAppCross.Droid.Views
             set.Apply();
 
         }
+
+
+        public override bool EnableToolbar => false;
     }
 
     [MvxFragment(typeof (ApplicationViewModel), Resource.Id.application_host_container_primary)]
     public class NotificationIndexView : ViewFragment<NotificationIndexFormViewModel>
     {
 
-        [Outlet] public RecyclerView NotificationContainer { get; set; }
+        [Outlet]
+        public RecyclerView ListContainer { get; set; }
+
+        [Outlet]
+        public TextView DescriptionLabel { get; set; }
+
+        public override int LayoutId => typeof(IncidentReportIndexView).MatchingLayoutId();
+
         public override void Bind()
         {
             base.Bind();
             var adapter = new IconTitleBadgeListAdapter<AlertBindingModel>()
             {
-                TitleSelector = i=>i.Title
+                TitleSelector = i=>i.Title,
+                IconColorResourceSelector = i=> (i.HasRead ?? false) ? Resource.Color.secondary_text_body : Resource.Color.primary,
+                IconResourceSelector = i => (i.HasRead ?? false) ? Resource.Drawable.message_read : Resource.Drawable.message_unread
             };
 
             adapter.Items = ViewModel.FilteredNotifications;
@@ -76,10 +89,94 @@ namespace ResidentAppCross.Droid.Views
                 ViewModel.OpenSelectedNotificationDetailsCommand.Execute(null);
             };
 
-            NotificationContainer.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
-            NotificationContainer.SetItemAnimator(new SlideInLeftAnimator());
-            NotificationContainer.SetAdapter(adapter);
+            var set = this.CreateBindingSet<NotificationIndexView, NotificationIndexFormViewModel>();
+            set.Bind(DescriptionLabel).For(x => x.Text).To(vm => vm.CurrentNotificationStatusFilter.MarkerTitle);
+            set.Apply();
 
+            this.OnViewModelEvent<NotificationFiltersUpdatedEvent>(evt =>
+            {
+                UpdatesSecondaryInformation();
+            });
+            UpdatesSecondaryInformation();
+
+
+
+            ListContainer.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
+            ListContainer.SetItemAnimator(new SlideInLeftAnimator());
+            ListContainer.SetAdapter(adapter);
+
+            if (ViewModel.CurrentNotificationStatusFilter == null)
+            {
+                ViewModel.CurrentNotificationStatusFilter = ViewModel.NotificationStatusFilters?.FirstOrDefault();
+            }
+
+        }
+        public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
+        {
+            base.OnCreateOptionsMenu(menu, inflater);
+
+            inflater.Inflate(Resource.Menu.maintenance_request_index_view_menu, menu);
+            FilterItem = menu.FindItem(Resource.Id.FilterButton);
+            FilterItem.SetTitle(ViewModel?.CurrentNotificationStatusFilter?.Title);
+
+
+
+            foreach (var filter in ViewModel.NotificationStatusFilters)
+            {
+                var item = FilterItem.SubMenu.Add(ViewModel.GetHashCode(), filter.GetHashCode(), 0, filter.Title);
+            }
+            UpdateTitle();
+
+
+        }
+
+        public void UpdatesSecondaryInformation()
+        {
+            if (string.IsNullOrEmpty(ViewModel?.CurrentNotificationStatusFilter?.MarkerTitle)) DescriptionLabel.Visibility = ViewStates.Gone;
+            else DescriptionLabel.Visibility = ViewStates.Visible;
+        }
+
+        public override void OnDetach()
+        {
+            base.OnDetach();
+            FilterItem = null;
+        }
+
+        public IMenuItem FilterItem { get; set; }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (ViewModel.GetHashCode() != item.GroupId) return base.OnOptionsItemSelected(item);
+
+
+            //filter?
+            var filter = ViewModel.NotificationStatusFilters.FirstOrDefault(f => f.GetHashCode() == item.ItemId);
+            if (filter == null) return base.OnOptionsItemSelected(item);
+            FilterItem?.SetTitle(filter.Title);
+            ViewModel.CurrentNotificationStatusFilter = filter;
+
+            ListContainer.SmoothScrollToPosition(0);
+
+            UpdateTitle();
+            return true;
+
+
+        }
+
+
+        public override string Title
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(ViewModel?.CurrentNotificationStatusFilter?.MarkerTitle))
+                {
+                    return $"Notifications ({ViewModel?.CurrentNotificationStatusFilter?.Title ?? "All"})";
+                }
+                else
+                {
+                    return $"Notifications";
+                }
+            }
         }
 
     }
@@ -87,6 +184,7 @@ namespace ResidentAppCross.Droid.Views
     [MvxFragment(typeof(ApplicationViewModel),Resource.Id.application_host_container_primary)]
     public class HomeMenuView : ViewFragment<HomeMenuViewModel>
     {
+        public override string Title => "Apartment Apps";
     }
 }
 

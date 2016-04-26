@@ -41,6 +41,7 @@ namespace ResidentAppCross.ViewModels.Screens
             Filters.Clear();
             Filters.Add(new IncidentIndexFilter()
             {
+                MarkerTitle = null,
                 Title = "All",
                 FilterExpression = item => true
                 ,Icon = SharedResources.Icons.IncidentList
@@ -49,6 +50,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new IncidentIndexFilter()
             {
+                MarkerTitle = "Filtered: Reported",
                 Title = "Reported",
                 FilterExpression = item => item.StatusId == "Reported"
                 ,
@@ -58,6 +60,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new IncidentIndexFilter()
             {
+                MarkerTitle = "Filtered: Open",
                 Title = "Open",
                 FilterExpression = item => item.StatusId == "Open"
                 ,
@@ -67,6 +70,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new IncidentIndexFilter()
             {
+                MarkerTitle = "Filtered: Paused",
                 Title = "Paused",
                 FilterExpression = item => item.StatusId == "Paused"
                 ,
@@ -76,6 +80,8 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new IncidentIndexFilter()
             {
+                MarkerTitle = "Filtered: Complete",
+
                 Title = "Complete",
                 FilterExpression = item => item.StatusId == "Complete"
                 ,
@@ -188,6 +194,7 @@ namespace ResidentAppCross.ViewModels.Screens
     public class IncidentIndexFilter
     {
         public string Title { get; set; }
+        public string MarkerTitle { get; set; }
         public Func<IncidentIndexBindingModel, bool> FilterExpression { get; set; }
         public SharedResources.Icons Icon { get; set; }
     }

@@ -49,10 +49,10 @@ namespace ResidentAppCross
         public override void Start()
         {
             base.Start();
-            if (LoginManager.IsLoggedIn)
-            {
-                LoginCommand.Execute(null);
-            }
+//            if (LoginManager.IsLoggedIn)
+//            {
+//                LoginCommand.Execute(null);
+//            }
         }
 
         public ICommand LoginCommand
@@ -78,6 +78,7 @@ namespace ResidentAppCross
                     var username =  Username;
                     var password =  Password;
 #endif
+
                     if (!await LoginManager.LoginAsync(username, password))
                     {
                         context.FailTask("Invalid login or password!");

@@ -509,6 +509,13 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return (int) fieldInfo.GetValue(null);
         }
 
+        public static int AsDrawableId(this string str)
+        {
+            var fieldInfo = typeof (Resource.Drawable).GetField(str, BindingFlags.Static | BindingFlags.Public);
+            if(fieldInfo == null) throw new Exception("Unable to locate drawable matching "+str);
+            return (int) fieldInfo.GetValue(null);
+        }
+
         public static int AsId(this string str)
         {
             var fieldInfo = typeof (Resource.Id).GetField(str, BindingFlags.Static | BindingFlags.Public);

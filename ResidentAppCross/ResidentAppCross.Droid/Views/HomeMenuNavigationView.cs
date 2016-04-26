@@ -120,6 +120,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             {
                 var item = ViewModel.MenuItems[index];
                 var menuitem = homeMenu.Add(0,index,index,item.Name);
+                menuitem.SetIcon(item.Icon.ToDrawableId());
                 CommandsMap[menuitem.ItemId] = item.Command;
                 menuitem.SetCheckable(true);
             }

@@ -14,23 +14,18 @@
         android:layout_height="wrap_content">
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
-            app:srcCompat="@drawable/maintenance_calendar_icon"
+            android:tint="@color/secondary_text_body"
+            app:srcCompat="@drawable/category"
             android:layout_height="@dimen/ticket_status_line_height"/>
 
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
-            android:drawablePadding="@dimen/ticket_status_icon_padding"
-            app:srcCompat="@drawable/maintenance_calendar_icon"
+            android:tint="@color/secondary_text_body"
+            app:srcCompat="@drawable/status"
             android:layout_height="@dimen/ticket_status_line_height" />
 
-        <android.support.v7.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/ticket_status_line_height"
-            app:srcCompat="@drawable/maintenance_calendar_icon"
-            />
-
-
     </LinearLayout>
+
     <LinearLayout
         android:orientation="vertical"
         android:padding="8dp"
@@ -55,13 +50,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/abc_primary_text_material_light" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:text="Created"
-            android:gravity="center"
-            android:layout_height="@dimen/ticket_status_line_height"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/abc_primary_text_material_light" />
 
 
     </LinearLayout>
@@ -93,15 +81,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
             android:textColor="@color/abc_secondary_text_material_light" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/CreatedOnLabel"
-            android:layout_height="@dimen/ticket_status_line_height"
 
-            android:layout_width="wrap_content"
-            android:text="12/12/12 12:12 AM"
-            android:gravity="center"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-            android:textColor="@color/abc_secondary_text_material_light" />
 
     </LinearLayout>
 

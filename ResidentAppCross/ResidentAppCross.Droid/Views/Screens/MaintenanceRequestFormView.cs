@@ -39,7 +39,7 @@ namespace ResidentAppCross.Droid.Views
         public override void Bind()
         {
             base.Bind();
-
+            HeaderSection.TitleLabel.Text = "Request Maintenance";
             TypeSelectionSection.Label.Text = "Request Type:";
         
             var set = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
@@ -67,6 +67,10 @@ namespace ResidentAppCross.Droid.Views
                 Action = () => ViewModel.DoneCommand.Execute(null),
                 Title = "Submit",
             });
+
+            HeaderSection.IconView.SetImageResource(Resource.Drawable.maintenance_plus);
+            HeaderSection.IconView.SetColorFilter(Resources.GetColor(Resource.Color.secondary_text_body));
+
         }
 
 
@@ -101,6 +105,9 @@ namespace ResidentAppCross.Droid.Views
             CommentsSection.InputField.Text = ViewModel.Checkin.Comments;
             HeaderSection.SubtitleLabel.Text = ViewModel.Checkin.StatusId;
 
+            HeaderSection.IconView.SetImageResource(AppTheme.IconResByMaintenanceState(ViewModel.Checkin.StatusId.AsMaintenanceStatus()));
+            var color = Resources.GetColor(Resource.Color.secondary_text_body);
+            HeaderSection.IconView.SetColorFilter(color);
             PhotoSection.Bind(ViewModel.CheckinPhotos);
         }
 
@@ -131,6 +138,9 @@ namespace ResidentAppCross.Droid.Views
             CommentsSection.InputField.Text = ViewModel.Checkin.Comments;
             HeaderSection.SubtitleLabel.Text = ViewModel.Checkin.StatusId;
             CommentsSection.HeaderLabel.Text = "Comments & Details:";
+
+            HeaderSection.IconView.SetImageResource(AppTheme.IconResByIncidentState(ViewModel.Checkin.StatusId.AsIncidentStatus()));
+            HeaderSection.IconView.SetColorFilter(Resources.GetColor(Resource.Color.secondary_text_body));
 
             PhotoSection.Bind(ViewModel.CheckinPhotos);
 
@@ -164,6 +174,11 @@ namespace ResidentAppCross.Droid.Views
             var invoker = new IOnMapReadyMonoInvoker();
             invoker.MapReady += OnMapReady;
             MapSection.Map.GetMapAsync(invoker);
+
+
+            HeaderSection.IconView.SetImageResource(Resource.Drawable.home_config);
+            HeaderSection.IconView.SetColorFilter(Resources.GetColor(Resource.Color.secondary_text_body));
+
         }
 
 
@@ -187,6 +202,8 @@ namespace ResidentAppCross.Droid.Views
 
             RefreshContent();
         }
+
+        public override string Title => "Configure Property";
 
         public GoogleMap Map { get; set; }
     }

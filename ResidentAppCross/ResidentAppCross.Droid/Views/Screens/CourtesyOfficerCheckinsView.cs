@@ -38,7 +38,8 @@ namespace ResidentAppCross.Droid.Views
             var invoker = new IOnMapReadyMonoInvoker();
             invoker.MapReady += OnMapReady;
             Map.GetMapAsync(invoker);
-
+            IconView.SetImageResource(Resource.Drawable.location_ok);
+            IconView.SetColorFilter(Resources.GetColor(Resource.Color.secondary_text_body));
         }
 
         private void PlaceM()

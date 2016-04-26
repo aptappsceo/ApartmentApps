@@ -36,8 +36,11 @@ namespace ResidentAppCross.ViewModels.Screens
         public override void Start()
         {
             base.Start();
+
+            Filters.Clear();
             var all = new RequestsIndexFilter()
             {
+                MarkerTitle = null,
                 Title = "All",
                 FilterExpression = item => true,
                 Icon = SharedResources.Icons.MaintenanceList
@@ -47,6 +50,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new RequestsIndexFilter()
             {
+                MarkerTitle = "Filtered: Open",
                 Title = "Open",
                 FilterExpression = item => item.StatusId == "Submitted",
                 Icon = SharedResources.Icons.QuestionMark
@@ -55,6 +59,8 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new RequestsIndexFilter()
             {
+                MarkerTitle = "Filtered: Scheduled",
+
                 Title = "Scheduled",
                 FilterExpression = item => item.StatusId == "Scheduled",
                 Icon = SharedResources.Icons.Calendar
@@ -63,6 +69,8 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new RequestsIndexFilter()
             {
+                MarkerTitle = "Filtered: Started",
+
                 Title = "Started",
                 FilterExpression = item => item.StatusId == "Started",
                 Icon = SharedResources.Icons.Play
@@ -71,6 +79,8 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new RequestsIndexFilter()
             {
+                MarkerTitle = "Filtered: Paused",
+
                 Title = "Paused",
                 FilterExpression = item => item.StatusId == "Paused",
                 Icon = SharedResources.Icons.Pause
@@ -79,10 +89,12 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new RequestsIndexFilter()
             {
+                MarkerTitle = "Filtered: Complete",
                 Title = "Complete",
                 FilterExpression = item => item.StatusId == "Complete",
                 Icon = SharedResources.Icons.Ok
             });
+
 
         }
 
@@ -139,8 +151,9 @@ namespace ResidentAppCross.ViewModels.Screens
 
               return this.TaskCommand(async context =>
                                 {
-                
+
                 this.Publish(new RequestsIndexUpdateStarted(this));
+
                 var requests = await _service.Maitenance.ListRequestsAsync();
                 Requests.Clear();
                 Requests.AddRange(requests);
@@ -192,6 +205,7 @@ namespace ResidentAppCross.ViewModels.Screens
     public class RequestsIndexFilter
     {
         public string Title { get; set; }
+        public string MarkerTitle { get; set; }
         public Func<MaintenanceIndexBindingModel, bool> FilterExpression { get; set; }
         public SharedResources.Icons Icon { get; set; }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Android.Graphics;
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V7.Widget;
@@ -7,6 +8,7 @@ using ApartmentApps.Client.Models;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Droid.Shared.Attributes;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
+using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
 using MaintenanceRequestStatus = ResidentAppCross.ViewModels.Screens.MaintenanceRequestStatus;
@@ -27,7 +29,7 @@ namespace ResidentAppCross.Droid.Views
         public RecyclerView HistoryPage { get; set; }
         
         public HeaderSection HeaderSection { get; set; }
-        public TicketStatusSection TicketStatusSection { get; set; }
+        public MaintenanceTicketStatusSection MaintenanceTicketStatusSection { get; set; }
         public NoneditableTextSection CommentsSection { get; set; }
         public GallerySection GallerySection { get; set; }
         public UnitInformationSection UnitInformationSection { get; set; }
@@ -46,6 +48,26 @@ namespace ResidentAppCross.Droid.Views
             {
                 ActionBarSection.Update();
                 UnitInformationSection.AvatarUrl = ViewModel?.Request?.User.ImageUrl;
+
+                HeaderSection.IconView.SetImageResource(AppTheme.IconResByMaintenanceState(ViewModel.Request.Status.AsMaintenanceStatus()));
+                var color =
+                    Resources.GetColor(Resource.Color.secondary_text_body);
+                HeaderSection.IconView.SetColorFilter(color);
+
+                if(string.IsNullOrEmpty(ViewModel.Request.BuildingName.Trim()))
+                HeaderSection.SubtitleLabel.Text = "Unit Infromation Missing";
+                else
+                HeaderSection.SubtitleLabel.Text = ViewModel.Request.BuildingName;
+
+                MaintenanceTicketStatusSection.PetStatusLabel.Text = ViewModel.Request.PetStatus?.AsPetStatusString();
+
+                if(ViewModel.Request.PermissionToEnter.HasValue)
+
+                    MaintenanceTicketStatusSection.EntranceStatusLabel.Text = ViewModel.Request.PermissionToEnter.Value ? "Yes" : "No";
+                else
+                    MaintenanceTicketStatusSection.EntranceStatusLabel.Text = "N/A";
+
+
             });
 
             GallerySection?.Bind(ViewModel.Photos);
@@ -60,8 +82,8 @@ namespace ResidentAppCross.Droid.Views
                 {
                     ViewModel.SelectedCheckin = item;
                     ViewModel.ShowCheckinDetailsCommand.Execute(null);
-                }
-
+                },
+                IconResourceSelector = i => AppTheme.StatusIconResByMaintenanceState(i.StatusId.AsMaintenanceStatus())
             });
 
 
@@ -72,14 +94,30 @@ namespace ResidentAppCross.Droid.Views
             ModeTabs.Invalidate();
 
             HeaderSection.TitleLabel.Text = "Maintenance Request";
-            HeaderSection.SubtitleLabel.Text = "";
 
             var set = this.CreateBindingSet<MaintenanceRequestStatusView, MaintenanceRequestStatusViewModel>();
 
-            set.Bind(TicketStatusSection.TypeLabel).For(f => f.Text).To(vm => vm.Request.Name);
-            set.Bind(TicketStatusSection.StatusLabel).For(f => f.Text).To(vm => vm.Request.Status);
-            set.Bind(TicketStatusSection.CreatedOnLabel).For(f => f.Text).To(vm => vm.ScheduleDateLabel).WithFallback("-");
+            set.Bind(MaintenanceTicketStatusSection.TypeLabel).For(f => f.Text).To(vm => vm.Request.Name);
+            set.Bind(MaintenanceTicketStatusSection.StatusLabel).For(f => f.Text).To(vm => vm.Request.Status);
             set.Bind(CommentsSection.InputField).For(t => t.Text).To(vm => vm.Request.Message).WithFallback("-");
+
+            set.Bind(UnitInformationSection.NameLabel)
+                .For(t => t.Text)
+                .To(vm => vm.Request.User.FullName)
+                .WithFallback("-");
+            set.Bind(UnitInformationSection.AddressLabel)
+                .For(t => t.Text)
+                .To(vm => vm.Request.User.Address)
+                .WithFallback("-");
+            set.Bind(UnitInformationSection.EmailLabel)
+                .For(t => t.Text)
+                .To(vm => vm.Request.User.PostalCode)
+                .WithFallback("-");
+            set.Bind(UnitInformationSection.PhoneLabel)
+                .For(t => t.Text)
+                .To(vm => vm.Request.User.PhoneNumber)
+                .WithFallback("-");
+
             set.Bind(UnitInformationSection).For(s => s.AvatarUrl).To(vm => vm.Request.User.ImageUrl);
             set.Apply();
 
@@ -114,12 +152,27 @@ namespace ResidentAppCross.Droid.Views
 
         }
 
+        public override void OnDestroyView()
+        {
+            base.OnDestroyView();
+        }
+
+        public override void OnDetach()
+        {
+            ModePager.SetCurrentItem(0, false);
+            base.OnDetach();
+        }
+
+        public override void UnBind()
+        {
+            base.UnBind();
+        }
 
         public override void GetContent(List<FragmentSection> sections)
         {
             base.GetContent(sections);
             sections.Add(HeaderSection);
-            sections.Add(TicketStatusSection);
+            sections.Add(MaintenanceTicketStatusSection);
             sections.Add(UnitInformationSection);
             sections.Add(CommentsSection);
             sections.Add(GallerySection);
@@ -165,6 +218,7 @@ namespace ResidentAppCross.Droid.Views
             });
         }
 
+        public override string Title => "Courtesy Checkins";
 
         public override void GetContent(List<FragmentSection> sections)
         {

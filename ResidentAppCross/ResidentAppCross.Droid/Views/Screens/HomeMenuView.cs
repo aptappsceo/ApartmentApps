@@ -16,6 +16,7 @@ using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using DE.Hdodenhof.Circleimageview;
 using FlyOutMenu;
 using ImageViews.Rounded;
 using MvvmCross.Droid.Views;
@@ -327,11 +328,12 @@ namespace ResidentAppCross.Droid.Views
         public Func<T,string> TitleSelector { get; set; } 
         public Func<T,string> BadgeSelector { get; set; } 
         public Func<T,long> IdSelector { get; set; } 
-        public Func<T,Color> IconColorSelector { get; set; } 
+        public Func<T,int> IconColorResourceSelector { get; set; } 
         public Func<T,Color> BadgeBackgroundColorSelector { get; set; } 
         public Func<T,Color> BadgeForegroundColorSelector { get; set; } 
         public Func<T,Color> BackgroundColorSelector { get; set; } 
         public Func<T,SharedResources.Icons> IconSelector { get; set; }
+        public Func<T,int> IconResourceSelector { get; set; }
         public Action<T> ItemSelected { get; set; }
         public IList<T> Items
         {
@@ -349,10 +351,33 @@ namespace ResidentAppCross.Droid.Views
             var view = (holder as ImageTextCounterListItemViewHolder).Item;
             var item = Items[position];
             view.Title = TitleSelector?.Invoke(item);
-            view.Icon = IconSelector?.Invoke(item) ?? SharedResources.Icons.LocationOk;
+
+            if (IconSelector != null || IconResourceSelector != null)
+            {
+                view.IconView.Visibility = ViewStates.Visible;
+
+                if (IconSelector != null)
+                    view.Icon = IconSelector.Invoke(item);
+
+                if (IconResourceSelector != null)
+                    view.IconResource = IconResourceSelector(item);
+
+                if (IconColorResourceSelector != null)
+                {
+                    var c = view.Resources.GetColor(IconColorResourceSelector(item));
+                    view.IconColor = c;
+                }
+
+            }
+            else
+            {
+                view.IconView.Visibility = ViewStates.Gone;
+            }
+
+     
             view.CounterTitle = BadgeSelector?.Invoke(item);
 
-            if (IconColorSelector != null) view.IconColor = IconColorSelector(item);
+          //  if (IconColorResourceSelector != null) view.IconColor = IconColorResourceSelector(item);
             if (BackgroundColorSelector != null) view.BackgroundColor = BackgroundColorSelector(item);
             if (BadgeForegroundColorSelector != null) view.BadgeForegroundColor = BadgeForegroundColorSelector(item);
             if (BadgeBackgroundColorSelector != null) view.BadgeBackgroundColor = BadgeBackgroundColorSelector(item);
@@ -393,6 +418,7 @@ namespace ResidentAppCross.Droid.Views
         public Func<T,string> DetailsSelector { get; set; }
         public Func<T,string> SubTitleSelector { get; set; }
         public Func<T,string> DateSelector { get; set; }
+        public Func<T,int> IconSelector { get; set; }
         public Func<T,Color> ColorSelector { get; set; }
         public Func<T,int> ColorResourceSelector { get; set; }
 
@@ -415,6 +441,8 @@ namespace ResidentAppCross.Droid.Views
             holder.DateLabel.Text = DateSelector?.Invoke(item) ?? "00/00/00 00:00 AM";
             holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
 
+            if(IconSelector != null)
+            holder.IconView.SetImageResource(IconSelector.Invoke(item));
 
             if (ColorSelector != null)
             {
@@ -456,6 +484,7 @@ namespace ResidentAppCross.Droid.Views
 
         public Func<T,string> TitleSelector { get; set; }
         public Func<T,string> SubtitleSelector { get; set; }
+        public Func<T,int> IconResourceSelector { get; set; }
 
         public ObservableCollection<T> Items
         {
@@ -473,25 +502,28 @@ namespace ResidentAppCross.Droid.Views
             holder.TitleLabel.Text = TitleSelector?.Invoke(item);
             holder.SubtitleLabel.Text = SubtitleSelector?.Invoke(item);
 
+
+            if(IconResourceSelector != null)
+            holder.IconView.SetImageResource(IconResourceSelector(item));
+
+
             //holder.IconView.Visibility = ViewStates.Gone;
-            holder.PipeIconView.Visibility = ViewStates.Gone;
-            holder.IconView.MutatesBackground = false;
+            holder.PipeIconView.Visibility = ViewStates.Visible;
             if (Items.Count == 1)
             {
-                holder.IconView.SetImageResource(Color.Transparent);
-                //holder.IconView.SetImageResource();
+                holder.PipeIconView.SetImageResource(Color.Transparent);
             }
             else if (position == 0)
             {
-                holder.IconView.SetImageResource(Resource.Drawable.timeline_top);
+                holder.PipeIconView.SetImageResource(Resource.Drawable.timeline_top);
             }
             else if (position == Items.Count-1)
             {
-                holder.IconView.SetImageResource(Resource.Drawable.timeline_bottom);
+                holder.PipeIconView.SetImageResource(Resource.Drawable.timeline_bottom);
             }
             else
             {
-                holder.IconView.SetImageResource(Resource.Drawable.timeline_mid);
+                holder.PipeIconView.SetImageResource(Resource.Drawable.timeline_mid);
             }
 
             //            if (Items.Count == 1)
@@ -588,7 +620,10 @@ namespace ResidentAppCross.Droid.Views
         public ImageView PipeIconView { get; set; }
 
         [Outlet]
-        public RoundedImageView IconView{ get; set; }
+        public ImageView BackgroundIconView { get; set; }
+
+        [Outlet]
+        public ImageView IconView { get; set; }
 
         [Outlet]
         public AppCompatTextView TitleLabel { get; set; }
@@ -599,6 +634,8 @@ namespace ResidentAppCross.Droid.Views
         public TicketHistoryItemViewHolder(View itemView) : base(itemView)
         {
             itemView.LocateOutlets(this);
+            PipeIconView.SetColorFilter(itemView.Resources.GetColor(Resource.Color.primary));
+            IconView.SetColorFilter(itemView.Resources.GetColor(Resource.Color.primary_text));
         }
     }
 
@@ -615,6 +652,7 @@ namespace ResidentAppCross.Droid.Views
         private Color _badgeBackgroundColor;
         private Color _badgeForegroundColor;
         private Color _backgroundColor;
+        private int _iconResource;
 
         public ImageTextCounterListItem(Context context) : base(context)
         {
@@ -684,6 +722,16 @@ namespace ResidentAppCross.Droid.Views
             {
                 _icon1 = value;
                 IconView.SetImageDrawable(AppTheme.GetIcon(value, SharedResources.Size.S));
+            }
+        }
+
+        public int IconResource
+        {
+            get { return _iconResource; }
+            set
+            {
+                _iconResource = value;
+                IconView.SetImageResource(_iconResource);
             }
         }
 

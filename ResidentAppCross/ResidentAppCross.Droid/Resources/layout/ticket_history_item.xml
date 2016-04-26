@@ -12,24 +12,28 @@
         android:layout_width="44dp"
         android:layout_height="44dp">
 
-
-
         <ImageView
             android:id="@+id/PipeIconView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            tools:background="@color/accent"
             />
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/IconView"
+        <ImageView
+            android:id="@+id/BackgroundIconView"
+            android:padding="4dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/circle_primary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:riv_border_width="4dp"
-            app:riv_oval="true"
-            app:riv_border_color="@color/primary"
-            android:cropToPadding="true"
-            android:padding="4dp"
-            android:scaleType="fitCenter"
+            />
+
+        <ImageView
+            android:id="@+id/IconView"
+            android:padding="7dp"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             />
 
     </FrameLayout>
