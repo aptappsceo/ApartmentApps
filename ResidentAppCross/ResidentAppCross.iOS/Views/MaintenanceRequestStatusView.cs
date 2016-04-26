@@ -311,9 +311,10 @@ namespace ResidentAppCross.iOS
             FooterFinishButton = ActionsSection.AddButton("Finish", style);
             FooterStartButton = ActionsSection.AddButton("Scan QR Code", style);
 			if (ViewModel.CanUpdateRequest) {
-				b.Bind(FooterPauseButton).To(vm => vm.PauseCommmand);
-				b.Bind(FooterFinishButton).To(vm => vm.FinishCommmand);
-				b.Bind(FooterStartButton).To(vm => vm.ScanAndStartCommand);
+				FooterPauseButton.TouchUpInside += (s,e)=>ViewModel.PauseCommand.Execute(null);
+				FooterFinishButton.TouchUpInside += (s,e)=>ViewModel.FinishCommmand.Execute(null);
+				FooterStartButton.TouchUpInside += (s,e)=>ViewModel.ScanAndStartCommand.Execute(null);
+		
 				b.Bind(FooterFinishButton).For(but => but.Hidden).To(vm => vm.ForbidComplete);
 				b.Bind(FooterStartButton).For(but => but.Hidden).To(vm => vm.ForbidStart);
 				b.Bind(FooterPauseButton).For(but => but.Hidden).To(vm => vm.ForbidPause);

@@ -42,9 +42,14 @@ namespace ResidentAppCross.iOS
 	        set.Bind(_signUpButton).To(vm => vm.SignUpCommand);
             set.Apply();
 
-         
+            _emailTextField.ShouldReturn += (textField) =>{_phoneNumberField.BecomeFirstResponder();return true;};
+            _phoneNumberField.ShouldReturn += (textField) =>{_firstNameField.BecomeFirstResponder();return true;};
+            _firstNameField.ShouldReturn += (textField) =>{_lastNameField.BecomeFirstResponder();return true;};
+            _lastNameField.ShouldReturn += (textField) =>{_passwordField.BecomeFirstResponder();return true;};
+            _passwordField.ShouldReturn += (textField) =>{_passwordConfirmationField.BecomeFirstResponder();return true;};
+            _passwordConfirmationField.ShouldReturn += (textField) =>{_passwordConfirmationField.ResignFirstResponder();return true;};
 
-	    }
+	}
 
         public override void ViewDidLayoutSubviews()
         {
