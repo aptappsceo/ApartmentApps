@@ -45,17 +45,6 @@ namespace ApartmentApps.Client.Models
             set { this._corporationId = value; }
         }
         
-        private PropertyEntrataInfo _entrataInfo;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public PropertyEntrataInfo EntrataInfo
-        {
-            get { return this._entrataInfo; }
-            set { this._entrataInfo = value; }
-        }
-        
         private int? _id;
         
         /// <summary>
@@ -100,17 +89,6 @@ namespace ApartmentApps.Client.Models
             set { this._propertyAddons = value; }
         }
         
-        private IList<Tenant> _tenants;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public IList<Tenant> Tenants
-        {
-            get { return this._tenants; }
-            set { this._tenants = value; }
-        }
-        
         private string _timeZone;
         
         /// <summary>
@@ -144,17 +122,6 @@ namespace ApartmentApps.Client.Models
             set { this._users = value; }
         }
         
-        private PropertyYardiInfo _yardiInfo;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public PropertyYardiInfo YardiInfo
-        {
-            get { return this._yardiInfo; }
-            set { this._yardiInfo = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the Property class.
         /// </summary>
@@ -163,7 +130,6 @@ namespace ApartmentApps.Client.Models
             this.Buildings = new LazyList<Building>();
             this.MaitenanceRequests = new LazyList<MaitenanceRequest>();
             this.PropertyAddons = new LazyList<PropertyAddon>();
-            this.Tenants = new LazyList<Tenant>();
             this.Users = new LazyList<ApplicationUser>();
         }
         
@@ -196,13 +162,6 @@ namespace ApartmentApps.Client.Models
                 {
                     this.CorporationId = ((int)corporationIdValue);
                 }
-                JToken entrataInfoValue = inputObject["EntrataInfo"];
-                if (entrataInfoValue != null && entrataInfoValue.Type != JTokenType.Null)
-                {
-                    PropertyEntrataInfo propertyEntrataInfo = new PropertyEntrataInfo();
-                    propertyEntrataInfo.DeserializeJson(entrataInfoValue);
-                    this.EntrataInfo = propertyEntrataInfo;
-                }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
@@ -233,16 +192,6 @@ namespace ApartmentApps.Client.Models
                         this.PropertyAddons.Add(propertyAddon);
                     }
                 }
-                JToken tenantsSequence = ((JToken)inputObject["Tenants"]);
-                if (tenantsSequence != null && tenantsSequence.Type != JTokenType.Null)
-                {
-                    foreach (JToken tenantsValue in ((JArray)tenantsSequence))
-                    {
-                        Tenant tenant = new Tenant();
-                        tenant.DeserializeJson(tenantsValue);
-                        this.Tenants.Add(tenant);
-                    }
-                }
                 JToken timeZoneValue = inputObject["TimeZone"];
                 if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
                 {
@@ -262,13 +211,6 @@ namespace ApartmentApps.Client.Models
                         applicationUser.DeserializeJson(usersValue);
                         this.Users.Add(applicationUser);
                     }
-                }
-                JToken yardiInfoValue = inputObject["YardiInfo"];
-                if (yardiInfoValue != null && yardiInfoValue.Type != JTokenType.Null)
-                {
-                    PropertyYardiInfo propertyYardiInfo = new PropertyYardiInfo();
-                    propertyYardiInfo.DeserializeJson(yardiInfoValue);
-                    this.YardiInfo = propertyYardiInfo;
                 }
             }
         }

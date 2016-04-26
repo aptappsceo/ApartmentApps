@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ApartmentApps.Client;
 using MvvmCross.Core.ViewModels;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Events;
@@ -14,6 +15,8 @@ namespace ResidentAppCross
     public class LoginFormViewModel : ViewModelBase
     {
         public ILoginManager LoginManager { get; set; }
+        public IVersionChecker VersionChecker { get; set; }
+        public IApartmentAppsAPIService Data { get; set; }
         private string _username;
         public string Username
         {
@@ -36,10 +39,11 @@ namespace ResidentAppCross
             set { SetProperty(ref _isOperating, value); }
         }
 
-        public LoginFormViewModel(ILoginManager loginManager)
+        public LoginFormViewModel(ILoginManager loginManager, IVersionChecker versionChecker, IApartmentAppsAPIService data)
         {
             LoginManager = loginManager;
-           
+            VersionChecker = versionChecker;
+            Data = data;
         }
 
         public override void Start()
@@ -57,6 +61,16 @@ namespace ResidentAppCross
             {
                 return this.TaskCommand(async context =>
                 {
+                    if (VersionChecker != null)
+                    {
+                        var version = await Data.Version.GetAsync();
+                        if (!VersionChecker.CheckVersion(version))
+                        {
+                            VersionChecker.OpenInStore(version);
+                            context.FailTask("Please update your version");
+                            return;
+                        }
+                    }
 #if DEBUG
                     var username = string.IsNullOrEmpty(Username) ? "micahosborne@gmail.com" : Username;
                     var password = string.IsNullOrEmpty(Password) ? "Asdf1234!" : Password;

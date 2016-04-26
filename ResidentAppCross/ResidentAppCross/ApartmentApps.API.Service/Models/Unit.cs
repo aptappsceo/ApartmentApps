@@ -10,8 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-
-    public partial class Unit 
+    public partial class Unit
     {
         private Building _building;
         
@@ -90,15 +89,37 @@ namespace ApartmentApps.Client.Models
             set { this._name = value; }
         }
         
-        private IList<Tenant> _tenants;
+        private Property _property;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public IList<Tenant> Tenants
+        public Property Property
         {
-            get { return this._tenants; }
-            set { this._tenants = value; }
+            get { return this._property; }
+            set { this._property = value; }
+        }
+        
+        private int? _propertyId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? PropertyId
+        {
+            get { return this._propertyId; }
+            set { this._propertyId = value; }
+        }
+        
+        private IList<ApplicationUser> _users;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<ApplicationUser> Users
+        {
+            get { return this._users; }
+            set { this._users = value; }
         }
         
         /// <summary>
@@ -107,7 +128,7 @@ namespace ApartmentApps.Client.Models
         public Unit()
         {
             this.MaitenanceRequests = new LazyList<MaitenanceRequest>();
-            this.Tenants = new LazyList<Tenant>();
+            this.Users = new LazyList<ApplicationUser>();
         }
         
         /// <summary>
@@ -159,14 +180,26 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Name = ((string)nameValue);
                 }
-                JToken tenantsSequence = ((JToken)inputObject["Tenants"]);
-                if (tenantsSequence != null && tenantsSequence.Type != JTokenType.Null)
+                JToken propertyValue = inputObject["Property"];
+                if (propertyValue != null && propertyValue.Type != JTokenType.Null)
                 {
-                    foreach (JToken tenantsValue in ((JArray)tenantsSequence))
+                    Property property = new Property();
+                    property.DeserializeJson(propertyValue);
+                    this.Property = property;
+                }
+                JToken propertyIdValue = inputObject["PropertyId"];
+                if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
+                {
+                    this.PropertyId = ((int)propertyIdValue);
+                }
+                JToken usersSequence = ((JToken)inputObject["Users"]);
+                if (usersSequence != null && usersSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken usersValue in ((JArray)usersSequence))
                     {
-                        Tenant tenant = new Tenant();
-                        tenant.DeserializeJson(tenantsValue);
-                        this.Tenants.Add(tenant);
+                        ApplicationUser applicationUser = new ApplicationUser();
+                        applicationUser.DeserializeJson(usersValue);
+                        this.Users.Add(applicationUser);
                     }
                 }
             }

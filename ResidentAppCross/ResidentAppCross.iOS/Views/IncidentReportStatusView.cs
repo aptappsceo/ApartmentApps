@@ -318,11 +318,6 @@ namespace ResidentAppCross.iOS
 				FooterPauseButton = FooterSection.AddButton("Pause", style);
 				FooterFinishButton = FooterSection.AddButton("Close", style);
 				FooterStartButton = FooterSection.AddButton("Open", style);
-			if (ViewModel.CanUpdateRequest) {
-				b.Bind(FooterPauseButton).To(vm => vm.PauseIncidentCommmand);
-				b.Bind(FooterFinishButton).To(vm => vm.CloseIncidentCommand);
-				b.Bind(FooterStartButton).To(vm => vm.OpenIncidentCommand);
-			}
 
           
 
@@ -358,6 +353,19 @@ namespace ResidentAppCross.iOS
             //Entrance Permission section
 
             //b.Bind(EntrancePermissionSection.Switch).For(s => s.On).To(vm => vm.Request.EntrancePermission);
+            if (ViewModel.CanUpdateRequest)
+            {
+            FooterPauseButton.TouchUpInside += (sender, args) => ViewModel.PauseIncidentCommmand.Execute(null);
+            FooterFinishButton.TouchUpInside += (sender, args) => ViewModel.CloseIncidentCommand.Execute(null);
+            FooterStartButton.TouchUpInside += (sender, args) => ViewModel.OpenIncidentCommand.Execute(null);
+            //this.DelayBind(() =>
+            //{
+            //    b.Bind(FooterPauseButton).To(vm => vm.PauseIncidentCommmand);
+            //    b.Bind(FooterFinishButton).To(vm => vm.CloseIncidentCommand);
+            //    b.Bind(FooterStartButton).To(vm => vm.OpenIncidentCommand);
+            //});
+              
+            }
 
 
             b.Apply();

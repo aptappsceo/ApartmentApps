@@ -1,6 +1,7 @@
 ﻿using System;
 using WindowsAzure.Messaging;
 using ApartmentApps.Client;
+using ApartmentApps.Client.Models;
 using Foundation;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Platform;
@@ -15,7 +16,7 @@ namespace ResidentAppCross.iOS
     // The UIApplicationDelegate for the application. This class is responsible for launching the
     // User Interface of the application, as well as listening (and optionally responding) to application events from iOS.
     [Register("AppDelegate")]
-    public class AppDelegate : MvxApplicationDelegate
+    public class AppDelegate : MvxApplicationDelegate, IVersionChecker
     {
         // class-level declarations
         private SBNotificationHub Hub { get; set; }
@@ -62,7 +63,7 @@ namespace ResidentAppCross.iOS
 
             var setup = new Setup(this, presenter);
             setup.Initialize();
-
+            Mvx.RegisterSingleton<IVersionChecker>(this);
             var startup = Mvx.Resolve<IMvxAppStart>();
             startup.Start();
 
@@ -71,6 +72,9 @@ namespace ResidentAppCross.iOS
             return true;
 
         }
+
+        public const int BUILD_NUMBER = 1;
+
         public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
         {
             ProcessNotification(userInfo, false);
@@ -197,6 +201,16 @@ namespace ResidentAppCross.iOS
         public override void WillTerminate(UIApplication application)
         {
             // Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
+        }
+
+        public bool CheckVersion(VersionInfo version)
+        {
+            return BUILD_NUMBER == version.IPhoneBuildNumber;
+        }
+
+        public void OpenInStore(VersionInfo version)
+        {
+            UIApplication.SharedApplication.OpenUrl(NSUrl.FromString(version.IPhoneStoreUrl));
         }
     }
 }

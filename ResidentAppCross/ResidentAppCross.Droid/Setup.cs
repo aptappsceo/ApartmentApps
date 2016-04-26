@@ -1,8 +1,10 @@
 using System;
 using Android.App;
+using Android.Bluetooth;
 using Android.Content;
 using Android.Runtime;
 using Android.Util;
+using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Core.Views;
 using MvvmCross.Droid.Platform;
@@ -19,8 +21,36 @@ using ZXing.Mobile;
 
 namespace ResidentAppCross.Droid
 {
-    public class Setup : MvxAndroidSetup
+    public class Setup : MvxAndroidSetup, IVersionChecker
     {
+        public const int BUILD_NUMBER = 1;
+        public bool CheckVersion(VersionInfo version)
+        {
+            return BUILD_NUMBER == 1;
+        }
+
+        public void OpenInStore(VersionInfo version)
+        {
+
+            try
+            {
+                var intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(version.AndroidStoreUrl));
+                // we need to add this, because the activity is in a new context.
+                // Otherwise the runtime will block the execution and throw an exception
+                intent.AddFlags(ActivityFlags.NewTask);
+
+                Application.Context.StartActivity(intent);
+            }
+            catch (ActivityNotFoundException)
+            {
+                var intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse((version.AndroidStoreUrl)));
+                // we need to add this, because the activity is in a new context.
+                // Otherwise the runtime will block the execution and throw an exception
+                intent.AddFlags(ActivityFlags.NewTask);
+
+                Application.Context.StartActivity(intent);
+            }
+        }
         public Setup(Context applicationContext)
             : base(applicationContext)
         {
@@ -33,7 +63,7 @@ namespace ResidentAppCross.Droid
         private void HandleExceptions(object sender, UnhandledExceptionEventArgs e)
         {
 
-            Android.Util.Log.WriteLine(LogPriority.Error, "Holy shit", string.Format("EXCEPTION: {0} {1} {2}", sender, sender.GetType().Name,
+            Android.Util.Log.WriteLine(LogPriority.Error, "ERROR", string.Format("EXCEPTION: {0} {1} {2}", sender, sender.GetType().Name,
                 e.ExceptionObject));
 
         }
@@ -55,6 +85,7 @@ namespace ResidentAppCross.Droid
             Mvx.ConstructAndRegisterSingleton<IQRService,AndroidQRService>();
             Mvx.RegisterSingleton<Application>(DroidApplication.Instance);
             Mvx.ConstructAndRegisterSingleton<IDialogService,AndroidDialogService>();
+            Mvx.RegisterSingleton<IVersionChecker>(this);
         }
 
         protected override IMvxApplication CreateApp()
@@ -99,10 +130,14 @@ namespace ResidentAppCross.Droid
 
         public override void OnCreate()
         {
+       
             Instance = this;
             App.ApartmentAppsClient.GetAuthToken = () => AuthToken;
             App.ApartmentAppsClient.SetAuthToken = (v) => AuthToken = v;
+
             base.OnCreate();
+
+
         }
 
         public static DroidApplication Instance { get; set; }
@@ -143,6 +178,7 @@ namespace ResidentAppCross.Droid
                 PreferencesEditor.Commit();
             }
         }
+
 
     }
 

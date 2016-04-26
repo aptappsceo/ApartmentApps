@@ -70,5 +70,10 @@ namespace ApartmentApps.Client
         {
             get; 
         }
+        
+        IVersion Version
+        {
+            get; 
+        }
     }
 }

@@ -10,8 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-
-    public partial class MaitenanceRequest 
+    public partial class MaitenanceRequest
     {
         private IList<MaintenanceRequestCheckin> _checkins;
         
@@ -33,6 +32,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._completionDate; }
             set { this._completionDate = value; }
+        }
+        
+        private string _description;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Description
+        {
+            get { return this._description; }
+            set { this._description = value; }
         }
         
         private string _groupId;
@@ -121,6 +131,28 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._petStatus; }
             set { this._petStatus = value; }
+        }
+        
+        private Property _property;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public Property Property
+        {
+            get { return this._property; }
+            set { this._property = value; }
+        }
+        
+        private int? _propertyId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? PropertyId
+        {
+            get { return this._propertyId; }
+            set { this._propertyId = value; }
         }
         
         private DateTimeOffset? _scheduleDate;
@@ -252,6 +284,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.CompletionDate = ((DateTimeOffset)completionDateValue);
                 }
+                JToken descriptionValue = inputObject["Description"];
+                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                {
+                    this.Description = ((string)descriptionValue);
+                }
                 JToken groupIdValue = inputObject["GroupId"];
                 if (groupIdValue != null && groupIdValue.Type != JTokenType.Null)
                 {
@@ -295,6 +332,18 @@ namespace ApartmentApps.Client.Models
                 if (petStatusValue != null && petStatusValue.Type != JTokenType.Null)
                 {
                     this.PetStatus = ((int)petStatusValue);
+                }
+                JToken propertyValue = inputObject["Property"];
+                if (propertyValue != null && propertyValue.Type != JTokenType.Null)
+                {
+                    Property property = new Property();
+                    property.DeserializeJson(propertyValue);
+                    this.Property = property;
+                }
+                JToken propertyIdValue = inputObject["PropertyId"];
+                if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
+                {
+                    this.PropertyId = ((int)propertyIdValue);
                 }
                 JToken scheduleDateValue = inputObject["ScheduleDate"];
                 if (scheduleDateValue != null && scheduleDateValue.Type != JTokenType.Null)

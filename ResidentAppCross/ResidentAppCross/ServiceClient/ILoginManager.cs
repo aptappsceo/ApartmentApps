@@ -106,12 +106,19 @@ namespace ResidentAppCross.ServiceClient
         void RefreshUserInfo();
     }
 
+    public interface IVersionChecker
+    {
+        bool CheckVersion(VersionInfo version);
+        void OpenInStore(VersionInfo version);
+
+    }
     public class LoginService : ILoginManager
     {
         public App.ApartmentAppsClient Data { get; set; }
         
         public LoginService(IApartmentAppsAPIService data)
         {
+          
             Data = data as App.ApartmentAppsClient;
         }
 
@@ -133,6 +140,7 @@ namespace ResidentAppCross.ServiceClient
         {
             try
             {
+           
                 if (!IsLoggedIn)
                 {
                     await Data.LoginAsync(username, password);

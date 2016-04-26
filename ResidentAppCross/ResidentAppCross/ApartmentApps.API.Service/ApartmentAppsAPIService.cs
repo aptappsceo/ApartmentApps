@@ -96,6 +96,13 @@ namespace ApartmentApps.Client
             get { return this._register; }
         }
         
+        private IVersion _version;
+        
+        public virtual IVersion Version
+        {
+            get { return this._version; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ApartmentAppsAPIService class.
         /// </summary>
@@ -111,6 +118,7 @@ namespace ApartmentApps.Client
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
+            this._version = new Version(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
         
@@ -133,6 +141,7 @@ namespace ApartmentApps.Client
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
+            this._version = new Version(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
         
@@ -158,6 +167,7 @@ namespace ApartmentApps.Client
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
             this._register = new Register(this);
+            this._version = new Version(this);
             this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
         }
         
