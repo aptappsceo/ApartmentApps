@@ -16,6 +16,7 @@ using Java.Lang;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Droid.Shared.Attributes;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
+using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
 
@@ -36,7 +37,7 @@ namespace ResidentAppCross.Droid.Views
         public RecyclerView HistoryPage { get; set; }
         
         public HeaderSection HeaderSection { get; set; }
-        public TicketStatusSection TicketStatusSection { get; set; }
+        public IncidentTicketStatusSection IncidentTicketStatusSection { get; set; }
         public NoneditableTextSection CommentsSection { get; set; }
         public GallerySection GallerySection { get; set; }
         public UnitInformationSection UnitInformationSection { get; set; }
@@ -53,6 +54,17 @@ namespace ResidentAppCross.Droid.Views
             {
                 ActionBarSection.Update();
                 //UnitInformationSection.AvatarUrl = ViewModel?.Request?.User.ImageUrl;
+
+
+                HeaderSection.IconView.SetImageResource(AppTheme.IconResByIncidentState(ViewModel.Request.Status.AsIncidentStatus()));
+                var color = Resources.GetColor(Resource.Color.secondary_text_body);
+                HeaderSection.IconView.SetColorFilter(color);
+
+                if (string.IsNullOrEmpty(ViewModel?.Request?.BuildingName?.Trim()))
+                    HeaderSection.SubtitleLabel.Text = "Unit Infromation Missing";
+                else
+                    HeaderSection.SubtitleLabel.Text = ViewModel.Request.BuildingName;
+
             });
 
             GallerySection?.Bind(ViewModel.Photos);
@@ -67,8 +79,8 @@ namespace ResidentAppCross.Droid.Views
                 {
                     ViewModel.SelectedCheckin = item;
                     ViewModel.ShowCheckinDetailsCommand.Execute(null);
-                }
-
+                },
+                IconResourceSelector = i => AppTheme.StatusIconResByIncidentState(i.StatusId.AsIncidentStatus())
             });
 
 
@@ -78,16 +90,33 @@ namespace ResidentAppCross.Droid.Views
             ModeTabs.Invalidate();
 
             HeaderSection.TitleLabel.Text = "Incident Report";
-            HeaderSection.SubtitleLabel.Text = "";
 
             var set = this.CreateBindingSet<IncidentReportStatusView, IncidentReportStatusViewModel>();
 
-            set.Bind(TicketStatusSection.TypeLabel).For(f => f.Text).To(vm => vm.Request.IncidentType);
-            set.Bind(TicketStatusSection.StatusLabel).For(f => f.Text).To(vm => vm.Request.Status);
-            TicketStatusSection.CreatedOnLabel.Text = "-";
-            //set.Bind(TicketStatusSection.CreatedOnLabel).For(f => f.Text).To(vm => vm.ScheduleDateLabel).WithFallback("-");
+            set.Bind(IncidentTicketStatusSection.TypeLabel).For(f => f.Text).To(vm => vm.Request.IncidentType);
+            set.Bind(IncidentTicketStatusSection.StatusLabel).For(f => f.Text).To(vm => vm.Request.Status);
+            //et.Bind(MaintenanceTicketStatusSection.CreatedOnLabel).For(f => f.Text).To(vm => vm.ScheduleDateLabel).WithFallback("-");
             set.Bind(CommentsSection.InputField).For(t => t.Text).To(vm => vm.Request.Comments).WithFallback("-");
-            //set.Bind(UnitInformationSection).For(s => s.AvatarUrl).To(vm => vm.Request.User.ImageUrl);
+            set.Bind(UnitInformationSection).For(s => s.AvatarUrl).To(vm => vm.Request.Requester.ImageUrl);
+
+
+            set.Bind(UnitInformationSection.NameLabel)
+              .For(t => t.Text)
+              .To(vm => vm.Request.Requester.FullName)
+              .WithFallback("-");
+            set.Bind(UnitInformationSection.AddressLabel)
+                .For(t => t.Text)
+                .To(vm => vm.Request.Requester.Address)
+                .WithFallback("-");
+            set.Bind(UnitInformationSection.EmailLabel)
+                .For(t => t.Text)
+                .To(vm => vm.Request.Requester.PostalCode)
+                .WithFallback("-");
+            set.Bind(UnitInformationSection.PhoneLabel)
+                .For(t => t.Text)
+                .To(vm => vm.Request.Requester.PhoneNumber)
+                .WithFallback("-");
+
             set.Apply();
 
             //CommentsSection.InputField.Focusable = false;
@@ -121,7 +150,7 @@ namespace ResidentAppCross.Droid.Views
         {
             base.GetContent(sections);
             sections.Add(HeaderSection);
-            sections.Add(TicketStatusSection);
+            sections.Add(IncidentTicketStatusSection);
             sections.Add(UnitInformationSection);
             sections.Add(CommentsSection);
             sections.Add(GallerySection);

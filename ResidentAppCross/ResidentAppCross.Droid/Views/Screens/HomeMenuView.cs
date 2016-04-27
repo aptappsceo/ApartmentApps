@@ -17,7 +17,6 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using FlyOutMenu;
-using ImageViews.Rounded;
 using MvvmCross.Droid.Views;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
@@ -327,11 +326,12 @@ namespace ResidentAppCross.Droid.Views
         public Func<T,string> TitleSelector { get; set; } 
         public Func<T,string> BadgeSelector { get; set; } 
         public Func<T,long> IdSelector { get; set; } 
-        public Func<T,Color> IconColorSelector { get; set; } 
+        public Func<T,int> IconColorResourceSelector { get; set; } 
         public Func<T,Color> BadgeBackgroundColorSelector { get; set; } 
         public Func<T,Color> BadgeForegroundColorSelector { get; set; } 
         public Func<T,Color> BackgroundColorSelector { get; set; } 
         public Func<T,SharedResources.Icons> IconSelector { get; set; }
+        public Func<T,int> IconResourceSelector { get; set; }
         public Action<T> ItemSelected { get; set; }
         public IList<T> Items
         {
@@ -349,10 +349,33 @@ namespace ResidentAppCross.Droid.Views
             var view = (holder as ImageTextCounterListItemViewHolder).Item;
             var item = Items[position];
             view.Title = TitleSelector?.Invoke(item);
-            view.Icon = IconSelector?.Invoke(item) ?? SharedResources.Icons.LocationOk;
+
+            if (IconSelector != null || IconResourceSelector != null)
+            {
+                view.IconView.Visibility = ViewStates.Visible;
+
+                if (IconSelector != null)
+                    view.Icon = IconSelector.Invoke(item);
+
+                if (IconResourceSelector != null)
+                    view.IconResource = IconResourceSelector(item);
+
+                if (IconColorResourceSelector != null)
+                {
+                    var c = view.Resources.GetColor(IconColorResourceSelector(item));
+                    view.IconColor = c;
+                }
+
+            }
+            else
+            {
+                view.IconView.Visibility = ViewStates.Gone;
+            }
+
+     
             view.CounterTitle = BadgeSelector?.Invoke(item);
 
-            if (IconColorSelector != null) view.IconColor = IconColorSelector(item);
+          //  if (IconColorResourceSelector != null) view.IconColor = IconColorResourceSelector(item);
             if (BackgroundColorSelector != null) view.BackgroundColor = BackgroundColorSelector(item);
             if (BadgeForegroundColorSelector != null) view.BadgeForegroundColor = BadgeForegroundColorSelector(item);
             if (BadgeBackgroundColorSelector != null) view.BadgeBackgroundColor = BadgeBackgroundColorSelector(item);
@@ -393,6 +416,7 @@ namespace ResidentAppCross.Droid.Views
         public Func<T,string> DetailsSelector { get; set; }
         public Func<T,string> SubTitleSelector { get; set; }
         public Func<T,string> DateSelector { get; set; }
+        public Func<T,int> IconSelector { get; set; }
         public Func<T,Color> ColorSelector { get; set; }
         public Func<T,int> ColorResourceSelector { get; set; }
 
@@ -410,11 +434,13 @@ namespace ResidentAppCross.Droid.Views
         {
             var item = Items[position];
             holder.DetailsLabel.Text = DetailsSelector?.Invoke(item) ?? "Details Info";
-            holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "Unit #4582";
+            holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "Unit Information Missing";
             holder.TypeLabel.Text = SubTitleSelector?.Invoke(item) ?? "Subtitle";
             holder.DateLabel.Text = DateSelector?.Invoke(item) ?? "00/00/00 00:00 AM";
             holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
 
+            if(IconSelector != null)
+            holder.IconView.SetImageResource(IconSelector.Invoke(item));
 
             if (ColorSelector != null)
             {
@@ -450,12 +476,56 @@ namespace ResidentAppCross.Droid.Views
         }
     }
 
+    public class LocationsIndexAdapter<T> : GenericRecyclerAdapter<LocationIndexItemViewHolder>
+    {
+        private ObservableCollection<T> _items;
+
+        public Func<T,string> TitleSelector { get; set; }
+        public Func<T,string> DetailsSelector { get; set; }
+        public Func<T,string> SubTitleSelector { get; set; }
+
+        public ObservableCollection<T> Items
+        {
+            get { return _items; }
+            set
+            {
+                _items = value;
+                this.BindToCollection(Items);
+            }
+        }
+
+        public override void OnBind(LocationIndexItemViewHolder holder, int position)
+        {
+            var item = Items[position];
+            holder.DetailsLabel.Text = DetailsSelector?.Invoke(item) ?? "~Location Coordinates~";
+            holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "~Location Title~";
+            holder.TypeLabel.Text = SubTitleSelector?.Invoke(item) ?? "~Location Subtitle~";
+            holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
+        }
+
+        public event Action<T> DetailsClicked;
+
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            var ticketIndexItemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.location_index_item, parent, false);
+            return new LocationIndexItemViewHolder(ticketIndexItemView);
+        }
+
+        public override int ItemCount => Items.Count;
+
+        protected virtual void OnDetailsClicked(T obj)
+        {
+            DetailsClicked?.Invoke(obj);
+        }
+    }
+
     public class TicketHistoryAdapter<T> : GenericRecyclerAdapter<TicketHistoryItemViewHolder>
     {
         private ObservableCollection<T> _items;
 
         public Func<T,string> TitleSelector { get; set; }
         public Func<T,string> SubtitleSelector { get; set; }
+        public Func<T,int> IconResourceSelector { get; set; }
 
         public ObservableCollection<T> Items
         {
@@ -469,29 +539,44 @@ namespace ResidentAppCross.Droid.Views
 
         public override void OnBind(TicketHistoryItemViewHolder holder, int position)
         {
-            var item = Items[position];
+            T item = default(T);
+
+            try
+            {
+                item = Items[position];
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Problem with history adapter");
+                return;
+            }
+
+
             holder.TitleLabel.Text = TitleSelector?.Invoke(item);
             holder.SubtitleLabel.Text = SubtitleSelector?.Invoke(item);
 
+
+            if(IconResourceSelector != null)
+            holder.IconView.SetImageResource(IconResourceSelector(item));
+
+
             //holder.IconView.Visibility = ViewStates.Gone;
-            holder.PipeIconView.Visibility = ViewStates.Gone;
-            holder.IconView.MutatesBackground = false;
+            holder.PipeIconView.Visibility = ViewStates.Visible;
             if (Items.Count == 1)
             {
-                holder.IconView.SetImageResource(Color.Transparent);
-                //holder.IconView.SetImageResource();
+                holder.PipeIconView.SetImageResource(Color.Transparent);
             }
             else if (position == 0)
             {
-                holder.IconView.SetImageResource(Resource.Drawable.timeline_top);
+                holder.PipeIconView.SetImageResource(Resource.Drawable.timeline_top);
             }
             else if (position == Items.Count-1)
             {
-                holder.IconView.SetImageResource(Resource.Drawable.timeline_bottom);
+                holder.PipeIconView.SetImageResource(Resource.Drawable.timeline_bottom);
             }
             else
             {
-                holder.IconView.SetImageResource(Resource.Drawable.timeline_mid);
+                holder.PipeIconView.SetImageResource(Resource.Drawable.timeline_mid);
             }
 
             //            if (Items.Count == 1)
@@ -582,13 +667,36 @@ namespace ResidentAppCross.Droid.Views
         }
     }
 
+    public class LocationIndexItemViewHolder : RecyclerView.ViewHolder
+    {
+        [Outlet]
+        public AppCompatTextView TitleLabel { get; set; }
+
+        [Outlet]
+        public AppCompatTextView DetailsLabel { get; set; }
+
+        [Outlet]
+        public AppCompatTextView TypeLabel { get; set; }
+
+        [Outlet]
+        public AppCompatButton DetailsButton { get; set; }
+
+        public LocationIndexItemViewHolder(View itemView) : base(itemView)
+        {
+            itemView.LocateOutlets(this);
+        }
+    }
+
     public class TicketHistoryItemViewHolder : RecyclerView.ViewHolder
     {
         [Outlet]
         public ImageView PipeIconView { get; set; }
 
         [Outlet]
-        public RoundedImageView IconView{ get; set; }
+        public ImageView BackgroundIconView { get; set; }
+
+        [Outlet]
+        public ImageView IconView { get; set; }
 
         [Outlet]
         public AppCompatTextView TitleLabel { get; set; }
@@ -599,6 +707,8 @@ namespace ResidentAppCross.Droid.Views
         public TicketHistoryItemViewHolder(View itemView) : base(itemView)
         {
             itemView.LocateOutlets(this);
+            PipeIconView.SetColorFilter(itemView.Resources.GetColor(Resource.Color.primary));
+            IconView.SetColorFilter(itemView.Resources.GetColor(Resource.Color.primary_text));
         }
     }
 
@@ -615,6 +725,7 @@ namespace ResidentAppCross.Droid.Views
         private Color _badgeBackgroundColor;
         private Color _badgeForegroundColor;
         private Color _backgroundColor;
+        private int _iconResource;
 
         public ImageTextCounterListItem(Context context) : base(context)
         {
@@ -684,6 +795,16 @@ namespace ResidentAppCross.Droid.Views
             {
                 _icon1 = value;
                 IconView.SetImageDrawable(AppTheme.GetIcon(value, SharedResources.Size.S));
+            }
+        }
+
+        public int IconResource
+        {
+            get { return _iconResource; }
+            set
+            {
+                _iconResource = value;
+                IconView.SetImageResource(_iconResource);
             }
         }
 

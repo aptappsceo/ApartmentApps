@@ -15,7 +15,7 @@ using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
-using DE.Hdodenhof.Circleimageview;
+using blocke.circleimageview;
 using MvvmCross.Binding.Droid.BindingContext;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -187,7 +187,7 @@ namespace ResidentAppCross.Droid.Views
         public SwitchCompat Switch { get; set; }
     }
 
-    public class TicketStatusSection : FragmentSection
+    public class MaintenanceTicketStatusSection : FragmentSection
     {
         [Outlet]
         public TextView TypeLabel { get; set; }
@@ -196,7 +196,20 @@ namespace ResidentAppCross.Droid.Views
         public TextView StatusLabel { get; set; }
 
         [Outlet]
-        public TextView CreatedOnLabel { get; set; }
+        public TextView EntranceStatusLabel { get; set; }
+
+        [Outlet]
+        public TextView PetStatusLabel { get; set; }
+    }
+
+    public class IncidentTicketStatusSection : FragmentSection
+    {
+        [Outlet]
+        public TextView TypeLabel { get; set; }
+
+        [Outlet]
+        public TextView StatusLabel { get; set; }
+
     }
 
 
@@ -405,9 +418,18 @@ namespace ResidentAppCross.Droid.Views
         public override void OnAttach(Context context)
         {
             base.OnAttach(context);
-        //    MainActivity.InvalidateOptionsMenu();
+            //    MainActivity.InvalidateOptionsMenu();
         }
 
+        public override void OnDetach()
+        {
+            base.OnDetach();
+        }
+
+        public override void OnViewStateRestored(Bundle savedInstanceState)
+        {
+            base.OnViewStateRestored(savedInstanceState);
+        }
 
         public virtual void UnBind()
         {
@@ -426,7 +448,7 @@ namespace ResidentAppCross.Droid.Views
 
         public virtual View CreateViewFromLayout(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            return this.BindingInflate(LayoutId, null);
+            return this.BindingInflate(LayoutId, container, false);
         }
 
         public override void OnViewModelSet()
@@ -439,13 +461,46 @@ namespace ResidentAppCross.Droid.Views
             base.OnViewCreated(view, savedInstanceState);
             Layout?.LocateOutlets(this);
             InitializeView(Layout, savedInstanceState);
+            UpdateToolbar();
+            UpdateTitle();
             Bind();
             IsBound = true;
+        }
+
+        public void UpdateToolbar()
+        {
+            if (EnableToolbar)
+            {
+                Toolbar.Show();
+            }
+            else
+            {
+                Toolbar.Hide();
+            }
+        }
+
+        public void UpdateTitle()
+        {
+            if (!string.IsNullOrEmpty(Title))
+            {
+                MainActivity.SupportActionBar.SetDisplayShowTitleEnabled(true);
+                Toolbar.Title = Title;
+            }
+            else
+            {
+                MainActivity.SupportActionBar.SetDisplayShowTitleEnabled(false);
+                Toolbar.Title = "";
+            }
         }
 
         public virtual void InitializeView(ViewGroup layout, Bundle savedInstanceState)
         {
         }
+
+
+        public virtual bool EnableToolbar { get; set; } = true;
+
+        public virtual string Title { get; set; }
 
         public bool IsBound { get; private set; }
 

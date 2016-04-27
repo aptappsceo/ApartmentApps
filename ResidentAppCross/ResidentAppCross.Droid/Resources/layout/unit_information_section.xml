@@ -7,7 +7,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
-
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/HeaderLabel"
         android:layout_alignParentStart="true"
@@ -18,75 +17,117 @@
 
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
-
-
-
     <LinearLayout
-        android:id="@+id/InformationContainer"
-        android:layout_alignParentStart="true"
         android:layout_below="@id/HeaderLabel"
-        android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:padding="8dp"
         android:layout_width="match_parent"
+        android:orientation="horizontal"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/NameLabel"
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="8dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Joshua Brewer"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/primary_text_body" />
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:tint="@color/secondary_text_body"
+                app:srcCompat="@drawable/contact"
+                android:layout_height="@dimen/ticket_status_line_height"/>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/AddressLabel"
-            android:layout_marginTop="4dp"
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:tint="@color/secondary_text_body"
+                app:srcCompat="@drawable/adress"
+                android:layout_height="@dimen/ticket_status_line_height" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:tint="@color/secondary_text_body"
+                android:layout_height="@dimen/ticket_status_line_height"
+                app:srcCompat="@drawable/phone"
+                />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:tint="@color/secondary_text_body"
+                android:layout_height="@dimen/ticket_status_line_height"
+                app:srcCompat="@drawable/message_unread"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/InformationContainer"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:paddingStart="0dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ap. #1026, Block C 5667 Street D"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/primary_text_body" />
+            android:minWidth="100dp"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/NameLabel"
+                android:hint="@string/empty_string_placeholder"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="@dimen/ticket_status_line_height"
+                tools:text="Joshua Brewer"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/primary_text_body"  />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/PhoneLabel"
-            android:layout_marginTop="4dp"
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/AddressLabel"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:hint="@string/empty_string_placeholder"
+                tools:text="Ap. #1026, Block C 5667 Street D"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/primary_text_body"
+                android:layout_height="@dimen/ticket_status_line_height" />
 
-            android:gravity="center|left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="@dimen/ticket_status_line_height"
+                android:hint="@string/empty_string_placeholder"
+                android:id="@+id/PhoneLabel"
+                tools:text="+1 555 777-999"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/primary_text_body" />
 
-            android:text="+1 555 777-999"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/primary_text_body" />
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="@dimen/ticket_status_line_height"
+                android:hint="@string/empty_string_placeholder"
+                android:id="@+id/EmailLabel"
+                tools:text="sinitreo@gmail.com"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/primary_text_body" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/EmailLabel"
-            android:layout_marginTop="4dp"
-            android:drawablePadding="@dimen/ticket_status_icon_padding"
-            android:gravity="center|left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="sinitreo@gmail.com"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/primary_text_body" />
 
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+        <blocke.circleimageview.CircleImageView
+            tools:background="@color/cardview_dark_background"
+            android:layout_gravity="center_vertical"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/AvatarView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/avatar_placeholder"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@android:color/darker_gray"/>
 
     </LinearLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        tools:background="@color/cardview_dark_background"
 
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/AvatarView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignTop="@id/InformationContainer"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/avatar_placeholder"
-        app:riv_oval="true"
-        app:civ_border_width="2dp"
-        app:civ_border_color="@android:color/darker_gray"/>
 
 
 

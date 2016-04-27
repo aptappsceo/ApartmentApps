@@ -28,20 +28,19 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             get
             {
-                return new MvxCommand(async () =>
+
+                return this.TaskCommand(async context =>
                 {
+
                     var locations = await ApiService.Checkins.GetAsync();
                     Locations.Clear();
                     foreach (var item in locations)
                     {
                         Locations.Add(item);
                     }
+                    this.Publish(new CourtesyOfficerCheckingLocationsUpdated(this));
 
-                });
-                //return this.TaskCommand(async context =>
-                //{
-
-                //}).OnStart("Loading Locations");
+                }).OnStart("Fetching Locations...");
             }
         }
         public LocationMessage CurrentLocation
@@ -81,7 +80,7 @@ namespace ResidentAppCross.ViewModels.Screens
                                 return;
                             }
                             
-                        }).OnStart("Checking In...").OnComplete("Reloading...", () =>
+                        }).OnStart("Checking In...").OnComplete("Done!", () =>
                         {
                             this.UpdateLocations.Execute(null);
                         }).Execute(null);
@@ -95,5 +94,12 @@ namespace ResidentAppCross.ViewModels.Screens
         public QRData ScanResult { get; set; }
         public ObservableCollection<CourtesyCheckinBindingModel> Locations { get; set; } = new ObservableCollection<CourtesyCheckinBindingModel>();
 
+    }
+
+    public class CourtesyOfficerCheckingLocationsUpdated : MvxMessage
+    {
+        public CourtesyOfficerCheckingLocationsUpdated(object sender) : base(sender)
+        {
+        }
     }
 }

@@ -53,5 +53,7 @@ namespace ResidentAppCross.Services
             Latitude = latitude;
             Longitude = longitude;
         }
+
+        
     }
 }

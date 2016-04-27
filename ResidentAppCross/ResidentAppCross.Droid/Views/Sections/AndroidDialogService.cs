@@ -127,12 +127,12 @@ namespace ResidentAppCross.Droid.Views.Sections
 
                 Dispatcher.RequestMainThreadAction(() => {
 
-                    var frag = new NotificationDialog();
-                    {
-
-                    };
-
-                    frag.SetActions(new NotificationDialogItem[]
+                var frag = new NotificationDialog
+                {
+                    TitleText = "Select Photo Source",
+                    Mode = NotificationDialogMode.Select
+                };
+                frag.SetActions(new[]
                     {
                         new NotificationDialogItem()
                         {
@@ -204,7 +204,28 @@ namespace ResidentAppCross.Droid.Views.Sections
 
         public void OpenNotification(string title, string subtitle, string ok)
         {
-            throw new NotImplementedException();
+            var frag = new NotificationDialog()
+            {
+                
+            };
+
+            frag.Mode = NotificationDialogMode.Notify;
+            frag.TitleText = title;
+            frag.SubTitleText = subtitle;
+            
+
+            frag.SetActions(new NotificationDialogItem[]
+            {
+                new NotificationDialogItem()
+                {
+                    Action = () =>
+                    {
+                    }, Title = ok,
+                    ShouldDismiss = true
+                }
+            });
+
+            frag.Show(CurrentTopActivity.FragmentManager, "Notification Dialog");
         }
 
         public void OpenImageFullScreen(object imageObject)
