@@ -17,7 +17,6 @@ using Android.Support.V4.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using ImageViews.Rounded;
 using Java.Lang;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.ViewModels;
@@ -273,7 +272,7 @@ namespace ResidentAppCross.Droid.Views
             {
                 if (_waitTimer == null)
                 {
-                    _waitTimer = new Timer(300f) {AutoReset = false};
+                    _waitTimer = new Timer(220f) {AutoReset = false};
                     _waitTimer.Elapsed += new System.Timers.ElapsedEventHandler((s, e) =>
                     {
 
@@ -289,7 +288,7 @@ namespace ResidentAppCross.Droid.Views
                             }
                             else
                             {
-                                DismissCurrentDialog();
+                                //DismissCurrentDialog();
                             }
                         });
                     });
@@ -303,6 +302,8 @@ namespace ResidentAppCross.Droid.Views
         public void SetTaskProgress(bool prompt, string label)
         {
             WaitTimer?.Stop();
+            _nextWaitingBlock = false;
+
             if (prompt && !string.IsNullOrEmpty(label))
             {
                 var dialog = GetOrCreateDialog(this);
@@ -320,6 +321,8 @@ namespace ResidentAppCross.Droid.Views
         public void SetTaskComplete(bool prompt, string label = null, Action onPrompted = null)
         {
             WaitTimer?.Stop();
+            _nextWaitingBlock = false;
+
             if (prompt && !string.IsNullOrEmpty(label))
             {
                 var dialog = GetOrCreateDialog(this);
@@ -341,6 +344,8 @@ namespace ResidentAppCross.Droid.Views
         public void SetTaskFailed(bool prompt, string label = null, Exception reason = null, Action<Exception> onPrompted = null)
         {
             WaitTimer?.Stop();
+            _nextWaitingBlock = false;
+
             if (prompt && !string.IsNullOrEmpty(label))
             {
                 var dialog = GetOrCreateDialog(this);

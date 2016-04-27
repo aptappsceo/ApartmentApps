@@ -124,7 +124,19 @@ namespace ResidentAppCross.ViewModels.Screens
             get
             {
 
-                return new MvxCommand(async () =>
+//                return new MvxCommand(async () =>
+//                {
+//                    this.Publish(new IncidentsIndexUpdateStarted(this));
+//                    var requests = await _service.Courtesy.ListRequestsAsync();
+//                    Incidents.Clear();
+//                    Incidents.AddRange(requests);
+//                    UpdateFilters();
+//                    this.Publish(new IncidentsIndexUpdateFinished(this));
+//
+//                });
+
+
+                return this.TaskCommand(async context =>
                 {
                     this.Publish(new IncidentsIndexUpdateStarted(this));
                     var requests = await _service.Courtesy.ListRequestsAsync();
@@ -132,18 +144,7 @@ namespace ResidentAppCross.ViewModels.Screens
                     Incidents.AddRange(requests);
                     UpdateFilters();
                     this.Publish(new IncidentsIndexUpdateFinished(this));
-
-                });
-
-
-//                return this.TaskCommand(async context =>
-//                {
-//                    var requests = await _service.Courtesy.ListRequestsAsync();
-//                    Incidents.Clear();
-//                    Incidents.AddRange(requests);
-//                    UpdateFilters();
-//
-//                }).OnStart("Fetching Incidents...");
+                }).OnStart("Fetching Incidents...");
             }
         }
 

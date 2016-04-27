@@ -41,7 +41,7 @@ namespace ResidentAppCross.ViewModels.Screens
                     {
                         Locations.Add(item);
                     }
-
+                    this.Publish(new PropertyConfigLocationsUpdated(this));
                 });
                 //return this.TaskCommand(async context =>
                 //{
@@ -78,7 +78,10 @@ namespace ResidentAppCross.ViewModels.Screens
                             {
                                 context.FailTask(result.Response.ReasonPhrase);
                             }
-                        }).OnStart("Adding...").Execute(null);
+                        }).OnStart("Adding...").OnComplete("Location Added!", () =>
+                        {
+                            UpdateLocations.Execute(null);
+                        }).Execute(null);
                     }
                     
                 });
@@ -93,10 +96,18 @@ namespace ResidentAppCross.ViewModels.Screens
             this.TaskCommand(async context =>
             {
                 await this.ApiService.Configure.DeleteLocationAsync(loc.Id.Value, loc.Type);
-            }).OnStart("Deleting...").OnComplete("Deleted", () =>
+            }).OnStart("Deleting...").OnComplete("Location Removed!", () =>
             {
                 UpdateLocations.Execute(null);
             }).Execute(null);
         });
+    }
+
+    public class PropertyConfigLocationsUpdated : MvxMessage
+    {
+        public PropertyConfigLocationsUpdated(object sender) : base(sender)
+        {
+        }
+
     }
 }

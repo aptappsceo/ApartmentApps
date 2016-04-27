@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:backgroundTint="@android:color/white"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardElevation="4dp"
+        card_view:cardCornerRadius="3dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            >
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:gravity="center"
+                android:id="@+id/TitleLabel"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+
+                android:text="Unit 1234"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/primary_text_body" />
+
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/TypeLabel"
+                android:layout_below="@+id/TitleLabel"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/secondary_text_body"
+                android:text="Bathroom Problems"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                android:ellipsize="marquee"
+                android:maxLines="3"
+                />
+
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/DetailsLabel"
+                android:layout_below="@+id/TypeLabel"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/primary_text_body"
+                android:text="Scheduled for 12/12/1992 12:12 AM"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                android:ellipsize="marquee"
+                android:maxLines="3"
+                />
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/small_button_height"
+                android:id="@+id/DetailsButton"
+                android:backgroundTint="#FF9100"
+                android:textColor="@color/primary_text"
+                android:layout_alignParentEnd="true"
+                android:text="REMOVE"
+                android:layout_marginBottom="8dp"
+                android:includeFontPadding="false"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_below="@+id/DetailsLabel"
+                android:layout_marginEnd="16dp"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -16,9 +16,7 @@ using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
-using DE.Hdodenhof.Circleimageview;
 using FlyOutMenu;
-using ImageViews.Rounded;
 using MvvmCross.Droid.Views;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
@@ -436,7 +434,7 @@ namespace ResidentAppCross.Droid.Views
         {
             var item = Items[position];
             holder.DetailsLabel.Text = DetailsSelector?.Invoke(item) ?? "Details Info";
-            holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "Unit #4582";
+            holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "Unit Information Missing";
             holder.TypeLabel.Text = SubTitleSelector?.Invoke(item) ?? "Subtitle";
             holder.DateLabel.Text = DateSelector?.Invoke(item) ?? "00/00/00 00:00 AM";
             holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
@@ -478,6 +476,49 @@ namespace ResidentAppCross.Droid.Views
         }
     }
 
+    public class LocationsIndexAdapter<T> : GenericRecyclerAdapter<LocationIndexItemViewHolder>
+    {
+        private ObservableCollection<T> _items;
+
+        public Func<T,string> TitleSelector { get; set; }
+        public Func<T,string> DetailsSelector { get; set; }
+        public Func<T,string> SubTitleSelector { get; set; }
+
+        public ObservableCollection<T> Items
+        {
+            get { return _items; }
+            set
+            {
+                _items = value;
+                this.BindToCollection(Items);
+            }
+        }
+
+        public override void OnBind(LocationIndexItemViewHolder holder, int position)
+        {
+            var item = Items[position];
+            holder.DetailsLabel.Text = DetailsSelector?.Invoke(item) ?? "~Location Coordinates~";
+            holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "~Location Title~";
+            holder.TypeLabel.Text = SubTitleSelector?.Invoke(item) ?? "~Location Subtitle~";
+            holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
+        }
+
+        public event Action<T> DetailsClicked;
+
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            var ticketIndexItemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.location_index_item, parent, false);
+            return new LocationIndexItemViewHolder(ticketIndexItemView);
+        }
+
+        public override int ItemCount => Items.Count;
+
+        protected virtual void OnDetailsClicked(T obj)
+        {
+            DetailsClicked?.Invoke(obj);
+        }
+    }
+
     public class TicketHistoryAdapter<T> : GenericRecyclerAdapter<TicketHistoryItemViewHolder>
     {
         private ObservableCollection<T> _items;
@@ -498,7 +539,19 @@ namespace ResidentAppCross.Droid.Views
 
         public override void OnBind(TicketHistoryItemViewHolder holder, int position)
         {
-            var item = Items[position];
+            T item = default(T);
+
+            try
+            {
+                item = Items[position];
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Problem with history adapter");
+                return;
+            }
+
+
             holder.TitleLabel.Text = TitleSelector?.Invoke(item);
             holder.SubtitleLabel.Text = SubtitleSelector?.Invoke(item);
 
@@ -609,6 +662,26 @@ namespace ResidentAppCross.Droid.Views
         public AppCompatButton DetailsButton { get; set; }
 
         public TicketIndexItemViewHolder(View itemView) : base(itemView)
+        {
+            itemView.LocateOutlets(this);
+        }
+    }
+
+    public class LocationIndexItemViewHolder : RecyclerView.ViewHolder
+    {
+        [Outlet]
+        public AppCompatTextView TitleLabel { get; set; }
+
+        [Outlet]
+        public AppCompatTextView DetailsLabel { get; set; }
+
+        [Outlet]
+        public AppCompatTextView TypeLabel { get; set; }
+
+        [Outlet]
+        public AppCompatButton DetailsButton { get; set; }
+
+        public LocationIndexItemViewHolder(View itemView) : base(itemView)
         {
             itemView.LocateOutlets(this);
         }

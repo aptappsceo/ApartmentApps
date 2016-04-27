@@ -19,7 +19,6 @@ using Android.Text.Style;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using ImageViews.Rounded;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Core;
 using ResidentAppCross.Droid.Views.Sections;

@@ -6,7 +6,6 @@ using System.Text;
 using Android.App;
 using Android.Content;
 using Android.Gms.Maps;
-using Android.Gms.Maps.Model;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
@@ -156,57 +155,6 @@ namespace ResidentAppCross.Droid.Views
         }
     }
 
-
-    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
-    public class PropertyConfigFormView : SectionViewFragment<PropertyConfigFormViewModel>
-    {
-        public override int LayoutId => DefaultLayoutId;
-
-        public HeaderSection HeaderSection { get; set; }
-        public LabelButtonSection TypeSelectionSection { get; set; }
-        public MapSection MapSection { get; set; }
-        public ActionBarSection ActionBar { get; set; }
-
-        public override void Bind()
-        {
-            base.Bind();
-            MapSection.SetLifecycleProvider(this);
-            var invoker = new IOnMapReadyMonoInvoker();
-            invoker.MapReady += OnMapReady;
-            MapSection.Map.GetMapAsync(invoker);
-
-
-            HeaderSection.IconView.SetImageResource(Resource.Drawable.home_config);
-            HeaderSection.IconView.SetColorFilter(Resources.GetColor(Resource.Color.secondary_text_body));
-
-        }
-
-
-        public override void GetContent(List<FragmentSection> sections)
-        {
-            base.GetContent(sections);
-            sections.Add(HeaderSection);
-            if (Map != null) sections.Add(MapSection);
-            sections.Add(TypeSelectionSection);
-            sections.Add(ActionBar);
-        }
-
-        public void OnMapReady(GoogleMap googleMap)
-        {
-            Map = googleMap;
-            googleMap.UiSettings.MyLocationButtonEnabled = false;
-            googleMap.MyLocationEnabled = true;
-
-            CameraUpdate cameraUpdate = CameraUpdateFactory.NewLatLngZoom(new LatLng(43.1, -87.9), 10);
-            googleMap.AnimateCamera(cameraUpdate);
-
-            RefreshContent();
-        }
-
-        public override string Title => "Configure Property";
-
-        public GoogleMap Map { get; set; }
-    }
 
     public class IOnMapReadyMonoInvoker : Java.Lang.Object, IOnMapReadyCallback
     {

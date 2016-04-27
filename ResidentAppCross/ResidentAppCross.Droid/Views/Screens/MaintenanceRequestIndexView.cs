@@ -67,6 +67,10 @@ namespace ResidentAppCross.Droid.Views
                 DateSelector = i => i.LatestCheckin?.Date?.ToString("g") ?? i.RequestDate?.ToString("g") ?? "-"
             };
 
+            ListContainer.SetAdapter(new AlphaInAnimationAdapter(adapter));
+            ListContainer.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
+            ListContainer.SetItemAnimator(new SlideInLeftAnimator());
+
             adapter.DetailsClicked += model =>
             {
                 ViewModel.SelectedRequest = model;
@@ -83,9 +87,7 @@ namespace ResidentAppCross.Droid.Views
             });
             UpdateSecondaryInformation();
 
-            ListContainer.SetAdapter(new AlphaInAnimationAdapter(adapter));
-            ListContainer.SetLayoutManager(new LinearLayoutManager(Context,LinearLayoutManager.Vertical,false));
-            ListContainer.SetItemAnimator(new SlideInLeftAnimator());
+    
 
             ViewModel.UpdateRequestsCommand.Execute(null);
 

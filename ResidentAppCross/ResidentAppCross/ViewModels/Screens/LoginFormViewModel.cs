@@ -49,10 +49,10 @@ namespace ResidentAppCross
         public override void Start()
         {
             base.Start();
-//            if (LoginManager.IsLoggedIn)
-//            {
-//                LoginCommand.Execute(null);
-//            }
+            if (LoginManager.IsLoggedIn)
+            {
+                LoginCommand.Execute(null);
+            }
         }
 
         public ICommand LoginCommand

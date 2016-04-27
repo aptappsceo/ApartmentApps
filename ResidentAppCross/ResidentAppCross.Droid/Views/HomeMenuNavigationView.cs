@@ -9,8 +9,7 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
-using DE.Hdodenhof.Circleimageview;
-using ImageViews.Rounded;
+using blocke.circleimageview;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
@@ -73,7 +72,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
                 {
                     UpdateContent();
                 }
-            });
+            },MvxReference.Strong);
             NavigationItemSelected += HomeMenuView_NavigationItemSelected;
             //ViewModel.UpdateMenuItems();
 

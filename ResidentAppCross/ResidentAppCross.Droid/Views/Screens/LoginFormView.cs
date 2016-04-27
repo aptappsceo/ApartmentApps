@@ -185,6 +185,16 @@ namespace ResidentAppCross.Droid.Views
     public class HomeMenuView : ViewFragment<HomeMenuViewModel>
     {
         public override string Title => "Apartment Apps";
+
+
+        public override void Bind()
+        {
+            base.Bind();
+            Layout.PostDelayed(() =>
+            {
+                ViewModel.ShowViewModel<NotificationIndexFormViewModel>(vm => { });
+            }, 300);
+        }
     }
 }
 

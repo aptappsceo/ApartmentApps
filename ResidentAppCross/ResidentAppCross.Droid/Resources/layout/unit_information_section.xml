@@ -114,7 +114,7 @@
             android:layout_weight="1"
             />
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <blocke.circleimageview.CircleImageView
             tools:background="@color/cardview_dark_background"
             android:layout_gravity="center_vertical"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -122,7 +122,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/avatar_placeholder"
-            app:riv_oval="true"
             app:civ_border_width="2dp"
             app:civ_border_color="@android:color/darker_gray"/>
 

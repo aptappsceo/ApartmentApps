@@ -54,7 +54,7 @@ namespace ResidentAppCross.Droid.Views
                     Resources.GetColor(Resource.Color.secondary_text_body);
                 HeaderSection.IconView.SetColorFilter(color);
 
-                if(string.IsNullOrEmpty(ViewModel.Request.BuildingName.Trim()))
+                if(string.IsNullOrEmpty(ViewModel?.Request?.BuildingName?.Trim()))
                 HeaderSection.SubtitleLabel.Text = "Unit Infromation Missing";
                 else
                 HeaderSection.SubtitleLabel.Text = ViewModel.Request.BuildingName;
