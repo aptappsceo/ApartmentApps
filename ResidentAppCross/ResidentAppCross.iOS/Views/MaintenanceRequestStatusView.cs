@@ -311,7 +311,7 @@ namespace ResidentAppCross.iOS
             FooterFinishButton = ActionsSection.AddButton("Finish", style);
             FooterStartButton = ActionsSection.AddButton("Scan QR Code", style);
 			if (ViewModel.CanUpdateRequest) {
-				FooterPauseButton.TouchUpInside += (s,e)=>ViewModel.PauseCommand.Execute(null);
+				FooterPauseButton.TouchUpInside += (s,e)=>ViewModel.PauseCommmand.Execute(null);
 				FooterFinishButton.TouchUpInside += (s,e)=>ViewModel.FinishCommmand.Execute(null);
 				FooterStartButton.TouchUpInside += (s,e)=>ViewModel.ScanAndStartCommand.Execute(null);
 		

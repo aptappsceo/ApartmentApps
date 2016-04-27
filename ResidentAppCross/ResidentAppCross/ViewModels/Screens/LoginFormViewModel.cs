@@ -61,6 +61,7 @@ namespace ResidentAppCross
             {
                 return this.TaskCommand(async context =>
                 {
+						LoginManager.Logout();
                     if (VersionChecker != null)
                     {
                         var version = await Data.Version.GetAsync();

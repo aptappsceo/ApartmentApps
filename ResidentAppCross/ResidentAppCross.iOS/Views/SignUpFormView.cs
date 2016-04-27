@@ -41,7 +41,7 @@ namespace ResidentAppCross.iOS
 	        set.Bind(_passwordConfirmationField).For(f => f.Text).TwoWay().To(vm => vm.PasswordConfirmation);
 	        set.Bind(_signUpButton).To(vm => vm.SignUpCommand);
             set.Apply();
-
+		
             _emailTextField.ShouldReturn += (textField) =>{_phoneNumberField.BecomeFirstResponder();return true;};
             _phoneNumberField.ShouldReturn += (textField) =>{_firstNameField.BecomeFirstResponder();return true;};
             _firstNameField.ShouldReturn += (textField) =>{_lastNameField.BecomeFirstResponder();return true;};
