@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -385,8 +385,11 @@ namespace ApartmentApps.API.Service.Controllers
                 if (result.Succeeded)
                 {
                     return Ok();
+                } else if (result.Errors.Any()) {
+                    return BadRequest(string.Join(Environment.NewLine, result.Errors));
                 }
-                return BadRequest("This account has already been set-up.");
+                // TODO user.Registered = true; _dbcontext.SaveChanges();
+                //return BadRequest("This account has already been set-up.");
             }
 
             return BadRequest("You have not been found in the system. Please contact your property manager.");
