@@ -60,8 +60,6 @@
 	<string>Apartment Apps v2</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.apartmentapps.mobile.v2</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
@@ -114,7 +112,9 @@
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We would like to use your location.</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
 	<key>CFBundleVersion</key>
-	<string>20</string>
+	<string>22</string>
 </dict>
 </plist>
