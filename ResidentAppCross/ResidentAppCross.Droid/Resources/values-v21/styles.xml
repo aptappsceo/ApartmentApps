@@ -10,6 +10,7 @@
     <item name="android:colorPrimary">@color/primary</item>
     <item name="android:colorPrimaryDark">@color/primary_dark</item>
     <item name="android:colorAccent">@color/accent</item>
+    <item name="android:colorButtonNormal">@color/accent</item>
     <item name="android:textColorPrimary">@color/primary_text</item>
     <item name="android:windowBackground">@color/window_background</item>
   </style>

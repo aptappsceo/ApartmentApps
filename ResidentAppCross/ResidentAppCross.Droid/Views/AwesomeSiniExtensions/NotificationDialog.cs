@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
@@ -20,6 +21,7 @@ using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Extensions;
 using Exception = System.Exception;
 using Object = System.Object;
+using Orientation = Android.Widget.Orientation;
 
 namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 {
@@ -384,18 +386,18 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
             foreach (var item in Actions)
             {
-                var butn = new Button(CurrentContext)
+                var butn = new AppCompatButton(CurrentContext)
                 {
                     Text = item.Title,
                     Gravity = GravityFlags.Center,
                     Tag = "action_btn"
                 }
                     .WithWidthMatchParent()
-                    .WithHeight(33)
+                    .WithHeightWrapContent()
                     .WithPaddingDp(0,0,0,0)
-                    .WithBackgroundColor(AppTheme.SecondaryBackgoundColor).WithLinearMargins(0,8,0,0)
+                    .WithLinearMargins(8,8,8,0)
                     .WithFont(AppFonts.DialogButton);
-
+                butn.SupportBackgroundTintList = ColorStateList.ValueOf(Resources.GetColor(Resource.Color.accent));
                 var item_CL = item;
                 butn.Click += (sender, args) =>
                 {
@@ -450,10 +452,10 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
                     _iconView = new ImageView(CurrentContext);
                     _iconView.WithDimensions(IconSizeDp);
                   //  _iconView.SetImageResource(Resource.Drawable.L_Ok);
-                    _iconView.SetScaleType(ImageView.ScaleType.CenterInside);
+                    _iconView.SetScaleType(ImageView.ScaleType.FitXy);
                     _iconView.WithBackground(AppShapes.GetCircle.OfColor(Color.White).OfStroke(Color.White, 2));
-                    _iconView.SetColorFilter(AppTheme.SecondaryBackgoundColor);
-                    _iconView.WithPaddingDp(4, 4, 4, 4);
+                    _iconView.SetColorFilter(Resources.GetColor(Resource.Color.primary));
+                    _iconView.WithPaddingDp(10, 10, 10, 10);
 
                     var p = _iconView.EnsureRelativeLayoutParams();
                     //p.AddRule(LayoutRules.CenterHorizontal);
@@ -651,11 +653,15 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
                 switch (Mode)
                 {
                     case NotificationDialogMode.Progress:
-                        return Resource.Drawable.L_Gear;
+                        return Resource.Drawable.gear;
                     case NotificationDialogMode.Failed:
-                        return Resource.Drawable.L_Ok;
+                        return Resource.Drawable.error;
                     case NotificationDialogMode.Complete:
-                        return Resource.Drawable.L_Ok;
+                        return Resource.Drawable.cicle_checkmark;
+                    case NotificationDialogMode.Notify:
+                        return Resource.Drawable.info;
+                    case NotificationDialogMode.Select:
+                        return Resource.Drawable.circle_question;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null);
                 }
@@ -694,7 +700,9 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
     {
         Progress,
         Complete,
-        Failed
+        Failed,
+        Notify,
+        Select
     }
 
     public class NotificationDialogItem

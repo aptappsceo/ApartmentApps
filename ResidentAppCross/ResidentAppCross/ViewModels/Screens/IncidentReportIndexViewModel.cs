@@ -41,6 +41,7 @@ namespace ResidentAppCross.ViewModels.Screens
             Filters.Clear();
             Filters.Add(new IncidentIndexFilter()
             {
+                MarkerTitle = null,
                 Title = "All",
                 FilterExpression = item => true
                 ,Icon = SharedResources.Icons.IncidentList
@@ -49,6 +50,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new IncidentIndexFilter()
             {
+                MarkerTitle = "Filtered: Reported",
                 Title = "Reported",
                 FilterExpression = item => item.StatusId == "Reported"
                 ,
@@ -58,6 +60,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new IncidentIndexFilter()
             {
+                MarkerTitle = "Filtered: Open",
                 Title = "Open",
                 FilterExpression = item => item.StatusId == "Open"
                 ,
@@ -67,6 +70,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new IncidentIndexFilter()
             {
+                MarkerTitle = "Filtered: Paused",
                 Title = "Paused",
                 FilterExpression = item => item.StatusId == "Paused"
                 ,
@@ -76,6 +80,8 @@ namespace ResidentAppCross.ViewModels.Screens
 
             Filters.Add(new IncidentIndexFilter()
             {
+                MarkerTitle = "Filtered: Complete",
+
                 Title = "Complete",
                 FilterExpression = item => item.StatusId == "Complete"
                 ,
@@ -118,7 +124,19 @@ namespace ResidentAppCross.ViewModels.Screens
             get
             {
 
-                return new MvxCommand(async () =>
+//                return new MvxCommand(async () =>
+//                {
+//                    this.Publish(new IncidentsIndexUpdateStarted(this));
+//                    var requests = await _service.Courtesy.ListRequestsAsync();
+//                    Incidents.Clear();
+//                    Incidents.AddRange(requests);
+//                    UpdateFilters();
+//                    this.Publish(new IncidentsIndexUpdateFinished(this));
+//
+//                });
+
+
+                return this.TaskCommand(async context =>
                 {
                     this.Publish(new IncidentsIndexUpdateStarted(this));
                     var requests = await _service.Courtesy.ListRequestsAsync();
@@ -126,18 +144,7 @@ namespace ResidentAppCross.ViewModels.Screens
                     Incidents.AddRange(requests);
                     UpdateFilters();
                     this.Publish(new IncidentsIndexUpdateFinished(this));
-
-                });
-
-
-//                return this.TaskCommand(async context =>
-//                {
-//                    var requests = await _service.Courtesy.ListRequestsAsync();
-//                    Incidents.Clear();
-//                    Incidents.AddRange(requests);
-//                    UpdateFilters();
-//
-//                }).OnStart("Fetching Incidents...");
+                }).OnStart("Fetching Incidents...");
             }
         }
 
@@ -188,6 +195,7 @@ namespace ResidentAppCross.ViewModels.Screens
     public class IncidentIndexFilter
     {
         public string Title { get; set; }
+        public string MarkerTitle { get; set; }
         public Func<IncidentIndexBindingModel, bool> FilterExpression { get; set; }
         public SharedResources.Icons Icon { get; set; }
     }

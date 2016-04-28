@@ -192,6 +192,7 @@ namespace ResidentAppCross.Droid.Views.Sections
         public Typeface Typeface { get; set; }
     }
 
+
     public static class AppTheme
     {
         public static int ButtonToolbarSectionHeight = 60;
@@ -238,6 +239,100 @@ namespace ResidentAppCross.Droid.Views.Sections
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, null);
             }
+        }
+
+        public static int ColorResByIncidentState(IncidentReportStatus status)
+        {
+            switch (status)
+            {
+                case IncidentReportStatus.Complete:
+                    return Resource.Color.semantic_complete;
+                case IncidentReportStatus.Open:
+                    return Resource.Color.semantic_inprogress;
+                case IncidentReportStatus.Paused:
+                    return Resource.Color.semantic_pause;
+                case IncidentReportStatus.Reported:
+                    return Resource.Color.semantic_create;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+            }
+        }
+
+        public static int IconResByMaintenanceState(MaintenanceRequestStatus status)
+        {
+            switch (status)
+            {
+                case MaintenanceRequestStatus.Complete:
+                    return SharedResources.Icons.MaintenanceComplete.ToDrawableId();
+                case MaintenanceRequestStatus.Paused:
+                    return SharedResources.Icons.MaintenancePause.ToDrawableId();
+                case MaintenanceRequestStatus.Scheduled:
+                    return SharedResources.Icons.MaintenanceCalendar.ToDrawableId();
+                case MaintenanceRequestStatus.Started:
+                    return SharedResources.Icons.MaintenancePlay.ToDrawableId();
+                case MaintenanceRequestStatus.Submitted:
+                    return SharedResources.Icons.MaintenancePending.ToDrawableId();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+            }
+        }
+
+        public static int StatusIconResByMaintenanceState(MaintenanceRequestStatus status)
+        {
+            switch (status)
+            {
+                case MaintenanceRequestStatus.Complete:
+                    return Resource.Drawable.cicle_checkmark;
+                case MaintenanceRequestStatus.Paused:
+                    return Resource.Drawable.circle_pause;
+                case MaintenanceRequestStatus.Scheduled:
+                    return Resource.Drawable.circle_calendar;
+                case MaintenanceRequestStatus.Started:
+                    return Resource.Drawable.circle_play;
+                case MaintenanceRequestStatus.Submitted:
+                    return Resource.Drawable.circle_question;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+            }
+        }
+
+        public static int StatusIconResByIncidentState(IncidentReportStatus status)
+        {
+            switch (status)
+            {
+                case IncidentReportStatus.Complete:
+                    return Resource.Drawable.cicle_checkmark;
+                case IncidentReportStatus.Open:
+                    return Resource.Drawable.circle_play;
+                case IncidentReportStatus.Paused:
+                    return Resource.Drawable.circle_pause;
+                case IncidentReportStatus.Reported:
+                    return Resource.Drawable.circle_question;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+            }
+        }
+
+        public static int IconResByIncidentState(IncidentReportStatus status)
+        {
+            switch (status)
+            {
+                case IncidentReportStatus.Complete:
+                    return SharedResources.Icons.CourtesyComplete.ToDrawableId();
+                case IncidentReportStatus.Open:
+                    return SharedResources.Icons.CourtesyInProgress.ToDrawableId();
+                case IncidentReportStatus.Paused:
+                    return SharedResources.Icons.CourtesyPaused.ToDrawableId();
+                case IncidentReportStatus.Reported:
+                    return SharedResources.Icons.CourtesyPending.ToDrawableId();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+            }
+        }
+
+        public static int ToDrawableId(this SharedResources.Icons icon)
+        {
+            return icon.ToString().ToLowerUnderscored().AsDrawableId();
         }
 
     }

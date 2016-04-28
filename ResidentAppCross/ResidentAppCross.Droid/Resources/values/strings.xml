@@ -6,4 +6,5 @@
 	<string name="drawer_open">Open</string>
 	<string name="drawer_close">Close</string>
 	<string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+	<string name="empty_string_placeholder">-</string>
 </resources>

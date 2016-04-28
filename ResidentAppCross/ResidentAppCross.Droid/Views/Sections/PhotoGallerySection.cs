@@ -14,7 +14,6 @@ using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
 using Grantland.Widget;
-using ImageViews.Rounded;
 using Java.Lang;
 using Java.Net;
 using Java.Util;
@@ -309,7 +308,7 @@ namespace ResidentAppCross.Droid.Views.Sections
 
     }
 
-    public class AspectAwareImageView : RoundedImageView
+    public class AspectAwareImageView : AppCompatImageView
     {
         private float _aspectRatio;
 

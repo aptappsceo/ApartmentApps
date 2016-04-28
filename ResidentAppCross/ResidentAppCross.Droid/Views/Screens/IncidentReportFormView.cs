@@ -22,6 +22,7 @@ namespace ResidentAppCross.Droid.Views
             base.Bind();
 
             var set = this.CreateBindingSet<IncidentReportFormView, IncidentReportFormViewModel>();
+            HeaderSection.TitleLabel.Text = "Report Incident";
 
             set.Bind(CommentsSection.InputField).TwoWay().To(vm => vm.Comments);
             set.Apply();
@@ -39,6 +40,9 @@ namespace ResidentAppCross.Droid.Views
                 Action = () => ViewModel.DoneCommand.Execute(null),
                 Title = "Submit"
             });
+
+            HeaderSection.IconView.SetImageResource(Resource.Drawable.police_plus);
+            HeaderSection.IconView.SetColorFilter(Resources.GetColor(Resource.Color.secondary_text_body));
         }
 
 

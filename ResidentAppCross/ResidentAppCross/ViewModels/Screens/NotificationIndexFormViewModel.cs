@@ -64,18 +64,25 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        public ICommand UpdateNotificationsCommand => new MvxCommand(async () =>
+        public ICommand UpdateNotificationsCommand
         {
-            var task = await _service.Alerts.GetWithOperationResponseAsync();
-            Notifications.Clear();
-            Notifications.AddRange(task.Body);
-            UpdateFilters();
-        });
+            get
+            {
+                return this.TaskCommand(async context =>
+                {
+                    var task = await _service.Alerts.GetWithOperationResponseAsync();
+                    Notifications.Clear();
+                    Notifications.AddRange(task.Body);
+                    UpdateFilters();
+                }).OnStart("Fetching Incidents...");
+            }
+        }
 
         public ICommand OpenSelectedNotificationDetailsCommand => new MvxCommand(() =>
         {
             if (SelectedNotification?.RelatedId == null) return;
 
+            SelectedNotification.HasRead = true;
 
             var alertId = SelectedNotification?.Id;
             if (alertId.HasValue)
@@ -107,6 +114,7 @@ namespace ResidentAppCross.ViewModels.Screens
 
             var defaultStatusFilter = new NotificationStatusFilter()
             {
+                MarkerTitle = "Filtered: Unread",
                 Title = "Unread",
                 FilterExpression = item => !item.HasRead.HasValue || !item.HasRead.Value
             };
@@ -115,6 +123,7 @@ namespace ResidentAppCross.ViewModels.Screens
           
             NotificationStatusFilters.Add(new NotificationStatusFilter()
             {
+                MarkerTitle = null,
                 Title = "All",
                 FilterExpression = item => true
             });
@@ -144,7 +153,8 @@ namespace ResidentAppCross.ViewModels.Screens
     public class NotificationStatusFilter
     {
         public string Title { get; set; }
-        public Func<AlertBindingModel, bool> FilterExpression { get; set; } 
+        public Func<AlertBindingModel, bool> FilterExpression { get; set; }
+        public string MarkerTitle { get; set; }
     }
 
 

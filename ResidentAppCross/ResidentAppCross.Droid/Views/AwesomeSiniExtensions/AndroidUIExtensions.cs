@@ -19,7 +19,6 @@ using Android.Text.Style;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using ImageViews.Rounded;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Core;
 using ResidentAppCross.Droid.Views.Sections;
@@ -506,6 +505,13 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
         {
             var fieldInfo = typeof (Resource.Layout).GetField(str, BindingFlags.Static | BindingFlags.Public);
             if(fieldInfo == null) throw new Exception("Unable to locate layout matching "+str);
+            return (int) fieldInfo.GetValue(null);
+        }
+
+        public static int AsDrawableId(this string str)
+        {
+            var fieldInfo = typeof (Resource.Drawable).GetField(str, BindingFlags.Static | BindingFlags.Public);
+            if(fieldInfo == null) throw new Exception("Unable to locate drawable matching "+str);
             return (int) fieldInfo.GetValue(null);
         }
 

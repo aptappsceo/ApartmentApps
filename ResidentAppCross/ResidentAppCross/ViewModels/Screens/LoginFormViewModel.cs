@@ -78,6 +78,7 @@ namespace ResidentAppCross
                     var username =  Username;
                     var password =  Password;
 #endif
+
                     if (!await LoginManager.LoginAsync(username, password))
                     {
                         context.FailTask("Invalid login or password!");

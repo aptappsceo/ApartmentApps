@@ -443,6 +443,28 @@ namespace ResidentAppCross.ViewModels.Screens
             return result;
 
         }
+
+        public static IncidentReportStatus AsIncidentStatus(this string statusId)
+        {
+            IncidentReportStatus result;
+            Enum.TryParse(statusId,out result);
+            return result;
+
+        }
+        public static string AsPetStatusString(this int petId)
+        {
+            switch (petId)
+            {
+                case 0:
+                    return "No Pet";
+                case 1:
+                    return "Yes, Contained";
+                case 2:
+                    return "Yes, Free";
+                default:
+                    return "N/A";
+            }
+        }
     }
 
 }

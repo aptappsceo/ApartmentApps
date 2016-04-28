@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Timers;
 using Android.App;
 using Android.Content;
 using Android.Gms.Common;
@@ -16,7 +17,6 @@ using Android.Support.V4.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using ImageViews.Rounded;
 using Java.Lang;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.ViewModels;
@@ -54,6 +54,7 @@ namespace ResidentAppCross.Droid.Views
         private HomeMenuNavigationView _navigationView;
         private UsefulActionBarDrawerToggle _drawerToggle;
         private IMvxMessenger _eventAggregator;
+        private Timer _waitTimer;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -162,6 +163,7 @@ namespace ResidentAppCross.Droid.Views
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             //NavigationView.InflateMenu(Resource.Menu.menu_main);
+            menu.Clear();
             MenuInflater.Inflate(Resource.Menu.menu_main,menu);
             return base.OnCreateOptionsMenu(menu);
         }
@@ -253,27 +255,55 @@ namespace ResidentAppCross.Droid.Views
             CurrentDialog = null;
         }
 
+        private bool _nextWaitingBlock = false;
+        private string _nextWaitingString = null;
+
         public void SetTaskRunning(string label, bool block = true)
         {
-
-            if (block && !string.IsNullOrEmpty(label))
-            {
-                var dialog = GetOrCreateDialog(this);
-                dialog.Mode = NotificationDialogMode.Progress;
-                dialog.TitleText = label;
-                dialog.SubTitleText = "Please, Wait";
-                dialog.ShouldDismissWhenClickedOutside = false;
-            }
-            else
-            {
-                DismissCurrentDialog();
-            }
-
+            _nextWaitingBlock = block;
+            _nextWaitingString = label;
+            WaitTimer.Start();
             //if(block) AndHUD.Shared.Show(view, label, -1, MaskType.Black, centered: true);
+        }
+
+        public Timer WaitTimer
+        {
+            get
+            {
+                if (_waitTimer == null)
+                {
+                    _waitTimer = new Timer(220f) {AutoReset = false};
+                    _waitTimer.Elapsed += new System.Timers.ElapsedEventHandler((s, e) =>
+                    {
+
+                        DrawerLayout.Post(() =>
+                        {
+                            if (_nextWaitingBlock && !string.IsNullOrEmpty(_nextWaitingString))
+                            {
+                                var dialog = GetOrCreateDialog(this);
+                                dialog.Mode = NotificationDialogMode.Progress;
+                                dialog.TitleText = _nextWaitingString;
+                                dialog.SubTitleText = "Please, Wait";
+                                dialog.ShouldDismissWhenClickedOutside = false;
+                            }
+                            else
+                            {
+                                //DismissCurrentDialog();
+                            }
+                        });
+                    });
+
+                }
+                return _waitTimer;
+            }
+            set { _waitTimer = value; }
         }
 
         public void SetTaskProgress(bool prompt, string label)
         {
+            WaitTimer?.Stop();
+            _nextWaitingBlock = false;
+
             if (prompt && !string.IsNullOrEmpty(label))
             {
                 var dialog = GetOrCreateDialog(this);
@@ -290,6 +320,8 @@ namespace ResidentAppCross.Droid.Views
 
         public void SetTaskComplete(bool prompt, string label = null, Action onPrompted = null)
         {
+            WaitTimer?.Stop();
+            _nextWaitingBlock = false;
 
             if (prompt && !string.IsNullOrEmpty(label))
             {
@@ -304,12 +336,16 @@ namespace ResidentAppCross.Droid.Views
             else
             {
                 DismissCurrentDialog();
+                onPrompted?.Invoke();
             }
 
         }
 
         public void SetTaskFailed(bool prompt, string label = null, Exception reason = null, Action<Exception> onPrompted = null)
         {
+            WaitTimer?.Stop();
+            _nextWaitingBlock = false;
+
             if (prompt && !string.IsNullOrEmpty(label))
             {
                 var dialog = GetOrCreateDialog(this);
@@ -322,6 +358,7 @@ namespace ResidentAppCross.Droid.Views
             else
             {
                 DismissCurrentDialog();
+                onPrompted?.Invoke(reason);
             }
         }
 
