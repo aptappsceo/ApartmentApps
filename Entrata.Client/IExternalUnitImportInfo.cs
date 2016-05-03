@@ -1,0 +1,4 @@
+﻿namespace Entrata.Model.Requests
+{
+
+}

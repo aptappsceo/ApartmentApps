@@ -21,7 +21,7 @@ namespace ApartmentApps.Portal.Controllers
         public ApplicationUser CurrentUser => UserContext.CurrentUser;
         public int PropertyId => UserContext.PropertyId;
 
-        public Property Property => CurrentUser?.Property;
+        public Data.Property Property => CurrentUser?.Property;
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

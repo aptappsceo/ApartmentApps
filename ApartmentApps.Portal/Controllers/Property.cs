@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -10,22 +13,27 @@ using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Entrata.Model.Requests;
+using FormFactory.AspMvc.UploadedFiles;
+using FormFactory.Attributes;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace ApartmentApps.Portal.Controllers
 {
     [RoutePrefix("Property")]
     [Authorize(Roles = "Admin")]
-    public class PropertiesController : AAController
+    public class Property : AAController
     {
-        
+        public IUnitImporter Importer { get; set; }
+
         private ApplicationUserManager _userManager;
 
-        public PropertiesController(PropertyContext context, IUserContext userContext, ApplicationUserManager userManager) : base(context, userContext)
+        public Property(IUnitImporter importer, PropertyContext context, IUserContext userContext, ApplicationUserManager userManager) : base(context, userContext)
         {
+            Importer = importer;
             _userManager = userManager;
         }
-
+       
         public ApplicationUserManager UserManager
         {
             get
@@ -58,12 +66,53 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = Context.Properties.Find(id);
+            Data.Property property = Context.Properties.Find(id);
             if (property == null)
             {
                 return HttpNotFound();
             }
             return View(property);
+        }
+
+  
+        public ActionResult ImportResidentCSV(int propertyId)
+        {
+            
+            return View(new ImportResidentCSVModel() {PropertyId = propertyId});
+        }
+        [HttpPost]
+        public async Task<ActionResult> ImportResidentCSV([FormModel] ImportResidentCSVModel model)
+        {
+
+            if (model.File.ContentLength > 0)
+            {
+                var fullPath = Server.MapPath($"~/App_Data/UploadedFiles/{model.File.Id}/{model.File.FileName}");
+                var text = System.IO.File.ReadAllText(fullPath);
+
+                IEnumerable<string> records = text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                if (model.SkipFirstRow)
+                    records = records.Skip(1);
+                foreach (var record in records)
+                {
+                    var rc = record.Split(',');
+
+                    var unitRecord = new ExternalUnitImportInfo()
+                    {
+                        BuildingName = rc[0],
+                        UnitNumber = rc[1],
+                        IsVacant = rc[2] == "Vacant",
+                        FirstName = rc[3],
+                        LastName = rc[4],
+                        PhoneNumber = rc[5],
+                        Email = rc[6],
+                    };
+                    await Importer.ImportResident(UserManager, Context.Properties.Find(model.PropertyId), unitRecord);
+                }
+
+                return RedirectToAction("Index","Units");
+            }
+
+            return RedirectToAction("Index");
         }
 
         // GET: /Properties/Create
@@ -78,11 +127,14 @@ namespace ApartmentApps.Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Name,CorporationId")] Property property)
+        public ActionResult Create([Bind(Include="Id,Name,CorporationId")] Data.Property property)
         {
             if (ModelState.IsValid)
             {
+                
                 Context.Properties.Add(property);
+                Context.SaveChanges();
+                CurrentUser.PropertyId = property.Id;
                 Context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -98,7 +150,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = Context.Properties.Find(id);
+            Data.Property property = Context.Properties.Find(id);
             if (property == null)
             {
                 return HttpNotFound();
@@ -112,7 +164,7 @@ namespace ApartmentApps.Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,Name,CorporationId")] Property property)
+        public ActionResult Edit([Bind(Include="Id,Name,CorporationId")] Data.Property property)
         {
             if (ModelState.IsValid)
             {
@@ -134,7 +186,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = Context.Properties.Find(id);
+            Data.Property property = Context.Properties.Find(id);
             if (property == null)
             {
                 return HttpNotFound();
@@ -147,12 +199,21 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Property property = Context.Properties.Find(id);
+            Data.Property property = Context.Properties.Find(id);
             Context.Properties.Remove(property);
             Context.SaveChanges();
             return RedirectToAction("Index");
         }
 
       
+    }
+    public class ImportResidentCSVModel
+    {
+        [Description("Should the first row be skipped (AKA are the column names in the first row?)")]
+        public bool SkipFirstRow { get; set; }
+        [Description("The csv file")]
+        public UploadedFile File { get; set; }
+        [DataType("Hidden")]
+        public int PropertyId { get; set; }
     }
 }

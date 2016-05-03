@@ -1,0 +1,8 @@
+﻿@using FormFactory
+@using FormFactory.AspMvc
+@model ApartmentApps.Portal.Controllers.ImportResidentCSVModel
+@using (var frm = Html.BeginForm("ImportResidentCSV", "Property", FormMethod.Post,new Dictionary<string, object>() { { "enctype" , "multipart/form-data" }}))
+{
+    @Html.PropertiesFor(Model).Render(Html)
+    <input type="submit"/>
+}

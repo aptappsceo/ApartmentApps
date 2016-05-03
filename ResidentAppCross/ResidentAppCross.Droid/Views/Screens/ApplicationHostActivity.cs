@@ -17,6 +17,7 @@ using Android.Support.V4.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Gcm;
 using Java.Lang;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.ViewModels;
@@ -32,6 +33,7 @@ using ResidentAppCross.Droid.Views.Components.NavigationDrawer;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Events;
 using ResidentAppCross.Interfaces;
+using ResidentAppCross.ServiceClient;
 using ResidentAppCross.ViewModels;
 using Square.OkHttp;
 using Exception = System.Exception;
@@ -42,6 +44,12 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace ResidentAppCross.Droid.Views
 {
+    public static class Constants
+    {
+        public const string SenderID = "<GoogleProjectNumber>"; // Google API Project Number
+        public const string ListenConnectionString = "<Listen connection string>";
+        public const string NotificationHubName = "<hub name>";
+    }
     [Activity(Label = "Apartment Apps", 
         MainLauncher = true, 
         NoHistory = false,
@@ -59,6 +67,18 @@ namespace ResidentAppCross.Droid.Views
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            LoginService.DevicePlatform = "gcm";
+            LoginService.DeviceHandle = DroidApplication.DeviceToken;
+
+            LoginService.GetRegistrationId = () => DroidApplication.HandleId;
+            LoginService.SetRegistrationId = (v) => DroidApplication.HandleId = v;
+
+            GcmClient.CheckDevice(this);
+            GcmClient.CheckManifest(this);
+
+            // Register for push notifications
+            Log.Info("MainActivity", "Registering...");
+            GcmClient.Register(this, Constants.SenderID);
         }
 
         public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)

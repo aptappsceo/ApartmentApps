@@ -174,6 +174,9 @@ namespace Entrata.Model.Requests
 
         [JsonProperty("MaidenName")]
         public string MaidenName { get; set; }
+
+        public string PhoneNumber { get; set; }
+        public string Status { get; set; }
     }
 
     public class Customers

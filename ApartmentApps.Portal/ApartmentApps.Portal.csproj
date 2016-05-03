@@ -34,6 +34,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IncludeIisSettings>true</IncludeIisSettings>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,6 +52,18 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FormFactory, Version=1.0.5939.32856, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FormFactory.1.3.19\lib\net451\FormFactory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FormFactory.AspMvc, Version=1.0.5939.32713, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FormFactory.AspMvc.1.3.18\lib\net451\FormFactory.AspMvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FormFactory.Templates, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FormFactory.Templates.1.3.19\lib\net451\FormFactory.Templates.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -109,6 +123,10 @@
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RazorEngine, Version=3.4.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Syncfusion.Chart.Wpf, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Compression.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.DocIO.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
@@ -133,7 +151,9 @@
     <Reference Include="Syncfusion.XlsIO.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -275,7 +295,7 @@
     <Compile Include="Controllers\IdentityUserRoleController.cs" />
     <Compile Include="Controllers\IncidentReportsController.cs" />
     <Compile Include="Controllers\MaitenanceRequestsController.cs" />
-    <Compile Include="Controllers\PropertiesController.cs" />
+    <Compile Include="Controllers\Property.cs" />
     <Compile Include="Controllers\PropertyEntrataInfoController.cs" />
     <Compile Include="Controllers\PropertyYardiInfoController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
@@ -486,6 +506,7 @@
     <BundleResource Include="Content\ej\web\default-theme\images\ui-icon.png" />
     <Content Include="Content\ej\web\default-theme\images\waitingpopup.gif" />
     <Content Include="Content\email.css" />
+    <Content Include="Content\FormFactory\FormFactory.css" />
     <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\landing\avatar_all.png" />
     <Content Include="Content\landing\header_one.jpg" />
@@ -724,6 +745,8 @@
     <None Include="Properties\PublishProfiles\ApartmentAppsWebPortal - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ApartmentAppsWebPortalDev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ApartmentAppsWebPortalDev - Web Deploy.pubxml" />
+    <Content Include="Scripts\bootstrap3-typeahead.js" />
+    <Content Include="Scripts\bootstrap3-typeahead.unobtrusive.js" />
     <Content Include="Scripts\ej\ej.widgets.all.min.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\canvg.js" />
@@ -733,6 +756,7 @@
     <Content Include="Scripts\ej\ej.widget.angular.min.js" />
     <Content Include="Scripts\ej\ej.widget.ko.min.js" />
     <Content Include="Scripts\excanvas.min.js" />
+    <Content Include="Scripts\FormFactory\FormFactory.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />
     <Content Include="Scripts\gridmvc.min.js" />
@@ -748,6 +772,7 @@
     <Content Include="Scripts\jquery.timeago.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.dynamic.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jsrender.min.js" />
@@ -774,6 +799,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template1.txt</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\FormFactory\_README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -834,11 +860,11 @@
     <Content Include="Views\Corporations\Details.cshtml" />
     <Content Include="Views\Corporations\Edit.cshtml" />
     <Content Include="Views\Corporations\Index.cshtml" />
-    <Content Include="Views\Properties\Create.cshtml" />
-    <Content Include="Views\Properties\Delete.cshtml" />
-    <Content Include="Views\Properties\Details.cshtml" />
-    <Content Include="Views\Properties\Edit.cshtml" />
-    <Content Include="Views\Properties\Index.cshtml" />
+    <Content Include="Views\Property\Create.cshtml" />
+    <Content Include="Views\Property\Delete.cshtml" />
+    <Content Include="Views\Property\Details.cshtml" />
+    <Content Include="Views\Property\Edit.cshtml" />
+    <Content Include="Views\Property\Index.cshtml" />
     <Content Include="Views\Tenants\Create.cshtml" />
     <Content Include="Views\Tenants\Delete.cshtml" />
     <Content Include="Views\Tenants\Details.cshtml" />
@@ -890,6 +916,37 @@
     <Content Include="Views\Shared\IncidentReportsIndex.cshtml" />
     <Content Include="Views\Shared\IncidentReportIndex.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.TimeSpan.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.String.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.Object.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.Int64.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.Int32.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.Enum.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.Double.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.Decimal.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.DateTimeOffset.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.DateTime.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.System.Boolean.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.IEnumerable.System.Object.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.IEnumerable.System.Enum.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.ICollection.System.Object.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Property.FormFactory.AspMvc.UploadedFiles.UploadedFile.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Form.Start.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Form.Property.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Form.Close.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Form.Actions.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Cell.System.TimeSpan.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Cell.System.String.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Cell.System.Object.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Cell.System.Int64.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Cell.System.Int32.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Cell.System.Enum.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Cell.System.Double.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Cell.System.Decimal.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Cell.System.DateTimeOffset.cshtml" />
+    <Content Include="Views\Shared\FormFactory\Cell.System.DateTime.cshtml" />
+    <Content Include="Views\Property\ImportResidentCSV.cshtml" />
+    <Content Include="Views\Shared\FormFactory\System.Web.HttpPostedFileBase.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -914,6 +971,10 @@
     <ProjectReference Include="..\ApartmentApps.IoC\ApartmentApps.IoC.csproj">
       <Project>{A7A41793-D1A8-4FF3-BAFD-207C43E73F32}</Project>
       <Name>ApartmentApps.IoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entrata.Client\Entrata.Client.csproj">
+      <Project>{A8CD4A6F-7D69-49A6-A4A8-D199DDC6E490}</Project>
+      <Name>Entrata.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

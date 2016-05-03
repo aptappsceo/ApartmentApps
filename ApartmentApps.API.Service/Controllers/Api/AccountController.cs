@@ -377,7 +377,8 @@ namespace ApartmentApps.API.Service.Controllers
             var user = _dbcontext.Users.FirstOrDefault(p => p.Email == model.Email);
             if (user == null)
             {
-                user = _dbcontext.Users.FirstOrDefault(p => p.PhoneNumber == model.PhoneNumber);
+                var phnNumber = model.PhoneNumber.NumbersOnly();
+                user = _dbcontext.Users.FirstOrDefault(p => p.PhoneNumber == phnNumber);
             }
             if (user != null && model.Password == model.ConfirmPassword)
             {

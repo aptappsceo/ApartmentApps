@@ -47,6 +47,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="GetCustomersResponse.cs" />
     <Compile Include="EntrataRequest.cs" />
+    <Compile Include="IExternalUnitImportInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

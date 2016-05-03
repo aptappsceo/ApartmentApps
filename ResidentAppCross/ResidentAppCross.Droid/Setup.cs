@@ -4,7 +4,9 @@ using Android.Bluetooth;
 using Android.Content;
 using Android.Runtime;
 using Android.Util;
+using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
+using Gcm;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Core.Views;
 using MvvmCross.Droid.Platform;
@@ -90,6 +92,7 @@ namespace ResidentAppCross.Droid
 
         protected override IMvxApplication CreateApp()
         {
+           
             return new App();
         }
 
@@ -179,6 +182,17 @@ namespace ResidentAppCross.Droid
             }
         }
 
+        public static void RegisterForHandle(string deviceToken)
+        {
+            var client = new App.ApartmentAppsClient();
+            if (HandleId == null)
+            {
+                HandleId = client.Register.Post(HandleId);
+            }
+
+            DeviceToken = deviceToken.ToString();
+            LoginService.DeviceHandle = DeviceToken;
+        }
 
     }
 
