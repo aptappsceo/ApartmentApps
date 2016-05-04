@@ -21,6 +21,12 @@ namespace ApartmentApps.Portal.Controllers
         {
         }
 
+        public ActionResult Print(int id)
+        {
+            var item = Service.Find(id);
+            return View(item);
+        }
+
     }
     public class MaitenanceRequests2Controller : AAController
     {

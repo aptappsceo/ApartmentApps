@@ -22,14 +22,16 @@ namespace ApartmentApps.Portal.Controllers
 {
     [RoutePrefix("Property")]
     [Authorize(Roles = "Admin")]
-    public class Property : AAController
+    public class PropertyController : AAController
     {
+        public EntrataIntegration Entrata { get; set; }
         public IUnitImporter Importer { get; set; }
 
         private ApplicationUserManager _userManager;
 
-        public Property(IUnitImporter importer, PropertyContext context, IUserContext userContext, ApplicationUserManager userManager) : base(context, userContext)
+        public PropertyController(EntrataIntegration entrata, IUnitImporter importer, PropertyContext context, IUserContext userContext, ApplicationUserManager userManager) : base(context, userContext)
         {
+            Entrata = entrata;
             Importer = importer;
             _userManager = userManager;
         }
@@ -56,7 +58,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public async Task<ActionResult> ImportEntrata(int id)
         {
-            var result = await ServiceExtensions.GetServices().OfType<EntrataIntegration>().First().ImportData(UserManager, Context.Properties.Find(id));
+            var result = await Entrata.ImportData(UserManager, Context.Properties.Find(id));
             return RedirectToAction("Index");
         }
         // GET: /Properties/Details/5

@@ -39,6 +39,10 @@ namespace ApartmentApps.Api.ViewModels
         public MaintenanceCheckinBindingModel LatestCheckin { get; set; }
         public IEnumerable<MaintenanceCheckinBindingModel> Checkins { get; set; }
         public string MainImage { get; set; }
+
+        public bool PermissionToEnter { get; set; }
+        public int PetStatus { get; set; }
+        public bool HasPet { get; set; }
     }
 
     public class IncidentReportViewModel : BaseViewModel

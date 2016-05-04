@@ -89,12 +89,20 @@ namespace ApartmentApps.Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="PropertyId,Endpoint,Username,Password,EntrataPropertyId")] PropertyEntrataInfo propertyEntrataInfo)
+        public ActionResult Edit([Bind(Include="Id,PropertyId,Endpoint,Username,Password,EntrataPropertyId")] PropertyEntrataInfo propertyEntrataInfo)
         {
             if (ModelState.IsValid)
             {
                 Context.Entry(propertyEntrataInfo);
                 Context.SaveChanges();
+                //var item = Context.PropertyEntrataInfos.Find(propertyEntrataInfo.Id);
+                //item.Username = propertyEntrataInfo.Username;
+                //item.Password = propertyEntrataInfo.Password;
+                //item.Endpoint = propertyEntrataInfo.Endpoint;
+                //item.EntrataPropertyId = propertyEntrataInfo.EntrataPropertyId;
+                ////item.Username = propertyEntrataInfo.Username;
+                ////Context.Entry(propertyEntrataInfo);
+                //Context.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.PropertyId = new SelectList(Context.Properties, "Id", "Name", propertyEntrataInfo.PropertyId);
