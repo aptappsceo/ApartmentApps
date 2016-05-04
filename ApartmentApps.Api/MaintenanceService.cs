@@ -28,6 +28,9 @@ namespace ApartmentApps.Api
             viewModel.Id = model.Id;
             viewModel.UnitName = model.Unit?.Name;
             viewModel.BuildingName = model.Unit?.Building?.Name;
+            viewModel.PermissionToEnter = model.PermissionToEnter;
+            viewModel.PetStatus = model.PetStatus;
+            viewModel.HasPet = model.PetStatus > 1;
             viewModel.LatestCheckin = model.LatestCheckin?.ToMaintenanceCheckinBindingModel(_blobStorageService);
             viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(_blobStorageService));
             //if (viewModel.LatestCheckin != null)

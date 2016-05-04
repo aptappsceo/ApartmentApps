@@ -53,8 +53,8 @@
                         c.Field(model => model.Comments).HeaderText("Comments").Add();
                         c.Field(model => model.StatusId).HeaderText("Status").Add();
                         c.Field(model => model.SubmissionBy.FullName).HeaderText("Requestor").Add();
-
-                        c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Details", "Details", new { id = "{{:Id}}" }).ToHtmlString())).Add();
+                        
+                        //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Details", "Details", new { id = "{{:Id}}" }).ToHtmlString())).Add();
                         //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Delete", "Delete", new { id = "{{:Id}}" }).ToHtmlString()))..Add();
                     })
                     )
@@ -70,7 +70,8 @@
     <script>
         function clicked(a) {
             console.log(a);
-            alert('yup');
+            window.location.href = "@Url.Action("Details")?id=" + a.data.Id;
+            
         }
     </script>
 }

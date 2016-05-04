@@ -43,6 +43,7 @@
     <div class="form-horizontal">
 
         @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.PropertyId)
 
         <div class="form-group">

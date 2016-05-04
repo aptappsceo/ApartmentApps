@@ -15,6 +15,7 @@ namespace ApartmentApps.Api
     {
         public static string NumbersOnly(this string str)
         {
+            if (string.IsNullOrEmpty(str)) return null;
             var strBuilder = new StringBuilder();
             foreach (var c in str)
             {
@@ -174,12 +175,15 @@ namespace ApartmentApps.Api
 
         public async Task<bool> ImportData(ICreateUser createUser, Property property)
         {
-            var client = new EntrataClient();
+       
             foreach (var info in PropertyContext.PropertyEntrataInfos.ToArray())
             {
-                client.EndPoint = info.Endpoint;
-                client.Username = info.Username;
-                client.Password = info.Password;
+                var client = new EntrataClient
+                {
+                    EndPoint = info.Endpoint,
+                    Username = info.Username,
+                    Password = info.Password
+                };
                 var result = await client.GetCustomers(info.EntrataPropertyId);
                 foreach (var item in result.Response.Result.Customers.Customer)
                 {

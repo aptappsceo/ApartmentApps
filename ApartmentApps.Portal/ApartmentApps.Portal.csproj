@@ -295,7 +295,7 @@
     <Compile Include="Controllers\IdentityUserRoleController.cs" />
     <Compile Include="Controllers\IncidentReportsController.cs" />
     <Compile Include="Controllers\MaitenanceRequestsController.cs" />
-    <Compile Include="Controllers\Property.cs" />
+    <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\PropertyEntrataInfoController.cs" />
     <Compile Include="Controllers\PropertyYardiInfoController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
@@ -947,6 +947,8 @@
     <Content Include="Views\Shared\FormFactory\Cell.System.DateTime.cshtml" />
     <Content Include="Views\Property\ImportResidentCSV.cshtml" />
     <Content Include="Views\Shared\FormFactory\System.Web.HttpPostedFileBase.cshtml" />
+    <Content Include="Views\MaitenanceRequests\Print.cshtml" />
+    <Content Include="Views\Shared\_Print.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

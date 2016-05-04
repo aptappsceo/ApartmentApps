@@ -78,7 +78,13 @@ namespace ResidentAppCross.Droid.Views
 
             // Register for push notifications
             Log.Info("MainActivity", "Registering...");
+
+            // NOTES
+            // 1: SenderId needs to be set
+            
             GcmClient.Register(this, Constants.SenderID);
+            // Sini: this needs to happen once the device is registered for push notifications
+            DroidApplication.RegisterForHandle("THE DEVICE TOKEN");
         }
 
         public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
