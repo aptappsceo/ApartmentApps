@@ -18,6 +18,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Gcm;
+using Gcm.Client;
 using Java.Lang;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.ViewModels;
@@ -38,6 +39,7 @@ using ResidentAppCross.ViewModels;
 using Square.OkHttp;
 using Exception = System.Exception;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
+using GcmClient = Gcm.GcmClient;
 using Math = System.Math;
 using Object = Java.Lang.Object;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
@@ -46,9 +48,9 @@ namespace ResidentAppCross.Droid.Views
 {
     public static class Constants
     {
-        public const string SenderID = "<GoogleProjectNumber>"; // Google API Project Number
-        public const string ListenConnectionString = "<Listen connection string>";
-        public const string NotificationHubName = "<hub name>";
+        public const string SenderID = "575898383085"; // Google API Project Number
+        public const string ListenConnectionString = "Endpoint=sb://apartmentappsapihub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=y1hY/2CAo+YUTnGbSIAC85yeyZ26PrGHmrlc9h4jVHM=";
+        public const string NotificationHubName = "apartmentappsapihub";
     }
     [Activity(Label = "Apartment Apps", 
         MainLauncher = true, 
@@ -67,6 +69,7 @@ namespace ResidentAppCross.Droid.Views
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
             LoginService.DevicePlatform = "gcm";
             LoginService.DeviceHandle = DroidApplication.DeviceToken;
 

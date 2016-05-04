@@ -155,7 +155,7 @@ namespace ResidentAppCross
         public ICommand SignOutCommand => new MvxCommand(() =>
         {
             _loginManager.Logout();
-            this.Close(this);
+            this.ShowViewModel<LoginFormViewModel>();
             //this.ShowViewModel<LoginFormViewModel>();
         });
 

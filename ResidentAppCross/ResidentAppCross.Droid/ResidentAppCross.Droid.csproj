@@ -82,6 +82,9 @@
       <HintPath>..\..\packages\blocke.circleimageview.1.0\lib\MonoAndroid50\blocke.circleimageview.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GCM.Client">
+      <HintPath>..\..\Components\GCMClient-1.0\lib\android\GCM.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
       <HintPath>..\..\packages\Microsoft.Rest.ClientRuntime.0.9.6\lib\portable-net403+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
@@ -223,6 +226,7 @@
     <Compile Include="Bootstrap\MessengerPluginBootstrap.cs" />
     <Compile Include="Bootstrap\MethodBindingPluginBootstrap.cs" />
     <Compile Include="Bootstrap\PictureChooserPluginBootstrap.cs" />
+    <Compile Include="BroadcastReceiver.cs" />
     <Compile Include="Converters\SharedIconsConverter.cs" />
     <Compile Include="FlyOutContainer.cs" />
     <Compile Include="MainActivity.cs" />
@@ -408,6 +412,10 @@
     <XamarinComponentReference Include="azure-messaging">
       <Visible>False</Visible>
       <Version>1.1.5.6</Version>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="GCMClient">
+      <Visible>False</Visible>
+      <Version>1.0</Version>
     </XamarinComponentReference>
     <XamarinComponentReference Include="PhotoView">
       <Version>1.2.4</Version>
@@ -995,6 +1003,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\location_index_item.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\user.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\exit.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
