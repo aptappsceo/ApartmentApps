@@ -14,6 +14,7 @@ using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
+using ResidentAppCross.Resources;
 
 namespace ResidentAppCross.Droid.Views.Components.Navigation
 {
@@ -61,7 +62,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             set { _eventAggregator = value; }
         }
 
-        public event Action<IMenu> OnRequestContent;
+        public event MenuContentRequestDelegate OnRequestContent;
 
         public virtual void OnViewModelSet()
         {
@@ -102,6 +103,8 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
         {
             Menu.Clear();
 
+            var index = 0;
+
             if (UsernameLabel == null)
             {
                 var header = this.FindViewById(Resource.Id.NavigationHeader);
@@ -115,23 +118,41 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
                 ImageExtensions.GetBitmapWithPicasso(ViewModel.ProfileImageUrl).NoFade().Placeholder(Resource.Drawable.avatar_placeholder).CenterCrop().Fit().Into(AvatarView);
 
             var homeMenu = Menu.AddSubMenu("Home Menu");
-            for (int index = 0; index < ViewModel.MenuItems.Count; index++)
+            for (int i = 0; i < ViewModel.MenuItems.Count; i++)
             {
-                var item = ViewModel.MenuItems[index];
+                var item = ViewModel.MenuItems[i];
                 var menuitem = homeMenu.Add(0,index,index,item.Name);
                 menuitem.SetIcon(item.Icon.ToDrawableId());
                 CommandsMap[menuitem.ItemId] = item.Command;
                 menuitem.SetCheckable(true);
+                index++;
             }
 
-            OnOnRequestContent(Menu);
+            //Edit Profile
+            var changeAvatarItem = homeMenu.Add(0, index, index, "Change Profile Photo");
+            changeAvatarItem.SetIcon(SharedResources.Icons.User.ToDrawableId());
+            CommandsMap[changeAvatarItem.ItemId] = ViewModel.EditProfileCommand;
+            changeAvatarItem.SetCheckable(true);
+            index++;
+
+            //Sign Out
+            var signoutItem = homeMenu.Add(0, index, index, "Sign Out");
+            signoutItem.SetIcon(SharedResources.Icons.Exit.ToDrawableId());
+            CommandsMap[signoutItem.ItemId] = ViewModel.SignOutCommand;
+            signoutItem.SetCheckable(true);
+            index++;
+
+
+
+            OnOnRequestContent(Menu, ref index);
         }
 
-        protected virtual void OnOnRequestContent(IMenu obj)
+        public delegate void MenuContentRequestDelegate(IMenu dataRow, ref int index);
+
+        protected virtual void OnOnRequestContent(IMenu menu, ref int index)
         {
-            OnRequestContent?.Invoke(obj);
+            OnRequestContent?.Invoke(menu, ref index);
         }
-
     }
 
 }

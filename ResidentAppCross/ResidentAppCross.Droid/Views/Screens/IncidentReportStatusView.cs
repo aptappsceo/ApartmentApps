@@ -42,6 +42,7 @@ namespace ResidentAppCross.Droid.Views
         public GallerySection GallerySection { get; set; }
         public UnitInformationSection UnitInformationSection { get; set; }
         public ActionBarSection ActionBarSection { get; set; }
+        public LabelButtonSection UnitSection { get; set; }
 
         public override void Bind()
         {
@@ -98,7 +99,14 @@ namespace ResidentAppCross.Droid.Views
             //et.Bind(MaintenanceTicketStatusSection.CreatedOnLabel).For(f => f.Text).To(vm => vm.ScheduleDateLabel).WithFallback("-");
             set.Bind(CommentsSection.InputField).For(t => t.Text).To(vm => vm.Request.Comments).WithFallback("-");
             set.Bind(UnitInformationSection).For(s => s.AvatarUrl).To(vm => vm.Request.Requester.ImageUrl);
+            UnitSection.Label.Text = "Unit";
+            set.Bind(UnitSection.Button)
+                .For(b => b.Text)
+                .To(vm => vm.Request.UnitName)
+                .WithFallback("Select");
 
+            if (ViewModel.CanUpdateRequest)
+                set.Bind(UnitSection.Button).To(vm => vm.SetUnitCommand);
 
             set.Bind(UnitInformationSection.NameLabel)
               .For(t => t.Text)
@@ -152,6 +160,7 @@ namespace ResidentAppCross.Droid.Views
             sections.Add(HeaderSection);
             sections.Add(IncidentTicketStatusSection);
             sections.Add(UnitInformationSection);
+            sections.Add(UnitSection);
             sections.Add(CommentsSection);
             sections.Add(GallerySection);
             if (ViewModel.CanUpdateRequest)
@@ -160,7 +169,13 @@ namespace ResidentAppCross.Droid.Views
             }
 
         }
+
+     
+
     }
+
+
+
 
     public class TicketStatusViewPagerAdapter : PagerAdapter
     {
@@ -176,7 +191,7 @@ namespace ResidentAppCross.Droid.Views
 
         public override ICharSequence GetPageTitleFormatted(int position)
         {
-            string res = "Fuck";
+            string res = "";
             if (position == 0) res = "Status";
             else if (position == 1) res = "History";
             return new Java.Lang.String(res); ;

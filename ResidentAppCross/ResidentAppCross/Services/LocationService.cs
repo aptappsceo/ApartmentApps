@@ -24,6 +24,9 @@ namespace ResidentAppCross.Services
 
         private void OnLocation(MvxGeoLocation location)
         {
+
+            if (!_messenger.HasSubscriptionsFor<LocationMessage>()) return;
+
             var message = new LocationMessage(this,
                                               location.Coordinates.Latitude,
                                               location.Coordinates.Longitude
