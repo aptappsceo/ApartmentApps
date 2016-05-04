@@ -1,16 +1,30 @@
-﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.Droid/ResidentAppCross.Droid.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.Xamarin_Android_API_23" />
+﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Xamarin_Android_API_23" />
   <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/LinkerPleaseInclude.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenanceRequestStatusView.cs" Line="317" Column="3" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/SignUpFormView.cs" Line="12" Column="2" />
-      <File FileName="ResidentAppCross/ResidentAppCross/Commands/TaskCommand.cs" Line="78" Column="14" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="65" Column="74" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="65" Column="43" />
-      <File FileName="ResidentAppCross/ResidentAppCross.Droid/Views/Screens/LoginFormView.cs" Line="50" Column="72" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenanceRequestStatusView.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/SignUpFormView.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/Commands/TaskCommand.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.Droid/Views/Screens/LoginFormView.cs" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ResidentAppCross" expanded="True">
+            <Node name="Mobile App" expanded="True">
+              <Node name="ResidentAppCross.Droid" expanded="True" selected="True">
+                <Node name="References" expanded="True" />
+                <Node name="ComponentReferenceFolder" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

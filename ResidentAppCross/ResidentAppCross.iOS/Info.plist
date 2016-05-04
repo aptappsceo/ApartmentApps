@@ -106,15 +106,11 @@
 	</dict>
 	<key>XSAppIconAssets</key>
 	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We would like to use your location.</string>
 	<key>CFBundleShortVersionString</key>
 	<string>2.0</string>
 	<key>CFBundleVersion</key>
-	<string>23</string>
+	<string>24</string>
 </dict>
 </plist>
