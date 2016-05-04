@@ -59,41 +59,46 @@ namespace ResidentAppCross
         {
             get
             {
-                return this.TaskCommand(async context =>
+                return new MvxCommand(async () =>
                 {
-						LoginManager.Logout();
+                    LoginManager.Logout();
                     if (VersionChecker != null)
                     {
                         var version = await Data.Version.GetAsync();
                         if (!VersionChecker.CheckVersion(version))
                         {
                             VersionChecker.OpenInStore(version);
-                            context.FailTask("Please update your version");
+                            
                             return;
                         }
                     }
+                    this.TaskCommand(async context =>
+                    {
+
 #if DEBUG
-                    var username = string.IsNullOrEmpty(Username) ? "micahosborne@gmail.com" : Username;
-                    var password = string.IsNullOrEmpty(Password) ? "Asdf1234!" : Password;
+                        var username = string.IsNullOrEmpty(Username) ? "micahosborne@gmail.com" : Username;
+                        var password = string.IsNullOrEmpty(Password) ? "Asdf1234!" : Password;
 #else
                     var username =  Username;
                     var password =  Password;
 #endif
 
-                    if (!await LoginManager.LoginAsync(username, password))
-                    {
-                        context.FailTask("Invalid login or password!");
-                    }
-                    else
-                    {
-                        
-                    }
-                })
-                .OnStart("Logging In...")
-                .OnComplete(null, () =>
-                {
-                    ShowViewModel<HomeMenuViewModel>();
+                        if (!await LoginManager.LoginAsync(username, password))
+                        {
+                            context.FailTask("Invalid login or password!");
+                        }
+                        else
+                        {
+
+                        }
+                    })
+                   .OnStart("Logging In...")
+                   .OnComplete(null, () =>
+                   {
+                       ShowViewModel<HomeMenuViewModel>();
+                   }).Execute(null);
                 });
+
             }
         }
 

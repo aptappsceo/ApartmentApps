@@ -25,10 +25,9 @@ namespace ResidentAppCross.Droid
 {
     public class Setup : MvxAndroidSetup, IVersionChecker
     {
-        public const int BUILD_NUMBER = 1;
         public bool CheckVersion(VersionInfo version)
         {
-            return BUILD_NUMBER == 1;
+            return Constants.ANDROID_BUILD_NUMBER >= version.AndroidBuildNumber;
         }
 
         public void OpenInStore(VersionInfo version)

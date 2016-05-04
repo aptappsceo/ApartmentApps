@@ -54,6 +54,7 @@ namespace ResidentAppCross.iOS.Views
                 {
 					_unitSection = Formals.Create<LabelWithButtonSection>();
 					_unitSection.Label.Text = "Unit";
+                    _unitSection.Button.TitleLabel.Text = "Select Unit";
                 }
 				return _unitSection;
             }
@@ -158,7 +159,7 @@ namespace ResidentAppCross.iOS.Views
 			b.Bind(RequestTypeSection.Button).To(vm => vm.SelectRequestTypeCommand).CommandParameter(RequestTypeSection.Button);
             if (ViewModel.ShouldSelectUnit) {
             	b.Bind(UnitSection.Button).For("Title").To(vm => vm.SelectedUnitTitle);
-	    	b.Bind(UnitSection.Button).To(vm => vm.SetUnitCommand).CommandParameter(UnitSection.Button);	
+	    	    b.Bind(UnitSection.Button).To(vm => vm.SetUnitCommand).CommandParameter(UnitSection.Button);	
             }
             
 

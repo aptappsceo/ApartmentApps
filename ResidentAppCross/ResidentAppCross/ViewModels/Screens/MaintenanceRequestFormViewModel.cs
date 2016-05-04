@@ -52,7 +52,7 @@ namespace ResidentAppCross.ViewModels
         }
          public string SelectedUnitTitle {
         	get{
-        		return _selectedUnitTitle;
+        		return _selectedUnitTitle ?? "Select Unit...";
         	}
         	set{
         		SetProperty(ref _selectedUnitTitle, value, "SelectedUnitTitle");
@@ -69,7 +69,7 @@ namespace ResidentAppCross.ViewModels
                     var selected = await _dialogService.OpenSearchableTableSelectionDialog(units,"Select Unit", p=>p.Value);
                     await Task.Delay(TimeSpan.FromMilliseconds(300));
                     SelectedUnit = selected;
-		    SelectedUnitTitle = selected.Value;
+		            SelectedUnitTitle = selected.Value;
                 });
 
 

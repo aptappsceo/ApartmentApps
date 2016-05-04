@@ -14,12 +14,19 @@ namespace ResidentAppCross.Services
     {
         private readonly IMvxLocationWatcher _watcher;
         private readonly IMvxMessenger _messenger;
+        private MvxSubscriptionToken _token;
 
         public LocationService(IMvxLocationWatcher watcher, IMvxMessenger messenger)
         {
             _watcher = watcher;
             _messenger = messenger;
-            _watcher.Start(new MvxLocationOptions(), OnLocation, OnError);
+            
+            _token = messenger.Subscribe<StartLocationServices>(OnStart);
+        }
+
+        private void OnStart(StartLocationServices obj)
+        {
+           
         }
 
         private void OnLocation(MvxGeoLocation location)
@@ -39,12 +46,28 @@ namespace ResidentAppCross.Services
         {
             Mvx.Error("Seen location error {0}", error.Code);
         }
+
+        public bool Started = false;
+        public void Start()
+        {
+            if (Started) return;
+            _token?.Dispose();
+            Started = true;
+            _watcher.Start(new MvxLocationOptions(), OnLocation, OnError);
+        }
     }
 
     public interface ILocationService
     {
+        void Start();
     }
 
+    public class StartLocationServices : MvxMessage
+    {
+        public StartLocationServices(object sender) : base(sender)
+        {
+        }
+    }
     public class LocationMessage : MvxMessage
     {
 

@@ -18,7 +18,10 @@ using UIKit;
 using Cirrious.FluentLayouts.Touch.Extensions;
 using Cirrious.FluentLayouts.Touch;
 using Cirrious.FluentLayouts.Touch.RowSet;
+using MvvmCross.Platform;
+using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Resources;
+using ResidentAppCross.Services;
 
 namespace ResidentAppCross.iOS.Views
 {
@@ -170,6 +173,7 @@ namespace ResidentAppCross.iOS.Views
             b.Apply();
 
             ViewModel.UpdateLocations.Execute(null);
+            
         }
 
         public bool CurrentLocationUpdated { get; set; }

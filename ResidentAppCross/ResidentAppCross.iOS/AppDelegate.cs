@@ -73,7 +73,7 @@ namespace ResidentAppCross.iOS
 
         }
 
-        public const int BUILD_NUMBER = 1;
+      
 
         public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
         {
@@ -205,7 +205,7 @@ namespace ResidentAppCross.iOS
 
         public bool CheckVersion(VersionInfo version)
         {
-            return BUILD_NUMBER == version.IPhoneBuildNumber;
+            return Constants.IOS_BUILD_NUMBER >= version.IPhoneBuildNumber;
         }
 
         public void OpenInStore(VersionInfo version)

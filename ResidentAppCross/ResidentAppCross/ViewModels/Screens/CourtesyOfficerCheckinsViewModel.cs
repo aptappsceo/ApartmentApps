@@ -4,6 +4,7 @@ using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Services;
 
@@ -21,7 +22,7 @@ namespace ResidentAppCross.ViewModels.Screens
             ApiService = apiService;
             _qrService = qrService;
             _token = messenger.Subscribe<LocationMessage>(DeliveryAction);
-
+            Mvx.Resolve<ILocationService>().Start();
         }
 
         public ICommand UpdateLocations
