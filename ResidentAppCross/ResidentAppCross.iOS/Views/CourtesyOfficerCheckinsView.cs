@@ -114,16 +114,17 @@ namespace ResidentAppCross.iOS
 
         public override MKAnnotationView GetViewForAnnotation(MKMapView mapView, IMKAnnotation annotation)
         {
-            MKAnnotationView annotationView = null;
+         
 
-            var unCompleteIcon = AppTheme.GetIcon(SharedResources.Icons.LocationQuestion, ResidentAppCross.Resources.SharedResources.Size.S).TintBlack(AppTheme.InProgressColor);
-            var completeIcon = AppTheme.GetIcon(SharedResources.Icons.LocationOk, ResidentAppCross.Resources.SharedResources.Size.S).TintBlack(AppTheme.CompleteColor);
-
+        
             if (annotation is MKUserLocation)
-                return null;
+                return base.GetViewForAnnotation(mapView, annotation);
             var checkinAnnotation = annotation as CheckinBindingModelAnnotation;
             if (checkinAnnotation != null)
             {
+                MKAnnotationView annotationView = null;
+                var unCompleteIcon = AppTheme.GetIcon(SharedResources.Icons.LocationQuestion, ResidentAppCross.Resources.SharedResources.Size.S).TintBlack(AppTheme.InProgressColor);
+                var completeIcon = AppTheme.GetIcon(SharedResources.Icons.LocationOk, ResidentAppCross.Resources.SharedResources.Size.S).TintBlack(AppTheme.CompleteColor);
 
                 // show conference annotation
                 annotationView = mapView.DequeueReusableAnnotation(annotationId);
@@ -140,10 +141,11 @@ namespace ResidentAppCross.iOS
                 }
                
                 annotationView.CanShowCallout = true;
+                return annotationView;
             }
 
-            return annotationView;
-            //var result =  base.GetViewForAnnotation(mapView, annotation);
+            return null;
+            //var result =  
             //result.Image = UIImage.FromBundle("MaintenaceIcon");
             //return result;
         }

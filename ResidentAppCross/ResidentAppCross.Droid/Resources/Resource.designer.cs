@@ -72,6 +72,7 @@ namespace ResidentAppCross.Droid
 			global::blocke.circleimageview.Resource.Styleable.CircleImageView_civ_border_overlay = global::ResidentAppCross.Droid.Resource.Styleable.CircleImageView_civ_border_overlay;
 			global::blocke.circleimageview.Resource.Styleable.CircleImageView_civ_border_width = global::ResidentAppCross.Droid.Resource.Styleable.CircleImageView_civ_border_width;
 			global::blocke.circleimageview.Resource.Styleable.CircleImageView_civ_fill_color = global::ResidentAppCross.Droid.Resource.Styleable.CircleImageView_civ_fill_color;
+			global::Gcm.Client.Resource.String.library_name = global::ResidentAppCross.Droid.Resource.String.library_name;
 			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxBind = global::ResidentAppCross.Droid.Resource.Attribute.MvxBind;
 			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxDropDownItemTemplate;
 			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxGroupItemTemplate;

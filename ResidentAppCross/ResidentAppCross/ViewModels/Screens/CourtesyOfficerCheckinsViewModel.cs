@@ -30,9 +30,9 @@ namespace ResidentAppCross.ViewModels.Screens
             get
             {
 
-                return this.TaskCommand(async context =>
+                return new MvxCommand(async () =>
                 {
-
+                   
                     var locations = await ApiService.Checkins.GetAsync();
                     Locations.Clear();
                     foreach (var item in locations)
@@ -41,9 +41,11 @@ namespace ResidentAppCross.ViewModels.Screens
                     }
                     this.Publish(new CourtesyOfficerCheckingLocationsUpdated(this));
 
-                }).OnStart("Fetching Locations...");
+                });//
+               // .OnStart("Fetching Locations...");
             }
         }
+
         public LocationMessage CurrentLocation
         {
             get { return _currentLocation; }
