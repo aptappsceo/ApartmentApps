@@ -79,34 +79,36 @@ namespace ResidentAppCross.Droid
 
         protected override void OnRegistered(Context context, string registrationId)
         {
+        
+            DroidApplication.RegisterForHandle(registrationId);
             Log.Verbose(BroadcastReceiver.TAG, "GCM Registered: " + registrationId);
             RegistrationID = registrationId;
 
-            createNotification("PushHandlerService-GCM Registered...",
-                                "The device has been Registered!");
+            //createNotification("PushHandlerService-GCM Registered...",
+            //                    "The device has been Registered!");
 
-            Hub = new NotificationHub(Views.Constants.NotificationHubName, Views.Constants.ListenConnectionString,
-                                        context);
-            try
-            {
-                Hub.UnregisterAll(registrationId);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(BroadcastReceiver.TAG, ex.Message);
-            }
+            //Hub = new NotificationHub(Views.Constants.NotificationHubName, Views.Constants.ListenConnectionString,
+            //                            context);
+            //try
+            //{
+            //    Hub.UnregisterAll(registrationId);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Log.Error(BroadcastReceiver.TAG, ex.Message);
+            //}
 
-            //var tags = new List<string>() { "falcons" }; // create tags if you want
-            var tags = new List<string>() { };
+            ////var tags = new List<string>() { "falcons" }; // create tags if you want
+            //var tags = new List<string>() { };
 
-            try
-            {
-                var hubRegistration = Hub.Register(registrationId, tags.ToArray());
-            }
-            catch (Exception ex)
-            {
-                Log.Error(BroadcastReceiver.TAG, ex.Message);
-            }
+            //try
+            //{
+            //    var hubRegistration = Hub.Register(registrationId, tags.ToArray());
+            //}
+            //catch (Exception ex)
+            //{
+            //    Log.Error(BroadcastReceiver.TAG, ex.Message);
+            //}
         }
 
         protected override bool OnRecoverableError(Context context, string errorId)
