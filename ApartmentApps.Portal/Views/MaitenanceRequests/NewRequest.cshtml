@@ -1,0 +1,21 @@
+﻿@using ApartmentApps.Portal.Controllers
+@using FormFactory
+@using FormFactory.AspMvc
+@model ApartmentApps.Portal.Controllers.MaitenanceRequestModel
+
+@{
+    ViewBag.Title = "Submit Maintenance Request";
+}
+
+
+<div class="ibox">
+    <div class="ibox-title">Submit Maintenance Request</div>
+    <div class="ibox-content">
+        @using (var form = Html.BeginForm("SubmitRequest"))
+        {
+            @Html.RenderForm(Model)
+
+            <input type="submit" value="Submit Maintenance Request" class="btn btn-primary" />
+        }
+    </div>
+</div>

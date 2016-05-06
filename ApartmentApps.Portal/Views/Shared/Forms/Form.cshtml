@@ -1,0 +1,38 @@
+﻿@using System.ComponentModel.DataAnnotations
+@model ApartmentApps.Forms.FormModel
+
+<div class="form-horizontal">
+    @foreach (var property in Model.Properties)
+    {
+        <div class="form-group">
+            <label class="control-label col-md-2" for="@property.Name">@property.Label</label>
+            <div class="col-md-10">
+                @if (property.Choices != null)
+                {
+                   @Html.DropDownList(property.Name, property.Choices.Select(p => new SelectListItem()
+                   {
+                       Value = p.Id,
+                       Text = p.Value,
+                       Selected = p.Selected
+                   }))
+                } else if (property.SystemType == typeof (bool))
+                {
+                    @Html.CheckBox(property.Name, property.GetValue())
+                }
+                else
+                {
+                    if (property.DataType.DataType == DataType.MultilineText)
+                    {
+                        @Html.TextArea(property.Name, property.GetValue())
+                    }
+                    else
+                    {
+                        @Html.TextBox(property.Name, property.GetValue())
+                    }
+
+                }
+                @Html.ValidationMessage(property.Name)
+            </div>
+        </div>
+    }
+</div>

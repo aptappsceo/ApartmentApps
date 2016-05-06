@@ -35,9 +35,12 @@ namespace ApartmentApps.Portal.App_Start
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
+           
             bootstrapper.Initialize(CreateKernel);
         }
-        
+
+        public static IKernel Kernel { get; set; }
+
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -52,7 +55,7 @@ namespace ApartmentApps.Portal.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
+            var kernel =  Kernel = new StandardKernel();
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);

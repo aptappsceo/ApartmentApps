@@ -291,6 +291,7 @@
     <Compile Include="Controllers\CourtesyOfficerLocationsController.cs" />
     <Compile Include="Controllers\CrudController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\FormModelHelpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdentityUserRoleController.cs" />
     <Compile Include="Controllers\IncidentReportsController.cs" />
@@ -949,6 +950,9 @@
     <Content Include="Views\Shared\FormFactory\System.Web.HttpPostedFileBase.cshtml" />
     <Content Include="Views\MaitenanceRequests\Print.cshtml" />
     <Content Include="Views\Shared\_Print.cshtml" />
+    <Content Include="Views\MaitenanceRequests\NewRequest.cshtml" />
+    <Content Include="Views\Shared\Forms\Form.cshtml" />
+    <Content Include="Views\Shared\AutoForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -969,6 +973,10 @@
     <ProjectReference Include="..\ApartmentApps.Data\ApartmentApps.Data.csproj">
       <Project>{69A819D5-3037-4E56-90E4-A9EDFF41B88A}</Project>
       <Name>ApartmentApps.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Forms\ApartmentApps.Forms.csproj">
+      <Project>{E3722B2C-0EE1-4359-89D2-CD78BDDD59C7}</Project>
+      <Name>ApartmentApps.Forms</Name>
     </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.IoC\ApartmentApps.IoC.csproj">
       <Project>{A7A41793-D1A8-4FF3-BAFD-207C43E73F32}</Project>

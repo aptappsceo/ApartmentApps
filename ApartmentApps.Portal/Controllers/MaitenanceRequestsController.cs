@@ -1,26 +1,154 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
+using ApartmentApps.Portal.App_Start;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    
-    public class MaitenanceRequestsController : CrudController<MaintenanceRequestViewModel, MaitenanceRequest>
+    public class MaitenanceRequestModel
     {
-        public MaitenanceRequestsController(IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+      
+        //[DataType()]
+        [DisplayName("Unit")]
+        public int UnitId { get; set; }
+
+        public IEnumerable<FormPropertySelectItem> UnitId_Items
         {
+            get
+            {
+                return
+                    NinjectWebCommon.Kernel.Get<IRepository<Unit>>()
+                        .ToArray()
+                        .Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Name, UnitId == p.Id));
+
+             
+            }
+        }
+        public IEnumerable<FormPropertySelectItem> MaitenanceRequestTypeId_Items
+        {
+            get
+            {
+                return
+                    NinjectWebCommon.Kernel.Get<IRepository<MaitenanceRequestType>>()
+                        .ToArray()
+                        .Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Name, MaitenanceRequestTypeId == p.Id));
+
+             
+            }
         }
 
+        [DisplayName("Type")]
+        public int MaitenanceRequestTypeId { get; set; }
+
+        public IEnumerable<SelectListItem> MaitenanceRequestTypeId_choices()
+        {
+            return Enumerable.Empty<SelectListItem>();
+        }
+        [DisplayName("Permission To Enter")]
+        public bool PermissionToEnter { get; set; }
+
+        [DisplayName("Pet Status")]
+        public PetStatus PetStatus { get; set; }
+    
+        [DataType(DataType.MultilineText)]
+        public string Comments { get; set; }
+  
+    }
+
+    public class MaintenanceStatusRequestModel
+    {
+        [DataType("Hidden")]
+        public int Id { get; set; }
+        [DataType(DataType.MultilineText)]
+        public string Comments { get; set; }
+    }
+    public enum PetStatus
+    {
+        NoPet,
+        YesContained,
+        YesFree
+    }
+    public class MaitenanceRequestsController : CrudController<MaintenanceRequestViewModel, MaitenanceRequest>
+    {
+        public IMaintenanceService MaintenanceService { get; set; }
+
+        public MaitenanceRequestsController(IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+        {
+            MaintenanceService = maintenanceService;
+        }
+        public ActionResult NewRequest()
+        {
+
+            return View(new MaitenanceRequestModel()
+            {
+                //MaitenanceRequestTypeId_choices =
+                //    Context.MaitenanceRequestTypes.ToArray()
+                //        .Select(p => new SelectListItem() {Value = p.Id.ToString(), Text = p.Name}),
+                //UnitId_items = Context.Units.ToArray().Select(p=>new SelectListItem() {Value = p.Id.ToString(),Text = p.Name})
+            });
+        }
+
+        public ActionResult Pause(int id)
+        {
+            return View("AutoForm", new AutoFormModel(new MaintenanceStatusRequestModel() {Id = id}, "PauseRequest"));
+        }
+        public ActionResult Complete(int id)
+        {
+            return View("AutoForm", new AutoFormModel(new MaintenanceStatusRequestModel() { Id = id }, "CompleteRequest"));
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult SubmitRequest(MaitenanceRequestModel request)
+        {
+            
+            MaintenanceService.SubmitRequest(
+                request.Comments, 
+                request.MaitenanceRequestTypeId,
+                (int)request.PetStatus, 
+                request.PermissionToEnter, 
+                null, 
+                Convert.ToInt32(request.UnitId)
+                );
+            return RedirectToAction("Index");
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult PauseRequest(MaintenanceStatusRequestModel request)
+        {
+
+            MaintenanceService.PauseRequest(
+                CurrentUser,
+                request.Id,
+                request.Comments,null
+              
+                );
+            return RedirectToAction("Index");
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult CompleteRequest(MaintenanceStatusRequestModel request)
+        {
+
+            MaintenanceService.CompleteRequest(
+                CurrentUser,
+                request.Id,
+                request.Comments, null
+                );
+            return RedirectToAction("Index");
+        }
         public ActionResult Print(int id)
         {
             var item = Service.Find(id);
@@ -28,10 +156,29 @@ namespace ApartmentApps.Portal.Controllers
         }
 
     }
+
+    public class AutoFormModel
+    {
+        private string _title;
+        public object Model { get; set; }
+
+        public string Title
+        {
+            get { return _title ?? (_title = Model.GetType().GetCustomAttributes(typeof(DisplayNameAttribute), true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? Model.GetType().Name); }
+            set { _title = value; }
+        }
+
+        public string PostAction { get; set; }
+        public AutoFormModel(object model, string postAction)
+        {
+            Model = model;
+      
+            PostAction = postAction;
+        }
+    }
+
     public class MaitenanceRequests2Controller : AAController
     {
-      
-
         // GET: /MaitenanceRequests/
         public MaitenanceRequests2Controller(PropertyContext context, IUserContext userContext) : base(context, userContext)
         {

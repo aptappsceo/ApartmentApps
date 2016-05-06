@@ -1,0 +1,19 @@
+﻿@using System.ComponentModel
+@using ApartmentApps.Portal.Controllers
+@using FormFactory
+@using FormFactory.AspMvc
+@model AutoFormModel
+@{
+    ViewBag.Title = Model.Title;
+}
+<div class="ibox">
+    <div class="ibox-title">@ViewBag.Title</div>
+    <div class="ibox-content">
+        @using (var form = Html.BeginForm(Model.PostAction))
+        {
+            @Html.RenderForm(Model.Model)
+
+            <input type="submit" value="Apply" class="btn btn-primary" />
+        }
+    </div>
+</div>
