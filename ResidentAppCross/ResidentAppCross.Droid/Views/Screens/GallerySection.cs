@@ -235,7 +235,9 @@ namespace ResidentAppCross.Droid.Views
 
             public override void OnBind(GenericViewHolder<AsyncImageView> holder, int position)
             {
+                if(position >= Items.Count) return; 
                 var photo = Items[position];
+
                 if (photo.Uri != null)
                 {
                     holder.View.SetImage(photo.Uri.ToString(), null);
@@ -249,6 +251,7 @@ namespace ResidentAppCross.Droid.Views
             public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
             {
                 var item = new AsyncImageView(parent.Context) { UsageMode = AspectAwareImageView.ImageMeasureMode.HorisontalLayout }.WithHeightWrapContent().WithWidthWrapContent();
+                item.TargetHeight = parent.Height/2;
                 var viewHolder = new GenericViewHolder<AsyncImageView>(item);
                 item.Click += (sender, args) =>
                 {

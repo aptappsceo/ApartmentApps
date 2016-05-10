@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Graphics.Drawables.Shapes;
@@ -30,14 +31,14 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             {
                 if (_progressBar == null)
                 {
-                    _progressBar = new ProgressBar(InflatingContext).WithRelativeCopyOfParent();
-                    _progressBar.ProgressDrawable = new ColorDrawable(Color.White);
+                    _progressBar = new ProgressBar(InflatingContext).WithRelativeCenterInParent();
+                    _progressBar.IndeterminateDrawable.SetColorFilter(Color.White,PorterDuff.Mode.Multiply);
                     _progressBar.Background = new ShapeDrawable(new OvalShape())
                     {
                         Bounds = new Rect(0, 0, 20, 20),
                         Paint =
                         {
-                            Color = AppTheme.SecondaryBackgoundColor
+                            Color = Resources.GetColor(Resource.Color.primary)
                         }
                     };
                     _progressBar.Alpha = 0.8f;
@@ -70,11 +71,16 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             }.WithDimensionsMatchParent();
             layout.AddView(ImageView);
             layout.AddView(ProgressBar);
-
+            ProgressBar.WithDimensions(120);
+            Point point = new Point();
+            Dialog.Window.WindowManager.DefaultDisplay.GetSize(point);
+            TargetWidth = point.X;
             if (CurrentUrl != null) SetImage(CurrentUrl, null);
             else if (CurrentData != null) SetImage(CurrentData);
             return layout;
         }
+
+        public int TargetWidth { get; set; }
 
         public Context InflatingContext { get; set; }
 
@@ -101,7 +107,10 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             iAnimate.Start();
             pAnimate.Start();
 
-            var image = await Task.Run(() => ImageExtensions.GetBitmapFromURL(src));
+            var image = await Task.Run(() =>
+            {
+                    return ImageExtensions.GetBitmapWithPicasso(src).Resize(TargetWidth, 0).Get();
+            });
             if (image == null)
             {
                 return;

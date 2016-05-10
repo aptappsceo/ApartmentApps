@@ -27,6 +27,8 @@
   <color name="semantic_inprogress">#4FC3F7</color>
   <color name="semantic_complete">#81C784</color>
 
+  <color name="invert_form_field_background">#eeffffff</color>
+
 
 
 

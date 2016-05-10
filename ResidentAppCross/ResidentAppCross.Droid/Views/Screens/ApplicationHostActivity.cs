@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Timers;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Gms.Common;
 using Android.Gms.Maps;
 using Android.Graphics;
@@ -76,6 +77,8 @@ namespace ResidentAppCross.Droid.Views
             LoginService.GetRegistrationId = () => DroidApplication.HandleId;
             LoginService.SetRegistrationId = (v) => DroidApplication.HandleId = v;
 
+          //  if (!DoesPackageExist("com.google.android.gsf")) return;
+
             GcmClient.CheckDevice(this);
             GcmClient.CheckManifest(this);
 
@@ -93,6 +96,21 @@ namespace ResidentAppCross.Droid.Views
         public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
         {
             base.OnCreate(savedInstanceState, persistentState);
+        }
+
+        public bool DoesPackageExist(string targetPackage)
+        {
+            IList<ApplicationInfo> packages;
+            PackageManager pm;
+
+            pm = PackageManager;
+            packages = pm.GetInstalledApplications(PackageInfoFlags.MatchAll);
+            foreach (var packageInfo in packages)
+            {
+                if (packageInfo.PackageName == targetPackage)
+                    return true;
+            }
+            return false;
         }
 
         public DrawerLayout DrawerLayout
@@ -271,10 +289,17 @@ namespace ResidentAppCross.Droid.Views
             {
                 SourceActivity = targetActivity
             };
+            try
+            {
+                CurrentDialog.Show(targetActivity.FragmentManager, "notification");
+                CurrentDialog.OnceOnDismiss(() => CurrentDialog = null);
+            }
+            catch (Exception ex)
+            {
 
-            CurrentDialog.Show(targetActivity.FragmentManager, "notification");
-            CurrentDialog.OnceOnDismiss(() => CurrentDialog = null);
+            }
             return CurrentDialog;
+
             ///CurrentDialog = ;
         }
 

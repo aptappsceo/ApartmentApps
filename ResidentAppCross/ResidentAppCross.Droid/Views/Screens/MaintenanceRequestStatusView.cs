@@ -46,7 +46,6 @@ namespace ResidentAppCross.Droid.Views
             //Setup stuff everytime we update status
             this.OnViewModelEvent<MaintenanceRequestStatusUpdated>(evt =>
             {
-                ActionBarSection.Update();
                 UnitInformationSection.AvatarUrl = ViewModel?.Request?.User.ImageUrl;
 
                 HeaderSection.IconView.SetImageResource(AppTheme.IconResByMaintenanceState(ViewModel.Request.Status.AsMaintenanceStatus()));
@@ -67,7 +66,7 @@ namespace ResidentAppCross.Droid.Views
                 else
                     MaintenanceTicketStatusSection.EntranceStatusLabel.Text = "N/A";
 
-
+                ActionBarSection.Update();
             });
 
             GallerySection?.Bind(ViewModel.Photos);

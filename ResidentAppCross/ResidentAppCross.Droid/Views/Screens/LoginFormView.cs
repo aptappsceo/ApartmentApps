@@ -41,15 +41,21 @@ namespace ResidentAppCross.Droid.Views
         [Outlet]
         public Button LoginButton { get; set; }
 
+        [Outlet]
+        public Button SignUpButton { get; set; }
+
         public override void Bind()
         {
             base.Bind();
+
+            MainActivity.Window.SetSoftInputMode(SoftInput.AdjustResize | SoftInput.StateHidden);
 
             var set = this.CreateBindingSet<LoginFormView, LoginFormViewModel>();
 
             set.Bind(LoginButton).To(vm => vm.LoginCommand);
             set.Bind(EmailInput).TwoWay().For(v => v.Text).To(vm => vm.Username);
             set.Bind(PasswordInput).TwoWay().For(v => v.Text).To(vm => vm.Password);
+            set.Bind(SignUpButton).To(vm => vm.SignUpCommand);
             set.Apply();
 
         }
@@ -57,6 +63,61 @@ namespace ResidentAppCross.Droid.Views
 
         public override bool EnableToolbar => false;
     }
+
+    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary,true)]
+    public class SignupFormView: ViewFragment<SignUpFormViewModel>
+    {
+
+        [Outlet]
+        public EditText FirstnameInput { get; set; }
+
+        [Outlet]
+        public EditText LastnameInput { get; set; }
+
+        [Outlet]
+        public EditText EmailInput { get; set; }
+
+        [Outlet]
+        public EditText PhoneInput { get; set; }
+
+        [Outlet]
+        public EditText PasswordInput { get; set; }
+
+        [Outlet]
+        public EditText PasswordConfirmInput { get; set; }
+
+        [Outlet]
+        public ScrollView ScrollContainer { get; set; }
+
+        [Outlet]
+        public Button SignUpButton { get; set; }
+
+        public override void Bind()
+        {
+            base.Bind();
+
+            MainActivity.Window.SetSoftInputMode(SoftInput.AdjustResize | SoftInput.StateHidden);
+
+     //       FirstnameInput.WithScrollOnFocus(ScrollContainer);
+    //        PasswordConfirmInput.WithScrollOnFocus(ScrollContainer);
+
+
+            var set = this.CreateBindingSet<SignupFormView, SignUpFormViewModel>();
+            set.Bind(FirstnameInput).For(f => f.Text).TwoWay().To(vm => vm.FirstName);
+            set.Bind(LastnameInput).For(f => f.Text).TwoWay().To(vm => vm.LastName);
+            set.Bind(EmailInput).For(f => f.Text).TwoWay().To(vm => vm.Email);
+            set.Bind(PhoneInput).For(f => f.Text).TwoWay().To(vm => vm.PhoneNumber);
+            set.Bind(PasswordInput).For(f => f.Text).TwoWay().To(vm => vm.Password);
+            set.Bind(PasswordConfirmInput).For(f => f.Text).TwoWay().To(vm => vm.PasswordConfirmation);
+            set.Bind(SignUpButton).To(vm => vm.SignUpCommand);
+            set.Apply();
+
+        }
+
+        public override bool EnableToolbar => false;
+    }
+
+
 
     [MvxFragment(typeof (ApplicationViewModel), Resource.Id.application_host_container_primary)]
     public class NotificationIndexView : ViewFragment<NotificationIndexFormViewModel>

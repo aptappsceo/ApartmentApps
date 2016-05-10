@@ -93,7 +93,7 @@ namespace ResidentAppCross.ViewModels.Screens
             if (!response.Response.IsSuccessStatusCode)
             {
                 context.FailTask(response.Response.ReasonPhrase);
-
+                return;
             }
             this.Close(this);
         }).OnStart("Signing Up");
