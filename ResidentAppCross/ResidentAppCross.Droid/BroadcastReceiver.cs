@@ -25,6 +25,14 @@ using ResidentAppCross.Droid.Views;
 
 namespace ResidentAppCross.Droid
 {
+
+    public static class GcmConstants
+    {
+        public const string SenderID = "575898383085"; // Google API Project Number
+        public const string ListenConnectionString = "Endpoint=sb://apartmentappsapihub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=y1hY/2CAo+YUTnGbSIAC85yeyZ26PrGHmrlc9h4jVHM=";
+        public const string NotificationHubName = "apartmentappsapihub";
+    }
+
     [BroadcastReceiver(Permission = Gcm.Client.Constants.PERMISSION_GCM_INTENTS)]
     [IntentFilter(new string[] { Gcm.Client.Constants.INTENT_FROM_GCM_MESSAGE },
         Categories = new string[] { "@PACKAGE_NAME@" })]
@@ -34,7 +42,7 @@ namespace ResidentAppCross.Droid
         Categories = new string[] { "@PACKAGE_NAME@" })]
     public class BroadcastReceiver : GcmBroadcastReceiverBase<PushHandlerService>
     {
-        public static string[] SENDER_IDS = new string[] { Views.Constants.SenderID };
+        public static string[] SENDER_IDS = new string[] { GcmConstants.SenderID };
 
         public const string TAG = "BroadcastReceiver-GCM";
     }
@@ -45,7 +53,7 @@ namespace ResidentAppCross.Droid
         public static string RegistrationID { get; private set; }
         private NotificationHub Hub { get; set; }
 
-        public PushHandlerService() : base(Views.Constants.SenderID)
+        public PushHandlerService() : base(GcmConstants.SenderID)
         {
             Log.Info(BroadcastReceiver.TAG, "PushHandlerService() constructor");
         }

@@ -47,12 +47,8 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace ResidentAppCross.Droid.Views
 {
-    public static class Constants
-    {
-        public const string SenderID = "575898383085"; // Google API Project Number
-        public const string ListenConnectionString = "Endpoint=sb://apartmentappsapihub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=y1hY/2CAo+YUTnGbSIAC85yeyZ26PrGHmrlc9h4jVHM=";
-        public const string NotificationHubName = "apartmentappsapihub";
-    }
+
+
     [Activity(Label = "Apartment Apps", 
         MainLauncher = true, 
         NoHistory = false,
@@ -77,40 +73,14 @@ namespace ResidentAppCross.Droid.Views
             LoginService.GetRegistrationId = () => DroidApplication.HandleId;
             LoginService.SetRegistrationId = (v) => DroidApplication.HandleId = v;
 
-          //  if (!DoesPackageExist("com.google.android.gsf")) return;
-
             GcmClient.CheckDevice(this);
             GcmClient.CheckManifest(this);
-
-            // Register for push notifications
-            Log.Info("MainActivity", "Registering...");
-
-            // NOTES
-            // 1: SenderId needs to be set
-            
-            GcmClient.Register(this, Constants.SenderID);
-            // Sini: this needs to happen once the device is registered for push notifications
-            //DroidApplication.RegisterForHandle("THE DEVICE TOKEN");
+            GcmClient.Register(this, GcmConstants.SenderID);
         }
 
         public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
         {
             base.OnCreate(savedInstanceState, persistentState);
-        }
-
-        public bool DoesPackageExist(string targetPackage)
-        {
-            IList<ApplicationInfo> packages;
-            PackageManager pm;
-
-            pm = PackageManager;
-            packages = pm.GetInstalledApplications(PackageInfoFlags.MatchAll);
-            foreach (var packageInfo in packages)
-            {
-                if (packageInfo.PackageName == targetPackage)
-                    return true;
-            }
-            return false;
         }
 
         public DrawerLayout DrawerLayout
@@ -243,6 +213,30 @@ namespace ResidentAppCross.Droid.Views
             IMvxCachedFragmentInfo cachedFragmentInfo = GetCurrentCacheableFragmentsInfo().First(x => x.ViewModelType == viewModel.GetType());
             this.CloseFragment(cachedFragmentInfo.Tag, cachedFragmentInfo.ContentId);
             return true;
+        }
+
+        protected override FragmentReplaceMode ShouldReplaceCurrentFragment(IMvxCachedFragmentInfo newFragment,
+            IMvxCachedFragmentInfo currentFragment, Bundle replacementBundle)
+        {
+            Fragment fragment = newFragment.CachedFragment as Fragment;
+            Bundle bundle = fragment?.Arguments;
+            if (bundle == null) return FragmentReplaceMode.ReplaceFragmentAndViewModel;
+
+            IMvxNavigationSerializer navigationSerializer = Mvx.Resolve<IMvxNavigationSerializer>();
+            string string1 = bundle.GetString("__mvxViewModelRequest");
+            MvxViewModelRequest viewModelRequest1 = navigationSerializer.Serializer.DeserializeObject<MvxViewModelRequest>(string1);
+            if (viewModelRequest1 == null)
+                return MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragment;
+            string string2 = replacementBundle.GetString("__mvxViewModelRequest");
+            MvxViewModelRequest viewModelRequest2 = navigationSerializer.Serializer.DeserializeObject<MvxViewModelRequest>(string2);
+            if (viewModelRequest2 == null)
+                return MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragment;
+            bool flag = viewModelRequest1.ParameterValues == viewModelRequest2.ParameterValues || viewModelRequest1.ParameterValues.Count == viewModelRequest2.ParameterValues.Count && !viewModelRequest1.ParameterValues.Except(viewModelRequest2.ParameterValues).Any();
+            if ((currentFragment != null ? currentFragment.Tag : (string)null) != newFragment.Tag)
+                return flag ? MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragment : MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragmentAndViewModel;
+            return flag ? MvxCachingFragmentCompatActivity.FragmentReplaceMode.NoReplace : MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragmentAndViewModel;
+
+
         }
 
         protected override void CloseFragment(string tag, int contentId)
