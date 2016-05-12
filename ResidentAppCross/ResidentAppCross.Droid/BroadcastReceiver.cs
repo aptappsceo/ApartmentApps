@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
@@ -24,6 +25,14 @@ using ResidentAppCross.Droid.Views;
 
 namespace ResidentAppCross.Droid
 {
+
+    public static class GcmConstants
+    {
+        public const string SenderID = "575898383085"; // Google API Project Number
+        public const string ListenConnectionString = "Endpoint=sb://apartmentappsapihub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=y1hY/2CAo+YUTnGbSIAC85yeyZ26PrGHmrlc9h4jVHM=";
+        public const string NotificationHubName = "apartmentappsapihub";
+    }
+
     [BroadcastReceiver(Permission = Gcm.Client.Constants.PERMISSION_GCM_INTENTS)]
     [IntentFilter(new string[] { Gcm.Client.Constants.INTENT_FROM_GCM_MESSAGE },
         Categories = new string[] { "@PACKAGE_NAME@" })]
@@ -33,7 +42,7 @@ namespace ResidentAppCross.Droid
         Categories = new string[] { "@PACKAGE_NAME@" })]
     public class BroadcastReceiver : GcmBroadcastReceiverBase<PushHandlerService>
     {
-        public static string[] SENDER_IDS = new string[] { Views.Constants.SenderID };
+        public static string[] SENDER_IDS = new string[] { GcmConstants.SenderID };
 
         public const string TAG = "BroadcastReceiver-GCM";
     }
@@ -44,7 +53,7 @@ namespace ResidentAppCross.Droid
         public static string RegistrationID { get; private set; }
         private NotificationHub Hub { get; set; }
 
-        public PushHandlerService() : base(Views.Constants.SenderID)
+        public PushHandlerService() : base(GcmConstants.SenderID)
         {
             Log.Info(BroadcastReceiver.TAG, "PushHandlerService() constructor");
         }
@@ -64,7 +73,7 @@ namespace ResidentAppCross.Droid
             string messageText = intent.Extras.GetString("message");
             if (!string.IsNullOrEmpty(messageText))
             {
-                createNotification("New hub message!", messageText);
+                createNotification("Apartment Apps", messageText);
             }
             else
             {
@@ -125,7 +134,7 @@ namespace ResidentAppCross.Droid
         }
 
 
-        void createNotification(string title, string desc)
+        void createNotification(string title, string desc, int id = 1)
         {
             //Create notification
             var notificationManager = GetSystemService(Context.NotificationService) as NotificationManager;
@@ -133,19 +142,26 @@ namespace ResidentAppCross.Droid
             //Create an intent to show UI
             var uiIntent = new Intent(this, typeof(ApplicationHostActivity));
 
+
+            var builder = new NotificationCompat.Builder(this)
+                .SetSmallIcon(Android.Resource.Drawable.SymActionEmail)
+                .SetContentTitle(title).SetContentText(desc)
+                .SetAutoCancel(true)
+                .SetContentIntent(PendingIntent.GetActivity(this, 0, uiIntent, 0));
+
             //Create the notification
-            var notification = new Notification(Android.Resource.Drawable.SymActionEmail, title);
+         //   var notification = new Notification(Android.Resource.Drawable.SymActionEmail, title);
 
             //Auto-cancel will remove the notification once the user touches it
-            notification.Flags = NotificationFlags.AutoCancel;
+        //    notification.Flags = NotificationFlags.AutoCancel;
 
             //Set the notification info
             //we use the pending intent, passing our ui intent over, which will get called
             //when the notification is tapped.
-            notification.SetLatestEventInfo(this, title, desc, PendingIntent.GetActivity(this, 0, uiIntent, 0));
+           // notification.SetLatestEventInfo(this, title, desc, PendingIntent.GetActivity(this, 0, uiIntent, 0));
 
             //Show the notification
-            notificationManager.Notify(1, notification);
+            notificationManager.Notify(id, builder.Build());
         //    dialogNotify(title, desc);
         }
         /*

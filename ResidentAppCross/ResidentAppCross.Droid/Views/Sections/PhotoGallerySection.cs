@@ -374,6 +374,9 @@ namespace ResidentAppCross.Droid.Views.Sections
             this.AddView(ProgressBar);
         }
 
+        public int? TargetWidth { get; set; }
+        public int? TargetHeight { get; set; }
+
         public ProgressBar ProgressBar
         {
             get
@@ -383,7 +386,7 @@ namespace ResidentAppCross.Droid.Views.Sections
                     _progressBar = new ProgressBar(Context);
                     _progressBar.EnsureFrameLayoutParams().Gravity = GravityFlags.CenterHorizontal | GravityFlags.CenterVertical;
                     _progressBar.WithDimensions(40);
-                    _progressBar.ProgressDrawable = new ColorDrawable(Resources.GetColor(Resource.Color.accent));
+                    _progressBar.IndeterminateDrawable.SetColorFilter(Color.White, PorterDuff.Mode.Multiply);
                     _progressBar.Background = new ShapeDrawable(new OvalShape())
                     {
                         Bounds = new Rect(0, 0, 20, 20),
@@ -448,7 +451,14 @@ namespace ResidentAppCross.Droid.Views.Sections
             iAnimate.Start();
             pAnimate.Start();
 
-            var image = await Task.Run(()=>ImageExtensions.GetBitmapFromURL(src));
+            var image = await Task.Run(() =>
+            {
+                if (TargetWidth.HasValue)
+                    return ImageExtensions.GetBitmapWithPicasso(src).Resize(TargetWidth.Value, 0).Get();
+                if(TargetHeight.HasValue)
+                    return ImageExtensions.GetBitmapWithPicasso(src).Resize(0, TargetHeight.Value).Get();
+                return ImageExtensions.GetBitmapWithPicasso(src).Get();
+            });
             if (image == null)
             {
                 return;

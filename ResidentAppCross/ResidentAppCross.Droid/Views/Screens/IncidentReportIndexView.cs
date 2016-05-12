@@ -31,7 +31,7 @@ namespace ResidentAppCross.Droid.Views
             var adapter = new TicketIndexAdapter<IncidentIndexBindingModel>()
             {
                 Items = ViewModel.FilteredIncidents,
-                TitleSelector = i => i.UnitName,
+                TitleSelector = i => $"Unit {i.UnitName}",
                 SubTitleSelector = i => i.Title,
                 DetailsSelector = i =>
                 {

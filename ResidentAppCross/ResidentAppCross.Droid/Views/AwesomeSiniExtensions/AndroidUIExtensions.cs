@@ -86,9 +86,14 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
         public static T WithDimensions<T>(this T view, int dpSize) where T : View
         {
+            return view.WithDimensionsPx(dpSize.ToPx());
+        }
+
+        public static T WithDimensionsPx<T>(this T view, int pxSize) where T : View
+        {
             var ensureLayoutParams = view.EnsureLayoutParams();
-            ensureLayoutParams.Height = dpSize.ToPx();
-            ensureLayoutParams.Width = dpSize.ToPx();
+            ensureLayoutParams.Height = pxSize;
+            ensureLayoutParams.Width = pxSize;
             return view;
         }
 
@@ -103,6 +108,22 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             view.WithPaddingDp(8, 4, 8, 4);
             return view;
         }
+        
+        public static T WithScrollOnFocus<T>(this T view, ScrollView container) where T : View
+        {
+
+            view.FocusChange += (sender, args) =>
+            {
+                if (view.IsFocused)
+                {
+                    container.SmoothScrollTo(0, view.Bottom);
+                }
+            };
+
+            return view;
+
+        }
+        
 
         public static T WithPaddingDp<T>(this T view, int left, int top, int right, int bottom) where T : View
         {

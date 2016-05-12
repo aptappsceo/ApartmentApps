@@ -437,7 +437,6 @@ namespace ResidentAppCross.Droid.Views
             holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "Unit Information Missing";
             holder.TypeLabel.Text = SubTitleSelector?.Invoke(item) ?? "Subtitle";
             holder.DateLabel.Text = DateSelector?.Invoke(item) ?? "00/00/00 00:00 AM";
-            holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
 
             if(IconSelector != null)
             holder.IconView.SetImageResource(IconSelector.Invoke(item));
@@ -465,7 +464,9 @@ namespace ResidentAppCross.Droid.Views
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             var ticketIndexItemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.ticket_index_item, parent, false);
-            return new TicketIndexItemViewHolder(ticketIndexItemView);
+            var holder = new TicketIndexItemViewHolder(ticketIndexItemView);
+            holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
+            return holder;
         }
 
         public override int ItemCount => Items.Count;
@@ -500,7 +501,6 @@ namespace ResidentAppCross.Droid.Views
             holder.DetailsLabel.Text = DetailsSelector?.Invoke(item) ?? "~Location Coordinates~";
             holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "~Location Title~";
             holder.TypeLabel.Text = SubTitleSelector?.Invoke(item) ?? "~Location Subtitle~";
-            holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
         }
 
         public event Action<T> DetailsClicked;
@@ -508,7 +508,9 @@ namespace ResidentAppCross.Droid.Views
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             var ticketIndexItemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.location_index_item, parent, false);
-            return new LocationIndexItemViewHolder(ticketIndexItemView);
+            var holder = new LocationIndexItemViewHolder(ticketIndexItemView);
+            holder.DetailsButton.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
+            return holder;
         }
 
         public override int ItemCount => Items.Count;

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -95,6 +94,9 @@
         </android.support.design.widget.TextInputLayout>
 
 
+
+
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/LoginButton"
             android:layout_marginTop="8dp"
@@ -103,6 +105,29 @@
             android:padding="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_height="wrap_content"
+            android:text="New Here?"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/primary_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/SignUpButton"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:text="SIGN UP FOR APARTMENT APPS"
+            android:textColor="@color/primary_text"
+            android:backgroundTint="@color/accent"
+            android:includeFontPadding="false"
+            android:padding="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="27dp" />
 
     </LinearLayout>
 

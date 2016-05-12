@@ -230,6 +230,7 @@
     <Compile Include="Views\NavigationDrawerAdapter.cs" />
     <Compile Include="Views\NavigationDrawerFragment.cs" />
     <Compile Include="Views\Screens\ApplicationHostActivity.cs" />
+    <Compile Include="Views\Screens\CheckinFormView.cs" />
     <Compile Include="Views\Screens\CourtesyOfficerCheckinsView.cs" />
     <Compile Include="Views\Screens\GallerySection.cs" />
     <Compile Include="Views\Screens\GenericWebView.cs" />
@@ -255,6 +256,7 @@
     <Compile Include="Views\Sections\PhotoGallerySection.cs" />
     <Compile Include="Views\Sections\SpinnerSelectionSection.cs" />
     <Compile Include="Views\Sections\TextViewSection.cs" />
+    <Compile Include="Views\SingleFragmentActivity.cs" />
     <Compile Include="Views\ViewBase.cs" />
     <AndroidResource Include="Resources\drawable\logo.png" />
   </ItemGroup>
@@ -993,6 +995,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\exit.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\signup_form_view.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
