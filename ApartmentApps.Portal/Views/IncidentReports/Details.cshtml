@@ -1,4 +1,4 @@
-﻿@model ApartmentApps.Data.IncidentReport
+﻿@model IncidentReportViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -17,114 +17,160 @@
         </ol>
     </div>
 </div>
-
-
-
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Details IncidentReport</h5>
+
+            <div class="row animated fadeInRight">
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Request Detail</h5>
+                        </div>
+                        <div>
+                            <div class="ibox-content no-padding border-left-right">
+                                <img alt="image" class="img-responsive" src="@Model.SubmissionBy.ImageUrl">
+                            </div>
+                            <div class="ibox-content profile-content">
+                                <h4><strong>@Model.SubmissionBy.FullName</strong></h4>
+                                <p><i class="fa fa-map-marker"></i> Unit: @Model.UnitName</p>
+                                <h5>
+                                    Details
+                                </h5>
+                                <p>
+                                    @*<div><b>Permission To Enter</b> @Model.PermissionToEnter</div>*@
+                                    <div><b>Type</b> @Model.Title</div>
+                                    <div><b>Requested</b> @Html.Timeago(Model.RequestDate)</div>
+                                    <div><b>Status</b> @Model.StatusId</div>
+
+                                </p>
+                                <div class="user-button">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a href="@Url.Action("Print", new {id = Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i>Printable</a>
+                                        </div>
+
+
+                                        @*<div class="col-md-6">
+                                                <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> Buy a coffee</button>
+                                            </div>*@
+                                    </div>
+                                    @if (User.IsInRole("PropertyAdmin") || User.IsInRole("Admin"))
+                                    {
+                                        if (Model.StatusId != "Complete")
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <a href="@Url.Action("Pause", new {id = Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pause"></i>Pause</a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a href="@Url.Action("Complete", new {id=Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-check"></i>Complete</a>
+                                                </div>
+                                            </div>
+
+                                        }
+
+                                    }
+
+
+                                </div>
+                                @*<div class="row m-t-lg">
+                                        <div class="col-md-4">
+                                            <span class="bar" style="display: none;">5,3,9,6,5,9,7,3,5,2</span><svg class="peity" height="16" width="32"><rect fill="#1ab394" x="0" y="7.111111111111111" width="2.3" height="8.88888888888889"></rect><rect fill="#d7d7d7" x="3.3" y="10.666666666666668" width="2.3" height="5.333333333333333"></rect><rect fill="#1ab394" x="6.6" y="0" width="2.3" height="16"></rect><rect fill="#d7d7d7" x="9.899999999999999" y="5.333333333333334" width="2.3" height="10.666666666666666"></rect><rect fill="#1ab394" x="13.2" y="7.111111111111111" width="2.3" height="8.88888888888889"></rect><rect fill="#d7d7d7" x="16.5" y="0" width="2.3" height="16"></rect><rect fill="#1ab394" x="19.799999999999997" y="3.555555555555557" width="2.3" height="12.444444444444443"></rect><rect fill="#d7d7d7" x="23.099999999999998" y="10.666666666666668" width="2.3" height="5.333333333333333"></rect><rect fill="#1ab394" x="26.4" y="7.111111111111111" width="2.3" height="8.88888888888889"></rect><rect fill="#d7d7d7" x="29.7" y="12.444444444444445" width="2.3" height="3.5555555555555554"></rect></svg>
+                                            <h5><strong>169</strong> Posts</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="line" style="display: none;">5,3,9,6,5,9,7,3,5,2</span><svg class="peity" height="16" width="32"><polygon fill="#1ab394" points="0 15 0 7.166666666666666 3.5555555555555554 10.5 7.111111111111111 0.5 10.666666666666666 5.5 14.222222222222221 7.166666666666666 17.77777777777778 0.5 21.333333333333332 3.833333333333332 24.888888888888886 10.5 28.444444444444443 7.166666666666666 32 12.166666666666666 32 15"></polygon><polyline fill="transparent" points="0 7.166666666666666 3.5555555555555554 10.5 7.111111111111111 0.5 10.666666666666666 5.5 14.222222222222221 7.166666666666666 17.77777777777778 0.5 21.333333333333332 3.833333333333332 24.888888888888886 10.5 28.444444444444443 7.166666666666666 32 12.166666666666666" stroke="#169c81" stroke-width="1" stroke-linecap="square"></polyline></svg>
+                                            <h5><strong>28</strong> Following</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="bar" style="display: none;">5,3,2,-1,-3,-2,2,3,5,2</span><svg class="peity" height="16" width="32"><rect fill="#1ab394" x="0" y="0" width="2.3" height="10"></rect><rect fill="#d7d7d7" x="3.3" y="4" width="2.3" height="6"></rect><rect fill="#1ab394" x="6.6" y="6" width="2.3" height="4"></rect><rect fill="#d7d7d7" x="9.899999999999999" y="10" width="2.3" height="2"></rect><rect fill="#1ab394" x="13.2" y="10" width="2.3" height="6"></rect><rect fill="#d7d7d7" x="16.5" y="10" width="2.3" height="4"></rect><rect fill="#1ab394" x="19.799999999999997" y="6" width="2.3" height="4"></rect><rect fill="#d7d7d7" x="23.099999999999998" y="4" width="2.3" height="6"></rect><rect fill="#1ab394" x="26.4" y="0" width="2.3" height="10"></rect><rect fill="#d7d7d7" x="29.7" y="6" width="2.3" height="4"></rect></svg>
+                                            <h5><strong>240</strong> Followers</h5>
+                                        </div>
+                                    </div>
+                                    <div class="user-button">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> Send Message</button>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> Buy a coffee</button>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="ibox-content">
+                <div class="col-md-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Activites</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li>
+                                        <a href="#">Config option 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div><div class="ibox-content inspinia-timeline">
+                            <div class="feed-activity-list">
+                                @foreach (var item in Model.Checkins.OrderByDescending(p => p.Date))
+                                {
+                                    <div class="feed-element">
+                                        <a href="profile.html" class="pull-left">
+                                            <img alt="image" class="img-circle" src="@item.Officer.ImageThumbnailUrl">
+                                        </a>
+                                        <div class="media-body ">
+                                            <small class="pull-right">@item.Date.ToShortDateString()</small>
+                                            <strong>@item.Officer.FullName</strong> @item.StatusId <br>
+                                            <small class="text-muted">@Html.Timeago(item.Date)</small>
+                                            @if (!string.IsNullOrEmpty(item.Comments))
+                                            {
+                                                <div class="well">
+                                                    @item.Comments
+                                                </div>
+                                            }
+                                            @if (item.Photos != null)
+                                            {
+                                                <div class="row">
+                                                    @foreach (var photo in item.Photos)
+                                                    {
+                                                        <div class="col-md-4">
+                                                            <img src="@photo.Url" style="width: 100%;" />
+                                                        </div>
+
+                                                    }
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                }
+                            </div>
 
 
-				    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IncidentReportStatus.Name)
-        </dt>
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.IncidentReportStatus.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Property.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Property.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Unit.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Unit.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.ImageUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.ImageUrl)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GroupId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GroupId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Comments)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Comments)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IncidentType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IncidentType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CompletionDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CompletionDate)
-        </dd>
-
-    </dl>
-
-
-	    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary"})
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+                    </div>
 
                 </div>
             </div>
+
+
+
         </div>
     </div>
- </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>

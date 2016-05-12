@@ -76,6 +76,7 @@ namespace ApartmentApps.Api
         public async Task<bool> SendToUser(string username, string message)
         {
             var pns = "apns";
+            await Send(message, "gcm", "userid:" + username);
             return await Send(message, pns, "userid:" + username);
         }
 
@@ -119,8 +120,9 @@ namespace ApartmentApps.Api
         {
             var pns = "apns";
          
+            //
+            await Send(message, "gcm", $"propertyid:{propertyId} && role:{role}");
             return await Send(message, pns, $"propertyid:{propertyId} && role:{role}");
-
         }
     }
 

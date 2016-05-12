@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -21,6 +22,8 @@ namespace ApartmentApps.Portal.Controllers
 
         public List<string> RolesList { get; set; }
         public List<string> SelectedRoles { get; set; }
+
+
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
 
@@ -33,12 +36,18 @@ namespace ApartmentApps.Portal.Controllers
 
     }
     [Authorize(Roles = "PropertyAdmin,Admin")]
-    public class UserManagementController : AAController
+    public class UserManagementController : CrudController<UserBindingModel,ApplicationUser>
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public UserManagementController(PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(context, userContext)
+        //public UserManagementController(PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(context, userContext)
+        //{
+        //    _signInManager = signInManager;
+        //    _userManager = userManager;
+        //}
+
+        public UserManagementController(IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(repository, service, context, userContext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -72,11 +81,11 @@ namespace ApartmentApps.Portal.Controllers
    
 
         // GET: UserManagement
-        public ActionResult Index()
-        {
-            var applicationusers = Context.Users;
-            return View(applicationusers.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    var applicationusers = Context.Users;
+        //    return View(applicationusers.ToList());
+        //}
 
         public ActionResult EditUser(string id = null)
         {

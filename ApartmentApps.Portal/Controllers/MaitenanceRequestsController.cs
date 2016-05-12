@@ -68,6 +68,7 @@ namespace ApartmentApps.Portal.Controllers
   
     }
 
+    [DisplayName("Update Maintenance Request")]
     public class MaintenanceStatusRequestModel
     {
         [DataType("Hidden")]
@@ -103,14 +104,14 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult Pause(int id)
         {
-            return View("AutoForm", new AutoFormModel(new MaintenanceStatusRequestModel() {Id = id}, "PauseRequest"));
+            return AutoForm(new MaintenanceStatusRequestModel() { Id = id }, "PauseRequest");
         }
         public ActionResult Complete(int id)
         {
-            return View("AutoForm", new AutoFormModel(new MaintenanceStatusRequestModel() { Id = id }, "CompleteRequest"));
+            return AutoForm(new MaintenanceStatusRequestModel() {Id = id}, "CompleteRequest");
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public ActionResult SubmitRequest(MaitenanceRequestModel request)
         {
             
@@ -156,7 +157,25 @@ namespace ApartmentApps.Portal.Controllers
         }
 
     }
+    public class AutoGridModel
+    {
+        private string _title;
+        public object[] Model { get; set; }
 
+        public string Title
+        {
+            get { return _title ?? (_title = Model.GetType().GetCustomAttributes(typeof(DisplayNameAttribute), true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? Model.GetType().Name); }
+            set { _title = value; }
+        }
+
+        public Type Type { get; set; }
+
+
+        public AutoGridModel(object[] model)
+        {
+            Model = model;
+        }
+    }
     public class AutoFormModel
     {
         private string _title;
@@ -169,8 +188,11 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         public string PostAction { get; set; }
-        public AutoFormModel(object model, string postAction)
+        public string PostController { get; set; }
+
+        public AutoFormModel(object model, string postAction, string postController)
         {
+            PostController = postController;
             Model = model;
       
             PostAction = postAction;

@@ -41,12 +41,18 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
-          
+            if (CurrentUser == null)
+            {
+                return RedirectToAction("Login","Account");
+            }
             if (startDate == null)
                 startDate = CurrentUser.TimeZone.Now().Subtract(new TimeSpan(30, 0, 0, 0));
 
             if (endDate == null)
                 endDate = CurrentUser.TimeZone.Now().AddDays(1);
+            
+            var todayEnd = CurrentUser.TimeZone.Now().AddDays(1);
+            var todayStart = CurrentUser.TimeZone.Now();
 
             return View("Index2", new DashboardBindingModel {
                 StartDate = startDate,
@@ -58,14 +64,14 @@ namespace ApartmentApps.Portal.Controllers
                 IncidentReportsOutstanding = IncidentsByRange(startDate, endDate).Count(p=>p.StatusId != "Reported" && p.StatusId != "Complete"),
                 IncidentReportsComplete = IncidentsByRange(startDate, endDate).Count(p=>p.StatusId == "Complete"),
                 MaintenanceTotalOutstanding = Context.MaitenanceRequests.Count(p=>p.StatusId != "Complete"),
-                MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p=>p.ScheduleDate > DateTime.Now && p.ScheduleDate < DateTime.Now.AddDays(1) && p.StatusId == "Scheduled"),
+                MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p=>p.ScheduleDate > todayStart && p.ScheduleDate < todayEnd && p.StatusId == "Scheduled"),
                 IncidentReportsTotalOutstanding = Context.IncidentReports.Count(x=>x.StatusId != "Complete"),
                 FeedItems = FeedService.GetAll(),
                 //Entered = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId == "Submitted"),
                 //Outstanding = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId != "Complete"),
                 //Completed = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId == "Complete"),
-                WorkOrdersPerEmployee = WorkOrdersByRange(startDate, endDate).Where(p=>p.StatusId == "Complete")
-                    .GroupBy(p=>p.User)
+                WorkOrdersPerEmployee = CheckinsByRange(startDate, endDate).Where(p=>p.StatusId == "Complete")
+                    .GroupBy(p=>p.Worker)
                     .Select(p=>new { label = p.Key.FirstName + " " + p.Key.LastName, data = p.Count() })
                     .ToArray()
             });
@@ -79,6 +85,10 @@ namespace ApartmentApps.Portal.Controllers
         private IQueryable<MaitenanceRequest> WorkOrdersByRange(DateTime? startDate, DateTime? endDate)
         {
             return Context.MaitenanceRequests.Where(p=>p.SubmissionDate > startDate && p.SubmissionDate < endDate);
+        }
+        private IQueryable<MaintenanceRequestCheckin> CheckinsByRange(DateTime? startDate, DateTime? endDate)
+        {
+            return Context.MaintenanceRequestCheckins.Where(p => p.Date > startDate && p.Date < endDate);
         }
     }
 }

@@ -96,7 +96,7 @@
                         <div class="media-body ">
                             <small class="pull-right">@item.Date.ToShortDateString()</small>
                             <strong>@item.Worker.FullName</strong> @item.StatusId <br>
-                            <small class="text-muted">@Html.Timeago(item.Date)</small>
+                            <small class="text-muted">@item.Date</small>
                             @if (!string.IsNullOrEmpty(item.Comments))
                             {
                                 <p >

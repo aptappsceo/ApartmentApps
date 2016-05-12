@@ -4,18 +4,39 @@
 <div class="form-horizontal">
     @foreach (var property in Model.Properties)
     {
+        if (property.Hidden)
+        {
+            @Html.Hidden(property.Name, property.GetValue())
+            continue;
+        }
         <div class="form-group">
             <label class="control-label col-md-2" for="@property.Name">@property.Label</label>
             <div class="col-md-10">
                 @if (property.Choices != null)
                 {
-                   @Html.DropDownList(property.Name, property.Choices.Select(p => new SelectListItem()
-                   {
-                       Value = p.Id,
-                       Text = p.Value,
-                       Selected = p.Selected
-                   }))
-                } else if (property.SystemType == typeof (bool))
+                    if (property.Choices.Length <= 4)
+                    {
+                        <div data-toggle="buttons" class="btn-group">
+                            @foreach (var item in property.Choices)
+                            {
+                                <label class="btn btn-sm btn-white @(item.Selected ? "active" : string.Empty)">
+                                     <input type="radio" id="option1" name="@property.Name" value="@item.Id" @(item.Selected ? "checked" : string.Empty)> @item.Value
+                                </label>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.DropDownList(property.Name, property.Choices.Select(p => new SelectListItem()
+                       {
+                           Value = p.Id,
+                           Text = p.Value,
+                           Selected = p.Selected
+                       }))
+                    }
+
+                }
+                else if (property.SystemType == typeof(bool))
                 {
                     @Html.CheckBox(property.Name, property.GetValue())
                 }

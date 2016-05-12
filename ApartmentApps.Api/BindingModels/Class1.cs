@@ -59,6 +59,7 @@ namespace ApartmentApps.Api.BindingModels
         public List<string> AcceptableCheckinCodes { get; set; }
         public int Id { get; set; }
         public bool Complete { get; set; }
+        public DateTime? Date { get; set; }
     }
 
     public class IncidentReportBindingModel

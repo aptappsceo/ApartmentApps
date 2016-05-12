@@ -1,0 +1,14 @@
+﻿@using System.ComponentModel
+@using ApartmentApps.Portal.Controllers
+@using FormFactory
+@using FormFactory.AspMvc
+@model AutoGridModel
+@{
+    ViewBag.Title = Model.Title;
+}
+<div class="ibox">
+  
+    <div class="ibox-content">
+            @Html.RenderGrid(Model.Type, Model.Model)
+    </div>
+</div>

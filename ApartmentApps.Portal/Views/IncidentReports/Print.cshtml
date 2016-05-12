@@ -1,0 +1,113 @@
+﻿@using ApartmentApps.Data
+@model IncidentReportViewModel
+
+@{
+    Layout = "~/Views/Shared/_Print.cshtml";
+    var property = ViewBag.Property as Property;
+}
+<div class="row">
+    <div class="col-md-4">
+        <h1>Incident Report <small>- @Model.StatusId</small></h1>
+        <h2>@property.Name</h2>
+    </div>
+    <div class="col-md-4" style="padding: 40px; border: solid 1px black;">
+        <table>
+            <tr>
+                <td><strong>Date:</strong></td>
+                <td></td>
+               
+               
+            </tr>
+            <tr>
+                <td><strong>Time In:</strong></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><strong>Time Out:</strong></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="height: 100px;"><strong>Notes:</strong></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><strong>Signature:</strong></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table>
+            <tr>
+                <td><strong>Report Number:</strong></td>
+                <td>@Model.Id</td>
+
+
+
+            </tr>
+            <tr>
+                <td><strong>Report Date:</strong></td>
+                <td>@Model.RequestDate</td>
+            </tr>
+     
+        </table>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-6">
+        <table>
+            <tr><td><strong>Building - Unit:</strong></td><td>@Model.BuildingName - @Model.UnitName</td></tr>
+            <tr><td style="width: 120px;"><strong>Problem:</strong></td><td>@Model.Title</td></tr>
+            <tr><td><strong>Description:</strong></td><td>@Model.Comments</td></tr>
+            <tr><td><strong>Created By:</strong></td><td>@Model.SubmissionBy.FullName</td></tr>
+            @*<tr><td>Permission To Enter</td><td>@(Model.PermissionToEnter ? "Yes" : "No")</td></tr>*@
+        </table>
+    </div>
+    <div class="col-md-6"></div>
+
+</div>
+<br/>
+<div>
+    <div class="col-md-12">
+        <div class="ibox-content inspinia-timeline">
+            <div class="feed-activity-list">
+                @foreach (var item in Model.Checkins.OrderByDescending(p => p.Date))
+                {
+                    <div class="feed-element">
+                        @*<a href="profile.html" class="pull-left">
+                            <img alt="image" class="img-circle" src="@item.Worker.ImageThumbnailUrl">
+                        </a>*@
+                        <div class="media-body ">
+                            <small class="pull-right">@item.Date.ToShortDateString()</small>
+                            <strong>@item.Officer.FullName</strong> @item.StatusId <br>
+                            <small class="text-muted">@item.Date</small>
+                            @if (!string.IsNullOrEmpty(item.Comments))
+                            {
+                                <p >
+                                    @item.Comments
+                                </p>
+                            }
+                            @*@if (item.Photos != null)
+                            {
+                                <div class="row">
+                                    @foreach (var photo in item.Photos)
+                                    {
+                                        <div class="col-md-4">
+                                            <img src="@photo.Url" style="width: 100%;" />
+                                        </div>
+
+                                    }
+                                </div>
+                            }*@
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

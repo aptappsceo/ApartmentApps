@@ -460,11 +460,19 @@ namespace ApartmentApps.Portal.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            //if (Url.IsLocalUrl(returnUrl))
+            //{
+            //    return Redirect(returnUrl);
+            //}
+            if (User.IsInRole("PropertyAdmin") || User.IsInRole("RegionalAdmin") || User.IsInRole("Admin"))
             {
-                return Redirect(returnUrl);
+                return RedirectToAction("Index", "Dashboard");
             }
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                return RedirectToAction("NewRequest", "MaitenanceRequests");
+            }
+            
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

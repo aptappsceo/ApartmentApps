@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Data;
 using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api.ViewModels
@@ -11,7 +12,7 @@ namespace ApartmentApps.Api.ViewModels
     // Models used as parameters to AccountController actions.
     public class UserBindingModel : BaseViewModel
     {
-        public string Id { get; set; }
+
         public string ImageUrl { get; set; }
         public string ImageThumbnailUrl { get; set; }
         public string FirstName { get; set; }
@@ -24,6 +25,7 @@ namespace ApartmentApps.Api.ViewModels
         public string Address { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
+        public string Email { get; set; }
     }
     public class MaintenanceRequestViewModel : BaseViewModel
     {
@@ -45,9 +47,27 @@ namespace ApartmentApps.Api.ViewModels
         public bool HasPet { get; set; }
     }
 
+    public class CourtesyCheckinViewModel : BaseViewModel
+    {
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public string Label { get; set; }
+        public List<string> AcceptableCheckinCodes { get; set; }
+
+        public bool Complete { get; set; }
+    }
+
     public class IncidentReportViewModel : BaseViewModel
     {
-        
+        public string Title { get; set; }
+        public DateTime RequestDate { get; set; }
+        public string Comments { get; set; }
+        public UserBindingModel SubmissionBy { get; set; }
+        public string StatusId { get; set; }
+        public string UnitName { get; set; }
+        public string BuildingName { get; set; }
+        public IncidentCheckinBindingModel LatestCheckin { get; set; }
+        public IEnumerable<IncidentCheckinBindingModel> Checkins { get; set; }
     }
     public class BuildingViewModel : BaseViewModel
     {

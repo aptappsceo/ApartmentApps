@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
@@ -8,20 +9,20 @@ using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api
 {
-    public class CourtesyService : StandardCrudService<IncidentReport, IncidentIndexBindingModel> ,ICourtesyService
+    public class IncidentsService : StandardCrudService<IncidentReport, IncidentReportViewModel> ,IIncidentsService
     {
         public PropertyContext Context { get; set; }
-        private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
+        public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; }
         private IBlobStorageService _blobStorageService;
 
-        public CourtesyService(IMapper<ApplicationUser,UserBindingModel> userMapper, IBlobStorageService blobStorageService, PropertyContext context) : base(context.IncidentReports)
+        public IncidentsService(IMapper<ApplicationUser,UserBindingModel> userMapper, IBlobStorageService blobStorageService, PropertyContext context) : base(context.IncidentReports)
         {
             Context = context;
-            _userMapper = userMapper;
+            UserMapper = userMapper;
             _blobStorageService = blobStorageService;
         }
 
-        public int SubmitIncidentReport(ApplicationUser user, string comments, IncidentType incidentReportTypeId, List<byte[]> images)
+        public int SubmitIncidentReport(ApplicationUser user, string comments, IncidentType incidentReportTypeId, List<byte[]> images, int unitId = 0)
         {
 
             var incidentReport = new IncidentReport()
@@ -31,12 +32,13 @@ namespace ApartmentApps.Api
                 IncidentType = incidentReportTypeId,
                 StatusId = "Reported",
                 CreatedOn = user.TimeZone.Now(),
-                GroupId = Guid.NewGuid()
+                GroupId = Guid.NewGuid(),
+                UnitId = unitId
             };
            
 
             Context.IncidentReports.Add(incidentReport);
-
+            if (images != null)
             foreach (var image in images)
             {
                 var imageKey = $"{Guid.NewGuid()}.{user.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
@@ -115,24 +117,34 @@ namespace ApartmentApps.Api
             return Checkin(user, incidentReportId, comments, "Complete", photos);
         }
 
-        public override void ToModel(IncidentIndexBindingModel viewModel, IncidentReport model)
+        public override void ToModel(IncidentReportViewModel viewModel, IncidentReport model)
         {
             model.Comments = viewModel.Comments;
             model.StatusId = viewModel.StatusId;
         }
 
-        public override void ToViewModel(IncidentReport x, IncidentIndexBindingModel viewModel)
+        public override void ToViewModel(IncidentReport model, IncidentReportViewModel viewModel)
         {
+            viewModel.Title = model.IncidentType.ToString();
+            viewModel.RequestDate = model.CreatedOn;
+            viewModel.Comments = model.Comments;
+            viewModel.SubmissionBy = UserMapper.ToViewModel(model.User);
+            viewModel.StatusId = model.StatusId;
+            viewModel.Id = model.Id;
+            viewModel.UnitName = model.Unit?.Name;
+            viewModel.BuildingName = model.Unit?.Building?.Name;
 
-            viewModel.Title = x.IncidentType.ToString();
-            viewModel.Comments = x.Comments;
-            viewModel.UnitName = x.Unit?.Name;
-            viewModel.BuildingName = x.Unit?.Building?.Name;
-            viewModel.RequestDate = x.CreatedOn;
-            viewModel.ReportedBy = _userMapper.ToViewModel(x.User);// x.User.ToUserBindingModel(BlobStorageService);
-            viewModel.StatusId = x.StatusId;
-            viewModel.LatestCheckin = x.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
-            viewModel.Id = x.Id;
+            viewModel.LatestCheckin = model.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
+            viewModel.Checkins = model.Checkins.Select(p => p.ToIncidentCheckinBindingModel(_blobStorageService));
+            //viewModel.Title = x.IncidentType.ToString();
+            //viewModel.Comments = x.Comments;
+            //viewModel.UnitName = x.Unit?.Name;
+            //viewModel.BuildingName = x.Unit?.Building?.Name;
+            //viewModel.RequestDate = x.CreatedOn;
+            //viewModel.SubmissionBy = _userMapper.ToViewModel(x.User);// x.User.ToUserBindingModel(BlobStorageService);
+            //viewModel.StatusId = x.StatusId;
+            //viewModel.LatestCheckin = x.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
+            viewModel.Id = model.Id;
 
         }
     }

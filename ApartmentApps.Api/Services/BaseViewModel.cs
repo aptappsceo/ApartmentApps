@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ApartmentApps.Portal.Controllers
 {
     public class BaseViewModel
     {
-        public int Id { get; set; }
+        [DataType("Hidden")]
+        public object Id { get; set; }
     }
 }
