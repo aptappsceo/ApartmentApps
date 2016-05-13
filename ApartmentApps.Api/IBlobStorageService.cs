@@ -52,14 +52,16 @@ namespace ApartmentApps.Api
             var header = new byte[4];
             Array.Copy(data,header,4);
             string photoFileName;
-
+            string contentType = "image/";
             if (IsJpegHeader(header))
             {
                 photoFileName = photoKey + ".jpeg";
+                contentType += "jpeg";
             }
             else if (IsPngHeader(header))
             {
                 photoFileName = photoKey + ".png";
+                contentType += "png";
             }
             else
             {
@@ -67,7 +69,7 @@ namespace ApartmentApps.Api
             }
 
             var blob = _photoBlobContainer.GetBlockBlobReference(photoFileName);
-
+            blob.Properties.ContentType = contentType;
             blob.UploadFromByteArray(data,0,data.Length);
 
             return photoFileName;
