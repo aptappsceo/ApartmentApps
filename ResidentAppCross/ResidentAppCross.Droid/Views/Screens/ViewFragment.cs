@@ -81,6 +81,15 @@ namespace ResidentAppCross.Droid.Views
         public ImageView IconView { get; set; }
     }
 
+    public class TextInputSection : FragmentSection
+    {
+        [Outlet]
+        public AppCompatEditText TextInput { get; set; }
+
+        [Outlet]
+        public TextInputLayout TextInputLayout { get; set; }
+    }
+
     public class ActionBarSection : FragmentSection
     {
         [Outlet]

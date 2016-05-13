@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_below="@id/Label"
-        android:text="By setting this to on, you give tech personal a permission to enter your house even if you are not present. "
+        android:text="Do you give permission for maintenance staff to enter when you are not home?"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="@color/secondary_text_body" />
 

@@ -10,6 +10,7 @@ using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using blocke.circleimageview;
+using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
@@ -140,6 +141,24 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             signoutItem.SetIcon(SharedResources.Icons.Exit.ToDrawableId());
             CommandsMap[signoutItem.ItemId] = ViewModel.SignOutCommand;
             signoutItem.SetCheckable(true);
+            index++;
+
+            var testMessageItem = homeMenu.Add(0, index, index, "Message Screen");
+            testMessageItem.SetIcon(SharedResources.Icons.Exit.ToDrawableId());
+            CommandsMap[testMessageItem.ItemId] = new MvxCommand(() =>
+            {
+                ViewModel.ShowViewModel<MessageDetailsViewModel>(vm=> {});
+            });
+            testMessageItem.SetCheckable(true);
+            index++;
+
+            var testChangePasswordItem = homeMenu.Add(0, index, index, "Change Password");
+            testChangePasswordItem.SetIcon(SharedResources.Icons.Exit.ToDrawableId());
+            CommandsMap[testChangePasswordItem.ItemId] = new MvxCommand(() =>
+            {
+                ViewModel.ShowViewModel<ChangePasswordViewModel>(vm=> {});
+            });
+            testChangePasswordItem.SetCheckable(true);
             index++;
 
 

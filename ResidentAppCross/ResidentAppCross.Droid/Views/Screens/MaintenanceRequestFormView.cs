@@ -40,7 +40,10 @@ namespace ResidentAppCross.Droid.Views
             base.Bind();
             HeaderSection.TitleLabel.Text = "Request Maintenance";
             TypeSelectionSection.Label.Text = "Request Type:";
-        
+
+            EntrancePermissionSection.SubtitleLabel.Text =
+                "Do you give permission for maintenance staff to enter when you are not home?";
+
             var set = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
             set.Bind(TypeSelectionSection.Button)
                 .For(b => b.Text)
@@ -82,6 +85,87 @@ namespace ResidentAppCross.Droid.Views
             sections.Add(PhotoSection);
             sections.Add(EntrancePermissionSection);
             sections.Add(PetTypeSelection);
+            sections.Add(ActionBar);
+        }
+    }
+
+    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
+    public class MessageDetailsView : SectionViewFragment<MessageDetailsViewModel>
+    {
+        public override int LayoutId => DefaultLayoutId;
+
+        public NoneditableTextSection SubjectSection { get; set; }
+        public NoneditableTextSection DateSection { get; set; }
+        public NoneditableTextSection MessageSection { get; set; }
+
+        public override void Bind()
+        {
+
+            SubjectSection.HeaderLabel.Text = "Subject";
+            DateSection.HeaderLabel.Text = "Date";
+            MessageSection.HeaderLabel.Text = "Message";
+
+            var set = this.CreateBindingSet<MessageDetailsView, MessageDetailsViewModel>();
+            set.Bind(SubjectSection.InputField).For(f=>f.Text).To(vm=>vm.Subject);
+            set.Bind(DateSection.InputField).For(f=>f.Text).To(vm=>vm.Date);
+            set.Bind(MessageSection.InputField).For(f=>f.Text).To(vm=>vm.Message);
+            set.Apply();
+
+        }
+
+        public override void GetContent(List<FragmentSection> sections)
+        {
+            base.GetContent(sections);
+            sections.Add(SubjectSection);
+            sections.Add(DateSection);
+            sections.Add(MessageSection);
+        }
+    }
+
+    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
+    public class ChangePasswordView : SectionViewFragment<ChangePasswordViewModel>
+    {
+        public override int LayoutId => DefaultLayoutId;
+
+        public HeaderSection HeaderSection { get; set; }
+        public TextInputSection OldPasswordInput { get; set; }
+        public TextInputSection NewPasswordInput { get; set; }
+        public TextInputSection NewPasswordConfirmation { get; set; }
+        public ActionBarSection ActionBar { get; set; }
+
+        public override void Bind()
+        {
+
+
+            HeaderSection.IconView.Visibility = ViewStates.Invisible;
+            HeaderSection.TitleLabel.Text = "Change Password";
+            HeaderSection.SubtitleLabel.Text = "Please, fill the information below";
+
+            OldPasswordInput.TextInputLayout.Hint = "Current Password";
+            NewPasswordInput.TextInputLayout.Hint = "New Password";
+            NewPasswordConfirmation.TextInputLayout.Hint = "Confirm New Password";
+
+            var set = this.CreateBindingSet<ChangePasswordView, ChangePasswordViewModel>();
+            set.Bind(OldPasswordInput.TextInput).TwoWay().For(f=>f.Text).To(vm=>vm.OldPassword);
+            set.Bind(NewPasswordInput.TextInput).TwoWay().For(f=>f.Text).To(vm=>vm.NewPassword);
+            set.Bind(NewPasswordConfirmation.TextInput).TwoWay().For(f=>f.Text).To(vm=>vm.NewPasswordConfirmation );
+            set.Apply();
+
+            ActionBar.SetItems(new ActionBarSection.ActionBarItem()
+            {
+                Action = ()=> { ViewModel.ChangePasswordCommand.Execute(null); },
+                Title = "CHANGE PASSWORD"
+            });
+
+        }
+
+        public override void GetContent(List<FragmentSection> sections)
+        {
+            base.GetContent(sections);
+            sections.Add(HeaderSection);
+            sections.Add(OldPasswordInput);
+            sections.Add(NewPasswordInput);
+            sections.Add(NewPasswordConfirmation);
             sections.Add(ActionBar);
         }
     }

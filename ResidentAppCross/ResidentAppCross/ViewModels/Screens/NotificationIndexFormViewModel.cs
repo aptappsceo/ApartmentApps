@@ -74,7 +74,7 @@ namespace ResidentAppCross.ViewModels.Screens
                     Notifications.Clear();
                     Notifications.AddRange(task.Body);
                     UpdateFilters();
-                }).OnStart("Fetching Incidents...");
+                }).OnStart("Fetching Notifications...");
             }
         }
 
