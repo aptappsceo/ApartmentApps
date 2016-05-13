@@ -57,6 +57,8 @@ namespace ApartmentApps.Data
 
         public string DeviceToken { get; set; }
 
+        public int? ForteClientId { get; set; }
+
         int IBaseEntity.Id => 0;
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)

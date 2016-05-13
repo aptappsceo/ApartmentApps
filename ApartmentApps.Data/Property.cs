@@ -39,7 +39,9 @@ namespace ApartmentApps.Data
         
         public string TimeZoneIdentifier { get; set; }
         public virtual ICollection<ApplicationUser> Users { get; set; }
-         
+
+        public int? MerchantId { get; set; }
+
         //public virtual PropertyEntrataInfo EntrataInfo { get; set; }
         //public virtual PropertyYardiInfo YardiInfo { get; set; }
     }
