@@ -17,13 +17,13 @@ namespace ApartmentApps.API.Service.Controllers.Api
     {
         public VersionInfo Get()
         {
-            string appPackageName = "TODO";
+            string appPackageName = "com.apartmentapps";
             return new VersionInfo
             {
                 AndroidStoreUrl = "http://play.google.com/store/apps/details?id=" + appPackageName,
                 IPhoneStoreUrl = "https://itunes.apple.com/tj/app/apartment-apps-v2/id1088688855?mt=8",
-                IPhoneBuildNumber = 1,
-                AndroidBuildNumber = 1,
+                IPhoneBuildNumber = 2,
+                AndroidBuildNumber = 2,
                 Version = 2.0
             };
         }

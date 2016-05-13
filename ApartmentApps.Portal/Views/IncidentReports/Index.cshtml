@@ -1,7 +1,7 @@
 ﻿@using ApartmentApps.Api.BindingModels
 @using ApartmentApps.Data
 @using DataSource = Syncfusion.JavaScript.DataSource
-@model IEnumerable<ApartmentApps.Api.BindingModels.IncidentIndexBindingModel>
+@model IEnumerable<IncidentReportViewModel>
 
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -11,19 +11,19 @@
                 <div class="ibox-title">
                     <h5>Incident Reports</h5>
                     <div class="ibox-tools">
-                        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-xs" })
+                        @Html.ActionLink("Create New", "NewRequest", null, new { @class = "btn btn-primary btn-xs" })
                     </div>
                 </div>
                 <div class="ibox-content">
                     @(
-                    Html.EJ().Grid<IncidentIndexBindingModel>("Grid")
+                    Html.EJ().Grid<IncidentReportViewModel>("Grid")
                     .Datasource(ds => ds.URL(Url.Action("DataSource")).Adaptor(AdaptorType.UrlAdaptor))
                     //.Datasource(Model.ToArray())
                     .Mappers(map =>
                         map
                         .ExportToExcelAction(Url.Action("ExportToExcel"))
                         .ExportToPdfAction(Url.Action("ExportToPdf"))
-                        .ExportToWordAction(Url.Action("ExportToWord"))
+     
                     )
                      .ToolbarSettings(toolbar =>
                      {
@@ -38,6 +38,7 @@
                     .FilterSettings(filter => { filter.FilterType(FilterType.Excel).EnableCaseSensitivity(true); })
                     //.EditSettings(edit => { edit.AllowAdding().AllowDeleting().AllowEditing().EditMode(EditMode.Dialog); })
                     .EnableToolbarItems(true)
+                    .ClientSideEvents(_ => _.RecordClick("clicked"))
                     //.ToolbarSettings(_=>_.ToolbarItems(new List<ToolBarItems>() { new Toolbarit}))
                     .AllowPaging(true)
                     .AllowGrouping()
@@ -48,10 +49,10 @@
 
                         c.Field(model => model.Id).Add();
                         c.Field(model => model.Title).HeaderText("Type").Add();
-                        c.Field(model => model.UnitName).HeaderText("Building Name").Add();
+                        c.Field(model => model.UnitName).HeaderText("Unit").Add();
                         c.Field(model => model.Comments).HeaderText("Comments").Add();
                         c.Field(model => model.StatusId).HeaderText("Status").Add();
-                        c.Field(model => model.Reporter).HeaderText("Requestor").Add();
+                        //c.Field(model => model.SubmissionBy.FullName).HeaderText("Requestor").DefaultValue(string.Empty).Add();
                         c.Field(model => model.RequestDate).HeaderText("Request Date").Add();
 
                         //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Edit", "Edit", new { id = "{{:Id}}" }).ToHtmlString())).Add();
@@ -67,4 +68,14 @@
 </div>
 
 
+
+@section Scripts {
+    <script>
+        function clicked(a) {
+            console.log(a);
+            window.location.href = "@Url.Action("Details")?id=" + a.data.Id;
+
+        }
+    </script>
+}
 

@@ -24,7 +24,7 @@ namespace ApartmentApps.IoC
            
             kernel.Bind< IService,
                 IMapper < TModel, TViewModel >,
-                StandardCrudService <TModel, TViewModel>>()
+                StandardCrudService <TModel, TViewModel>, IServiceFor<TViewModel>>()
                 .To<TService>().InRequestScope();
 
             //kernel.Bind<IMapper<TModel, TViewModel>>().To<TService>().InRequestScope();
@@ -33,6 +33,9 @@ namespace ApartmentApps.IoC
         }
         public static void RegisterServices(IKernel kernel)
         {
+            
+            //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
+            ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
             kernel.Bind<EntrataIntegration>().ToSelf().InRequestScope();
             kernel.Bind<IUnitImporter>().To<UnitImporter>().InRequestScope();
             kernel.Bind<Property>().ToMethod(_ => kernel.Get<IUserContext>().CurrentUser.Property).InRequestScope();
@@ -80,7 +83,8 @@ namespace ApartmentApps.IoC
             kernel.Bind<ApplicationDbContext>().ToSelf().InRequestScope();
             kernel.Bind<IService>().To<AlertsService>().InRequestScope();
             kernel.Bind<IMaintenanceService>().To<MaintenanceService>().InRequestScope();
-            kernel.Bind<ICourtesyService>().To<CourtesyService>().InRequestScope();
+            //kernel.Bind<IInci>().To<MaintenanceService>().InRequestScope();
+            kernel.Bind<IIncidentsService>().To<IncidentsService>().InRequestScope();
             kernel.Bind<DbContext>().ToMethod(_ => _.Kernel.Get<ApplicationDbContext>()).InRequestScope();
             kernel.Bind<IFeedSerivce>().To<FeedSerivce>().InRequestScope();
 
@@ -88,7 +92,10 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<Building, BuildingViewModel, BuildingService>();
             kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService>();
             kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService>();
-            kernel.RegisterMappable<IncidentReport, IncidentIndexBindingModel, CourtesyService>();
+            kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService>();
+            kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService>();
+
+            kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
         }
     }
 }

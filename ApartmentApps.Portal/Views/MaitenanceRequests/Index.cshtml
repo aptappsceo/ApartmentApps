@@ -16,7 +16,7 @@
                 </div>
                 <div class="ibox-content">
                     @(
-                    Html.EJ().Grid<MaintenanceIndexBindingModel>("Grid")
+                    Html.EJ().Grid<MaintenanceRequestViewModel>("Grid")
                     .Datasource(ds => ds.URL(Url.Action("DataSource")).Adaptor(AdaptorType.UrlAdaptor))
                     //.Datasource(Model.ToArray())
                     .Mappers(map =>

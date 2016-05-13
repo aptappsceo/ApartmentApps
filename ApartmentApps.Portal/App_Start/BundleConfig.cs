@@ -13,7 +13,7 @@ namespace ApartmentApps.Portal
             bundles.Add(new ScriptBundle("~/bundles/jquery")
 
                 //.Include("~/Scripts/jquery-2.1.1.min.js")
-                .Include("~/Scripts/jquery-1.10.2.min.js")
+                .Include("~/Scripts/jquery-2.1.1.min.js")
                 .Include("~/Scripts/jquery.easing.1.3.min.js")
                 .Include("~/Scripts/jsrender.min.js")
                 .Include("~/Scripts/ej/ej.web.all.min.js")
@@ -56,7 +56,8 @@ namespace ApartmentApps.Portal
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/animate.css",
-                      "~/Content/style.css"));
+                      "~/Content/style.css",
+                      "~/Content/Site.css"));
 
             // Font Awesome icons
             bundles.Add(new StyleBundle("~/font-awesome/css").Include(

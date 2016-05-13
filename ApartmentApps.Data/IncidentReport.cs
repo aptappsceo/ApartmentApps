@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ApartmentApps.Data
 {
-    public class IncidentReport : PropertyEntity, IImageContainer, IFeedItem
+    public class IncidentReport : PropertyEntity, IImageContainer, IFeedItem, IBaseEntity
     {
      
 

@@ -46,24 +46,29 @@
                                     </p>
                                     <div class="user-button">
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-12">
                                                 <a href="@Url.Action("Print", new {id = Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i>Printable</a>
                                             </div>
-                                            @if (User.IsInRole("PropertyAdmin") || User.IsInRole("Admin"))
-                                            {
-                                                <div class="col-md-4">
-                                                    <a href="@Url.Action("Pause", new {id = Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i>Printable</a>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <a href="@Url.Action("Complete", new {id=Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i>Printable</a>
-                                                </div>
-                                            }
 
 
                                             @*<div class="col-md-6">
                                                 <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> Buy a coffee</button>
                                             </div>*@
                                         </div>
+                                        @if (User.IsInRole("PropertyAdmin") || User.IsInRole("Admin"))
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <a href="@Url.Action("Pause", new {id = Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pause"></i>Pause</a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a href="@Url.Action("Complete", new {id=Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-check"></i>Complete</a>
+                                                </div>
+                                            </div>
+
+                                        }
+
+
                                     </div>
                                     @*<div class="row m-t-lg">
                                         <div class="col-md-4">

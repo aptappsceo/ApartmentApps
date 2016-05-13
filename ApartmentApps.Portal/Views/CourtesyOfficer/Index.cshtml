@@ -1,0 +1,70 @@
+﻿@using ApartmentApps.Api.BindingModels
+@using Jmelosegui.Mvc.GoogleMap
+@using Size = System.Drawing.Size
+@model System.Collections.Generic.IEnumerable<ApartmentApps.Api.BindingModels.CourtesyCheckinBindingModel>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Courtesy Checkins</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="ibox">
+            <div class="ibox-title">Map</div>
+            <div class="ibox-content">
+                @(
+    Html.GoogleMap()
+        .Name("map")
+        .Height(500)
+        .Markers(m =>
+        {
+            foreach (var item in Model)
+            {
+                m.Add()
+                    .Latitude(item.Latitude)
+                    .Longitude(item.Longitude)
+                    .Icon(item.Complete ? "/Content/geo_filled.png" : "/Content/geo.png", new Size(32, 32))
+                    .Title(item.Label);
+            }
+        }
+
+        ).FitToMarkersBounds(true)
+
+            )
+        </div>
+    </div>
+    </div>
+    <div class="col-md-4">
+
+        <div class="ibox">
+            <div class="ibox-title">Checkin List</div>
+            <div class="ibox-content">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Complete</th>
+                        <th>Location</th>
+                        <th>Checkin Time</th>
+                    </tr>
+                    @foreach (var item in Model.OrderBy(p=>p.Complete))
+                    {
+                        <tr>
+                            <td><img src="@(Url.Content(item.Complete ? "~/Content/geo_filled.png" : "~/Content/geo.png"))"/></td>
+                            <td>@item.Label</td>
+                            <td>@item.Date</td>
+
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+@section scripts {
+    @(Html.GoogleMap().ScriptRegistrar())
+}

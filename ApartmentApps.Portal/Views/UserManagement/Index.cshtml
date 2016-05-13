@@ -1,21 +1,9 @@
-﻿@using GridMvc.Html
-@model IEnumerable<ApartmentApps.Data.ApplicationUser>
+﻿@using ApartmentApps.Api.BindingModels
+@using ApartmentApps.Data
+@using DataSource = Syncfusion.JavaScript.DataSource
+@model IEnumerable<UserBindingModel>
 
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-4">
-        <h2>Index</h2>
-        <ol class="breadcrumb">
-            <li class="active">
-                <strong>User Management</strong>
-            </li>
-        </ol>
-    </div>
-</div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -23,21 +11,55 @@
                 <div class="ibox-title">
                     <h5>Users</h5>
                     <div class="ibox-tools">
-                        @Html.ActionLink("Create New", "EditUser", null, new { @class = "btn btn-primary btn-xs" })
+                        @Html.ActionLink("Submit Request", "EditUser", null, new { @class = "btn btn-primary btn-xs" })
                     </div>
                 </div>
                 <div class="ibox-content">
-                   @Html.Grid(Model).Columns(columns =>
-                   {
+                    @(
+                    Html.EJ().Grid<UserBindingModel>("UserGrid")
+                    .Datasource(ds => ds.URL(Url.Action("DataSource", "UserManagement")).Adaptor(AdaptorType.UrlAdaptor))
+                   // .Datasource(Model.ToArray())
+                    .Mappers(map =>
+                        map
+                        .ExportToExcelAction(Url.Action("ExportToExcel"))
+                        .ExportToPdfAction(Url.Action("ExportToPdf"))
+                        .ExportToWordAction(Url.Action("ExportToWord"))
+                    )
+                     .ToolbarSettings(toolbar =>
+                     {
+                         toolbar.ShowToolbar().ToolbarItems(items =>
+                         {
+                             items.AddTool(ToolBarItems.ExcelExport);
+                             items.AddTool(ToolBarItems.WordExport);
+                             items.AddTool(ToolBarItems.PdfExport);
+                         });
+                     })
 
-                       columns.Add(foo => foo.FirstName).Titled("First Name").SetWidth(110);
-                       //columns.Add(foo => foo.Unit.Building.Name).Titled("Building Name").SetWidth(110);
-                       columns.Add(foo => foo.LastName).Titled("Last Name").Sortable(true).Filterable(true);
-                       columns.Add(foo => foo.Email).Sortable(true).Filterable(true);
-                       columns.Add().Titled("Roles").RenderValueAs(item => @Html.Raw(string.Join(",", item.Roles.Select(p => p.RoleId))));
-                       columns.Add().Encoded(false).Sanitized(false).RenderValueAs(item => @Html.ActionLink("Edit", "EditUser", new { id = item.Id }, new { @class = "" }));
+                    .FilterSettings(filter => { filter.FilterType(FilterType.Excel).EnableCaseSensitivity(true); })
+                    //.EditSettings(edit => { edit.AllowAdding().AllowDeleting().AllowEditing().EditMode(EditMode.Dialog); })
+                    .EnableToolbarItems(true)
+                    //.ToolbarSettings(_=>_.ToolbarItems(new List<ToolBarItems>() { new Toolbarit}))
+                    .AllowPaging(true)
+                    .AllowGrouping()
+                    .AllowSorting(true)
+                    .AllowFiltering()
+                    .ClientSideEvents(_ => _.RecordClick("clicked"))
+                    .Columns(c =>
+                    {
 
-                   }).WithPaging(10)
+                        c.Field(model => model.Id).Visible(false).Add();
+                        c.Field(model => model.BuildingName).HeaderText("Building Name").DefaultValue("--None--").Add();
+                        c.Field(model => model.UnitName).HeaderText("Unit Name").DefaultValue("--None--").Add();
+                        c.Field(model => model.FirstName).HeaderText("FirstName").Add();
+                        c.Field(model => model.LastName).HeaderText("LastName").Add();
+                        c.Field(model => model.Email).HeaderText("Email").Add();
+                        c.Field(model => model.PhoneNumber).HeaderText("PhoneNumber").Add();
+
+                        //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Details", "Details", new { id = "{{:Id}}" }).ToHtmlString())).Add();
+                        //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Delete", "Delete", new { id = "{{:Id}}" }).ToHtmlString()))..Add();
+                    })
+                    )
+
 
                 </div>
             </div>
@@ -45,5 +67,13 @@
     </div>
 </div>
 
+@section Scripts {
+    <script>
+        function clicked(a) {
+            console.log(a);
+            window.location.href = "@Url.Action("EditUser")?id=" + a.data.Id;
 
+        }
+    </script>
+}
 

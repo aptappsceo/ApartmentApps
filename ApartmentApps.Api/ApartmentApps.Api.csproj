@@ -158,12 +158,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingModels\Class1.cs" />
+    <Compile Include="CourtesyOfficerService.cs" />
     <Compile Include="Repositories\BuildingsRepository.cs" />
-    <Compile Include="CourtesyService.cs" />
+    <Compile Include="IncidentsService.cs" />
     <Compile Include="DateTimeUtil.cs" />
     <Compile Include="IBlobStorageService.cs" />
     <Compile Include="Repositories\IBuildingsRepository.cs" />
-    <Compile Include="ICourtesyService.cs" />
+    <Compile Include="IIncidentsService.cs" />
     <Compile Include="Repositories\IncidentReportRepository.cs" />
     <Compile Include="Repositories\MaintenanceRepository.cs" />
     <Compile Include="Notifications.cs" />
@@ -185,8 +186,14 @@
     <Compile Include="Repositories\UnitRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\BaseViewModel.cs" />
+    <Compile Include="Services\BuildingService.cs" />
     <Compile Include="Services\IMapper.cs" />
+    <Compile Include="Services\IServiceFor.cs" />
+    <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="Services\NotificationViewModel.cs" />
     <Compile Include="Services\StandardCrudService.cs" />
+    <Compile Include="Services\UnitService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\Class1.cs" />
     <Compile Include="YardiIntegration.cs" />
   </ItemGroup>

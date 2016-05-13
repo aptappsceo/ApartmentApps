@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace ApartmentApps.Forms
 {
+    public class GridModel
+    {
+        public List<FormPropertyModel> Properties { get; set; } = new List<FormPropertyModel>();
+
+        public object[] Items { get; set; }
+
+    }
     public class FormModel
     {
         public List<FormPropertyModel> Properties { get; set; } = new List<FormPropertyModel>();
@@ -47,6 +54,7 @@ namespace ApartmentApps.Forms
 
         public Func<object> GetValue { get; set; }
         public Action<object> SetValue { get; set; }
+        public bool Hidden { get; set; }
     }
 
     public class FormPropertySelectItem

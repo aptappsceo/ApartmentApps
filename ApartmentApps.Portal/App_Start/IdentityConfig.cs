@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,8 +20,33 @@ namespace ApartmentApps.Portal
 {
     public class EmailService : IIdentityMessageService
     {
+
         public Task SendAsync(IdentityMessage message)
         {
+
+            var fromAddress = new MailAddress("mosborne@apartmentapps.com", "Apartment Apps");
+            var toAddress = new MailAddress(message.Destination);
+            const string fromPassword = "iamadumbass";
+            string subject = message.Subject;
+            string body = message.Body;
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("mosborne", fromPassword,"apartmentapps.com")
+            };
+            using (var msg = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(msg);
+            }
             // Plug in your email service here to send an email.
             return Task.FromResult(0);
         }
@@ -42,7 +69,7 @@ namespace ApartmentApps.Portal
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
@@ -83,7 +110,7 @@ namespace ApartmentApps.Portal
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
+                manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
@@ -91,7 +118,7 @@ namespace ApartmentApps.Portal
 
         public async Task<ApplicationUser> CreateUser(string email, string password, string firstName, string lastName)
         {
-            var user = new ApplicationUser() {UserName = email, Email = email, FirstName = firstName, LastName = lastName};
+            var user = new ApplicationUser() { UserName = email, Email = email, FirstName = firstName, LastName = lastName };
             var result = await CreateAsync(user, password);
             if (result.Succeeded)
             {

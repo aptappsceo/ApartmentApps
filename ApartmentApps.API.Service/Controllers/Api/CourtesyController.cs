@@ -21,11 +21,11 @@ namespace ApartmentApps.API.Service.Controllers.Api
     {
 
         public IBlobStorageService BlobStorageService { get; set; }
-        public ICourtesyService CourtesyService { get; set; }
+        public IIncidentsService IncidentsService { get; set; }
 
-        public CourtesyController(ICourtesyService courtesyService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public CourtesyController(IIncidentsService incidentsService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
-            CourtesyService = courtesyService;
+            IncidentsService = incidentsService;
             BlobStorageService = blobStorageService;
         }
 
@@ -108,7 +108,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         [System.Web.Http.Route("SubmitIncidentReport")]
         public void SubmitIncidentReport(IncidentReportModel request)
         {
-            CourtesyService.SubmitIncidentReport(CurrentUser, request.Comments, request.IncidentReportTypeId,
+            IncidentsService.SubmitIncidentReport(CurrentUser, request.Comments, request.IncidentReportTypeId,
                 request.Images);
         }
 
@@ -116,21 +116,21 @@ namespace ApartmentApps.API.Service.Controllers.Api
         [System.Web.Http.Route("OpenIncidentReport")]
         public void OpenIncidentReport(int id, string comments, List<Byte[]> images)
         {
-            CourtesyService.OpenIncidentReport(CurrentUser, id, comments, images);
+            IncidentsService.OpenIncidentReport(CurrentUser, id, comments, images);
         }
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("PauseIncidentReport")]
         public void PauseIncidentReport(int id, string comments, List<Byte[]> images)
         {
-            CourtesyService.PauseIncidentReport(CurrentUser, id, comments, images);
+            IncidentsService.PauseIncidentReport(CurrentUser, id, comments, images);
         }
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("CloseIncidentReport")]
         public void CloseIncidentReport(int id, string comments, List<Byte[]> images)
         {
-            CourtesyService.CloseIncidentReport(CurrentUser, id, comments, images);
+            IncidentsService.CloseIncidentReport(CurrentUser, id, comments, images);
         }
 
 

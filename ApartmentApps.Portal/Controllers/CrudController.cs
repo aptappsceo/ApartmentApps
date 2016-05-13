@@ -54,6 +54,8 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult ExportToExcel(string GridModel)
         {
             ExcelExport exp = new ExcelExport();
+            Dm.Skip = 0;
+            Dm.Take = 0;
             int count;
             var Data = GetData(Dm, out count);
             //var DataSource = Service.GetAll().OrderBy(p => p.Id);
@@ -104,22 +106,24 @@ namespace ApartmentApps.Portal.Controllers
                
            });
         }
-        [ValidateInput(false)]
-        public void ExportToWord(string GridModel)
-        {
-            WordExport exp = new WordExport();
+        //[ValidateInput(false)]
+        //public void ExportToWord(string GridModel)
+        //{
+        //    WordExport exp = new WordExport();
       
-            var DataSource = Service.GetAll().OrderBy(p => p.Id);
-            GridProperties properties = ConvertGridObject(GridModel);
-            properties.AllowPaging = false;
-            properties.PageSettings.PageSize = Int32.MaxValue;
-            var dataSource = new DataOperations().Execute(DataSource, properties,true);
-            exp.Export(properties, dataSource, "Export.docx");
-        }
+        //    var DataSource = Service.GetAll().OrderBy(p => p.Id);
+        //    GridProperties properties = ConvertGridObject(GridModel);
+        //    properties.AllowPaging = false;
+        //    properties.PageSettings.PageSize = Int32.MaxValue;
+        //    var dataSource = new DataOperations().Execute(DataSource, properties,true);
+        //    exp.Export(properties, dataSource, "Export.docx");
+        //}
         [ValidateInput(false)]
         public void ExportToPdf(string GridModel)
         {
             PdfExport exp = new PdfExport();
+            Dm.Skip = 0;
+            Dm.Take = 0;
             int count;
             var Data = GetData(Dm, out count);
             //var DataSource = Service.GetAll().OrderBy(p => p.Id);
@@ -129,7 +133,7 @@ namespace ApartmentApps.Portal.Controllers
             //{
             //    Where =properties.FilterSettings.
             //};
-
+            
             properties.AllowPaging = false;
             properties.PageSettings.PageSize = Int32.MaxValue;
             //var dataSource = new DataOperations().Execute(DataSource.ToArray(), properties,true);
@@ -167,6 +171,7 @@ namespace ApartmentApps.Portal.Controllers
         private IEnumerable<TViewModel> GetData(DataManager dm, out int count)
         {
             IEnumerable<TViewModel> Data = Service.GetAll().ToArray();
+          
             Syncfusion.JavaScript.DataSources.DataOperations operation = new Syncfusion.JavaScript.DataSources.DataOperations();
             if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting
             {

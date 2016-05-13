@@ -9,7 +9,7 @@
 <div class="ibox">
     <div class="ibox-title">@ViewBag.Title</div>
     <div class="ibox-content">
-        @using (var form = Html.BeginForm(Model.PostAction))
+        @using (var form = Html.BeginForm(Model.PostAction,Model.PostController))
         {
             @Html.RenderForm(Model.Model)
 

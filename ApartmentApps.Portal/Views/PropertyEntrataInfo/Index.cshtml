@@ -10,7 +10,7 @@
         <h2>Index</h2>
         <ol class="breadcrumb">
             <li class="active">
-                <strong>PropertyEntrataInfo</strong>
+                <strong>Entrata Accounts</strong>
             </li>
         </ol>
     </div>
@@ -23,64 +23,60 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>List of PropertyEntrataInfo</h5>
-					<div class="ibox-tools">
-						@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-xs"})
-					</div>
+                    <div class="ibox-tools">
+                        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-xs" })
+                    </div>
                 </div>
                 <div class="ibox-content">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Property.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Endpoint)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Username)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Password)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EntrataPropertyId)
+                            </th>
+                            <th></th>
+                        </tr>
 
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Property.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Endpoint)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EntrataPropertyId)
-        </th>
-        <th></th>
-    </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Property.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Endpoint)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Username)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Password)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EntrataPropertyId)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.PropertyId }, new { @class = "btn btn-white btn-sm" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.PropertyId }, new { @class = "btn btn-white btn-sm" })
+                                </td>
+                            </tr>
+                        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Endpoint)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EntrataPropertyId)
-        </td>
-        <td>
-			@Html.ActionLink("Details", "Details", new { id=item.PropertyId }, new { @class = "btn btn-primary btn-sm"})
-            @Html.ActionLink("Edit", "Edit", new { id=item.PropertyId }, new { @class = "btn btn-white btn-sm"})
-            @Html.ActionLink("Delete", "Delete", new { id=item.PropertyId }, new { @class = "btn btn-white btn-sm"})
-        </td>
-    </tr>
-}
-
-</table>
+                    </table>
 
                 </div>
             </div>
         </div>
     </div>
- </div>
-
-
-
+</div>

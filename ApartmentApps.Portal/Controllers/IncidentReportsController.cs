@@ -1,22 +1,91 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class IncidentReportsController : CrudController<IncidentIndexBindingModel, IncidentReport>
+    [DisplayName("Update Incident Request")]
+    public class IncidentStatusRequestModel
     {
-        public IncidentReportsController(IRepository<IncidentReport> repository, StandardCrudService<IncidentReport, IncidentIndexBindingModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+        [DataType("Hidden")]
+        public int Id { get; set; }
+        [DataType(DataType.MultilineText)]
+        public string Comments { get; set; }
+    }
+
+    public class IncidentReportsController : CrudController<IncidentReportViewModel, IncidentReport>
+    {
+        public ActionResult Print(int id)
         {
+            var item = Service.Find(id);
+            return View(item);
+        }
+        public IncidentsService OfficerService { get; set; }
+
+        public IncidentReportsController(IncidentsService officerService, IRepository<IncidentReport> repository, StandardCrudService<IncidentReport, IncidentReportViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+        {
+            OfficerService = officerService;
+        }
+        public ActionResult NewRequest()
+        {
+
+            return AutoForm(new IncidentReportFormModel(), "SubmitRequest", "New Incident Report");
+        }
+        public ActionResult Pause(int id)
+        {
+            return AutoForm(new IncidentStatusRequestModel() { Id = id }, "PauseRequest");
+        }
+        public ActionResult Complete(int id)
+        {
+            return AutoForm(new IncidentStatusRequestModel() { Id = id }, "CompleteRequest");
+        }
+
+        [HttpPost]
+        public ActionResult SubmitRequest(IncidentReportFormModel request)
+        {
+
+            OfficerService.SubmitIncidentReport(
+                CurrentUser,
+                request.Comments,
+                request.ReportType,
+                null,
+                Convert.ToInt32(request.UnitId)
+                );
+            return RedirectToAction("Index");
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult PauseRequest(IncidentStatusRequestModel request)
+        {
+            OfficerService.PauseIncidentReport(
+                CurrentUser,
+                request.Id,
+                request.Comments, null
+
+                );
+            return RedirectToAction("Index");
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult CompleteRequest(IncidentStatusRequestModel request)
+        {
+
+            OfficerService.CloseIncidentReport(
+                CurrentUser,
+                request.Id,
+                request.Comments, null
+                );
+            return RedirectToAction("Index");
         }
     }
     public class IncidentReports2Controller : AAController

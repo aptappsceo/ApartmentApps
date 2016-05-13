@@ -10,12 +10,19 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class BuildingsController : CrudController<BuildingViewModel,Building>
+    public class BuildingsController : AutoFormController<BuildingService, BuildingViewModel>
     {
-        public BuildingsController(IRepository<Building> repository, StandardCrudService<Building, BuildingViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+        public BuildingsController(IKernel kernel, BuildingService service, PropertyContext context, IUserContext userContext) : base(kernel, service, context, userContext)
+        {
+        }
+    }
+    public class Buildings3Controller : CrudController<BuildingViewModel,Building>
+    {
+        public Buildings3Controller(IRepository<Building> repository, StandardCrudService<Building, BuildingViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
         {
         }
     }
