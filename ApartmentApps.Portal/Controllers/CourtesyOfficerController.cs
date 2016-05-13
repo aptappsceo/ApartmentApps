@@ -25,7 +25,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public ActionResult Yesterday()
         {
-            return View("Index", Service.ForDay(UserContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(1))));
+            return View("Index", Service.ForDay(UserContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(1,0,0,0))));
         }
         public ActionResult ThisWeek()
         {
