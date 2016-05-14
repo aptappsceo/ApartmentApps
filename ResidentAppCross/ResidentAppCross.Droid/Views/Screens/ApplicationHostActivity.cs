@@ -1,29 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Timers;
 using Android.App;
 using Android.Content;
-using Android.Content.PM;
 using Android.Gms.Common;
 using Android.Gms.Maps;
-using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.Design.Widget;
-using Android.Support.V4.Content;
-using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using Gcm;
-using Gcm.Client;
-using Java.Lang;
-using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Core.Views;
 using MvvmCross.Droid.Shared.Attributes;
 using MvvmCross.Droid.Shared.Caching;
 using MvvmCross.Droid.Support.V7.AppCompat;
@@ -32,17 +20,10 @@ using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Components.Navigation;
 using ResidentAppCross.Droid.Views.Components.NavigationDrawer;
-using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Events;
-using ResidentAppCross.Interfaces;
-using ResidentAppCross.ServiceClient;
 using ResidentAppCross.ViewModels;
-using Square.OkHttp;
 using Exception = System.Exception;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
-using GcmClient = Gcm.GcmClient;
-using Math = System.Math;
-using Object = Java.Lang.Object;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace ResidentAppCross.Droid.Views
@@ -62,26 +43,6 @@ namespace ResidentAppCross.Droid.Views
         private UsefulActionBarDrawerToggle _drawerToggle;
         private IMvxMessenger _eventAggregator;
         private Timer _waitTimer;
-
-        protected override void OnCreate(Bundle bundle)
-        {
-            base.OnCreate(bundle);
-
-            LoginService.DevicePlatform = "gcm";
-            LoginService.DeviceHandle = DroidApplication.DeviceToken;
-
-            LoginService.GetRegistrationId = () => DroidApplication.HandleId;
-            LoginService.SetRegistrationId = (v) => DroidApplication.HandleId = v;
-
-            GcmClient.CheckDevice(this);
-            GcmClient.CheckManifest(this);
-            GcmClient.Register(this, GcmConstants.SenderID);
-        }
-
-        public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
-        {
-            base.OnCreate(savedInstanceState, persistentState);
-        }
 
         public DrawerLayout DrawerLayout
         {
@@ -110,7 +71,12 @@ namespace ResidentAppCross.Droid.Views
         public override void OnBeforeFragmentChanging(IMvxCachedFragmentInfo fragmentInfo, FragmentTransaction transaction)
         {
             base.OnBeforeFragmentChanging(fragmentInfo, transaction);
-            transaction.SetCustomAnimations(Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight,Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight);
+            transaction.SetCustomAnimations(Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight, Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight);
+        }
+
+        protected override void OnCreate(Bundle bundle)
+        {
+            base.OnCreate(bundle);
         }
 
         protected override void OnViewModelSet()
@@ -120,6 +86,7 @@ namespace ResidentAppCross.Droid.Views
 
             //Setup content
             SetContentView(Resource.Layout.application_host);
+
             //Setup action bar
             SetSupportActionBar(Toolbar);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
@@ -128,53 +95,33 @@ namespace ResidentAppCross.Droid.Views
             DrawerLayout.AddDrawerListener(DrawerToggle);
             DrawerLayout.Post(() => DrawerToggle.SyncState());
 
-            //Setup what's inside the drawer (Home Menu View)
-            DrawerToggle.Opening += () =>
+            //Refresh HomeMenuView when we open the drawer
+            DrawerToggle.Opening += () => HomeMenuView.Refresh();
+
+            HomeMenuView.OnBeforeSelectItem += item =>
             {
-                HomeMenuView.Post(() =>
+                if (item.IsNavigation)
                 {
-                    HomeMenuView.Refresh();
-//                   var item = HomeMenuView.Menu.Add("Please");
-//                    item.SetShowAsActionFlags(ShowAsAction.Never);
-//                    item.SetCheckable(true);
-//                    item.SetIcon(Resource.Drawable.Search);
-//                    Console.WriteLine("ok");
-                });
-            };
-            HomeMenuView.ViewModel = Mvx.Resolve<HomeMenuViewModel>();
-            HomeMenuView.BeforeNavigate += (sender, args) =>
-            {
-                for (int i = 0; i < SupportFragmentManager.BackStackEntryCount; ++i)
-                {
-                    SupportFragmentManager.PopBackStack();
+                    ClearHistoryAndCloseAllFragments();
+                    DrawerLayout.CloseDrawers();
                 }
-                
-                GetCurrentCacheableFragmentsInfo().Clear();
-
-                args.MenuItem.SetChecked(true);
-
-                DrawerLayout.CloseDrawers();
             };
 
-            try
+
+            this.OnEvent<TaskStarted>(evt => SetTaskRunning(evt.Label));
+            this.OnEvent<TaskComplete>(evt => SetTaskComplete(evt.ShouldPrompt, evt.Label, evt.OnPrompted));
+            this.OnEvent<TaskFailed>(evt => SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted));
+            this.OnEvent<TaskProgressUpdated>(evt => SetTaskProgress(evt.ShouldPrompt, evt.Label));
+
+        }
+
+        public void ClearHistoryAndCloseAllFragments()
+        {
+            for (int i = 0; i < SupportFragmentManager.BackStackEntryCount; ++i)
             {
-                MapsInitializer.Initialize(this);
+                SupportFragmentManager.PopBackStack();
             }
-            catch (GooglePlayServicesNotAvailableException e)
-            {
-                e.PrintStackTrace();
-            }
-
-
-            this.OnEvent<TaskStarted>(evt => this.SetTaskRunning(evt.Label));
-            this.OnEvent<TaskComplete>(evt => this.SetTaskComplete(evt.ShouldPrompt, evt.Label, evt.OnPrompted));
-            this.OnEvent<TaskFailed>(evt => this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted));
-            this.OnEvent<TaskProgressUpdated>(evt => this.SetTaskProgress(evt.ShouldPrompt, evt.Label));
-
-            //            var frame = FindViewById<FrameLayout>(Resource.Id.application_host_container_primary);
-            //            CoordinatorLayout.LayoutParams prms=(CoordinatorLayout.LayoutParams)frame.LayoutParameters;
-            //            prms.Behavior = new SlideUpOnSnackbarBehaviour();
-            //            frame.RequestLayout();
+            GetCurrentCacheableFragmentsInfo().Clear();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -221,22 +168,19 @@ namespace ResidentAppCross.Droid.Views
             Fragment fragment = newFragment.CachedFragment as Fragment;
             Bundle bundle = fragment?.Arguments;
             if (bundle == null) return FragmentReplaceMode.ReplaceFragmentAndViewModel;
-
             IMvxNavigationSerializer navigationSerializer = Mvx.Resolve<IMvxNavigationSerializer>();
             string string1 = bundle.GetString("__mvxViewModelRequest");
             MvxViewModelRequest viewModelRequest1 = navigationSerializer.Serializer.DeserializeObject<MvxViewModelRequest>(string1);
             if (viewModelRequest1 == null)
-                return MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragment;
+                return FragmentReplaceMode.ReplaceFragment;
             string string2 = replacementBundle.GetString("__mvxViewModelRequest");
             MvxViewModelRequest viewModelRequest2 = navigationSerializer.Serializer.DeserializeObject<MvxViewModelRequest>(string2);
             if (viewModelRequest2 == null)
-                return MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragment;
+                return FragmentReplaceMode.ReplaceFragment;
             bool flag = viewModelRequest1.ParameterValues == viewModelRequest2.ParameterValues || viewModelRequest1.ParameterValues.Count == viewModelRequest2.ParameterValues.Count && !viewModelRequest1.ParameterValues.Except(viewModelRequest2.ParameterValues).Any();
-            if ((currentFragment != null ? currentFragment.Tag : (string)null) != newFragment.Tag)
-                return flag ? MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragment : MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragmentAndViewModel;
-            return flag ? MvxCachingFragmentCompatActivity.FragmentReplaceMode.NoReplace : MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragmentAndViewModel;
-
-
+            if (currentFragment?.Tag != newFragment.Tag)
+                return flag ? FragmentReplaceMode.ReplaceFragment : FragmentReplaceMode.ReplaceFragmentAndViewModel;
+            return flag ? FragmentReplaceMode.NoReplace : FragmentReplaceMode.ReplaceFragmentAndViewModel;
         }
 
         protected override void CloseFragment(string tag, int contentId)
@@ -271,30 +215,22 @@ namespace ResidentAppCross.Droid.Views
 
             if (targetActivity == null) return null;
 
-
             if (targetActivity == CurrentDialog?.SourceActivity)
             {
                 return CurrentDialog;
             }
-
 
             DismissCurrentDialog();
             CurrentDialog = new NotificationDialog()
             {
                 SourceActivity = targetActivity
             };
-            try
-            {
-                CurrentDialog.Show(targetActivity.FragmentManager, "notification");
-                CurrentDialog.OnceOnDismiss(() => CurrentDialog = null);
-            }
-            catch (Exception ex)
-            {
 
-            }
+            CurrentDialog.Show(targetActivity.FragmentManager, "notification");
+            CurrentDialog.OnceOnDismiss(() => CurrentDialog = null);
+
             return CurrentDialog;
 
-            ///CurrentDialog = ;
         }
 
         public static void DismissCurrentDialog()
@@ -311,7 +247,6 @@ namespace ResidentAppCross.Droid.Views
             _nextWaitingBlock = block;
             _nextWaitingString = label;
             WaitTimer.Start();
-            //if(block) AndHUD.Shared.Show(view, label, -1, MaskType.Black, centered: true);
         }
 
         public Timer WaitTimer
@@ -320,8 +255,8 @@ namespace ResidentAppCross.Droid.Views
             {
                 if (_waitTimer == null)
                 {
-                    _waitTimer = new Timer(220f) {AutoReset = false};
-                    _waitTimer.Elapsed += new System.Timers.ElapsedEventHandler((s, e) =>
+                    _waitTimer = new Timer(250f) {AutoReset = false};
+                    _waitTimer.Elapsed += (s, e) =>
                     {
 
                         DrawerLayout.Post(() =>
@@ -331,7 +266,7 @@ namespace ResidentAppCross.Droid.Views
                                 var dialog = GetOrCreateDialog(this);
                                 dialog.Mode = NotificationDialogMode.Progress;
                                 dialog.TitleText = _nextWaitingString;
-                                dialog.SubTitleText = "Please, Wait";
+                                dialog.SubTitleText = Resource.String.please_wait.GetResourceString();
                                 dialog.ShouldDismissWhenClickedOutside = false;
                             }
                             else
@@ -339,7 +274,8 @@ namespace ResidentAppCross.Droid.Views
                                 //DismissCurrentDialog();
                             }
                         });
-                    });
+
+                    };
 
                 }
                 return _waitTimer;
@@ -357,7 +293,7 @@ namespace ResidentAppCross.Droid.Views
                 var dialog = GetOrCreateDialog(this);
                 dialog.Mode = NotificationDialogMode.Progress;
                 dialog.TitleText = label;
-                dialog.SubTitleText = "Please, Wait";
+                dialog.SubTitleText = Resource.String.please_wait.GetResourceString();
                 dialog.ShouldDismissWhenClickedOutside = false;
             }
             else
@@ -379,7 +315,7 @@ namespace ResidentAppCross.Droid.Views
                 dialog.SubTitleText = null;
                 dialog.ShouldDismissWhenClickedOutside = true;
                 dialog.OnceOnDismiss(onPrompted);
-                dialog.SetActions(new[] { new NotificationDialogItem() { Action = () => { }, Title = "Ok", ShouldDismiss = true } });
+                dialog.SetActions(new[] { new NotificationDialogItem() { Action = () => { }, Title = Resource.String.ok.GetResourceString(), ShouldDismiss = true } });
             }
             else
             {
@@ -398,7 +334,7 @@ namespace ResidentAppCross.Droid.Views
             {
                 var dialog = GetOrCreateDialog(this);
                 dialog.Mode = NotificationDialogMode.Failed;
-                dialog.TitleText = "Oops!";
+                dialog.TitleText = Resource.String.problem_occurred.GetResourceString();
                 dialog.SubTitleText = label;
                 dialog.ShouldDismissWhenClickedOutside = true;
                 if (onPrompted != null) dialog.OnceOnDismiss(() => onPrompted?.Invoke(reason));
@@ -432,36 +368,6 @@ namespace ResidentAppCross.Droid.Views
         {
             get { return _eventAggregator ?? (_eventAggregator = Mvx.Resolve<IMvxMessenger>()); }
             set { _eventAggregator = value; }
-        }
-    }
-
-    public class SlideUpOnSnackbarBehaviour : AppBarLayout.ScrollingViewBehavior
-    {
-        public SlideUpOnSnackbarBehaviour(Context context, IAttributeSet attrs) : base(context, attrs)
-        {
-        }
-
-        public SlideUpOnSnackbarBehaviour()
-        {
-        }
-
-        public override bool LayoutDependsOn(CoordinatorLayout parent, Object child, View dependency)
-        {
-            return dependency is Snackbar.SnackbarLayout || base.LayoutDependsOn(parent,child,dependency);
-        }
-
-        public override bool OnDependentViewChanged(CoordinatorLayout parent, Object child, View dependency)
-        {
-            if (dependency is Snackbar.SnackbarLayout)
-            {
-                var view = child as View;
-                float translationY = Math.Min(0, dependency.TranslationY - dependency.Height);
-                return true;
-            }
-            else
-            {
-                return base.OnDependentViewChanged(parent, child, dependency);
-            }
         }
     }
 

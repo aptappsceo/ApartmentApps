@@ -10,4 +10,7 @@
 	<string name="hint_current_password">Current Password</string>
 	<string name="hint_new_password">New Password</string>
 	<string name="hint_confirm_new_password">Confirm New Password</string>
+	<string name="problem_occurred">Problem Occurred.</string>
+	<string name="ok">Ok</string>
+	<string name="please_wait">Please, wait</string>
 </resources>

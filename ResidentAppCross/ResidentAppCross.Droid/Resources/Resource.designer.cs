@@ -5696,6 +5696,15 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f06003e
 			public const int lorem_ipsum = 2131099710;
 			
+			// aapt resource value: 0x7f060044
+			public const int ok = 2131099716;
+			
+			// aapt resource value: 0x7f060045
+			public const int please_wait = 2131099717;
+			
+			// aapt resource value: 0x7f060043
+			public const int problem_occurred = 2131099715;
+			
 			// aapt resource value: 0x7f060032
 			public const int status_bar_notification_info_overflow = 2131099698;
 			
