@@ -5,6 +5,7 @@ using Android.App;
 using Android.Content;
 using Android.Gms.Common;
 using Android.Gms.Maps;
+using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
@@ -14,8 +15,11 @@ using Android.Widget;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Droid.Shared.Attributes;
 using MvvmCross.Droid.Shared.Caching;
+using MvvmCross.Droid.Shared.Fragments;
 using MvvmCross.Droid.Support.V7.AppCompat;
+using MvvmCross.Droid.Views;
 using MvvmCross.Platform;
+using MvvmCross.Platform.Exceptions;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Components.Navigation;
@@ -71,12 +75,29 @@ namespace ResidentAppCross.Droid.Views
         public override void OnBeforeFragmentChanging(IMvxCachedFragmentInfo fragmentInfo, FragmentTransaction transaction)
         {
             base.OnBeforeFragmentChanging(fragmentInfo, transaction);
-            transaction.SetCustomAnimations(Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight, Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight);
+            transaction.SetCustomAnimations(Android.Resource.Animation.FadeIn, Android.Resource.Animation.FadeOut, Android.Resource.Animation.FadeIn, Android.Resource.Animation.FadeOut);
         }
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+        }
+
+        public bool IsToolbarVisible
+        {
+            set
+            {
+                if (value)
+                {
+                    Toolbar.Visibility = ViewStates.Visible;
+                    SupportActionBar.Show();
+                }
+                else
+                {
+                    Toolbar.Visibility = ViewStates.Gone;
+                    SupportActionBar.Hide();
+                }
+            }
         }
 
         protected override void OnViewModelSet()
@@ -90,6 +111,7 @@ namespace ResidentAppCross.Droid.Views
             //Setup action bar
             SetSupportActionBar(Toolbar);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
+            SupportActionBar.SetShowHideAnimationEnabled(true);
 
             //Setup drawer
             DrawerLayout.AddDrawerListener(DrawerToggle);
@@ -104,6 +126,9 @@ namespace ResidentAppCross.Droid.Views
                 {
                     ClearHistoryAndCloseAllFragments();
                     DrawerLayout.CloseDrawers();
+                } else if (!item.IsCheckable)
+                {
+                   DrawerLayout.CloseDrawers();
                 }
             };
 
@@ -139,7 +164,50 @@ namespace ResidentAppCross.Droid.Views
             this.ShowFragment(fragmentTag, fragmentAttribute.FragmentContentId, bundle, false, false);
             return true;
         }
-        
+
+        protected override void ShowFragment(string tag, int contentId, Bundle bundle, bool forceAddToBackStack = false,
+            bool forceReplaceFragment = false)
+        {
+            IMvxCachedFragmentInfo cachedFragmentInfo1;
+            this.FragmentCacheConfiguration.TryGetValue(tag, out cachedFragmentInfo1);
+            IMvxCachedFragmentInfo cachedFragmentInfo2 = (IMvxCachedFragmentInfo)null;
+            Android.Support.V4.App.Fragment fragmentById = this.SupportFragmentManager.FindFragmentById(contentId);
+            if (fragmentById != null)
+                this.FragmentCacheConfiguration.TryGetValue(fragmentById.Tag, out cachedFragmentInfo2);
+            if (cachedFragmentInfo1 == null)
+                throw new MvxException("Could not find tag: {0} in cache, you need to register it first.", new object[1]
+                {
+          (object) tag
+                });
+            MvxCachingFragmentCompatActivity.FragmentReplaceMode fragmentReplaceMode = MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragmentAndViewModel;
+            if (!forceReplaceFragment)
+                fragmentReplaceMode = this.ShouldReplaceCurrentFragment(cachedFragmentInfo1, cachedFragmentInfo2, bundle);
+            if (fragmentReplaceMode == MvxCachingFragmentCompatActivity.FragmentReplaceMode.NoReplace)
+                return;
+            FragmentTransaction transaction = this.SupportFragmentManager.BeginTransaction();
+            this.OnBeforeFragmentChanging(cachedFragmentInfo1, transaction);
+            cachedFragmentInfo1.ContentId = contentId;
+            if (cachedFragmentInfo1.CachedFragment != null && fragmentReplaceMode == MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragment)
+            {
+                (cachedFragmentInfo1.CachedFragment as Android.Support.V4.App.Fragment).Arguments.Clear();
+                (cachedFragmentInfo1.CachedFragment as Android.Support.V4.App.Fragment).Arguments.PutAll(bundle);
+            }
+            else
+            {
+                cachedFragmentInfo1.CachedFragment = Android.Support.V4.App.Fragment.Instantiate((Context)this, this.FragmentJavaName(cachedFragmentInfo1.FragmentType), bundle) as IMvxFragmentView;
+                this.OnFragmentCreated(cachedFragmentInfo1, transaction);
+            }
+            transaction.Replace(cachedFragmentInfo1.ContentId, cachedFragmentInfo1.CachedFragment as Android.Support.V4.App.Fragment, cachedFragmentInfo1.Tag);
+            if (fragmentReplaceMode == MvxCachingFragmentCompatActivity.FragmentReplaceMode.ReplaceFragmentAndViewModel)
+                Mvx.GetSingleton<IMvxMultipleViewModelCache>().GetAndClear(cachedFragmentInfo1.ViewModelType, this.GetTagFromFragment(cachedFragmentInfo1.CachedFragment as Android.Support.V4.App.Fragment));
+            if (((fragmentById == null ? 0 : (cachedFragmentInfo1.AddToBackStack ? 1 : 0)) | (forceAddToBackStack ? 1 : 0)) != 0)
+                transaction.AddToBackStack(cachedFragmentInfo1.Tag);
+            this.OnFragmentChanging(cachedFragmentInfo1, transaction);
+            transaction.CommitAllowingStateLoss();
+            this.SupportFragmentManager.ExecutePendingTransactions();
+            this.OnFragmentChanged(cachedFragmentInfo1);
+        }
+
         protected override string FragmentJavaName(Type fragmentType)
         {
             return Java.Lang.Class.FromType(fragmentType).Name;

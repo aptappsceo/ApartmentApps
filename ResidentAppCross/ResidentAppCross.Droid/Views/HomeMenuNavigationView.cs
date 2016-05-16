@@ -24,7 +24,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
         private HomeMenuViewModel _viewModel;
         private IMvxMessenger _eventAggregator;
         private Dictionary<int, ICommand> _commandsMap;
-        private HomeMenuRegistry _registry;
+        private GenericMenuRegistry _registry;
 
         public HomeMenuNavigationView(Context context) : base(context)
         {
@@ -56,13 +56,13 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             set { _eventAggregator = value; }
         }
 
-        public HomeMenuRegistry Registry
+        public GenericMenuRegistry Registry
         {
             get
             {
                 if (_registry == null)
                 {
-                    _registry = new HomeMenuRegistry(Menu);
+                    _registry = new GenericMenuRegistry(Menu);
                     _registry.OnBeforeSelectItem += OnOnBeforeSelectItem;
                 }
                 return _registry;
@@ -130,7 +130,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
                 Registry.AddCommand(item.Name, item.Icon.ToDrawableId(),item.Command);
             }
 
-            Registry.AddCommand("Change Profile Photo", SharedResources.Icons.User.ToDrawableId(), ViewModel.EditProfileCommand);
+            Registry.AddCommand("Change Profile Photo", SharedResources.Icons.User.ToDrawableId(), ViewModel.EditProfileCommand,false, ShowAsAction.Never,false);
 
             Registry.AddCommand("Sign Out", SharedResources.Icons.Exit.ToDrawableId(), ViewModel.SignOutCommand);
 
@@ -149,17 +149,17 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             Registry.Generate();
         }
 
-        public event Action<HomeMenuRegistry.IRegistryItem> OnBeforeSelectItem;
+        public event Action<GenericMenuRegistry.IRegistryItem> OnBeforeSelectItem;
 
 
-        public delegate void MenuContentRequestDelegate(HomeMenuRegistry registry);
+        public delegate void MenuContentRequestDelegate(GenericMenuRegistry registry);
 
-        protected virtual void OnOnRequestContent(HomeMenuRegistry registry)
+        protected virtual void OnOnRequestContent(GenericMenuRegistry registry)
         {
             OnRequestContent?.Invoke(registry);
         }
 
-        protected virtual void OnOnBeforeSelectItem(HomeMenuRegistry.IRegistryItem obj)
+        protected virtual void OnOnBeforeSelectItem(GenericMenuRegistry.IRegistryItem obj)
         {
             OnBeforeSelectItem?.Invoke(obj);
         }
@@ -167,7 +167,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
 
 
 
-    public class HomeMenuRegistry
+    public class GenericMenuRegistry
     {
         private Dictionary<int, ICommand> _commandsMap;
         private IMenu _menu;
@@ -175,7 +175,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
         private Dictionary<int, IRegistryItem> _items;
         private IList<IRegistryItem> _templates;
 
-        public HomeMenuRegistry(IMenu menu)
+        public GenericMenuRegistry(IMenu menu)
         {
             _menu = menu;
         }
@@ -214,11 +214,23 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             _orderCounter = 0;
         }
 
-        public void AddCommand(string title, int iconId, ICommand command, bool isNavigation = true, bool checkable = true)
+        public void AddCommand(string title, int iconId, ICommand command, bool isNavigation = true, ShowAsAction display = ShowAsAction.Never, bool checkable = true)
         {
             Templates.Add(new CommandItem()
             {
                 Command =  command,
+                IconId = iconId,
+                Title = title,
+                IsCheckable = checkable,
+                IsNavigation = isNavigation
+            });
+        }
+
+        public void AddAction(string title, int iconId, Action action, bool isNavigation = true, ShowAsAction display = ShowAsAction.Never, bool checkable = true)
+        {
+            Templates.Add(new ActionItem()
+            {
+                Action =  action,
                 IconId = iconId,
                 Title = title,
                 IsCheckable = checkable,
@@ -242,11 +254,30 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             item?.Command?.Execute(null);
         }
 
+        public void Select(ActionItem item)
+        {
+            if (item.IsCheckable) item.UIItem.SetChecked(true);
+            item?.Action?.Invoke();
+        }
+
         public IMenuItem Construct(CommandItem item)
         {
             var index = _orderCounter++;
             var menuitem = _menu.Add(0, index, index, item.Title);
             menuitem.SetIcon(item.IconId);
+            menuitem.SetShowAsAction(item.ShowAsAction);
+            item.UIItem = menuitem;
+            Items[menuitem.ItemId] = item;
+            menuitem.SetCheckable(item.IsCheckable);
+            return menuitem;
+        }
+
+        public IMenuItem Construct(ActionItem item)
+        {
+            var index = _orderCounter++;
+            var menuitem = _menu.Add(0, index, index, item.Title);
+            menuitem.SetIcon(item.IconId);
+            menuitem.SetShowAsAction(item.ShowAsAction);
             item.UIItem = menuitem;
             Items[menuitem.ItemId] = item;
             menuitem.SetCheckable(item.IsCheckable);
@@ -260,14 +291,36 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             public int IconId { get; set; }
             public bool IsCheckable { get; set; }
             public bool IsNavigation { get; set; }
+            public ShowAsAction ShowAsAction { get; set; }
             public ICommand Command { get; set; }
 
-            public IMenuItem Construct(HomeMenuRegistry registry)
+            public IMenuItem Construct(GenericMenuRegistry registry)
             {
                 return registry.Construct(this);
             }
 
-            public void Select(HomeMenuRegistry registry)
+            public void Select(GenericMenuRegistry registry)
+            {
+                registry.Select(this);
+            }
+        }
+
+        public class ActionItem : IRegistryItem
+        {
+            public IMenuItem UIItem { get; set; }
+            public string Title { get; set; }
+            public int IconId { get; set; }
+            public bool IsCheckable { get; set; }
+            public bool IsNavigation { get; set; }
+            public ShowAsAction ShowAsAction { get; set; }
+            public Action Action { get; set; }
+
+            public IMenuItem Construct(GenericMenuRegistry registry)
+            {
+                return registry.Construct(this);
+            }
+
+            public void Select(GenericMenuRegistry registry)
             {
                 registry.Select(this);
             }
@@ -279,8 +332,11 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             string Title { get; set; }
             int IconId { get; set; }
             bool IsNavigation { get; set; }
-            IMenuItem Construct(HomeMenuRegistry registry);
-            void Select(HomeMenuRegistry registry);
+            bool IsCheckable { get; set; }
+
+            ShowAsAction ShowAsAction { get; set; }
+            IMenuItem Construct(GenericMenuRegistry registry);
+            void Select(GenericMenuRegistry registry);
         }
 
         protected virtual void OnOnBeforeSelectItem(IRegistryItem obj)
