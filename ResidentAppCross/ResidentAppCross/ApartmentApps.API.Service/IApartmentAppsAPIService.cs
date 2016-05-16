@@ -66,6 +66,11 @@ namespace ApartmentApps.Client
             get; 
         }
         
+        IPayments Payments
+        {
+            get; 
+        }
+        
         IRegister Register
         {
             get; 

@@ -15,7 +15,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client
 {
-    public partial class Version : IServiceOperations<ApartmentAppsAPIService>, IVersion
+    internal partial class Version : IServiceOperations<ApartmentAppsAPIService>, IVersion
     {
         /// <summary>
         /// Initializes a new instance of the Version class.

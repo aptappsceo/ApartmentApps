@@ -89,6 +89,13 @@ namespace ApartmentApps.Client
             get { return this._notifiations; }
         }
         
+        private IPayments _payments;
+        
+        public virtual IPayments Payments
+        {
+            get { return this._payments; }
+        }
+        
         private IRegister _register;
         
         public virtual IRegister Register
@@ -117,9 +124,10 @@ namespace ApartmentApps.Client
             this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
+            this._payments = new Payments(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
+            this._baseUri = new Uri("http://apartmentappsapiservicedev.azurewebsites.net");
         }
         
         /// <summary>
@@ -140,9 +148,10 @@ namespace ApartmentApps.Client
             this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
+            this._payments = new Payments(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
+            this._baseUri = new Uri("http://apartmentappsapiservicedev.azurewebsites.net");
         }
         
         /// <summary>
@@ -166,9 +175,10 @@ namespace ApartmentApps.Client
             this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
             this._notifiations = new Notifiations(this);
+            this._payments = new Payments(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://apartmentappsapiservice.azurewebsites.net");
+            this._baseUri = new Uri("http://apartmentappsapiservicedev.azurewebsites.net");
         }
         
         /// <summary>

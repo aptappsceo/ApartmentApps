@@ -111,6 +111,17 @@ namespace ApartmentApps.Client.Models
             set { this._firstName = value; }
         }
         
+        private int? _forteClientId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? ForteClientId
+        {
+            get { return this._forteClientId; }
+            set { this._forteClientId = value; }
+        }
+        
         private string _gender;
         
         /// <summary>
@@ -466,6 +477,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.FirstName = ((string)firstNameValue);
                 }
+                JToken forteClientIdValue = inputObject["ForteClientId"];
+                if (forteClientIdValue != null && forteClientIdValue.Type != JTokenType.Null)
+                {
+                    this.ForteClientId = ((int)forteClientIdValue);
+                }
                 JToken genderValue = inputObject["Gender"];
                 if (genderValue != null && genderValue.Type != JTokenType.Null)
                 {
@@ -474,7 +490,7 @@ namespace ApartmentApps.Client.Models
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
-                    this.Id = ((string)idValue);
+                    this.Id = idValue.ToString(Newtonsoft.Json.Formatting.Indented);
                 }
                 JToken imageThumbnailUrlValue = inputObject["ImageThumbnailUrl"];
                 if (imageThumbnailUrlValue != null && imageThumbnailUrlValue.Type != JTokenType.Null)

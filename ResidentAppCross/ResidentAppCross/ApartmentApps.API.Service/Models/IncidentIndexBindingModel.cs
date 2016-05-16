@@ -32,12 +32,12 @@ namespace ApartmentApps.Client.Models
             set { this._comments = value; }
         }
         
-        private int? _id;
+        private string _id;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public int? Id
+        public string Id
         {
             get { return this._id; }
             set { this._id = value; }
@@ -147,7 +147,7 @@ namespace ApartmentApps.Client.Models
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
-                    this.Id = ((int)idValue);
+                    this.Id = idValue.ToString(Newtonsoft.Json.Formatting.Indented);
                 }
                 JToken latestCheckinValue = inputObject["LatestCheckin"];
                 if (latestCheckinValue != null && latestCheckinValue.Type != JTokenType.Null)

@@ -42,6 +42,17 @@ namespace ApartmentApps.Client.Models
             set { this._city = value; }
         }
         
+        private string _email;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Email
+        {
+            get { return this._email; }
+            set { this._email = value; }
+        }
+        
         private string _firstName;
         
         /// <summary>
@@ -181,6 +192,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.City = ((string)cityValue);
                 }
+                JToken emailValue = inputObject["Email"];
+                if (emailValue != null && emailValue.Type != JTokenType.Null)
+                {
+                    this.Email = ((string)emailValue);
+                }
                 JToken firstNameValue = inputObject["FirstName"];
                 if (firstNameValue != null && firstNameValue.Type != JTokenType.Null)
                 {
@@ -194,7 +210,7 @@ namespace ApartmentApps.Client.Models
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
-                    this.Id = ((string)idValue);
+                    this.Id = idValue.ToString(Newtonsoft.Json.Formatting.Indented);
                 }
                 JToken imageThumbnailUrlValue = inputObject["ImageThumbnailUrl"];
                 if (imageThumbnailUrlValue != null && imageThumbnailUrlValue.Type != JTokenType.Null)

@@ -33,10 +33,14 @@ public class App : MvxApplication
         Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
 
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
-        
+
         //Mvx.RegisterSingleton<ILocationService,LocationService>();
-        var client = new ApartmentAppsClient();
-        //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
+        //var client = new ApartmentAppsClient();
+#if DEBUG
+        var client = new ApartmentAppsClient(new Uri("http://apartmentappsapiservicedev.azurewebsites.net/"));
+#else
+        var client = new ApartmentAppsClient(new Uri("https://api.apartmentapps.com"));
+#endif
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);
         var loginService = new LoginService(client);
         Mvx.RegisterSingleton<ILoginManager>(loginService);

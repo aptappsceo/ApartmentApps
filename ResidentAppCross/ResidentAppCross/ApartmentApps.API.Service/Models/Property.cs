@@ -67,6 +67,28 @@ namespace ApartmentApps.Client.Models
             set { this._maitenanceRequests = value; }
         }
         
+        private int? _merchantId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? MerchantId
+        {
+            get { return this._merchantId; }
+            set { this._merchantId = value; }
+        }
+        
+        private string _merchantPassword;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string MerchantPassword
+        {
+            get { return this._merchantPassword; }
+            set { this._merchantPassword = value; }
+        }
+        
         private string _name;
         
         /// <summary>
@@ -176,6 +198,16 @@ namespace ApartmentApps.Client.Models
                         maitenanceRequest.DeserializeJson(maitenanceRequestsValue);
                         this.MaitenanceRequests.Add(maitenanceRequest);
                     }
+                }
+                JToken merchantIdValue = inputObject["MerchantId"];
+                if (merchantIdValue != null && merchantIdValue.Type != JTokenType.Null)
+                {
+                    this.MerchantId = ((int)merchantIdValue);
+                }
+                JToken merchantPasswordValue = inputObject["MerchantPassword"];
+                if (merchantPasswordValue != null && merchantPasswordValue.Type != JTokenType.Null)
+                {
+                    this.MerchantPassword = ((string)merchantPasswordValue);
                 }
                 JToken nameValue = inputObject["Name"];
                 if (nameValue != null && nameValue.Type != JTokenType.Null)
