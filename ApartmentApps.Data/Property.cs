@@ -41,7 +41,8 @@ namespace ApartmentApps.Data
         public virtual ICollection<ApplicationUser> Users { get; set; }
 
         public int? MerchantId { get; set; }
-
+            
+        public string MerchantPassword { get; set; }
         //public virtual PropertyEntrataInfo EntrataInfo { get; set; }
         //public virtual PropertyYardiInfo YardiInfo { get; set; }
     }

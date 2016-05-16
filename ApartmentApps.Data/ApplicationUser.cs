@@ -9,6 +9,33 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data
 {
+    public class UserPaymentOption : PropertyEntity
+    {
+        public string FriendlyName { get; set; }
+
+        public string TokenId { get; set; }
+
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
+
+
+
+    }
+
+    public class UserTransaction : PropertyEntity
+    {
+        public DateTime DateCreated { get; set; }
+        public DateTime DateExecuted { get; set; }
+
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
+
+
+    }
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser, IPropertyEntity
     {

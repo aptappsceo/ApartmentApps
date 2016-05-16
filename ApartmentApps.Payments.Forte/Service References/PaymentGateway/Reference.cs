@@ -474,7 +474,9 @@ namespace ApartmentApps.Payments.Forte.PaymentGateway {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface PaymentGatewaySoapChannel : ApartmentApps.Payments.Forte.PaymentGateway.PaymentGatewaySoap, System.ServiceModel.IClientChannel {
     }
-    
+
+ 
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class PaymentGatewaySoapClient : System.ServiceModel.ClientBase<ApartmentApps.Payments.Forte.PaymentGateway.PaymentGatewaySoap>, ApartmentApps.Payments.Forte.PaymentGateway.PaymentGatewaySoap {
@@ -530,131 +532,70 @@ namespace ApartmentApps.Payments.Forte.PaymentGateway {
             return base.Channel.ExecuteSocketQuery(request);
         }
         
-        public string ExecuteSocketQuery(
-                    string pg_merchant_id, 
-                    string pg_password, 
-                    string pg_transaction_type, 
-                    string pg_merchant_data_1, 
-                    string pg_merchant_data_2, 
-                    string pg_merchant_data_3, 
-                    string pg_merchant_data_4, 
-                    string pg_merchant_data_5, 
-                    string pg_merchant_data_6, 
-                    string pg_merchant_data_7, 
-                    string pg_merchant_data_8, 
-                    string pg_merchant_data_9, 
-                    string pg_total_amount, 
-                    string pg_sales_tax_amount, 
-                    string pg_convenience_fee, 
-                    string pg_consumer_id, 
-                    string ecom_consumerorderid, 
-                    string ecom_walletid, 
-                    string pg_billto_postal_name_company, 
-                    string ecom_billto_postal_name_first, 
-                    string ecom_billto_postal_name_last, 
-                    string ecom_billto_postal_street_line1, 
-                    string ecom_billto_postal_street_line2, 
-                    string ecom_billto_postal_city, 
-                    string ecom_billto_postal_stateprov, 
-                    string ecom_billto_postal_postalcode, 
-                    string ecom_billto_postal_countrycode, 
-                    string ecom_billto_telecom_phone_number, 
-                    string ecom_billto_online_email, 
-                    string pg_billto_ssn, 
-                    string pg_billto_dl_number, 
-                    string pg_billto_dl_state, 
-                    string pg_billto_date_of_birth, 
-                    string pg_entered_by, 
-                    string pg_schedule_quantity, 
-                    string pg_schedule_frequency, 
-                    string pg_schedule_recurring_amount, 
-                    string pg_schedule_start_date, 
-                    string pg_customer_ip_address, 
-                    string pg_preauth_no_decline_on_fail, 
-                    string pg_preauth_decline_on_noanswer, 
-                    string pg_avs_method, 
-                    string ecom_payment_card_type, 
-                    string ecom_payment_card_name, 
-                    string ecom_payment_card_number, 
-                    string ecom_payment_card_expdate_month, 
-                    string ecom_payment_card_expdate_year, 
-                    string ecom_payment_card_verification, 
-                    string pg_procurement_card, 
-                    string pg_customer_acct_code, 
-                    string pg_cc_swipe_data, 
-                    string pg_mail_or_phone_order, 
-                    string ecom_payment_check_trn, 
-                    string ecom_payment_check_account, 
-                    string ecom_payment_check_account_type, 
-                    string ecom_payment_check_checkno, 
-                    string pg_original_trace_number, 
-                    string pg_original_authorization_code, 
-                    string pg_client_id, 
-                    string pg_payment_method_id, 
-                    string pg_entry_class_code) {
+        public string ExecuteSocketQuery(ExecuteSocketQueryParams executeSocketQueryParams) {
             ApartmentApps.Payments.Forte.PaymentGateway.ExecuteSocketQueryRequest inValue = new ApartmentApps.Payments.Forte.PaymentGateway.ExecuteSocketQueryRequest();
             inValue.Body = new ApartmentApps.Payments.Forte.PaymentGateway.ExecuteSocketQueryRequestBody();
-            inValue.Body.pg_merchant_id = pg_merchant_id;
-            inValue.Body.pg_password = pg_password;
-            inValue.Body.pg_transaction_type = pg_transaction_type;
-            inValue.Body.pg_merchant_data_1 = pg_merchant_data_1;
-            inValue.Body.pg_merchant_data_2 = pg_merchant_data_2;
-            inValue.Body.pg_merchant_data_3 = pg_merchant_data_3;
-            inValue.Body.pg_merchant_data_4 = pg_merchant_data_4;
-            inValue.Body.pg_merchant_data_5 = pg_merchant_data_5;
-            inValue.Body.pg_merchant_data_6 = pg_merchant_data_6;
-            inValue.Body.pg_merchant_data_7 = pg_merchant_data_7;
-            inValue.Body.pg_merchant_data_8 = pg_merchant_data_8;
-            inValue.Body.pg_merchant_data_9 = pg_merchant_data_9;
-            inValue.Body.pg_total_amount = pg_total_amount;
-            inValue.Body.pg_sales_tax_amount = pg_sales_tax_amount;
-            inValue.Body.pg_convenience_fee = pg_convenience_fee;
-            inValue.Body.pg_consumer_id = pg_consumer_id;
-            inValue.Body.ecom_consumerorderid = ecom_consumerorderid;
-            inValue.Body.ecom_walletid = ecom_walletid;
-            inValue.Body.pg_billto_postal_name_company = pg_billto_postal_name_company;
-            inValue.Body.ecom_billto_postal_name_first = ecom_billto_postal_name_first;
-            inValue.Body.ecom_billto_postal_name_last = ecom_billto_postal_name_last;
-            inValue.Body.ecom_billto_postal_street_line1 = ecom_billto_postal_street_line1;
-            inValue.Body.ecom_billto_postal_street_line2 = ecom_billto_postal_street_line2;
-            inValue.Body.ecom_billto_postal_city = ecom_billto_postal_city;
-            inValue.Body.ecom_billto_postal_stateprov = ecom_billto_postal_stateprov;
-            inValue.Body.ecom_billto_postal_postalcode = ecom_billto_postal_postalcode;
-            inValue.Body.ecom_billto_postal_countrycode = ecom_billto_postal_countrycode;
-            inValue.Body.ecom_billto_telecom_phone_number = ecom_billto_telecom_phone_number;
-            inValue.Body.ecom_billto_online_email = ecom_billto_online_email;
-            inValue.Body.pg_billto_ssn = pg_billto_ssn;
-            inValue.Body.pg_billto_dl_number = pg_billto_dl_number;
-            inValue.Body.pg_billto_dl_state = pg_billto_dl_state;
-            inValue.Body.pg_billto_date_of_birth = pg_billto_date_of_birth;
-            inValue.Body.pg_entered_by = pg_entered_by;
-            inValue.Body.pg_schedule_quantity = pg_schedule_quantity;
-            inValue.Body.pg_schedule_frequency = pg_schedule_frequency;
-            inValue.Body.pg_schedule_recurring_amount = pg_schedule_recurring_amount;
-            inValue.Body.pg_schedule_start_date = pg_schedule_start_date;
-            inValue.Body.pg_customer_ip_address = pg_customer_ip_address;
-            inValue.Body.pg_preauth_no_decline_on_fail = pg_preauth_no_decline_on_fail;
-            inValue.Body.pg_preauth_decline_on_noanswer = pg_preauth_decline_on_noanswer;
-            inValue.Body.pg_avs_method = pg_avs_method;
-            inValue.Body.ecom_payment_card_type = ecom_payment_card_type;
-            inValue.Body.ecom_payment_card_name = ecom_payment_card_name;
-            inValue.Body.ecom_payment_card_number = ecom_payment_card_number;
-            inValue.Body.ecom_payment_card_expdate_month = ecom_payment_card_expdate_month;
-            inValue.Body.ecom_payment_card_expdate_year = ecom_payment_card_expdate_year;
-            inValue.Body.ecom_payment_card_verification = ecom_payment_card_verification;
-            inValue.Body.pg_procurement_card = pg_procurement_card;
-            inValue.Body.pg_customer_acct_code = pg_customer_acct_code;
-            inValue.Body.pg_cc_swipe_data = pg_cc_swipe_data;
-            inValue.Body.pg_mail_or_phone_order = pg_mail_or_phone_order;
-            inValue.Body.ecom_payment_check_trn = ecom_payment_check_trn;
-            inValue.Body.ecom_payment_check_account = ecom_payment_check_account;
-            inValue.Body.ecom_payment_check_account_type = ecom_payment_check_account_type;
-            inValue.Body.ecom_payment_check_checkno = ecom_payment_check_checkno;
-            inValue.Body.pg_original_trace_number = pg_original_trace_number;
-            inValue.Body.pg_original_authorization_code = pg_original_authorization_code;
-            inValue.Body.pg_client_id = pg_client_id;
-            inValue.Body.pg_payment_method_id = pg_payment_method_id;
-            inValue.Body.pg_entry_class_code = pg_entry_class_code;
+            inValue.Body.pg_merchant_id = executeSocketQueryParams.PgMerchantId;
+            inValue.Body.pg_password = executeSocketQueryParams.PgPassword;
+            inValue.Body.pg_transaction_type = executeSocketQueryParams.PgTransactionType;
+            inValue.Body.pg_merchant_data_1 = executeSocketQueryParams.PgMerchantData1;
+            inValue.Body.pg_merchant_data_2 = executeSocketQueryParams.PgMerchantData2;
+            inValue.Body.pg_merchant_data_3 = executeSocketQueryParams.PgMerchantData3;
+            inValue.Body.pg_merchant_data_4 = executeSocketQueryParams.PgMerchantData4;
+            inValue.Body.pg_merchant_data_5 = executeSocketQueryParams.PgMerchantData5;
+            inValue.Body.pg_merchant_data_6 = executeSocketQueryParams.PgMerchantData6;
+            inValue.Body.pg_merchant_data_7 = executeSocketQueryParams.PgMerchantData7;
+            inValue.Body.pg_merchant_data_8 = executeSocketQueryParams.PgMerchantData8;
+            inValue.Body.pg_merchant_data_9 = executeSocketQueryParams.PgMerchantData9;
+            inValue.Body.pg_total_amount = executeSocketQueryParams.PgTotalAmount;
+            inValue.Body.pg_sales_tax_amount = executeSocketQueryParams.PgSalesTaxAmount;
+            inValue.Body.pg_convenience_fee = executeSocketQueryParams.PgConvenienceFee;
+            inValue.Body.pg_consumer_id = executeSocketQueryParams.PgConsumerId;
+            inValue.Body.ecom_consumerorderid = executeSocketQueryParams.EcomConsumerorderid;
+            inValue.Body.ecom_walletid = executeSocketQueryParams.EcomWalletid;
+            inValue.Body.pg_billto_postal_name_company = executeSocketQueryParams.PgBilltoPostalNameCompany;
+            inValue.Body.ecom_billto_postal_name_first = executeSocketQueryParams.EcomBilltoPostalNameFirst;
+            inValue.Body.ecom_billto_postal_name_last = executeSocketQueryParams.EcomBilltoPostalNameLast;
+            inValue.Body.ecom_billto_postal_street_line1 = executeSocketQueryParams.EcomBilltoPostalStreetLine1;
+            inValue.Body.ecom_billto_postal_street_line2 = executeSocketQueryParams.EcomBilltoPostalStreetLine2;
+            inValue.Body.ecom_billto_postal_city = executeSocketQueryParams.EcomBilltoPostalCity;
+            inValue.Body.ecom_billto_postal_stateprov = executeSocketQueryParams.EcomBilltoPostalStateprov;
+            inValue.Body.ecom_billto_postal_postalcode = executeSocketQueryParams.EcomBilltoPostalPostalcode;
+            inValue.Body.ecom_billto_postal_countrycode = executeSocketQueryParams.EcomBilltoPostalCountrycode;
+            inValue.Body.ecom_billto_telecom_phone_number = executeSocketQueryParams.EcomBilltoTelecomPhoneNumber;
+            inValue.Body.ecom_billto_online_email = executeSocketQueryParams.EcomBilltoOnlineEmail;
+            inValue.Body.pg_billto_ssn = executeSocketQueryParams.PgBilltoSsn;
+            inValue.Body.pg_billto_dl_number = executeSocketQueryParams.PgBilltoDlNumber;
+            inValue.Body.pg_billto_dl_state = executeSocketQueryParams.PgBilltoDlState;
+            inValue.Body.pg_billto_date_of_birth = executeSocketQueryParams.PgBilltoDateOfBirth;
+            inValue.Body.pg_entered_by = executeSocketQueryParams.PgEnteredBy;
+            inValue.Body.pg_schedule_quantity = executeSocketQueryParams.PgScheduleQuantity;
+            inValue.Body.pg_schedule_frequency = executeSocketQueryParams.PgScheduleFrequency;
+            inValue.Body.pg_schedule_recurring_amount = executeSocketQueryParams.PgScheduleRecurringAmount;
+            inValue.Body.pg_schedule_start_date = executeSocketQueryParams.PgScheduleStartDate;
+            inValue.Body.pg_customer_ip_address = executeSocketQueryParams.PgCustomerIpAddress;
+            inValue.Body.pg_preauth_no_decline_on_fail = executeSocketQueryParams.PgPreauthNoDeclineOnFail;
+            inValue.Body.pg_preauth_decline_on_noanswer = executeSocketQueryParams.PgPreauthDeclineOnNoanswer;
+            inValue.Body.pg_avs_method = executeSocketQueryParams.PgAvsMethod;
+            inValue.Body.ecom_payment_card_type = executeSocketQueryParams.EcomPaymentCardType;
+            inValue.Body.ecom_payment_card_name = executeSocketQueryParams.EcomPaymentCardName;
+            inValue.Body.ecom_payment_card_number = executeSocketQueryParams.EcomPaymentCardNumber;
+            inValue.Body.ecom_payment_card_expdate_month = executeSocketQueryParams.EcomPaymentCardExpdateMonth;
+            inValue.Body.ecom_payment_card_expdate_year = executeSocketQueryParams.EcomPaymentCardExpdateYear;
+            inValue.Body.ecom_payment_card_verification = executeSocketQueryParams.EcomPaymentCardVerification;
+            inValue.Body.pg_procurement_card = executeSocketQueryParams.PgProcurementCard;
+            inValue.Body.pg_customer_acct_code = executeSocketQueryParams.PgCustomerAcctCode;
+            inValue.Body.pg_cc_swipe_data = executeSocketQueryParams.PgCcSwipeData;
+            inValue.Body.pg_mail_or_phone_order = executeSocketQueryParams.PgMailOrPhoneOrder;
+            inValue.Body.ecom_payment_check_trn = executeSocketQueryParams.EcomPaymentCheckTrn;
+            inValue.Body.ecom_payment_check_account = executeSocketQueryParams.EcomPaymentCheckAccount;
+            inValue.Body.ecom_payment_check_account_type = executeSocketQueryParams.EcomPaymentCheckAccountType;
+            inValue.Body.ecom_payment_check_checkno = executeSocketQueryParams.EcomPaymentCheckCheckno;
+            inValue.Body.pg_original_trace_number = executeSocketQueryParams.PgOriginalTraceNumber;
+            inValue.Body.pg_original_authorization_code = executeSocketQueryParams.PgOriginalAuthorizationCode;
+            inValue.Body.pg_client_id = executeSocketQueryParams.PgClientId;
+            inValue.Body.pg_payment_method_id = executeSocketQueryParams.PgPaymentMethodId;
+            inValue.Body.pg_entry_class_code = executeSocketQueryParams.PgEntryClassCode;
             ApartmentApps.Payments.Forte.PaymentGateway.ExecuteSocketQueryResponse retVal = ((ApartmentApps.Payments.Forte.PaymentGateway.PaymentGatewaySoap)(this)).ExecuteSocketQuery(inValue);
             return retVal.Body.ExecuteSocketQueryResult;
         }
