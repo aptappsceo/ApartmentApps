@@ -548,6 +548,25 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return type.Name.ToLowerUnderscored().AsLayoutId();
         }
 
+        public static IEnumerable<View> GetChildren(this ViewGroup viewGroup)
+        {
+            for (int i = 0; i < viewGroup.ChildCount; i++)
+            {
+                yield return viewGroup.GetChildAt(i);
+            }
+        } 
+
+        public static IEnumerable<View> GetChildrenWithTag(this ViewGroup viewGroup, string tag)
+        {
+            var tagJString = new Java.Lang.String(tag);
+            return viewGroup.GetChildren().Where(c =>
+            {
+                return tagJString.Equals(c.Tag);
+            });
+        } 
+
+
+
         public static string GetResourceString(this int resourceId)
         {
             return DroidApplication.Instance.Resources.GetText(resourceId);
