@@ -183,10 +183,10 @@ namespace ResidentAppCross.Droid.Views
         {
             base.Bind();
 
-            HeaderSection.TitleLabel.Text = "Maintenance Checkin";
             CommentsSection.HeaderLabel.Text = "Comments & Details:";
             CommentsSection.InputField.Text = ViewModel.Checkin.Comments;
             HeaderSection.SubtitleLabel.Text = ViewModel.Checkin.StatusId;
+            HeaderSection.TitleLabel.Text = "Maintenance Checkin";
 
             HeaderSection.IconView.SetImageResource(AppTheme.IconResByMaintenanceState(ViewModel.Checkin.StatusId.AsMaintenanceStatus()));
             var color = Resources.GetColor(Resource.Color.secondary_text_body);
@@ -226,6 +226,8 @@ namespace ResidentAppCross.Droid.Views
             HeaderSection.IconView.SetColorFilter(Resources.GetColor(Resource.Color.secondary_text_body));
 
             PhotoSection.Bind(ViewModel.CheckinPhotos);
+
+
 
         }
 

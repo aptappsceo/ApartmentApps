@@ -16,6 +16,7 @@ using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Resources;
+using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross.Droid.Views.Components.Navigation
 {
@@ -142,6 +143,11 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             Registry.AddCommand("Change Password", SharedResources.Icons.Exit.ToDrawableId(), new MvxCommand(() =>
             {
                 ViewModel.ShowViewModel<ChangePasswordViewModel>(vm => { });
+            }));
+
+            Registry.AddCommand("Rent Summary", SharedResources.Icons.Wallet.ToDrawableId(), new MvxCommand(() =>
+            {
+                ViewModel.ShowViewModel<RentSummaryViewModel>(vm => { });
             }));
 
             OnOnRequestContent(Registry);

@@ -159,6 +159,7 @@
     <Compile Include="ViewModels\Screens\MaintenanceRequestStatusViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceStartFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\PropertyConfigFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\RentSummaryViewModel.cs" />
     <Compile Include="ViewModels\Screens\SettingsFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\SignUpFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\TestFormViewModel.cs" />

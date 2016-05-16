@@ -10,6 +10,9 @@ using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
+
+
+
     public class CourtesyOfficerCheckinsViewModel : ViewModelBase
     {
         public IApartmentAppsAPIService ApiService { get; set; }
