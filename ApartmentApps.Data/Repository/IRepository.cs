@@ -28,9 +28,11 @@ namespace ApartmentApps.Data.Repository
             IRepository<CourtesyOfficerCheckin> courtesyOfficerCheckins, 
             IRepository<IncidentReport> incidentReports, 
             IRepository<IncidentReportCheckin> incidentReportCheckins, 
-            IRepository<UserAlert> userAlerts)
+            IRepository<UserAlert> userAlerts, IRepository<UserPaymentOption> paymentOptions, IRepository<UserTransaction> userTransactions  )
         {
             _db = db;
+            PaymentOptions = paymentOptions;
+            UserTransactions = userTransactions;
             Users = users;
             Roles = roles;
             MaintenanceRequestStatuses = maintenanceRequestStatuses;
@@ -77,6 +79,8 @@ namespace ApartmentApps.Data.Repository
         public virtual IRepository<IncidentReport> IncidentReports { get; set; }
         public virtual IRepository<IncidentReportCheckin> IncidentReportCheckins { get; set; }
         public virtual IRepository<UserAlert> UserAlerts { get; set; }
+        public virtual IRepository<UserPaymentOption> PaymentOptions { get; set; }
+        public IRepository<UserTransaction> UserTransactions { get; set; }
 
         public void Entry(object obj)
         {
