@@ -7,4 +7,10 @@
 	<string name="drawer_close">Close</string>
 	<string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 	<string name="empty_string_placeholder">-</string>
+	<string name="hint_current_password">Current Password</string>
+	<string name="hint_new_password">New Password</string>
+	<string name="hint_confirm_new_password">Confirm New Password</string>
+	<string name="problem_occurred">Problem Occurred.</string>
+	<string name="ok">Ok</string>
+	<string name="please_wait">Please, wait</string>
 </resources>

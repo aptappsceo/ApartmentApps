@@ -56,18 +56,15 @@ namespace ApartmentApps.Api
             var calendar = new GregorianCalendar();
             var week = calendar.GetWeekOfYear(today, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
             var last7DaysCheckins =
-                Repository.Where(x => x.CreatedOn.Day == today.Day && x.CreatedOn.Year == today.Year &&
+                Repository.Where(x => (x.CreatedOn.Day <= today.Day && x.CreatedOn.Day > today.Day - 7 ) && x.CreatedOn.Year == today.Year &&
                                       x.CreatedOn.Month == today.Month).ToList();
             last7DaysCheckins.RemoveAll(
                 p => calendar.GetWeekOfYear(p.CreatedOn, CalendarWeekRule.FirstDay, DayOfWeek.Monday) != week);
 
             foreach (var p in Locations.GetAll().ToArray())
             {
-                var item = last7DaysCheckins.FirstOrDefault(
-                    x =>
-                        x.CreatedOn.Day == today.Day -7 && x.CreatedOn.Year == today.Year &&
-                        x.CreatedOn.Month == today.Month);
-    
+                var item = last7DaysCheckins.FirstOrDefault(x=>x.CourtesyOfficerLocationId == p.Id);
+               
                     yield return ToCourtesyCheckinBindingModel(p, item);
             }
         }
