@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="#aaaaaa"
+    android:padding="@dimen/default_section_padding"
+    android:layout_height="wrap_content">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/TextInput"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword"
+            android:minWidth="350dp"
+            android:textColor="@color/primary_text_body"
+            android:textColorHint="@color/secondary_text_body"
+            android:singleLine="true"
+            android:textCursorDrawable="@null"/>
+
+        <!--            "-->
+
+    </android.support.design.widget.TextInputLayout>
+
+</LinearLayout>

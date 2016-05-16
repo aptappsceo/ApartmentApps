@@ -146,7 +146,7 @@ namespace ResidentAppCross.iOS.Views
             HeaderSection.SubLabel.Text = "Fill the information below";
             RequestTypeSection.Label.Text = "Request Type";
             EntrancePermissionSection.HeaderLabel.Text = "Permission To Enter";
-            EntrancePermissionSection.SubHeaderLabel.Text = "Do you give a permission for tech guys to enter your apartment when you are not at home?";
+            EntrancePermissionSection.SubHeaderLabel.Text = "Do you give permission for maintenance staff to enter when you are not home?";
             var b = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
 
             //Header Section

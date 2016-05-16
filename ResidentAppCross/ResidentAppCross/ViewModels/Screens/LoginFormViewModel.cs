@@ -102,7 +102,10 @@ namespace ResidentAppCross
             }
         }
 
-        public ICommand RemindPasswordCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand RemindPasswordCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<RecoverPasswordViewModel>();
+        });
 
         public ICommand SignUpCommand => new MvxCommand(() =>
         {
@@ -120,4 +123,93 @@ namespace ResidentAppCross
             }
         }
     }
+
+
+
+    public class RecoverPasswordViewModel : ViewModelBase
+    {
+        private string _email;
+
+        public string Email
+        {
+            get { return _email; }
+            set { this.SetProperty(ref _email, value); }
+        }
+
+        public ICommand RecoverPasswordCommand
+        {
+            get
+            {
+                return this.TaskCommand(async context =>
+                {
+                    await Task.Delay(2000);
+                })
+                .OnStart("Recovering...")
+                .OnComplete("Done! Further instructions were sent to your email.", () => Close(this));
+            }
+        }
+    }
+
+    public class MessageDetailsViewModel : ViewModelBase
+    {
+        private string _subject = "Some important subject here";
+        private string _message = "Very insteresting message should be here because otherwise noone's gonna read it. Also I need to ad some text just to see how multiline text looks like in this particular case so don;t blame me for a long string.";
+        private string _date = "4/6/2015 22:02 AM";
+
+        public string Subject
+        {
+            get { return _subject; }
+            set { SetProperty(ref _subject,value); }
+        }
+
+        public string Message
+        {
+            get { return _message; }
+            set { SetProperty(ref _message, value); }
+        }
+
+        public string Date
+        {
+            get { return _date; }
+            set { SetProperty(ref _date, value); }
+        }
+    }
+
+    public class ChangePasswordViewModel : ViewModelBase
+    {
+        private string _oldPassword;
+        private string _newPassword;
+        private string _newPasswordConfirmation;
+
+        public string OldPassword
+        {
+            get { return _oldPassword; }
+            set { SetProperty(ref _oldPassword, value); }
+        }
+
+        public string NewPassword
+        {
+            get { return _newPassword; }
+            set { SetProperty(ref _newPassword, value); }
+        }
+
+        public string NewPasswordConfirmation
+        {
+            get { return _newPasswordConfirmation; }
+            set { SetProperty(ref _newPasswordConfirmation,value); }
+        }
+
+        public ICommand ChangePasswordCommand => StubCommands.NoActionSpecifiedCommand(this);
+    }
+
+
+    public enum MessageType
+    {
+        Maintenance,
+        Courtesy,
+        Delivery,
+        Other,
+        Payment
+    }
+
 }

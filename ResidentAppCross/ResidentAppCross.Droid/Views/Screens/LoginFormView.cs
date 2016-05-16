@@ -64,6 +64,34 @@ namespace ResidentAppCross.Droid.Views
         public override bool EnableToolbar => false;
     }
 
+
+    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary)]
+    public class RecoverPasswordView: ViewFragment<RecoverPasswordViewModel>
+    {
+
+        [Outlet]
+        public EditText EmailInput { get; set; }
+
+        [Outlet]
+        public Button RecoverPasswordButton { get; set; }
+
+        public override void Bind()
+        {
+            base.Bind();
+
+            MainActivity.Window.SetSoftInputMode(SoftInput.AdjustResize | SoftInput.StateHidden);
+
+            var set = this.CreateBindingSet<RecoverPasswordView, RecoverPasswordViewModel>();
+            set.Bind(RecoverPasswordButton).To(vm => vm.RecoverPasswordCommand);
+            set.Bind(EmailInput).TwoWay().For(v => v.Text).To(vm => vm.Email);
+            set.Apply();
+
+        }
+
+
+        public override bool EnableToolbar => false;
+    }
+
     [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary,true)]
     public class SignupFormView: ViewFragment<SignUpFormViewModel>
     {

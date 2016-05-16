@@ -515,6 +515,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
     public static class StringExtensions
     {
+
         public static string ToLowerUnderscored(this string str)
         {
             return
@@ -547,6 +548,10 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return type.Name.ToLowerUnderscored().AsLayoutId();
         }
 
+        public static string GetResourceString(this int resourceId)
+        {
+            return DroidApplication.Instance.Resources.GetText(resourceId);
+        }
         
 
     }

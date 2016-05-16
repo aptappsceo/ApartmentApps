@@ -41,6 +41,7 @@ namespace ApartmentApps.API.Service
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(800),
                 // In production mode set AllowInsecureHttp = false
+                
                 AllowInsecureHttp = true
             };
 

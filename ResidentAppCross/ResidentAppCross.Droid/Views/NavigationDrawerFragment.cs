@@ -97,12 +97,9 @@ namespace ResidentAppCross.Droid.Views.Components.NavigationDrawer
 
         public override void OnDrawerStateChanged(int newState)
         {
-            if (newState == DrawerLayout.StateSettling)
+            if (newState == DrawerLayout.StateSettling && !Layout.IsDrawerOpen(GravityCompat.Start))
             {
-                if (!Layout.IsDrawerOpen(GravityCompat.Start))
-                {
-                    Opening?.Invoke();
-                }
+                Layout.Post(()=>Opening?.Invoke());
             }
         }
 

@@ -81,6 +81,15 @@ namespace ResidentAppCross.Droid.Views
         public ImageView IconView { get; set; }
     }
 
+    public class TextInputSection : FragmentSection
+    {
+        [Outlet]
+        public AppCompatEditText TextInput { get; set; }
+
+        [Outlet]
+        public TextInputLayout TextInputLayout { get; set; }
+    }
+
     public class ActionBarSection : FragmentSection
     {
         [Outlet]
@@ -461,22 +470,18 @@ namespace ResidentAppCross.Droid.Views
             base.OnViewCreated(view, savedInstanceState);
             Layout?.LocateOutlets(this);
             InitializeView(Layout, savedInstanceState);
-            UpdateToolbar();
-            UpdateTitle();
             Bind();
             IsBound = true;
+            UpdateTitle();
+            UpdateToolbar();
         }
+
+
 
         public void UpdateToolbar()
         {
-            if (EnableToolbar)
-            {
-                Toolbar.Show();
-            }
-            else
-            {
-                Toolbar.Hide();
-            }
+            var act = MainActivity as ApplicationHostActivity;
+            act.IsToolbarVisible = EnableToolbar;
         }
 
         public void UpdateTitle()
