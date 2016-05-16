@@ -9,6 +9,12 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data
 {
+    public enum PaymentOptionType
+    {
+        CreditCard,
+        Checking,
+        Savings
+    }
     public class UserPaymentOption : PropertyEntity
     {
         public string FriendlyName { get; set; }
@@ -20,8 +26,7 @@ namespace ApartmentApps.Data
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
 
-
-
+        public PaymentOptionType Type { get; set; }
     }
 
     public class UserTransaction : PropertyEntity

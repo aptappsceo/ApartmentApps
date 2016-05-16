@@ -14,6 +14,10 @@ namespace ApartmentApps.API.Service.Controllers
     public interface IPaymentsService
     {
         Task<MakePaymentResult> MakePayment( MakePaymentBindingModel makePaymentBindingModel);
+        Task<AddCreditCardResult> AddCreditCard(AddCreditCardBindingModel addCreditCard);
+        Task<AddBankAccountResult> AddBankAccount(AddBankAccountBindingModel addCreditCard);
+        IEnumerable<PaymentOptionBindingModel> GetPaymentOptions();
+        IEnumerable<PaymentHistoryBindingModel> GetPaymentHistory();
     }
     public class MakePaymentResult
     {
@@ -24,14 +28,26 @@ namespace ApartmentApps.API.Service.Controllers
     {
        
     }
+    public enum CardType : int
+    {
+        VISA = 0,
+        MAST = 1,
+        DISC = 2,
+        AMER = 3,
+        DINE = 4,
+        JCB = 5,
+    }
 
+ 
     public class PaymentSummaryBindingModel
     {
         
     }
     public class PaymentOptionBindingModel
     {
-        
+        public string FriendlyName { get; set; }
+        public PaymentOptionType Type { get; set; }
+        public int Id { get; set; }
     }
     public class PaymentHistoryBindingModel
     {
@@ -44,7 +60,11 @@ namespace ApartmentApps.API.Service.Controllers
 
     public class AddCreditCardBindingModel
     {
-        
+        public string AccountHolderName { get; set; }
+        public string CardNumber { get; set; }
+        public string ExpirationDate { get; set; }
+        public CardType CardType { get; set; }
+        public string FriendlyName { get; set; }
     }
 
     public class AddCreditCardResult
@@ -54,7 +74,11 @@ namespace ApartmentApps.API.Service.Controllers
 
     public class AddBankAccountBindingModel
     {
-        
+        public bool IsSavings { get; set; }
+        public string AccountHolderName { get; set; }
+        public string AccountNumber { get; set; }
+        public string RoutingNumber { get; set; }
+        public string FriendlyName { get; set; }
     }
     public class AddBankAccountResult
     {
@@ -69,11 +93,15 @@ namespace ApartmentApps.API.Service.Controllers
         {
             Context = context;
             UserContext = userContext;
-            MerchantId = userContext.CurrentUser.Property.MerchantId ?? 0;
-            MerchantPassword= userContext
-        } //IRepository<Property> propertyRepo,
+            //MerchantId = userContext.CurrentUser.Property.MerchantId ?? 0;
+           
+        }
 
-        public int MerchantId { get; set; }
+        public string MerchantPassword => UserContext.CurrentUser.Property.MerchantPassword;
+
+        //IRepository<Property> propertyRepo,
+
+        public int MerchantId => UserContext.CurrentUser.Property.MerchantId ?? 0;
         
         public string ApiLoginId { get; set; } = "5KwrM3b7T7";
 
@@ -84,24 +112,69 @@ namespace ApartmentApps.API.Service.Controllers
         {
             var auth = Authenticate.GetClientAuthTicket(ApiLoginId, Key);
             int clientId = await EnsureClientId(auth);
+            PaymentMethod payment = new PaymentMethod();
+            payment.AcctHolderName = addCreditCard.AccountHolderName;
+            payment.CcCardNumber = addCreditCard.CardNumber;
+            payment.CcExpirationDate = addCreditCard.ExpirationDate;
+            payment.CcCardType = (CcCardType)Enum.Parse(typeof(CcCardType), addCreditCard.CardType.ToString());
+            payment.Note = addCreditCard.FriendlyName;
+            payment.ClientID = clientId;
+            payment.MerchantID = MerchantId;
 
-
-
+            using (var client = new ClientServiceClient("WSHttpBinding_IClientService"))
+            {
+                var result = await client.createPaymentMethodAsync(auth, payment);
+                var paymentMethodId = result.Body.createPaymentMethodResult;
+                Context.PaymentOptions.Add(new UserPaymentOption()
+                {
+                    UserId = UserContext.UserId,
+                    Type = PaymentOptionType.CreditCard,
+                    FriendlyName = addCreditCard.FriendlyName,
+                    TokenId = paymentMethodId.ToString()
+                });
+                Context.SaveChanges();
+            }
             return new AddCreditCardResult();
         }
         public async Task<AddBankAccountResult> AddBankAccount(AddBankAccountBindingModel addCreditCard)
         {
             var auth = Authenticate.GetClientAuthTicket(ApiLoginId, Key);
             int clientId = await EnsureClientId(auth);
+            PaymentMethod payment = new PaymentMethod();
+            payment.AcctHolderName = addCreditCard.AccountHolderName;
+            payment.EcAccountNumber = addCreditCard.AccountNumber;
+            payment.EcAccountTRN = addCreditCard.RoutingNumber;
+            payment.EcAccountType = addCreditCard.IsSavings ? EcAccountType.SAVINGS : EcAccountType.CHECKING;
+            payment.Note = addCreditCard.FriendlyName;
+            payment.ClientID = clientId;
+            payment.MerchantID = MerchantId;
 
-
+            using (var client = new ClientServiceClient("WSHttpBinding_IClientService"))
+            {
+                var result = await client.createPaymentMethodAsync(auth, payment);
+                var paymentMethodId = result.Body.createPaymentMethodResult;
+                Context.PaymentOptions.Add(new UserPaymentOption()
+                {
+                    UserId = UserContext.UserId,
+                    Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking,
+                    FriendlyName = addCreditCard.FriendlyName,
+                    TokenId = paymentMethodId.ToString()
+                });
+                Context.SaveChanges();
+            }
             return new AddBankAccountResult();
         }
 
         public IEnumerable<PaymentOptionBindingModel> GetPaymentOptions()
         {
-            yield break;
-        } 
+            return Context.PaymentOptions.Where(p => p.UserId == UserContext.UserId).Select(x=>
+                new PaymentOptionBindingModel()
+                {
+                    FriendlyName = x.FriendlyName,
+                    Type = x.Type,
+                    Id = x.Id,
+                });
+        }
 
         public IEnumerable<PaymentHistoryBindingModel> GetPaymentHistory()
         {

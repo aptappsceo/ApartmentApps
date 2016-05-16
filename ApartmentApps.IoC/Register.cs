@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
+using ApartmentApps.API.Service.Controllers;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
@@ -36,6 +37,12 @@ namespace ApartmentApps.IoC
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
             ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
+
+            kernel.Bind<IPaymentsService>().To<FortePaymentsService>().InRequestScope();
+            kernel.Bind<IRepository<UserPaymentOption>>().To<PropertyRepository<UserPaymentOption>>().InRequestScope();
+            kernel.Bind<IRepository<UserTransaction>>().To<PropertyRepository<UserTransaction>>().InRequestScope();
+
+
             kernel.Bind<EntrataIntegration>().ToSelf().InRequestScope();
             kernel.Bind<IUnitImporter>().To<UnitImporter>().InRequestScope();
             kernel.Bind<Property>().ToMethod(_ => kernel.Get<IUserContext>().CurrentUser.Property).InRequestScope();
@@ -55,6 +62,7 @@ namespace ApartmentApps.IoC
             kernel.Bind<IRepository<IdentityRole>>().To<BaseRepository<IdentityRole>>().InRequestScope();
 
             kernel.Bind<IRepository<Building>>().To<PropertyRepository<Building>>().InRequestScope();
+            
             kernel.Bind<IRepository<Unit>>().To<UnitRepository>().InRequestScope();
           
             kernel.Bind<IRepository<MaitenanceRequest>>().To<MaintenanceRepository>().InRequestScope();
