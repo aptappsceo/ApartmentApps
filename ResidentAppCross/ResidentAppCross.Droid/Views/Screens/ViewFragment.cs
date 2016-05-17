@@ -470,22 +470,18 @@ namespace ResidentAppCross.Droid.Views
             base.OnViewCreated(view, savedInstanceState);
             Layout?.LocateOutlets(this);
             InitializeView(Layout, savedInstanceState);
-            UpdateToolbar();
-            UpdateTitle();
             Bind();
             IsBound = true;
+            UpdateTitle();
+            UpdateToolbar();
         }
+
+
 
         public void UpdateToolbar()
         {
-            if (EnableToolbar)
-            {
-                Toolbar.Show();
-            }
-            else
-            {
-                Toolbar.Hide();
-            }
+            var act = MainActivity as ApplicationHostActivity;
+            act.IsToolbarVisible = EnableToolbar;
         }
 
         public void UpdateTitle()

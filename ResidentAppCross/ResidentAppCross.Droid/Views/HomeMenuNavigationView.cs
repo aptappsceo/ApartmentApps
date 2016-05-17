@@ -22,8 +22,15 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
     public class HomeMenuNavigationView : NavigationView
     {
         private HomeMenuViewModel _viewModel;
+        private IMvxMessenger _eventAggregator;
+        private Dictionary<int, ICommand> _commandsMap;
+        private GenericMenuRegistry _registry;
 
-        public HomeMenuNavigationView(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
+        public HomeMenuNavigationView(Context context) : base(context)
+        {
+        }
+
+        protected HomeMenuNavigationView(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
         {
         }
 
@@ -35,27 +42,13 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
         {
         }
 
-        public HomeMenuNavigationView(Context context) : base(context)
-        {
-        }
-
-
         [Outlet] public AppCompatTextView EmailLabel { get; set; }
         [Outlet] public AppCompatTextView UsernameLabel { get; set; }
         [Outlet] public CircleImageView AvatarView { get; set; }
+        public event MenuContentRequestDelegate OnRequestContent;
+        public event Action<object, NavigationItemSelectedEventArgs> BeforeNavigate;
 
-        public HomeMenuViewModel ViewModel
-        {
-            get { return _viewModel; }
-            set
-            {
-                _viewModel = value;
-                if (value != null) OnViewModelSet();
-            }
-        }
-
-        private IMvxMessenger _eventAggregator;
-        private Dictionary<int, ICommand> _commandsMap;
+        public HomeMenuViewModel ViewModel => _viewModel ?? (_viewModel = ResolveViewModel());
 
         public IMvxMessenger EventAggregator
         {
@@ -63,29 +56,36 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             set { _eventAggregator = value; }
         }
 
-        public event MenuContentRequestDelegate OnRequestContent;
-
-        public virtual void OnViewModelSet()
+        public GenericMenuRegistry Registry
         {
-
-            EventAggregator.SubscribeOnMainThread<HomeMenuUpdatedEvent>(evt =>
+            get
             {
-                if (evt.Sender == ViewModel)
+                if (_registry == null)
                 {
-                    UpdateContent();
+                    _registry = new GenericMenuRegistry(Menu);
+                    _registry.OnBeforeSelectItem += OnOnBeforeSelectItem;
                 }
-            },MvxReference.Strong);
-            NavigationItemSelected += HomeMenuView_NavigationItemSelected;
-            //ViewModel.UpdateMenuItems();
-
+                return _registry;
+            }
+            set { _registry = value; }
         }
 
-        public event Action<object, NavigationItemSelectedEventArgs> BeforeNavigate;
+        private HomeMenuViewModel ResolveViewModel()
+        {
+            EventAggregator.SubscribeOnMainThread<HomeMenuUpdatedEvent>(evt =>
+            {
+                if (evt.Sender == ViewModel) UpdateContent();
+            }, MvxReference.Strong);
+
+            NavigationItemSelected += HomeMenuView_NavigationItemSelected;
+
+            return Mvx.Resolve<HomeMenuViewModel>();
+        }
+
 
         private void HomeMenuView_NavigationItemSelected(object sender, NavigationItemSelectedEventArgs e)
         {
-            BeforeNavigate?.Invoke(sender,  e);
-            CommandsMap[e.MenuItem.ItemId].Execute(null);
+            Registry.Select(e.MenuItem.ItemId);
         }
 
         public void Refresh()
@@ -100,77 +100,248 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
         }
 
 
-        private void UpdateContent()
+        public void UpdateHeader()
         {
-            Menu.Clear();
-
-            var index = 0;
-
             if (UsernameLabel == null)
             {
                 var header = this.FindViewById(Resource.Id.NavigationHeader);
                 header.LocateOutlets(this);
             }
 
+            if(UsernameLabel == null || EmailLabel == null || AvatarView == null) throw new Exception("Header structure is incorrect, Outlets were not found");
+
             UsernameLabel.Text = ViewModel?.Username;
             EmailLabel.Text = ViewModel?.Email;
 
             if (!string.IsNullOrEmpty(ViewModel?.ProfileImageUrl))
                 ImageExtensions.GetBitmapWithPicasso(ViewModel.ProfileImageUrl).NoFade().Placeholder(Resource.Drawable.avatar_placeholder).CenterCrop().Fit().Into(AvatarView);
-
-            var homeMenu = Menu.AddSubMenu("Home Menu");
-            for (int i = 0; i < ViewModel.MenuItems.Count; i++)
-            {
-                var item = ViewModel.MenuItems[i];
-                var menuitem = homeMenu.Add(0,index,index,item.Name);
-                menuitem.SetIcon(item.Icon.ToDrawableId());
-                CommandsMap[menuitem.ItemId] = item.Command;
-                menuitem.SetCheckable(true);
-                index++;
-            }
-
-            //Edit Profile
-            var changeAvatarItem = homeMenu.Add(0, index, index, "Change Profile Photo");
-            changeAvatarItem.SetIcon(SharedResources.Icons.User.ToDrawableId());
-            CommandsMap[changeAvatarItem.ItemId] = ViewModel.EditProfileCommand;
-            changeAvatarItem.SetCheckable(true);
-            index++;
-
-            //Sign Out
-            var signoutItem = homeMenu.Add(0, index, index, "Sign Out");
-            signoutItem.SetIcon(SharedResources.Icons.Exit.ToDrawableId());
-            CommandsMap[signoutItem.ItemId] = ViewModel.SignOutCommand;
-            signoutItem.SetCheckable(true);
-            index++;
-
-            var testMessageItem = homeMenu.Add(0, index, index, "Message Screen");
-            testMessageItem.SetIcon(SharedResources.Icons.Exit.ToDrawableId());
-            CommandsMap[testMessageItem.ItemId] = new MvxCommand(() =>
-            {
-                ViewModel.ShowViewModel<MessageDetailsViewModel>(vm=> {});
-            });
-            testMessageItem.SetCheckable(true);
-            index++;
-
-            var testChangePasswordItem = homeMenu.Add(0, index, index, "Change Password");
-            testChangePasswordItem.SetIcon(SharedResources.Icons.Exit.ToDrawableId());
-            CommandsMap[testChangePasswordItem.ItemId] = new MvxCommand(() =>
-            {
-                ViewModel.ShowViewModel<ChangePasswordViewModel>(vm=> {});
-            });
-            testChangePasswordItem.SetCheckable(true);
-            index++;
-
-
-
-            OnOnRequestContent(Menu, ref index);
         }
 
-        public delegate void MenuContentRequestDelegate(IMenu dataRow, ref int index);
 
-        protected virtual void OnOnRequestContent(IMenu menu, ref int index)
+
+        private void UpdateContent()
         {
-            OnRequestContent?.Invoke(menu, ref index);
+            UpdateHeader();
+
+            Registry.Clear();
+
+            foreach (var item in ViewModel.MenuItems)
+            {
+                Registry.AddCommand(item.Name, item.Icon.ToDrawableId(),item.Command);
+            }
+
+            Registry.AddCommand("Change Profile Photo", SharedResources.Icons.User.ToDrawableId(), ViewModel.EditProfileCommand,false, ShowAsAction.Never,false);
+
+            Registry.AddCommand("Sign Out", SharedResources.Icons.Exit.ToDrawableId(), ViewModel.SignOutCommand);
+
+            Registry.AddCommand("Message Screen", SharedResources.Icons.Exit.ToDrawableId(), new MvxCommand(() =>
+            {
+                ViewModel.ShowViewModel<MessageDetailsViewModel>(vm => { });
+            }));
+
+            Registry.AddCommand("Change Password", SharedResources.Icons.Exit.ToDrawableId(), new MvxCommand(() =>
+            {
+                ViewModel.ShowViewModel<ChangePasswordViewModel>(vm => { });
+            }));
+
+            OnOnRequestContent(Registry);
+
+            Registry.Generate();
+        }
+
+        public event Action<GenericMenuRegistry.IRegistryItem> OnBeforeSelectItem;
+
+
+        public delegate void MenuContentRequestDelegate(GenericMenuRegistry registry);
+
+        protected virtual void OnOnRequestContent(GenericMenuRegistry registry)
+        {
+            OnRequestContent?.Invoke(registry);
+        }
+
+        protected virtual void OnOnBeforeSelectItem(GenericMenuRegistry.IRegistryItem obj)
+        {
+            OnBeforeSelectItem?.Invoke(obj);
+        }
+    }
+
+
+
+    public class GenericMenuRegistry
+    {
+        private Dictionary<int, ICommand> _commandsMap;
+        private IMenu _menu;
+        private int _orderCounter = 0;
+        private Dictionary<int, IRegistryItem> _items;
+        private IList<IRegistryItem> _templates;
+
+        public GenericMenuRegistry(IMenu menu)
+        {
+            _menu = menu;
+        }
+
+        public Dictionary<int, ICommand> CommandsMap
+        {
+            get { return _commandsMap ?? (_commandsMap = new Dictionary<int, ICommand>()); }
+            set { _commandsMap = value; }
+        }
+
+        public Dictionary<int, IRegistryItem> Items
+        {
+            get { return _items ?? (_items = new Dictionary<int, IRegistryItem>()); }
+            set { _items = value; }
+        }
+
+        public IList<IRegistryItem> Templates
+        {
+            get { return _templates ?? (_templates = new List<IRegistryItem>()); }
+            set { _templates = value; }
+        }
+
+        public void Generate()
+        {
+            foreach (var template in Templates)
+            {
+                template.Construct(this);
+            }
+        }
+
+        public void Clear()
+        {
+            _menu.Clear();
+            Items.Clear();
+            Templates.Clear();
+            _orderCounter = 0;
+        }
+
+        public void AddCommand(string title, int iconId, ICommand command, bool isNavigation = true, ShowAsAction display = ShowAsAction.Never, bool checkable = true)
+        {
+            Templates.Add(new CommandItem()
+            {
+                Command =  command,
+                IconId = iconId,
+                Title = title,
+                IsCheckable = checkable,
+                IsNavigation = isNavigation
+            });
+        }
+
+        public void AddAction(string title, int iconId, Action action, bool isNavigation = true, ShowAsAction display = ShowAsAction.Never, bool checkable = true)
+        {
+            Templates.Add(new ActionItem()
+            {
+                Action =  action,
+                IconId = iconId,
+                Title = title,
+                IsCheckable = checkable,
+                IsNavigation = isNavigation
+            });
+        }
+
+        public event Action<IRegistryItem> OnBeforeSelectItem;
+
+        public void Select(int itemId)
+        {
+            if (!Items.ContainsKey(itemId)) return;
+            var item = Items[itemId];
+            OnOnBeforeSelectItem(item);
+            item.Select(this);
+        }
+
+        public void Select(CommandItem item)
+        {
+            if (item.IsCheckable) item.UIItem.SetChecked(true);
+            item?.Command?.Execute(null);
+        }
+
+        public void Select(ActionItem item)
+        {
+            if (item.IsCheckable) item.UIItem.SetChecked(true);
+            item?.Action?.Invoke();
+        }
+
+        public IMenuItem Construct(CommandItem item)
+        {
+            var index = _orderCounter++;
+            var menuitem = _menu.Add(0, index, index, item.Title);
+            menuitem.SetIcon(item.IconId);
+            menuitem.SetShowAsAction(item.ShowAsAction);
+            item.UIItem = menuitem;
+            Items[menuitem.ItemId] = item;
+            menuitem.SetCheckable(item.IsCheckable);
+            return menuitem;
+        }
+
+        public IMenuItem Construct(ActionItem item)
+        {
+            var index = _orderCounter++;
+            var menuitem = _menu.Add(0, index, index, item.Title);
+            menuitem.SetIcon(item.IconId);
+            menuitem.SetShowAsAction(item.ShowAsAction);
+            item.UIItem = menuitem;
+            Items[menuitem.ItemId] = item;
+            menuitem.SetCheckable(item.IsCheckable);
+            return menuitem;
+        }
+
+        public class CommandItem : IRegistryItem
+        {
+            public IMenuItem UIItem { get; set; }
+            public string Title { get; set; }
+            public int IconId { get; set; }
+            public bool IsCheckable { get; set; }
+            public bool IsNavigation { get; set; }
+            public ShowAsAction ShowAsAction { get; set; }
+            public ICommand Command { get; set; }
+
+            public IMenuItem Construct(GenericMenuRegistry registry)
+            {
+                return registry.Construct(this);
+            }
+
+            public void Select(GenericMenuRegistry registry)
+            {
+                registry.Select(this);
+            }
+        }
+
+        public class ActionItem : IRegistryItem
+        {
+            public IMenuItem UIItem { get; set; }
+            public string Title { get; set; }
+            public int IconId { get; set; }
+            public bool IsCheckable { get; set; }
+            public bool IsNavigation { get; set; }
+            public ShowAsAction ShowAsAction { get; set; }
+            public Action Action { get; set; }
+
+            public IMenuItem Construct(GenericMenuRegistry registry)
+            {
+                return registry.Construct(this);
+            }
+
+            public void Select(GenericMenuRegistry registry)
+            {
+                registry.Select(this);
+            }
+        }
+
+        public interface IRegistryItem
+        {
+            IMenuItem UIItem { get; set; }
+            string Title { get; set; }
+            int IconId { get; set; }
+            bool IsNavigation { get; set; }
+            bool IsCheckable { get; set; }
+
+            ShowAsAction ShowAsAction { get; set; }
+            IMenuItem Construct(GenericMenuRegistry registry);
+            void Select(GenericMenuRegistry registry);
+        }
+
+        protected virtual void OnOnBeforeSelectItem(IRegistryItem obj)
+        {
+            OnBeforeSelectItem?.Invoke(obj);
         }
     }
 
