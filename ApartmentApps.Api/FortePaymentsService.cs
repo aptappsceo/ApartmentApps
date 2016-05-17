@@ -198,7 +198,7 @@ namespace ApartmentApps.API.Service.Controllers
                 PgMerchantId = MerchantId.ToString(),
                 PgClientId = clientId.ToString(),
                 PgPaymentMethodId =  paymentOption.TokenId,
-                PgPassword = "LEpLqvx7Y5L200"
+                PgPassword = MerchantPassword//"LEpLqvx7Y5L200"
             });
 
             return new MakePaymentResult()
