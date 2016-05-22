@@ -5,7 +5,7 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	partial class TextFieldSection : UIView
+	partial class TextFieldSection : NSObject
 	{
 		public TextFieldSection (IntPtr handle) : base (handle)
 		{

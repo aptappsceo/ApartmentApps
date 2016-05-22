@@ -1,4 +1,4 @@
-﻿<Properties StartupItem="ResidentAppCross\ResidentAppCross.iOS\ResidentAppCross.iOS.csproj">
+﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.Droid/ResidentAppCross.Droid.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross\ResidentAppCross.Droid\Properties\AndroidManifest.xml">
     <Files>

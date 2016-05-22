@@ -578,6 +578,10 @@
       <Project>{84E46F6D-1424-48B7-8966-B6FD6153FEE3}</Project>
       <Name>ResidentAppCross</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SCLAlertViewLib\SCLAlertViewLib.csproj">
+      <Project>{EE36DD11-4F2C-4D9E-A8A7-7EC647B2AD9F}</Project>
+      <Name>SCLAlertViewLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\TimelineEnd.png" />
