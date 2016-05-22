@@ -354,7 +354,6 @@
     <InterfaceDefinition Include="Views\TableSources\TicketIndexTableViewCell.xib" />
     <InterfaceDefinition Include="Views\Sections\VerticalCollectionSection.xib" />
     <InterfaceDefinition Include="Views\CollectionItems\TicketCollectionViewCell.xib" />
-    <InterfaceDefinition Include="Views\SignUpFormView.xib" />
     <InterfaceDefinition Include="Views\Sections\TextFieldSection.xib" />
   </ItemGroup>
   <ItemGroup>
@@ -497,9 +496,6 @@
     <Compile Include="Views\IncidentReportStatusView.cs" />
     <Compile Include="Views\IncidentReportIndexView.cs" />
     <Compile Include="Views\SignUpFormView.cs" />
-    <Compile Include="Views\SignUpFormView.designer.cs">
-      <DependentUpon>SignUpFormView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\Sections\TextFieldSection.cs" />
     <Compile Include="Views\Sections\TextFieldSection.designer.cs">
       <DependentUpon>TextFieldSection.cs</DependentUpon>

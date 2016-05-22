@@ -130,6 +130,12 @@ namespace ResidentAppCross.iOS.Views
             set { _sectionsContainer = value; }
         }
 
+        public void SetCustomBackground(UIColor color)
+        {
+            View.BackgroundColor = color;
+            SectionsContainer.BackgroundColor = UIColor.Clear;
+        }
+
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -281,6 +287,8 @@ namespace ResidentAppCross.iOS.Views
             NotificatioHandlers.Add(NSNotificationCenter.DefaultCenter.AddObserver(UIKeyboard.DidShowNotification,
                 notification =>
                 {
+                    return;
+                    if (HeyboardShown) return;
                     var frame = SectionsContainer.Frame;
                     frame.Height -= ShownKeyboardHeight;
                     SectionsContainer.Frame = frame;
