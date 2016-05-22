@@ -115,5 +115,4 @@ namespace ResidentAppCross.ViewModels.Screens
         public string Verb { get; set; }
         public Action Action { get; set; }
     }
-
 }

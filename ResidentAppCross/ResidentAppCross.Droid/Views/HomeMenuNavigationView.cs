@@ -150,6 +150,11 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
                 ViewModel.ShowViewModel<RentSummaryViewModel>(vm => { });
             }));
 
+            Registry.AddCommand("Add Credit Card", SharedResources.Icons.Wallet.ToDrawableId(), new MvxCommand(() =>
+            {
+                ViewModel.ShowViewModel<AddCreditCardPaymentOptionViewModel>(vm => { });
+            }));
+
             OnOnRequestContent(Registry);
 
             Registry.Generate();
