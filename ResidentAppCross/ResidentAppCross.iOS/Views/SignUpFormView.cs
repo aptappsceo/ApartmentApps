@@ -137,24 +137,17 @@ namespace ResidentAppCross.iOS
             SignUpButton.SetTitle("Sign Up", UIControlState.Normal);
 
             
-            /*
+       
             var set = this.CreateBindingSet<SignUpFormView, SignUpFormViewModel>();
-	        set.Bind(_firstNameField).For(f => f.Text).TwoWay().To(vm => vm.FirstName);
-	        set.Bind(_lastNameField).For(f => f.Text).TwoWay().To(vm => vm.LastName);
-	        set.Bind(_emailTextField).For(f => f.Text).TwoWay().To(vm => vm.Email);
-	        set.Bind(_phoneNumberField).For(f => f.Text).TwoWay().To(vm => vm.PhoneNumber);
-	        set.Bind(_passwordField).For(f => f.Text).TwoWay().To(vm => vm.Password);
-	        set.Bind(_passwordConfirmationField).For(f => f.Text).TwoWay().To(vm => vm.PasswordConfirmation);
+	        set.Bind(FirstNameFieldSection.TextField).For(f => f.Text).TwoWay().To(vm => vm.FirstName);
+	        set.Bind(LastNameFieldSection.TextField).For(f => f.Text).TwoWay().To(vm => vm.LastName);
+	        set.Bind(EmailNameFieldSection.TextField).For(f => f.Text).TwoWay().To(vm => vm.Email);
+	        set.Bind(PhoneFieldSection.TextField).For(f => f.Text).TwoWay().To(vm => vm.PhoneNumber);
+	        set.Bind(PasswordFieldSection.TextField).For(f => f.Text).TwoWay().To(vm => vm.Password);
+	        set.Bind(PasswordConfirmationFieldSection.TextField).For(f => f.Text).TwoWay().To(vm => vm.PasswordConfirmation);
 	        set.Bind(_signUpButton).To(vm => vm.SignUpCommand);
             set.Apply();
-		
-            _emailTextField.ShouldReturn += (textField) =>{_phoneNumberField.BecomeFirstResponder();return true;};
-            _phoneNumberField.ShouldReturn += (textField) =>{_firstNameField.BecomeFirstResponder();return true;};
-            _firstNameField.ShouldReturn += (textField) =>{_lastNameField.BecomeFirstResponder();return true;};
-            _lastNameField.ShouldReturn += (textField) =>{_passwordField.BecomeFirstResponder();return true;};
-            _passwordField.ShouldReturn += (textField) =>{_passwordConfirmationField.BecomeFirstResponder();return true;};
-            _passwordConfirmationField.ShouldReturn += (textField) =>{_passwordConfirmationField.ResignFirstResponder();return true;};
-            */
+
 	}
 
         public override void ViewDidLayoutSubviews()
