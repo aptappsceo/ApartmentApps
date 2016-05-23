@@ -28,7 +28,6 @@ namespace ResidentAppCross.Droid.Views
                 MobileBarcodeScanner.Initialize(Application);
                 _scannerInitialized = true;
             }
-            SetContentView(Resource.Layout.QRScannerViewLayout);
         }
     }
 }

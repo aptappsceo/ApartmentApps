@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:local="http://schemas.android.com/apk/res-auto"
-    android:src="@android:drawable/ic_menu_gallery"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
-    android:layout_weight="0.33"
-    local:MvxBind="Bitmap ByteArrayToImage(Data);"
-    android:id="@+id/imageView1" />

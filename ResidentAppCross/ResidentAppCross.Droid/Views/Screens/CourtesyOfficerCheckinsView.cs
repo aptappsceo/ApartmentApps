@@ -7,6 +7,7 @@ using Android.Graphics;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using FR.Ganfra.Materialspinner;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Droid.Shared.Attributes;
 using RecyclerViewAnimators.Animators;
@@ -21,6 +22,44 @@ using String = Java.Lang.String;
 
 namespace ResidentAppCross.Droid.Views
 {
+    [MvxFragment(typeof (ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
+    public class AddCreditCardPaymentOptionView : ViewFragment<AddCreditCardPaymentOptionViewModel>
+    {
+
+        [Outlet]
+        public MaterialSpinner ExpirationMonthSelection { get; set; }
+        [Outlet]
+        public MaterialSpinner ExpirationYearSelection { get; set; }
+        [Outlet]
+        public TextView TitleLabel { get; set; }
+        [Outlet]
+        public TextView SubtitleLabel { get; set; }
+        [Outlet]
+        public ImageView IconView { get; set; }
+
+        public override void Bind()
+        {
+            base.Bind();
+
+            /* Header setup */
+            TitleLabel.Text = "Add Credit Card";
+            SubtitleLabel.Text = "Please fill the information below";
+            IconView.SetImageResource(SharedResources.Icons.WalletPlus.ToDrawableId());
+            IconView.SetColorFilter(Resources.GetColor(Resource.Color.secondary_text_body));
+
+            /* spinners setup */
+            var nowYear = DateTime.Now.Year;
+            var months = Enumerable.Range(1, 12).Select(i => i.ToString()).Select(s => new Java.Lang.String(s)).ToList();
+            var years = Enumerable.Range(0, 60).Select(i => (nowYear+i).ToString()).Select(s => new Java.Lang.String(s)).ToList();
+            ArrayAdapter<String> monthAdapter = new ArrayAdapter<String>(Context, Resource.Layout.spinner_item_text_light, months);
+            ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(Context, Resource.Layout.spinner_item_text_light, years);
+            monthAdapter.SetDropDownViewResource(Resource.Layout.spinner_item_text_light);
+            yearAdapter.SetDropDownViewResource(Resource.Layout.spinner_item_text_light);
+            ExpirationMonthSelection.Adapter = monthAdapter;
+            ExpirationYearSelection.Adapter = yearAdapter;
+        }
+    }
+
     [MvxFragment(typeof (ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
     public class RentSummaryView : ViewFragment<RentSummaryViewModel>
     {
@@ -45,9 +84,6 @@ namespace ResidentAppCross.Droid.Views
 
             this.OnViewModelEvent<RentSummaryUpdated>(evt =>
             {
-
-
-
 
                 var anyPayments = ViewModel.PaymentSummary.Entries.Any();
                 if (anyPayments)
