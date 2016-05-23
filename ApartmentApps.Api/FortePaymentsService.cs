@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using ApartmentApps.Api;
@@ -18,6 +19,8 @@ namespace ApartmentApps.API.Service.Controllers
         Task<AddBankAccountResult> AddBankAccount(AddBankAccountBindingModel addCreditCard);
         IEnumerable<PaymentOptionBindingModel> GetPaymentOptions();
         IEnumerable<PaymentHistoryBindingModel> GetPaymentHistory();
+        Task<PaymentSummaryBindingModel> GetPaymentSummary(int userId);
+        Task<PaymentSummaryBindingModel> GetRentSummary(int userId);
     }
     public class MakePaymentResult
     {
@@ -41,7 +44,15 @@ namespace ApartmentApps.API.Service.Controllers
  
     public class PaymentSummaryBindingModel
     {
-        
+        public int BaseRent { get; set; }
+        public List<PaymentSummaryBindingModel> SummaryOptions { get; set; }
+    }
+
+    public class PaymentSummaryItemBindingModel
+    {
+        public string Description { get; set; }
+
+        public decimal Amount { get; set; }
     }
     public class PaymentOptionBindingModel
     {
@@ -69,20 +80,31 @@ namespace ApartmentApps.API.Service.Controllers
 
     public class AddCreditCardResult
     {
-        
+        public string ErrorMessage { get; set; }
     }
 
     public class AddBankAccountBindingModel
     {
+        [DisplayName("Is Savings?")]
+        [Description("If unchecked a checking account is used.")]
         public bool IsSavings { get; set; }
+
+        [DisplayName("Account Holder Name")]
         public string AccountHolderName { get; set; }
+
+        [DisplayName("Account Number")]
         public string AccountNumber { get; set; }
+
+        [DisplayName("Routing Number")]
         public string RoutingNumber { get; set; }
+
+        [DisplayName("Friendly Name")]
+        [Description("A friendly name that you can use for this account.")]
         public string FriendlyName { get; set; }
     }
     public class AddBankAccountResult
     {
-        
+        public string ErrorMessage { get; set; }
     }
     public class FortePaymentsService : IPaymentsService
     {
@@ -107,7 +129,27 @@ namespace ApartmentApps.API.Service.Controllers
 
         public string Key { get; set; } = "18RcFs5F";
 
+        public async Task<PaymentSummaryBindingModel> GetPaymentSummary(int userId)
+        {
+            var user = Context.Users.Find(userId);
 
+            return new PaymentSummaryBindingModel()
+            {
+                BaseRent = user.Unit.Building.RentAmount,
+
+            };
+        }
+
+        public async Task<PaymentSummaryBindingModel> GetRentSummary(int userId)
+        {
+            var user = Context.Users.Find(userId);
+
+            return new PaymentSummaryBindingModel()
+            {
+                BaseRent = user.Unit.Building.RentAmount,
+
+            };
+        }
         public async Task<AddCreditCardResult> AddCreditCard(AddCreditCardBindingModel addCreditCard)
         {
             var auth = Authenticate.GetClientAuthTicket(ApiLoginId, Key);
@@ -123,16 +165,24 @@ namespace ApartmentApps.API.Service.Controllers
 
             using (var client = new ClientServiceClient("WSHttpBinding_IClientService"))
             {
-                var result = await client.createPaymentMethodAsync(auth, payment);
-                var paymentMethodId = result.Body.createPaymentMethodResult;
-                Context.PaymentOptions.Add(new UserPaymentOption()
+                try
                 {
-                    UserId = UserContext.UserId,
-                    Type = PaymentOptionType.CreditCard,
-                    FriendlyName = addCreditCard.FriendlyName,
-                    TokenId = paymentMethodId.ToString()
-                });
-                Context.SaveChanges();
+                    var result = await client.createPaymentMethodAsync(auth, payment);
+                    var paymentMethodId = result.Body.createPaymentMethodResult;
+                    Context.PaymentOptions.Add(new UserPaymentOption()
+                    {
+                        UserId = UserContext.UserId,
+                        Type = PaymentOptionType.CreditCard,
+                        FriendlyName = addCreditCard.FriendlyName,
+                        TokenId = paymentMethodId.ToString()
+                    });
+                    Context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return new AddCreditCardResult() {ErrorMessage = ex.Message};
+                }
+                
             }
             return new AddCreditCardResult();
         }
@@ -151,16 +201,25 @@ namespace ApartmentApps.API.Service.Controllers
 
             using (var client = new ClientServiceClient("WSHttpBinding_IClientService"))
             {
-                var result = await client.createPaymentMethodAsync(auth, payment);
-                var paymentMethodId = result.Body.createPaymentMethodResult;
-                Context.PaymentOptions.Add(new UserPaymentOption()
+                try
                 {
-                    UserId = UserContext.UserId,
-                    Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking,
-                    FriendlyName = addCreditCard.FriendlyName,
-                    TokenId = paymentMethodId.ToString()
-                });
-                Context.SaveChanges();
+                    var result = await client.createPaymentMethodAsync(auth, payment);
+
+                    var paymentMethodId = result.Body.createPaymentMethodResult;
+                    Context.PaymentOptions.Add(new UserPaymentOption()
+                    {
+                        UserId = UserContext.UserId,
+                        Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking,
+                        FriendlyName = addCreditCard.FriendlyName,
+                        TokenId = paymentMethodId.ToString()
+                    });
+                    Context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return new AddBankAccountResult() {ErrorMessage = ex.Message};
+                }
+                
             }
             return new AddBankAccountResult();
         }
@@ -178,6 +237,7 @@ namespace ApartmentApps.API.Service.Controllers
 
         public IEnumerable<PaymentHistoryBindingModel> GetPaymentHistory()
         {
+            //return Context.UserTransactions.
             yield break;
         }
         public async Task<MakePaymentResult> MakePayment(MakePaymentBindingModel makePaymentBindingModel)

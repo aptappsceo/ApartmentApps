@@ -129,6 +129,23 @@
                     </ul>
                 </li>
             }
+            <li>
+                <a href="index.html"><i class="fa fa-credit-card"></i> <span class="nav-label">Payments</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse in">
+                    <li class="@Html.IsSelected(controller: "Payments", action: "PaymentHistory")">
+                        <a href="@Url.Action("PaymentHistory", "Payments")"><i class="fa fa-desktop"></i> <span class="nav-label">History</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "Payments", action: "PaymentOptions")">
+                        <a href="@Url.Action("PaymentOptions", "Payments")"><i class="fa fa-credit-card-alt"></i> <span class="nav-label">Payment Methods</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "Payments", action: "AddCreditCard")">
+                        <a href="@Url.Action("AddCreditCard", "Payments")"><i class="fa fa-credit-card-alt"></i> <span class="nav-label">Add Credit Card</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "Payments", action: "AddBankAccount")">
+                        <a href="@Url.Action("AddBankAccount", "Payments")"><i class="fa fa-credit-card-alt"></i> <span class="nav-label">Add Bank Account</span></a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </nav>

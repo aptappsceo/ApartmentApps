@@ -60,13 +60,37 @@ namespace PlaygroundConsole
             {
                 Username = "apartmentappsinc",
                 Password = "Password1",
-
+                EndPoint = "rampartnersllc"
             };
-            var result = await client.GetCustomers("162896");
-            var customers = result.Response.Result.Customers.Customer;
-            foreach (var item in customers)
+            var result = await client.GetMitsLeases("162896");
+            var leaseApps = result.response.result.LeaseApplication;
+            
+            var tenants = leaseApps.Tenant;
+            var leases = leaseApps.LA_Lease;
+            foreach (var item in tenants)
             {
-                Console.WriteLine(item.FirstName);
+                var id = item.LeaseID.Identification.FirstOrDefault();
+                if (id != null)
+                {
+                    var idValue = id.IDValue;
+                    var lease = leases.FirstOrDefault(p => p.Identification.IDValue == idValue);
+                    if (lease != null)
+                    {
+                        var charge =
+                            lease.AccountingData.ChargeSet.SelectMany(p => p.Charge)
+                                .FirstOrDefault(p => p.Attributes.ChargeType.ToUpper() == "BASE RENT");
+                        if (charge != null)
+                        {
+                            Console.WriteLine(charge.Amount + item.Name.FirstName + " " + item.Name.LastName);
+                        }
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("NOT FOUND" + item.Name.FirstName + " " + item.Name.LastName);
+                    }
+                }
+               
             }
 
         }
@@ -99,7 +123,7 @@ namespace PlaygroundConsole
         }
         static void Main(string[] args)
         {
-            Main4();
+            Main3();
             Console.ReadLine();
 
             //var webClient = new WebClient();
