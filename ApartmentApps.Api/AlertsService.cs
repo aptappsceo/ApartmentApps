@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.Azure.NotificationHubs;
+using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Api
 {
@@ -65,19 +67,34 @@ namespace ApartmentApps.Api
     public interface IPushNotifiationHandler
     {
         Task<bool> SendToUser(string username, string message);
+        Task<bool> SendToUser(string username, NotificationPayload payload);
         Task<bool> SendToRole(int propertyId, string role, string message);
-
-
         Task<bool> Send( string message, string pns, string expression);
+        Task<bool> Send( NotificationPayload payload, string pns, string expression);
+    }
+
+    public class NotificationPayload
+    {
+        public string Title { get; set; }
+        public string Message { get; set; }
+        public string Semantic { get; set; } = "Default"; //App decides about icon based on semantic
+        public string Action { get; set; }
+        public int DataId { get; set; }
+        public string DataType { get; set; }
     }
 
     public class AzurePushNotificationHandler : IPushNotifiationHandler
     {
         public async Task<bool> SendToUser(string username, string message)
         {
-            var pns = "apns";
             await Send(message, "gcm", "userid:" + username);
-            return await Send(message, pns, "userid:" + username);
+            return await Send(message, "apns", "userid:" + username);
+        }
+
+        public async  Task<bool> SendToUser(string username, NotificationPayload payload)
+        {
+            await Send(payload, "gcm", "userid:" + username);
+            return await Send(payload, "apns", "userid:" + username);
         }
 
         public async Task<bool> Send(string message, string pns, string expression)
@@ -115,7 +132,38 @@ namespace ApartmentApps.Api
             return false;
         }
 
-    
+        public async Task<bool> Send(NotificationPayload payload, string pns, string expression)
+        {
+            Microsoft.Azure.NotificationHubs.NotificationOutcome outcome = null;
+            switch (pns.ToLower())
+            {
+                case "wns":
+                    // Windows 8.1 / Windows Phone 8.1
+                    var toast = @"<toast><visual><binding template=""ToastText01""><text id=""1"">" +
+                                  "stub" + "</text></binding></visual></toast>";
+                    outcome = await Notifications.Instance.Hub.SendWindowsNativeNotificationAsync(toast, expression);
+                    break;
+                case "apns":
+                    // iOS
+                    var alert = "{\"aps\":{\"alert\":\"" + payload.Message + "\"}}";
+                    outcome = await Notifications.Instance.Hub.SendAppleNativeNotificationAsync(alert, expression);
+                    break;
+                case "gcm":
+                    outcome = await Notifications.Instance.Hub.SendGcmNativeNotificationAsync(payload.ToGCMJson().ToString(), expression);
+                    break;
+            }
+            if (outcome != null)
+            {
+                if (!((outcome.State == Microsoft.Azure.NotificationHubs.NotificationOutcomeState.Abandoned) ||
+                      (outcome.State == Microsoft.Azure.NotificationHubs.NotificationOutcomeState.Unknown)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         public async Task<bool> SendToRole(int propertyId, string role, string message)
         {
             var pns = "apns";
@@ -167,7 +215,15 @@ namespace ApartmentApps.Api
                 UserId = user.Id
             });
             Context.SaveChanges();
-            _pushHandler.SendToUser(user.Id, message);
+
+            _pushHandler.SendToUser(user.Id, new NotificationPayload()
+            {
+                Action = "View",
+                DataId = relatedId,
+                DataType = type,
+                Message = message,
+                Title = title
+            });
 
         }
         public void SendAlert( int propertyId, string role, string title, string message, string type, int relatedId = 0)
@@ -207,6 +263,15 @@ namespace ApartmentApps.Api
     }
 
 
-
+    public static class NotificationPayloadExtensions
+    {
+        public static JObject ToGCMJson(this NotificationPayload payload)
+        {
+            return new JObject(
+                            new JProperty("data",
+                                new JObject(
+                                    new JProperty("payload", payload))));
+        }
+    }
 
 }

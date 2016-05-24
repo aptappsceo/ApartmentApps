@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ApartmentApps.Client;
+using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Events;
 using ResidentAppCross.ServiceClient;
@@ -95,7 +97,19 @@ namespace ResidentAppCross
                    .OnStart("Logging In...")
                    .OnComplete(null, () =>
                    {
-                       ShowViewModel<HomeMenuViewModel>();
+                       if (EventAggregator.HasSubscriptionsFor<UserLoggedInEvent>())
+                       {
+                           var message = new UserLoggedInEvent(this);
+                           this.Publish(message);
+                           if (!message.PreventNavigation)
+                           {
+                               ShowViewModel<HomeMenuViewModel>();
+                           }
+                       }
+                       else
+                       {
+                           ShowViewModel<HomeMenuViewModel>();
+                       }
                    }).Execute(null);
                 });
 
@@ -122,6 +136,15 @@ namespace ResidentAppCross
                 });
             }
         }
+    }
+
+    public class UserLoggedInEvent : MvxMessage
+    {
+        public UserLoggedInEvent(object sender) : base(sender)
+        {
+        }
+
+        public bool PreventNavigation { get; set; }
     }
 
 
@@ -152,9 +175,25 @@ namespace ResidentAppCross
 
     public class MessageDetailsViewModel : ViewModelBase
     {
+        public AlertBindingModel Data
+        {
+            get { return _data; }
+            set
+            {
+                if (_data == value) return;
+                _data = value;
+                if (_data == null) return;
+                Subject = _data.Title;
+                Message = _data.Message;
+                Date = _data.CreatedOn?.ToString("g") ?? "-";
+            }
+        }
+
+
         private string _subject = "Some important subject here";
         private string _message = "Very insteresting message should be here because otherwise noone's gonna read it. Also I need to ad some text just to see how multiline text looks like in this particular case so don;t blame me for a long string.";
         private string _date = "4/6/2015 22:02 AM";
+        private AlertBindingModel _data;
 
         public string Subject
         {

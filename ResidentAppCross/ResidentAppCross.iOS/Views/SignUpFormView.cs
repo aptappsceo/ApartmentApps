@@ -51,7 +51,6 @@ namespace ResidentAppCross.iOS
                 return _lastNameFieldSection ?? (_lastNameFieldSection = Formals.Create<TextFieldSection>()
                     .WithClearBackground()
                     .WithPlaceholder("Last Name...")
-
                     .WithNextResponder(EmailNameFieldSection));
             }
         }
@@ -74,7 +73,6 @@ namespace ResidentAppCross.iOS
                 return _phoneFieldSection ?? (_phoneFieldSection = Formals.Create<TextFieldSection>()
                     .WithClearBackground()
                     .WithPlaceholder("Phone Number...")
-
                     .WithNextResponder(PasswordFieldSection));
             }
         }
@@ -88,7 +86,6 @@ namespace ResidentAppCross.iOS
                     .WithClearBackground()
                     .WithPlaceholder("Password...")
                     .WithSecureTextEntry()
-
                     .WithNextResponder(PasswordConfirmationFieldSection));
             }
         }
@@ -101,7 +98,6 @@ namespace ResidentAppCross.iOS
                     .WithClearBackground()
                     .WithPlaceholder("Confirm Password...")
                     .WithSecureTextEntry()
-
                     .WithNextResponder(
                     () =>
                     {

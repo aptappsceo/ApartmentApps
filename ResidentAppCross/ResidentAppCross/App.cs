@@ -28,30 +28,17 @@ public class App : MvxApplication
 {
     public App()
     {
-        //Mvx.RegisterType<ICalculation, Calculation>();
         Mvx.ConstructAndRegisterSingleton<IImageService, ImageService>();
         Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
-
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
-        
-        //Mvx.RegisterSingleton<ILocationService,LocationService>();
-        var client = new ApartmentAppsClient();
         //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
-        Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);
-        var loginService = new LoginService(client);
-        Mvx.RegisterSingleton<ILoginManager>(loginService);
-        //if (loginService.IsLoggedIn)
-        //{
-        //    Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<HomeMenuViewModel>());
-        //}
-        //else
-        //{
+        Mvx.RegisterSingleton<IApartmentAppsAPIService>(new ApartmentAppsClient());
+        Mvx.RegisterSingleton<ILoginManager>(new LoginService(new ApartmentAppsClient()));
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
         Mvx.ConstructAndRegisterSingleton<HomeMenuViewModel, HomeMenuViewModel>();
-
-        //}
-
+        Mvx.ConstructAndRegisterSingleton<IActionRequestHandler, ActionRequestHandler>();
     }
+
     public class CustomAppStart
        : MvxNavigatingObject
        , IMvxAppStart
@@ -72,7 +59,11 @@ public class App : MvxApplication
     }
     public class ApartmentAppsClient : ApartmentAppsAPIService 
     {
-        public ApartmentAppsClient() : base(new Uri("http://apartmentappsapiservice.azurewebsites.net"), new AparmentAppsDelegating())
+
+        const string ProductionServiceApiURL = "http://apartmentappsapiservice.azurewebsites.net";
+        const string DevelopmentServiceApiURL = "http://apartmentappsapiservicedev.azurewebsites.net/";
+
+        public ApartmentAppsClient() : base(new Uri(ProductionServiceApiURL), new AparmentAppsDelegating())
         {
         }
 
