@@ -10,6 +10,7 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
 using Ninject.Web.Common;
@@ -38,6 +39,8 @@ namespace ApartmentApps.IoC
             ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
             kernel.Bind<EntrataIntegration>().ToSelf().InRequestScope();
             kernel.Bind<IUnitImporter>().To<UnitImporter>().InRequestScope();
+            kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
+            kernel.Bind<AlertsService>().ToSelf().InRequestScope();
             kernel.Bind<Property>().ToMethod(_ => kernel.Get<IUserContext>().CurrentUser.Property).InRequestScope();
             kernel.Bind<PropertyContext>().ToSelf().InRequestScope();
 

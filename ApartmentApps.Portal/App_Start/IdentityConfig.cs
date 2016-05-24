@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ApartmentApps.Api;
@@ -18,48 +19,7 @@ using ApartmentApps.Portal.Models;
 
 namespace ApartmentApps.Portal
 {
-    public class EmailService : IIdentityMessageService
-    {
-
-        public Task SendAsync(IdentityMessage message)
-        {
-
-            var fromAddress = new MailAddress("mosborne@apartmentapps.com", "Apartment Apps");
-            var toAddress = new MailAddress(message.Destination);
-            const string fromPassword = "iamadumbass";
-            string subject = message.Subject;
-            string body = message.Body;
-
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("mosborne", fromPassword,"apartmentapps.com")
-            };
-            using (var msg = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = subject,
-                Body = body
-            })
-            {
-                smtp.Send(msg);
-            }
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
-        }
-    }
-
-    public class SmsService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
-        {
-            // Plug in your SMS service here to send a text message.
-            return Task.FromResult(0);
-        }
-    }
+ 
 
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>, ICreateUser

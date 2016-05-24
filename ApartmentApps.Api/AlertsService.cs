@@ -2,10 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Microsoft.AspNet.Identity;
 using Microsoft.Azure.NotificationHubs;
 
 namespace ApartmentApps.Api
@@ -132,11 +136,13 @@ namespace ApartmentApps.Api
     public class AlertsService : IService, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent
     {
         public PropertyContext Context { get; set; }
+        private readonly IIdentityMessageService _emailService;
         private IPushNotifiationHandler _pushHandler;
 
-        public AlertsService(IPushNotifiationHandler pushHandler, PropertyContext context)
+        public AlertsService(IIdentityMessageService emailService, IPushNotifiationHandler pushHandler, PropertyContext context)
         {
             Context = context;
+            _emailService = emailService;
             _pushHandler = pushHandler;
         }
 
@@ -157,7 +163,7 @@ namespace ApartmentApps.Api
 
         public void SendAlert(ApplicationUser user, string title, string message, string type, int relatedId = 0)
         {
-            Context.UserAlerts.Add(new UserAlert()
+            var alert = new UserAlert()
             {
                 Title = title,
                 Message = message,
@@ -165,8 +171,10 @@ namespace ApartmentApps.Api
                 RelatedId = relatedId,
                 Type = type,
                 UserId = user.Id
-            });
+            };
+            Context.UserAlerts.Add(alert);
             Context.SaveChanges();
+            _emailService.SendAsync(new IdentityMessage() { Body = message, Destination = user.Email, Subject = title });
             _pushHandler.SendToUser(user.Id, message);
 
         }
@@ -174,6 +182,7 @@ namespace ApartmentApps.Api
         {
             foreach (var item in Context.Users.Where(x => x.Roles.Any(p => p.RoleId == role)))
             {
+
                 Context.UserAlerts.Add(new UserAlert()
                 {
                     Title = title,
@@ -183,9 +192,11 @@ namespace ApartmentApps.Api
                     Type = type,
                     UserId = item.Id
                 });
+                _emailService.SendAsync(new IdentityMessage() {Body = message, Destination = item.Email, Subject = title});
             }
 
             Context.SaveChanges();
+       
             _pushHandler.SendToRole(propertyId, role, title);
 
         }
@@ -203,6 +214,54 @@ namespace ApartmentApps.Api
             {
                 SendAlert(incidentReport.User, $"Incident Report {incidentReport.StatusId}", incidentReport.Comments, "Incident", incidentReport.Id);
             }
+        }
+
+        public void SendAlert(object[] ids,string title, string message, string type, int relatedId)
+        {
+            foreach (var id in ids)
+            {
+                var user = Context.Users.Find(id);
+                SendAlert(user, title, message, type, 0);
+            }
+
+        }
+    }
+    public class EmailService : IIdentityMessageService
+    {
+
+        public Task SendAsync(IdentityMessage message)
+        {
+            SmtpClient client = new SmtpClient();
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("mosborne@apartmentapps.com", "iamadumbass");
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+
+
+            MailAddress
+                maFrom = new MailAddress("mosborne@apartmentapps.com", "Apartment Apps", Encoding.UTF8),
+                maTo = new MailAddress(message.Destination, string.Empty, Encoding.UTF8);
+            MailMessage mmsg = new MailMessage(maFrom.Address, maTo.Address);
+            mmsg.Body = message.Body;
+            mmsg.BodyEncoding = Encoding.UTF8;
+            mmsg.IsBodyHtml = true;
+            mmsg.Subject = message.Subject;
+            mmsg.SubjectEncoding = Encoding.UTF8;
+
+            client.Send(mmsg);
+
+            // Plug in your email service here to send an email.
+            return Task.FromResult(0);
+        }
+    }
+
+    public class SmsService : IIdentityMessageService
+    {
+        public Task SendAsync(IdentityMessage message)
+        {
+            // Plug in your SMS service here to send a text message.
+            return Task.FromResult(0);
         }
     }
 

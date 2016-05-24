@@ -1285,6 +1285,7 @@
     <Content Include="Views\CourtesyOfficer\Index.cshtml" />
     <Content Include="Views\Shared\AutoIndex.cshtml" />
     <Content Include="Views\Shared\Forms\Grid.cshtml" />
+    <Content Include="Views\Messaging\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

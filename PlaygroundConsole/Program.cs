@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Net.Mime;
 using System.Net.Security;
 using System.Text;
@@ -21,7 +22,7 @@ using PushSharp.Apple;
 
 namespace PlaygroundConsole
 {
-   
+
     class Program
     {
         static async Task Main4()
@@ -53,7 +54,7 @@ namespace PlaygroundConsole
             //    EcAccountNumber = "",
 
             //});
-        } 
+        }
         static async void Main3()
         {
             var client = new EntrataClient()
@@ -99,14 +100,35 @@ namespace PlaygroundConsole
         }
         static void Main(string[] args)
         {
-            Main4();
+            SmtpClient client = new SmtpClient();
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("mosborne@apartmentapps.com", "iamadumbass");
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            
+
+            MailAddress
+                maFrom = new MailAddress("mosborne@apartmentapps.com", "Micah Osborne", Encoding.UTF8),
+                maTo = new MailAddress("micahosborne@gmail.com", "Micah Osborne", Encoding.UTF8);
+            MailMessage mmsg = new MailMessage(maFrom.Address, maTo.Address);
+            mmsg.Body = "<html><body><h1>Some HTML Text for Test as BODY</h1></body></html>";
+            mmsg.BodyEncoding = Encoding.UTF8;
+            mmsg.IsBodyHtml = true;
+            mmsg.Subject = "Some Other Text as Subject";
+            mmsg.SubjectEncoding = Encoding.UTF8;
+
+            client.Send(mmsg);
+            Console.WriteLine("Done");
+
+            //Main4();
             Console.ReadLine();
 
             //var webClient = new WebClient();
-            
+
             //var nameValueCollection = new NameValueCollection()
             //{
-              
+
             //};
             //nameValueCollection.Add("username", "micahosborne@gmail.com");
             //nameValueCollection.Add("password", "Asdf1234!");
@@ -115,9 +137,9 @@ namespace PlaygroundConsole
             //var response = new UTF8Encoding().GetString(webClient.UploadValues(url + "/Token","POST", nameValueCollection));
             //Console.WriteLine(response);
 
-          
+
         }
     }
 
-   
+
 }
