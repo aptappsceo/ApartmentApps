@@ -95,11 +95,18 @@ namespace ResidentAppCross.ViewModels.Screens
                     vm.MaintenanceRequestId = SelectedNotification.RelatedId.Value;
                 });
             }
-            else
+            else if (SelectedNotification.Type == "Courtesy")
             {
                 ShowViewModel<IncidentReportStatusViewModel>(vm =>
                 {
                     vm.IncidentReportId = SelectedNotification.RelatedId.Value;
+                });
+            }
+            else
+            {
+                ShowViewModel<MessageDetailsViewModel>(vm =>
+                {
+                    vm.Data = SelectedNotification;
                 });
             }
             //ShowViewModel<NotificationDetailsFormViewModel>();

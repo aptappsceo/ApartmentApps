@@ -168,7 +168,7 @@ namespace ApartmentApps.Portal.Controllers
 
         }
 
-        private IEnumerable<TViewModel> GetData(DataManager dm, out int count)
+        protected IEnumerable<TViewModel> GetData(DataManager dm, out int count)
         {
             IEnumerable<TViewModel> Data = Service.GetAll().ToArray();
           
@@ -199,7 +199,7 @@ namespace ApartmentApps.Portal.Controllers
             return Data;
         }
 
-        private DataManager Dm
+        protected DataManager Dm
         {
             get { return Session["LastDataManagerRequested"] as DataManager; }
             set { Session["LastDataManagerRequested"] = value; }

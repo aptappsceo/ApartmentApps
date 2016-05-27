@@ -73,7 +73,10 @@ namespace ResidentAppCross.iOS
 
         }
 
-      
+        public override bool WillFinishLaunching(UIApplication application, NSDictionary launchOptions)
+        {
+            return true;
+        }
 
         public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
         {

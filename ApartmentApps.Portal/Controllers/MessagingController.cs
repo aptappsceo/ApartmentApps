@@ -1,29 +1,41 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity;
+using Syncfusion.JavaScript;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class MessagingController : AAController
-    {
-        public IIdentityMessageService MessagingService { get; set; }
 
-        public MessagingController(IIdentityMessageService messagingService, PropertyContext context, IUserContext userContext) : base(context, userContext)
+    public class MessagingController : CrudController<UserBindingModel, ApplicationUser>
+    {
+        public MessagingController(IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, AlertsService messagingService) : base(repository, service, context, userContext)
         {
             MessagingService = messagingService;
         }
 
-        public async Task<ActionResult> Index()
+        public AlertsService MessagingService { get; set; }
+
+
+
+        public override ActionResult Index()
         {
-            await MessagingService.SendAsync(new IdentityMessage()
-            {
-                Destination = "micahosborne@gmail.com",
-                Body = "Test Message Body",
-                Subject = "Test Subject"
-            });
-            return Content("YUP");
+
+            return View("Index");
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult SendMessage(string subject, string message)
+        {
+            int count;
+            MessagingService.SendAlert(GetData(Dm, out count).Select(p => p.Id).ToArray(), subject, message,"Message",0);
+            ViewBag.SuccessMessage = "Message Sent";
+            return RedirectToAction("Index");
         }
     }
 }
