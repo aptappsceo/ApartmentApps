@@ -3,7 +3,6 @@
     android:id="@+id/ScrollContainer"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background"
-    android:focusable="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,8 +11,10 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/SectionContainerDefault"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="true"
             android:orientation="vertical"
             android:paddingLeft="32dp"
             android:paddingRight="32dp">
@@ -46,6 +47,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress|textNoSuggestions"
                     android:minWidth="350dp"
+                    android:nextFocusForward="@+id/LastnameInput"
                     android:textColor="@color/primary_text_body"
                     android:textColorHint="@color/secondary_text_body"
                     android:hint="First Name"
@@ -67,6 +69,8 @@
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/LastnameInput"
                     android:layout_width="match_parent"
+                    android:nextFocusForward="@+id/EmailInput"
+
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress|textNoSuggestions"
@@ -91,6 +95,8 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/EmailInput"
+                    android:nextFocusForward="@+id/PhoneInput"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
@@ -117,6 +123,7 @@
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/PhoneInput"
                     android:layout_width="match_parent"
+                    android:nextFocusForward="@+id/PasswordInput"
 
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
@@ -145,7 +152,7 @@
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/PasswordInput"
                     android:layout_width="match_parent"
-
+                    android:nextFocusForward="@+id/PasswordConfirmInput"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
@@ -173,7 +180,6 @@
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/PasswordConfirmInput"
                     android:layout_width="match_parent"
-
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"

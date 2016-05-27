@@ -5,11 +5,15 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Net.Mime;
+using System.Net.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ApartmentApps.Client;
+using ApartmentApps.Payments.Forte;
+using ApartmentApps.Payments.Forte.Forte.Client;
 using Entrata.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -18,22 +22,38 @@ using PushSharp.Apple;
 
 namespace PlaygroundConsole
 {
-   
+
     class Program
     {
-        static void Main4()
+        static async Task Main4()
         {
-            var push = new PushBroker();
+            //return Task.Delay(0);
+            //var merchantId = "1234";
+            //var apiClientId = "2000";
+            //var key = "";
+            //var client = new ApartmentApps.Payments.Forte.Forte.Client.ClientServiceClient();
+            //var auth = Authenticate.GetClientAuthTicket(apiClientId, key);
+            //var result = await client.createClientAsync(auth, new ClientRecord()
+            //{
+            //     FirstName = "",
+            //     LastName = "",
 
-            //Registering the Apple Service and sending an iOS Notification
-            var appleCert = File.ReadAllBytes(@"C:\Users\micah\Dropbox\APT APP FILES\push\Certificates.p12");
-            push.RegisterAppleService(new ApplePushChannelSettings(true, appleCert, "asdf1234!"));
-            push.QueueNotification(new AppleNotification()
-                                       .ForDeviceToken("3ce99f796433009e2daeca69d1dc4ee3a0af993cfff2274d2debf2cc6415ae22")
-                                       .WithAlert("Hello World!")
-                                       .WithBadge(7)
-                                       .WithSound("sound.caf"));
 
+            //});
+            //var clientId = result.Body.createClientResult;
+
+            //var  client.createPaymentMethodAsync(auth, new PaymentMethod()
+            //{
+            //    ClientID = result.Body.createClientResult,
+
+            //    CcCardType = CcCardType.VISA,
+            //    AcctHolderName = "",
+            //    CcCardNumber = "",
+            //    CcExpirationDate = "",
+            //    CcProcurementCard = false,
+            //    EcAccountNumber = "",
+
+            //});
         }
         static async void Main3()
         {
@@ -80,14 +100,35 @@ namespace PlaygroundConsole
         }
         static void Main(string[] args)
         {
-            Main4();
+            SmtpClient client = new SmtpClient();
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("mosborne@apartmentapps.com", "iamadumbass");
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            
+
+            MailAddress
+                maFrom = new MailAddress("mosborne@apartmentapps.com", "Micah Osborne", Encoding.UTF8),
+                maTo = new MailAddress("micahosborne@gmail.com", "Micah Osborne", Encoding.UTF8);
+            MailMessage mmsg = new MailMessage(maFrom.Address, maTo.Address);
+            mmsg.Body = "<html><body><h1>Some HTML Text for Test as BODY</h1></body></html>";
+            mmsg.BodyEncoding = Encoding.UTF8;
+            mmsg.IsBodyHtml = true;
+            mmsg.Subject = "Some Other Text as Subject";
+            mmsg.SubjectEncoding = Encoding.UTF8;
+
+            client.Send(mmsg);
+            Console.WriteLine("Done");
+
+            //Main4();
             Console.ReadLine();
 
             //var webClient = new WebClient();
-            
+
             //var nameValueCollection = new NameValueCollection()
             //{
-              
+
             //};
             //nameValueCollection.Add("username", "micahosborne@gmail.com");
             //nameValueCollection.Add("password", "Asdf1234!");
@@ -96,9 +137,9 @@ namespace PlaygroundConsole
             //var response = new UTF8Encoding().GetString(webClient.UploadValues(url + "/Token","POST", nameValueCollection));
             //Console.WriteLine(response);
 
-          
+
         }
     }
 
-   
+
 }

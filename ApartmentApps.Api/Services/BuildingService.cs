@@ -1,10 +1,15 @@
 using System;
+using System.Linq;
+using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Microsoft.AspNet.Identity;
 
 namespace ApartmentApps.Portal.Controllers
 {
+  
+
     public class BuildingService : StandardCrudService<Building, BuildingViewModel>
     {
         public BuildingService(IRepository<Building> repository) : base(repository)

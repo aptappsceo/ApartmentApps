@@ -35,6 +35,9 @@ namespace ApartmentApps.Portal.Controllers
 
 
     }
+
+
+
     [Authorize(Roles = "PropertyAdmin,Admin")]
     public class UserManagementController : CrudController<UserBindingModel,ApplicationUser>
     {
@@ -76,9 +79,6 @@ namespace ApartmentApps.Portal.Controllers
                 _userManager = value;
             }
         }
-
-
-   
 
         // GET: UserManagement
         //public ActionResult Index()

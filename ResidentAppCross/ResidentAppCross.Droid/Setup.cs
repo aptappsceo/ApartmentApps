@@ -2,6 +2,8 @@ using System;
 using Android.App;
 using Android.Bluetooth;
 using Android.Content;
+using Android.Gms.Common;
+using Android.Gms.Maps;
 using Android.Runtime;
 using Android.Util;
 using ApartmentApps.Client;
@@ -134,8 +136,29 @@ namespace ResidentAppCross.Droid
         {
        
             Instance = this;
+
             App.ApartmentAppsClient.GetAuthToken = () => AuthToken;
             App.ApartmentAppsClient.SetAuthToken = (v) => AuthToken = v;
+
+
+            LoginService.DevicePlatform = "gcm";
+            LoginService.DeviceHandle = DeviceToken;
+
+            LoginService.GetRegistrationId = () => HandleId;
+            LoginService.SetRegistrationId = (v) => HandleId = v;
+
+            GcmClient.CheckDevice(this);
+            GcmClient.CheckManifest(this);
+            GcmClient.Register(this, GcmConstants.SenderID);
+
+            try
+            {
+                MapsInitializer.Initialize(this);
+            }
+            catch (GooglePlayServicesNotAvailableException e)
+            {
+                e.PrintStackTrace();
+            }
 
             base.OnCreate();
 

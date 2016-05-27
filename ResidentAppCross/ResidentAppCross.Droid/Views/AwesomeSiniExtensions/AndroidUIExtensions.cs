@@ -177,6 +177,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return view;
         }
 
+
         public static T WithRelativeBelow<T>(this T view, View what) where T : View
         {
             view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.Below, what.WithUniqueId().Id);
@@ -515,6 +516,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
     public static class StringExtensions
     {
+
         public static string ToLowerUnderscored(this string str)
         {
             return
@@ -547,6 +549,10 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return type.Name.ToLowerUnderscored().AsLayoutId();
         }
 
+        public static string GetResourceString(this int resourceId)
+        {
+            return DroidApplication.Instance.Resources.GetText(resourceId);
+        }
         
 
     }

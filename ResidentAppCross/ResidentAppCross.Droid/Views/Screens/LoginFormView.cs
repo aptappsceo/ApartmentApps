@@ -11,6 +11,7 @@ using Android.Support.V4.Content;
 using Android.Support.V4.View;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
 using AndroidHUD;
 using ApartmentApps.Client.Models;
@@ -64,6 +65,34 @@ namespace ResidentAppCross.Droid.Views
         public override bool EnableToolbar => false;
     }
 
+
+    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary)]
+    public class RecoverPasswordView: ViewFragment<RecoverPasswordViewModel>
+    {
+
+        [Outlet]
+        public EditText EmailInput { get; set; }
+
+        [Outlet]
+        public Button RecoverPasswordButton { get; set; }
+
+        public override void Bind()
+        {
+            base.Bind();
+
+            MainActivity.Window.SetSoftInputMode(SoftInput.AdjustResize | SoftInput.StateHidden);
+
+            var set = this.CreateBindingSet<RecoverPasswordView, RecoverPasswordViewModel>();
+            set.Bind(RecoverPasswordButton).To(vm => vm.RecoverPasswordCommand);
+            set.Bind(EmailInput).TwoWay().For(v => v.Text).To(vm => vm.Email);
+            set.Apply();
+
+        }
+
+
+        public override bool EnableToolbar => false;
+    }
+
     [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary,true)]
     public class SignupFormView: ViewFragment<SignUpFormViewModel>
     {
@@ -90,6 +119,9 @@ namespace ResidentAppCross.Droid.Views
         public ScrollView ScrollContainer { get; set; }
 
         [Outlet]
+        public LinearLayout SectionContainerDefault { get; set; }
+
+        [Outlet]
         public Button SignUpButton { get; set; }
 
         public override void Bind()
@@ -98,8 +130,20 @@ namespace ResidentAppCross.Droid.Views
 
             MainActivity.Window.SetSoftInputMode(SoftInput.AdjustResize | SoftInput.StateHidden);
 
-     //       FirstnameInput.WithScrollOnFocus(ScrollContainer);
-    //        PasswordConfirmInput.WithScrollOnFocus(ScrollContainer);
+            //       FirstnameInput.WithScrollOnFocus(ScrollContainer);
+            //        PasswordConfirmInput.WithScrollOnFocus(ScrollContainer);
+
+            SectionContainerDefault.Click += (sender, args) =>
+            {
+                InputMethodManager imm = (InputMethodManager)MainActivity.GetSystemService(Application.InputMethodService);
+                imm.HideSoftInputFromWindow(Layout.WindowToken, 0);
+            };
+
+            PasswordConfirmInput.EditorAction += (sender, args) =>
+            {
+                InputMethodManager imm = (InputMethodManager)MainActivity.GetSystemService(Application.InputMethodService);
+                imm.HideSoftInputFromWindow(Layout.WindowToken, 0);
+            };
 
 
             var set = this.CreateBindingSet<SignupFormView, SignUpFormViewModel>();

@@ -85,15 +85,8 @@
     <CodesignProvision>1b68aea1-aa0a-4224-a1e8-7bd7b63030bf</CodesignProvision>
     <CodesignExtraArgs>
     </CodesignExtraArgs>
-    <MtouchFastDev>False</MtouchFastDev>
-    <MtouchUseLlvm>False</MtouchUseLlvm>
-    <MtouchUseThumb>False</MtouchUseThumb>
-    <MtouchUseSGen>False</MtouchUseSGen>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
-    <OptimizePNGs>True</OptimizePNGs>
-    <MtouchFloat32>False</MtouchFloat32>
-    <DeviceSpecificBuild>False</DeviceSpecificBuild>
-    <MtouchI18n />
+    <MtouchI18n>
+    </MtouchI18n>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhone'">
     <CodesignKey>iPhone Distribution</CodesignKey>
@@ -361,7 +354,7 @@
     <InterfaceDefinition Include="Views\TableSources\TicketIndexTableViewCell.xib" />
     <InterfaceDefinition Include="Views\Sections\VerticalCollectionSection.xib" />
     <InterfaceDefinition Include="Views\CollectionItems\TicketCollectionViewCell.xib" />
-    <InterfaceDefinition Include="Views\SignUpFormView.xib" />
+    <InterfaceDefinition Include="Views\Sections\TextFieldSection.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -503,8 +496,9 @@
     <Compile Include="Views\IncidentReportStatusView.cs" />
     <Compile Include="Views\IncidentReportIndexView.cs" />
     <Compile Include="Views\SignUpFormView.cs" />
-    <Compile Include="Views\SignUpFormView.designer.cs">
-      <DependentUpon>SignUpFormView.cs</DependentUpon>
+    <Compile Include="Views\Sections\TextFieldSection.cs" />
+    <Compile Include="Views\Sections\TextFieldSection.designer.cs">
+      <DependentUpon>TextFieldSection.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -581,7 +575,7 @@
       <Name>ResidentAppCross</Name>
     </ProjectReference>
     <ProjectReference Include="..\SCLAlertViewLib\SCLAlertViewLib.csproj">
-      <Project>{ee36dd11-4f2c-4d9e-a8a7-7ec647b2ad9f}</Project>
+      <Project>{EE36DD11-4F2C-4D9E-A8A7-7EC647B2AD9F}</Project>
       <Name>SCLAlertViewLib</Name>
     </ProjectReference>
   </ItemGroup>
