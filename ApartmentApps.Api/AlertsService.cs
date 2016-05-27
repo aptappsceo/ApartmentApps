@@ -233,14 +233,12 @@ namespace ApartmentApps.Api
         {
             SmtpClient client = new SmtpClient();
             client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("mosborne@apartmentapps.com", "iamadumbass");
+            client.Credentials = new NetworkCredential("noreply@apartmentapps.com", "AptApps2016!");
             client.Port = 587;
             client.Host = "smtp.gmail.com";
             client.EnableSsl = true;
-
-
             MailAddress
-                maFrom = new MailAddress("mosborne@apartmentapps.com", "Apartment Apps", Encoding.UTF8),
+                maFrom = new MailAddress("noreply@apartmentapps.com", "Apartment Apps", Encoding.UTF8),
                 maTo = new MailAddress(message.Destination, string.Empty, Encoding.UTF8);
             MailMessage mmsg = new MailMessage(maFrom.Address, maTo.Address);
             mmsg.Body = message.Body;

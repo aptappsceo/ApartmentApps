@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -32,8 +35,16 @@ namespace ApartmentApps.IoC
                 //.ToMethod(_ => _.<StandardCrudService<TModel, TViewModel>>())
                 //.InRequestScope();
         }
+
+        public static void RegisterModule<TModule, TModuleConfig>( this IKernel kernel ) where TModule : Module<TModuleConfig> where TModuleConfig : ModuleConfig, new()
+        {
+            kernel.Bind<TModule, IModule>().To<TModule>().InRequestScope();
+            kernel.Bind<IRepository<TModuleConfig>>().To<Module<TModuleConfig>.ConfigRepository>().InRequestScope();
+        }
         public static void RegisterServices(IKernel kernel)
         {
+
+            kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
             ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
@@ -99,6 +110,30 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService>();
 
             kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
+            //try
+            //{
+            //    var config = new DbMigrationsConfiguration<ApplicationDbContext>
+            //    {
+            //        AutomaticMigrationsEnabled = true,
+            //        AutomaticMigrationDataLossAllowed = true
+            //    };
+            //    var migrator = new DbMigrator(config);
+            //    if (migrator.GetPendingMigrations().Any())
+            //        migrator.Update();
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine(ex.Message);
+            //}
+           
+
+
+
         }
     }
+    //public sealed class GalleryDbMigrationConfiguration : DbMigrationsConfiguration
+    //{
+      
+       
+    //}
 }

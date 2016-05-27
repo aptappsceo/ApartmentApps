@@ -4,7 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+    public class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {

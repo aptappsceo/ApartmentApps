@@ -9,6 +9,7 @@ using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api.ViewModels
 {
+
     // Models used as parameters to AccountController actions.
     public class UserBindingModel : BaseViewModel
     {
@@ -27,6 +28,7 @@ namespace ApartmentApps.Api.ViewModels
         public string PostalCode { get; set; }
         public string Email { get; set; }
     }
+
     public class MaintenanceRequestViewModel : BaseViewModel
     {
         public DateTime? ScheduleDate { get; set; }
@@ -69,10 +71,12 @@ namespace ApartmentApps.Api.ViewModels
         public IncidentCheckinBindingModel LatestCheckin { get; set; }
         public IEnumerable<IncidentCheckinBindingModel> Checkins { get; set; }
     }
+
     public class BuildingViewModel : BaseViewModel
     {
         public string Name { get; set; }
     }
+
     public class UnitViewModel :BaseViewModel
     {
         public string Name { get; set; }

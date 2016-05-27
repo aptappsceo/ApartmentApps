@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ApartmentApps.Api.Modules;
+using ApartmentApps.API.Service.Controllers;
 
 namespace ApartmentApps.API.Service.Models
 {
@@ -38,8 +40,16 @@ namespace ApartmentApps.API.Service.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }
+        public PropertyConfig PropertyConfig { get; set; }
+    }
+    public class PropertyConfig
+    {
+        public string PaymentsUrl { get; set; }
+        public string[] EnabledModules { get; set; }
+        public ModuleInfo[] ModuleConfigs { get; set; }
     }
 
+   
     public class UserLoginInfoViewModel
     {
         public string LoginProvider { get; set; }
