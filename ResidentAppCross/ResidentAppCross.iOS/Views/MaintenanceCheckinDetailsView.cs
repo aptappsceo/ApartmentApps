@@ -10,6 +10,81 @@ using UIKit;
 
 namespace ResidentAppCross.iOS.Views
 {
+
+    [Register("MessageDetailsView")]
+    [NavbarStyling]
+    [StatusBarStyling]
+    public class MessageDetailsView : BaseForm<MessageDetailsViewModel>
+    {
+        private TextViewSection _subjectSection;
+        private TextViewSection _dateSection;
+        private TextViewSection _messageSection;
+
+        public TextViewSection SubjectSection
+        {
+            get
+            {
+                if (_subjectSection == null)
+                {
+                    _subjectSection = Formals.Create<TextViewSection>();
+                    _subjectSection.HeaderLabel.Text = "Subject";
+
+                }
+                return _subjectSection;
+            }
+            set { _subjectSection = value; }
+        }
+
+        public TextViewSection DateSection
+        {
+            get
+            {
+                if (_dateSection == null)
+                {
+                    _dateSection = Formals.Create<TextViewSection>();
+                    _dateSection.HeaderLabel.Text = "Date";
+                }
+                return _dateSection;
+            }
+            set { _dateSection = value; }
+        }
+
+        public TextViewSection MessageSection
+        {
+            get
+            {
+                if (_messageSection == null)
+                {
+                    _messageSection = Formals.Create<TextViewSection>();
+                    _messageSection.HeaderLabel.Text = "Message";
+
+                }
+                return _messageSection;
+            }
+            set { _messageSection = value; }
+        }
+
+
+        public override void BindForm()
+        {
+            base.BindForm();
+            var set = this.CreateBindingSet<MessageDetailsView, MessageDetailsViewModel>();
+            set.Bind(SubjectSection.TextView).For(f => f.Text).To(vm => vm.Subject);
+            set.Bind(DateSection.TextView).For(f => f.Text).To(vm => vm.Date);
+            set.Bind(MessageSection.TextView).For(f => f.Text).To(vm => vm.Message);
+            set.Apply();
+        }
+
+        public override void GetContent(List<UIView> content)
+        {
+            base.GetContent(content);
+            content.Add(SubjectSection);
+            content.Add(DateSection);
+            content.Add(MessageSection);
+        }
+
+    }
+
     [Register("MaintenanceCheckinDetailsView")]
     [NavbarStyling]
     [StatusBarStyling]
