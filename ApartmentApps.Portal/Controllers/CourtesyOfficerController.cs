@@ -7,6 +7,7 @@ using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -14,7 +15,7 @@ namespace ApartmentApps.Portal.Controllers
     {
         public CourtesyOfficerService Service { get; set; }
 
-        public CourtesyOfficerController(CourtesyOfficerService service, PropertyContext context, IUserContext userContext) : base(context,userContext)
+        public CourtesyOfficerController(IKernel kernel, CourtesyOfficerService service, PropertyContext context, IUserContext userContext) : base(kernel,context,userContext)
         {
             Service = service;
         }

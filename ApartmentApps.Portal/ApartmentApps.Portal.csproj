@@ -1286,6 +1286,7 @@
     <Content Include="Views\Shared\AutoIndex.cshtml" />
     <Content Include="Views\Shared\Forms\Grid.cshtml" />
     <Content Include="Views\Messaging\Index.cshtml" />
+    <Content Include="Views\PropertySettings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1340,7 +1341,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61984</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58737/</IISUrl>
+          <IISUrl>http://localhost:58738/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

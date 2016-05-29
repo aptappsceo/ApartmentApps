@@ -7,6 +7,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -34,7 +35,7 @@ namespace ApartmentApps.Portal.Controllers
     {
         public IFeedSerivce FeedService { get; set; }
         // GET: Dashboard
-        public DashboardController(PropertyContext context, IUserContext userContext, IFeedSerivce feedService) : base(context, userContext)
+        public DashboardController(IKernel kernel, PropertyContext context, IUserContext userContext, IFeedSerivce feedService) : base(kernel, context, userContext)
         {
             FeedService = feedService;
         }

@@ -245,7 +245,7 @@ namespace ApartmentApps.Portal.Controllers
     {
         public IMaintenanceService MaintenanceService { get; set; }
 
-        public MaitenanceRequestsController(IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+        public MaitenanceRequestsController(IKernel kernel, IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel,repository, service, context, userContext)
         {
             MaintenanceService = maintenanceService;
         }
@@ -361,7 +361,7 @@ namespace ApartmentApps.Portal.Controllers
     public class MaitenanceRequests2Controller : AAController
     {
         // GET: /MaitenanceRequests/
-        public MaitenanceRequests2Controller(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public MaitenanceRequests2Controller(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
         }
 

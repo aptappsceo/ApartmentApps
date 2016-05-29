@@ -11,6 +11,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Newtonsoft.Json;
+using Ninject;
 using Syncfusion.EJ.Export;
 using Syncfusion.EJ.ReportWriter;
 using Syncfusion.JavaScript;
@@ -26,7 +27,7 @@ namespace ApartmentApps.Portal.Controllers
       //  public IRepository<TModel> Repository { get; set; }
         public StandardCrudService<TModel, TViewModel> Service { get; set; }
 
-        public CrudController(IRepository<TModel> repository, StandardCrudService<TModel, TViewModel> service, PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public CrudController(IKernel kernel, IRepository<TModel> repository, StandardCrudService<TModel, TViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             //Repository = repository;
             Service = service;

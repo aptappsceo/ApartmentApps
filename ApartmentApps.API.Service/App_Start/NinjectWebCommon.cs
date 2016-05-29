@@ -116,6 +116,11 @@ namespace ApartmentApps.API.Service.App_Start
 
         public IIdentity User => System.Web.HttpContext.Current.User.Identity;
 
+        public bool IsInRole(string roleName)
+        {
+            return HttpContext.Current.User.IsInRole(roleName);
+        }
+
         public string UserId => CurrentUser.Id;
         public string Email => User.GetUserName();
         public string Name => CurrentUser.FirstName + " " + CurrentUser.LastName;

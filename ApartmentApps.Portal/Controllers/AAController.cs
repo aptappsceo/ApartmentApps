@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Services.Description;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Ninject;
@@ -36,13 +38,15 @@ namespace ApartmentApps.Portal.Controllers
         private readonly TFormService _formService;
         private readonly TService _indexService;
 
-        public AutoFormController(IKernel kernel, TFormService formService, TService indexService, PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public AutoFormController(IKernel kernel, TFormService formService, TService indexService, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             _kernel = kernel;
             _formService = formService;
             _indexService = indexService;
         }
 
+ 
+        
         public virtual ActionResult Index()
         {
             return AutoIndex(_indexService.GetAll().ToArray());
@@ -79,12 +83,23 @@ namespace ApartmentApps.Portal.Controllers
     {
         public IUserContext UserContext { get; }
 
-        public AAController(PropertyContext context, IUserContext userContext)
+        public AAController(IKernel kernel,PropertyContext context, IUserContext userContext)
         {
+            Kernel = kernel;
             Context = context;
             UserContext = userContext;
         }
+        public IEnumerable<IModule> Modules
+        {
+            get { return Kernel.GetAll<IModule>(); }
+        }
 
+        public IEnumerable<IModule> EnabledModules
+        {
+            get { return Modules.Where(p => p.Enabled); }
+        }
+
+        public IKernel Kernel { get; set; }
         protected PropertyContext Context { get; }
 
         public ApplicationUser CurrentUser => UserContext.CurrentUser;
@@ -103,6 +118,9 @@ namespace ApartmentApps.Portal.Controllers
                     ViewBag.Properties = Context.Properties.GetAll().ToArray();
 
                 }
+                var menuItems = new List<MenuItemViewModel>();
+                EnabledModules.Signal<IMenuItemProvider>(p=>p.PopulateMenuItems(menuItems));
+                ViewBag.MenuItems = menuItems;
             }
 
         }

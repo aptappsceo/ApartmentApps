@@ -94,6 +94,10 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PushSharp.Amazon.Adm, Version=2.2.1.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
       <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.Amazon.Adm.dll</HintPath>
       <Private>True</Private>
@@ -161,6 +165,7 @@
     <Compile Include="CourtesyOfficerService.cs" />
     <Compile Include="Modules\Class1.cs" />
     <Compile Include="Modules\IModule.cs" />
+    <Compile Include="Modules\MessagingModule.cs" />
     <Compile Include="Modules\Module.cs" />
     <Compile Include="Modules\PaymentsConfig.cs" />
     <Compile Include="Modules\PaymentsModule.cs" />
