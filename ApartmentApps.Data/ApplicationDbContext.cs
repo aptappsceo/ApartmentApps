@@ -1,4 +1,6 @@
+using System;
 using System.Data.Entity;
+using System.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data
@@ -28,6 +30,17 @@ namespace ApartmentApps.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
+                var entityTypes = assembly
+                  .GetTypes()
+                  .Where(t =>
+                    t.GetCustomAttributes(typeof(ModuleConfigurationAttribute), inherit: true)
+                    .Any());
+                foreach (var type in entityTypes)
+                modelBuilder.RegisterEntityType(type);
+            }
             //modelBuilder.Entity<Unit>().Property(p => p.Latitude).HasPrecision(9, 6);
             //modelBuilder.Entity<Unit>().Property(p => p.Longitude).HasPrecision(9, 6);
             //modelBuilder.Entity<CourtesyOfficerLocation>().Property(p => p.Latitude).HasPrecision(9, 6);
@@ -44,5 +57,10 @@ namespace ApartmentApps.Data
         {
             return new ApplicationDbContext();
         }
+    }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class ModuleConfigurationAttribute : Attribute
+    {
     }
 }

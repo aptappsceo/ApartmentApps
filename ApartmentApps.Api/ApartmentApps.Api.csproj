@@ -159,6 +159,11 @@
   <ItemGroup>
     <Compile Include="BindingModels\Class1.cs" />
     <Compile Include="CourtesyOfficerService.cs" />
+    <Compile Include="Modules\Class1.cs" />
+    <Compile Include="Modules\IModule.cs" />
+    <Compile Include="Modules\Module.cs" />
+    <Compile Include="Modules\PaymentsConfig.cs" />
+    <Compile Include="Modules\PaymentsModule.cs" />
     <Compile Include="Repositories\BuildingsRepository.cs" />
     <Compile Include="IncidentsService.cs" />
     <Compile Include="DateTimeUtil.cs" />

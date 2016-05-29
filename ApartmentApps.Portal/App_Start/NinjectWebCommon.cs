@@ -81,7 +81,7 @@ namespace ApartmentApps.Portal.App_Start
             Register.RegisterServices(kernel);
             //kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
 
-
+            
             kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
             kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();
             kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
