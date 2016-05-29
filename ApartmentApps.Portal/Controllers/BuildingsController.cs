@@ -14,12 +14,12 @@ using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    //public class Buildings2Controller : AutoFormController<BuildingService, BuildingViewModel>
-    //{
-    //    public Buildings2Controller(IKernel kernel, BuildingService service, PropertyContext context, IUserContext userContext) : base(kernel, service, context, userContext)
-    //    {
-    //    }
-    //}
+    public class BuildingsController : AutoFormController<BuildingService, BuildingViewModel>
+    {
+        public BuildingsController(IKernel kernel, BuildingService service, PropertyContext context, IUserContext userContext) : base(kernel, service, context, userContext)
+        {
+        }
+    }
     //public class Buildings3Controller : CrudController<BuildingViewModel,Building>
     //{
     //    public Buildings3Controller(IRepository<Building> repository, StandardCrudService<Building, BuildingViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
@@ -27,12 +27,12 @@ namespace ApartmentApps.Portal.Controllers
     //    }
     //}
     [Authorize(Roles = "PropertyAdmin")]
-    public class BuildingsController : AAController
+    public class Buildings2Controller : AAController
     {
        
 
         // GET: /Buildings/
-        public BuildingsController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        public Buildings2Controller(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
         }
 
