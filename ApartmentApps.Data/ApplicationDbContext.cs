@@ -7,6 +7,7 @@ namespace ApartmentApps.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+       
         public virtual IDbSet<MaintenanceRequestStatus> MaintenanceRequestStatuses { get; set; }
         public virtual IDbSet<IncidentReportStatus> IncidentReportStatuses { get; set; }
         public virtual IDbSet<Corporation> Corporations { get; set; }
@@ -36,8 +37,8 @@ namespace ApartmentApps.Data
                 var entityTypes = assembly
                   .GetTypes()
                   .Where(t =>
-                    t.GetCustomAttributes(typeof(ModuleConfigurationAttribute), inherit: true)
-                    .Any());
+                    t.GetCustomAttributes(typeof(PersistantAttribute), inherit: true)
+                    .Any() );
                 foreach (var type in entityTypes)
                 modelBuilder.RegisterEntityType(type);
             }
@@ -60,7 +61,7 @@ namespace ApartmentApps.Data
     }
 
     [AttributeUsage(AttributeTargets.Class)]
-    public class ModuleConfigurationAttribute : Attribute
+    public class PersistantAttribute : Attribute
     {
     }
 }

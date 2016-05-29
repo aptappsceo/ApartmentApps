@@ -8,11 +8,33 @@ using System.Web;
 using System.Web.Http;
 
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
+    public class MessagingController : ApartmentAppsApiController
+    {
+        private readonly IRepository<Message> _messages;
+
+        public MessagingController(IRepository<Message> messages, PropertyContext context, IUserContext userContext) : base(context, userContext)
+        {
+            _messages = messages;
+        }
+
+        public AlertBindingModel GetMessage(int id)
+        {
+            var alert = _messages.Find(id);
+            return new AlertBindingModel()
+            { 
+                Message = alert.Body,
+                Title = alert.Subject,
+                CreatedOn = alert.SentOn,
+                Type="Message"
+            };
+        } 
+    }
     public class NotifiationsController : ApartmentAppsApiController
     {
         public NotifiationsController(PropertyContext context, IUserContext userContext) : base(context, userContext)

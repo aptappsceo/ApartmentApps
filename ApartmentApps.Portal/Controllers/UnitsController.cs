@@ -9,6 +9,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -18,7 +19,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /Units/
 
 
-        public UnitsController(IRepository<Unit> repository, StandardCrudService<Unit, UnitViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+        public UnitsController(IKernel kernel, IRepository<Unit> repository, StandardCrudService<Unit, UnitViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel,repository, service, context, userContext)
         {
         }
 

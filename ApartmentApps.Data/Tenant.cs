@@ -7,11 +7,15 @@ namespace ApartmentApps.Data
     public abstract class PropertyEntity : IPropertyEntity
     {
         [DefaultValue(1)]
+        [DataType("Hidden")]
         public int? PropertyId { get; set; } = 1;
 
         [ForeignKey("PropertyId")]
+        [DataType("Ignore")]
         public virtual Property Property { get; set; }
+
         [Key]
+        [DataType("Hidden")]
         public int Id { get; set; }
     }
 

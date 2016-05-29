@@ -1,16 +1,19 @@
-﻿using ApartmentApps.Data;
+﻿using System.ComponentModel;
+using ApartmentApps.Data;
 
 namespace ApartmentApps.Api.Modules
 {
-    [ModuleConfiguration]
+    [Persistant]
     public class PaymentsConfig : ModuleConfig
     {
         public PaymentsConfig()
         {
-            Name = "Payments";
+           
         }
-
+        [DisplayName("Use Url?")]
         public bool UseUrl { get; set; }
+
+        [DisplayName("Url")]
         public string Url { get; set; }
 
     }

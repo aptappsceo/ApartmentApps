@@ -8,6 +8,5 @@ namespace ApartmentApps.Api.Modules
     public class ModuleConfig : PropertyEntity
     {
         public bool Enabled { get; set; }
-        public string Name { get; set; }
     }
 }

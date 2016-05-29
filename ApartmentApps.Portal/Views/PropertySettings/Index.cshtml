@@ -1,0 +1,27 @@
+﻿@using ApartmentApps.Portal.Controllers
+@model System.Collections.Generic.IEnumerable<ApartmentApps.Api.Modules.IModule>
+<div class="tabs-container">
+
+    <div class="tabs-left">
+        <ul class="nav nav-tabs">
+            @foreach (var item in Model)
+            {
+                <li class="@(ViewBag.ActiveModule == item ? "active" : "")"><a data-toggle="tab" href="#@item.Name">@item.Name</a></li>
+            }
+            
+           
+        </ul>
+        <div class="tab-content ">
+            @foreach (var item in Model.ToArray())
+            {
+                <div id="@item.Name" class="tab-pane @(ViewBag.ActiveModule == item ? "active" : "")">
+                    <div class="panel-body">
+                        @Html.RenderForm(item.ModuleConfig)
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>

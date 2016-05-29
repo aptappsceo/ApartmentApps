@@ -10,6 +10,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -45,7 +46,7 @@ namespace ApartmentApps.Portal.Controllers
         // POST: /IdentityUserRole/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        public IdentityUserRoleController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public IdentityUserRoleController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
         }
 

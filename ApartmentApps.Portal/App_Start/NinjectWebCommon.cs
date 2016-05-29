@@ -110,7 +110,13 @@ namespace ApartmentApps.Portal.App_Start
             }
         }
 
+
         public IIdentity User => System.Web.HttpContext.Current.User.Identity;
+
+        public bool IsInRole(string roleName)
+        {
+            return HttpContext.Current.User.IsInRole(roleName);
+        }
 
         public string UserId => CurrentUser.Id;
         public string Email => User.GetUserName();

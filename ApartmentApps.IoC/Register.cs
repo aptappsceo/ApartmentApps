@@ -38,13 +38,46 @@ namespace ApartmentApps.IoC
 
         public static void RegisterModule<TModule, TModuleConfig>( this IKernel kernel ) where TModule : Module<TModuleConfig> where TModuleConfig : ModuleConfig, new()
         {
-            kernel.Bind<TModule, IModule>().To<TModule>().InRequestScope();
-            kernel.Bind<IRepository<TModuleConfig>>().To<Module<TModuleConfig>.ConfigRepository>().InRequestScope();
+            kernel.Bind<TModule, IModule, Module<TModuleConfig>>().To<TModule>().InRequestScope();
+            //kernel.Bind<IRepository<TModuleConfig>>().To<Module<TModuleConfig>.ConfigRepository>().InRequestScope();
         }
         public static void RegisterServices(IKernel kernel)
         {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
+                var entityTypes = assembly
+                  .GetTypes()
+                  .Where(t =>
+                    t.GetCustomAttributes(typeof(PersistantAttribute), inherit: true)
+                    .Any());
 
+                foreach (var entityType in entityTypes)
+                {
+                    if (typeof (ModuleConfig).IsAssignableFrom(entityType))
+                    {
+                        kernel.Bind(typeof(IRepository<>).MakeGenericType(entityType))
+                           .To(typeof(PropertyRepository<>).MakeGenericType(entityType));
+                    }
+                    else if (typeof (PropertyEntity).IsAssignableFrom(entityType))
+                    {
+                        kernel.Bind(typeof (IRepository<>).MakeGenericType(entityType))
+                            .To(typeof (PropertyRepository<>).MakeGenericType(entityType));
+                    }
+                    else
+                    {
+                        kernel.Bind(typeof(IRepository<>).MakeGenericType(entityType))
+                              .To(typeof(BaseRepository<>).MakeGenericType(entityType));
+
+                    }
+                }
+                    
+            }
+            kernel.RegisterModule<AdminModule, PortalConfig>();
             kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
+            kernel.RegisterModule<MaintenanceModule, MaintenanceConfig>();
+            kernel.RegisterModule<CourtesyModule, CourtesyConfig>();
+            kernel.RegisterModule<MessagingModule, MessagingConfig>();
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
             ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
