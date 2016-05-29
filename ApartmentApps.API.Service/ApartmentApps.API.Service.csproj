@@ -268,6 +268,7 @@
     <Compile Include="Controllers\Api\ConfigureController.cs" />
     <Compile Include="Controllers\Api\CourtesyController.cs" />
     <Compile Include="Controllers\Api\MaitenanceController.cs" />
+    <Compile Include="Controllers\Api\MessagingController.cs" />
     <Compile Include="Controllers\Api\NotifiationsController.cs" />
     <Compile Include="Controllers\Api\RegisterController.cs" />
     <Compile Include="Controllers\Api\LookupsController.cs" />
@@ -364,6 +365,8 @@
     <Content Include="push\ProdPushCert.p12" />
     <None Include="Properties\PublishProfiles\ApartmentAppsAPIService - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ApartmentAppsAPIService - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ApartmentAppsApiServiceDev - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ApartmentAppsApiServiceDev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />
@@ -443,7 +446,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54683</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:54684/</IISUrl>
+          <IISUrl>http://localhost:54685/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

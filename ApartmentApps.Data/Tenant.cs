@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace ApartmentApps.Data
 {
@@ -12,6 +13,7 @@ namespace ApartmentApps.Data
 
         [ForeignKey("PropertyId")]
         [DataType("Ignore")]
+        [JsonIgnore]
         public virtual Property Property { get; set; }
 
         [Key]

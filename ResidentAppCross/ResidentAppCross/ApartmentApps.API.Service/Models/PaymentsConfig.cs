@@ -2,16 +2,24 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using ApartmentApps.Client.Models;
-using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class Building
+    public partial class PaymentsConfig
     {
+        private bool? _enabled;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? Enabled
+        {
+            get { return this._enabled; }
+            set { this._enabled = value; }
+        }
+        
         private int? _id;
         
         /// <summary>
@@ -21,17 +29,6 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._id; }
             set { this._id = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
         }
         
         private int? _propertyId;
@@ -45,23 +42,33 @@ namespace ApartmentApps.Client.Models
             set { this._propertyId = value; }
         }
         
-        private IList<Unit> _units;
+        private string _url;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public IList<Unit> Units
+        public string Url
         {
-            get { return this._units; }
-            set { this._units = value; }
+            get { return this._url; }
+            set { this._url = value; }
+        }
+        
+        private bool? _useUrl;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? UseUrl
+        {
+            get { return this._useUrl; }
+            set { this._useUrl = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Building class.
+        /// Initializes a new instance of the PaymentsConfig class.
         /// </summary>
-        public Building()
+        public PaymentsConfig()
         {
-            this.Units = new LazyList<Unit>();
         }
         
         /// <summary>
@@ -71,30 +78,30 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken enabledValue = inputObject["Enabled"];
+                if (enabledValue != null && enabledValue.Type != JTokenType.Null)
+                {
+                    this.Enabled = ((bool)enabledValue);
+                }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((int)idValue);
-                }
-                JToken nameValue = inputObject["Name"];
-                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                {
-                    this.Name = ((string)nameValue);
                 }
                 JToken propertyIdValue = inputObject["PropertyId"];
                 if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
                 {
                     this.PropertyId = ((int)propertyIdValue);
                 }
-                JToken unitsSequence = ((JToken)inputObject["Units"]);
-                if (unitsSequence != null && unitsSequence.Type != JTokenType.Null)
+                JToken urlValue = inputObject["Url"];
+                if (urlValue != null && urlValue.Type != JTokenType.Null)
                 {
-                    foreach (JToken unitsValue in ((JArray)unitsSequence))
-                    {
-                        Unit unit = new Unit();
-                        unit.DeserializeJson(unitsValue);
-                        this.Units.Add(unit);
-                    }
+                    this.Url = ((string)urlValue);
+                }
+                JToken useUrlValue = inputObject["UseUrl"];
+                if (useUrlValue != null && useUrlValue.Type != JTokenType.Null)
+                {
+                    this.UseUrl = ((bool)useUrlValue);
                 }
             }
         }

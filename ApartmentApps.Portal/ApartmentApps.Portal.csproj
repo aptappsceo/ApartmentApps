@@ -1078,6 +1078,8 @@
     <Content Include="Scripts\ej\ej.widgets.all.min.map" />
     <Content Include="Scripts\canvg.js" />
     <Content Include="Scripts\ej\ej.unobtrusive.min.js" />
+    <None Include="Properties\PublishProfiles\ApartmentAppsWebPortalDev - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ApartmentAppsWebPortalDev - Web Deploy.pubxml" />
     <None Include="Scripts\ej\ej.web.all.intellisense.js" />
     <Content Include="Scripts\ej\ej.web.all.min.js" />
     <Content Include="Scripts\ej\ej.widget.angular.min.js" />

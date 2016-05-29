@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 
@@ -8,6 +9,12 @@ namespace ApartmentApps.Api.Modules
     [Persistant]
     public class Message : PropertyEntity
     {
+        public string FromId { get; set; }
+        [ForeignKey("FromId")]
+        public ApplicationUser From
+        {
+            get;set;
+        }
         public int SentToCount { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
@@ -41,6 +48,7 @@ namespace ApartmentApps.Api.Modules
         {
             var entity = new Message()
             {
+                FromId = UserContext.UserId,
                 SentToCount = ids.Length,
                 Subject = subject,
                 Body = message,

@@ -54,17 +54,6 @@ namespace ApartmentApps.Client.Models
             set { this._message = value; }
         }
         
-        private Property _property;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public Property Property
-        {
-            get { return this._property; }
-            set { this._property = value; }
-        }
-        
         private int? _propertyId;
         
         /// <summary>
@@ -164,13 +153,6 @@ namespace ApartmentApps.Client.Models
                 if (messageValue != null && messageValue.Type != JTokenType.Null)
                 {
                     this.Message = ((string)messageValue);
-                }
-                JToken propertyValue = inputObject["Property"];
-                if (propertyValue != null && propertyValue.Type != JTokenType.Null)
-                {
-                    Property property = new Property();
-                    property.DeserializeJson(propertyValue);
-                    this.Property = property;
                 }
                 JToken propertyIdValue = inputObject["PropertyId"];
                 if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)

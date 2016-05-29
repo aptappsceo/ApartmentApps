@@ -33,6 +33,17 @@ namespace ApartmentApps.Client.Models
             set { this._complete = value; }
         }
         
+        private DateTimeOffset? _date;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public DateTimeOffset? Date
+        {
+            get { return this._date; }
+            set { this._date = value; }
+        }
+        
         private int? _id;
         
         /// <summary>
@@ -104,6 +115,11 @@ namespace ApartmentApps.Client.Models
                 if (completeValue != null && completeValue.Type != JTokenType.Null)
                 {
                     this.Complete = ((bool)completeValue);
+                }
+                JToken dateValue = inputObject["Date"];
+                if (dateValue != null && dateValue.Type != JTokenType.Null)
+                {
+                    this.Date = ((DateTimeOffset)dateValue);
                 }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)

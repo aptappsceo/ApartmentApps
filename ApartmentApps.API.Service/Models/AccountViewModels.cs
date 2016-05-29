@@ -44,9 +44,7 @@ namespace ApartmentApps.API.Service.Models
     }
     public class PropertyConfig
     {
-        public string PaymentsUrl { get; set; }
-        public string[] EnabledModules { get; set; }
-        public ModuleInfo[] ModuleConfigs { get; set; }
+        public ModuleInfo ModuleInfo { get; set; }
     }
 
    

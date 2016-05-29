@@ -30,8 +30,11 @@ namespace ApartmentApps.API.Service.Controllers
 {
     public class ModuleInfo
     {
-        public ModuleConfig Config { get; set; }
-        public string Name { get; set; }
+  
+        public PaymentsConfig PaymentsConfig { get; set; }
+        public MessagingConfig MessagingConfig { get; set; }
+        public CourtesyConfig CourtesyConfig { get; set; }
+        public MaintenanceConfig MaintenanceConfig { get; set; }
     }
     [Authorize]
     [RoutePrefix("api/Account")]
@@ -118,11 +121,16 @@ namespace ApartmentApps.API.Service.Controllers
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
                 PropertyConfig = new PropertyConfig()
                 {
-                    ModuleConfigs = _kernel.GetAll<IModule>().Select(p=>new ModuleInfo()
+                    ModuleInfo = new ModuleInfo()
                     {
-                        Config = p.ModuleConfig,
-                        Name = p.Name
-                    }).ToArray()
+                        PaymentsConfig = _kernel.Get<Module<PaymentsConfig>>().Config,
+                        MessagingConfig = _kernel.Get<Module<MessagingConfig>>().Config,
+                        CourtesyConfig = _kernel.Get<Module<CourtesyConfig>>().Config,
+                        MaintenanceConfig = _kernel.Get<Module<MaintenanceConfig>>().Config,
+                      
+                        
+                    }
+                 
                 }
             };
         }

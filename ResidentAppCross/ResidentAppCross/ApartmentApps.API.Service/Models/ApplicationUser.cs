@@ -474,7 +474,7 @@ namespace ApartmentApps.Client.Models
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
-                    this.Id = ((string)idValue);
+                    this.Id = idValue.ToString(Newtonsoft.Json.Formatting.Indented);
                 }
                 JToken imageThumbnailUrlValue = inputObject["ImageThumbnailUrl"];
                 if (imageThumbnailUrlValue != null && imageThumbnailUrlValue.Type != JTokenType.Null)

@@ -15,15 +15,15 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client
 {
-    internal partial class Version : IServiceOperations<ApartmentAppsAPIService>, IVersion
+    internal partial class Messaging : IServiceOperations<ApartmentAppsAPIService>, IMessaging
     {
         /// <summary>
-        /// Initializes a new instance of the Version class.
+        /// Initializes a new instance of the Messaging class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal Version(ApartmentAppsAPIService client)
+        internal Messaging(ApartmentAppsAPIService client)
         {
             this._client = client;
         }
@@ -39,10 +39,13 @@ namespace ApartmentApps.Client
             get { return this._client; }
         }
         
+        /// <param name='id'>
+        /// Required.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public async Task<HttpOperationResponse<VersionInfo>> GetWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async Task<HttpOperationResponse<AlertBindingModel>> GetMessageWithOperationResponseAsync(int id, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Tracing
             bool shouldTrace = ServiceClientTracing.IsEnabled;
@@ -51,12 +54,14 @@ namespace ApartmentApps.Client
             {
                 invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                ServiceClientTracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                tracingParameters.Add("id", id);
+                ServiceClientTracing.Enter(invocationId, this, "GetMessageAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/api/Version";
+            url = url + "/api/Messaging/";
+            url = url + Uri.EscapeDataString(id.ToString());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -110,14 +115,14 @@ namespace ApartmentApps.Client
             }
             
             // Create Result
-            HttpOperationResponse<VersionInfo> result = new HttpOperationResponse<VersionInfo>();
+            HttpOperationResponse<AlertBindingModel> result = new HttpOperationResponse<AlertBindingModel>();
             result.Request = httpRequest;
             result.Response = httpResponse;
             
             // Deserialize Response
             if (statusCode == HttpStatusCode.OK)
             {
-                VersionInfo resultModel = new VersionInfo();
+                AlertBindingModel resultModel = new AlertBindingModel();
                 JToken responseDoc = null;
                 if (string.IsNullOrEmpty(responseContent) == false)
                 {
