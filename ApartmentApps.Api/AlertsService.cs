@@ -278,7 +278,7 @@ namespace ApartmentApps.Api
             foreach (var id in ids)
             {
                 var user = Context.Users.Find(id);
-                SendAlert(user, title, message, type, 0);
+                SendAlert(user, title, message, type, relatedId);
             }
 
         }
@@ -320,15 +320,11 @@ namespace ApartmentApps.Api
         }
     }
 
-
     public static class NotificationPayloadExtensions
     {
         public static JObject ToGCMJson(this NotificationPayload payload)
         {
-            return new JObject(
-                            new JProperty("data",
-                                new JObject(
-                                    new JProperty("payload", payload))));
+            return new JObject(new JProperty("data", JObject.FromObject(payload)));
         }
     }
 

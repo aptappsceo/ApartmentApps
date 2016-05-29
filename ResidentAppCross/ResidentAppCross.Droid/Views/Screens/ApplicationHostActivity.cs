@@ -321,10 +321,15 @@ namespace ResidentAppCross.Droid.Views
             {
                 SourceActivity = targetActivity
             };
-
-            CurrentDialog.Show(targetActivity.FragmentManager, "notification");
-            CurrentDialog.OnceOnDismiss(() => CurrentDialog = null);
-
+            try
+            {
+                CurrentDialog.Show(targetActivity.FragmentManager, "notification");
+                CurrentDialog.OnceOnDismiss(() => CurrentDialog = null);
+            }
+            catch (Exception ex)
+            {
+                //fuck you
+            }
             return CurrentDialog;
 
         }

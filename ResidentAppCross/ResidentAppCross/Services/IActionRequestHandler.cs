@@ -39,7 +39,7 @@ namespace ResidentAppCross.Services
             set { _hack = value; }
         }
 
-        [ForAction(ActionType.View, "courtesy")]
+        [ForAction(ActionType.View, "Incident")]
         public void ViewIncident(TypedActionRequest request)
         {
             if (!request.DataId.HasValue) return;
@@ -63,7 +63,7 @@ namespace ResidentAppCross.Services
             }
         }
 
-        [ForAction(ActionType.View, "maintenance")]
+        [ForAction(ActionType.View, "Maintenance")]
         public void ViewMaintenance(TypedActionRequest request)
         {
             if (!request.DataId.HasValue) return;
@@ -82,6 +82,30 @@ namespace ResidentAppCross.Services
                     Hack.ShowViewModel<MaintenanceRequestStatusViewModel>(vm =>
                     {
                         vm.MaintenanceRequestId = request.DataId.Value;
+                    });
+                });
+            }
+        }
+
+        [ForAction(ActionType.View, "Message")]
+        public void ViewMessage(TypedActionRequest request)
+        {
+            if (!request.DataId.HasValue) return;
+            if (_loginManager.IsLoggedIn)
+            {
+                Hack.ShowViewModel<MessageDetailsViewModel>(vm =>
+                {
+                    vm.MessageId = request.DataId.Value;
+                });
+            }
+            else
+            {
+                this.SubscribeOnce<UserLoggedInEvent>(evt =>
+                {
+                    evt.PreventNavigation = true;
+                    Hack.ShowViewModel<MessageDetailsViewModel>(vm =>
+                    {
+                        vm.MessageId = request.DataId.Value;
                     });
                 });
             }

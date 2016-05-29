@@ -107,7 +107,8 @@ namespace ResidentAppCross.Droid
             //Create an intent to open app and pass a bundle to be executed
             var uiIntent = new Intent(this, typeof(ApplicationHostActivity));
             payload.ToActionRequest().Save(uiIntent);
-            Notify(payload.Title, payload.Message, uiIntent, payload.DataId ?? -1);
+            var id = payload.DataType.GetHashCode()+payload.Action.GetHashCode()+payload.DataId ?? -1;
+            Notify(payload.Title, payload.Message, uiIntent, id);
         }
 
         void NotifyWithData(string title, string message, int id = 1)
@@ -129,9 +130,9 @@ namespace ResidentAppCross.Droid
 
             var builder = new NotificationCompat.Builder(this)
                 .SetSmallIcon(iconId)
-                .SetContentTitle(title).SetContentText(message)
+                .SetContentTitle(id+" "+title).SetContentText(message)
                 .SetAutoCancel(true)
-                .SetContentIntent(PendingIntent.GetActivity(this, 0, tapIntent, 0));
+                .SetContentIntent(PendingIntent.GetActivity(this, id, tapIntent, PendingIntentFlags.UpdateCurrent));
 
             NotificationManager.Notify(id, builder.Build());
         }
