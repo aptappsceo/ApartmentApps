@@ -208,31 +208,31 @@ namespace ResidentAppCross.iOS.Views
             }
         }
 
-        public static void Notify(this ViewBase view, string title, string message, string okText, string cancelText)
-        {
-            if (WaitingView.IsVisible) WaitingView.HideView(); //Release progress
-            if (BackgroundTaskProgressTimer != null) //Release timer
-            {
-                BackgroundTaskProgressTimer.Dispose();
-                BackgroundTaskProgressTimer = null;
-            }
-            if (prompt)
-            {
-                view.InvokeOnMainThread(() =>
-                {
-                    var alert = new SCLAlertView();
-                    alert.ShowAnimationType = SCLAlertViewShowAnimation.FadeIn;
-                    alert.HideAnimationType = SCLAlertViewHideAnimation.FadeOut;
-                    alert.AlertIsDismissed(() => { onPrompted?.Invoke(reson); });
-                    //alert.CustomViewColor = AppTheme.SecondaryBackgoundColor;
-                    alert.ShowError(view, "Oops!", label, "Ok", 5f);
-                });
-            }
-            else
-            {
-                onPrompted?.Invoke(reson);
-            }
-        }
+        //public static void Notify(this ViewBase view, string title, string message, string okText, string cancelText)
+        //{
+        //    if (WaitingView.IsVisible) WaitingView.HideView(); //Release progress
+        //    if (BackgroundTaskProgressTimer != null) //Release timer
+        //    {
+        //        BackgroundTaskProgressTimer.Dispose();
+        //        BackgroundTaskProgressTimer = null;
+        //    }
+        //    if (prompt)
+        //    {
+        //        view.InvokeOnMainThread(() =>
+        //        {
+        //            var alert = new SCLAlertView();
+        //            alert.ShowAnimationType = SCLAlertViewShowAnimation.FadeIn;
+        //            alert.HideAnimationType = SCLAlertViewHideAnimation.FadeOut;
+        //            alert.AlertIsDismissed(() => { onPrompted?.Invoke(reson); });
+        //            //alert.CustomViewColor = AppTheme.SecondaryBackgoundColor;
+        //            alert.ShowError(view, "Oops!", label, "Ok", 5f);
+        //        });
+        //    }
+        //    else
+        //    {
+        //        onPrompted?.Invoke(reson);
+        //    }
+        //}
 
 
         public static void SetTaskProgress(this ViewBase view, bool shouldPrompt, string label)
