@@ -44,6 +44,8 @@ namespace ResidentAppCross
                 return;
             }
 
+
+
             if (_loginManager.UserInfo.Roles.Contains("Maintenance") ||
                 _loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
@@ -105,6 +107,8 @@ namespace ResidentAppCross
 
             if (_loginManager.UserInfo.Roles.Contains("Resident"))
             {
+             
+                if(PayRentCommand.CanExecute(null))
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Pay Rent",
@@ -122,6 +126,9 @@ namespace ResidentAppCross
             this.Publish(new HomeMenuUpdatedEvent(this));
 
         }
+
+
+        public string PaymentUrl => _loginManager?.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.Url;
 
         public ICommand AlertsCommand
         {
@@ -189,7 +196,10 @@ namespace ResidentAppCross
             });
         });
 
-        public ICommand PayRentCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand PayRentCommand => new MvxCommand(() =>
+        {
+            _dialogService.OpenUrl(PaymentUrl);
+        },()=>!string.IsNullOrEmpty(PaymentUrl));
 
         public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);
 

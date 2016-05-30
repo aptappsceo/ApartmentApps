@@ -17,6 +17,7 @@ namespace ResidentAppCross.Services
         void OpenNotification(string title, string subtitle, string ok, Action action = null);
         void OpenImageFullScreen(object imageObject);
         void OpenImageFullScreenFromUrl(string url);
-        
+
+        void OpenUrl(string url);
     }
 }

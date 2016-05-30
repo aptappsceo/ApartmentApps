@@ -130,7 +130,7 @@ namespace ResidentAppCross.Droid
 
             var builder = new NotificationCompat.Builder(this)
                 .SetSmallIcon(iconId)
-                .SetContentTitle(id+" "+title).SetContentText(message)
+                .SetContentTitle(title).SetContentText(message)
                 .SetAutoCancel(true)
                 .SetContentIntent(PendingIntent.GetActivity(this, id, tapIntent, PendingIntentFlags.UpdateCurrent));
 

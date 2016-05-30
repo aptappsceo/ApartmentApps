@@ -387,6 +387,11 @@ namespace ResidentAppCross.iOS.Services
             });
         }
 
+        public void OpenUrl(string url)
+        {
+            UIApplication.SharedApplication.OpenUrl(NSUrl.FromString(url));
+        }
+
         public UIImagePickerController ImagePickerController
         {
             get

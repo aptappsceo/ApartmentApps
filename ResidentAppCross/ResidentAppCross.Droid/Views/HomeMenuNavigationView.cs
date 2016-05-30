@@ -132,17 +132,20 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
 
             Registry.AddCommand("Change Profile Photo", SharedResources.Icons.User.ToDrawableId(), ViewModel.EditProfileCommand,false, ShowAsAction.Never,false);
 
+            Registry.AddCommand("Change Password", SharedResources.Icons.User.ToDrawableId(), new MvxCommand(() =>
+            {
+                ViewModel.ShowViewModel<ChangePasswordViewModel>(vm => { });
+            }));
+
             Registry.AddCommand("Sign Out", SharedResources.Icons.Exit.ToDrawableId(), ViewModel.SignOutCommand);
 
+         
+            /*
             Registry.AddCommand("Message Screen", SharedResources.Icons.Exit.ToDrawableId(), new MvxCommand(() =>
             {
                 ViewModel.ShowViewModel<MessageDetailsViewModel>(vm => { });
             }));
-
-            Registry.AddCommand("Change Password", SharedResources.Icons.Exit.ToDrawableId(), new MvxCommand(() =>
-            {
-                ViewModel.ShowViewModel<ChangePasswordViewModel>(vm => { });
-            }));
+            */
 
             OnOnRequestContent(Registry);
 

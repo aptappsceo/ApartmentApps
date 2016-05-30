@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
+using Android.Content;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Core;
 using MvvmCross.Platform.Droid.Platform;
@@ -244,6 +245,10 @@ namespace ResidentAppCross.Droid.Views.Sections
             frag.Show(CurrentTopActivity.FragmentManager, "Photo Viewer");
         }
 
-    
+        public void OpenUrl(string url)
+        {
+            Intent browserIntent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(url));
+            CurrentTopActivity.StartActivity(browserIntent);
+        }
     }
 }
