@@ -351,12 +351,12 @@ namespace ApartmentApps.Api
                 new JProperty("title",payload.Title),
                 new JProperty("body",payload.Message));
 
-            return new JObject(new JProperty("aps", new JObject(
+            return new JObject(
+                new JProperty("aps", new JObject(
                     new JProperty("alert",jmessage),
-                    new JProperty("payload",jpayload),
                     new JProperty("content-available", 1)
-                
-                )));
+                )), 
+                new JProperty("payload", jpayload));
         }
     }
 
