@@ -1,6 +1,6 @@
 ﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Xamarin_Android_API_23" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.iPhone" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/Views/ViewBase.cs">
     <Files>
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/LinkerPleaseInclude.cs" Line="1" Column="1" />
@@ -10,21 +10,8 @@
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross.Droid/Views/Screens/LoginFormView.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/ViewBase.cs" Line="237" Column="3" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="ResidentAppCross" expanded="True">
-            <Node name="Mobile App" expanded="True">
-              <Node name="ResidentAppCross.Droid" expanded="True" selected="True">
-                <Node name="References" expanded="True" />
-                <Node name="ComponentReferenceFolder" expanded="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
