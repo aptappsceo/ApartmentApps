@@ -48,10 +48,7 @@
     <CodesignEntitlements>EntitlementsRelease.plist</CodesignEntitlements>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <CodesignProvision>4e365158-ef01-417c-92d1-dd5742ad55e2</CodesignProvision>
-    <CodesignResourceRules />
-    <CodesignExtraArgs />
+    <CodesignKey>iPhone Distribution: Apartment Apps, Inc. (AE6JSDC99F)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -90,7 +87,6 @@
     </CodesignExtraArgs>
     <MtouchI18n>
     </MtouchI18n>
-    <CodesignResourceRules />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhone'">
     <CodesignKey>iPhone Distribution</CodesignKey>
