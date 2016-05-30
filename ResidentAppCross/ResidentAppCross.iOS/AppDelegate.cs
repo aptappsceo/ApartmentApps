@@ -178,8 +178,7 @@ namespace ResidentAppCross.iOS
         public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
             //Hub = new SBNotificationHub(Constants.ConnectionString, Constants.NotificationHubPath);
-           
-            var client = new App.ApartmentAppsClient();
+            var client = Mvx.Resolve<IApartmentAppsAPIService>();
             if (HandleId == null)
             {
                 HandleId = client.Register.Post(HandleId);

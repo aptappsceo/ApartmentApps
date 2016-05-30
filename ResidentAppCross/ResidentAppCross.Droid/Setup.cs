@@ -206,7 +206,8 @@ namespace ResidentAppCross.Droid
 
         public static void RegisterForHandle(string deviceToken)
         {
-            var client = new App.ApartmentAppsClient();
+            var client = Mvx.Resolve<IApartmentAppsAPIService>();
+
             if (HandleId == null)
             {
                 HandleId = client.Register.Post(HandleId);
