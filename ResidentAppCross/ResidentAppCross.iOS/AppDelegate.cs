@@ -92,6 +92,10 @@ namespace ResidentAppCross.iOS
             {
                 //Get the aps dictionary
                 NSDictionary aps = options.ObjectForKey(new NSString("aps")) as NSDictionary;
+                NSDictionary payloadD = null;
+
+                if(options.ContainsKey(new NSString("payload")))
+                payloadD = options.ObjectForKey(new NSString("payload")) as NSDictionary;
 
                 string alert = string.Empty;
 
@@ -109,27 +113,31 @@ namespace ResidentAppCross.iOS
 
                 NotificationPayload payload = null;
 
-                if (aps.ContainsKey(new NSString("payload")))
+                if (payloadD != null)
                 {
-                    payload = (aps["payload"] as NSDictionary).ToNotificationPayload();
+                    payload = payloadD.ToNotificationPayload();
                 } 
 
                 //If this came from the ReceivedRemoteNotification while the app was running,
                 // we of course need to manually process things like the sound, badge, and alert.
-                if (!fromFinishedLaunching && payload != null)
+                if (payload != null)
                 {
-
-                    Mvx.Resolve<IDialogService>().OpenNotification(payload.Title, payload.Message, "View", () =>
+                    if (!fromFinishedLaunching)
                     {
-                    });
-                    
-                    //UIAlertView avAlert = new UIAlertView("Notification", alert, null, "OK", null);
-                    //avAlert.Show();
 
-                }
-                else
-                {
-                    Mvx.Resolve<IActionRequestHandler>().Handle(payload.ToActionRequest().ToTypedActionRequest());
+                        Mvx.Resolve<IDialogService>().OpenNotification(payload.Title, payload.Message, "View", () =>
+                        {
+                            Mvx.Resolve<IActionRequestHandler>()
+                                .Handle(payload.ToActionRequest().ToTypedActionRequest());
+                        });
+
+                        //UIAlertView avAlert = new UIAlertView("Notification", alert, null, "OK", null);
+                        //avAlert.Show();
+                    }
+                    else
+                    {
+                        Mvx.Resolve<IActionRequestHandler>().Handle(payload.ToActionRequest().ToTypedActionRequest());
+                    }
                 }
             }
         }
@@ -170,8 +178,7 @@ namespace ResidentAppCross.iOS
         public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
             //Hub = new SBNotificationHub(Constants.ConnectionString, Constants.NotificationHubPath);
-           
-            var client = new App.ApartmentAppsClient();
+            var client = Mvx.Resolve<IApartmentAppsAPIService>();
             if (HandleId == null)
             {
                 HandleId = client.Register.Post(HandleId);

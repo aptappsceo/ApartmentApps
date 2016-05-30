@@ -101,7 +101,14 @@ namespace ResidentAppCross.iOS.Views
                             }
                             else
                             {
-                                cell.ImageView.Image = null;
+                                if (item.HasRead ?? false)
+                                {
+                                    cell.ImageView.Image = maintenanceReadIcon;
+                                }
+                                else
+                                {
+                                    cell.ImageView.Image = maintenanceUnReadIcon;
+                                }
                             }
 
                             cell.TextLabel.MinimumScaleFactor = 0.2f;

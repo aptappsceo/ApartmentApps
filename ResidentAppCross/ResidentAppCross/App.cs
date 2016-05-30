@@ -21,8 +21,8 @@ public static class Constants
 {
     public const string ConnectionString = "Endpoint=sb://aptappspush.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=b8UIg+ith9oTvd+/4bhvCkc81e6nSnombxgsTqTB8ak=";
     public const string NotificationHubPath = "apartmentapps";
-    public const int IOS_BUILD_NUMBER = 2;
-    public const int ANDROID_BUILD_NUMBER = 3;
+    public const int IOS_BUILD_NUMBER = 4;
+    public const int ANDROID_BUILD_NUMBER = 4;
 }
 public class App : MvxApplication
 {
@@ -32,8 +32,9 @@ public class App : MvxApplication
         Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
         //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
-        Mvx.RegisterSingleton<IApartmentAppsAPIService>(new ApartmentAppsClient(new Uri("http://apartmentappsapiservicedev.azurewebsites.net/")));
-        Mvx.RegisterSingleton<ILoginManager>(new LoginService(new ApartmentAppsClient()));
+        var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://apartmentappsapiservice.azurewebsites.net"));
+        Mvx.RegisterSingleton<IApartmentAppsAPIService>(apartmentAppsApiService);
+        Mvx.RegisterSingleton<ILoginManager>(new LoginService(apartmentAppsApiService));
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
         Mvx.ConstructAndRegisterSingleton<HomeMenuViewModel, HomeMenuViewModel>();
         Mvx.ConstructAndRegisterSingleton<IActionRequestHandler, ActionRequestHandler>();
@@ -59,13 +60,6 @@ public class App : MvxApplication
     }
     public class ApartmentAppsClient : ApartmentAppsAPIService 
     {
-
-        const string ProductionServiceApiURL = "http://apartmentappsapiservice.azurewebsites.net";
-        const string DevelopmentServiceApiURL = "http://apartmentappsapiservicedev.azurewebsites.net/";
-
-        public ApartmentAppsClient() : base(new Uri(DevelopmentServiceApiURL), new AparmentAppsDelegating())
-        {
-        }
 
         public ApartmentAppsClient(Uri baseUri) : base(baseUri, new AparmentAppsDelegating())
         {
