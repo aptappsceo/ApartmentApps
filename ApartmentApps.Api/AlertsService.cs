@@ -73,6 +73,7 @@ namespace ApartmentApps.Api
         Task<bool> SendToUser(string username, string message);
         Task<bool> SendToUser(string username, NotificationPayload payload);
         Task<bool> SendToRole(int propertyId, string role, string message);
+        Task<bool> SendToRole(int propertyId, string role, NotificationPayload payload);
         Task<bool> Send( string message, string pns, string expression);
         Task<bool> Send( NotificationPayload payload, string pns, string expression);
     }
@@ -149,8 +150,7 @@ namespace ApartmentApps.Api
                     break;
                 case "apns":
                     // iOS
-                    var alert = "{\"aps\":{\"alert\":\"" + payload.Message + "\"}}";
-                    outcome = await Notifications.Instance.Hub.SendAppleNativeNotificationAsync(alert, expression);
+                    outcome = await Notifications.Instance.Hub.SendAppleNativeNotificationAsync(payload.ToANPSJson().ToString(), expression);
                     break;
                 case "gcm":
                     outcome = await Notifications.Instance.Hub.SendGcmNativeNotificationAsync(payload.ToGCMJson().ToString(), expression);
@@ -175,6 +175,15 @@ namespace ApartmentApps.Api
             //
             await Send(message, "gcm", $"propertyid:{propertyId} && role:{role}");
             return await Send(message, pns, $"propertyid:{propertyId} && role:{role}");
+        }
+
+        public async Task<bool> SendToRole(int propertyId, string role, NotificationPayload payload)
+        {
+            var pns = "apns";
+         
+            //
+            await Send(payload, "gcm", $"propertyid:{propertyId} && role:{role}");
+            return await Send(payload, pns, $"propertyid:{propertyId} && role:{role}");
         }
     }
 
@@ -254,7 +263,16 @@ namespace ApartmentApps.Api
 
             Context.SaveChanges();
        
-            _pushHandler.SendToRole(propertyId, role, title);
+            //_pushHandler.SendToRole(propertyId, role, title);
+
+            _pushHandler.SendToRole(propertyId, role, new NotificationPayload()
+            {
+                Action = "View",
+                DataId = relatedId,
+                DataType = type,
+                Message = message,
+                Title = title
+            });
 
         }
 
@@ -278,7 +296,7 @@ namespace ApartmentApps.Api
             foreach (var id in ids)
             {
                 var user = Context.Users.Find(id);
-                SendAlert(user, title, message, type, 0);
+                SendAlert(user, title, message, type, relatedId);
             }
 
         }
@@ -320,15 +338,25 @@ namespace ApartmentApps.Api
         }
     }
 
-
     public static class NotificationPayloadExtensions
     {
         public static JObject ToGCMJson(this NotificationPayload payload)
         {
-            return new JObject(
-                            new JProperty("data",
-                                new JObject(
-                                    new JProperty("payload", payload))));
+            return new JObject(new JProperty("data", JObject.FromObject(payload)));
+        }
+        public static JObject ToANPSJson(this NotificationPayload payload)
+        {
+            var jpayload = JObject.FromObject(payload);
+            var jmessage = new JObject(
+                new JProperty("title",payload.Title),
+                new JProperty("body",payload.Message));
+
+            return new JObject(new JProperty("aps", new JObject(
+                    new JProperty("alert",jmessage),
+                    new JProperty("payload",jpayload),
+                    new JProperty("content-available", 1)
+                
+                )));
         }
     }
 

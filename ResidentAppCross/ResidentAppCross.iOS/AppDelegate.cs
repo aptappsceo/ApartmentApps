@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using WindowsAzure.Messaging;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
@@ -9,6 +10,7 @@ using MvvmCross.iOS.Views.Presenters;
 using MvvmCross.Platform;
 using ObjCRuntime;
 using ResidentAppCross.ServiceClient;
+using ResidentAppCross.Services;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -75,6 +77,7 @@ namespace ResidentAppCross.iOS
 
         public override bool WillFinishLaunching(UIApplication application, NSDictionary launchOptions)
         {
+            ProcessNotification(launchOptions, true);
             return true;
         }
 
@@ -99,19 +102,34 @@ namespace ResidentAppCross.iOS
                 // your "alert" object from the aps dictionary will be another NSDictionary.
                 // Basically the JSON gets dumped right into a NSDictionary,
                 // so keep that in mind.
-                if (aps.ContainsKey(new NSString("alert")))
-                    alert = (aps[new NSString("alert")] as NSString).ToString();
+             //   if (aps.ContainsKey(new NSString("alert")))
+             //       alert = (aps[new NSString("alert")] as NSString).ToString();
+
+
+
+                NotificationPayload payload = null;
+
+                if (aps.ContainsKey(new NSString("payload")))
+                {
+                    payload = (aps["payload"] as NSDictionary).ToNotificationPayload();
+                } 
 
                 //If this came from the ReceivedRemoteNotification while the app was running,
                 // we of course need to manually process things like the sound, badge, and alert.
-                if (!fromFinishedLaunching)
+                if (!fromFinishedLaunching && payload != null)
                 {
-                    //Manually show an alert
-                    if (!string.IsNullOrEmpty(alert))
+
+                    Mvx.Resolve<IDialogService>().OpenNotification(payload.Title, payload.Message, "View", () =>
                     {
-                        UIAlertView avAlert = new UIAlertView("Notification", alert, null, "OK", null);
-                        avAlert.Show();
-                    }
+                    });
+                    
+                    //UIAlertView avAlert = new UIAlertView("Notification", alert, null, "OK", null);
+                    //avAlert.Show();
+
+                }
+                else
+                {
+                    Mvx.Resolve<IActionRequestHandler>().Handle(payload.ToActionRequest().ToTypedActionRequest());
                 }
             }
         }
@@ -214,6 +232,72 @@ namespace ResidentAppCross.iOS
         public void OpenInStore(VersionInfo version)
         {
             UIApplication.SharedApplication.OpenUrl(NSUrl.FromString(version.IPhoneStoreUrl));
+        }
+    }
+
+
+    public static class ActionRequestExtentions
+    {
+        public static NotificationPayload ToNotificationPayload(this NSDictionary bundle)
+        {
+            var payload = new NotificationPayload();
+            var actionKey = new NSString("Action");
+            var dataTypeKey = new NSString("DataType");
+            var dataIdKey = new NSString("DataId");
+            var dataMessageKey = new NSString("Message");
+            var dataTitleKey = new NSString("Title");
+            var dataSemanticKey = new NSString("Semantic");
+            payload.Action = bundle.Keys.Contains(actionKey) ? bundle[actionKey].ToString() : "None";
+            payload.Title = bundle.Keys.Contains(dataTitleKey) ? bundle[dataTitleKey].ToString() : "" ;
+            payload.Message = bundle.Keys.Contains(dataMessageKey) ? bundle[dataMessageKey].ToString() : "";
+            payload.DataType = bundle.Keys.Contains(dataTypeKey) ? bundle[dataTypeKey].ToString() : "";
+            payload.Semantic = bundle.Keys.Contains(dataSemanticKey) ? bundle[dataSemanticKey].ToString() : "Default";
+            var idString = bundle.Keys.Contains(dataIdKey) ? bundle[dataIdKey].ToString() : "-1";
+            payload.DataId = int.Parse(idString);
+
+            return payload;
+        }
+
+        public static ActionRequest ToActionRequest(this NSDictionary bundle)
+        {
+            var actionKey = new NSString("Action");
+            var dataTypeKey = new NSString("DataType");
+            var dataIdKey = new NSString("DataId");
+            var idString = bundle.Keys.Contains(dataIdKey) ? bundle[dataIdKey].ToString() : "-1";
+
+            var action = new ActionRequest
+            {
+                Action = bundle.Keys.Contains(actionKey) ? bundle[actionKey].ToString() : "None",
+                DataType = bundle.Keys.Contains(dataTypeKey) ? bundle[actionKey].ToString() : "None",
+                DataId = int.Parse(idString)
+            };
+            return action;
+        }
+
+
+        public static ActionRequest ToActionRequest(this NotificationPayload payload)
+        {
+            return new ActionRequest()
+            {
+                Action = payload.Action,
+                DataId = payload.DataId,
+                DataType = payload.DataType
+            };
+        }
+
+        public static TypedActionRequest ToTypedActionRequest(this ActionRequest request)
+        {
+            var result = new TypedActionRequest();
+            ActionType act;
+            if (!Enum.TryParse(request.Action, out act))
+            {
+                throw new Exception("ActionType Type Not Found: " + request.Action);
+            }
+            result.ActionType = act;
+            result.DataId = request.DataId;
+            result.DataType = request.DataType;
+
+            return result;
         }
     }
 }

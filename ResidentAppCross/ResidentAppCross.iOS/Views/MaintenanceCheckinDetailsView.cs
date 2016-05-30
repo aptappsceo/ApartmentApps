@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using ResidentAppCross.iOS.Views.Attributes;
@@ -27,6 +28,8 @@ namespace ResidentAppCross.iOS.Views
                 if (_subjectSection == null)
                 {
                     _subjectSection = Formals.Create<TextViewSection>();
+                    _subjectSection.HeightConstraint.Constant = 100;
+                    _subjectSection.TextView.Layer.BorderColor = new CGColor(1f,1f,1f);
                     _subjectSection.HeaderLabel.Text = "Subject";
 
                 }
@@ -42,6 +45,8 @@ namespace ResidentAppCross.iOS.Views
                 if (_dateSection == null)
                 {
                     _dateSection = Formals.Create<TextViewSection>();
+                    _dateSection.HeightConstraint.Constant = 100;
+                    _dateSection.TextView.Layer.BorderColor = new CGColor(1f, 1f, 1f);
                     _dateSection.HeaderLabel.Text = "Date";
                 }
                 return _dateSection;
@@ -57,6 +62,8 @@ namespace ResidentAppCross.iOS.Views
                 {
                     _messageSection = Formals.Create<TextViewSection>();
                     _messageSection.HeaderLabel.Text = "Message";
+                    _messageSection.HeightConstraint.Constant = 300;
+
 
                 }
                 return _messageSection;

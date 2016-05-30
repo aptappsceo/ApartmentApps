@@ -32,7 +32,7 @@ public class App : MvxApplication
         Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
         //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
-        Mvx.RegisterSingleton<IApartmentAppsAPIService>(new ApartmentAppsClient());
+        Mvx.RegisterSingleton<IApartmentAppsAPIService>(new ApartmentAppsClient(new Uri("http://apartmentappsapiservicedev.azurewebsites.net/")));
         Mvx.RegisterSingleton<ILoginManager>(new LoginService(new ApartmentAppsClient()));
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
         Mvx.ConstructAndRegisterSingleton<HomeMenuViewModel, HomeMenuViewModel>();
@@ -63,7 +63,7 @@ public class App : MvxApplication
         const string ProductionServiceApiURL = "http://apartmentappsapiservice.azurewebsites.net";
         const string DevelopmentServiceApiURL = "http://apartmentappsapiservicedev.azurewebsites.net/";
 
-        public ApartmentAppsClient() : base(new Uri(ProductionServiceApiURL), new AparmentAppsDelegating())
+        public ApartmentAppsClient() : base(new Uri(DevelopmentServiceApiURL), new AparmentAppsDelegating())
         {
         }
 
