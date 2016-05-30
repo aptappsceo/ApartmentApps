@@ -202,8 +202,11 @@ namespace ResidentAppCross.Droid.Views.Sections
         }
 
 
-        public void OpenNotification(string title, string subtitle, string ok)
+        public void OpenNotification(string title, string subtitle, string ok, Action action = null)
         {
+
+            if(action != null) throw new Exception("Handler is not currently supported on droid");
+
             var frag = new NotificationDialog()
             {
                 
