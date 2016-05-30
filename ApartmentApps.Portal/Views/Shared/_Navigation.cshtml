@@ -118,21 +118,9 @@
                             <span class="block m-t-xs">
                                 <strong class="font-bold">@property.Name</strong>
                             </span>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <span class="text-muted text-xs block">Change Property <b class="caret"></b></span>
-                            }
                         </span>
                     </a>
-                    @if ((User.IsInRole("Admin") || User.IsInRole("RegionalAdmin")) && properties != null)
-                    {
-                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            @foreach (var p in properties)
-                            {
-                                <li><a href="@Url.Action("ChangeProperty", "Account", new {id = p.Id})">@p.Name</a></li>
-                            }
-                        </ul>
-                    }
+            
                 </div>
                 <div class="logo-element">
                     AA+
