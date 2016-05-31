@@ -123,9 +123,21 @@ namespace ResidentAppCross
                 });
 
             }
+
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "Change Password",
+                Icon = SharedResources.Icons.Settings,
+                Command = ChangePasswordCommand
+            });
             this.Publish(new HomeMenuUpdatedEvent(this));
 
         }
+
+        public ICommand ChangePasswordCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<ChangePasswordViewModel>();
+        });
 
 
         public string PaymentUrl => _loginManager?.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.Url;

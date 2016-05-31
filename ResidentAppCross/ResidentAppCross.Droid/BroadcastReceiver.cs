@@ -77,6 +77,7 @@ namespace ResidentAppCross.Droid
 
         protected override void OnMessage(Context context, Intent intent)
         {
+            if (!DroidApplication.PushNotificationsEnabled) return;
             Log.Verbose(BroadcastReceiver.TAG, "Message Recieved");
             NotifyWithPayload(intent?.Extras?.ToNotificationPayload());
         }
