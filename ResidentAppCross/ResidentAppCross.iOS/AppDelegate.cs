@@ -77,7 +77,10 @@ namespace ResidentAppCross.iOS
 
         public override bool WillFinishLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            LastOptions = launchOptions;
+
+            var dictionary = launchOptions[UIApplication.LaunchOptionsRemoteNotificationKey] as NSDictionary;
+            if(dictionary != null)
+            LastOptions = dictionary;
             return true;
         }
 
@@ -91,6 +94,11 @@ namespace ResidentAppCross.iOS
                 ProcessNotification(LastOptions, true);
                 LastOptions = null;
             }
+        }
+
+        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
+        {
+            ProcessNotification(userInfo, false);
         }
 
         public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
