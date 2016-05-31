@@ -110,6 +110,7 @@ namespace ResidentAppCross.Droid
     {
         private static ISharedPreferencesEditor _preferencesEditor;
         private static ISharedPreferences _preferences;
+        private static bool _pushNotificationsEnabled;
 
         protected DroidApplication(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
         {
@@ -200,6 +201,16 @@ namespace ResidentAppCross.Droid
             set
             {
                 PreferencesEditor.PutString("AA_HANDLE", value);
+                PreferencesEditor.Commit();
+            }
+        }
+
+        public static bool PushNotificationsEnabled
+        {
+            get { return Preferences.GetBoolean("AA_PUSHNOTIFICATIONS", true); }
+            set
+            {
+                PreferencesEditor.PutBoolean("AA_PUSHNOTIFICATIONS", value);
                 PreferencesEditor.Commit();
             }
         }
