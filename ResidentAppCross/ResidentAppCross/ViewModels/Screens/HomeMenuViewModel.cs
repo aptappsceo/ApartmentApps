@@ -128,13 +128,14 @@ namespace ResidentAppCross
                     Command = PayRentCommand
                 });
 
+                /*
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Community Partners",
                     Icon = SharedResources.Icons.Partners,
                     Command = CommunityPartnersCommand
                 });
-
+                */
             }
 
             MenuItems.Add(new HomeMenuItemViewModel()

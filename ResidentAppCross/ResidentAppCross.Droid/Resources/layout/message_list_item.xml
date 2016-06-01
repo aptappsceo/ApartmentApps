@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="66dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/IconView"
+        android:layout_width="24dp"
+        app:srcCompat="@drawable/settings"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#aaaaaa"
+        android:layout_marginStart="4dp"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/TitleLabel"
+        android:layout_toEndOf="@+id/IconView"
+        android:layout_marginTop="11dp"
+        android:layout_marginStart="4dp"
+        android:text="New Maintenance Request Created"
+        android:layout_marginEnd="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/secondary_text_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/SubtitleLabel"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/DateLabel"
+        android:text="This is some long data that gotta be truncated and bla bla bla"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_toEndOf="@+id/IconView"
+        android:layout_below="@+id/TitleLabel"
+        android:textColor="@color/secondary_text_body"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/DateLabel"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_alignBaseline="@+id/SubtitleLabel"
+        android:textColor="@color/secondary_text_body"
+
+        android:text="12.14.2016 13:00 AM"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+</RelativeLayout>
