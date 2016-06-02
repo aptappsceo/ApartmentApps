@@ -43,7 +43,7 @@ namespace ResidentAppCross.Services
         public void ViewIncident(TypedActionRequest request)
         {
             if (!request.DataId.HasValue) return;
-            if (_loginManager.IsLoggedIn)
+            if (UserLoggedIn)
             {
                 Hack.ShowViewModel<IncidentReportStatusViewModel>(vm =>
                 {
@@ -63,11 +63,14 @@ namespace ResidentAppCross.Services
             }
         }
 
+
+        private bool UserLoggedIn => _loginManager?.UserInfo != null;
+
         [ForAction(ActionType.View, "Maintenance")]
         public void ViewMaintenance(TypedActionRequest request)
         {
             if (!request.DataId.HasValue) return;
-            if (_loginManager.IsLoggedIn)
+            if (UserLoggedIn)
             {
                 Hack.ShowViewModel<MaintenanceRequestStatusViewModel>(vm =>
                 {
@@ -91,7 +94,7 @@ namespace ResidentAppCross.Services
         public void ViewMessage(TypedActionRequest request)
         {
             if (!request.DataId.HasValue) return;
-            if (_loginManager.IsLoggedIn)
+            if (UserLoggedIn)
             {
                 Hack.ShowViewModel<MessageDetailsViewModel>(vm =>
                 {

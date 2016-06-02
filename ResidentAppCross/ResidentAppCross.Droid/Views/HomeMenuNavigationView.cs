@@ -132,7 +132,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             }
 
             Registry.AddCommand("Change Profile Photo", SharedResources.Icons.Settings.ToDrawableId(), ViewModel.EditProfileCommand,false, ShowAsAction.Never,false);
-            Registry.AddSwitch("Test Switch", SharedResources.Icons.Settings.ToDrawableId(), () => DroidApplication.PushNotificationsEnabled, x => DroidApplication.PushNotificationsEnabled = x);
+            Registry.AddSwitch("Push Notifications", SharedResources.Icons.Settings.ToDrawableId(), () => DroidApplication.PushNotificationsEnabled, x => DroidApplication.PushNotificationsEnabled = x);
 
 
             Registry.AddCommand("Sign Out", SharedResources.Icons.Exit.ToDrawableId(), ViewModel.SignOutCommand);
