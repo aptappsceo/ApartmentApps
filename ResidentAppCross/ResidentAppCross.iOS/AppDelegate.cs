@@ -77,10 +77,11 @@ namespace ResidentAppCross.iOS
 
         public override bool WillFinishLaunching(UIApplication application, NSDictionary launchOptions)
         {
-
-            var dictionary = launchOptions[UIApplication.LaunchOptionsRemoteNotificationKey] as NSDictionary;
-            if(dictionary != null)
-            LastOptions = dictionary;
+			if (launchOptions != null && launchOptions.ContainsKey(UIApplication.LaunchOptionsRemoteNotificationKey)) {
+	            var dictionary = launchOptions[UIApplication.LaunchOptionsRemoteNotificationKey] as NSDictionary;
+	            if(dictionary != null)
+	            	LastOptions = dictionary;
+			}
             return true;
         }
 

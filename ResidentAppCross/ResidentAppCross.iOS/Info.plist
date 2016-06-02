@@ -57,7 +57,7 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>CFBundleDisplayName</key>
-	<string>Apartment Apps v2</string>
+	<string>Apartment Apps</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.apartmentapps.mobile.v2</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -111,6 +111,8 @@
 	<key>CFBundleShortVersionString</key>
 	<string>2.1</string>
 	<key>CFBundleVersion</key>
-	<string>28</string>
+	<string>29</string>
+	<key>CFBundleName</key>
+	<string>Apartment Apps</string>
 </dict>
 </plist>
