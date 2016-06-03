@@ -110,9 +110,9 @@
 	<string>We would like to use your location.</string>
 	<key>CFBundleShortVersionString</key>
 	<string>2.1</string>
-	<key>CFBundleVersion</key>
-	<string>29</string>
 	<key>CFBundleName</key>
 	<string>Apartment Apps</string>
+	<key>CFBundleVersion</key>
+	<string>30</string>
 </dict>
 </plist>
