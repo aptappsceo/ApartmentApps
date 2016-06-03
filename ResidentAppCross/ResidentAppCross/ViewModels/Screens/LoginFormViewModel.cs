@@ -42,6 +42,8 @@ namespace ResidentAppCross
             set { SetProperty(ref _isOperating, value); }
         }
 
+        public bool IsAutologin = false;
+
         public LoginFormViewModel(ILoginManager loginManager, IVersionChecker versionChecker, IApartmentAppsAPIService data)
         {
             LoginManager = loginManager;
@@ -54,6 +56,7 @@ namespace ResidentAppCross
             base.Start();
             if (LoginManager.IsLoggedIn)
             {
+                IsAutologin = true;
                 LoginCommand.Execute(null);
             }
         }
@@ -64,7 +67,8 @@ namespace ResidentAppCross
             {
                 return new MvxCommand(async () =>
                 {
-                    LoginManager.Logout();
+
+                    if(!IsAutologin) LoginManager.Logout();
                     if (VersionChecker != null)
                     {
                         var version = await Data.Version.GetAsync();
