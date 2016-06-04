@@ -12,6 +12,7 @@ using ResidentAppCross.Events;
 using ResidentAppCross.ServiceClient;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
+using ResidentAppCross.Services;
 
 namespace ResidentAppCross
 {
@@ -44,15 +45,18 @@ namespace ResidentAppCross
 
         public bool IsAutologin = false;
 
-        public LoginFormViewModel(ILoginManager loginManager, IVersionChecker versionChecker, IApartmentAppsAPIService data)
+		IDialogService dialogService;
+
+		public LoginFormViewModel(IDialogService dialogService, ILoginManager loginManager, IVersionChecker versionChecker, IApartmentAppsAPIService data)
         {
+			this.dialogService = dialogService;
             LoginManager = loginManager;
             VersionChecker = versionChecker;
             Data = data;
         }
 
         public override void Start()
-        {
+       { 
             base.Start();
             if (LoginManager.IsLoggedIn)
             {
@@ -123,7 +127,8 @@ namespace ResidentAppCross
 
         public ICommand RemindPasswordCommand => new MvxCommand(() =>
         {
-            ShowViewModel<RecoverPasswordViewModel>();
+            //ShowViewModel<RecoverPasswordViewModel>();
+				this.dialogService.OpenUrl("http://portal.apartmentapps.com/Account/ForgotPassword");
         });
 
         public ICommand SignUpCommand => new MvxCommand(() =>
