@@ -33,6 +33,7 @@ public class App : MvxApplication
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
         //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
         var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://apartmentappsapiservice.azurewebsites.net"));
+        //var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://82.151.208.56.nip.io:54685"));
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(apartmentAppsApiService);
         Mvx.RegisterSingleton<ILoginManager>(new LoginService(apartmentAppsApiService));
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
