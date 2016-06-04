@@ -41,7 +41,7 @@
 				<key>NSIncludesSubdomains</key>
 				<true/>
 			</dict>
-			<key>82.151.208.56.xip.io:54683</key>
+			<key>82.151.208.56.xip.io:54685</key>
 			<dict>
 				<key>NSExceptionMinimumTLSVersion</key>
 				<string>TLSv1.0</string>
