@@ -21,41 +21,26 @@ public static class Constants
 {
     public const string ConnectionString = "Endpoint=sb://aptappspush.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=b8UIg+ith9oTvd+/4bhvCkc81e6nSnombxgsTqTB8ak=";
     public const string NotificationHubPath = "apartmentapps";
-    public const int IOS_BUILD_NUMBER = 2;
-    public const int ANDROID_BUILD_NUMBER = 3;
+    public const int IOS_BUILD_NUMBER = 4;
+    public const int ANDROID_BUILD_NUMBER = 5;
 }
 public class App : MvxApplication
 {
     public App()
     {
-        //Mvx.RegisterType<ICalculation, Calculation>();
         Mvx.ConstructAndRegisterSingleton<IImageService, ImageService>();
         Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
-
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
-
-        //Mvx.RegisterSingleton<ILocationService,LocationService>();
-        //var client = new ApartmentAppsClient();
-#if DEBUG
-        var client = new ApartmentAppsClient(new Uri("http://apartmentappsapiservicedev.azurewebsites.net/"));
-#else
-        var client = new ApartmentAppsClient(new Uri("https://api.apartmentapps.com"));
-#endif
-        Mvx.RegisterSingleton<IApartmentAppsAPIService>(client);
-        var loginService = new LoginService(client);
-        Mvx.RegisterSingleton<ILoginManager>(loginService);
-        //if (loginService.IsLoggedIn)
-        //{
-        //    Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<HomeMenuViewModel>());
-        //}
-        //else
-        //{
+        //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
+        var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://apartmentappsapiservice.azurewebsites.net"));
+        //var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://82.151.208.56.nip.io:54685"));
+        Mvx.RegisterSingleton<IApartmentAppsAPIService>(apartmentAppsApiService);
+        Mvx.RegisterSingleton<ILoginManager>(new LoginService(apartmentAppsApiService));
         Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
         Mvx.ConstructAndRegisterSingleton<HomeMenuViewModel, HomeMenuViewModel>();
-
-        //}
-
+        Mvx.ConstructAndRegisterSingleton<IActionRequestHandler, ActionRequestHandler>();
     }
+
     public class CustomAppStart
        : MvxNavigatingObject
        , IMvxAppStart
@@ -76,9 +61,6 @@ public class App : MvxApplication
     }
     public class ApartmentAppsClient : ApartmentAppsAPIService 
     {
-        public ApartmentAppsClient() : base(new Uri("http://apartmentappsapiservice.azurewebsites.net"), new AparmentAppsDelegating())
-        {
-        }
 
         public ApartmentAppsClient(Uri baseUri) : base(baseUri, new AparmentAppsDelegating())
         {

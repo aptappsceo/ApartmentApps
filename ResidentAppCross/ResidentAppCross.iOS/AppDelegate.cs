@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using WindowsAzure.Messaging;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
@@ -9,6 +11,7 @@ using MvvmCross.iOS.Views.Presenters;
 using MvvmCross.Platform;
 using ObjCRuntime;
 using ResidentAppCross.ServiceClient;
+using ResidentAppCross.Services;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -64,21 +67,78 @@ namespace ResidentAppCross.iOS
             var setup = new Setup(this, presenter);
             setup.Initialize();
             Mvx.RegisterSingleton<IVersionChecker>(this);
+
+
+            var dictionary = launchOptions?[UIApplication.LaunchOptionsRemoteNotificationKey] as NSDictionary;
+            if (dictionary != null) LastOptions = dictionary;
+
+            if (LastOptions != null)
+            {
+                ProcessNotification(LastOptions, true);
+                LastOptions = null;
+            }
+
             var startup = Mvx.Resolve<IMvxAppStart>();
             startup.Start();
 
             Window.MakeKeyAndVisible();
 
+
+
+            
+
+            
+
             return true;
 
         }
 
-      
+        
+        
+
+        private NSDictionary MockNotificationLaunchDictionary()
+        {
+            Debug.WriteLine("Start");
+            var res = new NSMutableDictionary();
+            var apsDictionry = new NSMutableDictionary();
+            var alertDictionry = new NSMutableDictionary();
+            var payloadDictionry = new NSMutableDictionary();
+
+
+            res["aps"] = apsDictionry;
+            apsDictionry["alert"] = alertDictionry;
+            apsDictionry["content-available"] = new NSNumber(1);
+
+            alertDictionry["title"] = new NSString("Hey Ho");
+            alertDictionry["body"] = new NSString("This is the body");
+
+            res["payload"] = payloadDictionry;
+
+            payloadDictionry["Title"] = new NSString("Hello");
+            payloadDictionry["Message"] = new NSString("Some Message Here");
+            payloadDictionry["Semantic"] = new NSString("Default");
+            payloadDictionry["Action"] = new NSString("View");
+            payloadDictionry["DataId"] = new NSString("1");
+            payloadDictionry["DataType"] = new NSString("Maintenance");
+            Debug.WriteLine("End");
+
+            return res;
+
+        }
+
+        public NSDictionary LastOptions { get; set; }
+
+
+        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
+        {
+            ProcessNotification(userInfo, false);
+        }
 
         public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
         {
             ProcessNotification(userInfo, false);
         }
+
         void ProcessNotification(NSDictionary options, bool fromFinishedLaunching)
         {
             // Check to see if the dictionary has the aps key.  This is the notification payload you would have sent
@@ -86,6 +146,10 @@ namespace ResidentAppCross.iOS
             {
                 //Get the aps dictionary
                 NSDictionary aps = options.ObjectForKey(new NSString("aps")) as NSDictionary;
+                NSDictionary payloadD = null;
+
+                if(options.ContainsKey(new NSString("payload")))
+                payloadD = options.ObjectForKey(new NSString("payload")) as NSDictionary;
 
                 string alert = string.Empty;
 
@@ -96,18 +160,37 @@ namespace ResidentAppCross.iOS
                 // your "alert" object from the aps dictionary will be another NSDictionary.
                 // Basically the JSON gets dumped right into a NSDictionary,
                 // so keep that in mind.
-                if (aps.ContainsKey(new NSString("alert")))
-                    alert = (aps[new NSString("alert")] as NSString).ToString();
+             //   if (aps.ContainsKey(new NSString("alert")))
+             //       alert = (aps[new NSString("alert")] as NSString).ToString();
+
+
+
+                NotificationPayload payload = null;
+
+                if (payloadD != null)
+                {
+                    payload = payloadD.ToNotificationPayload();
+                } 
 
                 //If this came from the ReceivedRemoteNotification while the app was running,
                 // we of course need to manually process things like the sound, badge, and alert.
-                if (!fromFinishedLaunching)
+                if (payload != null)
                 {
-                    //Manually show an alert
-                    if (!string.IsNullOrEmpty(alert))
+                    if (!fromFinishedLaunching)
                     {
-                        UIAlertView avAlert = new UIAlertView("Notification", alert, null, "OK", null);
-                        avAlert.Show();
+
+                        Mvx.Resolve<IDialogService>().OpenNotification(payload.Title, payload.Message, "View", () =>
+                        {
+                            Mvx.Resolve<IActionRequestHandler>()
+                                .Handle(payload.ToActionRequest().ToTypedActionRequest());
+                        });
+
+                        //UIAlertView avAlert = new UIAlertView("Notification", alert, null, "OK", null);
+                        //avAlert.Show();
+                    }
+                    else
+                    {
+                        Mvx.Resolve<IActionRequestHandler>().Handle(payload.ToActionRequest().ToTypedActionRequest());
                     }
                 }
             }
@@ -149,8 +232,7 @@ namespace ResidentAppCross.iOS
         public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
             //Hub = new SBNotificationHub(Constants.ConnectionString, Constants.NotificationHubPath);
-           
-            var client = new App.ApartmentAppsClient();
+            var client = Mvx.Resolve<IApartmentAppsAPIService>();
             if (HandleId == null)
             {
                 HandleId = client.Register.Post(HandleId);
@@ -211,6 +293,72 @@ namespace ResidentAppCross.iOS
         public void OpenInStore(VersionInfo version)
         {
             UIApplication.SharedApplication.OpenUrl(NSUrl.FromString(version.IPhoneStoreUrl));
+        }
+    }
+
+
+    public static class ActionRequestExtentions
+    {
+        public static NotificationPayload ToNotificationPayload(this NSDictionary bundle)
+        {
+            var payload = new NotificationPayload();
+            var actionKey = new NSString("Action");
+            var dataTypeKey = new NSString("DataType");
+            var dataIdKey = new NSString("DataId");
+            var dataMessageKey = new NSString("Message");
+            var dataTitleKey = new NSString("Title");
+            var dataSemanticKey = new NSString("Semantic");
+            payload.Action = bundle.Keys.Contains(actionKey) ? bundle[actionKey].ToString() : "None";
+            payload.Title = bundle.Keys.Contains(dataTitleKey) ? bundle[dataTitleKey].ToString() : "" ;
+            payload.Message = bundle.Keys.Contains(dataMessageKey) ? bundle[dataMessageKey].ToString() : "";
+            payload.DataType = bundle.Keys.Contains(dataTypeKey) ? bundle[dataTypeKey].ToString() : "";
+            payload.Semantic = bundle.Keys.Contains(dataSemanticKey) ? bundle[dataSemanticKey].ToString() : "Default";
+            var idString = bundle.Keys.Contains(dataIdKey) ? bundle[dataIdKey].ToString() : "-1";
+            payload.DataId = int.Parse(idString);
+
+            return payload;
+        }
+
+        public static ActionRequest ToActionRequest(this NSDictionary bundle)
+        {
+            var actionKey = new NSString("Action");
+            var dataTypeKey = new NSString("DataType");
+            var dataIdKey = new NSString("DataId");
+            var idString = bundle.Keys.Contains(dataIdKey) ? bundle[dataIdKey].ToString() : "-1";
+
+            var action = new ActionRequest
+            {
+                Action = bundle.Keys.Contains(actionKey) ? bundle[actionKey].ToString() : "None",
+                DataType = bundle.Keys.Contains(dataTypeKey) ? bundle[actionKey].ToString() : "None",
+                DataId = int.Parse(idString)
+            };
+            return action;
+        }
+
+
+        public static ActionRequest ToActionRequest(this NotificationPayload payload)
+        {
+            return new ActionRequest()
+            {
+                Action = payload.Action,
+                DataId = payload.DataId,
+                DataType = payload.DataType
+            };
+        }
+
+        public static TypedActionRequest ToTypedActionRequest(this ActionRequest request)
+        {
+            var result = new TypedActionRequest();
+            ActionType act;
+            if (!Enum.TryParse(request.Action, out act))
+            {
+                throw new Exception("ActionType Type Not Found: " + request.Action);
+            }
+            result.ActionType = act;
+            result.DataId = request.DataId;
+            result.DataType = request.DataType;
+
+            return result;
         }
     }
 }

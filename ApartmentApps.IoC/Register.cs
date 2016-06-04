@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.API.Service.Controllers;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
 using Ninject.Web.Common;
@@ -32,8 +36,49 @@ namespace ApartmentApps.IoC
                 //.ToMethod(_ => _.<StandardCrudService<TModel, TViewModel>>())
                 //.InRequestScope();
         }
+
+        public static void RegisterModule<TModule, TModuleConfig>( this IKernel kernel ) where TModule : Module<TModuleConfig> where TModuleConfig : ModuleConfig, new()
+        {
+            kernel.Bind<TModule, IModule, Module<TModuleConfig>>().To<TModule>().InRequestScope();
+            //kernel.Bind<IRepository<TModuleConfig>>().To<Module<TModuleConfig>.ConfigRepository>().InRequestScope();
+        }
         public static void RegisterServices(IKernel kernel)
         {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
+                var entityTypes = assembly
+                  .GetTypes()
+                  .Where(t =>
+                    t.GetCustomAttributes(typeof(PersistantAttribute), inherit: true)
+                    .Any());
+
+                foreach (var entityType in entityTypes)
+                {
+                    if (typeof (ModuleConfig).IsAssignableFrom(entityType))
+                    {
+                        kernel.Bind(typeof(IRepository<>).MakeGenericType(entityType))
+                           .To(typeof(PropertyRepository<>).MakeGenericType(entityType));
+                    }
+                    else if (typeof (PropertyEntity).IsAssignableFrom(entityType))
+                    {
+                        kernel.Bind(typeof (IRepository<>).MakeGenericType(entityType))
+                            .To(typeof (PropertyRepository<>).MakeGenericType(entityType));
+                    }
+                    else
+                    {
+                        kernel.Bind(typeof(IRepository<>).MakeGenericType(entityType))
+                              .To(typeof(BaseRepository<>).MakeGenericType(entityType));
+
+                    }
+                }
+                    
+            }
+            kernel.RegisterModule<AdminModule, PortalConfig>();
+            kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
+            kernel.RegisterModule<MaintenanceModule, MaintenanceConfig>();
+            kernel.RegisterModule<CourtesyModule, CourtesyConfig>();
+            kernel.RegisterModule<MessagingModule, MessagingConfig>();
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
             ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
@@ -45,6 +90,8 @@ namespace ApartmentApps.IoC
 
             kernel.Bind<EntrataIntegration>().ToSelf().InRequestScope();
             kernel.Bind<IUnitImporter>().To<UnitImporter>().InRequestScope();
+            kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
+            kernel.Bind<AlertsService>().ToSelf().InRequestScope();
             kernel.Bind<Property>().ToMethod(_ => kernel.Get<IUserContext>().CurrentUser.Property).InRequestScope();
             kernel.Bind<PropertyContext>().ToSelf().InRequestScope();
 
@@ -104,6 +151,30 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService>();
 
             kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
+            //try
+            //{
+            //    var config = new DbMigrationsConfiguration<ApplicationDbContext>
+            //    {
+            //        AutomaticMigrationsEnabled = true,
+            //        AutomaticMigrationDataLossAllowed = true
+            //    };
+            //    var migrator = new DbMigrator(config);
+            //    if (migrator.GetPendingMigrations().Any())
+            //        migrator.Update();
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine(ex.Message);
+            //}
+           
+
+
+
         }
     }
+    //public sealed class GalleryDbMigrationConfiguration : DbMigrationsConfiguration
+    //{
+      
+       
+    //}
 }

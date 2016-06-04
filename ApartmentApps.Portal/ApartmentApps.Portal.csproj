@@ -1071,13 +1071,13 @@
     <Content Include="Content\ej\web\gradient-lime\ej.theme.less" />
     <Content Include="Content\ej\web\gradient-saffron-dark\ej.theme.less" />
     <Content Include="Content\ej\web\gradient-saffron\ej.theme.less" />
-    <None Include="Properties\PublishProfiles\ApartmentAppsWebPortal - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ApartmentAppsWebPortal - Web Deploy.pubxml" />
     <Content Include="Scripts\bootstrap3-typeahead.js" />
     <Content Include="Scripts\bootstrap3-typeahead.unobtrusive.js" />
     <Content Include="Scripts\ej\ej.widgets.all.min.map" />
     <Content Include="Scripts\canvg.js" />
     <Content Include="Scripts\ej\ej.unobtrusive.min.js" />
+    <None Include="Properties\PublishProfiles\ApartmentAppsWebPortal - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ApartmentAppsWebPortal - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ApartmentAppsWebPortalDev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ApartmentAppsWebPortalDev - Web Deploy.pubxml" />
     <None Include="Scripts\ej\ej.web.all.intellisense.js" />
@@ -1287,6 +1287,8 @@
     <Content Include="Views\CourtesyOfficer\Index.cshtml" />
     <Content Include="Views\Shared\AutoIndex.cshtml" />
     <Content Include="Views\Shared\Forms\Grid.cshtml" />
+    <Content Include="Views\Messaging\Index.cshtml" />
+    <Content Include="Views\PropertySettings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1341,7 +1343,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61984</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58737/</IISUrl>
+          <IISUrl>http://localhost:58738/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

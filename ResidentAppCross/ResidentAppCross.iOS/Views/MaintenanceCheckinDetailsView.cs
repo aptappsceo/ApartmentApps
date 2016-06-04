@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using ResidentAppCross.iOS.Views.Attributes;
@@ -10,6 +11,87 @@ using UIKit;
 
 namespace ResidentAppCross.iOS.Views
 {
+
+    [Register("MessageDetailsView")]
+    [NavbarStyling]
+    [StatusBarStyling]
+    public class MessageDetailsView : BaseForm<MessageDetailsViewModel>
+    {
+        private TextViewSection _subjectSection;
+        private TextViewSection _dateSection;
+        private TextViewSection _messageSection;
+
+        public TextViewSection SubjectSection
+        {
+            get
+            {
+                if (_subjectSection == null)
+                {
+                    _subjectSection = Formals.Create<TextViewSection>();
+                    _subjectSection.HeightConstraint.Constant = 100;
+                    _subjectSection.TextView.Layer.BorderColor = new CGColor(1f,1f,1f);
+                    _subjectSection.HeaderLabel.Text = "Subject";
+
+                }
+                return _subjectSection;
+            }
+            set { _subjectSection = value; }
+        }
+
+        public TextViewSection DateSection
+        {
+            get
+            {
+                if (_dateSection == null)
+                {
+                    _dateSection = Formals.Create<TextViewSection>();
+                    _dateSection.HeightConstraint.Constant = 100;
+                    _dateSection.TextView.Layer.BorderColor = new CGColor(1f, 1f, 1f);
+                    _dateSection.HeaderLabel.Text = "Date";
+                }
+                return _dateSection;
+            }
+            set { _dateSection = value; }
+        }
+
+        public TextViewSection MessageSection
+        {
+            get
+            {
+                if (_messageSection == null)
+                {
+                    _messageSection = Formals.Create<TextViewSection>();
+                    _messageSection.HeaderLabel.Text = "Message";
+                    _messageSection.HeightConstraint.Constant = 300;
+
+
+                }
+                return _messageSection;
+            }
+            set { _messageSection = value; }
+        }
+
+
+        public override void BindForm()
+        {
+            base.BindForm();
+            var set = this.CreateBindingSet<MessageDetailsView, MessageDetailsViewModel>();
+            set.Bind(SubjectSection.TextView).For(f => f.Text).To(vm => vm.Subject);
+            set.Bind(DateSection.TextView).For(f => f.Text).To(vm => vm.Date);
+            set.Bind(MessageSection.TextView).For(f => f.Text).To(vm => vm.Message);
+            set.Apply();
+        }
+
+        public override void GetContent(List<UIView> content)
+        {
+            base.GetContent(content);
+            content.Add(SubjectSection);
+            content.Add(DateSection);
+            content.Add(MessageSection);
+        }
+
+    }
+
     [Register("MaintenanceCheckinDetailsView")]
     [NavbarStyling]
     [StatusBarStyling]

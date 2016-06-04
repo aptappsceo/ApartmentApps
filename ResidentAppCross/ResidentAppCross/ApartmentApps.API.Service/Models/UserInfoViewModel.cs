@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ApartmentApps.Client.Models;
 using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
@@ -99,6 +100,17 @@ namespace ApartmentApps.Client.Models
             set { this._loginProvider = value; }
         }
         
+        private PropertyConfig _propertyConfig;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public PropertyConfig PropertyConfig
+        {
+            get { return this._propertyConfig; }
+            set { this._propertyConfig = value; }
+        }
+        
         private IList<string> _roles;
         
         /// <summary>
@@ -164,6 +176,13 @@ namespace ApartmentApps.Client.Models
                 if (loginProviderValue != null && loginProviderValue.Type != JTokenType.Null)
                 {
                     this.LoginProvider = ((string)loginProviderValue);
+                }
+                JToken propertyConfigValue = inputObject["PropertyConfig"];
+                if (propertyConfigValue != null && propertyConfigValue.Type != JTokenType.Null)
+                {
+                    PropertyConfig propertyConfig = new PropertyConfig();
+                    propertyConfig.DeserializeJson(propertyConfigValue);
+                    this.PropertyConfig = propertyConfig;
                 }
                 JToken rolesSequence = ((JToken)inputObject["Roles"]);
                 if (rolesSequence != null && rolesSequence.Type != JTokenType.Null)

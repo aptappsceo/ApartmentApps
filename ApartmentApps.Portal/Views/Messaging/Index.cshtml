@@ -1,0 +1,88 @@
+﻿@model dynamic
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Send Message</h2>
+        <p>Send notifications to your staff and tenants.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Send To Users</h5><br />
+
+                @*<div class="ibox-tools">
+                        @Html.ActionLink("Submit Request", "EditUser", null, new { @class = "btn btn-primary btn-xs" })
+                    </div>*@
+            </div>
+            <div class="ibox-content">
+                <p>
+                    Filter the grid to the users you would like to send a notification to. <b>Note:</b> If you don't filter it will be sent to everyone.
+                </p>
+                @(
+    Html.EJ().Grid<UserBindingModel>("UserGrid")
+        .Datasource(ds => ds.URL(Url.Action("DataSource", "Messaging")).Adaptor(AdaptorType.UrlAdaptor))
+        .FilterSettings(filter =>
+        {
+            filter.FilterType(FilterType.Menu).EnableCaseSensitivity(true);
+        })
+        .AllowPaging(true)
+        //.AllowGrouping()
+        //.AllowSorting(true)
+        .AllowFiltering()
+        .Columns(c =>
+        {
+
+            c.Field(model => model.Id).Visible(false).Add();
+            c.Field(model => model.BuildingName).HeaderText("Building Name").DefaultValue("--None--").Add();
+            c.Field(model => model.UnitName).HeaderText("Unit Name").DefaultValue("--None--").Add();
+            c.Field(model => model.FirstName).HeaderText("FirstName").Add();
+            c.Field(model => model.LastName).HeaderText("LastName").Add();
+            c.Field(model => model.Email).HeaderText("Email").Add();
+            c.Field(model => model.PhoneNumber).HeaderText("PhoneNumber").Add();
+        })
+                )
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@using (var frm = Html.BeginForm("SendMessage", "Messaging"))
+{
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    Subject/Title
+                </div>
+                <div class="ibox-content">
+                    @Html.TextBox("subject",string.Empty,new {style="width: 100%;"})
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        Compose Message
+                    </div>
+                    <div class="ibox-content">
+                        @Html.EJ().RTE("message")
+                        <br />
+
+                    </div>
+                    <div class="ibox-footer">
+                        <input type="submit" class="btn btn-primary" value="Send" />
+                    </div>
+                </div>
+            </div>
+        </div><br />
+}

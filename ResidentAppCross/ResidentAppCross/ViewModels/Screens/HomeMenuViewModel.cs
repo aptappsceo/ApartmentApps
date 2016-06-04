@@ -38,12 +38,20 @@ namespace ResidentAppCross
         {
             MenuItems.Clear();
 
+            var paymentsEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.Enabled ?? false;
+            var courtesyEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.CourtesyConfig?.Enabled ?? false;
+            var maintenanceEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.MaintenanceConfig?.Enabled ?? false;
+            var messagingEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.MessagingConfig?.Enabled ?? false;
+
+
             if (_loginManager?.UserInfo?.Roles == null)
             {
                 this.Publish(new HomeMenuUpdatedEvent(this));
                 return;
             }
 
+
+            if(maintenanceEnabled)
             if (_loginManager.UserInfo.Roles.Contains("Maintenance") ||
                 _loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
@@ -56,6 +64,7 @@ namespace ResidentAppCross
                 });
             }
 
+            if(courtesyEnabled)
             if (_loginManager.UserInfo.Roles.Contains("Officer") ||
                 _loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
@@ -72,6 +81,7 @@ namespace ResidentAppCross
                     Command = new MvxCommand(() => { ShowViewModel<CourtesyOfficerCheckinsViewModel>(); })
                 });
             }
+
 
             if (_loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
@@ -90,12 +100,15 @@ namespace ResidentAppCross
                 Command = AlertsCommand
             });
 
+            if(maintenanceEnabled)
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Maintenance Request",
                 Icon = SharedResources.Icons.Maintenance,
                 Command = MaintenaceRequestCommand
             });
+
+            if(courtesyEnabled)
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Request Courtesy Officer",
@@ -103,25 +116,45 @@ namespace ResidentAppCross
                 Command = RequestCourtesyOfficerCommand
             });
 
+
             if (_loginManager.UserInfo.Roles.Contains("Resident"))
             {
+             
+                if(PayRentCommand.CanExecute(null))
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Pay Rent",
                     Icon = SharedResources.Icons.Wallet,
                     Command = PayRentCommand
                 });
+
+                /*
                 MenuItems.Add(new HomeMenuItemViewModel()
                 {
                     Name = "Community Partners",
                     Icon = SharedResources.Icons.Partners,
                     Command = CommunityPartnersCommand
                 });
-
+                */
             }
+
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "Change Password",
+                Icon = SharedResources.Icons.Settings,
+                Command = ChangePasswordCommand
+            });
             this.Publish(new HomeMenuUpdatedEvent(this));
 
         }
+
+        public ICommand ChangePasswordCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<ChangePasswordViewModel>();
+        });
+
+
+        public string PaymentUrl => _loginManager?.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.Url;
 
         public ICommand AlertsCommand
         {
@@ -189,7 +222,10 @@ namespace ResidentAppCross
             });
         });
 
-        public ICommand PayRentCommand => StubCommands.NoActionSpecifiedCommand(this);
+        public ICommand PayRentCommand => new MvxCommand(() =>
+        {
+            _dialogService.OpenUrl(PaymentUrl);
+        },()=>!string.IsNullOrEmpty(PaymentUrl));
 
         public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);
 

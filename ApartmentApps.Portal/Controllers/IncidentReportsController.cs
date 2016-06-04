@@ -11,6 +11,7 @@ using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -32,7 +33,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public IncidentsService OfficerService { get; set; }
 
-        public IncidentReportsController(IncidentsService officerService, IRepository<IncidentReport> repository, StandardCrudService<IncidentReport, IncidentReportViewModel> service, PropertyContext context, IUserContext userContext) : base(repository, service, context, userContext)
+        public IncidentReportsController(IKernel kernel, IncidentsService officerService, IRepository<IncidentReport> repository, StandardCrudService<IncidentReport, IncidentReportViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel, repository, service, context, userContext)
         {
             OfficerService = officerService;
         }
@@ -88,129 +89,129 @@ namespace ApartmentApps.Portal.Controllers
             return RedirectToAction("Index");
         }
     }
-    public class IncidentReports2Controller : AAController
-    {
+  //  public class IncidentReports2Controller : AAController
+  //  {
         
-		public IncidentReports2Controller(PropertyContext context, IUserContext userContext) : base(context, userContext)
-        {
+		//public IncidentReports2Controller(PropertyContext context, IUserContext userContext) : base(context, userContext)
+  //      {
             
-        }
-        // GET: /IncidentReports/
-        public ActionResult Index()
-        {
-            var incidentreports = Context.IncidentReports.GetAll();
-            return View(incidentreports);
-        }
+  //      }
+  //      // GET: /IncidentReports/
+  //      public ActionResult Index()
+  //      {
+  //          var incidentreports = Context.IncidentReports.GetAll();
+  //          return View(incidentreports);
+  //      }
 
-        // GET: /IncidentReports/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            IncidentReport incidentReport = Context.IncidentReports.Find(id.Value);
-            if (incidentReport == null)
-            {
-                return HttpNotFound();
-            }
-            return View(incidentReport);
-        }
+  //      // GET: /IncidentReports/Details/5
+  //      public ActionResult Details(int? id)
+  //      {
+  //          if (id == null)
+  //          {
+  //              return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+  //          }
+  //          IncidentReport incidentReport = Context.IncidentReports.Find(id.Value);
+  //          if (incidentReport == null)
+  //          {
+  //              return HttpNotFound();
+  //          }
+  //          return View(incidentReport);
+  //      }
 
-        // GET: /IncidentReports/Create
-        public ActionResult Create()
-        {
-            ViewBag.StatusId = new SelectList(Context.IncidentReportStatuses.GetAll(), "Name", "Name");
-            ViewBag.PropertyId = new SelectList(Context.Properties.GetAll(), "Id", "Name");
-            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name");
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "ImageUrl");
-            return View();
-        }
+  //      // GET: /IncidentReports/Create
+  //      public ActionResult Create()
+  //      {
+  //          ViewBag.StatusId = new SelectList(Context.IncidentReportStatuses.GetAll(), "Name", "Name");
+  //          ViewBag.PropertyId = new SelectList(Context.Properties.GetAll(), "Id", "Name");
+  //          ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name");
+  //          ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "ImageUrl");
+  //          return View();
+  //      }
 	
-        // POST: /IncidentReports/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,UserId,GroupId,Comments,UnitId,IncidentType,CreatedOn,StatusId,CompletionDate,PropertyId")] IncidentReport incidentReport)
-        {
-            if (ModelState.IsValid)
-            {
-                Context.IncidentReports.Add(incidentReport);
-                Context.SaveChanges();
-                return RedirectToAction("Index");
-            }
+  //      // POST: /IncidentReports/Create
+  //      // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+  //      // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+  //      [HttpPost]
+  //      [ValidateAntiForgeryToken]
+  //      public ActionResult Create([Bind(Include="Id,UserId,GroupId,Comments,UnitId,IncidentType,CreatedOn,StatusId,CompletionDate,PropertyId")] IncidentReport incidentReport)
+  //      {
+  //          if (ModelState.IsValid)
+  //          {
+  //              Context.IncidentReports.Add(incidentReport);
+  //              Context.SaveChanges();
+  //              return RedirectToAction("Index");
+  //          }
 
-            ViewBag.StatusId = new SelectList(Context.IncidentReportStatuses.GetAll(), "Name", "Name", incidentReport.StatusId);
-            ViewBag.PropertyId = new SelectList(Context.Properties.GetAll(), "Id", "Name", incidentReport.PropertyId);
-            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", incidentReport.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "ImageUrl", incidentReport.UserId);
-            return View(incidentReport);
-        }
+  //          ViewBag.StatusId = new SelectList(Context.IncidentReportStatuses.GetAll(), "Name", "Name", incidentReport.StatusId);
+  //          ViewBag.PropertyId = new SelectList(Context.Properties.GetAll(), "Id", "Name", incidentReport.PropertyId);
+  //          ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", incidentReport.UnitId);
+  //          ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "ImageUrl", incidentReport.UserId);
+  //          return View(incidentReport);
+  //      }
 
-        // GET: /IncidentReports/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            IncidentReport incidentReport = Context.IncidentReports.Find(id);
-            if (incidentReport == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.StatusId = new SelectList(Context.IncidentReportStatuses.GetAll(), "Name", "Name", incidentReport.StatusId);
-            ViewBag.PropertyId = new SelectList(Context.Properties.GetAll(), "Id", "Name", incidentReport.PropertyId);
-            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", incidentReport.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "Username", incidentReport.UserId);
-            return View(incidentReport);
-        }
+  //      // GET: /IncidentReports/Edit/5
+  //      public ActionResult Edit(int? id)
+  //      {
+  //          if (id == null)
+  //          {
+  //              return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+  //          }
+  //          IncidentReport incidentReport = Context.IncidentReports.Find(id);
+  //          if (incidentReport == null)
+  //          {
+  //              return HttpNotFound();
+  //          }
+  //          ViewBag.StatusId = new SelectList(Context.IncidentReportStatuses.GetAll(), "Name", "Name", incidentReport.StatusId);
+  //          ViewBag.PropertyId = new SelectList(Context.Properties.GetAll(), "Id", "Name", incidentReport.PropertyId);
+  //          ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", incidentReport.UnitId);
+  //          ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "Username", incidentReport.UserId);
+  //          return View(incidentReport);
+  //      }
 
-        // POST: /IncidentReports/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,UserId,GroupId,Comments,UnitId,IncidentType,CreatedOn,StatusId,CompletionDate,PropertyId")] IncidentReport incidentReport)
-        {
-            if (ModelState.IsValid)
-            {
-                Context.Entry(incidentReport);
-                Context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.StatusId = new SelectList(Context.IncidentReportStatuses.GetAll(), "Name", "Name", incidentReport.StatusId);
-            ViewBag.PropertyId = new SelectList(Context.Properties.GetAll(), "Id", "Name", incidentReport.PropertyId);
-            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", incidentReport.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "Username", incidentReport.UserId);
-            return View(incidentReport);
-        }
+  //      // POST: /IncidentReports/Edit/5
+  //      // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+  //      // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+  //      [HttpPost]
+  //      [ValidateAntiForgeryToken]
+  //      public ActionResult Edit([Bind(Include="Id,UserId,GroupId,Comments,UnitId,IncidentType,CreatedOn,StatusId,CompletionDate,PropertyId")] IncidentReport incidentReport)
+  //      {
+  //          if (ModelState.IsValid)
+  //          {
+  //              Context.Entry(incidentReport);
+  //              Context.SaveChanges();
+  //              return RedirectToAction("Index");
+  //          }
+  //          ViewBag.StatusId = new SelectList(Context.IncidentReportStatuses.GetAll(), "Name", "Name", incidentReport.StatusId);
+  //          ViewBag.PropertyId = new SelectList(Context.Properties.GetAll(), "Id", "Name", incidentReport.PropertyId);
+  //          ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", incidentReport.UnitId);
+  //          ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "Username", incidentReport.UserId);
+  //          return View(incidentReport);
+  //      }
 
-        // GET: /IncidentReports/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            IncidentReport incidentReport = Context.IncidentReports.Find(id.Value);
-            if (incidentReport == null)
-            {
-                return HttpNotFound();
-            }
-            return View(incidentReport);
-        }
+  //      // GET: /IncidentReports/Delete/5
+  //      public ActionResult Delete(int? id)
+  //      {
+  //          if (id == null)
+  //          {
+  //              return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+  //          }
+  //          IncidentReport incidentReport = Context.IncidentReports.Find(id.Value);
+  //          if (incidentReport == null)
+  //          {
+  //              return HttpNotFound();
+  //          }
+  //          return View(incidentReport);
+  //      }
 
-        // POST: /IncidentReports/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            IncidentReport incidentReport = Context.IncidentReports.Find(id);
-            Context.IncidentReports.Remove(incidentReport);
-            Context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-    }
+  //      // POST: /IncidentReports/Delete/5
+  //      [HttpPost, ActionName("Delete")]
+  //      [ValidateAntiForgeryToken]
+  //      public ActionResult DeleteConfirmed(int id)
+  //      {
+  //          IncidentReport incidentReport = Context.IncidentReports.Find(id);
+  //          Context.IncidentReports.Remove(incidentReport);
+  //          Context.SaveChanges();
+  //          return RedirectToAction("Index");
+  //      }
+  //  }
 }

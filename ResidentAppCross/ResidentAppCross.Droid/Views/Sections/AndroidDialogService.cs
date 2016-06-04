@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
+using Android.Content;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Core;
 using MvvmCross.Platform.Droid.Platform;
@@ -202,8 +203,11 @@ namespace ResidentAppCross.Droid.Views.Sections
         }
 
 
-        public void OpenNotification(string title, string subtitle, string ok)
+        public void OpenNotification(string title, string subtitle, string ok, Action action = null)
         {
+
+            if(action != null) throw new Exception("Handler is not currently supported on droid");
+
             var frag = new NotificationDialog()
             {
                 
@@ -241,6 +245,10 @@ namespace ResidentAppCross.Droid.Views.Sections
             frag.Show(CurrentTopActivity.FragmentManager, "Photo Viewer");
         }
 
-    
+        public void OpenUrl(string url)
+        {
+            Intent browserIntent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(url));
+            CurrentTopActivity.StartActivity(browserIntent);
+        }
     }
 }

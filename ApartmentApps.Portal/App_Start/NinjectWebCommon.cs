@@ -79,9 +79,9 @@ namespace ApartmentApps.Portal.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             Register.RegisterServices(kernel);
-            kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
+            //kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
 
-
+            
             kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
             kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();
             kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
@@ -110,7 +110,13 @@ namespace ApartmentApps.Portal.App_Start
             }
         }
 
+
         public IIdentity User => System.Web.HttpContext.Current.User.Identity;
+
+        public bool IsInRole(string roleName)
+        {
+            return HttpContext.Current.User.IsInRole(roleName);
+        }
 
         public string UserId => CurrentUser.Id;
         public string Email => User.GetUserName();

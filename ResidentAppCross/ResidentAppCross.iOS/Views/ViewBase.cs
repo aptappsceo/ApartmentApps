@@ -208,6 +208,8 @@ namespace ResidentAppCross.iOS.Views
             }
         }
 
+       
+
 
         public static void SetTaskProgress(this ViewBase view, bool shouldPrompt, string label)
         {

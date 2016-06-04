@@ -319,6 +319,7 @@ namespace ResidentAppCross.Droid.Views
 //        }
 //    }
 
+
     public class IconTitleBadgeListAdapter<T> : RecyclerView.Adapter
     {
         private IList<T> _items;
@@ -474,6 +475,72 @@ namespace ResidentAppCross.Droid.Views
         protected virtual void OnDetailsClicked(T obj)
         {
             DetailsClicked?.Invoke(obj);
+        }
+    }
+
+  public class MessageListAdapter<T> : GenericRecyclerAdapter<MessageListItemViewHolder>
+    {
+        private ObservableCollection<T> _items;
+
+        public Func<T,string> TitleSelector { get; set; }
+        public Func<T,string> SubtitleSelector { get; set; }
+        public Func<T,string> DateSelector { get; set; }
+        public Func<T,int> IconSelector { get; set; }
+        public Func<T,Color> ColorSelector { get; set; }
+        public Func<T,int> ColorResourceSelector { get; set; }
+
+        public ObservableCollection<T> Items
+        {
+            get { return _items; }
+            set
+            {
+                _items = value;
+                this.BindToCollection(Items);
+            }
+        }
+
+        public override void OnBind(MessageListItemViewHolder holder, int position)
+        {
+            var item = Items[position];
+            holder.SubtitleLabel.Text = SubtitleSelector?.Invoke(item) ?? "Subtitle";
+            holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "Title";
+            holder.DateLabel.Text = DateSelector?.Invoke(item) ?? "00/00/00 00:00 AM";
+
+            if(IconSelector != null)
+            holder.IconView.SetImageResource(IconSelector.Invoke(item));
+
+            if (ColorSelector != null)
+            {
+            holder.IconView.SetBackgroundColor(ColorSelector(item));
+                
+            }
+            else if (ColorResourceSelector != null)
+            {
+                var color = holder.IconView.Resources.GetColor(ColorResourceSelector(item));
+                holder.IconView.SetColorFilter(color);
+            }
+            else
+            {
+                holder.IconView.SetColorFilter(Color.DarkSlateGray);
+            }
+        }
+
+        public event Action<T> ItemClicked;
+
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            var ticketIndexItemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.message_list_item, parent, false);
+            var holder = new MessageListItemViewHolder(ticketIndexItemView);
+
+              ticketIndexItemView.Click += (sender, args) => { OnDetailsClicked(Items[holder.AdapterPosition]); };
+            return holder;
+        }
+
+        public override int ItemCount => Items.Count;
+
+        protected virtual void OnDetailsClicked(T obj)
+        {
+            ItemClicked?.Invoke(obj);
         }
     }
 
@@ -664,6 +731,26 @@ namespace ResidentAppCross.Droid.Views
         public AppCompatButton DetailsButton { get; set; }
 
         public TicketIndexItemViewHolder(View itemView) : base(itemView)
+        {
+            itemView.LocateOutlets(this);
+        }
+    }
+
+    public class MessageListItemViewHolder : RecyclerView.ViewHolder
+    {
+        [Outlet]
+        public AppCompatImageView IconView { get; set; }
+
+        [Outlet]
+        public AppCompatTextView TitleLabel { get; set; }
+
+        [Outlet]
+        public AppCompatTextView SubtitleLabel { get; set; }
+
+        [Outlet]
+        public AppCompatTextView DateLabel { get; set; }
+
+        public MessageListItemViewHolder(View itemView) : base(itemView)
         {
             itemView.LocateOutlets(this);
         }

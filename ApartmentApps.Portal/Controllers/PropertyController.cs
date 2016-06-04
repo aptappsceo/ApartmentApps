@@ -17,6 +17,7 @@ using Entrata.Model.Requests;
 using FormFactory.AspMvc.UploadedFiles;
 using FormFactory.Attributes;
 using Microsoft.AspNet.Identity.Owin;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -29,7 +30,7 @@ namespace ApartmentApps.Portal.Controllers
 
         private ApplicationUserManager _userManager;
 
-        public PropertyController(EntrataIntegration entrata, IUnitImporter importer, PropertyContext context, IUserContext userContext, ApplicationUserManager userManager) : base(context, userContext)
+        public PropertyController(IKernel kernel, EntrataIntegration entrata, IUnitImporter importer, PropertyContext context, IUserContext userContext, ApplicationUserManager userManager) : base(kernel, context, userContext)
         {
             Entrata = entrata;
             Importer = importer;

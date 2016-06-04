@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -18,7 +19,7 @@ namespace ApartmentApps.Portal.Controllers
         
 
         // GET: /PropertyEntrataInfo/
-        public PropertyEntrataInfoController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public PropertyEntrataInfoController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
         }
 

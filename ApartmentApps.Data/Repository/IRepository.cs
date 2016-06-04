@@ -86,11 +86,12 @@ namespace ApartmentApps.Data.Repository
         {
             try
             {
-                this._db.Entry(obj).State = EntityState.Modified;
+                var dbEntityEntry = this._db.Entry(obj);
+                dbEntityEntry.State = EntityState.Modified;
             }
             catch (Exception ex)
             {
-                
+               
             }
           
         }

@@ -82,6 +82,13 @@ namespace ApartmentApps.Client
             get { return this._maitenance; }
         }
         
+        private IMessaging _messaging;
+        
+        public virtual IMessaging Messaging
+        {
+            get { return this._messaging; }
+        }
+        
         private INotifiations _notifiations;
         
         public virtual INotifiations Notifiations
@@ -123,6 +130,7 @@ namespace ApartmentApps.Client
             this._courtesy = new Courtesy(this);
             this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
+            this._messaging = new Messaging(this);
             this._notifiations = new Notifiations(this);
             this._payments = new Payments(this);
             this._register = new Register(this);
@@ -147,6 +155,7 @@ namespace ApartmentApps.Client
             this._courtesy = new Courtesy(this);
             this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
+            this._messaging = new Messaging(this);
             this._notifiations = new Notifiations(this);
             this._payments = new Payments(this);
             this._register = new Register(this);
@@ -174,6 +183,7 @@ namespace ApartmentApps.Client
             this._courtesy = new Courtesy(this);
             this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
+            this._messaging = new Messaging(this);
             this._notifiations = new Notifiations(this);
             this._payments = new Payments(this);
             this._register = new Register(this);

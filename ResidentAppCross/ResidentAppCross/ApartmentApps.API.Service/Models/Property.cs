@@ -100,6 +100,17 @@ namespace ApartmentApps.Client.Models
             set { this._name = value; }
         }
         
+        private string _paymentsUrl;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string PaymentsUrl
+        {
+            get { return this._paymentsUrl; }
+            set { this._paymentsUrl = value; }
+        }
+        
         private IList<PropertyAddon> _propertyAddons;
         
         /// <summary>
@@ -213,6 +224,11 @@ namespace ApartmentApps.Client.Models
                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                 {
                     this.Name = ((string)nameValue);
+                }
+                JToken paymentsUrlValue = inputObject["PaymentsUrl"];
+                if (paymentsUrlValue != null && paymentsUrlValue.Type != JTokenType.Null)
+                {
+                    this.PaymentsUrl = ((string)paymentsUrlValue);
                 }
                 JToken propertyAddonsSequence = ((JToken)inputObject["PropertyAddons"]);
                 if (propertyAddonsSequence != null && propertyAddonsSequence.Type != JTokenType.Null)

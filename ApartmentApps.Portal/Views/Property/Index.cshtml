@@ -1,8 +1,10 @@
-﻿@model IEnumerable<ApartmentApps.Data.Property>
+﻿@using ApartmentApps.Data
+@model IEnumerable<ApartmentApps.Data.Property>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var property = ViewBag.Property as Property;
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -54,6 +56,20 @@
                                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
                                     @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
                                     @Html.ActionLink("Import Entrata Data", "ImportEntrata", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        @Html.ActionLink("Import Entrata Data", "ImportEntrata", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+                                        if (item == property)
+                                        {
+                                            <b>Current Property</b>
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("Switch To Property", "ChangeProperty", "Account", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+                                        }
+
+                                    }
+                                    
                                 </td>
                             </tr>
                         }

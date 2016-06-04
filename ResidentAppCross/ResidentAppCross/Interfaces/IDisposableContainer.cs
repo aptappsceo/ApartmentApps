@@ -49,4 +49,18 @@ namespace ResidentAppCross.Interfaces
     {
         IMvxMessenger EventAggregator { get; set; }
     }
+
+    public static class IEventAwareExtensions
+    {
+        public static MvxSubscriptionToken SubscribeOnce<T>(this IEventAware subject, Action<T> act) where T : MvxMessage
+        {
+            MvxSubscriptionToken token = null;
+            token = subject.EventAggregator.Subscribe<T>(evt =>
+            {
+                act(evt);
+                token.Dispose();
+            },MvxReference.Strong);
+            return token;
+        }
+    }
 }

@@ -340,7 +340,7 @@ namespace ResidentAppCross.iOS.Services
             });
         }
 
-        public void OpenNotification(string title, string subtitle, string ok)
+        public void OpenNotification(string title, string subtitle, string ok,Action action = null)
         {
             TopController.InvokeOnMainThread(() =>
             {
@@ -349,6 +349,10 @@ namespace ResidentAppCross.iOS.Services
                 alert.HideAnimationType = SCLAlertViewHideAnimation.FadeOut;
                 //alert.CustomViewColor = AppTheme.SecondaryBackgoundColor;
                 alert.ShowInfo(TopController,title, subtitle, ok,0);
+                alert.AlertIsDismissed(() =>
+                {
+                    action?.Invoke();
+                });
             });
         }
 
@@ -381,6 +385,11 @@ namespace ResidentAppCross.iOS.Services
                 RootController.PushViewController(controller,true);
 
             });
+        }
+
+        public void OpenUrl(string url)
+        {
+            UIApplication.SharedApplication.OpenUrl(NSUrl.FromString(url));
         }
 
         public UIImagePickerController ImagePickerController

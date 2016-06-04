@@ -14,9 +14,10 @@ namespace ResidentAppCross.Services
         Task<DateTime?> OpenDateTimeDialog(string title);
         Task<DateTime?> OpenDateDialog(string title);
         Task<byte[]> OpenImageDialog();
-        void OpenNotification(string title, string subtitle, string ok);
+        void OpenNotification(string title, string subtitle, string ok, Action action = null);
         void OpenImageFullScreen(object imageObject);
         void OpenImageFullScreenFromUrl(string url);
-        
+
+        void OpenUrl(string url);
     }
 }

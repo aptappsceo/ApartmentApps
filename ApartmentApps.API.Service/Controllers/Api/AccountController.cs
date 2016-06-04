@@ -12,6 +12,7 @@ using System.Web.Http.ModelBinding;
 using System.Web.Security;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -23,13 +24,23 @@ using ApartmentApps.API.Service.Providers;
 using ApartmentApps.API.Service.Results;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers
 {
+    public class ModuleInfo
+    {
+  
+        public PaymentsConfig PaymentsConfig { get; set; }
+        public MessagingConfig MessagingConfig { get; set; }
+        public CourtesyConfig CourtesyConfig { get; set; }
+        public MaintenanceConfig MaintenanceConfig { get; set; }
+    }
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApartmentAppsApiController
     {
+        private readonly IKernel _kernel;
         private readonly ApplicationDbContext _dbcontext;
         private readonly IBlobStorageService _blobStorage;
 
@@ -52,8 +63,9 @@ namespace ApartmentApps.API.Service.Controllers
         private ApplicationUserManager _userManager;
 
 
-        public AccountController(ApplicationDbContext dbcontext,ApplicationUserManager userManager, PropertyContext context, IBlobStorageService blobStorage, IUserContext userContext) : base(context,userContext)
+        public AccountController(IKernel kernel, ApplicationDbContext dbcontext,ApplicationUserManager userManager, PropertyContext context, IBlobStorageService blobStorage, IUserContext userContext) : base(context,userContext)
         {
+            _kernel = kernel;
             _dbcontext = dbcontext;
             _blobStorage = blobStorage;
             UserManager = userManager;
@@ -106,7 +118,20 @@ namespace ApartmentApps.API.Service.Controllers
                 FullName = CurrentUser.FirstName + " " + CurrentUser.LastName,
                 ImageUrl = _blobStorage.GetPhotoUrl(CurrentUser.ImageUrl) ?? $"http://www.gravatar.com/avatar/{ModelExtensions.HashEmailForGravatar(CurrentUser.Email.ToLower())}.jpg",
                 ImageThumbnailUrl = _blobStorage.GetPhotoUrl(CurrentUser.ImageThumbnailUrl) ?? $"http://www.gravatar.com/avatar/{ModelExtensions.HashEmailForGravatar(CurrentUser.Email.ToLower())}.jpg",
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
+                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
+                PropertyConfig = new PropertyConfig()
+                {
+                    ModuleInfo = new ModuleInfo()
+                    {
+                        PaymentsConfig = _kernel.Get<Module<PaymentsConfig>>().Config,
+                        MessagingConfig = _kernel.Get<Module<MessagingConfig>>().Config,
+                        CourtesyConfig = _kernel.Get<Module<CourtesyConfig>>().Config,
+                        MaintenanceConfig = _kernel.Get<Module<MaintenanceConfig>>().Config,
+                      
+                        
+                    }
+                 
+                }
             };
         }
 
@@ -569,4 +594,6 @@ namespace ApartmentApps.API.Service.Controllers
 
         #endregion
     }
+
+   
 }

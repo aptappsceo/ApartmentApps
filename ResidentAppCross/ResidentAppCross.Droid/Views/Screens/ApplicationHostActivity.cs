@@ -3,9 +3,11 @@ using System.Linq;
 using System.Timers;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Gms.Common;
 using Android.Gms.Maps;
 using Android.Graphics;
+using Android.Net.Http;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
@@ -25,7 +27,10 @@ using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Components.Navigation;
 using ResidentAppCross.Droid.Views.Components.NavigationDrawer;
 using ResidentAppCross.Events;
+using ResidentAppCross.Interfaces;
+using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels;
+using ResidentAppCross.ViewModels.Screens;
 using Exception = System.Exception;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
@@ -36,9 +41,10 @@ namespace ResidentAppCross.Droid.Views
 
     [Activity(Label = "Apartment Apps", 
         MainLauncher = true, 
+        LaunchMode = LaunchMode.SingleTop,
         NoHistory = false,
         WindowSoftInputMode = SoftInput.AdjustResize | SoftInput.StateHidden)]
-    public class ApplicationHostActivity : MvxCachingFragmentCompatActivity<ApplicationViewModel>
+    public class ApplicationHostActivity : MvxCachingFragmentCompatActivity<ApplicationViewModel>, IEventAware
     {
         private FrameLayout _frame;
         private Toolbar _toolbar;
@@ -47,6 +53,7 @@ namespace ResidentAppCross.Droid.Views
         private UsefulActionBarDrawerToggle _drawerToggle;
         private IMvxMessenger _eventAggregator;
         private Timer _waitTimer;
+        private IActionRequestHandler _requestHandler;
 
         public DrawerLayout DrawerLayout
         {
@@ -81,6 +88,27 @@ namespace ResidentAppCross.Droid.Views
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            ProcessIntent(Intent);
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            base.OnNewIntent(intent);
+            ProcessIntent(intent);
+        }
+
+        public IActionRequestHandler RequestHandler
+        {
+            get { return _requestHandler ?? (_requestHandler = Mvx.Resolve<IActionRequestHandler>()); }
+            set { _requestHandler = value; }
+        }
+
+        public void ProcessIntent(Intent intent)
+        {
+            var bundle = intent.Extras;
+            if (bundle == null) return;
+            var request = bundle.ToActionRequest().ToTypedActionRequest();
+            RequestHandler.Handle(request);
         }
 
         public bool IsToolbarVisible
@@ -293,10 +321,15 @@ namespace ResidentAppCross.Droid.Views
             {
                 SourceActivity = targetActivity
             };
-
-            CurrentDialog.Show(targetActivity.FragmentManager, "notification");
-            CurrentDialog.OnceOnDismiss(() => CurrentDialog = null);
-
+            try
+            {
+                CurrentDialog.Show(targetActivity.FragmentManager, "notification");
+                CurrentDialog.OnceOnDismiss(() => CurrentDialog = null);
+            }
+            catch (Exception ex)
+            {
+                //fuck you
+            }
             return CurrentDialog;
 
         }

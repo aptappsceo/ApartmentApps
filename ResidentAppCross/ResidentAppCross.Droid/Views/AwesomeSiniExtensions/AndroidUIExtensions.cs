@@ -177,6 +177,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             return view;
         }
 
+
         public static T WithRelativeBelow<T>(this T view, View what) where T : View
         {
             view.WithUniqueId().EnsureRelativeLayoutParams().AddRule(LayoutRules.Below, what.WithUniqueId().Id);

@@ -13,6 +13,10 @@ namespace ApartmentApps.Forms
         {
             var type = model.GetType();
             var formModel = new FormModel();
+            if (type.FullName.Contains("DynamicProx"))
+            {
+                type = type.BaseType;
+            }
             var properties =
                 type.GetProperties(BindingFlags.Default | BindingFlags.Public | BindingFlags.NonPublic |
                                    BindingFlags.Instance).ToList();
@@ -20,15 +24,22 @@ namespace ApartmentApps.Forms
             foreach (var property in properties)
             {
                 if (property.Name.EndsWith("_Items")) continue;
+
                 var propertyModel = new FormPropertyModel();
+                propertyModel.DataType = property.GetCustomAttributes(typeof(DataTypeAttribute), true).OfType<DataTypeAttribute>().FirstOrDefault();
+                if (propertyModel.DataType?.CustomDataType == "Ignore") continue;
+
+                if (propertyModel.DataType != null)
+                    propertyModel.Hidden = propertyModel.DataType.CustomDataType == "Hidden";
+              
                 propertyModel.SystemType = property.PropertyType;
                 propertyModel.Name = property.Name;
                 propertyModel.GetValue = () => property.GetValue(model);
                 propertyModel.SetValue = (v) => property.SetValue(model,v);
                 propertyModel.Description = property.GetCustomAttributes(typeof(DescriptionAttribute), true).OfType<DescriptionAttribute>().FirstOrDefault()?.Description;
                 propertyModel.Label = property.GetCustomAttributes(typeof(DisplayNameAttribute), true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? property.Name;
-                propertyModel.DataType = property.GetCustomAttributes(typeof(DataTypeAttribute), true).OfType<DataTypeAttribute>().FirstOrDefault();
-                propertyModel.Hidden = propertyModel.DataType.CustomDataType == "Hidden";
+               
+              
                 if (typeof (Enum).IsAssignableFrom(property.PropertyType))
                 {
                     var names = Enum.GetNames(property.PropertyType);

@@ -66,6 +66,7 @@ namespace ResidentAppCross.iOS.Views
         public static float SegmentSectionHeightReduced = 50f;
         public static float SwitchSectionHeight = 120f;
         public static float LabelWithButtonSectionHeight = 46f;
+        public static float TextFieldSectionHeight = 44f;
 
         private static UIColor _completeColor;
         private static UIColor _inProgressColor;

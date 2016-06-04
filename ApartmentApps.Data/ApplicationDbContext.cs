@@ -1,10 +1,13 @@
+using System;
 using System.Data.Entity;
+using System.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+       
         public virtual IDbSet<MaintenanceRequestStatus> MaintenanceRequestStatuses { get; set; }
         public virtual IDbSet<IncidentReportStatus> IncidentReportStatuses { get; set; }
         public virtual IDbSet<Corporation> Corporations { get; set; }
@@ -30,6 +33,17 @@ namespace ApartmentApps.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
+                var entityTypes = assembly
+                  .GetTypes()
+                  .Where(t =>
+                    t.GetCustomAttributes(typeof(PersistantAttribute), inherit: true)
+                    .Any() );
+                foreach (var type in entityTypes)
+                modelBuilder.RegisterEntityType(type);
+            }
             //modelBuilder.Entity<Unit>().Property(p => p.Latitude).HasPrecision(9, 6);
             //modelBuilder.Entity<Unit>().Property(p => p.Longitude).HasPrecision(9, 6);
             //modelBuilder.Entity<CourtesyOfficerLocation>().Property(p => p.Latitude).HasPrecision(9, 6);
@@ -46,5 +60,10 @@ namespace ApartmentApps.Data
         {
             return new ApplicationDbContext();
         }
+    }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class PersistantAttribute : Attribute
+    {
     }
 }

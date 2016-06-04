@@ -41,7 +41,7 @@
 				<key>NSIncludesSubdomains</key>
 				<true/>
 			</dict>
-			<key>82.151.208.56.xip.io:54683</key>
+			<key>82.151.208.56.xip.io:54685</key>
 			<dict>
 				<key>NSExceptionMinimumTLSVersion</key>
 				<string>TLSv1.0</string>
@@ -57,7 +57,7 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>CFBundleDisplayName</key>
-	<string>Apartment Apps v2</string>
+	<string>Apartment Apps</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.apartmentapps.mobile.v2</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -109,8 +109,10 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We would like to use your location.</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>2.1</string>
+	<key>CFBundleName</key>
+	<string>Apartment Apps</string>
 	<key>CFBundleVersion</key>
-	<string>24</string>
+	<string>30</string>
 </dict>
 </plist>

@@ -13,6 +13,8 @@ using Android.Views;
 using Android.Widget;
 using Gcm.Client;
 using ResidentAppCross.Droid.Views;
+using ResidentAppCross.Services;
+using Action = System.Action;
 
 [assembly: Permission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE")]
 [assembly: UsesPermission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE")]
@@ -33,6 +35,8 @@ namespace ResidentAppCross.Droid
         public const string NotificationHubName = "apartmentappsapihub";
     }
 
+
+
     [BroadcastReceiver(Permission = Gcm.Client.Constants.PERMISSION_GCM_INTENTS)]
     [IntentFilter(new string[] { Gcm.Client.Constants.INTENT_FROM_GCM_MESSAGE },
         Categories = new string[] { "@PACKAGE_NAME@" })]
@@ -47,38 +51,35 @@ namespace ResidentAppCross.Droid
         public const string TAG = "BroadcastReceiver-GCM";
     }
 
+
     [Service]
     public class PushHandlerService : GcmServiceBase
     {
+        private NotificationManager _notificationManager;
         public static string RegistrationID { get; private set; }
         private NotificationHub Hub { get; set; }
 
         public PushHandlerService() : base(GcmConstants.SenderID)
         {
-            Log.Info(BroadcastReceiver.TAG, "PushHandlerService() constructor");
+            Log.Verbose(BroadcastReceiver.TAG,"GCM Service Started");
+        }
+
+        public override void OnCreate()
+        {
+            base.OnCreate();
+            /*
+            #if DEBUG
+                if(!Android.OS.Debug.IsDebuggerConnected)
+                    Android.OS.Debug.WaitForDebugger();
+            #endif
+            */
         }
 
         protected override void OnMessage(Context context, Intent intent)
         {
-            Log.Info(BroadcastReceiver.TAG, "GCM Message Received!");
-
-            var msg = new StringBuilder();
-
-            if (intent != null && intent.Extras != null)
-            {
-                foreach (var key in intent.Extras.KeySet())
-                    msg.AppendLine(key + "=" + intent.Extras.Get(key).ToString());
-            }
-
-            string messageText = intent.Extras.GetString("message");
-            if (!string.IsNullOrEmpty(messageText))
-            {
-                createNotification("Apartment Apps", messageText);
-            }
-            else
-            {
-                createNotification("Unknown message details", msg.ToString());
-            }
+            if (!DroidApplication.PushNotificationsEnabled) return;
+            Log.Verbose(BroadcastReceiver.TAG, "Message Recieved");
+            NotifyWithPayload(intent?.Extras?.ToNotificationPayload());
         }
 
         protected override void OnError(Context context, string errorId)
@@ -88,97 +89,122 @@ namespace ResidentAppCross.Droid
 
         protected override void OnRegistered(Context context, string registrationId)
         {
-        
             DroidApplication.RegisterForHandle(registrationId);
-            Log.Verbose(BroadcastReceiver.TAG, "GCM Registered: " + registrationId);
-            RegistrationID = registrationId;
-
-            //createNotification("PushHandlerService-GCM Registered...",
-            //                    "The device has been Registered!");
-
-            //Hub = new NotificationHub(Views.Constants.NotificationHubName, Views.Constants.ListenConnectionString,
-            //                            context);
-            //try
-            //{
-            //    Hub.UnregisterAll(registrationId);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Log.Error(BroadcastReceiver.TAG, ex.Message);
-            //}
-
-            ////var tags = new List<string>() { "falcons" }; // create tags if you want
-            //var tags = new List<string>() { };
-
-            //try
-            //{
-            //    var hubRegistration = Hub.Register(registrationId, tags.ToArray());
-            //}
-            //catch (Exception ex)
-            //{
-            //    Log.Error(BroadcastReceiver.TAG, ex.Message);
-            //}
+            RegistrationID = registrationId; 
         }
 
         protected override bool OnRecoverableError(Context context, string errorId)
         {
-            Log.Warn(BroadcastReceiver.TAG, "Recoverable Error: " + errorId);
             return base.OnRecoverableError(context, errorId);
         }
 
         protected override void OnUnRegistered(Context context, string registrationId)
         {
-            Log.Verbose(BroadcastReceiver.TAG, "GCM Unregistered: " + registrationId);
-
-            createNotification("GCM Unregistered...", "The device has been unregistered!");
+            NotifyWithData("GCM Unregistered...", "The device has been unregistered!");
         }
 
-
-        void createNotification(string title, string desc, int id = 1)
+        private void NotifyWithPayload(NotificationPayload payload)
         {
-            //Create notification
-            var notificationManager = GetSystemService(Context.NotificationService) as NotificationManager;
-
-            //Create an intent to show UI
+            //Create an intent to open app and pass a bundle to be executed
             var uiIntent = new Intent(this, typeof(ApplicationHostActivity));
+            payload.ToActionRequest().Save(uiIntent);
+            var id = payload.DataType.GetHashCode()+payload.Action.GetHashCode()+payload.DataId ?? -1;
+            Notify(payload.Title, payload.Message, uiIntent, id);
+        }
 
+        void NotifyWithData(string title, string message, int id = 1)
+        {
+            var uiIntent = new Intent(this, typeof(ApplicationHostActivity));
+            Notify(title, message, uiIntent, id);
+        }
+
+        public NotificationManager NotificationManager
+        {
+            get { return _notificationManager ?? (_notificationManager = GetSystemService(Context.NotificationService) as NotificationManager); }
+            set { _notificationManager = value; }
+        }
+
+        void Notify(string title, string message, Intent tapIntent, int id, int iconId = Android.Resource.Drawable.SymActionEmail)
+        {
+
+            if (tapIntent == null) tapIntent = new Intent(this, typeof(ApplicationHostActivity));
 
             var builder = new NotificationCompat.Builder(this)
-                .SetSmallIcon(Android.Resource.Drawable.SymActionEmail)
-                .SetContentTitle(title).SetContentText(desc)
+                .SetSmallIcon(iconId)
+                .SetContentTitle(title).SetContentText(message)
                 .SetAutoCancel(true)
-                .SetContentIntent(PendingIntent.GetActivity(this, 0, uiIntent, 0));
+                .SetContentIntent(PendingIntent.GetActivity(this, id, tapIntent, PendingIntentFlags.UpdateCurrent));
 
-            //Create the notification
-         //   var notification = new Notification(Android.Resource.Drawable.SymActionEmail, title);
-
-            //Auto-cancel will remove the notification once the user touches it
-        //    notification.Flags = NotificationFlags.AutoCancel;
-
-            //Set the notification info
-            //we use the pending intent, passing our ui intent over, which will get called
-            //when the notification is tapped.
-           // notification.SetLatestEventInfo(this, title, desc, PendingIntent.GetActivity(this, 0, uiIntent, 0));
-
-            //Show the notification
-            notificationManager.Notify(id, builder.Build());
-        //    dialogNotify(title, desc);
+            NotificationManager.Notify(id, builder.Build());
         }
-        /*
-        protected void dialogNotify(String title, String message)
-        {
 
-            ApplicationHostActivity.instance.RunOnUiThread(() => {
-                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.instance);
-                AlertDialog alert = dlg.Create();
-                alert.SetTitle(title);
-                alert.SetButton("Ok", delegate {
-                    alert.Dismiss();
-                });
-                alert.SetMessage(message);
-                alert.Show();
-            });
-        }
-        */
+
+        public const int PushHandlerRequestCode = 18824;
+
     }
+
+    public static class BundleExtensions
+    {
+        public static NotificationPayload ToNotificationPayload(this Bundle bundle)
+        {
+            var payload = new NotificationPayload();
+
+            payload.Action = bundle.GetString("Action", "None");
+            payload.Title = bundle.GetString("Title", "");
+            payload.Message = bundle.GetString("Message", "");
+            payload.DataType = bundle.GetString("DataType", "");
+            payload.Semantic = bundle.GetString("Semantic", "Default");
+            payload.DataId = int.Parse(bundle.GetString("DataId", "-1"));
+
+            return payload;
+        }
+
+        public static ActionRequest ToActionRequest(this Bundle bundle)
+        {
+            var action = new ActionRequest
+            {
+                Action = bundle.GetString("Action", "None"),
+                DataType = bundle.GetString("DataType", "None"),
+                DataId = int.Parse(bundle.GetString("DataId", "-1"))
+            };
+            return action;
+        }
+
+        public static void Save(this ActionRequest request, Intent intent)
+        {
+            intent.PutExtra("Action", request.Action);
+            intent.PutExtra("DataType", request.DataType);
+            intent.PutExtra("DataId", (request.DataId ?? -1).ToString());
+        }
+
+        public static ActionRequest ToActionRequest(this NotificationPayload payload)
+        {
+            return new ActionRequest()
+            {
+                Action = payload.Action,
+                DataId = payload.DataId,
+                DataType = payload.DataType
+            };
+        }
+
+        public static TypedActionRequest ToTypedActionRequest(this ActionRequest request)
+        {
+            var result = new TypedActionRequest();
+            ActionType act;
+            if (!Enum.TryParse(request.Action, out act))
+            {
+                throw new Exception("ActionType Type Not Found: " + request.Action);
+            }
+            result.ActionType = act;
+            result.DataId = request.DataId;
+            result.DataType = request.DataType;
+
+            return result;
+        }
+
+
+    }
+
+
+   
 }

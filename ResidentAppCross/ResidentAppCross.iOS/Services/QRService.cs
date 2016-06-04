@@ -39,7 +39,7 @@ namespace ResidentAppCross.iOS.Services
             }
 
             var scan = await Scanner.Scan();
-            
+            if (scan == null) return null;
             return new QRData()
             {
                 Data = scan?.Text,

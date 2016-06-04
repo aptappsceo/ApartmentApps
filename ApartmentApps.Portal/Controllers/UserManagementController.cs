@@ -11,6 +11,7 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -35,6 +36,9 @@ namespace ApartmentApps.Portal.Controllers
 
 
     }
+
+
+
     [Authorize(Roles = "PropertyAdmin,Admin")]
     public class UserManagementController : CrudController<UserBindingModel,ApplicationUser>
     {
@@ -47,7 +51,7 @@ namespace ApartmentApps.Portal.Controllers
         //    _userManager = userManager;
         //}
 
-        public UserManagementController(IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(repository, service, context, userContext)
+        public UserManagementController(IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(kernel, repository, service, context, userContext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -76,9 +80,6 @@ namespace ApartmentApps.Portal.Controllers
                 _userManager = value;
             }
         }
-
-
-   
 
         // GET: UserManagement
         //public ActionResult Index()

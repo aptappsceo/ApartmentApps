@@ -17,6 +17,12 @@ namespace ResidentAppCross.Services
 
     public class ImageService : IImageService
     {
+
+
+        //For droid: 
+        //TODO https://github.com/MvvmCross/MvvmCross/wiki/MvvmCross-plugins#picturechooser
+        // ViewModel Tombstoning + Transfer to service
+
         private IMvxPictureChooserTask _pictureChooser => Mvx.Resolve<IMvxPictureChooserTask>();
 
 

@@ -1,12 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Dynamic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Microsoft.AspNet.Identity;
 using Microsoft.Azure.NotificationHubs;
+using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Api
 {
@@ -65,19 +71,35 @@ namespace ApartmentApps.Api
     public interface IPushNotifiationHandler
     {
         Task<bool> SendToUser(string username, string message);
+        Task<bool> SendToUser(string username, NotificationPayload payload);
         Task<bool> SendToRole(int propertyId, string role, string message);
-
-
+        Task<bool> SendToRole(int propertyId, string role, NotificationPayload payload);
         Task<bool> Send( string message, string pns, string expression);
+        Task<bool> Send( NotificationPayload payload, string pns, string expression);
+    }
+
+    public class NotificationPayload
+    {
+        public string Title { get; set; }
+        public string Message { get; set; }
+        public string Semantic { get; set; } = "Default"; //App decides about icon based on semantic
+        public string Action { get; set; }
+        public int DataId { get; set; }
+        public string DataType { get; set; }
     }
 
     public class AzurePushNotificationHandler : IPushNotifiationHandler
     {
         public async Task<bool> SendToUser(string username, string message)
         {
-            var pns = "apns";
             await Send(message, "gcm", "userid:" + username);
-            return await Send(message, pns, "userid:" + username);
+            return await Send(message, "apns", "userid:" + username);
+        }
+
+        public async  Task<bool> SendToUser(string username, NotificationPayload payload)
+        {
+            await Send(payload, "gcm", "userid:" + username);
+            return await Send(payload, "apns", "userid:" + username);
         }
 
         public async Task<bool> Send(string message, string pns, string expression)
@@ -115,7 +137,37 @@ namespace ApartmentApps.Api
             return false;
         }
 
-    
+        public async Task<bool> Send(NotificationPayload payload, string pns, string expression)
+        {
+            Microsoft.Azure.NotificationHubs.NotificationOutcome outcome = null;
+            switch (pns.ToLower())
+            {
+                case "wns":
+                    // Windows 8.1 / Windows Phone 8.1
+                    var toast = @"<toast><visual><binding template=""ToastText01""><text id=""1"">" +
+                                  "stub" + "</text></binding></visual></toast>";
+                    outcome = await Notifications.Instance.Hub.SendWindowsNativeNotificationAsync(toast, expression);
+                    break;
+                case "apns":
+                    // iOS
+                    outcome = await Notifications.Instance.Hub.SendAppleNativeNotificationAsync(payload.ToANPSJson().ToString(), expression);
+                    break;
+                case "gcm":
+                    outcome = await Notifications.Instance.Hub.SendGcmNativeNotificationAsync(payload.ToGCMJson().ToString(), expression);
+                    break;
+            }
+            if (outcome != null)
+            {
+                if (!((outcome.State == Microsoft.Azure.NotificationHubs.NotificationOutcomeState.Abandoned) ||
+                      (outcome.State == Microsoft.Azure.NotificationHubs.NotificationOutcomeState.Unknown)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         public async Task<bool> SendToRole(int propertyId, string role, string message)
         {
             var pns = "apns";
@@ -123,6 +175,15 @@ namespace ApartmentApps.Api
             //
             await Send(message, "gcm", $"propertyid:{propertyId} && role:{role}");
             return await Send(message, pns, $"propertyid:{propertyId} && role:{role}");
+        }
+
+        public async Task<bool> SendToRole(int propertyId, string role, NotificationPayload payload)
+        {
+            var pns = "apns";
+         
+            //
+            await Send(payload, "gcm", $"propertyid:{propertyId} && role:{role}");
+            return await Send(payload, pns, $"propertyid:{propertyId} && role:{role}");
         }
     }
 
@@ -132,11 +193,13 @@ namespace ApartmentApps.Api
     public class AlertsService : IService, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent
     {
         public PropertyContext Context { get; set; }
+        private readonly IIdentityMessageService _emailService;
         private IPushNotifiationHandler _pushHandler;
 
-        public AlertsService(IPushNotifiationHandler pushHandler, PropertyContext context)
+        public AlertsService(IIdentityMessageService emailService, IPushNotifiationHandler pushHandler, PropertyContext context)
         {
             Context = context;
+            _emailService = emailService;
             _pushHandler = pushHandler;
         }
 
@@ -157,7 +220,7 @@ namespace ApartmentApps.Api
 
         public void SendAlert(ApplicationUser user, string title, string message, string type, int relatedId = 0)
         {
-            Context.UserAlerts.Add(new UserAlert()
+            var alert = new UserAlert()
             {
                 Title = title,
                 Message = message,
@@ -165,15 +228,27 @@ namespace ApartmentApps.Api
                 RelatedId = relatedId,
                 Type = type,
                 UserId = user.Id
-            });
+            };
+            Context.UserAlerts.Add(alert);
             Context.SaveChanges();
-            _pushHandler.SendToUser(user.Id, message);
+
+            _emailService.SendAsync(new IdentityMessage() { Body = message, Destination = user.Email, Subject = title });
+
+            _pushHandler.SendToUser(user.Id, new NotificationPayload()
+            {
+                Action = "View",
+                DataId = relatedId,
+                DataType = type,
+                Message = message,
+                Title = title
+            });
 
         }
         public void SendAlert( int propertyId, string role, string title, string message, string type, int relatedId = 0)
         {
             foreach (var item in Context.Users.Where(x => x.Roles.Any(p => p.RoleId == role)))
             {
+
                 Context.UserAlerts.Add(new UserAlert()
                 {
                     Title = title,
@@ -183,10 +258,21 @@ namespace ApartmentApps.Api
                     Type = type,
                     UserId = item.Id
                 });
+                _emailService.SendAsync(new IdentityMessage() {Body = message, Destination = item.Email, Subject = title});
             }
 
             Context.SaveChanges();
-            _pushHandler.SendToRole(propertyId, role, title);
+       
+            //_pushHandler.SendToRole(propertyId, role, title);
+
+            _pushHandler.SendToRole(propertyId, role, new NotificationPayload()
+            {
+                Action = "View",
+                DataId = relatedId,
+                DataType = type,
+                Message = message,
+                Title = title
+            });
 
         }
 
@@ -204,9 +290,74 @@ namespace ApartmentApps.Api
                 SendAlert(incidentReport.User, $"Incident Report {incidentReport.StatusId}", incidentReport.Comments, "Incident", incidentReport.Id);
             }
         }
+
+        public void SendAlert(object[] ids,string title, string message, string type, int relatedId)
+        {
+            foreach (var id in ids)
+            {
+                var user = Context.Users.Find(id);
+                SendAlert(user, title, message, type, relatedId);
+            }
+
+        }
+    }
+    public class EmailService : IIdentityMessageService
+    {
+
+        public Task SendAsync(IdentityMessage message)
+        {
+            SmtpClient client = new SmtpClient();
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("noreply@apartmentapps.com", "AptApps2016!");
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            MailAddress
+                maFrom = new MailAddress("noreply@apartmentapps.com", "Apartment Apps", Encoding.UTF8),
+                maTo = new MailAddress(message.Destination, string.Empty, Encoding.UTF8);
+            MailMessage mmsg = new MailMessage(maFrom.Address, maTo.Address);
+            mmsg.Body = message.Body;
+            mmsg.BodyEncoding = Encoding.UTF8;
+            mmsg.IsBodyHtml = true;
+            mmsg.Subject = message.Subject;
+            mmsg.SubjectEncoding = Encoding.UTF8;
+
+            client.Send(mmsg);
+
+            // Plug in your email service here to send an email.
+            return Task.FromResult(0);
+        }
     }
 
+    public class SmsService : IIdentityMessageService
+    {
+        public Task SendAsync(IdentityMessage message)
+        {
+            // Plug in your SMS service here to send a text message.
+            return Task.FromResult(0);
+        }
+    }
 
+    public static class NotificationPayloadExtensions
+    {
+        public static JObject ToGCMJson(this NotificationPayload payload)
+        {
+            return new JObject(new JProperty("data", JObject.FromObject(payload)));
+        }
+        public static JObject ToANPSJson(this NotificationPayload payload)
+        {
+            var jpayload = JObject.FromObject(payload);
+            var jmessage = new JObject(
+                new JProperty("title",payload.Title),
+                new JProperty("body",payload.Message));
 
+            return new JObject(
+                new JProperty("aps", new JObject(
+                    new JProperty("alert",jmessage),
+                    new JProperty("content-available", 1)
+                )), 
+                new JProperty("payload", jpayload));
+        }
+    }
 
 }

@@ -9,6 +9,7 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
+using Android.Widget;
 using blocke.circleimageview;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -131,19 +132,19 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
                 Registry.AddCommand(item.Name, item.Icon.ToDrawableId(),item.Command);
             }
 
-            Registry.AddCommand("Change Profile Photo", SharedResources.Icons.User.ToDrawableId(), ViewModel.EditProfileCommand,false, ShowAsAction.Never,false);
+            Registry.AddCommand("Change Profile Photo", SharedResources.Icons.Settings.ToDrawableId(), ViewModel.EditProfileCommand,false, ShowAsAction.Never,false);
+            Registry.AddSwitch("Push Notifications", SharedResources.Icons.Settings.ToDrawableId(), () => DroidApplication.PushNotificationsEnabled, x => DroidApplication.PushNotificationsEnabled = x);
+
 
             Registry.AddCommand("Sign Out", SharedResources.Icons.Exit.ToDrawableId(), ViewModel.SignOutCommand);
 
+         
+            /*
             Registry.AddCommand("Message Screen", SharedResources.Icons.Exit.ToDrawableId(), new MvxCommand(() =>
             {
                 ViewModel.ShowViewModel<MessageDetailsViewModel>(vm => { });
             }));
-
-            Registry.AddCommand("Change Password", SharedResources.Icons.Exit.ToDrawableId(), new MvxCommand(() =>
-            {
-                ViewModel.ShowViewModel<ChangePasswordViewModel>(vm => { });
-            }));
+            */
 
             Registry.AddCommand("Rent Summary", SharedResources.Icons.Wallet.ToDrawableId(), new MvxCommand(() =>
             {
@@ -249,6 +250,19 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             });
         }
 
+        public void AddSwitch(string title, int iconId, Func<bool> func, Action<bool> func1)
+        {
+            Templates.Add(new SwitchItem()
+            {
+                Title = title,
+                IconId = iconId,
+                IsNavigation = false,
+                IsCheckable = false,
+                Getter = func,
+                Setter = func1
+            });
+        }
+
         public event Action<IRegistryItem> OnBeforeSelectItem;
 
         public void Select(int itemId)
@@ -337,6 +351,61 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             }
         }
 
+        public class SwitchItem : IRegistryItem
+        {
+            public IMenuItem UIItem { get; set; }
+            public string Title { get; set; }
+            public int IconId { get; set; }
+            public bool IsCheckable { get; set; }
+            public bool IsNavigation { get; set; }
+            public ShowAsAction ShowAsAction { get; set; }
+            public Action Action { get; set; }
+            public Func<bool> Getter { get; set; }
+            public Action<bool> Setter { get; set; }
+
+            public IMenuItem Construct(GenericMenuRegistry registry)
+            {
+                return registry.Construct(this);
+            }
+
+            public void Select(GenericMenuRegistry registry)
+            {
+                registry.Select(this);
+            }
+        }
+
+        private void Select(SwitchItem switchItem)
+        {
+
+        }
+
+        private IMenuItem Construct(SwitchItem item)
+        {
+            var index = _orderCounter++;
+            var menuitem = _menu.Add(0, index, index, item.Title);
+
+            menuitem.SetActionView(Resource.Layout.home_menu_switch);
+
+            var view = menuitem.ActionView;
+            var sw = view.FindViewById<SwitchCompat>(Resource.Id.Switch);
+
+            sw.Checked = item.Getter();
+
+            sw.CheckedChange += (sender, args) =>
+            {
+                item.Setter(args.IsChecked);
+            };
+
+            menuitem.SetIcon(item.IconId);
+            //menuitem.SetShowAsAction(item.ShowAsAction);
+            item.UIItem = menuitem;
+
+            Items[menuitem.ItemId] = item;
+
+            menuitem.SetCheckable(false);
+            return menuitem;
+        }
+
         public interface IRegistryItem
         {
             IMenuItem UIItem { get; set; }
@@ -354,6 +423,9 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
         {
             OnBeforeSelectItem?.Invoke(obj);
         }
+
+
     }
+
 
 }

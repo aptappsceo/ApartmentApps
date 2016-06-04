@@ -61,6 +61,11 @@ namespace ApartmentApps.Client
             get; 
         }
         
+        IMessaging Messaging
+        {
+            get; 
+        }
+        
         INotifiations Notifiations
         {
             get; 

@@ -11,6 +11,7 @@ using Android.Support.V4.Content;
 using Android.Support.V4.View;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
 using AndroidHUD;
 using ApartmentApps.Client.Models;
@@ -50,7 +51,14 @@ namespace ResidentAppCross.Droid.Views
 
             MainActivity.Window.SetSoftInputMode(SoftInput.AdjustResize | SoftInput.StateHidden);
 
+            PasswordInput.EditorAction += (sender, args) =>
+            {
+                InputMethodManager imm = (InputMethodManager)MainActivity.GetSystemService(Application.InputMethodService);
+                imm.HideSoftInputFromWindow(Layout.WindowToken, 0);
+            };
+
             var set = this.CreateBindingSet<LoginFormView, LoginFormViewModel>();
+
 
             set.Bind(LoginButton).To(vm => vm.LoginCommand);
             set.Bind(EmailInput).TwoWay().For(v => v.Text).To(vm => vm.Username);
@@ -118,6 +126,9 @@ namespace ResidentAppCross.Droid.Views
         public ScrollView ScrollContainer { get; set; }
 
         [Outlet]
+        public LinearLayout SectionContainerDefault { get; set; }
+
+        [Outlet]
         public Button SignUpButton { get; set; }
 
         public override void Bind()
@@ -126,8 +137,20 @@ namespace ResidentAppCross.Droid.Views
 
             MainActivity.Window.SetSoftInputMode(SoftInput.AdjustResize | SoftInput.StateHidden);
 
-     //       FirstnameInput.WithScrollOnFocus(ScrollContainer);
-    //        PasswordConfirmInput.WithScrollOnFocus(ScrollContainer);
+            //       FirstnameInput.WithScrollOnFocus(ScrollContainer);
+            //        PasswordConfirmInput.WithScrollOnFocus(ScrollContainer);
+
+            SectionContainerDefault.Click += (sender, args) =>
+            {
+                InputMethodManager imm = (InputMethodManager)MainActivity.GetSystemService(Application.InputMethodService);
+                imm.HideSoftInputFromWindow(Layout.WindowToken, 0);
+            };
+
+            PasswordConfirmInput.EditorAction += (sender, args) =>
+            {
+                InputMethodManager imm = (InputMethodManager)MainActivity.GetSystemService(Application.InputMethodService);
+                imm.HideSoftInputFromWindow(Layout.WindowToken, 0);
+            };
 
 
             var set = this.CreateBindingSet<SignupFormView, SignUpFormViewModel>();
@@ -162,17 +185,19 @@ namespace ResidentAppCross.Droid.Views
         public override void Bind()
         {
             base.Bind();
-            var adapter = new IconTitleBadgeListAdapter<AlertBindingModel>()
+            var adapter = new MessageListAdapter<AlertBindingModel>()
             {
                 TitleSelector = i=>i.Title,
-                IconColorResourceSelector = i=> (i.HasRead ?? false) ? Resource.Color.secondary_text_body : Resource.Color.primary,
-                IconResourceSelector = i => (i.HasRead ?? false) ? Resource.Drawable.message_read : Resource.Drawable.message_unread
+                SubtitleSelector = i=>i.Message,
+                DateSelector = i=> i.CreatedOn?.ToString("g") ?? "-",
+                ColorResourceSelector = i=> (i.HasRead ?? false) ? Resource.Color.secondary_text_body : Resource.Color.primary,
+                IconSelector = i => (i.HasRead ?? false) ? Resource.Drawable.message_read : Resource.Drawable.message_unread
             };
 
             adapter.Items = ViewModel.FilteredNotifications;
             adapter.BindToCollection(ViewModel.FilteredNotifications);
 
-            adapter.ItemSelected += obj =>
+            adapter.ItemClicked += obj =>
             {
                 ViewModel.SelectedNotification = obj;
                 ViewModel.OpenSelectedNotificationDetailsCommand.Execute(null);
@@ -274,8 +299,6 @@ namespace ResidentAppCross.Droid.Views
     public class HomeMenuView : ViewFragment<HomeMenuViewModel>
     {
         public override string Title => "Apartment Apps";
-
-
         public override void Bind()
         {
             base.Bind();

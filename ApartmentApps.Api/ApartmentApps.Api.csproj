@@ -94,6 +94,10 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PushSharp.Amazon.Adm, Version=2.2.1.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
       <HintPath>..\packages\PushSharp.2.2.1.0\lib\net40\PushSharp.Amazon.Adm.dll</HintPath>
       <Private>True</Private>
@@ -159,7 +163,12 @@
   <ItemGroup>
     <Compile Include="BindingModels\Class1.cs" />
     <Compile Include="CourtesyOfficerService.cs" />
-    <Compile Include="FortePaymentsService.cs" />
+    <Compile Include="Modules\Class1.cs" />
+    <Compile Include="Modules\IModule.cs" />
+    <Compile Include="Modules\MessagingModule.cs" />
+    <Compile Include="Modules\Module.cs" />
+    <Compile Include="Modules\PaymentsConfig.cs" />
+    <Compile Include="Modules\PaymentsModule.cs" />
     <Compile Include="Repositories\BuildingsRepository.cs" />
     <Compile Include="IncidentsService.cs" />
     <Compile Include="DateTimeUtil.cs" />
@@ -195,6 +204,9 @@
     <Compile Include="Services\StandardCrudService.cs" />
     <Compile Include="Services\UnitService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Utils\ImageProcessing\BitmapExtensions.cs" />
+    <Compile Include="Utils\ImageProcessing\ExifReader.cs" />
+    <Compile Include="Utils\ImageProcessing\ExifTags.cs" />
     <Compile Include="ViewModels\Class1.cs" />
     <Compile Include="YardiIntegration.cs" />
   </ItemGroup>
@@ -202,10 +214,6 @@
     <ProjectReference Include="..\ApartmentApps.Data\ApartmentApps.Data.csproj">
       <Project>{69a819d5-3037-4e56-90e4-a9edff41b88a}</Project>
       <Name>ApartmentApps.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ApartmentApps.Payments.Forte\ApartmentApps.Payments.Forte.csproj">
-      <Project>{37cb1883-4cf9-4ac2-91e4-036d806657f2}</Project>
-      <Name>ApartmentApps.Payments.Forte</Name>
     </ProjectReference>
     <ProjectReference Include="..\Entrata.Client\Entrata.Client.csproj">
       <Project>{A8CD4A6F-7D69-49A6-A4A8-D199DDC6E490}</Project>

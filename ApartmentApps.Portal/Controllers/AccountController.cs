@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ApartmentApps.Portal.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -25,7 +26,7 @@ namespace ApartmentApps.Portal.Controllers
         private ApplicationUserManager _userManager;
 
   
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager , IBlobStorageService blobStorage, IUserContext userContext, PropertyContext context) : base(context, userContext)
+        public AccountController(IKernel kernel,ApplicationUserManager userManager, ApplicationSignInManager signInManager , IBlobStorageService blobStorage, IUserContext userContext, PropertyContext context) : base(kernel, context, userContext)
         {
             _blobStorage = blobStorage;
             UserManager = userManager;

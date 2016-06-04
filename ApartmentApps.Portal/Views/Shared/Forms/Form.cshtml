@@ -38,17 +38,17 @@
                 }
                 else if (property.SystemType == typeof (bool))
                 {
-                    @Html.CheckBox(property.Name, property.GetValue())
+                    @Html.CheckBox(property.Name, (bool)property.GetValue())
                 }
                 else
                 {
                     if (property.DataType.DataType == DataType.MultilineText)
                     {
-                        @Html.TextArea(property.Name, property.GetValue())
+                        @Html.TextArea(property.Name, property.GetValue()?.ToString())
                     }
                     else
                     {
-                        @Html.TextBox(property.Name, property.GetValue())
+                        @Html.TextBox(property.Name, property.GetValue()?.ToString())
                     }
 
                 }

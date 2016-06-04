@@ -41,6 +41,59 @@ public static class Formals
         return view;
     }
 
+    public static T WithClearBackground<T>(this T view) where T : UIView
+    {
+        view.WithBackground(UIColor.Clear);
+        return view;
+    }
+
+    public static T WithSecureTextEntry<T>(this T view) where T : UITextField
+    {
+        view.SecureTextEntry = true;
+        return view;
+    }
+
+    public static T WithNextResponder<T>(this T view, UIView responder) where T : UITextField
+    {
+        if (responder == null)
+        {
+            view.ReturnKeyType = UIReturnKeyType.Done;
+            view.ShouldReturn = field => view.ResignFirstResponder();
+        }
+        else
+        {
+            view.ReturnKeyType = UIReturnKeyType.Next;
+            view.ShouldReturn = field => responder.BecomeFirstResponder();
+        }
+        return view;
+    }
+
+
+    public static T WithNextResponder<T>(this T view, Action responder, UIReturnKeyType key = UIReturnKeyType.Send) where T : UITextField
+    {
+        view.ReturnKeyType = key;
+        view.ShouldReturn = field =>
+        {
+            responder?.Invoke();
+            return true;
+        };
+        return view;
+    }
+
+    public static T WithPlaceholder<T>(this T view, string placeholder) where T : UITextField
+    {
+        view.Placeholder = placeholder;
+        return view;
+    }
+
+
+
+    public static T WithBackground<T>(this T view, UIColor color) where T : UIView
+    {
+        view.BackgroundColor = color;
+        return view;
+    }
+
     public static T AddTo<T>(this T view, UIView parent) where T : UIView
     {
         parent.Add(view);
