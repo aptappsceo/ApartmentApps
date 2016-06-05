@@ -1,16 +1,10 @@
-﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.iPhone" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/Views/ViewBase.cs">
+﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj" RefactoringSettings.EnableRefactorings="True">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/LinkerPleaseInclude.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenanceRequestStatusView.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/SignUpFormView.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross/Commands/TaskCommand.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.Droid/Views/Screens/LoginFormView.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/ViewBase.cs" Line="237" Column="3" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="74" Column="5" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="131" Column="47" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/HomeMenuViewModel.cs" Line="227" Column="13" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
