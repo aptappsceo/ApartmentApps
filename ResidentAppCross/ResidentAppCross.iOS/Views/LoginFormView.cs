@@ -65,7 +65,7 @@ namespace ResidentAppCross.iOS
             b.Bind(LoginTextField).TwoWay().For(v => v.Text).To(vm => vm.Username);
             b.Bind(PasswordTextField).TwoWay().For(v => v.Text).To(vm => vm.Password);
             b.Bind(LoginButton).To(vm => vm.LoginCommand);
-            //b.Bind(ForgotPasswordButton).To(vm => vm.RemindPasswordCommand);
+           
             b.Bind(_signUpButton).To(vm => vm.SignUpCommand);
             b.Apply();
 
@@ -132,6 +132,11 @@ namespace ResidentAppCross.iOS
                 }
                 this.PresentViewController(controller, true, () => { });
             };
+#else
+			ForgotPasswordButton.TouchUpInside += (sender, args) =>
+			{
+				ViewModel.RemindPasswordCommand.Execute(null);
+			};
 #endif
             LoginTextField.ShouldReturn += (textField) =>
             {
