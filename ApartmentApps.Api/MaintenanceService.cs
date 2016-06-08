@@ -43,7 +43,7 @@ namespace ApartmentApps.Api
             viewModel.Comments = model.Comments;
             viewModel.SubmissionBy = UserMapper.ToViewModel(model.User);
             viewModel.StatusId = model.StatusId;
-            viewModel.Id = model.Id;
+            viewModel.Id = model.Id.ToString();
             viewModel.UnitName = model.Unit?.Name;
             viewModel.BuildingName = model.Unit?.Building?.Name;
 
@@ -63,10 +63,13 @@ namespace ApartmentApps.Api
         {
             viewModel.Title = model.MaitenanceRequestType.Name;
             viewModel.RequestDate = model.SubmissionDate;
+            viewModel.ScheduleDate = model.ScheduleDate;
+            if (model.ScheduleDate != null)
+                viewModel.EndDate = model.ScheduleDate.Value.Add(new TimeSpan(0, 0, 30, 0));
             viewModel.Comments = model.Message;
             viewModel.SubmissionBy = UserMapper.ToViewModel(model.User);
             viewModel.StatusId = model.StatusId;
-            viewModel.Id = model.Id;
+            viewModel.Id = model.Id.ToString();
             viewModel.UnitName = model.Unit?.Name;
             viewModel.BuildingName = model.Unit?.Building?.Name;
             viewModel.PermissionToEnter = model.PermissionToEnter;
@@ -94,6 +97,13 @@ namespace ApartmentApps.Api
             _userContext = userContext;
         }
 
+        public IEnumerable<MaintenanceRequestViewModel> GetAppointments()
+        {
+            var tz = _userContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(15,0,0,0));
+            return
+                Context.MaitenanceRequests.Where(p => p.ScheduleDate != null).ToArray()
+                    .Select(ToViewModel);
+        }
         public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)
         {
 
@@ -104,6 +114,7 @@ namespace ApartmentApps.Api
                 UserId = _userContext.UserId,
                 User =  _userContext.CurrentUser,
                 Message = comments,
+                
                 UnitId = unitId,
                 MaitenanceRequestTypeId = requestTypeId,
                 StatusId = "Submitted",

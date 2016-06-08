@@ -73,7 +73,7 @@ namespace PlaygroundConsole
         }
         static async void Main2()
         {
-            var client = new App.ApartmentAppsClient();
+            var client = new ApartmentAppsClient();
             var login = await client.LoginAsync("micahosborne@gmail.com", "Asdf1234!");
 
             //var url = "http://apartmentappsapiservice.azurewebsites.net";

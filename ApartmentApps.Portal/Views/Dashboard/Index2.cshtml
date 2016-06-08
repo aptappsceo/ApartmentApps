@@ -34,10 +34,10 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         @*<span class="label label-success pull-right">Total Outstanding</span>*@
-                        <h5>Maintenenance</h5>
+                        <h5>Maintenance</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">@Model.MaintenanceTotalOutstanding</h1>
+                        <h1 class="no-margins">@Model.MaintenanceScheduledToday</h1>
                         <div class="stat-percent font-bold text-success">
                             @*98% <i class="fa fa-bolt"></i>*@
                         </div>
@@ -61,7 +61,7 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Maintenance Completed By User</h5>
+                        <h5>Maintenance Completed By User - Last 30 Days</h5>
                     </div>
                     <div class="ibox-content">
                         <div id="mcbu" style="height: 200px;"></div>
@@ -103,8 +103,8 @@
                                     <img alt="image" class="img-circle" src="@item.User.ImageThumbnailUrl">
                                 </a>
                                 <div class="media-body ">
-                                    <small class="pull-right">@item.CreatedOn.ToShortDateString()</small>
-                                    <strong>@item.User.FirstName @item.User.LastName</strong> @item.Description <br>
+                                    
+                                    <strong>@@@item.User.FirstName @item.User.LastName</strong> @item.Description <br>
                                     <small class="text-muted">@Html.Timeago(item.CreatedOn)</small>
                                     @if (!string.IsNullOrEmpty(item.Message))
                                     {
@@ -112,7 +112,7 @@
                                             @item.Message
                                         </div>
                                     }
-
+                                    <small class="pull-right">@item.CreatedOn.ToShortDateString()</small>
                                 </div>
                             </div>
                         }

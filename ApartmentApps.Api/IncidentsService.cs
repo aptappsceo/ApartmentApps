@@ -130,7 +130,7 @@ namespace ApartmentApps.Api
             viewModel.Comments = model.Comments;
             viewModel.SubmissionBy = UserMapper.ToViewModel(model.User);
             viewModel.StatusId = model.StatusId;
-            viewModel.Id = model.Id;
+            viewModel.Id = model.Id.ToString();
             viewModel.UnitName = model.Unit?.Name;
             viewModel.BuildingName = model.Unit?.Building?.Name;
 
@@ -144,7 +144,7 @@ namespace ApartmentApps.Api
             //viewModel.SubmissionBy = _userMapper.ToViewModel(x.User);// x.User.ToUserBindingModel(BlobStorageService);
             //viewModel.StatusId = x.StatusId;
             //viewModel.LatestCheckin = x.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
-            viewModel.Id = model.Id;
+            viewModel.Id = model.Id.ToString();
 
         }
     }

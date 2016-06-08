@@ -82,12 +82,28 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         // GET: UserManagement
-        //public ActionResult Index()
-        //{
-        //    var applicationusers = Context.Users;
-        //    return View(applicationusers.ToList());
-        //}
+        public override ActionResult Index()
+        {
+            return View(Service.GetAll());
+        }
+        public ActionResult DeleteUser(string id)
+        {
+            var user = Context.Users.Find(id);
 
+            return View("Delete", user);
+
+        }
+        // POST: /Units/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteUserConfirmed(string id)
+        {
+            //var unit = Service.Find(id);
+            var user = Context.Users.Find(id);
+            user.Archived = true;
+            Context.SaveChanges();
+            return RedirectToAction("Index");
+        }
         public ActionResult EditUser(string id = null)
         {
             var user = Context.Users.Find(id);
@@ -158,6 +174,7 @@ namespace ApartmentApps.Portal.Controllers
                 }
                 if (newUser)
                 {
+                  
                     var result = await UserManager.CreateAsync(user, "Temp1234!");
                     if (result.Succeeded)
                     {

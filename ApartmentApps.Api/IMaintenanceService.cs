@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 
 namespace ApartmentApps.Api
@@ -11,5 +12,6 @@ namespace ApartmentApps.Api
         bool CompleteRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images);
         void StartRequest(ApplicationUser worker, int id, string comments, List<byte[]> images);
         void ScheduleRequest(ApplicationUser currentUser, int id, DateTime scheduleDate);
+        IEnumerable<MaintenanceRequestViewModel> GetAppointments();
     }
 }

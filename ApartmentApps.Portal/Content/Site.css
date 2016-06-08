@@ -5,3 +5,6 @@
     font-size: 11px !important;
     font-weight: normal !important;
 }
+.e-rowcell {
+    border-color: transparent !important;
+}

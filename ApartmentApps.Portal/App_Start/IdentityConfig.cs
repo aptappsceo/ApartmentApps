@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Security;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
 using Microsoft.AspNet.Identity;
@@ -16,17 +17,59 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using ApartmentApps.Portal.Models;
+using Microsoft.Owin.Security.DataProtection;
 
 namespace ApartmentApps.Portal
 {
- 
 
+    public class MachineKeyProtectionProvider : IDataProtectionProvider
+    {
+        public IDataProtector Create(params string[] purposes)
+        {
+            return new MachineKeyDataProtector(purposes);
+        }
+    }
+
+    public class MachineKeyDataProtector : IDataProtector
+    {
+        private readonly string[] _purposes;
+
+        public MachineKeyDataProtector(string[] purposes)
+        {
+            _purposes = purposes;
+        }
+
+        public byte[] Protect(byte[] userData)
+        {
+            return MachineKey.Protect(userData, _purposes);
+        }
+
+        public byte[] Unprotect(byte[] protectedData)
+        {
+            return MachineKey.Unprotect(protectedData, _purposes);
+        }
+    }
+
+    public class AppUserValidator : UserValidator<ApplicationUser>
+    {
+        public AppUserValidator(UserManager<ApplicationUser, string> manager) : base(manager)
+        {
+        }
+
+        public override Task<IdentityResult> ValidateAsync(ApplicationUser item)
+        {
+            return base.ValidateAsync(item);
+        }
+    }
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>, ICreateUser
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {
+            var provider = new MachineKeyProtectionProvider();
+            UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(
+                provider.Create("ResetPasswordPurpose"));
         }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
@@ -36,7 +79,8 @@ namespace ApartmentApps.Portal
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
+                RequireUniqueEmail = true,
+                
             };
 
             // Configure validation logic for passwords
