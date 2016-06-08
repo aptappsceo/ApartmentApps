@@ -72,9 +72,7 @@ namespace ResidentAppCross.iOS
 
 
             var dictionary = launchOptions?[UIApplication.LaunchOptionsRemoteNotificationKey] as NSDictionary;
-#if DEBUG
-            dictionary = MockNotificationLaunchDictionary();
-#endif
+
             if (dictionary != null) LastOptions = dictionary;
 
             if (LastOptions != null)
