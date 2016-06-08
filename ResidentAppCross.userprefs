@@ -1,4 +1,4 @@
-﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj">
+﻿<Properties StartupItem="ResidentAppCross/ResidentAppCross.iOS/ResidentAppCross.iOS.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.iPhone" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/Views/ViewBase.cs">
     <Files>

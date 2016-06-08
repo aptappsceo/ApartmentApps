@@ -81,7 +81,11 @@ namespace ResidentAppCross.iOS.Views
             base.ViewDidLoad();
             this.OnViewModelEvent<TaskStarted>(evt => this.SetTaskRunning(evt.Label));
             this.OnViewModelEvent<TaskComplete>(evt => this.SetTaskComplete(evt.ShouldPrompt, evt.Label, evt.OnPrompted));
-            this.OnViewModelEvent<TaskFailed>(evt => this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted));
+            this.OnViewModelEvent<TaskFailed>(evt =>
+            {
+                evt.Processed = true;
+                this.SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted);
+            });
             this.OnViewModelEvent<TaskProgressUpdated>(evt => this.SetTaskProgress(evt.ShouldPrompt, evt.Label));
             OwnViewAttributes.ForEach(a=>a.OnViewLoaded(this));
         }

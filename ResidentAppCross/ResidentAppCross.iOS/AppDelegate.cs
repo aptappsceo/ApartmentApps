@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using WindowsAzure.Messaging;
 using ApartmentApps.Client;
@@ -6,11 +7,13 @@ using ApartmentApps.Client.Models;
 using Foundation;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Platform;
+using MvvmCross.iOS.Views;
 using MvvmCross.iOS.Views.Presenters;
 using MvvmCross.Platform;
 using ObjCRuntime;
 using ResidentAppCross.ServiceClient;
 using ResidentAppCross.Services;
+using ResidentAppCross.ViewModels;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -66,25 +69,78 @@ namespace ResidentAppCross.iOS
             var setup = new Setup(this, presenter);
             setup.Initialize();
             Mvx.RegisterSingleton<IVersionChecker>(this);
-            var startup = Mvx.Resolve<IMvxAppStart>();
-            startup.Start();
+
+
+            var dictionary = launchOptions?[UIApplication.LaunchOptionsRemoteNotificationKey] as NSDictionary;
+
+            if (dictionary != null) LastOptions = dictionary;
+
+            if (LastOptions != null)
+            {
+                ProcessNotification(LastOptions, true);
+                LastOptions = null;
+            }
+
+            Mvx.Resolve<HomeMenuViewModel>().ShowViewModel<ApplicationViewModel>(x=> {});
 
             Window.MakeKeyAndVisible();
+
+
+
+            
+
+            
 
             return true;
 
         }
 
-        public override bool WillFinishLaunching(UIApplication application, NSDictionary launchOptions)
+        
+        
+
+        private NSDictionary MockNotificationLaunchDictionary()
         {
-            ProcessNotification(launchOptions, true);
-            return true;
+            Debug.WriteLine("Start");
+            var res = new NSMutableDictionary();
+            var apsDictionry = new NSMutableDictionary();
+            var alertDictionry = new NSMutableDictionary();
+            var payloadDictionry = new NSMutableDictionary();
+
+
+            res["aps"] = apsDictionry;
+            apsDictionry["alert"] = alertDictionry;
+            apsDictionry["content-available"] = new NSNumber(1);
+
+            alertDictionry["title"] = new NSString("Hey Ho");
+            alertDictionry["body"] = new NSString("This is the body");
+
+            res["payload"] = payloadDictionry;
+
+            payloadDictionry["Title"] = new NSString("Hello");
+            payloadDictionry["Message"] = new NSString("Some Message Here");
+            payloadDictionry["Semantic"] = new NSString("Default");
+            payloadDictionry["Action"] = new NSString("View");
+            payloadDictionry["DataId"] = new NSString("27");
+            payloadDictionry["DataType"] = new NSString("Maintenance");
+            Debug.WriteLine("End");
+
+            return res;
+
+        }
+
+        public NSDictionary LastOptions { get; set; }
+
+
+        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
+        {
+            ProcessNotification(userInfo, false);
         }
 
         public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
         {
             ProcessNotification(userInfo, false);
         }
+
         void ProcessNotification(NSDictionary options, bool fromFinishedLaunching)
         {
             // Check to see if the dictionary has the aps key.  This is the notification payload you would have sent

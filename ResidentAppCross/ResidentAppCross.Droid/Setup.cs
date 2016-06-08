@@ -21,6 +21,7 @@ using ResidentAppCross.Droid.Services;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.ServiceClient;
 using ResidentAppCross.Services;
+using ResidentAppCross.ViewModels.Screens;
 using ZXing.Mobile;
 
 namespace ResidentAppCross.Droid
@@ -88,6 +89,7 @@ namespace ResidentAppCross.Droid
             Mvx.ConstructAndRegisterSingleton<IQRService,AndroidQRService>();
             Mvx.RegisterSingleton<Application>(DroidApplication.Instance);
             Mvx.ConstructAndRegisterSingleton<IDialogService,AndroidDialogService>();
+            Mvx.ConstructAndRegisterSingleton<IDefaultViewModelTypeProvider,AndroidDefaultViewModelTypeProvider>();
             Mvx.RegisterSingleton<IVersionChecker>(this);
         }
 
@@ -105,11 +107,17 @@ namespace ResidentAppCross.Droid
         }
     }
 
+    public class AndroidDefaultViewModelTypeProvider : IDefaultViewModelTypeProvider
+    {
+        public Type DefaultViewModelType => typeof (NotificationIndexFormViewModel);
+    }
+
     [Application]
     public class DroidApplication : Application
     {
         private static ISharedPreferencesEditor _preferencesEditor;
         private static ISharedPreferences _preferences;
+        private static bool _pushNotificationsEnabled;
 
         protected DroidApplication(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
         {
@@ -200,6 +208,16 @@ namespace ResidentAppCross.Droid
             set
             {
                 PreferencesEditor.PutString("AA_HANDLE", value);
+                PreferencesEditor.Commit();
+            }
+        }
+
+        public static bool PushNotificationsEnabled
+        {
+            get { return Preferences.GetBoolean("AA_PUSHNOTIFICATIONS", true); }
+            set
+            {
+                PreferencesEditor.PutBoolean("AA_PUSHNOTIFICATIONS", value);
                 PreferencesEditor.Commit();
             }
         }

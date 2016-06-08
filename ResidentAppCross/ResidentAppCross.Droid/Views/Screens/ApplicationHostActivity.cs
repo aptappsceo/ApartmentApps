@@ -163,7 +163,11 @@ namespace ResidentAppCross.Droid.Views
 
             this.OnEvent<TaskStarted>(evt => SetTaskRunning(evt.Label));
             this.OnEvent<TaskComplete>(evt => SetTaskComplete(evt.ShouldPrompt, evt.Label, evt.OnPrompted));
-            this.OnEvent<TaskFailed>(evt => SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted));
+            this.OnEvent<TaskFailed>(evt =>
+            {
+                evt.Processed = true;
+                SetTaskFailed(evt.ShouldPrompt, evt.Label, evt.Reason, evt.OnPrompted);
+            });
             this.OnEvent<TaskProgressUpdated>(evt => SetTaskProgress(evt.ShouldPrompt, evt.Label));
 
         }
@@ -356,7 +360,7 @@ namespace ResidentAppCross.Droid.Views
             {
                 if (_waitTimer == null)
                 {
-                    _waitTimer = new Timer(250f) {AutoReset = false};
+                    _waitTimer = new Timer(350f) {AutoReset = false};
                     _waitTimer.Elapsed += (s, e) =>
                     {
 
@@ -428,6 +432,7 @@ namespace ResidentAppCross.Droid.Views
 
         public void SetTaskFailed(bool prompt, string label = null, Exception reason = null, Action<Exception> onPrompted = null)
         {
+
             WaitTimer?.Stop();
             _nextWaitingBlock = false;
 
