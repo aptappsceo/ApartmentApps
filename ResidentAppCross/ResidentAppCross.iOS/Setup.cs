@@ -28,8 +28,14 @@ namespace ResidentAppCross.iOS
                 base.InitializeIoC();
                 Mvx.ConstructAndRegisterSingleton<IQRService, IOSQRService>();
                 Mvx.ConstructAndRegisterSingleton<IDialogService, IOSDialogService>();
+                Mvx.ConstructAndRegisterSingleton<IDefaultViewModelTypeProvider, IOSDefaultViewModelTypeProvider>();
             }
         }
+
+    public class IOSDefaultViewModelTypeProvider : IDefaultViewModelTypeProvider
+    {
+        public Type DefaultViewModelType => typeof (HomeMenuViewModel);
+    }
 
     public class VerionChecker
     {

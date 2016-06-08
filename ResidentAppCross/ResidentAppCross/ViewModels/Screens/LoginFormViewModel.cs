@@ -21,6 +21,7 @@ namespace ResidentAppCross
         public ILoginManager LoginManager { get; set; }
         public IVersionChecker VersionChecker { get; set; }
         public IApartmentAppsAPIService Data { get; set; }
+       private ISharedCommands _sharedCommands { get; set; }
         private string _username;
         public string Username
         {
@@ -47,12 +48,13 @@ namespace ResidentAppCross
 
 		IDialogService dialogService;
 
-		public LoginFormViewModel(IDialogService dialogService, ILoginManager loginManager, IVersionChecker versionChecker, IApartmentAppsAPIService data)
+		public LoginFormViewModel(IDialogService dialogService, ILoginManager loginManager, IVersionChecker versionChecker, IApartmentAppsAPIService data, ISharedCommands sharedCommands)
         {
 			this.dialogService = dialogService;
             LoginManager = loginManager;
             VersionChecker = versionChecker;
             Data = data;
+		    _sharedCommands = sharedCommands;
         }
 
         public override void Start()
@@ -69,59 +71,8 @@ namespace ResidentAppCross
         {
             get
             {
-                return new MvxCommand(async () =>
-                {
-
-                    if(!IsAutologin) LoginManager.Logout();
-                    if (VersionChecker != null)
-                    {
-                        var version = await Data.Version.GetAsync();
-                        if (!VersionChecker.CheckVersion(version))
-                        {
-                            VersionChecker.OpenInStore(version);
-                            
-                            return;
-                        }
-                    }
-                    this.TaskCommand(async context =>
-                    {
-
-#if DEBUG
-                        var username = string.IsNullOrEmpty(Username) ? "micahosborne@gmail.com" : Username;
-                        var password = string.IsNullOrEmpty(Password) ? "Asdf1234!" : Password;
-#else
-                    var username =  Username;
-                    var password =  Password;
-#endif
-
-                        if (!await LoginManager.LoginAsync(username, password))
-                        {
-                            context.FailTask("Invalid login or password!");
-                        }
-                        else
-                        {
-
-                        }
-                    })
-                   .OnStart("Logging In...")
-                   .OnComplete(null, () =>
-                   {
-                       if (EventAggregator.HasSubscriptionsFor<UserLoggedInEvent>())
-                       {
-                           var message = new UserLoggedInEvent(this);
-                           this.Publish(message);
-                           if (!message.PreventNavigation)
-                           {
-                               ShowViewModel<HomeMenuViewModel>();
-                           }
-                       }
-                       else
-                       {
-                           ShowViewModel<HomeMenuViewModel>();
-                       }
-                   }).Execute(null);
-                });
-
+                return _sharedCommands.CheckVersionAndLogInIfNeededCommand(this, () => Username, () => Password)
+                    .OnStart("Logging In...");
             }
         }
 

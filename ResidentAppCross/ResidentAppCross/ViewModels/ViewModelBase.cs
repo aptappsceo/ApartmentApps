@@ -95,12 +95,16 @@ namespace ResidentAppCross.ViewModels
 
         public static void FailTaskWithPrompt(this ViewModelBase viewModel, string message, Action<Exception> onPrompt = null)
         {
-            viewModel.Publish(new TaskFailed(viewModel) { Label =  message, ShouldPrompt = true, OnPrompted = onPrompt});
+            var evt = new TaskFailed(viewModel) { Label =  message, ShouldPrompt = true, OnPrompted = onPrompt, Processed = false};
+            viewModel.Publish(evt);
+            if (!evt.Processed) onPrompt?.Invoke(new Exception(message)); //If not processed with view, invoke handler right here
         }
 
         public static void FailTaskWithPrompt(this ViewModelBase viewModel, Exception reason, Action<Exception> onPrompt = null)
         {
-            viewModel.Publish(new TaskFailed(viewModel) { Reason = reason, ShouldPrompt = true, OnPrompted = onPrompt});
+            var evt = new TaskFailed(viewModel) { Reason = reason, ShouldPrompt = true, OnPrompted = onPrompt};
+            viewModel.Publish(evt);
+            if (!evt.Processed) onPrompt?.Invoke(reason); //If not processed with view, invoke handler right here
         }
 
         public static void UpdateTask(this ViewModelBase viewModel, string message)

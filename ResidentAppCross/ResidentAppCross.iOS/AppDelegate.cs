@@ -7,11 +7,13 @@ using ApartmentApps.Client.Models;
 using Foundation;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Platform;
+using MvvmCross.iOS.Views;
 using MvvmCross.iOS.Views.Presenters;
 using MvvmCross.Platform;
 using ObjCRuntime;
 using ResidentAppCross.ServiceClient;
 using ResidentAppCross.Services;
+using ResidentAppCross.ViewModels;
 using UIKit;
 
 namespace ResidentAppCross.iOS
@@ -70,6 +72,9 @@ namespace ResidentAppCross.iOS
 
 
             var dictionary = launchOptions?[UIApplication.LaunchOptionsRemoteNotificationKey] as NSDictionary;
+#if DEBUG
+            dictionary = MockNotificationLaunchDictionary();
+#endif
             if (dictionary != null) LastOptions = dictionary;
 
             if (LastOptions != null)
@@ -78,8 +83,7 @@ namespace ResidentAppCross.iOS
                 LastOptions = null;
             }
 
-            var startup = Mvx.Resolve<IMvxAppStart>();
-            startup.Start();
+            Mvx.Resolve<HomeMenuViewModel>().ShowViewModel<ApplicationViewModel>(x=> {});
 
             Window.MakeKeyAndVisible();
 
@@ -118,7 +122,7 @@ namespace ResidentAppCross.iOS
             payloadDictionry["Message"] = new NSString("Some Message Here");
             payloadDictionry["Semantic"] = new NSString("Default");
             payloadDictionry["Action"] = new NSString("View");
-            payloadDictionry["DataId"] = new NSString("1");
+            payloadDictionry["DataId"] = new NSString("27");
             payloadDictionry["DataType"] = new NSString("Maintenance");
             Debug.WriteLine("End");
 
