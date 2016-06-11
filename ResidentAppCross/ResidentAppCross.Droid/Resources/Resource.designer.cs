@@ -4241,8 +4241,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0200bb
 			public const int my_background = 2130837691;
 			
-			// aapt resource value: 0x7f0200e2
-			public const int notification_template_icon_bg = 2130837730;
+			// aapt resource value: 0x7f0200e3
+			public const int notification_template_icon_bg = 2130837731;
 			
 			// aapt resource value: 0x7f0200bc
 			public const int OfficerIcon = 2130837692;
@@ -4356,7 +4356,10 @@ namespace ResidentAppCross.Droid
 			public const int wallet = 2130837728;
 			
 			// aapt resource value: 0x7f0200e1
-			public const int WhiteHomeIcon = 2130837729;
+			public const int wallet_plus = 2130837729;
+			
+			// aapt resource value: 0x7f0200e2
+			public const int WhiteHomeIcon = 2130837730;
 			
 			static Drawable()
 			{
