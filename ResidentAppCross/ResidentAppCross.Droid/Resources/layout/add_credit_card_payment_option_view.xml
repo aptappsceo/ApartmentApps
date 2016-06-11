@@ -162,7 +162,7 @@
 
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/PayButton"
+        android:id="@+id/AddCreditCardButton"
         android:text="ADD CREDIT CARD"
         android:backgroundTint="@color/accent"
         android:layout_width="match_parent"
