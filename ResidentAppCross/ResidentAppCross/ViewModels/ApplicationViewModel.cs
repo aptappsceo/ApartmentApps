@@ -13,7 +13,7 @@ namespace ResidentAppCross.ViewModels
         public override void Start()
         {
             base.Start();
-            ShowViewModel<AddCreditCardPaymentOptionViewModel>();
+            ShowViewModel<LoginFormViewModel>();
         }
 
     }
