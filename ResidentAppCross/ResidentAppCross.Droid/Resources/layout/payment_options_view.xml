@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/header_section"
+        android:id="@+id/HeaderSection"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/PaymentOptionsContainer"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:tag="PAYMENT_OPTIONS"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:tag="NO_PAYMENT_OPTIONS"
+        >
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            app:srcCompat="@drawable/cicle_checkmark"
+            android:tint="@color/accent"
+
+            android:layout_centerInParent="true"
+            android:id="@+id/NoPaymentsIcon"/>
+
+
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/AddCreditCardButton"
+        android:text="ADD CREDIT CARD"
+        android:backgroundTint="@color/accent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="PAYMENTS"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/AddBankAccountButton"
+        android:text="ADD BANK ACCOUNT"
+        android:backgroundTint="@color/accent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="PAYMENTS"/>
+
+</LinearLayout>

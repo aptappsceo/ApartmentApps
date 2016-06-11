@@ -88,7 +88,7 @@ namespace ResidentAppCross
 
 #if DEBUG
                         var username = string.IsNullOrEmpty(Username) ? "micahosborne@gmail.com" : Username;
-                        var password = string.IsNullOrEmpty(Password) ? "Asdf1234!" : Password;
+                        var password = string.IsNullOrEmpty(Password) ? "micah123" : Password;
 #else
                     var username =  Username;
                     var password =  Password;

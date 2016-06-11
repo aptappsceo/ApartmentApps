@@ -146,10 +146,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             }));
             */
 
-            Registry.AddCommand("Rent Summary", SharedResources.Icons.Wallet.ToDrawableId(), new MvxCommand(() =>
-            {
-                ViewModel.ShowViewModel<RentSummaryViewModel>(vm => { });
-            }));
+  
 
             Registry.AddCommand("Add Credit Card", SharedResources.Icons.Wallet.ToDrawableId(), new MvxCommand(() =>
             {

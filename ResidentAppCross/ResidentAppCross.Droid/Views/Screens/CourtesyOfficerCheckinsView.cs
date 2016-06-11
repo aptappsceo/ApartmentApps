@@ -7,6 +7,7 @@ using Android.Graphics;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using ApartmentApps.Client.Models;
 using FR.Ganfra.Materialspinner;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Droid.Shared.Attributes;
@@ -68,6 +69,7 @@ namespace ResidentAppCross.Droid.Views
         [Outlet] public TextView TitleLabel { get; set; }
         [Outlet] public TextView SubtitleLabel { get; set; }
         [Outlet] public ImageView IconView { get; set; }
+        [Outlet] public Button PayButton { get; set; }
 
         public IEnumerable<View> NoPaymentsViews => Layout.GetChildrenWithTag("NO_PAYMENTS");
         public IEnumerable<View> PaymentsViews => Layout.GetChildrenWithTag("PAYMENTS");
@@ -75,6 +77,12 @@ namespace ResidentAppCross.Droid.Views
         public override void Bind()
         {
             base.Bind();
+
+            var set = this.CreateBindingSet<RentSummaryView, RentSummaryViewModel>();
+
+            set.Bind(PayButton).To(vm => vm.CheckOutCommand);
+            set.Apply();
+            
 
             TitleLabel.Text = "Rent Summary";
 
@@ -117,6 +125,85 @@ namespace ResidentAppCross.Droid.Views
             RentDetailsList.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
             RentDetailsList.SetItemAnimator(new SlideInLeftAnimator());
             RentDetailsList.SetAdapter(adapter);
+
+        }
+    }
+
+    [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
+    public class PaymentOptionsView : ViewFragment<PaymentOptionsViewModel>
+    {
+
+        [Outlet]
+        public RecyclerView PaymentOptionsContainer { get; set; }
+        [Outlet]
+        public TextView TitleLabel { get; set; }
+        [Outlet]
+        public TextView SubtitleLabel { get; set; }
+        [Outlet]
+        public ImageView IconView { get; set; }
+        [Outlet]
+        public Button AddCreditCardButton { get; set; }
+        [Outlet]
+        public Button AddBankAccountButton { get; set; }
+
+
+        public IEnumerable<View> NoPaymentsViews => Layout.GetChildrenWithTag("NO_PAYMENT_OPTION");
+        public IEnumerable<View> PaymentsViews => Layout.GetChildrenWithTag("PAYMENT_OPTIONS");
+
+        public override void Bind()
+        {
+            base.Bind();
+
+            var set = this.CreateBindingSet<PaymentOptionsView, PaymentOptionsViewModel>();
+            set.Bind(AddCreditCardButton).To(vm => vm.AddCreditCardCommand);
+            set.Bind(AddBankAccountButton).To(vm => vm.AddBankAccountCommand);
+            set.Apply();
+            
+            TitleLabel.Text = "Select Payment Option";
+
+            IconView.SetImageResource(SharedResources.Icons.Wallet.ToDrawableId());
+            var color = Resources.GetColor(Resource.Color.secondary_text_body);
+            IconView.SetColorFilter(color);
+
+            this.OnViewModelEvent<PaymentOptionsUpdated>(evt =>
+            {
+
+                var anyPayments = ViewModel.PaymentOptions.Any();
+                if (anyPayments)
+                {
+                    SubtitleLabel.Text = "Pay with....";
+                }
+                else
+                {
+                    SubtitleLabel.Text = "Please, add payment options.";
+                }
+
+                var paymentsViews = PaymentsViews.ToList();
+                var noPaymentsViews = NoPaymentsViews.ToList();
+
+                foreach (var view in paymentsViews)
+                {
+                    view.Visibility = anyPayments ? ViewStates.Visible : ViewStates.Gone;
+                }
+
+                foreach (var view in noPaymentsViews)
+                {
+                    view.Visibility = !anyPayments ? ViewStates.Visible : ViewStates.Gone;
+                }
+
+            });
+
+
+            var adapter = new IconTitleBadgeListAdapter<PaymentOptionBindingModel>()
+            {
+                Items = ViewModel.PaymentOptions,
+                TitleSelector = i=>i.FriendlyName
+            };
+
+            PaymentOptionsContainer.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
+            PaymentOptionsContainer.SetItemAnimator(new SlideInLeftAnimator());
+            PaymentOptionsContainer.SetAdapter(adapter);
+
 
         }
     }
