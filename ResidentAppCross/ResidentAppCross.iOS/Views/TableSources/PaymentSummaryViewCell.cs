@@ -18,5 +18,11 @@ namespace ResidentAppCross.iOS
 		public PaymentSummaryViewCell (IntPtr handle) : base (handle)
 		{
 		}
-	}
+
+        public UIView TopSeparator => _topSeparator;
+        public UIView BottomSeparator => _bottomSeparator;
+        public UILabel ItemTitleLabel => _itemTitleLabel;
+        public UILabel ItemPriceLabel => _itemPriceLabel;
+
+    }
 }

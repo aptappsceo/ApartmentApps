@@ -5,10 +5,18 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	partial class GenericTableSection : UIView
-	{
+	public partial class GenericTableSection : SectionViewBase
+    {
 		public GenericTableSection (IntPtr handle) : base (handle)
 		{
 		}
-	}
+
+	    public GenericTableSection()
+	    {
+	    }
+
+	    public UITableView Table => _tableView;
+
+
+    }
 }

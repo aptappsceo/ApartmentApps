@@ -364,6 +364,8 @@
     <None Include="packages.config" />
     <None Include="Entitlements.plist" />
     <None Include="EntitlementsRelease.plist" />
+    <InterfaceDefinition Include="Views\TableSources\PaymentSummaryViewCell.xib" />
+    <InterfaceDefinition Include="Views\Sections\GenericTableSection.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\LocationPluginBootstrap.cs" />
@@ -386,7 +388,12 @@
     <Compile Include="Views\BaseForm.cs" />
     <Compile Include="Views\CheckinFormView.cs" />
     <Compile Include="Views\MaintenanceRequestIndexView.cs" />
+    <Compile Include="Views\RentSummaryView.cs" />
     <Compile Include="Views\Sections\CollectionSections\GenericCollectionViewSource.cs" />
+    <Compile Include="Views\Sections\GenericTableSection.cs" />
+    <Compile Include="Views\Sections\GenericTableSection.designer.cs">
+      <DependentUpon>GenericTableSection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sections\Intefaces\ISoftKeyboardEventsListener.cs" />
     <Compile Include="Views\Sections\Intefaces\IFormEventsListener.cs" />
     <Compile Include="Views\Sections\Intefaces\IFormTapListener.cs" />
@@ -406,6 +413,10 @@
     <Compile Include="Views\SettingsFormView.cs" />
     <Compile Include="Views\TableSources\HomeMenuTableSource.cs" />
     <Compile Include="Views\TableSources\LookUpPairSelectionTableSource.cs" />
+    <Compile Include="Views\TableSources\PaymentSummaryViewCell.cs" />
+    <Compile Include="Views\TableSources\PaymentSummaryViewCell.designer.cs">
+      <DependentUpon>PaymentSummaryViewCell.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\TestFormView.cs" />
     <Compile Include="Views\ThemeFramework\Theme.cs" />
     <Compile Include="Views\UIViewsExtensions.cs" />
