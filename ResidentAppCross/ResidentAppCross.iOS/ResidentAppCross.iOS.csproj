@@ -1177,4 +1177,16 @@
   <ItemGroup>
     <BundleResource Include="Resources\132_HomeConfig%402x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_WalletPlus%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_Wallet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_Wallet%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\132_WalletPlus.png" />
+  </ItemGroup>
 </Project>

@@ -82,7 +82,8 @@ namespace ResidentAppCross.iOS
                 {
                     _headerSection = Formals.Create<HeaderSection>();
                     _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
-                    _headerSection.LogoImage.Image = AppTheme.GetIcon(SharedResources.Icons.Wallet, SharedResources.Size.L);
+                    _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Wallet, SharedResources.Size.L);
+                    _headerSection.LogoImage.TintColor = AppTheme.CreateColor;
                     _headerSection.MainLabel.Text = "Rent Summary";
                     _headerSection.SubLabel.Text = "Pending payments are listed below";
                 }
