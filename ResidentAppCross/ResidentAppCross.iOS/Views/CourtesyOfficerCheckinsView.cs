@@ -150,4 +150,125 @@ namespace ResidentAppCross.iOS
             //return result;
         }
     }
+
+    [Register("RentSummaryView")]
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    public partial class RentSummaryView : BaseForm<RentSummaryViewModel>
+    {
+        
+    }
+
+    [Register("AddCreditCardPaymentOptionView")]
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    public partial class AddCreditCardPaymentOptionView : BaseForm<AddCreditCardPaymentOptionViewModel>
+    {
+
+    }
+
+    [Register("AddBankAccountPaymentOptionView")]
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    public partial class AddBankAccountPaymentOptionView : BaseForm<AddBankAccountPaymentOptionViewModel>
+    {
+        private TextFieldSection _paymentOptionTitleSection;
+        private TextFieldSection _routingNumberSection;
+        private TextFieldSection _accountNumberSection;
+        private TextFieldSection _accountHolderSection;
+        private CallToActionSection _callToActionSection;
+        private HeaderSection _headerSection;
+
+        public HeaderSection HeaderSection
+        {
+            get
+            {
+                if (_headerSection == null)
+                {
+                    _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
+                    _headerSection.LogoImage.Image = UIImage.FromBundle("WalletIcon");
+                    _headerSection.MainLabel.Text = "Add Credit Card";
+                    _headerSection.SubLabel.Text = "Please, fill the information below";
+                }
+                return _headerSection;
+            }
+        }
+
+        public TextFieldSection PaymentOptionTitleSection
+        {
+            get
+            {
+                return _paymentOptionTitleSection ?? (_paymentOptionTitleSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Payment Option Title...")
+                    .WithNextResponder(AccountNumberSection));
+            }
+        }
+
+        public TextFieldSection RoutingNumberSection
+        {
+            get
+            {
+                return _routingNumberSection ?? (_routingNumberSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Routing Number...")
+                    .WithNextResponder(AccountHolderSection));
+            }
+        }
+
+        public TextFieldSection AccountNumberSection
+        {
+            get
+            {
+                return _accountNumberSection ?? (_accountNumberSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Account Number...")
+                    .WithNextResponder(RoutingNumberSection));
+            }
+        }
+
+        public TextFieldSection AccountHolderSection
+        {
+            get
+            {
+                return _accountHolderSection ?? (_accountHolderSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Account Holder Name..."));
+            }
+        }
+
+        public CallToActionSection CallToActionSection
+        {
+            get
+            {
+                if (_callToActionSection == null)
+                {
+                    _callToActionSection = Formals.Create<CallToActionSection>();
+                    _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
+                }
+                return _callToActionSection;
+            }
+        }
+
+
+    }
+
+    [Register("PaymentOptionsView")]
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    public partial class PaymentOptionsView : BaseForm<PaymentOptionsViewModel>
+    {
+
+    }
+
+    [Register("CommitPaymentView")]
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    public partial class CommitPaymentView : BaseForm<CommitPaymentViewModel>
+    {
+
+    }
+
+
+
+
+
+
 }
