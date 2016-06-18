@@ -2,6 +2,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Entrata.Client;
@@ -149,6 +150,21 @@ namespace ApartmentApps.Api
         }
     }
 
+    public class EntrataSettings : ModuleConfig
+    {
+        
+    }
+    public class EntrataModule : Module<EntrataSettings>, IWebJob
+    {
+        public EntrataModule(IRepository<EntrataSettings> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        {
+        }
+
+        public void Execute(ILogger logger)
+        {
+            logger.Info("It has begun.");
+        }
+    }
     /// <summary>
     /// Handles the synchronization of entrata and apartment apps.
     /// </summary>

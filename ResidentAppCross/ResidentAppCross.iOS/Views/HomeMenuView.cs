@@ -42,7 +42,6 @@ namespace ResidentAppCross.iOS
                 UsernameLabel.Font = AppFonts.SectionHeader;
                 EditProfileButton.Font = AppFonts.Note;
 
-
                 MenuTable.Source = new HomeMenuTableSource() { Items = ViewModel.MenuItems.ToArray() };
                 MenuTable.SeparatorStyle = UITableViewCellSeparatorStyle.None;
                 SignOutButton.SetRightIcon(exitIcon, false);
@@ -79,9 +78,7 @@ namespace ResidentAppCross.iOS
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-
 		}
-
 
         public override void ViewWillLayoutSubviews()
         {

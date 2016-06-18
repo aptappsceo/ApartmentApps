@@ -30,13 +30,15 @@ public class App : MvxApplication
     {
         Mvx.ConstructAndRegisterSingleton<IImageService, ImageService>();
         Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
-        Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
-        //var client = new ApartmentAppsClient(new Uri("http://localhost:54683"));
-        var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://apartmentappsapiservice.azurewebsites.net"));
+        
+        //local sini pc endpoint
         //var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://82.151.208.56.nip.io:54685"));
+
+        var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://apartmentappsapiservice.azurewebsites.net"));
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(apartmentAppsApiService);
         Mvx.RegisterSingleton<ILoginManager>(new LoginService(apartmentAppsApiService));
-        Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<LoginFormViewModel>());
+        Mvx.RegisterSingleton<IMvxAppStart>(new CustomAppStart());
+        Mvx.LazyConstructAndRegisterSingleton<ISharedCommands, SharedCommands>();
         Mvx.ConstructAndRegisterSingleton<HomeMenuViewModel, HomeMenuViewModel>();
         Mvx.ConstructAndRegisterSingleton<IActionRequestHandler, ActionRequestHandler>();
     }
@@ -45,20 +47,14 @@ public class App : MvxApplication
        : MvxNavigatingObject
        , IMvxAppStart
     {
+
+
         public void Start(object hint = null)
         {
-            var auth = Mvx.Resolve<ILoginManager>();
-            if (!auth.IsLoggedIn)
-            {
-                ShowViewModel<LoginFormViewModel>();
-            }
-            else
-            {
-                //ShowViewModel<LoginFormViewModel>();
-                ShowViewModel<HomeMenuViewModel>();
-            }
+       
         }
     }
+
     public class ApartmentAppsClient : ApartmentAppsAPIService 
     {
 

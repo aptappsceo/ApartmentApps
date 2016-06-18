@@ -134,8 +134,10 @@
     <Compile Include="ApartmentApps.API.Service\RegisterExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Version.cs" />
     <Compile Include="ApartmentApps.API.Service\VersionExtensions.cs" />
+    <Compile Include="Services\IDefaultViewModelTypeProvider.cs" />
     <Compile Include="Services\IExternalRequestProvider.cs" />
     <Compile Include="Services\IActionRequestHandler.cs" />
+    <Compile Include="Services\ISharedServices.cs" />
     <Compile Include="ViewModels\AparmentAppsDelegating.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Commands\StubCommands.cs" />

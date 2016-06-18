@@ -11,19 +11,19 @@
                 <div class="ibox-title">
                     <h5>Users</h5>
                     <div class="ibox-tools">
-                        @Html.ActionLink("Submit Request", "EditUser", null, new { @class = "btn btn-primary btn-xs" })
+                        @Html.ActionLink("Add User", "EditUser", null, new { @class = "btn btn-primary btn-xs" })
                     </div>
                 </div>
                 <div class="ibox-content">
                     @(
                     Html.EJ().Grid<UserBindingModel>("UserGrid")
                     .Datasource(ds => ds.URL(Url.Action("DataSource", "UserManagement")).Adaptor(AdaptorType.UrlAdaptor))
-                   // .Datasource(Model.ToArray())
+                    // .Datasource(Model.ToArray())
                     .Mappers(map =>
                         map
                         .ExportToExcelAction(Url.Action("ExportToExcel"))
                         .ExportToPdfAction(Url.Action("ExportToPdf"))
-                        .ExportToWordAction(Url.Action("ExportToWord"))
+                    //.ExportToWordAction(Url.Action("ExportToWord"))
                     )
                      .ToolbarSettings(toolbar =>
                      {
@@ -56,7 +56,7 @@
                         c.Field(model => model.PhoneNumber).HeaderText("PhoneNumber").Add();
 
                         //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Details", "Details", new { id = "{{:Id}}" }).ToHtmlString())).Add();
-                        //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Delete", "Delete", new { id = "{{:Id}}" }).ToHtmlString()))..Add();
+                        c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Delete", "DeleteUser", new { id = "{{:Id}}" }).ToHtmlString())).Add();
                     })
                     )
 

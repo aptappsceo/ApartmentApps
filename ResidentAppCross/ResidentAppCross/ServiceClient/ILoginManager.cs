@@ -19,19 +19,19 @@ namespace ResidentAppCross.ServiceClient
     {
         string BaseUrl { get; set; }
         string BearerToken { get; set; }
-        Task<string> PostForm(string url, Dictionary<string,string> formContent );
+        Task<string> PostForm(string url, Dictionary<string, string> formContent);
         Task<string> PostString(string url, string str);
         Task<bool> LoginAsync(string username, string password);
     }
 
     public interface IAuthorizedRestClient : IRestClient
     {
-        
+
     }
     public class RestClient : IRestClient
     {
         public string Url = "http://apartmentappsapiservice.azurewebsites.net";
-     
+
 
         public virtual HttpClient CreateClient()
         {
@@ -48,7 +48,7 @@ namespace ResidentAppCross.ServiceClient
 
         public RestClient()
         {
-            
+
         }
 
         public RestClient(string baseUrl)
@@ -58,32 +58,32 @@ namespace ResidentAppCross.ServiceClient
 
         public string BaseUrl { get; set; } = "http://apartmentappsapiservice.azurewebsites.net";
 
-            public async Task<bool> LoginAsync(string username, string password)
-            {
-                var result = await PostForm("Token", new Dictionary<string, string>()
+        public async Task<bool> LoginAsync(string username, string password)
+        {
+            var result = await PostForm("Token", new Dictionary<string, string>()
                 {
                     {"Username", username},
                     {"password", password},
                     {"grant_type", "password"},
                 });
-                try
+            try
+            {
+                var obj = JObject.Parse(result);
+                JToken token;
+                if (obj.TryGetValue("access_token", out token))
                 {
-                    var obj = JObject.Parse(result);
-                    JToken token;
-                    if (obj.TryGetValue("access_token", out token))
-                    {
-                        BearerToken = token.Value<string>();
-                        return true;
-                    }
+                    BearerToken = token.Value<string>();
+                    return true;
                 }
-                catch (Exception ex)
-                {
-                    return false;
-                }
-                return false;
-
             }
-        public async Task<string> PostForm(string url, Dictionary<string,string> formContent )
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
+
+        }
+        public async Task<string> PostForm(string url, Dictionary<string, string> formContent)
         {
             var client = CreateClient();
             var result = await client.PostAsync(BaseUrl + "/" + url, new FormUrlEncodedContent(formContent));
@@ -103,6 +103,7 @@ namespace ResidentAppCross.ServiceClient
         bool IsLoggedIn { get; }
         void Logout();
         Task<bool> LoginAsync(string username, string password);
+
         void RefreshUserInfo();
     }
 
@@ -115,23 +116,23 @@ namespace ResidentAppCross.ServiceClient
     public class LoginService : ILoginManager
     {
         public App.ApartmentAppsClient Data { get; set; }
-        
+
         public LoginService(IApartmentAppsAPIService data)
         {
-          
+
             Data = data as App.ApartmentAppsClient;
         }
 
         public bool IsLoggedIn { get { return AparmentAppsDelegating.AuthorizationKey != null; } }
 
-        
+
 
         public void Logout()
         {
             Data.Logout();
         }
         public static Action<string> SetRegistrationId { get; set; }
-        public static Func<string> GetRegistrationId { get; set; } 
+        public static Func<string> GetRegistrationId { get; set; }
 
         public static string DeviceHandle { get; set; }
         public static string DevicePlatform { get; set; }
@@ -140,25 +141,25 @@ namespace ResidentAppCross.ServiceClient
         {
             try
             {
-           
+
                 if (!IsLoggedIn)
                 {
                     await Data.LoginAsync(username, password);
                 }
-               
+
                 if (IsLoggedIn)
                 {
                     RefreshUserInfo();
                     if (GetRegistrationId != null && DeviceHandle != null)
                     {
-                        var registerResult = await Data.Register.PutAsync(GetRegistrationId().Replace("\"",""), new DeviceRegistration()
+                        var registerResult = await Data.Register.PutAsync(GetRegistrationId().Replace("\"", ""), new DeviceRegistration()
                         {
-                            Handle = DeviceHandle.Replace("<","").Replace(">","").Replace(" ",""),
+                            Handle = DeviceHandle.Replace("<", "").Replace(">", "").Replace(" ", ""),
                             Platform = DevicePlatform,
                             Tags = new List<string>()
                         });
                         if (registerResult != null)
-                        SetRegistrationId(registerResult);
+                            SetRegistrationId(registerResult);
                     }
                 }
                 return IsLoggedIn;

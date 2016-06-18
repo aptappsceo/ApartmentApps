@@ -41,13 +41,16 @@ namespace ApartmentApps.Data
                   .Where(t =>
                     t.GetCustomAttributes(typeof(PersistantAttribute), inherit: true)
                     .Any() );
+
+                
                 foreach (var type in entityTypes)
                 modelBuilder.RegisterEntityType(type);
             }
-            //modelBuilder.Entity<Unit>().Property(p => p.Latitude).HasPrecision(9, 6);
-            //modelBuilder.Entity<Unit>().Property(p => p.Longitude).HasPrecision(9, 6);
-            //modelBuilder.Entity<CourtesyOfficerLocation>().Property(p => p.Latitude).HasPrecision(9, 6);
-            //modelBuilder.Entity<CourtesyOfficerLocation>().Property(p => p.Longitude).HasPrecision(9, 6);
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany(p=>p.UserAlerts)
+            //    .WithRequired(p=>p.User)
+            //    .WillCascadeOnDelete(true);
+           
         }
 
         public ApplicationDbContext()

@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using ApartmentApps.Client;
 using CoreGraphics;
 using Foundation;
@@ -9,10 +10,38 @@ using MvvmCross.Platform;
 using MvvmCross.Plugins.PictureChooser.iOS;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
+using ResidentAppCross.ViewModels;
+using ResidentAppCross.ViewModels.Screens;
 using UIKit;
 
 namespace ResidentAppCross.iOS
 {
+
+
+
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    [NavbarStyling(Hidden = true)]
+    [Register("ApplicationView")]
+    public partial class ApplicationView : BaseForm<ApplicationViewModel>
+    {
+        public ApplicationView(string nibName, NSBundle bundle) : base(nibName, bundle)
+        {
+        }
+
+        public ApplicationView()
+        {
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
+            SetCustomBackground(UIColor.FromPatternImage(UIImage.FromFile("background.png").ImageToFitSize(View.Frame.Size)));
+            //  ExtendedLayoutIncludesOpaqueBars = false;
+            //  EdgesForExtendedLayout = UIRectEdge.None;
+
+        }
+    }
 
     [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
     public partial class LoginFormView : ViewBase
@@ -48,6 +77,8 @@ namespace ResidentAppCross.iOS
 
 
         }
+
+        
 
         public override void ViewDidAppear(bool animated)
         {

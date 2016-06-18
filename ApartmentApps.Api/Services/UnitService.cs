@@ -18,7 +18,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public override void ToViewModel(Unit model, UnitViewModel viewModel)
         {
-            viewModel.Id = model.Id;
+            viewModel.Id = model.Id.ToString();
             viewModel.Name = model.Name;
             viewModel.Latitude = model.Latitude;
             viewModel.Longitude = model.Longitude;

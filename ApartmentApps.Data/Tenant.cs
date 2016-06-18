@@ -5,6 +5,17 @@ using Newtonsoft.Json;
 
 namespace ApartmentApps.Data
 {
+    public abstract class UserEntity : PropertyEntity
+    {
+        [DefaultValue(1)]
+        [DataType("Hidden")]
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        [DataType("Ignore")]
+        [JsonIgnore]
+        public virtual ApplicationUser User { get; set; }
+    }
     public abstract class PropertyEntity : IPropertyEntity
     {
         [DefaultValue(1)]

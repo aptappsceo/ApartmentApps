@@ -34,13 +34,17 @@ namespace ApartmentApps.Api.Modules
 
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
         {
-            menuItems.Add(new MenuItemViewModel("Messaging","fa-envelope")
+            if (UserContext.IsInRole("PropertyAdmin") || UserContext.IsInRole("Admin"))
             {
-                Children = new List<MenuItemViewModel>()
+                menuItems.Add(new MenuItemViewModel("Messaging", "fa-envelope")
+                {
+                    Children = new List<MenuItemViewModel>()
                 {
                     new MenuItemViewModel("New Message","fa-plus-square","Index","Messaging")
                 }
-            });
+                });
+            }
+            
 
         }
 

@@ -375,6 +375,7 @@
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Services\ISharedCommands.cs" />
     <Compile Include="Services\IOSDialogService.cs" />
     <Compile Include="Services\IOSTouchPresentationService.cs" />
     <Compile Include="Services\QRService.cs" />

@@ -50,7 +50,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                         ReportedBy = x.User.ToUserBindingModel(BlobStorageService),
                         StatusId = x.StatusId,
                         LatestCheckin = x.LatestCheckin?.ToIncidentCheckinBindingModel(BlobStorageService),
-                        Id = x.Id
+                        Id = x.Id.ToString()
                     }).ToArray();
 
         }

@@ -17,12 +17,20 @@ using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
+using Ninject.Syntax;
+#if !JOBS
 using Ninject.Web.Common;
-
+#endif
 namespace ApartmentApps.IoC
 {
     public static class Register
     {
+#if JOBS
+        public static void InRequestScope<T>(this IBindingWhenInNamedWithOrOnSyntax<T> b)
+        {
+            b.InSingletonScope();
+        }
+#endif
         public static void RegisterMappable<TModel, TViewModel,TService>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel, TViewModel>
         {
             
@@ -95,7 +103,6 @@ namespace ApartmentApps.IoC
             kernel.Bind<Property>().ToMethod(_ => kernel.Get<IUserContext>().CurrentUser.Property).InRequestScope();
             kernel.Bind<PropertyContext>().ToSelf().InRequestScope();
 
-     
             kernel.Bind<IRepository<MaitenanceRequestType>>()
                 .To<BaseRepository<MaitenanceRequestType>>()
                 .InRequestScope();
