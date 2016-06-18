@@ -12,7 +12,7 @@ namespace ApartmentApps.Api
 
         public override IQueryable<ApplicationUser> GetAll()
         {
-            return base.GetAll().Where(p=>!p.Archived);
+            return base.GetAll();//.Where(p=>!p.Archived);
         }
 
         public override IQueryable<ApplicationUser> Includes(IDbSet<ApplicationUser> set)

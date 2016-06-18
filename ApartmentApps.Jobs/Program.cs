@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace ApartmentApps.Jobs
     {
         static void Main(string[] args)
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
+            
             var context = new ApplicationDbContext();
             foreach (var item in context.Properties)
             {
@@ -36,7 +39,7 @@ namespace ApartmentApps.Jobs
                 }
 
             }
-           
+            Console.ReadLine();
 
         }
     }

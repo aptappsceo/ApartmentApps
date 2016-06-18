@@ -100,7 +100,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             //var unit = Service.Find(id);
             var user = Context.Users.Find(id);
-            user.Archived = true;
+            //user.Archived = true;
             Context.SaveChanges();
             return RedirectToAction("Index");
         }

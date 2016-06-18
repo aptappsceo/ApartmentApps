@@ -44,10 +44,10 @@ namespace ApartmentApps.Data
                 foreach (var type in entityTypes)
                 modelBuilder.RegisterEntityType(type);
             }
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(p=>p.UserAlerts)
-                .WithRequired(p=>p.User)
-                .WillCascadeOnDelete(true);
+            //modelBuilder.Entity<ApplicationUser>()
+            //    .HasMany(p=>p.UserAlerts)
+            //    .WithRequired(p=>p.User)
+            //    .WillCascadeOnDelete(true);
            
         }
 

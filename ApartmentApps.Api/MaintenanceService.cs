@@ -75,6 +75,9 @@ namespace ApartmentApps.Api
             viewModel.PermissionToEnter = model.PermissionToEnter;
             viewModel.PetStatus = model.PetStatus;
             viewModel.HasPet = model.PetStatus > 1;
+            viewModel.StartDate = model.Checkins.FirstOrDefault(p => p.StatusId == "Started")?.Date;
+            viewModel.CompleteDate = model.Checkins.FirstOrDefault(p => p.StatusId == "Complete")?.Date;
+
             viewModel.LatestCheckin = model.LatestCheckin?.ToMaintenanceCheckinBindingModel(_blobStorageService);
             viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(_blobStorageService));
             //if (viewModel.LatestCheckin != null)

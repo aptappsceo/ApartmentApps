@@ -241,6 +241,7 @@ namespace ApartmentApps.Portal.Controllers
         YesContained,
         YesFree
     }
+    [Authorize]
     public class MaitenanceRequestsController : CrudController<MaintenanceRequestViewModel, MaitenanceRequest>
     {
         public IMaintenanceService MaintenanceService { get; set; }

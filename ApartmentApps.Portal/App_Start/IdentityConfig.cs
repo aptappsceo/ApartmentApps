@@ -70,6 +70,13 @@ namespace ApartmentApps.Portal
             var provider = new MachineKeyProtectionProvider();
             UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(
                 provider.Create("ResetPasswordPurpose"));
+            UserValidator = new UserValidator<ApplicationUser>(this)
+            {
+                AllowOnlyAlphanumericUserNames = false,
+                RequireUniqueEmail = true,
+
+            };
+
         }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
