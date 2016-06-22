@@ -6,17 +6,18 @@
         .Datasource(Model.Items)
         .AllowSelection(true)
         .ClientSideEvents(_=>_.RecordDoubleClick("recordDoubleClick"))
-        .ToolbarSettings(toolbar =>
-        {
-            toolbar.ShowToolbar().ToolbarItems(items =>
-            {
+        .AllowPaging(true)
+        //.ToolbarSettings(toolbar =>
+        //{
+        //    toolbar.ShowToolbar().ToolbarItems(items =>
+        //    {
 
-                items.AddTool(ToolBarItems.Add);
-                items.AddTool(ToolBarItems.Edit);
-                items.AddTool(ToolBarItems.Delete);
-            });
+        //        items.AddTool(ToolBarItems.Add);
+        //        items.AddTool(ToolBarItems.Edit);
+        //        items.AddTool(ToolBarItems.Delete);
+        //    });
 
-        })
+        //})
         .Columns(_ =>
         {
             foreach(var property in Model.Properties)

@@ -21,7 +21,7 @@ namespace ApartmentApps.Portal.Controllers
     }
 
     public class AutoFormController<TService, TViewModel> :
-        AutoFormController<TService, TService, TViewModel, TViewModel> where TViewModel : new() where TService : IServiceFor<TViewModel>
+        AutoFormController<TService, TService, TViewModel, TViewModel> where TViewModel : BaseViewModel, new() where TService : IServiceFor<TViewModel>
     {
         public AutoFormController(IKernel kernel, TService service, PropertyContext context, IUserContext userContext) : base(kernel, service, service, context, userContext)
         {
@@ -30,7 +30,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public class AutoFormController<TService, TFormService, TIndexViewModel, TFormViewModel> : AAController
         where TIndexViewModel : new()
-        where TFormViewModel : new()
+        where TFormViewModel : BaseViewModel, new()
         where TService : IServiceFor<TIndexViewModel>
         where TFormService : IServiceFor<TFormViewModel>
     {
@@ -53,7 +53,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public virtual ActionResult Entry(int? id = null)
         {
-            if (id != null)
+            if (id != null && id != 0)
             {
                 return AutoForm(_formService.Find(id.Value), "SaveEntry", "Change");
             }
@@ -64,6 +64,10 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (model.Id is string[])
+                {
+                    model.Id = null;
+                }
                 _formService.Save(model);
                 ViewBag.SuccessMessage = "Success!";
                 return RedirectToAction("Index");

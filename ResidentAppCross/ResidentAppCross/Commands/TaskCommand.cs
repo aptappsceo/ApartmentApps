@@ -80,6 +80,7 @@ namespace ResidentAppCross.Commands
         private void ProcessFail(Exception exception)
         {
             _owner.FailTaskWithPrompt(exception.Message,ExceptionHandler);
+            
         }
 
         private void ProcessStart()
@@ -144,6 +145,12 @@ namespace ResidentAppCross.Commands
             throw new Exception(reason);
         }
 
+        public void FailTask(string reason, Action handler)
+        {
+            ExceptionHandler = ex=>handler?.Invoke();
+            throw new Exception(reason);
+        }
+
         public void CancelTask()
         {
             
@@ -156,6 +163,7 @@ namespace ResidentAppCross.Commands
     {
         void UpdateTask(string message, float progress = -1);
         void FailTask(string reason);
+        void FailTask(string reason, Action handler);
         object Argument { get; }
         ITaskCommandContext OnStart(string message);
         ITaskCommandContext OnComplete(string message, Action completeHandler = null);

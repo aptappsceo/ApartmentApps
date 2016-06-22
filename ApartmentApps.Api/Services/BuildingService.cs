@@ -26,7 +26,7 @@ namespace ApartmentApps.Portal.Controllers
         public override void ToViewModel(Building model, BuildingViewModel viewModel)
         {
             viewModel.Name = model.Name;
-            viewModel.Id = model.Id;
+            viewModel.Id = model.Id.ToString();
         }
     }
 }

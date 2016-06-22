@@ -1,0 +1,6 @@
+﻿.e-rowcell {
+    border-color: transparent !important;
+}
+.e-grid .e-headercell, .e-grid .e-grouptopleftcell {
+    border-left-color: transparent !important;
+}

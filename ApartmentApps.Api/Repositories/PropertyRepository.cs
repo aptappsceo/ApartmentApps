@@ -9,6 +9,64 @@ using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Api
 {
+    public class UserRepository<TEntity> : PropertyRepository<TEntity> where TEntity : class, IUserEntity
+    {
+        //public UserRepository(Func<IQueryable<TEntity>, IDbSet<TEntity>> includes, DbContext context, IUserContext userContext) : base(includes, context, userContext)
+        //{
+        //}
+
+        public override void Add(TEntity entity)
+        {
+            entity.UserId = UserContext.UserId;
+            base.Add(entity);
+        }
+
+        public override TEntity Find(object id)
+        {
+            var propertyId = UserContext.PropertyId;
+            if (id != null)
+            {
+                int v;
+                if (int.TryParse(id.ToString(), out v))
+                {
+                    var result = Context.Set<TEntity>().Find(v);
+
+                    if (propertyId != result.PropertyId || UserContext.UserId != result.UserId) return null;
+                    return result;
+
+                }
+                else
+                {
+                    var result = Context.Set<TEntity>().Find(id);
+
+                    if (propertyId != result.PropertyId || UserContext.UserId != result.UserId) return null;
+                    return result;
+                }
+            }
+            return null;
+            //return base.Find(id);
+        }
+
+        public UserRepository(DbContext context, IUserContext userContext) : base(context, userContext)
+        {
+        }
+
+        public override IQueryable<TEntity> GetAll()
+        {
+            var propertyId = UserContext.PropertyId;
+            var userId = UserContext.UserId;
+            return WithIncludes.Where(p => p.PropertyId == propertyId && p.UserId == userId);
+        }
+
+        public override void Remove(TEntity entity)
+        {
+          
+            if (entity.UserId == UserContext.UserId)
+            {
+                base.Remove(entity);
+            }
+        }
+    }
     public class PropertyRepository<TEntity> : IRepository<TEntity> where TEntity : class,IPropertyEntity
     {
         public DbContext Context { get; set; }
@@ -28,14 +86,14 @@ namespace ApartmentApps.Api
             UserContext = userContext;
         }
 
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             entity.PropertyId = UserContext.PropertyId;
             Context.Set<TEntity>().Add(entity);
            
         }
 
-        public void Remove(TEntity entity)
+        public virtual void Remove(TEntity entity)
         {
             if (entity.PropertyId == UserContext.PropertyId)
             {
@@ -53,7 +111,7 @@ namespace ApartmentApps.Api
             return GetAll().Where(predicate);
         }
 
-        public IQueryable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
         {
             var propertyId = UserContext.PropertyId;
             return WithIncludes.Where(p => p.PropertyId == propertyId);
@@ -69,15 +127,27 @@ namespace ApartmentApps.Api
             return set;
         }
 
-        public TEntity Find(object id)
+        public virtual TEntity Find(object id)
         {
             var propertyId = UserContext.PropertyId;
             if (id != null)
             {
-                var result = Context.Set<TEntity>().Find(id);
+                int v;
+                if (int.TryParse(id.ToString(), out v))
+                {
+                    var result = Context.Set<TEntity>().Find(v);
 
-                if (propertyId != result.PropertyId) return null;
-                return result;
+                    if (propertyId != result.PropertyId) return null;
+                    return result;
+
+                }
+                else
+                {
+                    var result = Context.Set<TEntity>().Find(id);
+
+                    if (propertyId != result.PropertyId) return null;
+                    return result;
+                }
             }
             return null;
         }

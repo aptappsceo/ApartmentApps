@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
-using ResidentAppCross.ViewModels.Screens;
+using MvvmCross.Platform;
+using ResidentAppCross.ServiceClient;
+using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels
 {
@@ -13,7 +15,21 @@ namespace ResidentAppCross.ViewModels
         public override void Start()
         {
             base.Start();
-            ShowViewModel<LoginFormViewModel>();
+
+            var auth = Mvx.Resolve<ILoginManager>();
+            if (!auth.IsLoggedIn)
+            {
+                ShowViewModel<LoginFormViewModel>();
+            }
+            else
+            {
+                var sharedCommands = Mvx.Resolve<ISharedCommands>();
+                var taskCommandContext = sharedCommands.CheckVersionAndLogInIfNeededCommand(this, null, null)
+                    .OnFail(ex => ShowViewModel<LoginFormViewModel>());
+
+                taskCommandContext.OnStart("Logging in...").Execute(null);
+            }
+
         }
 
     }

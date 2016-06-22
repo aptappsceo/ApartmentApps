@@ -241,13 +241,28 @@ namespace ApartmentApps.Portal.Controllers
         YesContained,
         YesFree
     }
+    [Authorize]
     public class MaitenanceRequestsController : CrudController<MaintenanceRequestViewModel, MaitenanceRequest>
     {
         public IMaintenanceService MaintenanceService { get; set; }
+        public override ActionResult Index()
+        {
+            return View(Service.GetAll().OrderByDescending(p=>p.RequestDate));
+        }
 
         public MaitenanceRequestsController(IKernel kernel, IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel,repository, service, context, userContext)
         {
             MaintenanceService = maintenanceService;
+        }
+
+        public ActionResult MySchedule()
+        {
+            return View();
+        }
+
+        public JsonResult MyScheduleData()
+        {
+            return Json(MaintenanceService.GetAppointments(), JsonRequestBehavior.AllowGet);
         }
         public ActionResult NewRequest()
         {

@@ -21,13 +21,17 @@ namespace ApartmentApps.Portal.Controllers
     [Authorize]
     public class AccountController : AAController
     {
+        private readonly ApplicationDbContext _dbcontext;
+        private readonly IIdentityMessageService _email;
         private readonly IBlobStorageService _blobStorage;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
   
-        public AccountController(IKernel kernel,ApplicationUserManager userManager, ApplicationSignInManager signInManager , IBlobStorageService blobStorage, IUserContext userContext, PropertyContext context) : base(kernel, context, userContext)
+        public AccountController(ApplicationDbContext dbcontext,IIdentityMessageService email, IKernel kernel,ApplicationUserManager userManager, ApplicationSignInManager signInManager , IBlobStorageService blobStorage, IUserContext userContext, PropertyContext context) : base(kernel, context, userContext)
         {
+            _dbcontext = dbcontext;
+            _email = email;
             _blobStorage = blobStorage;
             UserManager = userManager;
             SignInManager = signInManager;
@@ -155,26 +159,52 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email }; 
-                var result = await UserManager.CreateAsync(user, model.Password);
+
+                return View(model);
+            }
+            var user = _dbcontext.Users.FirstOrDefault(p => p.Email == model.Email);
+            if (user == null)
+            {
+                var phnNumber = model.PhoneNumber.NumbersOnly();
+                user = _dbcontext.Users.FirstOrDefault(p => p.PhoneNumber == phnNumber);
+            }
+            if (user != null && model.Password == model.ConfirmPassword)
+            {
+                var result = await UserManager.ChangePasswordAsync(user.Id, "Temp1234!", model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login");
                 }
-                AddErrors(result);
+                else if (result.Errors.Any())
+                {
+                    return View("Error",new HandleErrorInfo(new Exception(string.Join(Environment.NewLine,result.Errors)),"Account","Register" ));
+                }
+                // TODO user.Registered = true; _dbcontext.SaveChanges();
+                //return BadRequest("This account has already been set-up.");
             }
 
-            // If we got this far, something failed, redisplay form
+            //if (ModelState.IsValid)
+            //{
+            //    var user = new ApplicationUser { UserName = model.Email, Email = model.Email }; 
+            //    var result = await UserManager.CreateAsync(user, model.Password);
+            //    if (result.Succeeded)
+            //    {
+            //        await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    
+            //        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+            //        // Send an email with this link
+            //        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            //        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    AddErrors(result);
+            //}
+
+            //// If we got this far, something failed, redisplay form
             return View(model);
         }
 
@@ -209,7 +239,7 @@ namespace ApartmentApps.Portal.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -217,10 +247,15 @@ namespace ApartmentApps.Portal.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await _email.SendAsync(new IdentityMessage()
+                {
+                    Destination = user.Email,
+                    Body = "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>",
+                    Subject = "Apartment Apps Reset Password"
+                });
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form

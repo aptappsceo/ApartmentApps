@@ -25,9 +25,10 @@
         .Datasource(ds => ds.URL(Url.Action("DataSource", "Messaging")).Adaptor(AdaptorType.UrlAdaptor))
         .FilterSettings(filter =>
         {
-            filter.FilterType(FilterType.Menu).EnableCaseSensitivity(true);
+            filter.FilterType(FilterType.Excel).EnableCaseSensitivity(true);
         })
         .AllowPaging(true)
+        .AllowSelection(false)
         //.AllowGrouping()
         //.AllowSorting(true)
         .AllowFiltering()

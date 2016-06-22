@@ -54,7 +54,7 @@ namespace ApartmentApps.Data
                     case "Paused":
                         return "paused a maintenance request";
                     case "Submitted":
-                        return $"{MaitenanceRequest.User.FirstName} {MaitenanceRequest.User.LastName}submitted a maintenance request";
+                        return $"{MaitenanceRequest.User.FirstName} {MaitenanceRequest.User.LastName} submitted a maintenance request";
                 }
                 return string.Empty;
             }

@@ -7,8 +7,14 @@
     ViewBag.Title = Model.Title;
 }
 <div class="ibox">
-  
+    <div class="ibox-title">
+        <h5></h5>
+        <div class="ibox-tools">
+            @Html.ActionLink("Create New", "Entry", null, new { @class = "btn btn-primary btn-xs" })
+        </div>
+    </div>
     <div class="ibox-content">
             @Html.RenderGrid(Model.Type, Model.Model)
     </div>
 </div>
+<div class="clear"></div>

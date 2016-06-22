@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Ninject;
@@ -34,34 +35,37 @@ namespace ApartmentApps.Api.Modules
         {
             if (UserContext.IsInRole("PropertyAdmin"))
             {
+
                 var checkins = new MenuItemViewModel("Settings", "fa-cog", 30);
                 checkins.Children.Add(new MenuItemViewModel("Buildings", "fa-building", "Index", "Buildings"));
                 checkins.Children.Add(new MenuItemViewModel("Units", "fa-bed", "Index", "Units"));
                 checkins.Children.Add(new MenuItemViewModel("Users", "fa-user", "Index", "UserManagement"));
                 checkins.Children.Add(new MenuItemViewModel("Courtesy Locations", "fa-location-arrow", "Index", "CourtesyOfficerLocations"));
 
-           
-                foreach (var module in Kernel.GetAll<IModule>().OfType<IAdminConfigurable>())
-                {
-                    checkins.Children.Add(new MenuItemViewModel(module.Name, "fa-gear", "Index", module.SettingsController));
-                }
-                menuItems.Add(checkins);
+              menuItems.Add(checkins);
+               
 
             }
             if (UserContext.IsInRole("Admin"))
             {
+               
                 var checkins = new MenuItemViewModel("AA Admin", "fa-heartbeat");
+                foreach (var module in Kernel.GetAll<IModule>().OfType<IAdminConfigurable>())
+                {
+                    checkins.Children.Add(new MenuItemViewModel(module.Name, "fa-gear", "Index", module.SettingsController));
+                }
+             
                 checkins.Children.Add(new MenuItemViewModel("Corporations", "fa-suitcase", "Index", "Corporations"));
                 checkins.Children.Add(new MenuItemViewModel("Properties", "fa-cubes", "Index", "Property"));
                 checkins.Children.Add(new MenuItemViewModel("Entrata Accounts", "fa-group", "Index", "PropertyEntrataInfo"));
                 menuItems.Add(checkins);
             }
-            //if (UserContext.IsInRole("PropertyAdmin") || UserContext.IsInRole("Admin"))
-            //{
-                
-            //}
-            
-            
+            if (UserContext.IsInRole("PropertyAdmin") || UserContext.IsInRole("Admin"))
+            {
+                menuItems.Add(new MenuItemViewModel("Dashboard", "fa-group", "Index", "Dashboard"));
+            }
+
+
 
         }
     }
@@ -110,6 +114,73 @@ namespace ApartmentApps.Api.Modules
         }
     }
 
+    public interface ILogger
+    {
+        void Error(string str, params object[] args);
+        void Warning(string str, params object[] args);
+        void Info(string str, params object[] args);
+    }
+    public interface IWebJob
+    {
+        void Execute(ILogger logger);
+    }
+
+    [Persistant]
+    public class LoggerSettings : ModuleConfig
+    {
+        
+    }
+
+    [Persistant]
+    public class Log : PropertyEntity
+    {
+        public string Message { get; set; }
+        public LogSeverity Severity { get; set; }
+    }
+
+    public enum LogSeverity
+    {
+        Error,
+        Warning,
+        Info
+    }
+    public class LoggerModule : Module<LoggerSettings>, ILogger
+    {
+        private readonly IRepository<Log> _log;
+
+        public LoggerModule(IRepository<Log> log, IRepository<LoggerSettings> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        {
+            _log = log;
+        }
+
+        public void Error(string str, params object[] args)
+        {
+             _log.Add(new Log()
+            {
+                Message = args != null && args.Length > 0 ? string.Format(str, args) : str,
+                Severity = LogSeverity.Error
+            });
+            _log.Save();
+        }
+        public void Warning(string str, params object[] args)
+        {
+            _log.Add(new Log()
+            {
+                Message = args != null && args.Length > 0 ? string.Format(str, args) : str,
+                Severity = LogSeverity.Warning
+            });
+            _log.Save();
+        }
+        public void Info(string str, params object[] args)
+        {
+            _log.Add(new Log()
+            {
+                Message = args != null && args.Length > 0 ? string.Format(str, args) : str,
+                Severity = LogSeverity.Info
+            });
+            _log.Save();
+        }
+    }
     public class MaintenanceModule : Module<MaintenanceConfig>, IMenuItemProvider, IAdminConfigurable
     {
         public string SettingsController => "MaintenanceConfig";
@@ -125,6 +196,10 @@ namespace ApartmentApps.Api.Modules
             if (UserContext.IsInRole("PropertyAdmin"))
             {
                 menuItem.Children.Add(new MenuItemViewModel("Requests","fa-folder","Index","MaitenanceRequests"));
+            }
+            if (UserContext.IsInRole("Maintenance") || UserContext.IsInRole("PropertyAdmin"))
+            {
+                menuItem.Children.Add(new MenuItemViewModel("Schedule", "fa-folder", "MySchedule", "MaitenanceRequests"));
             }
             menuItems.Add(menuItem);
         }

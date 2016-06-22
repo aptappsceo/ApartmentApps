@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,12 @@ namespace ApartmentApps.Api.ViewModels
         public DateTime RequestDate { get; set; }
         public string Comments { get; set; }
         public UserBindingModel SubmissionBy { get; set; }
+
+        public string SubmissionByFullName
+        {
+            get { return SubmissionBy.FullName; }
+        }
+
         public string StatusId { get; set; }
         public string UnitName { get; set; }
         public string BuildingName { get; set; }
@@ -47,6 +54,9 @@ namespace ApartmentApps.Api.ViewModels
         public bool PermissionToEnter { get; set; }
         public int PetStatus { get; set; }
         public bool HasPet { get; set; }
+        public DateTime? EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? CompleteDate { get; set; }
     }
 
     public class CourtesyCheckinViewModel : BaseViewModel
@@ -71,7 +81,7 @@ namespace ApartmentApps.Api.ViewModels
         public IncidentCheckinBindingModel LatestCheckin { get; set; }
         public IEnumerable<IncidentCheckinBindingModel> Checkins { get; set; }
     }
-
+    [DisplayName("Buildings")]
     public class BuildingViewModel : BaseViewModel
     {
         public string Name { get; set; }

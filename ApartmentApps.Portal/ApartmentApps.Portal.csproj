@@ -498,6 +498,7 @@
     <Content Include="CodeTemplates\MvcView\Users.txt">
       <DependentUpon>Create.cs.t4</DependentUpon>
     </Content>
+    <Content Include="Content\AA.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.css.map" />
@@ -1289,6 +1290,8 @@
     <Content Include="Views\Shared\Forms\Grid.cshtml" />
     <Content Include="Views\Messaging\Index.cshtml" />
     <Content Include="Views\PropertySettings\Index.cshtml" />
+    <Content Include="Views\MaitenanceRequests\MySchedule.cshtml" />
+    <Content Include="Views\UserManagement\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

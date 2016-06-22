@@ -51,7 +51,7 @@ namespace ResidentAppCross.Events
         public bool ShouldPrompt { get; set; }
         public Exception Reason { get; set; }
         public Action<Exception> OnPrompted { get; set; }
-
+        public bool Processed { get; set; }
         public TaskFailed(object sender) : base(sender)
         {
         }

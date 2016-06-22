@@ -114,5 +114,9 @@
 	<string>Apartment Apps</string>
 	<key>CFBundleVersion</key>
 	<string>32</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>
