@@ -183,7 +183,7 @@ namespace ResidentAppCross.iOS
                 {
                     _headerSection = Formals.Create<HeaderSection>();
                     _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
-                    _headerSection.LogoImage.Image = AppTheme.GetIcon(SharedResources.Icons.Wallet, SharedResources.Size.L);
+                    _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.WalletPlus, SharedResources.Size.L);
                     _headerSection.MainLabel.Text = "Add Bank Account";
                     _headerSection.SubLabel.Text = "Please, fill the information below";
                 }
@@ -252,6 +252,7 @@ namespace ResidentAppCross.iOS
                 {
                     _isSavingsSection = Formals.Create<ToggleSection>();
                     _isSavingsSection.Editable = true;
+                    _isSavingsSection.HeightConstraint.Constant = 66;
                     _isSavingsSection.HeaderLabel.Text = "Is Savings?";
                     _isSavingsSection.SubHeaderLabel.Hidden = true;
                 }
@@ -295,7 +296,7 @@ namespace ResidentAppCross.iOS
                 {
                     _headerSection = Formals.Create<HeaderSection>();
                     _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
-                    _headerSection.LogoImage.Image = AppTheme.GetIcon(SharedResources.Icons.Wallet, SharedResources.Size.L);
+                    _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Wallet, SharedResources.Size.L);
                     _headerSection.MainLabel.Text = "Payment Options";
                     _headerSection.SubLabel.Text = "Select payment option or add a new one";
                 }
@@ -525,7 +526,7 @@ namespace ResidentAppCross.iOS
                 {
                     _headerSection = Formals.Create<HeaderSection>();
                     _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
-                    _headerSection.LogoImage.Image = AppTheme.GetIcon(SharedResources.Icons.Wallet, SharedResources.Size.L);
+                    _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Wallet, SharedResources.Size.L);
                     _headerSection.MainLabel.Text = "Rent Summary";
                     _headerSection.SubLabel.Text = "Pending payments are listed below";
                 }
