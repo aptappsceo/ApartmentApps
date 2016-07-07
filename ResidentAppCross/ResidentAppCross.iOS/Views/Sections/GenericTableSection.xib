@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1" customClass="GenericTableSection">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FJb-Qy-9xV">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="FJb-Qy-9xV" secondAttribute="bottom" id="8so-hb-Efd"/>
+                <constraint firstItem="FJb-Qy-9xV" firstAttribute="top" secondItem="1" secondAttribute="top" id="L7Q-fs-s0Y"/>
+                <constraint firstItem="FJb-Qy-9xV" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="PCz-th-b7w"/>
+                <constraint firstAttribute="trailing" secondItem="FJb-Qy-9xV" secondAttribute="trailing" id="Req-gb-hTI"/>
+            </constraints>
+            <connections>
+                <outlet property="_tableView" destination="FJb-Qy-9xV" id="5CE-Dr-Akx"/>
+            </connections>
+        </view>
+    </objects>
+</document>

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Mail;
 using System.Net.Mime;
 using System.Net.Security;
 using System.Text;
@@ -22,7 +21,7 @@ using PushSharp.Apple;
 
 namespace PlaygroundConsole
 {
-
+   
     class Program
     {
         static async Task Main4()
@@ -54,20 +53,44 @@ namespace PlaygroundConsole
             //    EcAccountNumber = "",
 
             //});
-        }
+        } 
         static async void Main3()
         {
             var client = new EntrataClient()
             {
                 Username = "apartmentappsinc",
                 Password = "Password1",
-
+                EndPoint = "rampartnersllc"
             };
-            var result = await client.GetCustomers("162896");
-            var customers = result.Response.Result.Customers.Customer;
-            foreach (var item in customers)
+            var result = await client.GetMitsLeases("162896");
+            var leaseApps = result.response.result.LeaseApplication;
+            
+            var tenants = leaseApps.Tenant;
+            var leases = leaseApps.LA_Lease;
+            foreach (var item in tenants)
             {
-                Console.WriteLine(item.FirstName);
+                var id = item.LeaseID.Identification.FirstOrDefault();
+                if (id != null)
+                {
+                    var idValue = id.IDValue;
+                    var lease = leases.FirstOrDefault(p => p.Identification.IDValue == idValue);
+                    if (lease != null)
+                    {
+                        var charge =
+                            lease.AccountingData.ChargeSet.SelectMany(p => p.Charge)
+                                .FirstOrDefault(p => p.Attributes.ChargeType.ToUpper() == "BASE RENT");
+                        if (charge != null)
+                        {
+                            Console.WriteLine(charge.Amount + item.Name.FirstName + " " + item.Name.LastName);
+                        }
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("NOT FOUND" + item.Name.FirstName + " " + item.Name.LastName);
+                    }
+                }
+               
             }
 
         }
@@ -100,35 +123,14 @@ namespace PlaygroundConsole
         }
         static void Main(string[] args)
         {
-            SmtpClient client = new SmtpClient();
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("mosborne@apartmentapps.com", "iamadumbass");
-            client.Port = 587;
-            client.Host = "smtp.gmail.com";
-            client.EnableSsl = true;
-            
-
-            MailAddress
-                maFrom = new MailAddress("mosborne@apartmentapps.com", "Micah Osborne", Encoding.UTF8),
-                maTo = new MailAddress("micahosborne@gmail.com", "Micah Osborne", Encoding.UTF8);
-            MailMessage mmsg = new MailMessage(maFrom.Address, maTo.Address);
-            mmsg.Body = "<html><body><h1>Some HTML Text for Test as BODY</h1></body></html>";
-            mmsg.BodyEncoding = Encoding.UTF8;
-            mmsg.IsBodyHtml = true;
-            mmsg.Subject = "Some Other Text as Subject";
-            mmsg.SubjectEncoding = Encoding.UTF8;
-
-            client.Send(mmsg);
-            Console.WriteLine("Done");
-
-            //Main4();
+            Main3();
             Console.ReadLine();
 
             //var webClient = new WebClient();
-
+            
             //var nameValueCollection = new NameValueCollection()
             //{
-
+              
             //};
             //nameValueCollection.Add("username", "micahosborne@gmail.com");
             //nameValueCollection.Add("password", "Asdf1234!");
@@ -137,9 +139,9 @@ namespace PlaygroundConsole
             //var response = new UTF8Encoding().GetString(webClient.UploadValues(url + "/Token","POST", nameValueCollection));
             //Console.WriteLine(response);
 
-
+          
         }
     }
 
-
+   
 }

@@ -172,7 +172,7 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(() =>
                 {
                     if (SelectedIncident == null) return;
-                    int id = SelectedIncident.Id ?? -1;
+                    int id = Convert.ToInt32(SelectedIncident.Id);
                     if (id == -1) return;
                     ShowViewModel<IncidentReportStatusViewModel>(vm =>
                     {

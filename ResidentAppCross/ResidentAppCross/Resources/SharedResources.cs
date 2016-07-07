@@ -79,7 +79,8 @@ namespace ResidentAppCross.Resources
             MessageMaintenanceRead,
             MessagePolice,
             MessagePoliceRead,
-            User
+            User,
+            WalletPlus
         }
 
         public enum Size

@@ -25,6 +25,8 @@ namespace ApartmentApps.Data
         public virtual IDbSet<IncidentReport> IncidentReports { get; set; }
         public virtual IDbSet<IncidentReportCheckin> IncidentReportCheckins { get; set; }
         public virtual IDbSet<UserAlert> UserAlerts { get; set; }
+        public virtual IDbSet<UserPaymentOption> UserPaymentOptions { get; set; }
+        public virtual IDbSet<UserTransaction> UserTransactions { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

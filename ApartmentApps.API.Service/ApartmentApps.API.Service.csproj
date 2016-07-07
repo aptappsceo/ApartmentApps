@@ -270,6 +270,7 @@
     <Compile Include="Controllers\Api\MaitenanceController.cs" />
     <Compile Include="Controllers\Api\MessagingController.cs" />
     <Compile Include="Controllers\Api\NotifiationsController.cs" />
+    <Compile Include="Controllers\Api\PaymentsController.cs" />
     <Compile Include="Controllers\Api\RegisterController.cs" />
     <Compile Include="Controllers\Api\LookupsController.cs" />
     <Compile Include="Controllers\Api\VersionController.cs" />

@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using ApartmentApps.Client.Models;
+using Cirrious.FluentLayouts.Touch;
 using CoreLocation;
 using Foundation;
 using MapKit;
 using MvvmCross.Binding.BindingContext;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.iOS.Views.Attributes;
+using ResidentAppCross.iOS.Views.TableSources;
 using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels.Screens;
 using UIKit;
@@ -150,4 +153,477 @@ namespace ResidentAppCross.iOS
             //return result;
         }
     }
+
+    [Register("AddCreditCardPaymentOptionView")]
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    public partial class AddCreditCardPaymentOptionView : BaseForm<AddCreditCardPaymentOptionViewModel>
+    {
+     
+    }
+
+    [Register("AddBankAccountPaymentOptionView")]
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    public partial class AddBankAccountPaymentOptionView : BaseForm<AddBankAccountPaymentOptionViewModel>
+    {
+        private TextFieldSection _paymentOptionTitleSection;
+        private TextFieldSection _routingNumberSection;
+        private TextFieldSection _accountNumberSection;
+        private TextFieldSection _accountHolderSection;
+        private CallToActionSection _callToActionSection;
+        private HeaderSection _headerSection;
+        private ToggleSection _isSavingsSection;
+
+        public HeaderSection HeaderSection
+        {
+            get
+            {
+                if (_headerSection == null)
+                {
+                    _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
+                    _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.WalletPlus, SharedResources.Size.L);
+                    _headerSection.MainLabel.Text = "Add Bank Account";
+                    _headerSection.SubLabel.Text = "Please, fill the information below";
+                }
+                return _headerSection;
+            }
+        }
+
+        public TextFieldSection PaymentOptionTitleSection
+        {
+            get
+            {
+                return _paymentOptionTitleSection ?? (_paymentOptionTitleSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Payment Option Title...")
+                    .WithNextResponder(AccountNumberSection));
+            }
+        }
+
+        public TextFieldSection RoutingNumberSection
+        {
+            get
+            {
+                return _routingNumberSection ?? (_routingNumberSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Routing Number...")
+                    .WithNextResponder(AccountHolderSection));
+            }
+        }
+
+        public TextFieldSection AccountNumberSection
+        {
+            get
+            {
+                return _accountNumberSection ?? (_accountNumberSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Account Number...")
+                    .WithNextResponder(RoutingNumberSection));
+            }
+        }
+
+        public TextFieldSection AccountHolderSection
+        {
+            get
+            {
+                return _accountHolderSection ?? (_accountHolderSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Account Holder Name..."));
+            }
+        }
+
+        public CallToActionSection CallToActionSection
+        {
+            get
+            {
+                if (_callToActionSection == null)
+                {
+                    _callToActionSection = Formals.Create<CallToActionSection>();
+                    _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
+                    _callToActionSection.MainButton.SetTitle("Add Bank Account");
+                }
+                return _callToActionSection;
+            }
+        }
+
+        public ToggleSection IsSavingsSection
+        {
+            get
+            {
+                if (_isSavingsSection == null)
+                {
+                    _isSavingsSection = Formals.Create<ToggleSection>();
+                    _isSavingsSection.Editable = true;
+                    _isSavingsSection.HeightConstraint.Constant = 66;
+                    _isSavingsSection.HeaderLabel.Text = "Is Savings?";
+                    _isSavingsSection.SubHeaderLabel.Hidden = true;
+                }
+                return _isSavingsSection;
+            }
+        }
+
+        public override void GetContent(List<UIView> content)
+        {
+            base.GetContent(content);
+            content.Add(HeaderSection);
+            content.Add(PaymentOptionTitleSection);
+            content.Add(AccountHolderSection);
+            content.Add(AccountNumberSection);
+            content.Add(RoutingNumberSection);
+            content.Add(IsSavingsSection);
+            content.Add(CallToActionSection);
+        }
+    }
+
+    [Register("PaymentOptionsView")]
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    public partial class PaymentOptionsView : BaseForm<PaymentOptionsViewModel>
+    {
+        private CallToActionSection _addCreditCardSection;
+        private CallToActionSection _addBankAccountSection;
+        private HeaderSection _headerSection;
+        private TableSection _tableSection;
+        private GenericTableSource _tableItemsSource;
+        private TableDataBinding<UITableViewCell, PaymentOptionBindingModel> _tableItemsBinding;
+
+        //Header view
+        //payment options table
+
+        public HeaderSection HeaderSection
+        {
+            get
+            {
+                if (_headerSection == null)
+                {
+                    _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
+                    _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Wallet, SharedResources.Size.L);
+                    _headerSection.MainLabel.Text = "Payment Options";
+                    _headerSection.SubLabel.Text = "Select payment option or add a new one";
+                }
+                return _headerSection;
+            }
+        }
+
+
+        public TableSection TableSection
+        {
+            get
+            {
+                if (_tableSection == null)
+                {
+                    _tableSection = Formals.Create<TableSection>();
+                    _tableSection.Table.AllowsSelection = false;
+                    _tableSection.Source = TableItemsSource;
+                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine;
+                    _tableSection.ReloadData();
+                }
+                return _tableSection;
+            }
+        }
+
+        public GenericTableSource TableItemsSource
+        {
+            get
+            {
+                if (_tableItemsSource == null)
+                {
+                    _tableItemsSource = new GenericTableSource()
+                    {
+                        Items = ViewModel.PaymentOptions, //Deliver data
+                        Binding = TableItemsBinding, //Deliver binding
+                        ItemsEditableByDefault = true, //Set all items editable
+                        ItemsFocusableByDefault = true
+                    };
+                }
+                return _tableItemsSource;
+            }
+            set { _tableItemsSource = value; }
+        }
+
+        public TableDataBinding<UITableViewCell, PaymentOptionBindingModel> TableItemsBinding
+        {
+            get
+            {
+                if (_tableItemsBinding == null)
+                {
+                    _tableItemsBinding = new TableDataBinding<UITableViewCell, PaymentOptionBindingModel>() //Define cell type and data type as type args
+                    {
+                        Bind = (cell, item, index) => //What to do when cell is created for item
+                        {
+
+                            cell.TextLabel.Text = item.FriendlyName;
+
+                        },
+                        //CellHeight = (item, index) => { return TicketItemCell.FullHeight; },
+                        ItemSelected = item =>
+                        {
+                            //ViewModel.SelectedRequest = item;
+                            //ViewModel.OpenSelectedRequestCommand.Execute(null);
+                        }, //When accessory button clicked
+                        AccessoryType = item => UITableViewCellAccessory.None, //What is displayed on the right edge
+                        CellSelector = () => new UITableViewCell(UITableViewCellStyle.Default,"PaymentOptions_CellView"), //Define how to create cell, if reusables not found
+                        CellIdentifier = "PaymentOptions_CellView"
+                    };
+                }
+                return _tableItemsBinding;
+            }
+            set { _tableItemsBinding = value; }
+        }
+
+        public CallToActionSection AddCreditCardSection
+        {
+            get
+            {
+                if (_addCreditCardSection == null)
+                {
+                    _addCreditCardSection = Formals.Create<CallToActionSection>();
+                    _addCreditCardSection.MainButton.SetTitle("Add Credit Card");
+                    _addCreditCardSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
+                }
+                return _addCreditCardSection;
+            }
+        }
+
+        public CallToActionSection AddBankAccountSection
+        {
+            get
+            {
+                if (_addBankAccountSection == null)
+                {
+                    _addBankAccountSection = Formals.Create<CallToActionSection>();
+                    _addBankAccountSection.MainButton.SetTitle("Add Bank Account");
+                    _addBankAccountSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
+                }
+                return _addBankAccountSection;
+            }
+        }
+
+        public override void BindForm()
+        {
+            base.BindForm();
+            this.OnViewModelEventMainThread<PaymentOptionsUpdated>(evt =>
+            {
+                TableSection.ReloadData();
+            });
+
+
+            var set = this.CreateBindingSet<PaymentOptionsView, PaymentOptionsViewModel>();
+            set.Bind(AddCreditCardSection.MainButton).To(vm => vm.AddCreditCardCommand);
+            set.Bind(AddBankAccountSection.MainButton).To(vm => vm.AddBankAccountCommand);
+            set.Apply();
+
+
+        }
+
+        public override void GetContent(List<UIView> content)
+        {
+            base.GetContent(content);
+            content.Add(HeaderSection);
+            content.Add(TableSection);
+            content.Add(AddCreditCardSection);
+            content.Add(AddBankAccountSection);
+        }
+
+        public override void LayoutContent()
+        {
+            View.AddConstraints(
+                HeaderSection.AtTopOf(View),
+                HeaderSection.AtLeftOf(View),
+                HeaderSection.AtRightOf(View)
+                );
+
+
+            View.AddConstraints(
+                TableSection.Below(HeaderSection),
+                TableSection.AtLeftOf(View),
+                TableSection.AtRightOf(View)
+                );
+
+            View.AddConstraints(
+                AddCreditCardSection.Below(TableSection),
+                AddCreditCardSection.AtLeftOf(View),
+                AddCreditCardSection.AtRightOf(View)
+                );
+
+            View.AddConstraints(
+                AddBankAccountSection.Below(AddCreditCardSection),
+                AddBankAccountSection.AtLeftOf(View),
+                AddBankAccountSection.AtRightOf(View),
+                AddBankAccountSection.AtBottomOf(View)
+                );
+        }
+
+    }
+
+    [Register("CommitPaymentView")]
+    [NavbarStyling]
+    [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
+    public partial class CommitPaymentView : BaseForm<CommitPaymentViewModel>
+    {
+        private HeaderSection _headerSection;
+        private CallToActionSection _callToActionSection;
+        private GenericTableSection _paymentSummarySection;
+        private TableDataBinding<PaymentSummaryViewCell, PaymentSummaryEntry> _tableItemsBinding;
+        private TableSection _tableSection;
+        private GenericTableSource _tableFiltersSource;
+
+
+        public CallToActionSection CallToActionSection
+        {
+            get
+            {
+                if (_callToActionSection == null)
+                {
+                    _callToActionSection = Formals.Create<CallToActionSection>();
+                    _callToActionSection.MainButton.SetTitle("Commit Payment");
+                    _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
+                }
+                return _callToActionSection;
+            }
+        }
+
+        public TableSection TableSection
+        {
+            get
+            {
+                if (_tableSection == null)
+                {
+                    _tableSection = Formals.Create<TableSection>();
+                    _tableSection.Table.ContentInset = new UIEdgeInsets(8, 24, 8, 24);
+                    _tableSection.Table.AllowsSelection = false;
+                    _tableSection.Source = TableItemsSource;
+                    _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+                    _tableSection.ReloadData();
+                }
+                return _tableSection;
+            }
+        }
+
+        public GenericTableSource TableItemsSource
+        {
+            get
+            {
+                if (_tableFiltersSource == null)
+                {
+                    _tableFiltersSource = new GenericTableSource()
+                    {
+                        Items = ViewModel.SelectedPaymentSummary.Entries, //Deliver data
+                        Binding = TableItemsBinding, //Deliver binding
+                        ItemsEditableByDefault = true, //Set all items editable
+                        ItemsFocusableByDefault = true
+                    };
+                }
+                return _tableFiltersSource;
+            }
+            set { _tableFiltersSource = value; }
+        }
+
+        public HeaderSection HeaderSection
+        {
+            get
+            {
+                if (_headerSection == null)
+                {
+                    _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
+                    _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Wallet, SharedResources.Size.L);
+                    _headerSection.MainLabel.Text = "Rent Summary";
+                    _headerSection.SubLabel.Text = "Pending payments are listed below";
+                }
+                return _headerSection;
+            }
+        }
+
+
+        public TableDataBinding<PaymentSummaryViewCell, PaymentSummaryEntry> TableItemsBinding
+        {
+            get
+            {
+                if (_tableItemsBinding == null)
+                {
+                    _tableItemsBinding = new TableDataBinding<PaymentSummaryViewCell, PaymentSummaryEntry>() //Define cell type and data type as type args
+                    {
+                        Bind = (cell, item, index) => //What to do when cell is created for item
+                        {
+
+                            cell.ItemPriceLabel.Text = item.Price;
+                            cell.ItemTitleLabel.Text = item.Title;
+
+                            if (item.Format == PaymentSummaryFormat.Default)
+                            {
+                                cell.TopSeparator.Alpha = 0;
+                                cell.BottomSeparator.Alpha = 1;
+                            }
+                            else
+                            {
+                                cell.TopSeparator.Alpha = 1;
+                                cell.BottomSeparator.Alpha = 0;
+                            }
+
+                        },
+                        //CellHeight = (item, index) => { return TicketItemCell.FullHeight; },
+                        ItemSelected = item =>
+                        {
+                            //ViewModel.SelectedRequest = item;
+                            //ViewModel.OpenSelectedRequestCommand.Execute(null);
+                        }, //When accessory button clicked
+                        AccessoryType = item => UITableViewCellAccessory.None, //What is displayed on the right edge
+                        //CellSelector = () => new PaymentSummaryViewCell(), //Define how to create cell, if reusables not found
+                        CellIdentifier = PaymentSummaryViewCell.Key
+                    };
+                }
+                return _tableItemsBinding;
+            }
+            set { _tableItemsBinding = value; }
+        }
+
+        public override void BindForm()
+        {
+            base.BindForm();
+            TableSection.Table.RegisterNibForCellReuse(PaymentSummaryViewCell.Nib, PaymentSummaryViewCell.Key);
+
+            var set = this.CreateBindingSet<CommitPaymentView, CommitPaymentViewModel>();
+            set.Bind(CallToActionSection.MainButton).To(vm => vm.CommitCommand);
+            set.Apply();
+
+
+        }
+
+        public override void GetContent(List<UIView> content)
+        {
+            base.GetContent(content);
+            content.Add(HeaderSection);
+            content.Add(TableSection);
+            content.Add(CallToActionSection);
+        }
+
+        public override void LayoutContent()
+        {
+            View.AddConstraints(
+                HeaderSection.AtTopOf(View),
+                HeaderSection.AtLeftOf(View),
+                HeaderSection.AtRightOf(View)
+                );
+
+
+            View.AddConstraints(
+                TableSection.Below(HeaderSection),
+                TableSection.AtLeftOf(View),
+                TableSection.AtRightOf(View)
+                );
+
+            View.AddConstraints(
+                CallToActionSection.Below(TableSection),
+                CallToActionSection.AtLeftOf(View),
+                CallToActionSection.AtRightOf(View),
+                CallToActionSection.AtBottomOf(View)
+                );
+        }
+    }
+
+
+
+
+
+
 }

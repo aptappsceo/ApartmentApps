@@ -59,11 +59,9 @@ namespace ResidentAppCross.Commands
         private async Task ExecuteTask()
         {
             Dispatcher.RequestMainThreadAction(ProcessStart);
-            Debug.WriteLine("Invoked outside of try");
+        
             try
             {
-                Debug.WriteLine("Invoked inside of try");
-
                 await _execute(this);
             }
 			catch (Microsoft.Rest.HttpOperationException ex) {

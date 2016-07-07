@@ -111,6 +111,17 @@ namespace ApartmentApps.Client.Models
             set { this._firstName = value; }
         }
         
+        private int? _forteClientId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? ForteClientId
+        {
+            get { return this._forteClientId; }
+            set { this._forteClientId = value; }
+        }
+        
         private string _gender;
         
         /// <summary>
@@ -465,6 +476,11 @@ namespace ApartmentApps.Client.Models
                 if (firstNameValue != null && firstNameValue.Type != JTokenType.Null)
                 {
                     this.FirstName = ((string)firstNameValue);
+                }
+                JToken forteClientIdValue = inputObject["ForteClientId"];
+                if (forteClientIdValue != null && forteClientIdValue.Type != JTokenType.Null)
+                {
+                    this.ForteClientId = ((int)forteClientIdValue);
                 }
                 JToken genderValue = inputObject["Gender"];
                 if (genderValue != null && genderValue.Type != JTokenType.Null)

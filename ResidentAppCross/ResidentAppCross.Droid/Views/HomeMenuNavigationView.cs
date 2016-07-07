@@ -17,6 +17,7 @@ using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Resources;
+using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross.Droid.Views.Components.Navigation
 {

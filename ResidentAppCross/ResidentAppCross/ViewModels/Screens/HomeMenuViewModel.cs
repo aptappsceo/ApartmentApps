@@ -38,7 +38,6 @@ namespace ResidentAppCross
         {
             MenuItems.Clear();
 
-            var paymentsEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.Enabled ?? false;
             var courtesyEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.CourtesyConfig?.Enabled ?? false;
             var maintenanceEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.MaintenanceConfig?.Enabled ?? false;
             var messagingEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.MessagingConfig?.Enabled ?? false;
@@ -224,8 +223,13 @@ namespace ResidentAppCross
 
         public ICommand PayRentCommand => new MvxCommand(() =>
         {
+            if(!string.IsNullOrEmpty(PaymentUrl))
             _dialogService.OpenUrl(PaymentUrl);
-        },()=>!string.IsNullOrEmpty(PaymentUrl));
+            else
+            {
+                ShowViewModel<RentSummaryViewModel>();
+            }
+        },()=> _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.Enabled ?? false );
 
         public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);
 

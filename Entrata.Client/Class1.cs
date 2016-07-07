@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Entrata.Client.GetMitsLeases;
 using Entrata.Model.Requests;
 using Newtonsoft.Json;
 
@@ -52,6 +53,21 @@ namespace Entrata.Client
             {
                 {"propertyId", propertyId}
             });
+
+            return result;
+        }
+        public async Task<GetMitsLeases.GetMitsLeasesResponse> GetMitsLeases(string propertyId)
+        {
+            var result = await SendRequest<GetMitsLeasesResponse>("getMitsLeases", new Dictionary<string, string>()
+            {
+                {"propertyId", propertyId},
+                {"includeLeaseHistory", "0"},
+                {"sendUnitSpaces", "0"},
+                {"includeDemographics", "0"},
+                {"includeOtherIncomeLeases", "1"},
+                {"residentFriendlyMode", "0"},
+
+            }, "leases");
 
             return result;
         }

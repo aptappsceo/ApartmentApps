@@ -55,6 +55,7 @@
     <Compile Include="ApartmentApps.API.Service\IMaitenance.cs" />
     <Compile Include="ApartmentApps.API.Service\IMessaging.cs" />
     <Compile Include="ApartmentApps.API.Service\INotifiations.cs" />
+    <Compile Include="ApartmentApps.API.Service\IPayments.cs" />
     <Compile Include="ApartmentApps.API.Service\IRegister.cs" />
     <Compile Include="ApartmentApps.API.Service\IVersion.cs" />
     <Compile Include="ApartmentApps.API.Service\Lookups.cs" />
@@ -63,6 +64,8 @@
     <Compile Include="ApartmentApps.API.Service\MaitenanceExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Messaging.cs" />
     <Compile Include="ApartmentApps.API.Service\MessagingExtensions.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\AddBankAccountBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\AddCreditCardBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AddExternalLoginBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AlertBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AlertBindingModelCollection.cs" />
@@ -100,9 +103,13 @@
     <Compile Include="ApartmentApps.API.Service\Models\MaitenanceRequestCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaitenanceRequestModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MaitenanceRequestType.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\MakePaymentBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\MakePaymentResult.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ManageInfoViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MessagingConfig.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ModuleInfo.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\PaymentOptionBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\PaymentOptionBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PaymentsConfig.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Property.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PropertyAddon.cs" />
@@ -121,6 +128,8 @@
     <Compile Include="ApartmentApps.API.Service\Models\VersionInfo.cs" />
     <Compile Include="ApartmentApps.API.Service\Notifiations.cs" />
     <Compile Include="ApartmentApps.API.Service\NotifiationsExtensions.cs" />
+    <Compile Include="ApartmentApps.API.Service\Payments.cs" />
+    <Compile Include="ApartmentApps.API.Service\PaymentsExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Register.cs" />
     <Compile Include="ApartmentApps.API.Service\RegisterExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Version.cs" />
@@ -147,6 +156,8 @@
     <Compile Include="Services\ViewModelConfigurator.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\DevelopmentViewModel1.cs" />
+    <Compile Include="ViewModels\Screens\AddCreditCardViewModel.cs" />
+    <Compile Include="ViewModels\Screens\CommitPaymentViewModel.cs" />
     <Compile Include="ViewModels\Screens\IncidentReportCheckinDetailsViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceCheckinDetailsViewModel.cs" />
     <Compile Include="ViewModels\Data\BadgeType.cs" />
@@ -172,6 +183,7 @@
     <Compile Include="ViewModels\Screens\MaintenanceRequestStatusViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceStartFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\PropertyConfigFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\RentSummaryViewModel.cs" />
     <Compile Include="ViewModels\Screens\SettingsFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\SignUpFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\TestFormViewModel.cs" />

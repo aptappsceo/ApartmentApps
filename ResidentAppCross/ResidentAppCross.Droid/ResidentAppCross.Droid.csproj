@@ -44,6 +44,7 @@
     <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
     <AndroidStoreUncompressedFileExtensions />
     <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AndroidKeyStore>True</AndroidKeyStore>
@@ -72,6 +73,10 @@
       <HintPath>..\..\packages\blocke.circleimageview.1.0\lib\MonoAndroid50\blocke.circleimageview.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MaterialSpinner, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MaterialSpinner-Xamarin.1.1.1\lib\MonoAndroid\MaterialSpinner.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
       <HintPath>..\..\packages\Microsoft.Rest.ClientRuntime.0.9.6\lib\portable-net403+win8+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
@@ -79,6 +84,10 @@
       <HintPath>..\..\Components\azure-messaging-1.1.5.6\lib\android\Microsoft.WindowsAzure.Messaging.Android.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android.Export" />
+    <Reference Include="NineOldAndroids, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.NineOldAndroids.0.0.1\lib\MonoAndroid\NineOldAndroids.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -221,7 +230,6 @@
     <Compile Include="FlyOutContainer.cs" />
     <Compile Include="MainActivity.cs" />
     <AndroidResource Include="Resources\drawable-hdpi\AddIcon.png" />
-    <AndroidResource Include="Resources\layout\MaintenanceRequestTypeSelectionViewLayout.axml" />
     <Compile Include="QRService.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -274,34 +282,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\layout\HomeMenuItemLayout.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\UpperDialogBarLayout.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\ImageBundleWidgetLayout.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\MaintenanceRequestTypeSelectionItemLayout.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\ImageBundleWidgetItemLayout.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\GenericWebViewLayout.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\QRScannerViewLayout.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\SpinnerSelectionSectionItem.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\mxfragment.axml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\LoginViewLayout.axml" />
     <AndroidResource Include="Resources\values\Strings.xml" />
     <AndroidResource Include="Resources\drawable-hdpi\Icon.png" />
     <AndroidResource Include="Resources\drawable-mdpi\Icon.png" />
@@ -549,9 +531,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\BadgeBackgroundSource.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\MaintenanceRequestViewLayout.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\MaintenanceRequestMainIcon.png" />
@@ -1022,6 +1001,33 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\message_list_item.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\add_credit_card_payment_option_view.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\rent_summary_view.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\spinner_item_text_light.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\payment_summary_total_line.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\payment_summary_default_line.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\payment_options_view.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\wallet_plus.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\add_bank_account_payment_option_view.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\commit_payment_view.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

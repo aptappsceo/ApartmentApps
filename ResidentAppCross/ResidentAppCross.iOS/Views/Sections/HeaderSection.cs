@@ -26,7 +26,8 @@ namespace ResidentAppCross.iOS
 	        HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
 	        MainLabel.Font = AppFonts.FormHeadline;
 	        SubLabel.Font = AppFonts.FormSubheadline;
-	    }
+            LogoImage.TintColor = AppTheme.CreateColor;
+        }
 
 	    public UIImageView LogoImage => LogoImageView;
 	    public UILabel MainLabel => HeaderLabel;

@@ -114,6 +114,7 @@
     <Compile Include="PropertyAddonType.cs" />
     <Compile Include="PropertyContext.cs" />
     <Compile Include="PropertyEntrataInfo.cs" />
+    <Compile Include="PropertyMerchantInfo.cs" />
     <Compile Include="PropertyMetadata.cs" />
     <Compile Include="PropertyYardiInfo.cs" />
     <Compile Include="Repository\BaseRepository.cs" />

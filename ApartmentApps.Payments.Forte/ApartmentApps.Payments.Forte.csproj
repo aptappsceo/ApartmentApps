@@ -59,6 +59,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\PaymentGateway\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -146,11 +151,19 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Forte.Transaction\TransactionService.wsdl" />
+    <None Include="Service References\PaymentGateway\ApartmentApps.Payments.Forte.PaymentGateway.ExecuteSocketDelimitedQueryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PaymentGateway\ApartmentApps.Payments.Forte.PaymentGateway.ExecuteSocketQueryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PaymentGateway\paymentsgateway.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Forte.Client\" />
     <WCFMetadataStorage Include="Service References\Forte.Merchant\" />
     <WCFMetadataStorage Include="Service References\Forte.Transaction\" />
+    <WCFMetadataStorage Include="Service References\PaymentGateway\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\Forte.Client\Client.disco" />
@@ -193,6 +206,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\Forte.Merchant\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PaymentGateway\paymentsgateway.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PaymentGateway\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PaymentGateway\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PaymentGateway\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

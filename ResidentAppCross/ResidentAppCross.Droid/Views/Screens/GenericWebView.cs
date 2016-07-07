@@ -26,7 +26,6 @@ namespace ResidentAppCross.Droid.Views
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            SetContentView(Resource.Layout.GenericWebViewLayout);
 
 
             //var menu = FindViewById<FlyOutContainer>(Resource.Id.FlyOutContainer);

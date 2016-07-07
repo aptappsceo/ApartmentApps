@@ -10,5 +10,6 @@ namespace ApartmentApps.Data
         public string Name { get; set; }
 
         public virtual ICollection<Unit> Units { get; set; }
+        public int RentAmount { get; set; } = 0;
     }
 }
