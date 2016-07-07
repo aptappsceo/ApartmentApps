@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Entrata.Model.Requests;
@@ -23,14 +24,14 @@ namespace ApartmentApps.Portal.Controllers
 {
     [RoutePrefix("Property")]
     [Authorize(Roles = "Admin")]
-    public class PropertyController : AAController
+    public class PropertyController : AAController, ILogger
     {
-        public EntrataIntegration Entrata { get; set; }
+        public EntrataModule Entrata { get; set; }
         public IUnitImporter Importer { get; set; }
 
         private ApplicationUserManager _userManager;
 
-        public PropertyController(IKernel kernel, EntrataIntegration entrata, IUnitImporter importer, PropertyContext context, IUserContext userContext, ApplicationUserManager userManager) : base(kernel, context, userContext)
+        public PropertyController(IKernel kernel, EntrataModule entrata, IUnitImporter importer, PropertyContext context, IUserContext userContext, ApplicationUserManager userManager) : base(kernel, context, userContext)
         {
             Entrata = entrata;
             Importer = importer;
@@ -59,7 +60,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public async Task<ActionResult> ImportEntrata(int id)
         {
-            var result = await Entrata.ImportData(UserManager, Context.Properties.Find(id));
+            //var result = await Entrata.Execute()
             return RedirectToAction("Index");
         }
         // GET: /Properties/Details/5
@@ -208,7 +209,21 @@ namespace ApartmentApps.Portal.Controllers
             return RedirectToAction("Index");
         }
 
-      
+
+        public void Error(string str, params object[] args)
+        {
+            
+        }
+
+        public void Warning(string str, params object[] args)
+        {
+            
+        }
+
+        public void Info(string str, params object[] args)
+        {
+            
+        }
     }
     public class ImportResidentCSVModel
     {

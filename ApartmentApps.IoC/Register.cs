@@ -100,7 +100,7 @@ namespace ApartmentApps.IoC
             kernel.Bind<IRepository<UserTransaction>>().To<PropertyRepository<UserTransaction>>().InRequestScope();
 
 
-            kernel.Bind<EntrataIntegration>().ToSelf().InRequestScope();
+            //kernel.Bind<EntrataIntegration>().ToSelf().InRequestScope();
             kernel.Bind<IUnitImporter>().To<UnitImporter>().InRequestScope();
             kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
             kernel.Bind<AlertsService>().ToSelf().InRequestScope();

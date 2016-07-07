@@ -11,8 +11,8 @@ using Entrata.Model.Requests;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.OData.Query.SemanticAst;
-using Yardi.Client.ResidentData;
-using Yardi.Client.ResidentTransactions;
+//using Yardi.Client.ResidentData;
+//using Yardi.Client.ResidentTransactions;
 
 namespace ApartmentApps.Api
 {
@@ -166,10 +166,12 @@ namespace ApartmentApps.Api
         public override void Execute(ILogger logger)
         {
             var config = Config;
-            var req = new GetUnitInformation_LoginRequest(new GetUnitInformation_LoginRequestBody());
+            //var req = new GetUnitInformation_LoginRequest(new GetUnitInformation_LoginRequestBody());
 
-            var xml = (new GetChargeTypes_LoginResponseBody()).GetChargeTypes_LoginResult.Value;
-            var client = new ItfResidentDataSoapClient();
+            //var xml = (new GetChargeTypes_LoginResponseBody()).GetChargeTypes_LoginResult.Value;
+            //var client = new ItfResidentDataSoapClient();
+
+
             //var client = new ItfResidentTransactions2_0SoapClient();
             //client.GetUnitInformation_Login("apartmentappbp", "67621", "YCSQL5TEST_2K8R2", "afqoml_70dev", "SQL Server",
             //    "", "Apartment App Payments", "");
@@ -210,6 +212,19 @@ namespace ApartmentApps.Api
                         ImportUnit(logger, ilsUnit.BuildingName,ilsUnit.MarketingName);
                     }
                 }
+
+                var customers =
+                    entrataClient.GetCustomers(item.EntrataPropertyId).Result.Response.Result.Customers.Customer;
+                foreach (var customer in customers)
+                {
+
+                    Building building;
+                    Unit unit;
+                    ImportUnit(logger,customer.BuildingName,customer.UnitNumber,out unit, out building);
+
+                    ImportCustomer(this, UserContext.CurrentUser.Property,unit.Id, customer.PhoneNumber.NumbersOnly(),customer.City, customer.Email, customer.FirstName, customer.LastName,customer.MiddleName,customer.Gender,customer.PostalCode,customer.State,customer.Address);
+
+                }
             }
 
         }
@@ -228,9 +243,22 @@ namespace ApartmentApps.Api
             _manager = manager;
          
         }
+
         protected void ImportUnit(ILogger logger, string buildingName, string unitName)
         {
-            var building = _context.Buildings.FirstOrDefault(p => p.Name == buildingName);
+            Building building;
+            ImportUnit(logger, buildingName, unitName, out building);
+        }
+
+        protected void ImportUnit(ILogger logger, string buildingName, string unitName, out Building building)
+        {
+            Unit unit;
+            ImportUnit(logger, buildingName, unitName, out unit, out building);
+        }
+
+        protected void ImportUnit(ILogger logger, string buildingName, string unitName, out Unit unit, out Building building)
+        {
+            building = _context.Buildings.FirstOrDefault(p => p.Name == buildingName);
 
             if (building == null)
             {
@@ -241,9 +269,9 @@ namespace ApartmentApps.Api
                 _context.Buildings.Add(building);
                 _context.SaveChanges();
             }
-
-            var unit =
-                _context.Units.FirstOrDefault(p => p.BuildingId == building.Id && p.Name == unitName);
+            var buildingId = building.Id;
+            unit =
+                _context.Units.FirstOrDefault(p => p.BuildingId == buildingId && p.Name == unitName);
             if (unit == null)
             {
                 unit = new Unit()
