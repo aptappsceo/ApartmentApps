@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PushSharp;
 using PushSharp.Apple;
+using Yardi.Client.ResidentTransactions;
 
 namespace PlaygroundConsole
 {
@@ -26,6 +27,8 @@ namespace PlaygroundConsole
     {
         static async Task Main4()
         {
+      
+
             //return Task.Delay(0);
             //var merchantId = "1234";
             //var apiClientId = "2000";
@@ -72,6 +75,7 @@ namespace PlaygroundConsole
                 var id = item.LeaseID.Identification.FirstOrDefault();
                 if (id != null)
                 {
+                   
                     var idValue = id.IDValue;
                     var lease = leases.FirstOrDefault(p => p.Identification.IDValue == idValue);
                     if (lease != null)
@@ -94,51 +98,13 @@ namespace PlaygroundConsole
             }
 
         }
-        static async void Main2()
-        {
-            var client = new ApartmentAppsClient();
-            var login = await client.LoginAsync("micahosborne@gmail.com", "Asdf1234!");
 
-            //var url = "http://apartmentappsapiservice.azurewebsites.net";
-            //var x = new HttpClient();
-
-            //var response = await x.PostAsync(url + "/Token", new FormUrlEncodedContent(new Dictionary<string, string>()
-            //{
-            //    {"Username", "micahosborne@gmail.com" },
-            //    {"password", "Asdf1234!" },
-            //    {"grant_type", "password" },
-            //}));
-
-            //var responseString = await response.Content.ReadAsStringAsync();
-            //var obj = JObject.Parse(responseString);
-            //var accessToken = (string)obj["access_token"];
-            //Console.WriteLine("ACCESS TOKEN = " + accessToken);
-
-            //var a = new Unknowntype(new Uri("http://apartmentappsapiservice.azurewebsites.net"), new BearerDelegatingHandler(accessToken));
-            //foreach (var item in a.Values.Get())
-            //{
-            //    Console.WriteLine("VALUE = " + item);
-            //}
-
-        }
         static void Main(string[] args)
         {
             Main3();
             Console.ReadLine();
 
-            //var webClient = new WebClient();
-            
-            //var nameValueCollection = new NameValueCollection()
-            //{
-              
-            //};
-            //nameValueCollection.Add("username", "micahosborne@gmail.com");
-            //nameValueCollection.Add("password", "Asdf1234!");
-            //nameValueCollection.Add("grant_type", "password");
-
-            //var response = new UTF8Encoding().GetString(webClient.UploadValues(url + "/Token","POST", nameValueCollection));
-            //Console.WriteLine(response);
-
+           
           
         }
     }

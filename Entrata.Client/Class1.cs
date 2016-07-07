@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Entrata.Client.GetMitsLeases;
+using Entrata.Client.GetMitsUnits;
 using Entrata.Model.Requests;
 using Newtonsoft.Json;
 
@@ -46,7 +47,21 @@ namespace Entrata.Client
             return (TResponse)JsonConvert.DeserializeObject(str, typeof (TResponse));
         }
 
+        public async Task<MitsUnitsResponse> GetMitsUnits(string propertyId)
+        {
+            var result = await SendRequest<MitsUnitsResponse>("getMitsPropertyUnits", new Dictionary<string, string>()
+            {
+                {"propertyIds", propertyId},
+                {"availableUnitsOnly ", "0"},
+                {"usePropertyPreferences", "0"},
+                {"includeDisabledFloorplans", "0"},
+                {"includeDisabledUnits", "0"},
+                {"showUnitSpaces", "0"},
+              
+            }, "propertyunits");
 
+            return result;
+        }
         public async Task<GetCustomersResponse> GetCustomers(string propertyId)
         {
             var result = await SendRequest<GetCustomersResponse>("getCustomers", new Dictionary<string, string>()

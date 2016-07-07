@@ -80,14 +80,6 @@ namespace ApartmentApps.API.Service.App_Start
 
             Register.RegisterServices(kernel);
 
-            kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
-
-    
-            kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
-
-
-            kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();
-            kernel.Bind<ISecureDataFormat<AuthenticationTicket>>().To<SecureDataFormat<AuthenticationTicket>>().InRequestScope();
             kernel.Bind<IAuthenticationManager>().ToMethod(p => HttpContext.Current.GetOwinContext().Authentication).InRequestScope();
             kernel.Bind<ApplicationUserManager>().ToMethod(o => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>()).InRequestScope();
 

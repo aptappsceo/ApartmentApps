@@ -10,7 +10,6 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
-using ApartmentApps.API.Service.Controllers;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
@@ -19,6 +18,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
 using Ninject.Syntax;
 #if !JOBS
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataHandler;
 using Ninject.Web.Common;
 #endif
 namespace ApartmentApps.IoC
@@ -48,6 +49,7 @@ namespace ApartmentApps.IoC
         public static void RegisterModule<TModule, TModuleConfig>( this IKernel kernel ) where TModule : Module<TModuleConfig> where TModuleConfig : ModuleConfig, new()
         {
             kernel.Bind<TModule, IModule, Module<TModuleConfig>>().To<TModule>().InRequestScope();
+            
             //kernel.Bind<IRepository<TModuleConfig>>().To<Module<TModuleConfig>.ConfigRepository>().InRequestScope();
         }
         public static void RegisterServices(IKernel kernel)
@@ -87,11 +89,13 @@ namespace ApartmentApps.IoC
             kernel.RegisterModule<MaintenanceModule, MaintenanceConfig>();
             kernel.RegisterModule<CourtesyModule, CourtesyConfig>();
             kernel.RegisterModule<MessagingModule, MessagingConfig>();
+            kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
+            kernel.RegisterModule<EntrataModule, EntrataConfig>();
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
             ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
 
-            kernel.Bind<IPaymentsService>().To<FortePaymentsService>().InRequestScope();
+         
             kernel.Bind<IRepository<UserPaymentOption>>().To<PropertyRepository<UserPaymentOption>>().InRequestScope();
             kernel.Bind<IRepository<UserTransaction>>().To<PropertyRepository<UserTransaction>>().InRequestScope();
 
@@ -158,6 +162,17 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService>();
 
             kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
+
+            kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
+
+
+
+#if !JOBS
+            kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();
+            kernel.Bind<ISecureDataFormat<AuthenticationTicket>>().To<SecureDataFormat<AuthenticationTicket>>().InRequestScope();
+#endif
+
+
             //try
             //{
             //    var config = new DbMigrationsConfiguration<ApplicationDbContext>
@@ -173,7 +188,7 @@ namespace ApartmentApps.IoC
             //{
             //    Debug.WriteLine(ex.Message);
             //}
-           
+
 
 
 

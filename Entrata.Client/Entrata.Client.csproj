@@ -48,6 +48,7 @@
     <Compile Include="GetCustomersResponse.cs" />
     <Compile Include="EntrataRequest.cs" />
     <Compile Include="GetMitsLeasesResponse.cs" />
+    <Compile Include="GetMitsUnitsResponse.cs" />
     <Compile Include="IExternalUnitImportInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
