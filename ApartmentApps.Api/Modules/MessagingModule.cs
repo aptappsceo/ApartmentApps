@@ -40,7 +40,8 @@ namespace ApartmentApps.Api.Modules
                 {
                     Children = new List<MenuItemViewModel>()
                 {
-                    new MenuItemViewModel("New Message","fa-plus-square","Index","Messaging")
+                    new MenuItemViewModel("New Message","fa-plus-square","Index","Messaging"),
+                    new MenuItemViewModel("Sent","fa-history","History","Messaging"),
                 }
                 });
             }

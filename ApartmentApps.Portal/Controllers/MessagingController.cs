@@ -16,10 +16,12 @@ namespace ApartmentApps.Portal.Controllers
 
     public class MessagingController : CrudController<UserBindingModel, ApplicationUser>
     {
+        private readonly MessagingService _messageService;
         private readonly MessagingModule _module;
 
-        public MessagingController(MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, AlertsService messagingService) : base(kernel,repository, service, context, userContext)
+        public MessagingController(MessagingService messageService, MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, AlertsService messagingService) : base(kernel,repository, service, context, userContext)
         {
+            _messageService = messageService;
             _module = module;
             MessagingService = messagingService;
         }
@@ -32,6 +34,11 @@ namespace ApartmentApps.Portal.Controllers
         {
 
             return View("Index");
+        }
+
+        public ActionResult History()
+        {
+            return View("History", _messageService.GetHistory());
         }
 
         [HttpPost, ValidateInput(false)]

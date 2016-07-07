@@ -13,11 +13,10 @@ using ApartmentApps.Data.Repository;
 using Newtonsoft.Json;
 using Ninject;
 using Syncfusion.EJ.Export;
-using Syncfusion.EJ.ReportWriter;
 using Syncfusion.JavaScript;
 using Syncfusion.JavaScript.DataSources;
 using Syncfusion.JavaScript.Models;
-using Syncfusion.Linq;
+using Syncfusion.XlsIO;
 using PageSettings = Syncfusion.JavaScript.Models.PageSettings;
 
 namespace ApartmentApps.Portal.Controllers
@@ -69,7 +68,7 @@ namespace ApartmentApps.Portal.Controllers
 
             properties.AllowPaging = false;
             properties.PageSettings.PageSize = Int32.MaxValue;
-            exp.Export(properties, Data, "Export.xlsx", Syncfusion.XlsIO.ExcelVersion.Excel2010);
+            exp.Export(properties, Data, "Export.xlsx", ExcelVersion.Excel2010);
             return RedirectToAction("Index");
         }
         private GridProperties ConvertGridObject(string gridProperty)

@@ -86,7 +86,14 @@ namespace ApartmentApps.Api.ViewModels
     {
         public string Name { get; set; }
     }
-
+    [DisplayName("Messages")]
+    public class MessageViewModel : BaseViewModel
+    {
+        public string Body { get; set; }
+        public string Title { get; set; }
+        public int SentToCount { get; set; }
+        public DateTime? SentOn { get; set; }
+    }
     public class UnitViewModel :BaseViewModel
     {
         public string Name { get; set; }

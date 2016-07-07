@@ -144,6 +144,7 @@ namespace ApartmentApps.IoC
 
             kernel.RegisterMappable<Unit, UnitViewModel, UnitService>();
             kernel.RegisterMappable<Building, BuildingViewModel, BuildingService>();
+            kernel.RegisterMappable<Message, MessageViewModel, MessagingService>();
             kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService>();
             kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService>();
             kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService>();

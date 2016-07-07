@@ -30,6 +30,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             return Repository.GetAll().ToArray().Select(Mapper.ToViewModel);
         }
+    
 
         public IEnumerable<TViewModel> GetRange(int skip, int take)
         {

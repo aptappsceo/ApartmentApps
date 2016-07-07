@@ -82,7 +82,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
       <Private>True</Private>
@@ -127,62 +129,224 @@
       <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.Chart.Wpf, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Compression.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.DocIO.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.DocToPDFConverter.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.EJ, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.EJ.Export, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.EJ.Mvc, Version=14.1500.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.EJ.Olap, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.EJ.PdfViewer, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.EJ.ReportViewer, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Gauge.Wpf, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Linq.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Olap.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Pdf.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.PivotAnalysis.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.PMML.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Presentation.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.ReportControls.Wpf, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.ReportWriter.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.SFMaps.WPF, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Shared.Wpf, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.XlsIO.Base, Version=14.1450.0.41, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
+    <Reference Include="Syncfusion.Compression.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.DocIO.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.DocIO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.DocToPdfConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.DocToPdfConverter.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.EJ, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.EJ.Export, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.Export.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.EJ.MVC, Version=14.2500.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.MVC.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.EJ.Olap, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.Olap.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.EJ.PdfViewer, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.PdfViewer.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.EJ.ReportViewer, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.ReportViewer.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.ExcelChartToImageConverter.Wpf, Version=14.2451.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.ExcelChartToImageConverter.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.ExcelToPDFConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.ExcelToPDFConverter.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Gauge.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Gauge.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Grid.Wpf, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Grid.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.GridCommon.Wpf, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.GridCommon.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.HTMLConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.HTMLConverter.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.HTMLUI.Base, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.HTMLUI.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Linq.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Linq.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.MIME.Base, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.MIME.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.OCRProcessor.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.OCRProcessor.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.OfficeChart.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.OfficeChart.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.OfficeChartToImageConverter.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.OfficeChartToImageConverter.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Olap.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Olap.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Pdf.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.PivotAnalysis.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.PivotAnalysis.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.PMML.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.PMML.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Presentation.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Presentation.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.PresentationToPdfConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.PresentationToPdfConverter.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.ReportControls.Wpf, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.ReportControls.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.ReportWriter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.ReportWriter.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.RichTextBoxAdv.WPF, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.RichTextBoxAdv.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfChart.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.SfChart.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfMaps.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.SfMaps.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Base, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Shared.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Shared.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.XlsIO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Http">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -325,16 +489,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Content\ej\web\default-theme\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\default-theme\images\dot.png" />
-    <BundleResource Include="Content\ej\web\default-theme\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\default-theme\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\default-theme\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\default-theme\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\default-theme\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\default-theme\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\default-theme\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\default-theme\images\ui-icon.png" />
     <Content Include="CodeGen\Buildings.txt">
       <DependentUpon>Template1.tt</DependentUpon>
     </Content>
@@ -504,22 +658,11 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\ej\web\bootstrap-theme\ej.theme.css" />
+    <Content Include="Content\ej\web\bootstrap-theme\ej.theme.less" />
     <Content Include="Content\ej\web\bootstrap-theme\ej.theme.min.css" />
-    <Content Include="Content\ej\web\bootstrap-theme\ej.web.all.css" />
     <Content Include="Content\ej\web\bootstrap-theme\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\bootstrap-theme\ej.widgets.all.css" />
     <Content Include="Content\ej\web\bootstrap-theme\ej.widgets.all.min.css" />
     <Content Include="Content\ej\web\bootstrap-theme\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\bootstrap-theme\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\bootstrap-theme\images\dot.png" />
-    <BundleResource Include="Content\ej\web\bootstrap-theme\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\bootstrap-theme\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\bootstrap-theme\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\bootstrap-theme\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\bootstrap-theme\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\bootstrap-theme\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\bootstrap-theme\images\toolbar_icons.png" />
     <Content Include="Content\ej\web\bootstrap-theme\images\waitingpopup.gif" />
     <BundleResource Include="Content\ej\web\common-images\colorpicker_dark.png" />
     <BundleResource Include="Content\ej\web\common-images\colorpicker_light.png" />
@@ -589,236 +732,36 @@
     <BundleResource Include="Content\ej\web\common-images\spreadsheet\chart-sprites.png" />
     <BundleResource Include="Content\ej\web\common-images\spreadsheet\charttab-sprites.png" />
     <BundleResource Include="Content\ej\web\common-images\spreadsheet\charttype-sprites.png" />
-    <Content Include="Content\ej\web\common-images\spreadsheet\Down_Arrow.cur" />
-    <Content Include="Content\ej\web\common-images\spreadsheet\Draw_Border.cur" />
-    <Content Include="Content\ej\web\common-images\spreadsheet\Draw_Border_Grid.cur" />
+    <Content Include="Content\ej\web\common-images\spreadsheet\down_arrow_dark.cur" />
+    <Content Include="Content\ej\web\common-images\spreadsheet\down_arrow_light.cur" />
+    <Content Include="Content\ej\web\common-images\spreadsheet\draw_border_dark.cur" />
+    <Content Include="Content\ej\web\common-images\spreadsheet\draw_border_grid_dark.cur" />
+    <Content Include="Content\ej\web\common-images\spreadsheet\draw_border_grid_light.cur" />
+    <Content Include="Content\ej\web\common-images\spreadsheet\draw_border_light.cur" />
     <Content Include="Content\ej\web\common-images\spreadsheet\ejxlicons.svg" />
-    <Content Include="Content\ej\web\common-images\spreadsheet\Format_Painter.cur" />
-    <Content Include="Content\ej\web\common-images\spreadsheet\Right_Arrow.cur" />
+    <Content Include="Content\ej\web\common-images\spreadsheet\format_painter_dark.cur" />
+    <Content Include="Content\ej\web\common-images\spreadsheet\format_painter_light.cur" />
+    <Content Include="Content\ej\web\common-images\spreadsheet\right_arrow_dark.cur" />
+    <Content Include="Content\ej\web\common-images\spreadsheet\right_arrow_light.cur" />
     <BundleResource Include="Content\ej\web\common-images\spreadsheet\sprites.png" />
     <BundleResource Include="Content\ej\web\common-images\tools\drop-sibling-rtl.png" />
     <BundleResource Include="Content\ej\web\common-images\tools\file_icons.png" />
-    <Content Include="Content\ej\web\default-theme\ej.theme.css" />
-    <Content Include="Content\ej\web\default-theme\ej.theme.less" />
-    <Content Include="Content\ej\web\default-theme\ej.theme.min.css" />
-    <Content Include="Content\ej\web\default-theme\ej.web.all.css" />
-    <Content Include="Content\ej\web\default-theme\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\default-theme\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\default-theme\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\default-theme\images\ajax-loader.gif" />
-    <Content Include="Content\ej\web\default-theme\images\waitingpopup.gif" />
     <Content Include="Content\ej\web\ej.widgets.core.bootstrap.min.css" />
     <Content Include="Content\ej\web\ej.widgets.core.min.css" />
-    <Content Include="Content\ej\web\flat-azure-dark\ej.theme.css" />
-    <Content Include="Content\ej\web\flat-azure-dark\ej.theme.min.css" />
-    <Content Include="Content\ej\web\flat-azure-dark\ej.web.all.css" />
-    <Content Include="Content\ej\web\flat-azure-dark\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\flat-azure-dark\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\flat-azure-dark\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\flat-azure-dark\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\flat-azure-dark\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\flat-azure-dark\images\dot.png" />
-    <BundleResource Include="Content\ej\web\flat-azure-dark\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\flat-azure-dark\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\flat-azure-dark\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\flat-azure-dark\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\flat-azure-dark\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\flat-azure-dark\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\flat-azure-dark\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\flat-azure-dark\images\ui-icon.png" />
-    <Content Include="Content\ej\web\flat-azure-dark\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\flat-lime-dark\ej.theme.css" />
-    <Content Include="Content\ej\web\flat-lime-dark\ej.theme.min.css" />
-    <Content Include="Content\ej\web\flat-lime-dark\ej.web.all.css" />
-    <Content Include="Content\ej\web\flat-lime-dark\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\flat-lime-dark\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\flat-lime-dark\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\flat-lime-dark\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\dot.png" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\transparent.png" />
-    <BundleResource Include="Content\ej\web\flat-lime-dark\images\ui-icon.png" />
-    <Content Include="Content\ej\web\flat-lime-dark\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\flat-lime\ej.theme.css" />
-    <Content Include="Content\ej\web\flat-lime\ej.theme.min.css" />
-    <Content Include="Content\ej\web\flat-lime\ej.web.all.css" />
-    <Content Include="Content\ej\web\flat-lime\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\flat-lime\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\flat-lime\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\flat-lime\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\dot.png" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\transparent.png" />
-    <BundleResource Include="Content\ej\web\flat-lime\images\ui-icon.png" />
-    <Content Include="Content\ej\web\flat-lime\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\flat-saffron-dark\ej.theme.css" />
-    <Content Include="Content\ej\web\flat-saffron-dark\ej.theme.min.css" />
-    <Content Include="Content\ej\web\flat-saffron-dark\ej.web.all.css" />
-    <Content Include="Content\ej\web\flat-saffron-dark\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\flat-saffron-dark\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\flat-saffron-dark\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\flat-saffron-dark\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\dot.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\transparent.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron-dark\images\ui-icon.png" />
-    <Content Include="Content\ej\web\flat-saffron-dark\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\flat-saffron\ej.theme.css" />
-    <Content Include="Content\ej\web\flat-saffron\ej.theme.min.css" />
-    <Content Include="Content\ej\web\flat-saffron\ej.web.all.css" />
-    <Content Include="Content\ej\web\flat-saffron\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\flat-saffron\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\flat-saffron\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\flat-saffron\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\dot.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\transparent.png" />
-    <BundleResource Include="Content\ej\web\flat-saffron\images\ui-icon.png" />
-    <Content Include="Content\ej\web\flat-saffron\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\gradient-azure-dark\ej.theme.css" />
-    <Content Include="Content\ej\web\gradient-azure-dark\ej.theme.min.css" />
-    <Content Include="Content\ej\web\gradient-azure-dark\ej.web.all.css" />
-    <Content Include="Content\ej\web\gradient-azure-dark\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\gradient-azure-dark\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\gradient-azure-dark\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\gradient-azure-dark\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\gradient-azure-dark\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure-dark\images\dot.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure-dark\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure-dark\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure-dark\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure-dark\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure-dark\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure-dark\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure-dark\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure-dark\images\ui-icon.png" />
-    <Content Include="Content\ej\web\gradient-azure-dark\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\gradient-azure\ej.theme.css" />
-    <Content Include="Content\ej\web\gradient-azure\ej.theme.min.css" />
-    <Content Include="Content\ej\web\gradient-azure\ej.web.all.css" />
-    <Content Include="Content\ej\web\gradient-azure\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\gradient-azure\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\gradient-azure\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\gradient-azure\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\gradient-azure\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure\images\dot.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\gradient-azure\images\ui-icon.png" />
-    <Content Include="Content\ej\web\gradient-azure\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\gradient-lime-dark\ej.theme.css" />
-    <Content Include="Content\ej\web\gradient-lime-dark\ej.theme.min.css" />
-    <Content Include="Content\ej\web\gradient-lime-dark\ej.web.all.css" />
-    <Content Include="Content\ej\web\gradient-lime-dark\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\gradient-lime-dark\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\gradient-lime-dark\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\gradient-lime-dark\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\gradient-lime-dark\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime-dark\images\dot.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime-dark\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime-dark\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime-dark\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime-dark\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime-dark\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime-dark\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime-dark\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime-dark\images\ui-icon.png" />
-    <Content Include="Content\ej\web\gradient-lime-dark\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\gradient-lime\ej.theme.css" />
-    <Content Include="Content\ej\web\gradient-lime\ej.theme.min.css" />
-    <Content Include="Content\ej\web\gradient-lime\ej.web.all.css" />
-    <Content Include="Content\ej\web\gradient-lime\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\gradient-lime\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\gradient-lime\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\gradient-lime\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\gradient-lime\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime\images\dot.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\gradient-lime\images\ui-icon.png" />
-    <Content Include="Content\ej\web\gradient-lime\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\gradient-saffron-dark\ej.theme.css" />
-    <Content Include="Content\ej\web\gradient-saffron-dark\ej.theme.min.css" />
-    <Content Include="Content\ej\web\gradient-saffron-dark\ej.web.all.css" />
-    <Content Include="Content\ej\web\gradient-saffron-dark\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\gradient-saffron-dark\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\gradient-saffron-dark\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\gradient-saffron-dark\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\gradient-saffron-dark\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron-dark\images\dot.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron-dark\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron-dark\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron-dark\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron-dark\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron-dark\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron-dark\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron-dark\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron-dark\images\ui-icon.png" />
-    <Content Include="Content\ej\web\gradient-saffron-dark\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\gradient-saffron\ej.theme.css" />
-    <Content Include="Content\ej\web\gradient-saffron\ej.theme.min.css" />
-    <Content Include="Content\ej\web\gradient-saffron\ej.web.all.css" />
-    <Content Include="Content\ej\web\gradient-saffron\ej.web.all.min.css" />
-    <Content Include="Content\ej\web\gradient-saffron\ej.widgets.all.css" />
-    <Content Include="Content\ej\web\gradient-saffron\ej.widgets.all.min.css" />
-    <Content Include="Content\ej\web\gradient-saffron\images\ajax-loader.gif" />
-    <BundleResource Include="Content\ej\web\gradient-saffron\images\checkedtick.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron\images\dot.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron\images\drop-sibling.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron\images\gradient.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron\images\palette-arrow.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron\images\rating-star.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron\images\rotator-icon.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron\images\toggle-text.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron\images\toolbar_icons.png" />
-    <BundleResource Include="Content\ej\web\gradient-saffron\images\ui-icon.png" />
-    <Content Include="Content\ej\web\gradient-saffron\images\waitingpopup.gif" />
-    <Content Include="Content\ej\web\responsive-css\ej.responsive.css" />
-    <Content Include="Content\ej\web\responsive-css\ejgrid.responsive.css" />
-    <Content Include="Content\ej\web\ribbon-css\ej.icons.css" />
     <Content Include="Content\email.css" />
     <Content Include="Content\FormFactory\FormFactory.css" />
     <AndroidResource Include="Content\geo.png" />
     <AndroidResource Include="Content\geo_filled.png" />
     <Content Include="Content\Gridmvc.css" />
+    <BundleResource Include="Content\ej\web\bootstrap-theme\images\checkedtick.png" />
+    <BundleResource Include="Content\ej\web\bootstrap-theme\images\dot.png" />
+    <BundleResource Include="Content\ej\web\bootstrap-theme\images\drop-sibling.png" />
+    <BundleResource Include="Content\ej\web\bootstrap-theme\images\gradient.png" />
+    <BundleResource Include="Content\ej\web\bootstrap-theme\images\palette-arrow.png" />
+    <BundleResource Include="Content\ej\web\bootstrap-theme\images\rating-star.png" />
+    <BundleResource Include="Content\ej\web\bootstrap-theme\images\rotator-icon.png" />
+    <BundleResource Include="Content\ej\web\bootstrap-theme\images\toggle-text.png" />
+    <BundleResource Include="Content\ej\web\bootstrap-theme\images\toolbar_icons.png" />
     <BundleResource Include="Content\landing\avatar_all.png" />
     <BundleResource Include="Content\landing\header_one.jpg" />
     <BundleResource Include="Content\landing\header_two.jpg" />
@@ -1049,7 +992,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="CodeTemplates\MvcView\Form.t4" />
     <Content Include="CodeTemplates\MvcView\ItemForm.t4" />
-    <Content Include="Content\ej\web\bootstrap-theme\ej.theme.less" />
+    <Content Include="Content\ej\web\ej.widgets.core.bootstrap.less" />
+    <Content Include="Content\ej\web\ej.widgets.core.less" />
+    <Content Include="Scripts\bootstrap3-typeahead.js" />
+    <Content Include="Scripts\bootstrap3-typeahead.unobtrusive.js" />
+    <None Include="Scripts\ej\ej.web.all.min.intellisense.js" />
+    <Content Include="Scripts\canvg.js" />
+    <Content Include="Scripts\ej\ej.unobtrusive.min.js" />
     <Content Include="Content\ej\web\common-images\ejicons.eot" />
     <Content Include="Content\ej\web\common-images\ejicons.ttf" />
     <Content Include="Content\ej\web\common-images\ejicons.woff" />
@@ -1059,29 +1008,8 @@
     <Content Include="Content\ej\web\common-images\spreadsheet\ejxlicons.eot" />
     <Content Include="Content\ej\web\common-images\spreadsheet\ejxlicons.ttf" />
     <Content Include="Content\ej\web\common-images\spreadsheet\ejxlicons.woff" />
-    <Content Include="Content\ej\web\ej.widgets.core.bootstrap.less" />
-    <Content Include="Content\ej\web\ej.widgets.core.less" />
-    <Content Include="Content\ej\web\flat-azure-dark\ej.theme.less" />
-    <Content Include="Content\ej\web\flat-lime-dark\ej.theme.less" />
-    <Content Include="Content\ej\web\flat-lime\ej.theme.less" />
-    <Content Include="Content\ej\web\flat-saffron-dark\ej.theme.less" />
-    <Content Include="Content\ej\web\flat-saffron\ej.theme.less" />
-    <Content Include="Content\ej\web\gradient-azure-dark\ej.theme.less" />
-    <Content Include="Content\ej\web\gradient-azure\ej.theme.less" />
-    <Content Include="Content\ej\web\gradient-lime-dark\ej.theme.less" />
-    <Content Include="Content\ej\web\gradient-lime\ej.theme.less" />
-    <Content Include="Content\ej\web\gradient-saffron-dark\ej.theme.less" />
-    <Content Include="Content\ej\web\gradient-saffron\ej.theme.less" />
-    <Content Include="Scripts\bootstrap3-typeahead.js" />
-    <Content Include="Scripts\bootstrap3-typeahead.unobtrusive.js" />
-    <Content Include="Scripts\ej\ej.widgets.all.min.map" />
-    <Content Include="Scripts\canvg.js" />
-    <Content Include="Scripts\ej\ej.unobtrusive.min.js" />
     <None Include="Properties\PublishProfiles\ApartmentAppsWebPortal - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ApartmentAppsWebPortal - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\ApartmentAppsWebPortalDev - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ApartmentAppsWebPortalDev - Web Deploy.pubxml" />
-    <None Include="Scripts\ej\ej.web.all.intellisense.js" />
     <Content Include="Scripts\ej\ej.web.all.min.js" />
     <Content Include="Scripts\ej\ej.widget.angular.min.js" />
     <Content Include="Scripts\ej\ej.widget.ko.min.js" />
@@ -1292,6 +1220,7 @@
     <Content Include="Views\PropertySettings\Index.cshtml" />
     <Content Include="Views\MaitenanceRequests\MySchedule.cshtml" />
     <Content Include="Views\UserManagement\Delete.cshtml" />
+    <Content Include="Views\Messaging\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

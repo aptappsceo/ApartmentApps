@@ -22,8 +22,8 @@
                     .Mappers(map =>
                         map
                         .ExportToExcelAction(Url.Action("ExportToExcel"))
-                        .ExportToPdfAction(Url.Action("ExportToPdf"))
-                        .ExportToWordAction(Url.Action("ExportToWord"))
+                    //.ExportToPdfAction(Url.Action("ExportToPdf"))
+                    //.ExportToWordAction(Url.Action("ExportToWord"))
                     )
                      .ToolbarSettings(toolbar =>
                      {
@@ -55,7 +55,7 @@
                         c.Field(model => model.SubmissionByFullName).HeaderText("Requestor").Add();
                         c.Field(model => model.StartDate).HeaderText("Start Date").Type(ColumnType.DateTime).Add();
                         c.Field(model => model.CompleteDate).HeaderText("Complete Date").Type(ColumnType.DateTime).Add();
-                        
+
                         //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Details", "Details", new { id = "{{:Id}}" }).ToHtmlString())).Add();
                         //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Delete", "Delete", new { id = "{{:Id}}" }).ToHtmlString()))..Add();
                     })
