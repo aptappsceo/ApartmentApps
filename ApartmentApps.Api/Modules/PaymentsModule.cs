@@ -1,79 +1,117 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
-using Ninject;
+using ApartmentApps.Payments.Forte;
+using ApartmentApps.Payments.Forte.Forte.Client;
 
 namespace ApartmentApps.Api.Modules
 {
- 
-    public class PortalConfig : ModuleConfig
+    public interface IPaymentsService
     {
-    
+        Task<MakePaymentResult> MakePayment(MakePaymentBindingModel makePaymentBindingModel);
+        Task<AddCreditCardResult> AddCreditCard(AddCreditCardBindingModel addCreditCard);
+        Task<AddBankAccountResult> AddBankAccount(AddBankAccountBindingModel addCreditCard);
+        IEnumerable<PaymentOptionBindingModel> GetPaymentOptions();
+        IEnumerable<PaymentHistoryBindingModel> GetPaymentHistory();
+        Task<PaymentSummaryBindingModel> GetPaymentSummary(int userId);
+        Task<PaymentSummaryBindingModel> GetRentSummary(int userId);
+    }
+    public class MakePaymentResult
+    {
+        public string ErrorMessage { get; set; }
     }
 
-    public class AdminModule : Module<PortalConfig>, IMenuItemProvider
+    public class PaymentBindingModel
     {
-        public IKernel Kernel { get; set; }
 
-
-        public override PortalConfig Config => new PortalConfig()
-        {
-            Enabled = true,
-            PropertyId = UserContext.PropertyId,
-            Id = 0
-        };
-
-        public AdminModule(IKernel kernel, IUserContext userContext) : base(null, userContext)
-        {
-            Kernel = kernel;
-        }
-
-        public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
-        {
-            if (UserContext.IsInRole("PropertyAdmin"))
-            {
-
-                var checkins = new MenuItemViewModel("Settings", "fa-cog", 30);
-                checkins.Children.Add(new MenuItemViewModel("Buildings", "fa-building", "Index", "Buildings"));
-                checkins.Children.Add(new MenuItemViewModel("Units", "fa-bed", "Index", "Units"));
-                checkins.Children.Add(new MenuItemViewModel("Users", "fa-user", "Index", "UserManagement"));
-                checkins.Children.Add(new MenuItemViewModel("Courtesy Locations", "fa-location-arrow", "Index", "CourtesyOfficerLocations"));
-
-              menuItems.Add(checkins);
-               
-
-            }
-            if (UserContext.IsInRole("Admin"))
-            {
-               
-                var checkins = new MenuItemViewModel("AA Admin", "fa-heartbeat");
-                foreach (var module in Kernel.GetAll<IModule>().OfType<IAdminConfigurable>())
-                {
-                    checkins.Children.Add(new MenuItemViewModel(module.Name, "fa-gear", "Index", module.SettingsController));
-                }
-             
-                checkins.Children.Add(new MenuItemViewModel("Corporations", "fa-suitcase", "Index", "Corporations"));
-                checkins.Children.Add(new MenuItemViewModel("Properties", "fa-cubes", "Index", "Property"));
-                checkins.Children.Add(new MenuItemViewModel("Entrata Accounts", "fa-group", "Index", "PropertyEntrataInfo"));
-                menuItems.Add(checkins);
-            }
-            if (UserContext.IsInRole("PropertyAdmin") || UserContext.IsInRole("Admin"))
-            {
-                menuItems.Add(new MenuItemViewModel("Dashboard", "fa-group", "Index", "Dashboard"));
-            }
-
-
-
-        }
     }
-  
-    public class PaymentsModule : Module<PaymentsConfig>, IMenuItemProvider, IAdminConfigurable
+    public enum CardType : int
     {
-        public PaymentsModule(IRepository<PaymentsConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        VISA = 0,
+        MAST = 1,
+        DISC = 2,
+        AMER = 3,
+        DINE = 4,
+        JCB = 5,
+    }
+
+
+    public class PaymentSummaryBindingModel
+    {
+        public int BaseRent { get; set; }
+        public List<PaymentSummaryBindingModel> SummaryOptions { get; set; }
+    }
+
+    public class PaymentSummaryItemBindingModel
+    {
+        public string Description { get; set; }
+
+        public decimal Amount { get; set; }
+    }
+    public class PaymentOptionBindingModel
+    {
+        public string FriendlyName { get; set; }
+        public PaymentOptionType Type { get; set; }
+        public int Id { get; set; }
+    }
+    public class PaymentHistoryBindingModel
+    {
+
+    }
+    public class MakePaymentBindingModel
+    {
+        public string PaymentOptionId { get; set; }
+    }
+
+    public class AddCreditCardBindingModel
+    {
+        public string AccountHolderName { get; set; }
+        public string CardNumber { get; set; }
+        public string ExpirationDate { get; set; }
+        public CardType CardType { get; set; }
+        public string FriendlyName { get; set; }
+    }
+
+    public class AddCreditCardResult
+    {
+        public string ErrorMessage { get; set; }
+    }
+
+    public class AddBankAccountBindingModel
+    {
+        [DisplayName("Is Savings?")]
+        [Description("If unchecked a checking account is used.")]
+        public bool IsSavings { get; set; }
+
+        [DisplayName("Account Holder Name")]
+        public string AccountHolderName { get; set; }
+
+        [DisplayName("Account Number")]
+        public string AccountNumber { get; set; }
+
+        [DisplayName("Routing Number")]
+        public string RoutingNumber { get; set; }
+
+        [DisplayName("Friendly Name")]
+        [Description("A friendly name that you can use for this account.")]
+        public string FriendlyName { get; set; }
+    }
+    public class AddBankAccountResult
+    {
+        public string ErrorMessage { get; set; }
+    }
+    public class PaymentsModule : Module<PaymentsConfig>, IMenuItemProvider, IAdminConfigurable, IPaymentsService
+    {
+        public PropertyContext Context { get; set; }
+
+        public PaymentsModule(PropertyContext context, IRepository<PaymentsConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
         {
+            Context = context;
         }
 
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
@@ -82,140 +120,175 @@ namespace ApartmentApps.Api.Modules
         }
 
         public string SettingsController => "PaymentsConfig";
-    }
 
+        public string MerchantPassword => Config.MerchantPassword;
 
-    public class CourtesyModule : Module<CourtesyConfig>, IMenuItemProvider, IAdminConfigurable
-    {
-        public string SettingsController => "CourtesyConfig";
-        public CourtesyModule(IRepository<CourtesyConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        //IRepository<Property> propertyRepo,
+
+        public int MerchantId => string.IsNullOrEmpty(Config.MerchantId) ? 0 : Convert.ToInt32(Config.MerchantId);
+
+        public string ApiLoginId { get; set; } = "5KwrM3b7T7";
+
+        public string Key { get; set; } = "18RcFs5F";
+
+        public async Task<PaymentSummaryBindingModel> GetPaymentSummary(int userId)
         {
+            var user = Context.Users.Find(userId);
+
+            return new PaymentSummaryBindingModel()
+            {
+                BaseRent = user.Unit.Building.RentAmount,
+
+            };
         }
 
-        public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
+        public async Task<PaymentSummaryBindingModel> GetRentSummary(int userId)
         {
-            var menuItem = new MenuItemViewModel("Incidents", "fa-shield");
-            menuItem.Children.Add(new MenuItemViewModel("New Request", "fa-plus-square", "NewRequest", "IncidentReports"));
-            if (UserContext.IsInRole("PropertyAdmin"))
+            var user = Context.Users.Find(userId);
+
+            return new PaymentSummaryBindingModel()
             {
-                menuItem.Children.Add(new MenuItemViewModel("Requests", "fa-folder", "Index", "IncidentReports"));
+                BaseRent = user.Unit.Building.RentAmount,
+
+            };
+        }
+        public async Task<AddCreditCardResult> AddCreditCard(AddCreditCardBindingModel addCreditCard)
+        {
+            var auth = Authenticate.GetClientAuthTicket(ApiLoginId, Key);
+            int clientId = await EnsureClientId(auth);
+            PaymentMethod payment = new PaymentMethod();
+            payment.AcctHolderName = addCreditCard.AccountHolderName;
+            payment.CcCardNumber = addCreditCard.CardNumber;
+            payment.CcExpirationDate = addCreditCard.ExpirationDate;
+            payment.CcCardType = (CcCardType)Enum.Parse(typeof(CcCardType), addCreditCard.CardType.ToString());
+            payment.Note = addCreditCard.FriendlyName;
+            payment.ClientID = clientId;
+            payment.MerchantID = MerchantId;
+
+            using (var client = new ClientServiceClient("WSHttpBinding_IClientService"))
+            {
+                try
+                {
+                    var result = await client.createPaymentMethodAsync(auth, payment);
+                    var paymentMethodId = result.Body.createPaymentMethodResult;
+                    Context.PaymentOptions.Add(new UserPaymentOption()
+                    {
+                        UserId = UserContext.UserId,
+                        Type = PaymentOptionType.CreditCard,
+                        FriendlyName = addCreditCard.FriendlyName,
+                        TokenId = paymentMethodId.ToString()
+                    });
+                    Context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return new AddCreditCardResult() { ErrorMessage = ex.Message };
+                }
+
             }
-            menuItems.Add(menuItem);
-           
-            if (UserContext.IsInRole("PropertyAdmin"))
+            return new AddCreditCardResult();
+        }
+        public async Task<AddBankAccountResult> AddBankAccount(AddBankAccountBindingModel addCreditCard)
+        {
+            var auth = Authenticate.GetClientAuthTicket(ApiLoginId, Key);
+            int clientId = await EnsureClientId(auth);
+            PaymentMethod payment = new PaymentMethod();
+            payment.AcctHolderName = addCreditCard.AccountHolderName;
+            payment.EcAccountNumber = addCreditCard.AccountNumber;
+            payment.EcAccountTRN = addCreditCard.RoutingNumber;
+            payment.EcAccountType = addCreditCard.IsSavings ? EcAccountType.SAVINGS : EcAccountType.CHECKING;
+            payment.Note = addCreditCard.FriendlyName;
+            payment.ClientID = clientId;
+            payment.MerchantID = MerchantId;
+
+            using (var client = new ClientServiceClient("WSHttpBinding_IClientService"))
             {
-                var checkins = new MenuItemViewModel("Checkins", "fa-location-arrow");
-                checkins.Children.Add(new MenuItemViewModel("Today", "fa-clock-o", "Index", "CourtesyOfficer"));
-                checkins.Children.Add(new MenuItemViewModel("Yesterday", "fa-history", "Yesterday", "CourtesyOfficer"));
-                checkins.Children.Add(new MenuItemViewModel("This Week", "fa-history", "ThisWeek", "CourtesyOfficer"));
-                menuItems.Add(checkins);
+                try
+                {
+                    var result = await client.createPaymentMethodAsync(auth, payment);
+
+                    var paymentMethodId = result.Body.createPaymentMethodResult;
+                    Context.PaymentOptions.Add(new UserPaymentOption()
+                    {
+                        UserId = UserContext.UserId,
+                        Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking,
+                        FriendlyName = addCreditCard.FriendlyName,
+                        TokenId = paymentMethodId.ToString()
+                    });
+                    Context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return new AddBankAccountResult() { ErrorMessage = ex.Message };
+                }
+
             }
-         
-        }
-    }
-
-    public interface ILogger
-    {
-        void Error(string str, params object[] args);
-        void Warning(string str, params object[] args);
-        void Info(string str, params object[] args);
-    }
-    public interface IWebJob
-    {
-        void Execute(ILogger logger);
-    }
-
-    [Persistant]
-    public class LoggerSettings : ModuleConfig
-    {
-        
-    }
-
-    [Persistant]
-    public class Log : PropertyEntity
-    {
-        public string Message { get; set; }
-        public LogSeverity Severity { get; set; }
-    }
-
-    public enum LogSeverity
-    {
-        Error,
-        Warning,
-        Info
-    }
-    public class LoggerModule : Module<LoggerSettings>, ILogger
-    {
-        private readonly IRepository<Log> _log;
-
-        public LoggerModule(IRepository<Log> log, IRepository<LoggerSettings> configRepo, IUserContext userContext) : base(configRepo, userContext)
-        {
-            _log = log;
+            return new AddBankAccountResult();
         }
 
-        public void Error(string str, params object[] args)
+        public IEnumerable<PaymentOptionBindingModel> GetPaymentOptions()
         {
-             _log.Add(new Log()
+            return Context.PaymentOptions.Where(p => p.UserId == UserContext.UserId).Select(x =>
+                new PaymentOptionBindingModel()
+                {
+                    FriendlyName = x.FriendlyName,
+                    Type = x.Type,
+                    Id = x.Id,
+                });
+        }
+
+        public IEnumerable<PaymentHistoryBindingModel> GetPaymentHistory()
+        {
+            //return Context.UserTransactions.
+            yield break;
+        }
+        public async Task<MakePaymentResult> MakePayment(MakePaymentBindingModel makePaymentBindingModel)
+        {
+            var auth = Authenticate.GetClientAuthTicket(ApiLoginId, Key);
+            int clientId = await EnsureClientId(auth);
+
+            var paymentOptionId = Convert.ToInt32(makePaymentBindingModel.PaymentOptionId);
+
+            var paymentOption = Context.PaymentOptions.FirstOrDefault(p => p.UserId == UserContext.UserId && p.Id == paymentOptionId);
+            if (paymentOption == null)
             {
-                Message = args != null && args.Length > 0 ? string.Format(str, args) : str,
-                Severity = LogSeverity.Error
+                return new MakePaymentResult() { ErrorMessage = "Payment Option Not Found." };
+            }
+            var transactionClient = new Payments.Forte.PaymentGateway.PaymentGatewaySoapClient();
+            transactionClient.ExecuteSocketQuery(new ExecuteSocketQueryParams()
+            {
+                PgMerchantId = MerchantId.ToString(),
+                PgClientId = clientId.ToString(),
+                PgPaymentMethodId = paymentOption.TokenId,
+                PgPassword = MerchantPassword//"LEpLqvx7Y5L200"
             });
-            _log.Save();
-        }
-        public void Warning(string str, params object[] args)
-        {
-            _log.Add(new Log()
+
+            return new MakePaymentResult()
             {
-                Message = args != null && args.Length > 0 ? string.Format(str, args) : str,
-                Severity = LogSeverity.Warning
-            });
-            _log.Save();
-        }
-        public void Info(string str, params object[] args)
-        {
-            _log.Add(new Log()
-            {
-                Message = args != null && args.Length > 0 ? string.Format(str, args) : str,
-                Severity = LogSeverity.Info
-            });
-            _log.Save();
-        }
-    }
-    public class MaintenanceModule : Module<MaintenanceConfig>, IMenuItemProvider, IAdminConfigurable
-    {
-        public string SettingsController => "MaintenanceConfig";
-        public MaintenanceModule(IRepository<MaintenanceConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
-        {
+
+            };
         }
 
-        public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
+        private async Task<int> EnsureClientId(Authentication auth)
         {
+            var user = UserContext.CurrentUser;
+            var clientId = user.ForteClientId ?? 0;
 
-            var menuItem = new MenuItemViewModel("Maintenance", "fa-briefcase");
-            menuItem.Children.Add(new MenuItemViewModel("New Request", "fa-plus-square", "NewRequest", "MaitenanceRequests"));
-            if (UserContext.IsInRole("PropertyAdmin"))
+            var client = new ClientServiceClient();
+            // If the user doesnt have a client account with forte
+            if (clientId == 0)
             {
-                menuItem.Children.Add(new MenuItemViewModel("Requests","fa-folder","Index","MaitenanceRequests"));
+                var result = await client.createClientAsync(auth, new ClientRecord()
+                {
+                    MerchantID = MerchantId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Status = ClientStatus.Active
+                });
+                UserContext.CurrentUser.ForteClientId = clientId = result.Body.createClientResult;
+                Context.SaveChanges();
             }
-            if (UserContext.IsInRole("Maintenance") || UserContext.IsInRole("PropertyAdmin"))
-            {
-                menuItem.Children.Add(new MenuItemViewModel("Schedule", "fa-folder", "MySchedule", "MaitenanceRequests"));
-            }
-            menuItems.Add(menuItem);
+            return clientId;
         }
-    }
-    [Persistant]
-    public class CourtesyConfig : ModuleConfig
-    {
-    }
-
-    [Persistant]
-    public class MaintenanceConfig : ModuleConfig
-    {
-    }
-
-    [Persistant]
-    public class MessagingConfig : ModuleConfig
-    {
     }
 }

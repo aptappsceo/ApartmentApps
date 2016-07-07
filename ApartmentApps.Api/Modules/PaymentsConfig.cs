@@ -16,5 +16,7 @@ namespace ApartmentApps.Api.Modules
         [DisplayName("Url")]
         public string Url { get; set; }
 
+        public string MerchantId { get; set; }
+        public string MerchantPassword { get; set; }
     }
 }

@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Auth;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.IoC;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
 
 namespace ApartmentApps.Jobs
@@ -20,10 +23,13 @@ namespace ApartmentApps.Jobs
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
             
             var context = new ApplicationDbContext();
-            foreach (var item in context.Properties)
+            foreach (var item in context.Properties.ToArray())
             {
                 IKernel kernel = new StandardKernel();
                 Register.RegisterServices(kernel);
+                kernel.Bind<DefaultUserManager>().ToSelf().InSingletonScope();
+                kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InSingletonScope();
+                kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InSingletonScope();
                 var userContext = new JobsUserContext(context)
                 {
                     PropertyId = item.Id,
@@ -32,14 +38,14 @@ namespace ApartmentApps.Jobs
                     Name = "Jobs"
                 };
                 kernel.Bind<IUserContext>().ToMethod(p=>userContext);
-
-                foreach (var module in kernel.GetAll<IModule>().OfType<IWebJob>().ToArray())
+                var modules = kernel.GetAll<IModule>().Where(p=>p.Enabled).OfType<IWebJob>().ToArray();
+                foreach (var module in modules)
                 {
                     module.Execute(new ConsoleLogger());
                 }
 
             }
-            Console.ReadLine();
+   
 
         }
     }

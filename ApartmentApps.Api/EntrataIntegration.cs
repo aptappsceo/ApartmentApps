@@ -2,13 +2,17 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApartmentApps.Api.Auth;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Entrata.Client;
 using Entrata.Model.Requests;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.OData.Query.SemanticAst;
+using Yardi.Client.ResidentData;
+using Yardi.Client.ResidentTransactions;
 
 namespace ApartmentApps.Api
 {
@@ -73,8 +77,6 @@ namespace ApartmentApps.Api
     public class UnitImporter : IUnitImporter
     {
         public ApplicationDbContext Context { get; set; }
-
-       
 
         public UnitImporter(ApplicationDbContext context)
         {
@@ -150,103 +152,130 @@ namespace ApartmentApps.Api
         }
     }
 
-    public class EntrataSettings : ModuleConfig
+    [Persistant]
+    public class YardiConfig : ModuleConfig
+    {
+
+    }
+    public class YardiModule : PropertyIntegrationModule<YardiConfig>
+    {
+        public YardiModule(PropertyContext context, DefaultUserManager manager, IRepository<YardiConfig> configRepo, IUserContext userContext) : base(context, manager, configRepo, userContext)
+        {
+        }
+
+        public override void Execute(ILogger logger)
+        {
+            var config = Config;
+            var req = new GetUnitInformation_LoginRequest(new GetUnitInformation_LoginRequestBody());
+
+            var xml = (new GetChargeTypes_LoginResponseBody()).GetChargeTypes_LoginResult.Value;
+            var client = new ItfResidentDataSoapClient();
+            //var client = new ItfResidentTransactions2_0SoapClient();
+            //client.GetUnitInformation_Login("apartmentappbp", "67621", "YCSQL5TEST_2K8R2", "afqoml_70dev", "SQL Server",
+            //    "", "Apartment App Payments", "");
+
+
+        }
+
+
+    }
+
+    [Persistant]
+    public class EntrataConfig : ModuleConfig
     {
         
     }
-    public class EntrataModule : Module<EntrataSettings>, IWebJob
+
+    public class EntrataModule : PropertyIntegrationModule<EntrataConfig>
     {
-        public EntrataModule(IRepository<EntrataSettings> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        public EntrataModule(PropertyContext context, DefaultUserManager manager,  IRepository<EntrataConfig> configRepo, IUserContext userContext) : base(context, manager, configRepo, userContext)
         {
         }
 
-        public void Execute(ILogger logger)
+        public override void Execute(ILogger logger)
         {
-            logger.Info("It has begun.");
-        }
-    }
-    /// <summary>
-    /// Handles the synchronization of entrata and apartment apps.
-    /// </summary>
-    public class EntrataIntegration : 
-        PropertyIntegrationAddon, 
-        IMaintenanceSubmissionEvent, 
-        IMaintenanceRequestCheckinEvent,
-        IDataImporter
-    {
-
-        public ApplicationDbContext Context { get; set; }
-        public PropertyContext PropertyContext { get; set; }
-
-        public EntrataIntegration(Property property, ApplicationDbContext context,PropertyContext propertyContext, IUserContext userContext) : base(property, userContext)
-        {
-            Context = context;
-            PropertyContext = propertyContext;
-        }
-
-        public override bool Filter()
-        {
-            return PropertyContext.PropertyEntrataInfos.Any();
-        }
-
-        public async Task<bool> ImportData(ICreateUser createUser, Property property)
-        {
-       
-            foreach (var info in PropertyContext.PropertyEntrataInfos.ToArray())
+            foreach (var item in _context.PropertyEntrataInfos)
             {
-                var client = new EntrataClient
+                var entrataClient = new EntrataClient()
                 {
-                    EndPoint = info.Endpoint,
-                    Username = info.Username,
-                    Password = info.Password
+                    Username = item.Username,
+                    Password = item.Password,
+                    EndPoint = item.Endpoint
                 };
-                var result = await client.GetCustomers(info.EntrataPropertyId);
-                foreach (var item in result.Response.Result.Customers.Customer)
+                var result = entrataClient.GetMitsUnits(item.EntrataPropertyId).Result;
+                foreach (var property in result.response.result.PhysicalProperty.Property)
                 {
-
-                    // Create the building
-                    await ImportCustomer(createUser, property, item);
+                    foreach (var ilsUnit in property.ILS_Unit.Select(p=>p.Units.Unit))
+                    {
+                        ImportUnit(logger, ilsUnit.BuildingName,ilsUnit.MarketingName);
+                    }
                 }
             }
-          
-            return true;
+
         }
 
-        private async Task ImportCustomer(ICreateUser createUser, Property property, Customer item)
+        
+    }
+
+    public class PropertyIntegrationModule<TConfig> : Module<TConfig>, IWebJob, ICreateUser where TConfig : ModuleConfig, new()
+    {
+        protected readonly PropertyContext _context;
+        private readonly DefaultUserManager _manager;
+     
+        public PropertyIntegrationModule(PropertyContext context, DefaultUserManager manager, IRepository<TConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
         {
-            var building =
-                await Context.Buildings.FirstOrDefaultAsync(p => p.PropertyId == property.Id && p.Name == item.BuildingName);
+            _context = context;
+            _manager = manager;
+         
+        }
+        protected void ImportUnit(ILogger logger, string buildingName, string unitName)
+        {
+            var building = _context.Buildings.FirstOrDefault(p => p.Name == buildingName);
 
             if (building == null)
             {
                 building = new Building()
                 {
-                    Name = item.BuildingName,
-                    PropertyId = property.Id
+                    Name = buildingName,
                 };
-                Context.Buildings.Add(building);
-                await Context.SaveChangesAsync();
+                _context.Buildings.Add(building);
+                _context.SaveChanges();
             }
 
             var unit =
-                await Context.Units.FirstOrDefaultAsync(p => p.BuildingId == building.Id && p.Name == item.UnitNumber);
+                _context.Units.FirstOrDefault(p => p.BuildingId == building.Id && p.Name == unitName);
             if (unit == null)
             {
                 unit = new Unit()
                 {
-                    Name = item.UnitNumber,
+                    Name = unitName,
                     BuildingId = building.Id,
-                    PropertyId = property.Id
                 };
-                Context.Units.Add(unit);
-                await Context.SaveChangesAsync();
+                _context.Units.Add(unit);
+                _context.SaveChanges();
             }
+            logger.Info("Synced unit {0}", unitName);
+        }
+        public async Task<ApplicationUser> CreateUser(string email, string password, string firstName, string lastName)
+        {
+            return await _manager.CreateUser(email, password, firstName, lastName);
+        }
 
-            var user = await Context.Users.FirstOrDefaultAsync(p => p.Email.ToLower() == item.Email.ToLower());
+        protected void ImportCustomer(Property property,  
+            int unitId, string phoneNumber, string city, string email, string firstName, string lastName,string middleName, string gender,string postalCode, string state, string address)
+        {
+            ImportCustomer(this, property, unitId, phoneNumber, city, email, firstName, lastName, middleName, gender, postalCode, state, address);
+        }
+
+        protected void ImportCustomer(ICreateUser createUser, Property property,  
+            int unitId, string phoneNumber, string city, string email, string firstName, string lastName,string middleName, string gender,string postalCode, string state, string address)
+        {
+           
+            var user = _context.Users.FirstOrDefault(p => p.Email.ToLower() == email.ToLower());
 
             if (user == null)
             {
-                user = await createUser.CreateUser(item.Email, "Temp1234!", item.FirstName, item.LastName);
+                user = createUser.CreateUser(email, "Temp1234!", firstName, lastName).Result;
             }
             if (user == null)
             {
@@ -261,30 +290,61 @@ namespace ApartmentApps.Api
                     UserId = user.Id
                 });
             }
-            user.PhoneNumber = item.PhoneNumber.NumbersOnly();
+            user.PhoneNumber = phoneNumber.NumbersOnly();
             user.PropertyId = property.Id;
-            user.City = item.City;
-            user.Email = item.Email;
-            user.FirstName = item.FirstName;
-            user.LastName = item.LastName;
-            user.Gender = item.Gender;
-            user.MiddleName = item.MiddleName;
-            user.PostalCode = item.PostalCode;
-            user.State = item.State;
-            user.UnitId = unit.Id;
-            user.Address = item.Address;
-            await Context.SaveChangesAsync();
+            user.City = city;
+            user.Email =email;
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.Gender = gender;
+            user.MiddleName = middleName;
+            user.PostalCode = postalCode;
+            user.State = state;
+            user.UnitId = unitId;
+            user.Address = address;
+            _context.SaveChanges();
         }
-
-        public void MaintenanceRequestSubmited( MaitenanceRequest maitenanceRequest)
-        {
-            // Sync with entrata on work order
-        }
-
-        public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
+        public virtual void Execute(ILogger logger)
         {
             
         }
-
     }
+
+    ///// <summary>
+    ///// Handles the synchronization of entrata and apartment apps.
+    ///// </summary>
+    //public class EntrataIntegration : 
+    //    PropertyIntegrationAddon, 
+    //    IMaintenanceSubmissionEvent, 
+    //    IMaintenanceRequestCheckinEvent,
+    //    IDataImporter
+    //{
+
+    //    public ApplicationDbContext Context { get; set; }
+    //    public PropertyContext PropertyContext { get; set; }
+
+    //    public EntrataIntegration(Property property, ApplicationDbContext context,PropertyContext propertyContext, IUserContext userContext) : base(property, userContext)
+    //    {
+    //        Context = context;
+    //        PropertyContext = propertyContext;
+    //    }
+
+    //    public override bool Filter()
+    //    {
+    //        return PropertyContext.PropertyEntrataInfos.Any();
+    //    }
+
+     
+
+    //    public void MaintenanceRequestSubmited( MaitenanceRequest maitenanceRequest)
+    //    {
+    //        // Sync with entrata on work order
+    //    }
+
+    //    public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
+    //    {
+            
+    //    }
+
+    //}
 }

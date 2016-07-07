@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.API.Service.Controllers
@@ -11,11 +12,10 @@ namespace ApartmentApps.API.Service.Controllers
     [Authorize]
     [RoutePrefix("api/Payments")]
     public class PaymentsController : ApartmentAppsApiController
-
     {
-        public IPaymentsService PaymentsService { get; set; }
+        public PaymentsModule PaymentsService { get; set; }
 
-        public PaymentsController(IPaymentsService paymentsService, PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public PaymentsController(PaymentsModule paymentsService, PropertyContext context, IUserContext userContext) : base(context, userContext)
         {
             PaymentsService = paymentsService;
         }

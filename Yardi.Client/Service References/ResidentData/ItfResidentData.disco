@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="https://www.yardiyc1.com/8223tp708dev/webservices/ItfResidentData.asmx?wsdl" docRef="http://www.yardiyc1.com/8223tp708dev/webservices/ItfResidentData.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://www.yardiyc1.com/8223tp708dev/webservices/ItfResidentData.asmx" xmlns:q1="http://tempuri.org/YSI.Interfaces.WebServices/ItfResidentData" binding="q1:ItfResidentDataSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://www.yardiyc1.com/8223tp708dev/webservices/ItfResidentData.asmx" xmlns:q2="http://tempuri.org/YSI.Interfaces.WebServices/ItfResidentData" binding="q2:ItfResidentDataSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>
