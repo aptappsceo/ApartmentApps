@@ -61,7 +61,7 @@ namespace ApartmentApps.Api.Modules
             };
             Messages.Add(entity);
             Messages.Save();
-            _service.SendAlert(ids, subject, message,"Message",entity.Id);
+            _service.SendAlert(ids, subject, message,"Message",entity.Id, true);
         }
         public string SettingsController => "MessagingConfig";
     }

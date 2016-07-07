@@ -30,8 +30,8 @@
                 }
                 column.Add();
             }
-            _.HeaderText().Template(WebUtility.UrlDecode(Html.ActionLink("Edit", "Entry", new {id = "{{:Id}}"}).ToString())).disableHtmlEncode(true).Add();
-            _.HeaderText().Template(WebUtility.UrlDecode(Html.ActionLink("Delete", "Delete", new {id = "{{:Id}}"}, new { onclick = "return confirm('Are you sure you wish to delete this item?');" }).ToString())).disableHtmlEncode(true).Add();
+            _.HeaderText().Template(WebUtility.UrlDecode(Html.ActionLink("Edit", "Entry", new {id = "{{:Id}}"}).ToString())).DisableHtmlEncode(true).Add();
+            _.HeaderText().Template(WebUtility.UrlDecode(Html.ActionLink("Delete", "Delete", new {id = "{{:Id}}"}, new { onclick = "return confirm('Are you sure you wish to delete this item?');" }).ToString())).DisableHtmlEncode(true).Add();
         }))
 
 </div>

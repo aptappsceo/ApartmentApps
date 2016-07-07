@@ -218,7 +218,7 @@ namespace ApartmentApps.Api
             }
         }
 
-        public void SendAlert(ApplicationUser user, string title, string message, string type, int relatedId = 0)
+        public void SendAlert(ApplicationUser user, string title, string message, string type, int relatedId = 0, bool email = false)
         {
             var alert = new UserAlert()
             {
@@ -231,7 +231,7 @@ namespace ApartmentApps.Api
             };
             Context.UserAlerts.Add(alert);
             Context.SaveChanges();
-
+            if (email)
             _emailService.SendAsync(new IdentityMessage() { Body = message, Destination = user.Email, Subject = title });
 
             _pushHandler.SendToUser(user.Id, new NotificationPayload()
@@ -244,7 +244,7 @@ namespace ApartmentApps.Api
             });
 
         }
-        public void SendAlert( int propertyId, string role, string title, string message, string type, int relatedId = 0)
+        public void SendAlert( int propertyId, string role, string title, string message, string type, int relatedId = 0, bool email = false)
         {
             foreach (var item in Context.Users.Where(x => x.Roles.Any(p => p.RoleId == role)))
             {
@@ -258,6 +258,7 @@ namespace ApartmentApps.Api
                     Type = type,
                     UserId = item.Id
                 });
+                if (email == true)
                 _emailService.SendAsync(new IdentityMessage() {Body = message, Destination = item.Email, Subject = title});
             }
 
@@ -291,12 +292,12 @@ namespace ApartmentApps.Api
             }
         }
 
-        public void SendAlert(object[] ids,string title, string message, string type, int relatedId)
+        public void SendAlert(object[] ids,string title, string message, string type, int relatedId, bool email = false)
         {
             foreach (var id in ids)
             {
                 var user = Context.Users.Find(id);
-                SendAlert(user, title, message, type, relatedId);
+                SendAlert(user, title, message, type, relatedId, email);
             }
 
         }
