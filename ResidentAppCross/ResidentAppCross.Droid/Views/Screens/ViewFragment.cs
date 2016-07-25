@@ -14,6 +14,7 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Webkit;
 using Android.Widget;
 using blocke.circleimageview;
 using MvvmCross.Binding.Droid.BindingContext;
@@ -221,7 +222,6 @@ namespace ResidentAppCross.Droid.Views
 
     }
 
-
     public class TextSection : FragmentSection
     {
         [Outlet]
@@ -240,7 +240,14 @@ namespace ResidentAppCross.Droid.Views
         public TextView InputField { get; set; }
     }
 
+    public class WebviewSection : FragmentSection
+    {
+        [Outlet]
+        public TextView HeaderLabel { get; set; }
 
+        [Outlet]
+        public WebView WebView { get; set; }
+    }
 
     public class FragmentSection
     {

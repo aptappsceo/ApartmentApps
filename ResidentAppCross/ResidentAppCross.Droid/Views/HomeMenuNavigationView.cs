@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Android.Content;
 using Android.Runtime;
 using Android.Support.Design.Widget;
-using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using blocke.circleimageview;
-using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Droid.Views.AwesomeSiniExtensions;
 using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.Resources;
-using ResidentAppCross.ViewModels.Screens;
 
 namespace ResidentAppCross.Droid.Views.Components.Navigation
 {
@@ -64,7 +60,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             {
                 if (_registry == null)
                 {
-                    _registry = new GenericMenuRegistry(Menu);
+                    _registry = new GenericMenuRegistry(Menu, LayoutInflater.FromContext(Context));
                     _registry.OnBeforeSelectItem += OnOnBeforeSelectItem;
                 }
                 return _registry;
@@ -129,7 +125,14 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
 
             foreach (var item in ViewModel.MenuItems)
             {
-                Registry.AddCommand(item.Name, item.Icon.ToDrawableId(),item.Command);
+                if (!string.IsNullOrEmpty(item.BadgeLabel))
+                {
+                    Registry.AddCommand(item.Name, item.Icon.ToDrawableId(), item.Command,item.BadgeLabel);
+                }
+                else
+                {
+                    Registry.AddCommand(item.Name, item.Icon.ToDrawableId(),item.Command);
+                }
             }
 
             Registry.AddCommand("Change Profile Photo", SharedResources.Icons.Settings.ToDrawableId(), ViewModel.EditProfileCommand,false, ShowAsAction.Never,false);
@@ -176,10 +179,12 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
         private int _orderCounter = 0;
         private Dictionary<int, IRegistryItem> _items;
         private IList<IRegistryItem> _templates;
+        private LayoutInflater _inflater;
 
-        public GenericMenuRegistry(IMenu menu)
+        public GenericMenuRegistry(IMenu menu, LayoutInflater inflater)
         {
             _menu = menu;
+            _inflater = inflater;
         }
 
         public Dictionary<int, ICommand> CommandsMap
@@ -223,6 +228,19 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
                 Command =  command,
                 IconId = iconId,
                 Title = title,
+                IsCheckable = checkable,
+                IsNavigation = isNavigation
+            });
+        }
+
+        public void AddCommand(string title, int iconId, ICommand command, string badge, bool isNavigation = true, ShowAsAction display = ShowAsAction.Never, bool checkable = true)
+        {
+            Templates.Add(new CommandItem()
+            {
+                Command =  command,
+                IconId = iconId,
+                Title = title,
+                Badge = badge, 
                 IsCheckable = checkable,
                 IsNavigation = isNavigation
             });
@@ -281,6 +299,14 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             var menuitem = _menu.Add(0, index, index, item.Title);
             menuitem.SetIcon(item.IconId);
             menuitem.SetShowAsAction(item.ShowAsAction);
+
+            if (!string.IsNullOrEmpty(item.Badge))
+            {
+                var badgeView = _inflater.Inflate(Resource.Layout.badge_view, null);
+                var title = badgeView.FindViewById<TextView>(Resource.Id.CounterLabel);
+                title.SetText(item.Badge,TextView.BufferType.Normal);
+                menuitem.SetActionView(badgeView);
+            }
             item.UIItem = menuitem;
             Items[menuitem.ItemId] = item;
             menuitem.SetCheckable(item.IsCheckable);
@@ -308,6 +334,7 @@ namespace ResidentAppCross.Droid.Views.Components.Navigation
             public bool IsNavigation { get; set; }
             public ShowAsAction ShowAsAction { get; set; }
             public ICommand Command { get; set; }
+            public string Badge { get; set; }
 
             public IMenuItem Construct(GenericMenuRegistry registry)
             {

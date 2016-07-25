@@ -10,6 +10,7 @@ using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
+using Android.Webkit;
 using Android.Widget;
 using Java.Lang;
 using MvvmCross.Binding.BindingContext;
@@ -108,7 +109,7 @@ namespace ResidentAppCross.Droid.Views
 
         public NoneditableTextSection SubjectSection { get; set; }
         public NoneditableTextSection DateSection { get; set; }
-        public NoneditableTextSection MessageSection { get; set; }
+        public WebviewSection MessageSection { get; set; }
 
         public override void Bind()
         {
@@ -120,7 +121,10 @@ namespace ResidentAppCross.Droid.Views
             var set = this.CreateBindingSet<MessageDetailsView, MessageDetailsViewModel>();
             set.Bind(SubjectSection.InputField).For(f=>f.Text).To(vm=>vm.Subject);
             set.Bind(DateSection.InputField).For(f=>f.Text).To(vm=>vm.Date);
-            set.Bind(MessageSection.InputField).For(f=>f.Text).To(vm=>vm.Message);
+
+            MessageSection.WebView.Settings.JavaScriptEnabled = true;
+            MessageSection.WebView.LoadDataWithBaseURL("", ViewModel.Message, "text/html", "UTF-8", "");
+            //set.Bind(MessageSection.InputField).For(f=>f.Text).To(vm=>vm.Message);
             set.Apply();
 
         }

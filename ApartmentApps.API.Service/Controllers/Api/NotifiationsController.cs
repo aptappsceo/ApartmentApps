@@ -91,7 +91,22 @@ namespace ApartmentApps.API.Service.Controllers.Api
                  });
         }
 
+        [HttpHead]
+        public AlertsCountBindingModel GetCount()
+        {
+            return new AlertsCountBindingModel()
+            {
+                TotalUnread = Context.UserAlerts.Count(p => p.UserId == CurrentUser.Id && !p.HasRead)
+            };
+        }
 
+
+    }
+
+
+    public class AlertsCountBindingModel
+    {
+        public int TotalUnread { get; set; }
     }
 
     public class AlertBindingModel

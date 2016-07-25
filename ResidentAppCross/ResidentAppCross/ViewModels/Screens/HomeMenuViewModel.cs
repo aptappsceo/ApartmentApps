@@ -58,7 +58,6 @@ namespace ResidentAppCross
                 {
                     Name = "Resident Requests",
                     Icon = SharedResources.Icons.MaintenanceFolder,
-                    BadgeLabel = "??",
                     Command = RequestsIndexCommand
                 });
             }
@@ -95,6 +94,7 @@ namespace ResidentAppCross
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Notifications",
+           //     BadgeLabel = "+12",
                 Icon = SharedResources.Icons.Inbox,
                 Command = AlertsCommand
             });
@@ -114,7 +114,6 @@ namespace ResidentAppCross
                 Icon = SharedResources.Icons.Police,
                 Command = RequestCourtesyOfficerCommand
             });
-
 
             if (_loginManager.UserInfo.Roles.Contains("Resident"))
             {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="#aaaaaa"
+    android:padding="@dimen/default_section_padding"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/HeaderLabel"
+        android:layout_width="wrap_content"
+        android:text="Comments &amp; Details"
+        android:textColor="@color/secondary_text_body"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
+    <WebView
+        android:id="@+id/WebView"
+        android:layout_width="match_parent"
+        android:padding="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

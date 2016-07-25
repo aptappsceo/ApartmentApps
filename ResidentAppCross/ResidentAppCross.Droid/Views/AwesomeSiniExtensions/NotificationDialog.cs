@@ -142,8 +142,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             SelectedDate = DateTime.Now;
             SelectedTime = new TimeSpan(SelectedDate.Hour,SelectedDate.Minute,0);
 
-            DatePicker.Init(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, this);
-
+            DatePicker.Init(SelectedDate.Year, SelectedDate.Month-1, SelectedDate.Day, this);
 
             ShowSelectDateButton.Click += (sender, args) =>
             {
