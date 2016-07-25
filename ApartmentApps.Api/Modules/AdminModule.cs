@@ -27,11 +27,11 @@ namespace ApartmentApps.Api.Modules
             {
 
                 var checkins = new MenuItemViewModel("Settings", "fa-cog", 30);
-                checkins.Children.Add(new MenuItemViewModel("Buildings", "fa-building", "Index", "Buildings"));
-                checkins.Children.Add(new MenuItemViewModel("Units", "fa-bed", "Index", "Units"));
+
                 checkins.Children.Add(new MenuItemViewModel("Users", "fa-user", "Index", "UserManagement"));
                 checkins.Children.Add(new MenuItemViewModel("Courtesy Locations", "fa-location-arrow", "Index", "CourtesyOfficerLocations"));
-
+                checkins.Children.Add(new MenuItemViewModel("Buildings", "fa-building", "Index", "Buildings"));
+                checkins.Children.Add(new MenuItemViewModel("Units", "fa-bed", "Index", "Units"));
                 menuItems.Add(checkins);
                
 

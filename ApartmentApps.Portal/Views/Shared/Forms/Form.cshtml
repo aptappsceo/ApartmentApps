@@ -1,4 +1,5 @@
 ﻿@using System.ComponentModel.DataAnnotations
+@using Syncfusion.JavaScript.Models
 @model ApartmentApps.Forms.FormModel
 
 <div class="form-horizontal">
@@ -35,6 +36,13 @@
                         }))
                     }
 
+                }
+                else if (property.SystemType == typeof (DateTime) || property.SystemType == typeof(DateTime?))
+                {
+                    @Html.EJ().DatePicker(property.Name, new DatePickerProperties()
+                    {
+                        Value = property.GetValue()
+                    })
                 }
                 else if (property.SystemType == typeof (bool))
                 {

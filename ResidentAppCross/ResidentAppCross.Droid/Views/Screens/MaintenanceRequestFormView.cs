@@ -28,7 +28,8 @@ namespace ResidentAppCross.Droid.Views
         public override int LayoutId => DefaultLayoutId;
 
         public HeaderSection HeaderSection { get; set; }
-        public LabelButtonSection TypeSelectionSection { get; set; } 
+        public LabelButtonSection TypeSelectionSection { get; set; }
+        public LabelButtonSection UnitSelectionSection { get; set; }
         public SwitchSection EntrancePermissionSection { get; set; } 
         public RadioSection PetTypeSelection { get; set; } 
         public TextSection CommentsSection { get; set; } 
@@ -40,6 +41,7 @@ namespace ResidentAppCross.Droid.Views
             base.Bind();
             HeaderSection.TitleLabel.Text = "Request Maintenance";
             TypeSelectionSection.Label.Text = "Request Type:";
+            UnitSelectionSection.Label.Text = "Unit:";
 
             EntrancePermissionSection.SubtitleLabel.Text =
                 "Do you give permission for maintenance staff to enter when you are not home?";
@@ -50,8 +52,15 @@ namespace ResidentAppCross.Droid.Views
                 .To(vm => vm.SelectedRequestType.Value)
                 .WithFallback("Select");
 
+            set.Bind(UnitSelectionSection.Button)
+                 .For(b => b.Text)
+                 .To(vm => vm.SelectedUnitTitle)
+                 .WithFallback("Select");
+
+
             set.Bind(EntrancePermissionSection.Switch).For(s => s.Checked).TwoWay().To(vm => vm.EntrancePermission);
             set.Bind(TypeSelectionSection.Button).To(vm => vm.SelectRequestTypeCommand);
+            set.Bind(UnitSelectionSection.Button).To(vm => vm.SetUnitCommand);
             set.Bind(CommentsSection.InputField).TwoWay().To(vm => vm.Comments);
             set.Apply();
 
@@ -81,6 +90,8 @@ namespace ResidentAppCross.Droid.Views
             base.GetContent(sections);
             sections.Add(HeaderSection);
             sections.Add(TypeSelectionSection);
+            sections.Add(UnitSelectionSection);
+
             sections.Add(CommentsSection);
             sections.Add(PhotoSection);
             sections.Add(EntrancePermissionSection);

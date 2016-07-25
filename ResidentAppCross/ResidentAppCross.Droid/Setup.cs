@@ -155,6 +155,9 @@ namespace ResidentAppCross.Droid
             LoginService.GetRegistrationId = () => HandleId;
             LoginService.SetRegistrationId = (v) => HandleId = v;
 
+            base.OnCreate();
+
+
             GcmClient.CheckDevice(this);
             GcmClient.CheckManifest(this);
             GcmClient.Register(this, GcmConstants.SenderID);
@@ -168,7 +171,6 @@ namespace ResidentAppCross.Droid
                 e.PrintStackTrace();
             }
 
-            base.OnCreate();
 
 
         }

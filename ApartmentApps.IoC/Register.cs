@@ -89,7 +89,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterModule<MaintenanceModule, MaintenanceConfig>();
             kernel.RegisterModule<CourtesyModule, CourtesyConfig>();
             kernel.RegisterModule<MessagingModule, MessagingConfig>();
-            kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
+            //kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<EntrataModule, EntrataConfig>();
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();

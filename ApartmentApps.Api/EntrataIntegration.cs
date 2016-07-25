@@ -159,7 +159,7 @@ namespace ApartmentApps.Api
     }
     public class YardiModule : PropertyIntegrationModule<YardiConfig>
     {
-        public YardiModule(PropertyContext context, DefaultUserManager manager, IRepository<YardiConfig> configRepo, IUserContext userContext) : base(context, manager, configRepo, userContext)
+        public YardiModule(ApplicationDbContext dbContext,PropertyContext context, DefaultUserManager manager, IRepository<YardiConfig> configRepo, IUserContext userContext) : base(dbContext, context, manager, configRepo, userContext)
         {
         }
 
@@ -190,13 +190,13 @@ namespace ApartmentApps.Api
 
     public class EntrataModule : PropertyIntegrationModule<EntrataConfig>
     {
-        public EntrataModule(PropertyContext context, DefaultUserManager manager,  IRepository<EntrataConfig> configRepo, IUserContext userContext) : base(context, manager, configRepo, userContext)
+        public EntrataModule(ApplicationDbContext dbContext,PropertyContext context, DefaultUserManager manager,  IRepository<EntrataConfig> configRepo, IUserContext userContext) : base(dbContext, context, manager, configRepo, userContext)
         {
         }
 
         public override void Execute(ILogger logger)
         {
-            foreach (var item in _context.PropertyEntrataInfos)
+            foreach (var item in _context.PropertyEntrataInfos.ToArray())
             {
                 var entrataClient = new EntrataClient()
                 {
@@ -205,13 +205,15 @@ namespace ApartmentApps.Api
                     EndPoint = item.Endpoint
                 };
                 var result = entrataClient.GetMitsUnits(item.EntrataPropertyId).Result;
-                foreach (var property in result.response.result.PhysicalProperty.Property)
-                {
-                    foreach (var ilsUnit in property.ILS_Unit.Select(p=>p.Units.Unit))
-                    {
-                        ImportUnit(logger, ilsUnit.BuildingName,ilsUnit.MarketingName);
-                    }
-                }
+                if (result?.response != null)
+                    if (result?.response?.result?.PhysicalProperty != null)
+                        foreach (var property in result?.response?.result?.PhysicalProperty?.Property)
+                        {
+                            foreach (var ilsUnit in property.ILS_Unit.Select(p=>p.Units.Unit))
+                            {
+                                ImportUnit(logger, ilsUnit.BuildingName,ilsUnit.MarketingName);
+                            }
+                        }
 
                 var customers =
                     entrataClient.GetCustomers(item.EntrataPropertyId).Result.Response.Result.Customers.Customer;
@@ -222,7 +224,7 @@ namespace ApartmentApps.Api
                     Unit unit;
                     ImportUnit(logger,customer.BuildingName,customer.UnitNumber,out unit, out building);
 
-                    ImportCustomer(this, UserContext.CurrentUser.Property,unit.Id, customer.PhoneNumber.NumbersOnly(),customer.City, customer.Email, customer.FirstName, customer.LastName,customer.MiddleName,customer.Gender,customer.PostalCode,customer.State,customer.Address);
+                    ImportCustomer(this,unit.Id, customer.PhoneNumber.NumbersOnly(),customer.City, customer.Email, customer.FirstName, customer.LastName,customer.MiddleName,customer.Gender,customer.PostalCode,customer.State,customer.Address);
 
                 }
             }
@@ -234,11 +236,13 @@ namespace ApartmentApps.Api
 
     public class PropertyIntegrationModule<TConfig> : Module<TConfig>, IWebJob, ICreateUser where TConfig : ModuleConfig, new()
     {
+        public ApplicationDbContext DbContext { get; set; }
         protected readonly PropertyContext _context;
         private readonly DefaultUserManager _manager;
      
-        public PropertyIntegrationModule(PropertyContext context, DefaultUserManager manager, IRepository<TConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        public PropertyIntegrationModule(ApplicationDbContext dbContext,PropertyContext context, DefaultUserManager manager, IRepository<TConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
         {
+            DbContext = dbContext;
             _context = context;
             _manager = manager;
          
@@ -292,14 +296,15 @@ namespace ApartmentApps.Api
         protected void ImportCustomer(Property property,  
             int unitId, string phoneNumber, string city, string email, string firstName, string lastName,string middleName, string gender,string postalCode, string state, string address)
         {
-            ImportCustomer(this, property, unitId, phoneNumber, city, email, firstName, lastName, middleName, gender, postalCode, state, address);
+            ImportCustomer(this, unitId, phoneNumber, city, email, firstName, lastName, middleName, gender, postalCode, state, address);
         }
 
-        protected void ImportCustomer(ICreateUser createUser, Property property,  
+        protected void ImportCustomer(ICreateUser createUser, 
             int unitId, string phoneNumber, string city, string email, string firstName, string lastName,string middleName, string gender,string postalCode, string state, string address)
         {
-           
-            var user = _context.Users.FirstOrDefault(p => p.Email.ToLower() == email.ToLower());
+            if (string.IsNullOrEmpty(email)) return;
+
+            var user = DbContext.Users.FirstOrDefault(p => p.Email.ToLower() == email.ToLower());
 
             if (user == null)
             {
@@ -309,7 +314,7 @@ namespace ApartmentApps.Api
             {
                 return;
             }
-            user.PropertyId = property.Id;
+            user.PropertyId = UserContext.PropertyId;
             if (!user.Roles.Any(p => p.RoleId == "Resident"))
             {
                 user.Roles.Add(new IdentityUserRole()
@@ -319,7 +324,7 @@ namespace ApartmentApps.Api
                 });
             }
             user.PhoneNumber = phoneNumber.NumbersOnly();
-            user.PropertyId = property.Id;
+            user.PropertyId = UserContext.PropertyId;
             user.City = city;
             user.Email =email;
             user.FirstName = firstName;
