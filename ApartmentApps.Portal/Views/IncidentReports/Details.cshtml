@@ -1,7 +1,10 @@
-﻿@model IncidentReportViewModel
+﻿@using ApartmentApps.Data
+
+@model IncidentReportViewModel
 
 @{
     ViewBag.Title = "Details";
+    var property = ViewBag.Property as Property;
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -40,7 +43,7 @@
                                 <p>
                                     @*<div><b>Permission To Enter</b> @Model.PermissionToEnter</div>*@
                                     <div><b>Type</b> @Model.Title</div>
-                                    <div><b>Requested</b> @Html.Timeago(Model.RequestDate)</div>
+                                    <div><b>Requested</b> @Html.Timeago(Model.RequestDate, property?.TimeZone)</div>
                                     <div><b>Status</b> @Model.StatusId</div>
 
                                 </p>
@@ -136,7 +139,7 @@
                                         <div class="media-body ">
                                             <small class="pull-right">@item.Date.ToShortDateString()</small>
                                             <strong>@item.Officer.FullName</strong> @item.StatusId <br>
-                                            <small class="text-muted">@Html.Timeago(item.Date)</small>
+                                            <small class="text-muted">@Html.Timeago(item.Date, property?.TimeZone)</small>
                                             @if (!string.IsNullOrEmpty(item.Comments))
                                             {
                                                 <div class="well">
