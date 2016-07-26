@@ -377,7 +377,7 @@ namespace ApartmentApps.Portal.Controllers
             var stream = new MemoryStream();
             _document.Save(stream);
             _document.Close(true);
-            return File(stream.ToArray(), "application/pdf", "sample.pdf");
+            return File(stream.ToArray(), "application/pdf", $"MonthlyReport{model.StartDate.Value.Month}{model.StartDate.Value.Day}-{model.EndDate.Value.Month}{model.EndDate.Value.Day}.pdf");
 
 
 
