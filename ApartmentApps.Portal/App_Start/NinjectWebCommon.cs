@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.IoC;
 using ApartmentApps.Portal.Controllers;
@@ -83,7 +84,8 @@ namespace ApartmentApps.Portal.App_Start
 
             
             kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
-            kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();
+            kernel.Bind<ILogger>().To<LoggerModule>().InRequestScope();
+            //kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();
             kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
 
             kernel.Bind<IAuthenticationManager>()

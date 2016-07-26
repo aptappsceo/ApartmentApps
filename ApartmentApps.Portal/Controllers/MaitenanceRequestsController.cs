@@ -5,9 +5,13 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
@@ -17,6 +21,13 @@ using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Portal.App_Start;
 using Ninject;
+using Syncfusion.DocIO.DLS;
+using Syncfusion.DocToPDFConverter;
+using Syncfusion.HtmlConverter;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using Syncfusion.MVC;
+using Syncfusion.OfficeChartToImageConverter;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -177,7 +188,7 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class MaitenanceRequestModel
     {
-      
+
         //[DataType()]
         [DisplayName("Unit")]
         public int UnitId { get; set; }
@@ -188,12 +199,12 @@ namespace ApartmentApps.Portal.Controllers
             {
                 var items =
                     NinjectWebCommon.Kernel.Get<IRepository<Unit>>()
-                        .ToArray().OrderByAlphaNumeric(p=>p.Name);
-                
+                        .ToArray().OrderByAlphaNumeric(p => p.Name);
 
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Name, UnitId == p.Id));
 
-             
+                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
+
+
             }
         }
         public IEnumerable<FormPropertySelectItem> MaitenanceRequestTypeId_Items
@@ -203,9 +214,9 @@ namespace ApartmentApps.Portal.Controllers
                 return
                     NinjectWebCommon.Kernel.Get<IRepository<MaitenanceRequestType>>()
                         .ToArray()
-                        .Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Name, MaitenanceRequestTypeId == p.Id));
+                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, MaitenanceRequestTypeId == p.Id));
 
-             
+
             }
         }
 
@@ -221,12 +232,20 @@ namespace ApartmentApps.Portal.Controllers
 
         [DisplayName("Pet Status")]
         public PetStatus PetStatus { get; set; }
-    
+
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
-  
+
     }
 
+    [DisplayName("Maintenance Requests Report")]
+    public class MaintenanceReportModel
+    {
+
+        [DataType(DataType.MultilineText)]
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+    }
     [DisplayName("Update Maintenance Request")]
     public class MaintenanceStatusRequestModel
     {
@@ -244,13 +263,50 @@ namespace ApartmentApps.Portal.Controllers
     [Authorize]
     public class MaitenanceRequestsController : CrudController<MaintenanceRequestViewModel, MaitenanceRequest>
     {
+        private PdfDocument _document;
         public IMaintenanceService MaintenanceService { get; set; }
         public override ActionResult Index()
         {
-            return View(Service.GetAll().OrderByDescending(p=>p.RequestDate));
+            return View(Service.GetAll().OrderByDescending(p => p.RequestDate));
         }
 
-        public MaitenanceRequestsController(IKernel kernel, IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel,repository, service, context, userContext)
+        public ActionResult Fix()
+        {
+            var units = Context.Units.OrderBy(p => p.Id).ToList();
+            var keep = new int[]
+            {
+                4771,
+                6000,
+                6129,
+                6132,
+                6140,
+                6141,
+                6142,
+                6182
+            };
+
+            var sb = new StringBuilder();
+            foreach (var item in units)
+            {
+                if (item.Id > 4700 && !keep.Contains(item.Id))
+                {
+                    //foreach (var mr in item.MaitenanceRequests)
+                    //{
+                    //    sb.AppendLine(mr.Id.ToString());
+                    //}
+                    foreach (var user in Kernel.Get<ApplicationDbContext>().Users.Where(p => p.UnitId == item.Id).ToArray())
+                    {
+                        user.UnitId = null;
+                        Context.SaveChanges();
+                    }
+                    Context.Units.Remove(item);
+                    Context.SaveChanges();
+                }
+            }
+            
+            return Content(sb.ToString(), "text/plain");
+        }
+        public MaitenanceRequestsController(IKernel kernel, IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel, repository, service, context, userContext)
         {
             MaintenanceService = maintenanceService;
         }
@@ -282,19 +338,125 @@ namespace ApartmentApps.Portal.Controllers
         }
         public ActionResult Complete(int id)
         {
-            return AutoForm(new MaintenanceStatusRequestModel() {Id = id}, "CompleteRequest");
+            return AutoForm(new MaintenanceStatusRequestModel() { Id = id }, "CompleteRequest");
+        }
+
+        public ActionResult MonthlyReport()
+        {
+            return AutoForm(new MaintenanceReportModel(), "CreateMonthlyReport", "MaitenanceRequests");
+        }
+        [HttpPost]
+        public ActionResult CreateMonthlyReport(MaintenanceReportModel model)
+        {
+            //var doc =
+            //    new WordDocument(
+            //        typeof (MaitenanceRequestsController).Assembly.GetManifestResourceStream(
+            //            "ApartmentApps.Portal.MaintenanceReport.docx"));
+
+            //doc.ChartToImageConverter = new ChartToImageConverter();
+
+            ////Create an instance of DocToPDFConverter
+
+            //DocToPDFConverter converter = new DocToPDFConverter();
+
+            ////Convert Word document into PDF document
+
+            //_document = converter.ConvertToPDF(doc);
+
+            Thread thread = new Thread(() => { CreateDocument(model); });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
+
+
+            //HTML string and base URL
+
+            //if (Browser == "Browser")
+            //{
+
+            var stream = new MemoryStream();
+            _document.Save(stream);
+            _document.Close(true);
+            return File(stream.ToArray(), "application/pdf", "sample.pdf");
+
+
+
+
+            ////                return doc.ExportAsActionResult("sample.pdf", HttpContext.ApplicationInstance.Response, HttpReadType.Open);
+            //            }
+            //            else
+            //            {
+            //                return doc.ExportAsActionResult("sample.pdf", HttpContext.ApplicationInstance.Response, HttpReadType.Save);
+            //            }
+        }
+        private IQueryable<MaitenanceRequest> WorkOrdersByRange(DateTime? startDate, DateTime? endDate)
+        {
+            return Context.MaitenanceRequests.Where(p => p.SubmissionDate > startDate && p.SubmissionDate < endDate);
+        }
+        private IQueryable<MaintenanceRequestCheckin> CheckinsByRange(DateTime? startDate, DateTime? endDate)
+        {
+            return Context.MaintenanceRequestCheckins.Where(p => p.Date > startDate && p.Date < endDate);
+        }
+        private void CreateDocument(MaintenanceReportModel model)
+        {
+            var startDate = model.StartDate;
+            var endDate = model.EndDate;
+            if (startDate == null)
+                startDate = CurrentUser.TimeZone.Now().Subtract(new TimeSpan(30, 0, 0, 0));
+
+            if (endDate == null)
+                endDate = CurrentUser.TimeZone.Now().AddDays(1);
+
+            var todayEnd = CurrentUser.TimeZone.Now().AddDays(1);
+            var todayStart = CurrentUser.TimeZone.Now();
+
+
+            var StartDate = startDate;
+            var EndDate = endDate;
+            var NumberEntered = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId == "Submitted");
+            var NumberOutstanding = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId != "Complete");
+            var NumberCompleted = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId == "Complete");
+
+            var MaintenanceTotalOutstanding = Context.MaitenanceRequests.Count(p => p.StatusId != "Complete");
+            var MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p => p.ScheduleDate > todayStart && p.ScheduleDate < todayEnd && p.StatusId == "Scheduled");
+            var IncidentReportsTotalOutstanding = Context.IncidentReports.Count(x => x.StatusId != "Complete");
+
+            var WorkOrdersPerEmployee = CheckinsByRange(startDate, endDate).Where(p => p.StatusId == "Complete")
+                .GroupBy(p => p.Worker)
+                .ToArray();
+            
+            HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+            string htmlText = $"<html><body style='padding: 40px;font-family: Arial, Helvetica, sans-serif;'>" +
+                              $"<div style='text-align: center; font-size: 32px; font-weight: bold'>{UserContext.CurrentUser.Property.Name} Monthly Maintenance Report</div>" +
+                              $"<div style='text-align: center; font-size: 20px;'>For {model.StartDate} {model.EndDate}</div>" +
+                              $"<br/><br/><table style='width: 100%'>";
+
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Work Orders</td><td>{CheckinsByRange(startDate,endDate).Count()} Work Orders</td></tr> ";
+            foreach (var item in WorkOrdersPerEmployee)
+            {
+                htmlText += $"<tr><td>{item.Key.FirstName} {item.Key.LastName} Completed</td><td>{item.Count()} Work Orders</td></tr> ";
+            }
+            htmlText += $"" +
+                              $"</table>" +
+                              $"</body></html>";
+
+            string baseUrl = "";
+
+            //Convert HTML to PDF document
+
+            _document = htmlConverter.Convert(htmlText, baseUrl);
         }
 
         [HttpPost]
         public ActionResult SubmitRequest(MaitenanceRequestModel request)
         {
-            
+
             MaintenanceService.SubmitRequest(
-                request.Comments, 
+                request.Comments,
                 request.MaitenanceRequestTypeId,
-                (int)request.PetStatus, 
-                request.PermissionToEnter, 
-                null, 
+                (int)request.PetStatus,
+                request.PermissionToEnter,
+                null,
                 Convert.ToInt32(request.UnitId)
                 );
             return RedirectToAction("Index");
@@ -307,8 +469,8 @@ namespace ApartmentApps.Portal.Controllers
             MaintenanceService.PauseRequest(
                 CurrentUser,
                 request.Id,
-                request.Comments,null
-              
+                request.Comments, null
+
                 );
             return RedirectToAction("Index");
         }
@@ -368,7 +530,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             PostController = postController;
             Model = model;
-      
+
             PostAction = postAction;
         }
     }
@@ -416,7 +578,7 @@ namespace ApartmentApps.Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
+        public ActionResult Create([Bind(Include = "Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
         {
             if (ModelState.IsValid)
             {
@@ -456,7 +618,7 @@ namespace ApartmentApps.Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
+        public ActionResult Edit([Bind(Include = "Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
         {
             if (ModelState.IsValid)
             {

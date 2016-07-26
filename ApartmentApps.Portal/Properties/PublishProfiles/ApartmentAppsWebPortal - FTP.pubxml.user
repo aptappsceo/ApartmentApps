@@ -14,19 +14,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/28/2016 23:25:16</publishTime>
     </File>
     <File Include="bin/ApartmentApps.Api.dll">
-      <publishTime>07/06/2016 18:57:04</publishTime>
+      <publishTime>07/08/2016 18:14:42</publishTime>
     </File>
     <File Include="bin/ApartmentApps.Data.dll">
-      <publishTime>07/06/2016 18:57:03</publishTime>
+      <publishTime>07/08/2016 18:14:40</publishTime>
     </File>
     <File Include="bin/ApartmentApps.Forms.dll">
       <publishTime>05/29/2016 11:28:17</publishTime>
     </File>
     <File Include="bin/ApartmentApps.IoC.dll">
-      <publishTime>07/06/2016 18:57:05</publishTime>
+      <publishTime>07/08/2016 18:26:18</publishTime>
+    </File>
+    <File Include="bin/ApartmentApps.Payments.Forte.dll">
+      <publishTime>07/08/2016 18:14:40</publishTime>
     </File>
     <File Include="bin/ApartmentApps.Portal.dll">
-      <publishTime>07/06/2016 22:54:25</publishTime>
+      <publishTime>07/08/2016 18:27:48</publishTime>
     </File>
     <File Include="bin/de/Microsoft.Data.Edm.resources.dll">
       <publishTime>05/05/2016 23:08:49</publishTime>
@@ -53,7 +56,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/10/2016 15:57:14</publishTime>
     </File>
     <File Include="bin/Entrata.Client.dll">
-      <publishTime>05/09/2016 19:44:38</publishTime>
+      <publishTime>07/08/2016 18:14:40</publishTime>
     </File>
     <File Include="bin/es/Microsoft.Data.Edm.resources.dll">
       <publishTime>05/05/2016 23:08:49</publishTime>
@@ -746,10 +749,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/24/2015 19:34:20</publishTime>
     </File>
     <File Include="Content/ej/web/bootstrap-theme/ej.theme.less">
-      <publishTime>07/06/2016 17:35:01</publishTime>
+      <publishTime>07/07/2016 18:51:32</publishTime>
     </File>
     <File Include="Content/ej/web/bootstrap-theme/ej.theme.min.css">
-      <publishTime>06/23/2016 06:35:16</publishTime>
+      <publishTime>07/07/2016 18:51:32</publishTime>
     </File>
     <File Include="Content/ej/web/bootstrap-theme/ej.web.all.min.css">
       <publishTime>07/06/2016 17:37:45</publishTime>
@@ -764,16 +767,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/18/2016 05:04:19</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/ejicons.eot">
-      <publishTime>06/18/2016 05:05:07</publishTime>
+      <publishTime>07/07/2016 18:51:32</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/ejicons.svg">
-      <publishTime>06/18/2016 05:05:11</publishTime>
+      <publishTime>07/07/2016 18:51:32</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/ejicons.ttf">
-      <publishTime>06/18/2016 05:05:11</publishTime>
+      <publishTime>07/07/2016 18:51:32</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/ejicons.woff">
-      <publishTime>06/18/2016 05:05:11</publishTime>
+      <publishTime>07/07/2016 18:51:32</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/grid/dropPointer.cur">
       <publishTime>06/18/2016 05:05:07</publishTime>
@@ -788,73 +791,73 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/18/2016 05:05:12</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/ribbon/ejrbnicons.eot">
-      <publishTime>06/18/2016 05:05:04</publishTime>
+      <publishTime>07/07/2016 18:51:32</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/ribbon/ejrbnicons.svg">
-      <publishTime>06/18/2016 05:05:04</publishTime>
+      <publishTime>07/07/2016 18:51:32</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/ribbon/ejrbnicons.ttf">
-      <publishTime>06/18/2016 05:05:04</publishTime>
+      <publishTime>07/07/2016 18:51:32</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/ribbon/ejrbnicons.woff">
-      <publishTime>06/18/2016 05:05:04</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/Rotate.cur">
       <publishTime>06/18/2016 05:05:11</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/down_arrow_dark.cur">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/down_arrow_light.cur">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/draw_border_dark.cur">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/draw_border_grid_dark.cur">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/draw_border_grid_light.cur">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/draw_border_light.cur">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/ejxlicons.eot">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/ejxlicons.svg">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/ejxlicons.ttf">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/ejxlicons.woff">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/format_painter_dark.cur">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/format_painter_light.cur">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/right_arrow_dark.cur">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/common-images/spreadsheet/right_arrow_light.cur">
-      <publishTime>06/18/2016 05:05:33</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/ej.widgets.core.bootstrap.less">
-      <publishTime>06/23/2016 06:31:40</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/ej.widgets.core.bootstrap.min.css">
-      <publishTime>06/23/2016 06:35:16</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/ej.widgets.core.less">
-      <publishTime>06/23/2016 06:31:40</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/ej/web/ej.widgets.core.min.css">
-      <publishTime>06/23/2016 06:35:16</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Content/email.css">
       <publishTime>02/13/2016 22:28:40</publishTime>
@@ -1352,16 +1355,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/30/2016 15:41:37</publishTime>
     </File>
     <File Include="Scripts/ej/ej.unobtrusive.min.js">
-      <publishTime>06/23/2016 06:35:32</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Scripts/ej/ej.web.all.min.js">
-      <publishTime>06/23/2016 06:35:52</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Scripts/ej/ej.widget.angular.min.js">
-      <publishTime>06/23/2016 06:35:32</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Scripts/ej/ej.widget.ko.min.js">
-      <publishTime>06/23/2016 06:35:32</publishTime>
+      <publishTime>07/07/2016 18:51:33</publishTime>
     </File>
     <File Include="Scripts/excanvas.min.js">
       <publishTime>04/30/2016 15:41:40</publishTime>
@@ -1652,7 +1655,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/30/2016 15:41:45</publishTime>
     </File>
     <File Include="Views/MaitenanceRequests/Index.cshtml">
-      <publishTime>07/06/2016 19:00:25</publishTime>
+      <publishTime>07/07/2016 18:51:35</publishTime>
     </File>
     <File Include="Views/MaitenanceRequests/MySchedule.cshtml">
       <publishTime>07/06/2016 16:26:53</publishTime>
@@ -1682,7 +1685,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/06/2016 00:56:02</publishTime>
     </File>
     <File Include="Views/Messaging/History.cshtml">
-      <publishTime>07/06/2016 18:50:49</publishTime>
+      <publishTime>07/07/2016 18:51:35</publishTime>
     </File>
     <File Include="Views/Messaging/Index.cshtml">
       <publishTime>07/06/2016 16:26:53</publishTime>
@@ -1853,10 +1856,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2016 22:57:19</publishTime>
     </File>
     <File Include="Views/Shared/Forms/Form.cshtml">
-      <publishTime>05/29/2016 00:00:12</publishTime>
+      <publishTime>07/07/2016 17:53:46</publishTime>
     </File>
     <File Include="Views/Shared/Forms/Grid.cshtml">
-      <publishTime>07/07/2016 17:35:54</publishTime>
+      <publishTime>07/07/2016 18:51:35</publishTime>
     </File>
     <File Include="Views/Shared/IncidentReportIndex.cshtml">
       <publishTime>04/30/2016 15:41:45</publishTime>
@@ -1877,7 +1880,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/06/2016 01:15:28</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>07/06/2016 17:41:36</publishTime>
+      <publishTime>07/07/2016 18:51:35</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutLogin.cshtml">
       <publishTime>07/06/2016 16:26:53</publishTime>
@@ -1934,13 +1937,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/06/2016 16:26:53</publishTime>
     </File>
     <File Include="Views/Web.config">
-      <publishTime>07/06/2016 21:57:26</publishTime>
+      <publishTime>07/07/2016 18:51:35</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>12/15/2014 09:38:24</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/06/2016 22:54:28</publishTime>
+      <publishTime>07/08/2016 18:27:58</publishTime>
     </File>
   </ItemGroup>
 </Project>

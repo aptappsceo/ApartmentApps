@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web.Http;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.IoC;
@@ -79,11 +80,12 @@ namespace ApartmentApps.API.Service.App_Start
         {
 
             Register.RegisterServices(kernel);
-
+            kernel.Bind<ILogger>().To<LoggerModule>().InRequestScope();
+            kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
             kernel.Bind<IAuthenticationManager>().ToMethod(p => HttpContext.Current.GetOwinContext().Authentication).InRequestScope();
             kernel.Bind<ApplicationUserManager>().ToMethod(o => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>()).InRequestScope();
 
-     
+           
             GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
         }        
     }

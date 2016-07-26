@@ -23,7 +23,7 @@ namespace ApartmentApps.Jobs
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
             
             var context = new ApplicationDbContext();
-            foreach (var item in context.Properties.ToArray())
+            foreach (var item in context.Properties.Where(p=>p.Id == 11).ToArray())
             {
                 IKernel kernel = new StandardKernel();
                 Register.RegisterServices(kernel);
@@ -37,6 +37,7 @@ namespace ApartmentApps.Jobs
                     Email = "micahosborne@gmail.com",
                     Name = "Jobs"
                 };
+                
                 kernel.Bind<IUserContext>().ToMethod(p=>userContext);
                 var modules = kernel.GetAll<IModule>().Where(p=>p.Enabled).OfType<IWebJob>().ToArray();
                 foreach (var module in modules)

@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity;
@@ -232,7 +233,10 @@ namespace ApartmentApps.Api
             Context.UserAlerts.Add(alert);
             Context.SaveChanges();
             if (email)
-            _emailService.SendAsync(new IdentityMessage() { Body = message, Destination = user.Email, Subject = title });
+            {
+                _emailService.SendAsync(new IdentityMessage() { Body = message, Destination = user.Email, Subject = title }).Wait();
+            }
+                
 
             _pushHandler.SendToUser(user.Id, new NotificationPayload()
             {
@@ -304,26 +308,43 @@ namespace ApartmentApps.Api
     }
     public class EmailService : IIdentityMessageService
     {
+        private readonly ILogger _logger;
+
+        public EmailService() : this(null)
+        {
+        }
+
+        public EmailService(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         public Task SendAsync(IdentityMessage message)
         {
-            SmtpClient client = new SmtpClient();
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("noreply@apartmentapps.com", "AptApps2016!");
-            client.Port = 587;
-            client.Host = "smtp.gmail.com";
-            client.EnableSsl = true;
-            MailAddress
-                maFrom = new MailAddress("noreply@apartmentapps.com", "Apartment Apps", Encoding.UTF8),
-                maTo = new MailAddress(message.Destination, string.Empty, Encoding.UTF8);
-            MailMessage mmsg = new MailMessage(maFrom.Address, maTo.Address);
-            mmsg.Body = message.Body;
-            mmsg.BodyEncoding = Encoding.UTF8;
-            mmsg.IsBodyHtml = true;
-            mmsg.Subject = message.Subject;
-            mmsg.SubjectEncoding = Encoding.UTF8;
+            try
+            {
+                SmtpClient client = new SmtpClient();
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("noreply@apartmentapps.com", "AptApps2016!");
+                client.Port = 587;
+                client.Host = "smtp.gmail.com";
+                client.EnableSsl = true;
+                MailAddress
+                    maFrom = new MailAddress("noreply@apartmentapps.com", "Apartment Apps", Encoding.UTF8),
+                    maTo = new MailAddress(message.Destination, string.Empty, Encoding.UTF8);
+                MailMessage mmsg = new MailMessage(maFrom.Address, maTo.Address);
+                mmsg.Body = message.Body;
+                mmsg.BodyEncoding = Encoding.UTF8;
+                mmsg.IsBodyHtml = true;
+                mmsg.Subject = message.Subject;
+                mmsg.SubjectEncoding = Encoding.UTF8;
 
-            client.Send(mmsg);
+                client.Send(mmsg);
+            }
+            catch (Exception ex)
+            {
+                _logger?.Error($"Error sending to email {message.Destination}\r\n {ex.Message}\r\n{ex.StackTrace}");
+            }
 
             // Plug in your email service here to send an email.
             return Task.FromResult(0);

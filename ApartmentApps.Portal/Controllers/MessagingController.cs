@@ -45,7 +45,8 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult SendMessage(string subject, string message)
         {
             int count;
-            _module.SendMessage(GetData(Dm, out count).Select(p => p.Id).ToArray(), subject, message);
+            var ids = GetData(Dm, out count).Select(p => p.Id).ToArray();
+            _module.SendMessage(ids, subject, message);
             ViewBag.SuccessMessage = "Message Sent";
             return RedirectToAction("Index");
         }
