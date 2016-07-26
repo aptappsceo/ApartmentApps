@@ -133,149 +133,133 @@
       <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Syncfusion.Chart.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.Chart.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Compression.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Compression.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Core, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.Core.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.DocIO.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.DocIO.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.DocIO.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.DocToPdfConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.DocToPDFConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.DocToPdfConverter.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.DocToPDFConverter.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.EJ, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.EJ.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.EJ.Export, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.Export.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.EJ.Export.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.EJ.MVC, Version=14.2500.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.MVC.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\MVC\MVC5\Syncfusion.EJ.MVC.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.EJ.Olap, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.Olap.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.EJ.Olap.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.EJ.PdfViewer, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.PdfViewer.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.EJ.PdfViewer.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.EJ.ReportViewer, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.EJ.ReportViewer.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.EJ.ReportViewer.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.ExcelChartToImageConverter.Wpf, Version=14.2451.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.ExcelChartToImageConverter.WPF, Version=14.2451.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.ExcelChartToImageConverter.Wpf.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.ExcelChartToImageConverter.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.ExcelToPDFConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.ExcelToPDFConverter.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.ExcelToPDFConverter.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Gauge.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Gauge.WPF.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.Gauge.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Grid.Wpf, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.GeckoHtmlRenderer.Base, Version=14.2451.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Grid.Wpf.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.GeckoHtmlRenderer.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.GridCommon.Wpf, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.HtmlConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.GridCommon.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.HTMLConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.HTMLConverter.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.HTMLUI.Base, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.HTMLUI.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.HtmlConverter.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Linq.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Linq.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.MIME.Base, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.MIME.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.Linq.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.OCRProcessor.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.OCRProcessor.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.OCRProcessor.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.OfficeChart.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.OfficeChart.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.OfficeChart.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.OfficeChartToImageConverter.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.OfficeChartToImageConverter.WPF.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.OfficeChartToImageConverter.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Olap.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Olap.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.Olap.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Pdf.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Pdf.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.Pdf.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.PivotAnalysis.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.PivotAnalysis.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.PivotAnalysis.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.PMML.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.PMML.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.PMML.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Presentation.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Presentation.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.Presentation.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.PresentationToPdfConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.PresentationToPdfConverter.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.PresentationToPdfConverter.Base.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.ReportControls.Wpf, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.ReportControls.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.ReportControls.Wpf.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.ReportControls.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.ReportWriter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.ReportWriter.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.RichTextBoxAdv.WPF, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.RichTextBoxAdv.WPF.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.ReportWriter.Base.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.SfChart.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.SfChart.WPF.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.SfChart.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.SfMaps.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.SfMaps.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.Shared.Base, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Shared.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.SfMaps.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Shared.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.Shared.WPF.dll</HintPath>
-    </Reference>
-    <Reference Include="Syncfusion.WebKitHtmlConverter.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Syncfusion\WebKitHTMLConverter\14.2.0.26\Assemblies\4.5\Syncfusion.WebKitHtmlConverter.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.Shared.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.XlsIO.Base, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\micah\AppData\Local\Syncfusion\EssentialStudio\14.2.0.26\MVC\Samples\web\bin\Syncfusion.XlsIO.Base.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.2.0.26\Assemblies\4.5.1\Syncfusion.XlsIO.Base.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>True</Private>
