@@ -28,8 +28,8 @@ namespace ResidentAppCross.Droid.Views
         public override int LayoutId => DefaultLayoutId;
 
         public HeaderSection HeaderSection { get; set; }
-        public LabelButtonSection TypeSelectionSection { get; set; }
-        public LabelButtonSection UnitSelectionSection { get; set; }
+        public LabelButtonSection TypeSelectionSection { get; set; } 
+        public LabelButtonSection UnitSelectionSection { get; set; } 
         public SwitchSection EntrancePermissionSection { get; set; } 
         public RadioSection PetTypeSelection { get; set; } 
         public TextSection CommentsSection { get; set; } 
@@ -53,10 +53,9 @@ namespace ResidentAppCross.Droid.Views
                 .WithFallback("Select");
 
             set.Bind(UnitSelectionSection.Button)
-                 .For(b => b.Text)
-                 .To(vm => vm.SelectedUnitTitle)
-                 .WithFallback("Select");
-
+                .For(b => b.Text)
+                .To(vm => vm.SelectedUnitTitle)
+                .WithFallback("Select");
 
             set.Bind(EntrancePermissionSection.Switch).For(s => s.Checked).TwoWay().To(vm => vm.EntrancePermission);
             set.Bind(TypeSelectionSection.Button).To(vm => vm.SelectRequestTypeCommand);
@@ -90,7 +89,9 @@ namespace ResidentAppCross.Droid.Views
             base.GetContent(sections);
             sections.Add(HeaderSection);
             sections.Add(TypeSelectionSection);
-            sections.Add(UnitSelectionSection);
+
+            if (ViewModel.ShouldSelectUnit)
+                sections.Add(UnitSelectionSection);
 
             sections.Add(CommentsSection);
             sections.Add(PhotoSection);

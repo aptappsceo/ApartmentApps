@@ -69,7 +69,7 @@ namespace ResidentAppCross.ViewModels
                     var selected = await _dialogService.OpenSearchableTableSelectionDialog(units,"Select Unit", p=>p.Value);
                     await Task.Delay(TimeSpan.FromMilliseconds(300));
                     SelectedUnit = selected;
-		            SelectedUnitTitle = selected.Value;
+		            SelectedUnitTitle = selected.Value; 
                 });
 
 
@@ -213,8 +213,7 @@ namespace ResidentAppCross.ViewModels
                     var images = Photos.RawImages.Select(p =>
                     {
                         return Convert.ToBase64String(p.Data);
-                    })
-                        .ToList();
+                    }).ToList();
 
                     var maitenanceRequestModel = new MaitenanceRequestModel()
                     {
@@ -222,9 +221,9 @@ namespace ResidentAppCross.ViewModels
                         PetStatus = SelectedPetStatus,
                         Comments = Comments,
                         MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
-                        Images =
-                            images,
-							UnitId = ShouldSelectUnit ? (int?)Convert.ToInt32(SelectedUnit.Key) : null
+                        Images = images,
+						UnitId = ShouldSelectUnit ? (int?)Convert.ToInt32(SelectedUnit.Key) : null,
+                            
                         
                     };
 
