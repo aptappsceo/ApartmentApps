@@ -215,7 +215,7 @@ namespace ApartmentApps.Api
         {
             if (request.User?.PropertyId != null)
             {
-                SendAlert( request.User, $"Maintenance {maitenanceRequest.StatusId}", maitenanceRequest.Comments,"Maintenance", request.Id);
+                SendAlert( request.User, $"Maintenance", "Your maintenance request has been "+request.StatusId, "Maintenance", request.Id);
             }
         }
 

@@ -43,18 +43,22 @@ namespace ApartmentApps.Data
         {
             get
             {
+                string unitInfoSuffix = "";
+                if(!string.IsNullOrEmpty(MaitenanceRequest?.Unit?.Name))
+                unitInfoSuffix = $" at Unit #{MaitenanceRequest.Unit.Name}";
+
                 switch (StatusId)
                 {
                     case "Complete":
-                        return "completed a maintenance request";
+                        return "completed a work order"+unitInfoSuffix;
                     case "Scheduled":
-                        return "scheduled a maintenance request";
+                        return "scheduled a work order" + unitInfoSuffix;
                     case "Started":
-                        return "started a maintenance request";
+                        return "started a work order" + unitInfoSuffix;
                     case "Paused":
-                        return "paused a maintenance request";
+                        return "paused a work order" + unitInfoSuffix;
                     case "Submitted":
-                        return $"{MaitenanceRequest.User.FirstName} {MaitenanceRequest.User.LastName} submitted a maintenance request";
+                        return "submitted a work order" + unitInfoSuffix;
                 }
                 return string.Empty;
             }

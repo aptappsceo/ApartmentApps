@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -171,7 +172,8 @@ namespace ResidentAppCross.ViewModels.Screens
                 Checkins.AddRange(Request.Checkins.OrderByDescending(x=>x.Date));
                 UnitAddressString = Request.BuildingName;
             TelephoneNumber = Request.User.PhoneNumber;
-            ScheduleDateLabel = Request.ScheduleDate?.ToString("g") ?? "-";
+            //scheduleDate.ToString("g", CultureInfo.GetCultureInfo("en-US"))
+            ScheduleDateLabel = Request.ScheduleDate?.ToString("g", CultureInfo.CurrentCulture) ?? "-";
             this.Publish(new MaintenanceRequestStatusUpdated(this));
 
         }).OnStart("Loading Request...").OnFail(ex=> { Close(this); });
