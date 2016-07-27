@@ -377,7 +377,7 @@ namespace ApartmentApps.Portal.Controllers
             var stream = new MemoryStream();
             _document.Save(stream);
             _document.Close(true);
-            return File(stream.ToArray(), "application/pdf", "sample.pdf");
+            return File(stream.ToArray(), "application/pdf", $"MonthlyReport{model.StartDate.Value.Month}{model.StartDate.Value.Day}-{model.EndDate.Value.Month}{model.EndDate.Value.Day}.pdf");
 
 
 
@@ -431,7 +431,7 @@ namespace ApartmentApps.Portal.Controllers
                               $"<div style='text-align: center; font-size: 20px;'>For {model.StartDate} {model.EndDate}</div>" +
                               $"<br/><br/><table style='width: 100%'>";
 
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Work Orders</td><td>{CheckinsByRange(startDate,endDate).Count()} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Work Orders</td><td>{CheckinsByRange(startDate,endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
             foreach (var item in WorkOrdersPerEmployee)
             {
                 htmlText += $"<tr><td>{item.Key.FirstName} {item.Key.LastName} Completed</td><td>{item.Count()} Work Orders</td></tr> ";
