@@ -1,5 +1,10 @@
 ﻿@using System.Activities.Expressions
 @using ApartmentApps.Data
+
+@{
+    var property = ViewBag.Property as Property;
+}
+
 @model ApartmentApps.Portal.Controllers.DashboardBindingModel
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
@@ -105,7 +110,7 @@
                                 <div class="media-body ">
                                     
                                     <strong>@@@item.User.FirstName @item.User.LastName</strong> @item.Description <br>
-                                    <small class="text-muted">@Html.Timeago(item.CreatedOn)</small>
+                                    <small class="text-muted">@Html.Timeago(item.CreatedOn,property?.TimeZone)</small>
                                     @if (!string.IsNullOrEmpty(item.Message))
                                     {
                                         <div class="well">

@@ -136,14 +136,11 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
 
             TimePicker.SetOnTimeChangedListener(this);
-
-
-
             SelectedDate = DateTime.Now;
+
             SelectedTime = new TimeSpan(SelectedDate.Hour,SelectedDate.Minute,0);
-
+            TimePicker.TimeChanged += OnTimeChanged;
             DatePicker.Init(SelectedDate.Year, SelectedDate.Month-1, SelectedDate.Day, this);
-
             ShowSelectDateButton.Click += (sender, args) =>
             {
                 DialogPager.SetCurrentItem(0, true);
@@ -156,9 +153,14 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
             ConfirmButton.Click += (sender, args) =>
             {
-                var dateTime = SelectedDate + SelectedTime;
+                var dateTime = DatePicker.DateTime + new TimeSpan(TimePicker.CurrentHour.IntValue(), TimePicker.CurrentMinute.IntValue(), 0);
                 DateTimeSelected?.Invoke(dateTime);
             };
+        }
+
+        private void OnTimeChanged(object sender, TimePicker.TimeChangedEventArgs e)
+        {
+            //SelectedTime = ;
         }
 
         public event Action<DateTime> DateTimeSelected;

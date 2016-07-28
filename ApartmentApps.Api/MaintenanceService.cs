@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
@@ -225,10 +226,8 @@ namespace ApartmentApps.Api
             var mr = Context.MaitenanceRequests.Find(id);
             mr.ScheduleDate = scheduleDate;
             Context.SaveChanges();
-
-
             Checkin(currentUser, id,
-                $"Schedule date set to {scheduleDate.DayOfWeek} at {scheduleDate.Hour}:{scheduleDate.Minute}", "Scheduled", null);
+                $"Schedule date set to {scheduleDate.ToString("g",CultureInfo.GetCultureInfo("en-US"))}", "Scheduled", null);
         }
     }
 }

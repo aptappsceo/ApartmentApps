@@ -500,6 +500,11 @@ namespace ApartmentApps.Portal.Controllers
             //{
             //    return Redirect(returnUrl);
             //}
+
+
+            //TODO MICAH: User Identity is not set correctly during the login request.
+            //I.E. When redirecting after succesfull login, it's useless to check for roles : they are all false.
+            /*
             if (User.IsInRole("PropertyAdmin") || User.IsInRole("RegionalAdmin") || User.IsInRole("Admin"))
             {
                 return RedirectToAction("Index", "Dashboard");
@@ -508,7 +513,9 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return RedirectToAction("NewRequest", "MaitenanceRequests");
             }
-            
+            */
+
+            return RedirectToAction("Index", "Dashboard");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

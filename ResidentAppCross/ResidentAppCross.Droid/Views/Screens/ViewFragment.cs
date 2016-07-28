@@ -422,7 +422,20 @@ namespace ResidentAppCross.Droid.Views
         public override void OnStop()
         {
             base.OnStop();
+/*
+            if (IsBound)
+            {
+                UnBind();
+                IsBound = false;
+            }
+            this.DisposeContainer();
+            */
 
+        }
+
+        public override void OnDestroyView()
+        {
+            base.OnDestroyView();
             if (IsBound)
             {
                 UnBind();
