@@ -254,6 +254,16 @@ namespace ApartmentApps.Portal.Controllers
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
     }
+
+    [DisplayName("Schedule Maintenance Request")]
+    public class MaintenanceScheduleRequestModel
+    {
+        [DataType("Hidden")]
+        public int Id { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime? Date { get; set; }
+    }
+
     public enum PetStatus
     {
         NoPet,
@@ -336,9 +346,20 @@ namespace ApartmentApps.Portal.Controllers
         {
             return AutoForm(new MaintenanceStatusRequestModel() { Id = id }, "PauseRequest");
         }
+
         public ActionResult Complete(int id)
         {
             return AutoForm(new MaintenanceStatusRequestModel() { Id = id }, "CompleteRequest");
+        }
+
+        public ActionResult Schedule(int id)
+        {
+            return AutoForm(new MaintenanceScheduleRequestModel() { Id = id }, "ScheduleRequest");
+        }
+
+        public ActionResult Start(int id)
+        {
+            return AutoForm(new MaintenanceStatusRequestModel() { Id = id }, "StartRequest");
         }
 
         public ActionResult MonthlyReport()
@@ -451,7 +472,7 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult SubmitRequest(MaitenanceRequestModel request)
         {
 
-            MaintenanceService.SubmitRequest(
+            var id = MaintenanceService.SubmitRequest(
                 request.Comments,
                 request.MaitenanceRequestTypeId,
                 (int)request.PetStatus,
@@ -459,7 +480,21 @@ namespace ApartmentApps.Portal.Controllers
                 null,
                 Convert.ToInt32(request.UnitId)
                 );
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id = id });
+
+        }
+
+        [HttpPost]
+        public ActionResult StartRequest(MaintenanceStatusRequestModel request)
+        {
+
+            MaintenanceService.StartRequest(
+                CurrentUser,
+                request.Id,
+                request.Comments, null
+                );
+            return RedirectToAction("Details", new { id = request.Id });
+
         }
 
         [System.Web.Http.HttpPost]
@@ -472,7 +507,22 @@ namespace ApartmentApps.Portal.Controllers
                 request.Comments, null
 
                 );
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id = request.Id });
+
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult ScheduleRequest(MaintenanceScheduleRequestModel request)
+        {
+            if (!request.Date.HasValue) throw new Exception("No date was selected.");
+            MaintenanceService.ScheduleRequest(
+                CurrentUser,
+                request.Id,
+                request.Date.Value
+
+                );
+            return RedirectToAction("Details", new { id = request.Id });
+
         }
 
         [System.Web.Http.HttpPost]
@@ -484,7 +534,7 @@ namespace ApartmentApps.Portal.Controllers
                 request.Id,
                 request.Comments, null
                 );
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id = request.Id });
         }
         public ActionResult Print(int id)
         {
