@@ -22,7 +22,7 @@
                     .Mappers(map =>
                         map
                         .ExportToExcelAction(Url.Action("ExportToExcel"))
-                    //.ExportToPdfAction(Url.Action("ExportToPdf"))
+                        .ExportToPdfAction(Url.Action("ExportToPdf"))
                     //.ExportToWordAction(Url.Action("ExportToWord"))
                     )
                      .ToolbarSettings(toolbar =>
@@ -30,7 +30,7 @@
                          toolbar.ShowToolbar().ToolbarItems(items =>
                          {
                              items.AddTool(ToolBarItems.ExcelExport);
-                             items.AddTool(ToolBarItems.WordExport);
+                            // items.AddTool(ToolBarItems.WordExport);
                              items.AddTool(ToolBarItems.PdfExport);
                          });
                      })
@@ -55,6 +55,7 @@
                         c.Field(model => model.SubmissionByFullName).HeaderText("Requestor").Add();
                         c.Field(model => model.StartDate).HeaderText("Start Date").Type(ColumnType.DateTime).Add();
                         c.Field(model => model.CompleteDate).HeaderText("Complete Date").Type(ColumnType.DateTime).Add();
+                        c.Field(model => model.CompletedByFullName).HeaderText("Complete By").Add();
 
                         //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Details", "Details", new { id = "{{:Id}}" }).ToHtmlString())).Add();
                         //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Delete", "Delete", new { id = "{{:Id}}" }).ToHtmlString()))..Add();

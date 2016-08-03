@@ -38,10 +38,16 @@ namespace ApartmentApps.Api.ViewModels
         public DateTime RequestDate { get; set; }
         public string Comments { get; set; }
         public UserBindingModel SubmissionBy { get; set; }
+        public UserBindingModel CompletedBy { get; set; }
 
         public string SubmissionByFullName
         {
             get { return SubmissionBy.FullName; }
+        }
+
+        public string CompletedByFullName
+        {
+            get { return CompletedBy?.FullName; }
         }
 
         public string StatusId { get; set; }

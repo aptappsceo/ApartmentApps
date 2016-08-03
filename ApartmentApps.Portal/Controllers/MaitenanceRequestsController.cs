@@ -468,6 +468,11 @@ namespace ApartmentApps.Portal.Controllers
             _document = htmlConverter.Convert(htmlText, baseUrl);
         }
 
+        public override string ExportFileName
+        {
+            get { return "MaintenanceRequests"; }
+        }
+
         [HttpPost]
         public ActionResult SubmitRequest(MaitenanceRequestModel request)
         {

@@ -49,27 +49,52 @@
                                     @Html.DisplayFor(modelItem => item.Corporation.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
-                                    @Html.ActionLink("Import Entrata Data", "ImportEntrata", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        @Html.ActionLink("Import Entrata Data", "ImportEntrata", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
-                                        if (item == property)
+                                    @{
+                                        if (item != property)
                                         {
-                                            <b>Current Property</b>
+                                            @Html.DisplayFor(modelItem => item.Name)
                                         }
                                         else
                                         {
-                                            @Html.ActionLink("Switch To Property", "ChangeProperty", "Account", new { id = item.Id }, new { @class = "btn btn-white btn-sm" })
+                                            <strong>
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </strong>
                                         }
-
                                     }
-                                    
+                          
+                                </td>
+                                <td>
+                                
+
+                                    <div class="btn-group">
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-xs" })
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-xs" })
+                                    </div>
+                      
+                                    @if (User.IsInRole("Admin") && item != property)
+                                    {
+                                        <div class="btn-group">
+                                            @Html.ActionLink("Switch", "ChangeProperty", "Account", new { id = item.Id }, new { @class = "btn btn-primary btn-xs" })
+                                        </div>
+                                    }
+
+
+                               
+                                    <div class="btn-group  pull-right">
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            @Html.ActionLink("Import Entrata Data", "ImportEntrata", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })
+                                        }
+                                        @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new {@class = "btn btn-danger btn-xs"})
+                                    </div>
+
+
+
+
+
+
+
+
                                 </td>
                             </tr>
                         }

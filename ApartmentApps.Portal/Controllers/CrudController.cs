@@ -68,7 +68,8 @@ namespace ApartmentApps.Portal.Controllers
 
             properties.AllowPaging = false;
             properties.PageSettings.PageSize = Int32.MaxValue;
-            exp.Export(properties, Data, "Export.xlsx", ExcelVersion.Excel2010);
+
+            exp.Export(properties, Data, $"{ ExportFileName}.xlsx", ExcelVersion.Excel2010);
             return RedirectToAction("Index");
         }
         private GridProperties ConvertGridObject(string gridProperty)
@@ -137,10 +138,13 @@ namespace ApartmentApps.Portal.Controllers
             properties.AllowPaging = false;
             properties.PageSettings.PageSize = Int32.MaxValue;
             //var dataSource = new DataOperations().Execute(DataSource.ToArray(), properties,true);
-            exp.Export(properties, Data, "Export.pdf");
+            exp.Export(properties, Data, $"{ExportFileName}.pdf");
         }
 
-
+        public virtual string ExportFileName
+        {
+            get { return "Export"; }
+        }
 
         public virtual ActionResult Remove(int key)
         {
