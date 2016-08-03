@@ -65,7 +65,7 @@ namespace ApartmentApps.Portal.Controllers
                 IncidentReportsOutstanding = IncidentsByRange(startDate, endDate).Count(p=>p.StatusId != "Reported" && p.StatusId != "Complete"),
                 IncidentReportsComplete = IncidentsByRange(startDate, endDate).Count(p=>p.StatusId == "Complete"),
                 MaintenanceTotalOutstanding = Context.MaitenanceRequests.Count(p=>p.StatusId != "Complete"),
-                MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p=>p.ScheduleDate > todayStart && p.ScheduleDate < todayEnd && p.StatusId == "Scheduled"),
+                MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p=> p.StatusId == "Scheduled" && p.ScheduleDate > todayStart && p.ScheduleDate < todayEnd ),
                 IncidentReportsTotalOutstanding = Context.IncidentReports.Count(x=>x.StatusId != "Complete"),
                 FeedItems = FeedService.GetAll(),
                 //Entered = WorkOrdersByRange(startDate, endDate, currentPropertyId).Where(p => p.StatusId == "Submitted"),

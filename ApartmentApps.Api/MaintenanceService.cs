@@ -70,6 +70,14 @@ namespace ApartmentApps.Api
                 viewModel.EndDate = model.ScheduleDate.Value.Add(new TimeSpan(0, 0, 30, 0));
             viewModel.Comments = model.Message;
             viewModel.SubmissionBy = UserMapper.ToViewModel(model.User);
+            if (model.LatestCheckin != null && model.LatestCheckin.StatusId == "Complete")
+            {
+                var user = model.LatestCheckin.Worker;
+                if (user != null)
+                {
+                    viewModel.CompletedBy = UserMapper.ToViewModel(user);
+                }
+            }
             viewModel.StatusId = model.StatusId;
             viewModel.Id = model.Id.ToString();
             viewModel.UnitName = model.Unit?.Name;

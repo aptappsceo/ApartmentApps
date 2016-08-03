@@ -95,8 +95,8 @@ namespace ResidentAppCross.ViewModels.Screens
                 context.FailTask(response.Response.ReasonPhrase);
                 return;
             }
-            this.Close(this);
-        }).OnStart("Signing Up");
+        }).OnStart("Signing Up").OnComplete("Sign Up Complete",()=> Close(this));
+
         public ICommand SelectBirthdayCommand => new MvxCommand(async () =>
         {
             var date = await _dialogService.OpenDateDialog("Birthday");

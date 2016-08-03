@@ -24,13 +24,23 @@
         <div class="col-lg-12">
 
                 <div class="row animated fadeInRight">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h5>Request Detail</h5>
+                            <div class="ibox-title vertical-align">
+
+
+                                <div class='btn-toolbar pull-right'>
+                                    <div class='btn-group btn-group-xs'>
+                                        <a href="@Url.Action("Print", new {id = Model.Id})" class="btn btn-info btn-xs"><i class="fa fa-fw fa-print"></i>Printable</a>
+                                    </div>
+                                </div>
+                                <h5 >
+                                    Request Details
+                                </h5>
+                            
                             </div>
                             <div>
-                                <div class="ibox-content no-padding border-left-right">
+                                <div class="ibox-content border-left-right">
                                     <img alt="image" class="img-responsive" src="@Model.SubmissionBy.ImageUrl">
                                 </div>
                                 <div class="ibox-content profile-content">
@@ -47,28 +57,41 @@
 
                                     </p>
                                     <div class="user-button">
+                                
                                         <div class="row">
+
                                             <div class="col-md-12">
-                                                <a href="@Url.Action("Print", new {id = Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i>Printable</a>
+                                                <div class="btn-group">
+
+                                                    @if (User.IsInRole("PropertyAdmin") || User.IsInRole("Admin"))
+                                                    {
+                                                        if (Model.StatusId == "Started" || Model.StatusId == "Paused" || Model.StatusId == "Scheduled")
+                                                        {
+                                                            <a href="@Url.Action("Complete", new {id = Model.Id})" class="btn btn-primary btn-sm"><i class="fa fa-check fa-fw"></i>Complete</a>
+                                                        }
+
+                                                        if (Model.StatusId == "Submitted" || Model.StatusId == "Scheduled")
+                                                        {
+                                                            <a href="@Url.Action("Start", new {id = Model.Id})" class="btn btn-primary btn-sm"><i class="fa fa-play fa-fw"></i>Start</a>
+                                                        }
+
+                                                        if (Model.StatusId == "Submitted" || Model.StatusId == "Paused" || Model.StatusId == "Scheduled")
+                                                        {
+                                                            <a href="@Url.Action("Schedule", new {id = Model.Id})" class="btn btn-primary btn-sm"><i class="fa fa-question fa-fw"></i>Schedule</a>
+                                                        }
+
+                                                        if (Model.StatusId == "Started")
+                                                        {
+                                                            <a href="@Url.Action("Pause", new {id = Model.Id})" class="btn btn-primary btn-sm"><i class="fa fa-pause fa-fw"></i>Pause</a>
+                                                        }
+
+
+                                                    }
+
+                                                </div>
                                             </div>
 
-
-                                            @*<div class="col-md-6">
-                                                <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> Buy a coffee</button>
-                                            </div>*@
                                         </div>
-                                        @if (User.IsInRole("PropertyAdmin") || User.IsInRole("Admin"))
-                                        {
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <a href="@Url.Action("Pause", new {id = Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pause"></i>Pause</a>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <a href="@Url.Action("Complete", new {id=Model.Id})" class="btn btn-primary btn-sm btn-block"><i class="fa fa-check"></i>Complete</a>
-                                                </div>
-                                            </div>
-
-                                        }
 
 
                                     </div>
@@ -100,10 +123,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Activites</h5>
+                                <h5>Activity Feed</h5>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
                                         <i class="fa fa-chevron-up"></i>

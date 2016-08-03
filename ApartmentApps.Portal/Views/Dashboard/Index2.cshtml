@@ -27,27 +27,26 @@
                         <h5>Maintenance</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">@Model.MaintenanceTotalOutstanding</h1>
-                        <div class="stat-percent font-bold text-success">
-                            @*98% <i class="fa fa-bolt"></i>*@
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h1 class="no-margins">@Model.MaintenanceTotalOutstanding</h1>
+                                <div class="stat-percent font-bold text-success">
+                                    @*98% <i class="fa fa-bolt"></i>*@
+                                </div>
+                                <small>Total Outstanding</small>
+                            </div>
+                            <div class="col-md-3">
+                                <h1 class="no-margins">@Model.MaintenanceScheduledToday</h1>
+                                <div class="stat-percent font-bold text-success">
+                                    @*98% <i class="fa fa-bolt"></i>*@
+                                </div>
+                                <small>Scheduled For Today</small>
+                            </div>
+
                         </div>
-                        <small>Total Outstanding</small>
+
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        @*<span class="label label-success pull-right">Total Outstanding</span>*@
-                        <h5>Maintenance</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">@Model.MaintenanceScheduledToday</h1>
-                        <div class="stat-percent font-bold text-success">
-                            @*98% <i class="fa fa-bolt"></i>*@
-                        </div>
-                        <small>Scheduled Today</small>
-                    </div>
+      
                 </div>
             </div>
         </div>
