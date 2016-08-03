@@ -180,10 +180,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlertsModuleConfig.cs" />
     <Compile Include="Auth\Class1.cs" />
+    <Compile Include="AzurePushNotificationHandler.cs" />
     <Compile Include="BindingModels\Class1.cs" />
     <Compile Include="CourtesyOfficerService.cs" />
+    <Compile Include="EmailService.cs" />
+    <Compile Include="FeedSerivce.cs" />
     <Compile Include="FortePaymentsService.cs" />
+    <Compile Include="IFeedSerivce.cs" />
+    <Compile Include="IPushNotifiationHandler.cs" />
     <Compile Include="Modules\AdminModule.cs" />
     <Compile Include="Modules\Class1.cs" />
     <Compile Include="Modules\CourtesyConfig.cs" />
@@ -203,6 +209,8 @@
     <Compile Include="Modules\PaymentsConfig.cs" />
     <Compile Include="Modules\PaymentsModule.cs" />
     <Compile Include="Modules\PortalConfig.cs" />
+    <Compile Include="NotificationPayload.cs" />
+    <Compile Include="NotificationPayloadExtensions.cs" />
     <Compile Include="Repositories\BuildingsRepository.cs" />
     <Compile Include="IncidentsService.cs" />
     <Compile Include="DateTimeUtil.cs" />
@@ -226,7 +234,7 @@
     <Compile Include="MaintenanceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyIntegrationAddon.cs" />
-    <Compile Include="AlertsService.cs" />
+    <Compile Include="AlertsModule.cs" />
     <Compile Include="Repositories\UnitRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\BaseViewModel.cs" />
@@ -238,6 +246,7 @@
     <Compile Include="Services\StandardCrudService.cs" />
     <Compile Include="Services\UnitService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="SmsService.cs" />
     <Compile Include="Utils\ImageProcessing\BitmapExtensions.cs" />
     <Compile Include="Utils\ImageProcessing\ExifReader.cs" />
     <Compile Include="Utils\ImageProcessing\ExifTags.cs" />

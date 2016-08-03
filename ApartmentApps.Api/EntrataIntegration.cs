@@ -11,6 +11,8 @@ using Entrata.Model.Requests;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.OData.Query.SemanticAst;
+using Ninject;
+
 //using Yardi.Client.ResidentData;
 //using Yardi.Client.ResidentTransactions;
 
@@ -159,7 +161,7 @@ namespace ApartmentApps.Api
     }
     public class YardiModule : PropertyIntegrationModule<YardiConfig>
     {
-        public YardiModule(ApplicationDbContext dbContext,PropertyContext context, DefaultUserManager manager, IRepository<YardiConfig> configRepo, IUserContext userContext) : base(dbContext, context, manager, configRepo, userContext)
+        public YardiModule(ApplicationDbContext dbContext,PropertyContext context, DefaultUserManager manager, IRepository<YardiConfig> configRepo, IUserContext userContext, IKernel kernel) : base( dbContext, context, manager, configRepo, userContext,kernel)
         {
         }
 
@@ -190,7 +192,7 @@ namespace ApartmentApps.Api
 
     public class EntrataModule : PropertyIntegrationModule<EntrataConfig>
     {
-        public EntrataModule(ApplicationDbContext dbContext,PropertyContext context, DefaultUserManager manager,  IRepository<EntrataConfig> configRepo, IUserContext userContext) : base(dbContext, context, manager, configRepo, userContext)
+        public EntrataModule(ApplicationDbContext dbContext,PropertyContext context, DefaultUserManager manager,  IRepository<EntrataConfig> configRepo, IUserContext userContext, IKernel kernel) : base(dbContext, context, manager, configRepo, userContext, kernel)
         {
         }
 
@@ -205,6 +207,11 @@ namespace ApartmentApps.Api
                     EndPoint = item.Endpoint
                 };
                 var result = entrataClient.GetMitsUnits(item.EntrataPropertyId).Result;
+                if (result?.response?.error?.code == 301)
+                {
+                    logger.Warning(result.response.error.message);
+                    continue;
+                }
                 if (result?.response != null)
                     if (result?.response?.result?.PhysicalProperty != null)
                         foreach (var property in result?.response?.result?.PhysicalProperty?.Property)
@@ -240,7 +247,7 @@ namespace ApartmentApps.Api
         protected readonly PropertyContext _context;
         private readonly DefaultUserManager _manager;
      
-        public PropertyIntegrationModule(ApplicationDbContext dbContext,PropertyContext context, DefaultUserManager manager, IRepository<TConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        public PropertyIntegrationModule(ApplicationDbContext dbContext,PropertyContext context, DefaultUserManager manager, IRepository<TConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
         {
             DbContext = dbContext;
             _context = context;

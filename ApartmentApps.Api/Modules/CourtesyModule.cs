@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
     public class CourtesyModule : Module<CourtesyConfig>, IMenuItemProvider, IAdminConfigurable
     {
         public string SettingsController => "CourtesyConfig";
-        public CourtesyModule(IRepository<CourtesyConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        public CourtesyModule(IRepository<CourtesyConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
         {
         }
 

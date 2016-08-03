@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
     public class MaintenanceModule : Module<MaintenanceConfig>, IMenuItemProvider, IAdminConfigurable
     {
         public string SettingsController => "MaintenanceConfig";
-        public MaintenanceModule(IRepository<MaintenanceConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        public MaintenanceModule(IRepository<MaintenanceConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
         {
         }
 

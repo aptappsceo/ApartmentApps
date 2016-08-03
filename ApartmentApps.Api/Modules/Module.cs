@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -72,15 +73,25 @@ namespace ApartmentApps.Api.Modules
             {
             }
         }
-  
+
+        protected IKernel Kernel { get; }
         private readonly IRepository<TConfig> _configRepo;
         public IUserContext UserContext { get; }
 
-        public Module( IRepository<TConfig> configRepo, IUserContext userContext)
+        public Module(IKernel kernel, IRepository<TConfig> configRepo, IUserContext userContext)
         {
-           
+            Kernel = kernel;
             _configRepo = configRepo;
             UserContext = userContext;
+        }
+        public IEnumerable<IModule> Modules
+        {
+            get { return Kernel.GetAll<IModule>(); }
+        }
+
+        public IEnumerable<IModule> EnabledModules
+        {
+            get { return Modules.Where(p => p.Enabled); }
         }
 
         public Type ConfigType

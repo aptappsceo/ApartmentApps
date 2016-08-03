@@ -457,10 +457,15 @@ namespace Entrata.Client.GetMitsUnits
     public class Response
     {
         public string requestId { get; set; }
-        public string code { get; set; }
+        public ErrorResponse error { get; set; }
         public Result result { get; set; }
     }
 
+    public class ErrorResponse
+    {
+        public int code { get; set; }
+        public string message { get; set; }
+    }
     public class MitsUnitsResponse
     {
         public Response response { get; set; }

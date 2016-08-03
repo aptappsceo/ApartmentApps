@@ -54,6 +54,7 @@ namespace ApartmentApps.IoC
         }
         public static void RegisterServices(IKernel kernel)
         {
+            Modules.Kernel = kernel;
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
@@ -84,6 +85,7 @@ namespace ApartmentApps.IoC
                 }
                     
             }
+            kernel.RegisterModule<AlertsModule, AlertsModuleConfig>();
             kernel.RegisterModule<AdminModule, PortalConfig>();
             kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<MaintenanceModule, MaintenanceConfig>();
@@ -93,9 +95,10 @@ namespace ApartmentApps.IoC
             kernel.RegisterModule<EntrataModule, EntrataConfig>();
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
-            ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
+            //ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
 
-         
+            
+
             kernel.Bind<IRepository<UserPaymentOption>>().To<PropertyRepository<UserPaymentOption>>().InRequestScope();
             kernel.Bind<IRepository<UserTransaction>>().To<PropertyRepository<UserTransaction>>().InRequestScope();
 
@@ -103,7 +106,7 @@ namespace ApartmentApps.IoC
             //kernel.Bind<EntrataIntegration>().ToSelf().InRequestScope();
             kernel.Bind<IUnitImporter>().To<UnitImporter>().InRequestScope();
             kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
-            kernel.Bind<AlertsService>().ToSelf().InRequestScope();
+
             kernel.Bind<Property>().ToMethod(_ => kernel.Get<IUserContext>().CurrentUser.Property).InRequestScope();
             kernel.Bind<PropertyContext>().ToSelf().InRequestScope();
 
@@ -147,7 +150,7 @@ namespace ApartmentApps.IoC
             kernel.Bind<IPushNotifiationHandler>().To<AzurePushNotificationHandler>().InRequestScope();
             kernel.Bind<IBlobStorageService>().To<BlobStorageService>().InRequestScope();
             kernel.Bind<ApplicationDbContext>().ToSelf().InRequestScope();
-            kernel.Bind<IService>().To<AlertsService>().InRequestScope();
+            //kernel.Bind<IService>().To<AlertsModule>().InRequestScope();
             kernel.Bind<IMaintenanceService>().To<MaintenanceService>().InRequestScope();
             //kernel.Bind<IInci>().To<MaintenanceService>().InRequestScope();
             kernel.Bind<IIncidentsService>().To<IncidentsService>().InRequestScope();

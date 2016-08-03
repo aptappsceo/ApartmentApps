@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -55,8 +56,8 @@ namespace ApartmentApps.Api
 
             Checkin(user, incidentReport.Id, incidentReport.Comments, incidentReport.StatusId, null,
               incidentReport.GroupId);
-
-            this.InvokeEvent<IIncidentReportSubmissionEvent>( _ => _.IncidentReportSubmited(incidentReport));
+            Modules.Modules.EnabledModules.Signal<IIncidentReportSubmissionEvent>(_ => _.IncidentReportSubmited(incidentReport));
+            
 
             return incidentReport.Id;
 
@@ -98,7 +99,7 @@ namespace ApartmentApps.Api
                 incidentReport.CompletionDate = officer.TimeZone.Now();
             }
             Context.SaveChanges();
-            this.InvokeEvent<IIncidentReportCheckinEvent>( _ => _.IncidentReportCheckin(checkin, incidentReport));
+            Modules.Modules.EnabledModules.Signal<IIncidentReportCheckinEvent>( _ => _.IncidentReportCheckin(checkin, incidentReport));
             return true;
 
         }

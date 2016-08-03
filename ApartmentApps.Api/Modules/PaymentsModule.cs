@@ -8,6 +8,7 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Payments.Forte;
 using ApartmentApps.Payments.Forte.Forte.Client;
+using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -109,7 +110,7 @@ namespace ApartmentApps.Api.Modules
     {
         public PropertyContext Context { get; set; }
 
-        public PaymentsModule(PropertyContext context, IRepository<PaymentsConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        public PaymentsModule(PropertyContext context, IRepository<PaymentsConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
         {
             Context = context;
         }

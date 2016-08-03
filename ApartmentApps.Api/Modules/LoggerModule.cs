@@ -1,4 +1,5 @@
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -6,7 +7,7 @@ namespace ApartmentApps.Api.Modules
     {
         private readonly IRepository<Log> _log;
 
-        public LoggerModule(IRepository<Log> log, IRepository<LoggerSettings> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        public LoggerModule(IRepository<Log> log, IRepository<LoggerSettings> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
         {
             _log = log;
         }

@@ -16,7 +16,7 @@ namespace ApartmentApps.Api.Modules
             Id = 0
         };
 
-        public AdminModule(IKernel kernel, IUserContext userContext) : base(null, userContext)
+        public AdminModule(IKernel kernel, IUserContext userContext) : base(kernel, null, userContext)
         {
             Kernel = kernel;
         }

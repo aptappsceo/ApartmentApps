@@ -19,14 +19,14 @@ namespace ApartmentApps.Portal.Controllers
         private readonly MessagingService _messageService;
         private readonly MessagingModule _module;
 
-        public MessagingController(MessagingService messageService, MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, AlertsService messagingService) : base(kernel,repository, service, context, userContext)
+        public MessagingController(MessagingService messageService, MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, AlertsModule messagingService) : base(kernel,repository, service, context, userContext)
         {
             _messageService = messageService;
             _module = module;
             MessagingService = messagingService;
         }
 
-        public AlertsService MessagingService { get; set; }
+        public AlertsModule MessagingService { get; set; }
 
 
 

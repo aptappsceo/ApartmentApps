@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -24,9 +25,9 @@ namespace ApartmentApps.Api.Modules
     public class MessagingModule : Module<MessagingConfig>, IMenuItemProvider, IAdminConfigurable
     {
         public IRepository<Message> Messages { get; set; }
-        private readonly AlertsService _service;
+        private readonly AlertsModule _service;
 
-        public MessagingModule(IRepository<Message> messages, AlertsService service, IRepository<MessagingConfig> configRepo, IUserContext userContext) : base(configRepo, userContext)
+        public MessagingModule(IRepository<Message> messages, AlertsModule service, IRepository<MessagingConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
         {
             Messages = messages;
             _service = service;
@@ -39,14 +40,12 @@ namespace ApartmentApps.Api.Modules
                 menuItems.Add(new MenuItemViewModel("Messaging", "fa-envelope")
                 {
                     Children = new List<MenuItemViewModel>()
-                {
-                    new MenuItemViewModel("New Message","fa-plus-square","Index","Messaging"),
-                    new MenuItemViewModel("Sent","fa-history","History","Messaging"),
-                }
+                    {
+                        new MenuItemViewModel("New Message","fa-plus-square","Index","Messaging"),
+                        new MenuItemViewModel("Sent","fa-history","History","Messaging"),
+                    }
                 });
             }
-            
-
         }
 
         public void SendMessage(object[] ids, string subject, string message)
@@ -62,6 +61,7 @@ namespace ApartmentApps.Api.Modules
             Messages.Add(entity);
             Messages.Save();
             _service.SendAlert(ids, subject, message,"Message",entity.Id, true);
+            
         }
         public string SettingsController => "MessagingConfig";
     }
