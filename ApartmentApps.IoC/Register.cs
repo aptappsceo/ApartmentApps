@@ -169,7 +169,7 @@ namespace ApartmentApps.IoC
 
             kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
 
-
+            kernel.Bind<IEmailService>().To<EmailService>().InRequestScope();
 
 #if !JOBS
             kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();

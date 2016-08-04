@@ -14,17 +14,23 @@ using Ninject;
 
 namespace ApartmentApps.Api
 {
+    public interface ISendAlert
+    {
+        
+    }
     /// <summary>
     /// This service is used to handle when push notifications should be sent out.
     /// </summary>
     public class AlertsModule : Module<AlertsModuleConfig>, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent
     {
         public PropertyContext Context { get; set; }
-        private readonly IIdentityMessageService _emailService;
+        private readonly IRepository<MessagingConfig> _messagingConfigRepo;
+        private readonly IEmailService _emailService;
         private IPushNotifiationHandler _pushHandler;
 
-        public AlertsModule(IKernel kernel, IRepository<AlertsModuleConfig> configRepo, IUserContext userContext, IIdentityMessageService emailService, IPushNotifiationHandler pushHandler, PropertyContext context) : base(kernel, configRepo, userContext)
+        public AlertsModule(IKernel kernel, IRepository<MessagingConfig> messagingConfigRepo, IRepository<AlertsModuleConfig> configRepo, IUserContext userContext, IEmailService emailService, IPushNotifiationHandler pushHandler, PropertyContext context) : base(kernel, configRepo, userContext)
         {
+            _messagingConfigRepo = messagingConfigRepo;
             _emailService = emailService;
             _pushHandler = pushHandler;
             Context = context;
@@ -63,7 +69,6 @@ namespace ApartmentApps.Api
             {
                 _emailService.SendAsync(new IdentityMessage() { Body = message, Destination = user.Email, Subject = title }).Wait();
             }
-                
 
             _pushHandler.SendToUser(user.Id, new NotificationPayload()
             {

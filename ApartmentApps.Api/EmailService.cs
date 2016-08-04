@@ -1,38 +1,44 @@
 using System.Threading.Tasks;
 using ApartmentApps.Api.Modules;
 using Microsoft.AspNet.Identity;
+using Ninject;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
 namespace ApartmentApps.Api
 {
-    public class EmailService : IIdentityMessageService
+    public interface IEmailService
+    {
+        Task SendAsync(IdentityMessage message);
+    }
+    public class EmailService : IIdentityMessageService, IEmailService
     {
         private readonly ILogger _logger;
-        private readonly MessagingConfig _config;
+        private readonly IKernel _config;
 
-        public EmailService() : this(null, null)
-        {
-        }
+ 
 
-        public EmailService(ILogger logger, MessagingConfig config)
+        public EmailService(ILogger logger, IKernel config)
         {
             _logger = logger;
             _config = config;
         }
 
-        public string APIKey { get; set; }
         public async Task SendAsync(IdentityMessage message)
         {
 
             string apiKey = "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";
-            if (_config != null && !string.IsNullOrEmpty(_config.SendGridApiToken))
+            var fromEmail = "noreply@apartmentapps.com";
+            var config = _config.Get<MessagingModule>().Config;
+
+            if (config != null && !string.IsNullOrEmpty(config.SendGridApiToken))
             {
-                apiKey = _config.SendGridApiToken;
+                apiKey = config.SendGridApiToken;
+                fromEmail = config.SendFromEmail;
             }
             dynamic sg = new SendGridAPIClient(apiKey);
-
-            Email from = new Email("noreply@apartmentapps.com");
+     
+            Email from = new Email(fromEmail);
             string subject = message.Subject;
             Email to = new Email(message.Destination);
             Content content = new Content("text/html", message.Body);
