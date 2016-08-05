@@ -57,11 +57,12 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.SentOn = model.SentOn;
             viewModel.SentToCount = model.MessageReceipts.Count();
             viewModel.Id = model.Id.ToString();
+            viewModel.OpenCount = model.MessageReceipts.Count(p => !p.Error && p.Opened);
             viewModel.DeliverCount = model.MessageReceipts.Count(p => p.Error == false);
             if (fullDetails)
             {
                 viewModel.DeliverCount = model.MessageReceipts.Count(p => !p.Error);
-                viewModel.OpenCount = model.MessageReceipts.Count(p => !p.Error && p.Opened);
+             
                 viewModel.Receipts = model.MessageReceipts.Select(p=>new MessageReceiptViewModel()
                 {
                     Id = p.Id,
