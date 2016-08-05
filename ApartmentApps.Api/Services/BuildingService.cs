@@ -48,15 +48,44 @@ namespace ApartmentApps.Portal.Controllers
 
         public override void ToViewModel(Message model, MessageViewModel viewModel)
         {
+            ToViewModel(model, viewModel, false);
+        }
+        public void ToViewModel(Message model, MessageViewModel viewModel, bool fullDetails)
+        {
             viewModel.Title = model.Subject;
             viewModel.Body = model.Body;
             viewModel.SentOn = model.SentOn;
-            viewModel.SentToCount = model.SentToCount;
+            viewModel.SentToCount = model.MessageReceipts.Count();
             viewModel.Id = model.Id.ToString();
+            viewModel.DeliverCount = model.MessageReceipts.Count(p => p.Error == false);
+            if (fullDetails)
+            {
+                viewModel.DeliverCount = model.MessageReceipts.Count(p => !p.Error);
+                viewModel.OpenCount = model.MessageReceipts.Count(p => !p.Error && p.Opened);
+                viewModel.Receipts = model.MessageReceipts.Select(p=>new MessageReceiptViewModel()
+                {
+                    Id = p.Id,
+                    UserEmail = p.User.Email,
+                    Opened = p.Opened,
+                    ErrorMessage = p.ErrorMessage,
+                    Error =  p.Error
+                }).ToArray();
+            }
+            //viewModel.OpenCount = model.MessageReceipts.Count
+
         }
         public IEnumerable<MessageViewModel> GetHistory()
         {
             return Repository.GetAll().OrderByDescending(p=>p.SentOn).Take(15).ToArray().Select(Mapper.ToViewModel);
         }
+
+        public MessageViewModel GetMessageWithDetails(int messageId)
+        {
+            var vm = new MessageViewModel();
+            ToViewModel(Repository.Find(messageId),vm,true);
+            return vm;
+        }
     }
+
+
 }

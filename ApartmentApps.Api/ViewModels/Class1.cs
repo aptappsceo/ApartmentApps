@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Portal.Controllers;
 
@@ -99,6 +100,20 @@ namespace ApartmentApps.Api.ViewModels
         public string Title { get; set; }
         public int SentToCount { get; set; }
         public DateTime? SentOn { get; set; }
+        public int OpenCount { get; set; }
+
+        public int DeliverCount { get; set; }
+
+        public IEnumerable<MessageReceiptViewModel>  Receipts { get; set; }
+
+    }
+    public class MessageReceiptViewModel
+    {
+        public bool Opened { get; set; }
+        public string UserEmail { get; set; }
+        public bool Error { get; set; }
+        public string ErrorMessage { get; set; }
+        public int Id { get; set; }
     }
     public class UnitViewModel :BaseViewModel
     {

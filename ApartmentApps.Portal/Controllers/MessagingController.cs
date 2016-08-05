@@ -46,9 +46,20 @@ namespace ApartmentApps.Portal.Controllers
         {
             int count;
             var ids = GetData(Dm, out count).Select(p => p.Id).ToArray();
-            _module.SendMessage(ids, subject, message);
+            
+            _module.SendMessage(ids, subject, message, HttpContext.Request.Url.Host + Url.Action("EmailMessageRead", "Messaging"));
             ViewBag.SuccessMessage = "Message Sent";
             return RedirectToAction("Index");
+        }
+        [Route("Messaging/EmailMessageRead/{messageId:int}/{userId}.jpg")]
+        public ActionResult EmailMessageRead(int messageId, string userId)
+        {
+            _module.ReadMessage(messageId, userId);
+            return File(Server.MapPath("~/Content/blank.jpg"), "image/jpeg");
+        }
+        public ActionResult MessageDetails(int id)
+        {
+            return View("MessageDetails", _messageService.GetMessageWithDetails(id));
         }
     }
 }

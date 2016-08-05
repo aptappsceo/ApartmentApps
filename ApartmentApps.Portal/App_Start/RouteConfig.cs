@@ -12,12 +12,19 @@ namespace ApartmentApps.Portal
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.MapRoute(
+                name: "OpenClick",
+                url: "{controller}/{action}/{messageId}/{userId}.jpg",
+                defaults: new {  }
+            );
 
+         
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Dashboard", action = "Index", id = UrlParameter.Optional }
             );
+            
         }
     }
 }

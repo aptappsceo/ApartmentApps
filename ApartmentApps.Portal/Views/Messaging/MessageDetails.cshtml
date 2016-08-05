@@ -1,0 +1,104 @@
+﻿@using ApartmentApps.Api.Modules
+@using ApartmentApps.Portal.Controllers
+@model MessageViewModel
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Message Details - @Model.Title</h2>
+        <ol class="breadcrumb">
+            <li class="active">
+                @*<strong>@Model.StartDate.Value.ToShortDateString() - @Model.EndDate.Value.ToShortDateString()</strong>*@
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-8">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Preview</h5>
+            </div>
+            <div class="ibox-content">
+                @Html.Raw(Model.Body)
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Delivered To</h5>
+                </div>
+                <div class="ibox-content">
+                    @Model.DeliverCount
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Sent To</h5>
+                </div>
+                <div class="ibox-content">
+                    @Model.SentToCount
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Opened</h5>
+                </div>
+                <div class="ibox-content">
+                    @Model.OpenCount
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Receipts</h5>
+            </div>
+            <div class="ibox-content">
+                @(
+    Html.EJ().Grid<MessageReceiptViewModel>("UserGrid")
+        .Datasource(Model.Receipts)
+        .FilterSettings(filter =>
+        {
+            filter.FilterType(FilterType.Excel).EnableCaseSensitivity(true);
+        })
+        .AllowPaging(true)
+        .AllowSelection(false)
+        //.AllowGrouping()
+        //.AllowSorting(true)
+        .AllowFiltering()
+        .Columns(c =>
+        {
+
+            //c.Field(model => model.Id).Visible(false).Add();
+            c.Field(model => model.UserEmail).HeaderText("User Email").DefaultValue("--None--").Add();
+            
+            c.Field(model => model.Opened).HeaderText("Opened").DefaultValue("--None--").Add();
+            c.Field(model => model.Error).HeaderText("Error").DefaultValue("--None--").Add();
+            c.Field(model => model.ErrorMessage).HeaderText("Error Message").DefaultValue("--None--").Add();
+
+        })
+                )
+
+                @*@(Html.EJ().Grid<MessageReceipt>("Receipts").)*@
+            </div>
+        </div>
+    </div>
+    
+
+</div>
+
+
+<div class="clear-fix"></div>

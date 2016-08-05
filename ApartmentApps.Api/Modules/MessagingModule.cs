@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using ApartmentApps.Data;
@@ -26,13 +27,15 @@ namespace ApartmentApps.Api.Modules
         public string Body { get; set; }
         public DateTime SentOn { get; set; }
 
+        public virtual ICollection<MessageReceipt> MessageReceipts { get; set; }
+
     }
     [Persistant]
     public class MessageReceipt : PropertyEntity
     {
         public string UserId { get; set; }
         [ForeignKey("UserId")]
-        public ApplicationUser User
+        public virtual ApplicationUser User
         {
             get; set;
         }
@@ -44,6 +47,7 @@ namespace ApartmentApps.Api.Modules
 
         public bool Error { get; set; }
         public string ErrorMessage { get; set; }
+        public bool Opened { get; set; }
     }
     public class MessagingModule : Module<MessagingConfig>, IMenuItemProvider, IAdminConfigurable
     {
@@ -77,14 +81,14 @@ namespace ApartmentApps.Api.Modules
             }
         }
 
-        public void SendMessage(object[] ids, string subject, string message)
+        public void SendMessage(object[] ids, string subject, string message, string host)
         {
             var entity = new Message()
             {
                 FromId = UserContext.UserId,
                 SentToCount = ids.Length,
                 Subject = subject,
-                Body = message,
+                Body = message ,
                 SentOn = UserContext.CurrentUser.TimeZone.Now()
             };
             Messages.Add(entity);
@@ -95,7 +99,7 @@ namespace ApartmentApps.Api.Modules
                 // Send the push notification
                 _alertsService.SendAlert(user, subject, message, "Message", entity.Id);
                 // Send the email
-                SendEmailAsync(entity, user, new IdentityMessage() { Body = message, Destination = user.Email, Subject = subject }).Wait();
+                SendEmailAsync(entity, user, new IdentityMessage() { Body = message + $"<img src='{host}/{entity.Id}/{item}.jpg' />", Destination = user.Email, Subject = subject }).Wait();
             }
             
 
@@ -133,5 +137,15 @@ namespace ApartmentApps.Api.Modules
 
         }
         public string SettingsController => "MessagingConfig";
+
+        public void ReadMessage(int messageId, string userId)
+        {
+            var message = _messageReceipts.FirstOrDefault(p => p.MessageId == messageId && p.UserId == userId);
+            if (message != null)
+            {
+                message.Opened = true;
+                _messageReceipts.Save();
+            }
+        }
     }
 }
