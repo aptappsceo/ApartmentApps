@@ -14,7 +14,7 @@ namespace ApartmentApps.Portal
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapRoute(
                 name: "OpenClick",
-                url: "{controller}/{action}/{messageId}/{userId}.jpg",
+                url: "{controller}/{action}/{messageId}/{userId}.png",
                 defaults: new {  }
             );
 

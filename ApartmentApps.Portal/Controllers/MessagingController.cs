@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Caching;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
@@ -55,11 +58,15 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult EmailMessageRead(int messageId, string userId)
         {
             _module.ReadMessage(messageId, userId);
-            return File(Server.MapPath("~/Content/blank.jpg"), "image/jpeg");
+            Response.Cache.SetCacheability(HttpCacheability.Public);
+            Response.Cache.SetExpires(Cache.NoAbsoluteExpiration);
+            Response.Cache.SetLastModified(DateTime.UtcNow);
+            return File(Server.MapPath("~/Content/blank.png"), "image/png");
         }
         public ActionResult MessageDetails(int id)
         {
             return View("MessageDetails", _messageService.GetMessageWithDetails(id));
         }
     }
+
 }

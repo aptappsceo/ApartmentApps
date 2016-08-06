@@ -99,7 +99,7 @@ namespace ApartmentApps.Api.Modules
                 // Send the push notification
                 _alertsService.SendAlert(user, subject, message, "Message", entity.Id);
                 // Send the email
-                SendEmailAsync(entity, user, new IdentityMessage() { Body = message + $"<img src='{host}/{entity.Id}/{item}.jpg' />", Destination = user.Email, Subject = subject }).Wait();
+                SendEmailAsync(entity, user, new IdentityMessage() { Body = message + $"<img src='{host}/{entity.Id}/{item}.png' />", Destination = user.Email, Subject = subject }).Wait();
             }
             
 
