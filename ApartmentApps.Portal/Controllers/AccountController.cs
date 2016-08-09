@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -268,6 +269,93 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
+        }
+
+        //
+        // GET: /Account/Manage
+        public ActionResult Manage()
+        {
+            return View(new ProfileEditModel()
+            {
+                FirstName = CurrentUser.FirstName,
+                LastName = CurrentUser.LastName,
+                Id = CurrentUser.Id,
+                PhoneNumber = CurrentUser.PhoneNumber
+            });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Manage(ProfileEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = CurrentUser;
+
+                if (user.Id == model.Id)
+                {
+
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.PhoneNumber = model.PhoneNumber;
+
+                    if (model.ProfileImage != null && model.ProfileImage.ContentLength != 0)
+                    {
+                        var bytes = ReadFully(model.ProfileImage.InputStream);
+                        var currentUser = CurrentUser;
+                        var imageKey = $"{Guid.NewGuid()}.{currentUser.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
+                        var filename = _blobStorage.UploadPhoto(bytes, imageKey);
+
+                        currentUser.ImageUrl = filename;
+                        currentUser.ImageThumbnailUrl = filename;
+
+                    }
+
+                    Context.SaveChanges();
+                }
+                //AddErrors(result);
+            }
+
+
+
+            return RedirectToAction("Index","Dashboard");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ChangePassword(ProfileEditModel model)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View("Manage");
+            }
+            var user = CurrentUser;
+            if (user.Id == model.Id)
+            {
+                var result = await UserManager.ChangePasswordAsync(user.Id, model.OldPassword, model.NewPassword);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+                AddErrors(result);
+                return View("Manage");
+            }
+            return View("Manage");
+
+
+        }
+
+        public static byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
         }
 
         //

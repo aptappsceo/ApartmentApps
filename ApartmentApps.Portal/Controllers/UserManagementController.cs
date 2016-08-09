@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,6 +38,25 @@ namespace ApartmentApps.Portal.Controllers
 
     }
 
+    public class ProfileEditModel
+    {
+        public string Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
+
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase ProfileImage { get; set; }
+
+        [DataType(DataType.Password)]
+        public string OldPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        public string ConfirmPassword { get; set; }
+    }
 
 
     [Authorize(Roles = "PropertyAdmin,Admin")]

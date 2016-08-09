@@ -116,11 +116,11 @@ namespace ApartmentApps.Api
 
         public string UploadPhoto(byte[] data, string photoKey)
         {
-            var header = new byte[4];
-            Array.Copy(data, header, 4);
+            var fourByteHeader = new byte[4];
+            Array.Copy(data, fourByteHeader, 4);
             string photoFileName;
             string contentType = "image/";
-            if (IsJpegHeader(header))
+            if (IsJpegHeader(fourByteHeader))
             {
                 photoFileName = photoKey + ".jpeg";
                 contentType += "jpeg";
@@ -134,7 +134,7 @@ namespace ApartmentApps.Api
                 }
 
             }
-            else if (IsPngHeader(header))
+            else if (IsPngHeader(fourByteHeader))
             {
                 photoFileName = photoKey + ".png";
                 contentType += "png";
@@ -179,8 +179,8 @@ namespace ApartmentApps.Api
 
         static bool IsPngHeader(byte[] fourByteHeader)
         {
-            var format = Encoding.ASCII.GetString(fourByteHeader.Take(4).ToArray()).ToLower();
-            return "png" == format;
+            UInt32 marker = BitConverter.ToUInt32(fourByteHeader, 0); // PNG Marker
+            return marker == 0x474E5089;
         }
     }
 }

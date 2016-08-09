@@ -77,15 +77,13 @@
 
                                                         if (Model.StatusId == "Submitted" || Model.StatusId == "Paused" || Model.StatusId == "Scheduled")
                                                         {
-                                                            <a href="@Url.Action("Schedule", new {id = Model.Id})" class="btn btn-primary btn-sm"><i class="fa fa-question fa-fw"></i>Schedule</a>
+                                                            <a href="@Url.Action("Schedule", new {id = Model.Id})" class="btn btn-primary btn-sm"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
                                                         }
 
                                                         if (Model.StatusId == "Started")
                                                         {
                                                             <a href="@Url.Action("Pause", new {id = Model.Id})" class="btn btn-primary btn-sm"><i class="fa fa-pause fa-fw"></i>Pause</a>
                                                         }
-
-
                                                     }
 
                                                 </div>

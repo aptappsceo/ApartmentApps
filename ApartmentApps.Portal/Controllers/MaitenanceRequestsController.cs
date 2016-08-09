@@ -342,6 +342,46 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
+        // GET: /MaitenanceRequests/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
+            if (maitenanceRequest == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
+            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(Context.Units, "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(Context.Users, "Id", "FirstName", maitenanceRequest.UserId);
+            return View(maitenanceRequest);
+        }
+
+        // POST: /MaitenanceRequests/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                Context.Entry(maitenanceRequest);
+                Context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
+            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
+            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", maitenanceRequest.UnitId);
+            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "FirstName", maitenanceRequest.UserId);
+            return View(maitenanceRequest);
+        }
+
+
         public ActionResult Pause(int id)
         {
             return AutoForm(new MaintenanceStatusRequestModel() { Id = id }, "PauseRequest");

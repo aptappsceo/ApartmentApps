@@ -1245,6 +1245,7 @@
     <Content Include="Views\UserManagement\Delete.cshtml" />
     <Content Include="Views\Messaging\History.cshtml" />
     <Content Include="Views\Messaging\MessageDetails.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
