@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using Ninject;
 
 namespace ApartmentApps.Modules.Inspections
 {
-    //[Persistant]
+    [Persistant]
     public class InspectionsModuleConfig : ModuleConfig
     {
         
@@ -24,13 +25,44 @@ namespace ApartmentApps.Modules.Inspections
         {
             _inspections = inspections;
         }
+
+
     }
 
-    //[Persistant]
-    public class Inspection
+    [Persistant]
+    public class Inspection : PropertyEntity
     {
-        
+        public virtual ICollection<InspectionAnswer> InspectionAnswers { get; set; }
     }
-   
+
+    [Persistant]
+    public class InspectionAnswer : PropertyEntity
+    {
+        public int InspectionId { get; set; }
+
+        [ForeignKey("InspectionId")]
+        public virtual Inspection Inspection { get; set; }
+        
+        public int InspectionQuestionId { get; set; }
+
+        [ForeignKey("InspectionQuestionId")]
+        public virtual InspectionQuestion InspectionQuestion { get; set; }
+
+        public string Value { get; set; }
+    }
+
+
+    public enum InspectionQuestionType
+    {
+        YesNo,
+
+    }
+
+    [Persistant]
+    public class InspectionQuestion : PropertyEntity
+    {
+        public string QuestionName { get; set; }
+        public InspectionQuestionType QuestionType { get; set; }
+    }
 
 }
