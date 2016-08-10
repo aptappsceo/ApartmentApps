@@ -84,6 +84,26 @@
       <Project>{69A819D5-3037-4E56-90E4-A9EDFF41B88A}</Project>
       <Name>ApartmentApps.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Alerts\ApartmentApps.Modules.Alerts.csproj">
+      <Project>{0E9D236A-18F7-46A1-A591-418D14EEE0A3}</Project>
+      <Name>ApartmentApps.Modules.Alerts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.CourtesyOfficer\ApartmentApps.Modules.CourtesyOfficer.csproj">
+      <Project>{62C439C3-12AF-48C9-B7B2-84BC16893027}</Project>
+      <Name>ApartmentApps.Modules.CourtesyOfficer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Maintenance\ApartmentApps.Modules.Maintenance.csproj">
+      <Project>{CFDCC102-7E3C-4E49-B438-ADE9D48F6615}</Project>
+      <Name>ApartmentApps.Modules.Maintenance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Messaging\ApartmentApps.Modules.Messaging.csproj">
+      <Project>{D1766F08-A347-4694-97CF-8AAA5749B6B2}</Project>
+      <Name>ApartmentApps.Modules.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Payments\ApartmentApps.Modules.Payments.csproj">
+      <Project>{CC299297-365F-4643-A0B8-316C788A4EF7}</Project>
+      <Name>ApartmentApps.Modules.Payments</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,10 +7,6 @@ using SendGrid.Helpers.Mail;
 
 namespace ApartmentApps.Api
 {
-    public interface IEmailService
-    {
-        Task SendAsync(IdentityMessage message);
-    }
     public class EmailService : IIdentityMessageService, IEmailService
     {
         private readonly ILogger _logger;
@@ -29,13 +25,13 @@ namespace ApartmentApps.Api
 
             string apiKey = "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";
             var fromEmail = "noreply@apartmentapps.com";
-            var config = _config.Get<MessagingModule>().Config;
+            //var config = _config.Get<MessagingModule>().Config;
 
-            if (config != null && !string.IsNullOrEmpty(config.SendGridApiToken))
-            {
-                apiKey = config.SendGridApiToken;
-                fromEmail = config.SendFromEmail;
-            }
+            //if (config != null && !string.IsNullOrEmpty(config.SendGridApiToken))
+            //{
+            //    apiKey = config.SendGridApiToken;
+            //    fromEmail = config.SendFromEmail;
+            //}
             dynamic sg = new SendGridAPIClient(apiKey);
      
             Email from = new Email(fromEmail);

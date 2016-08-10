@@ -10,6 +10,7 @@ using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.CourtesyOfficer;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
