@@ -14,6 +14,7 @@ using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Maintenance;
 
 namespace ApartmentApps.API.Service.Controllers
 {

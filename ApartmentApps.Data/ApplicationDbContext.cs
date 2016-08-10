@@ -44,7 +44,7 @@ namespace ApartmentApps.Data
 
                 
                 foreach (var type in entityTypes)
-                modelBuilder.RegisterEntityType(type);
+                    modelBuilder.RegisterEntityType(type);
             }
             //modelBuilder.Entity<ApplicationUser>()
             //    .HasMany(p=>p.UserAlerts)
