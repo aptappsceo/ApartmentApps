@@ -54,7 +54,7 @@ namespace ApartmentApps.IoC
         }
         public static void RegisterServices(IKernel kernel)
         {
-            Modules.Kernel = kernel;
+            ApartmentApps.Api.Modules.Modules.Kernel = kernel;
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
