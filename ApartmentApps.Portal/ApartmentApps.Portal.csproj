@@ -1138,7 +1138,7 @@
     <Content Include="Views\MaitenanceRequests\Create.cshtml" />
     <Content Include="Views\MaitenanceRequests\Delete.cshtml" />
     <Content Include="Views\MaitenanceRequests\Details.cshtml" />
-    <Content Include="Views\MaitenanceRequests\Edit.cshtml" />
+    <Content Include="Views\MaitenanceRequests\EditRequest.cshtml" />
     <Content Include="Views\MaitenanceRequests\Index.cshtml" />
     <Content Include="Views\Corporations\Create.cshtml" />
     <Content Include="Views\Corporations\Delete.cshtml" />

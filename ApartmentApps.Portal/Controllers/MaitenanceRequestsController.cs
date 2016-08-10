@@ -264,6 +264,70 @@ namespace ApartmentApps.Portal.Controllers
         public DateTime? Date { get; set; }
     }
 
+
+    public class MaintenanceRequestEditModel
+    {
+
+        //[DataType()]
+        [DisplayName("Unit")]
+        public int UnitId { get; set; }
+
+        public IEnumerable<FormPropertySelectItem> UnitId_Items
+        {
+            get
+            {
+                var items =
+                    NinjectWebCommon.Kernel.Get<IRepository<Unit>>()
+                        .ToArray().OrderByAlphaNumeric(p => p.Name);
+
+
+                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
+
+
+            }
+        }
+        public IEnumerable<FormPropertySelectItem> MaitenanceRequestTypeId_Items
+        {
+            get
+            {
+                return
+                    NinjectWebCommon.Kernel.Get<IRepository<MaitenanceRequestType>>()
+                        .ToArray()
+                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, MaitenanceRequestTypeId == p.Id));
+
+
+            }
+        }
+
+        public IEnumerable<FormPropertySelectItem> UserId_Items
+        {
+            get
+            {
+                return
+                    NinjectWebCommon.Kernel.Get<IRepository<ApplicationUser>>()
+                        .ToArray()
+                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName + " " + p.LastName, UserId == p.Id));
+
+
+            }
+        }
+
+        [DisplayName("Type")]
+        public int MaitenanceRequestTypeId { get; set; }
+
+        [DisplayName("Permission To Enter")]
+        public bool PermissionToEnter { get; set; }
+
+        [DisplayName("Pet Status")]
+        public PetStatus PetStatus { get; set; }
+
+        [DataType("Hidden")]
+        public int? Id { get; set; }
+
+        public string UserId { get; set; }
+
+    }
+
     public enum PetStatus
     {
         NoPet,
@@ -343,7 +407,7 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         // GET: /MaitenanceRequests/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult EditRequest(int? id)
         {
             if (id == null)
             {
@@ -354,11 +418,17 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(Context.Units, "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users, "Id", "FirstName", maitenanceRequest.UserId);
-            return View(maitenanceRequest);
+
+
+
+            return View(new MaintenanceRequestEditModel()
+            {
+                Id = id.Value,
+                MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId,
+                PermissionToEnter = maitenanceRequest.PermissionToEnter,
+                UnitId = maitenanceRequest.UnitId ?? 0,
+                PetStatus = (PetStatus)maitenanceRequest.PetStatus
+            });
         }
 
         // POST: /MaitenanceRequests/Edit/5
@@ -366,19 +436,34 @@ namespace ApartmentApps.Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
+        public ActionResult EditRequest(MaintenanceRequestEditModel editModel)
         {
+
             if (ModelState.IsValid)
             {
-                Context.Entry(maitenanceRequest);
+                var id = editModel.Id;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
+                if (maitenanceRequest == null)
+                {
+                    return HttpNotFound();
+                }
+
+                maitenanceRequest.PetStatus = (int) editModel.PetStatus;
+                maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
+                maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
+                maitenanceRequest.UnitId = editModel.UnitId;
+                maitenanceRequest.UserId = editModel.UserId;
+
                 Context.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Details",new {id = id});
             }
-            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "FirstName", maitenanceRequest.UserId);
-            return View(maitenanceRequest);
+
+            return View(editModel);
         }
 
 
@@ -689,44 +774,7 @@ namespace ApartmentApps.Portal.Controllers
             return View(maitenanceRequest);
         }
 
-        // GET: /MaitenanceRequests/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
-            if (maitenanceRequest == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(Context.Units, "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users, "Id", "FirstName", maitenanceRequest.UserId);
-            return View(maitenanceRequest);
-        }
-
-        // POST: /MaitenanceRequests/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
-        {
-            if (ModelState.IsValid)
-            {
-                Context.Entry(maitenanceRequest);
-                Context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "FirstName", maitenanceRequest.UserId);
-            return View(maitenanceRequest);
-        }
+    
 
         // GET: /MaitenanceRequests/Delete/5
         public ActionResult Delete(int? id)
