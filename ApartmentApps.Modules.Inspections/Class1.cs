@@ -33,15 +33,63 @@ namespace ApartmentApps.Modules.Inspections
     public class Inspection : PropertyEntity
     {
         public virtual ICollection<InspectionAnswer> InspectionAnswers { get; set; }
+        public DateTime? ScheduleDate { get; set; }
+        public DateTime? CompleteDate { get; set; }
+
+        public string Status { get; set; }
+
+        public int UnitId { get; set; }
+
+        [ForeignKey("UnitId")]
+        public virtual Unit Unit { get; set; }
     }
 
     [Persistant]
+    public class InspectionRoom : PropertyEntity
+    {
+        public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// Counters/Walls/etc
+    /// </summary>
+    [Persistant]
+    public class InspectionCategory : PropertyEntity
+    {
+        public string Name { get; set; }
+    }
+
+    public enum InspectionCategoryStatus
+    {
+        Fair,
+        Poor,
+        Good,
+        Great
+    }
+    [Persistant]
+    public class InspectionCateogryAnswer : PropertyEntity
+    {
+        public int InspectionCategoryId { get; set; }
+
+        [ForeignKey("InspectionCategoryId")]
+        public InspectionCategory InspectionCategory { get; set; }
+
+        public int? InspectionRoomId { get; set; }
+
+        [ForeignKey("InspectionRoomId")]
+        public virtual InspectionRoom InspectionRoom { get; set; }
+
+        public InspectionCategoryStatus Status { get; set; }
+
+        public virtual ICollection<InspectionAnswer> Answers { get; set; } 
+    }
+    [Persistant]
     public class InspectionAnswer : PropertyEntity
     {
-        public int InspectionId { get; set; }
+        public int InspectionCateogryAnswerId { get; set; }
 
-        [ForeignKey("InspectionId")]
-        public virtual Inspection Inspection { get; set; }
+        [ForeignKey("InspectionCateogryAnswerId")]
+        public virtual InspectionCateogryAnswer InspectionCateogryAnswer { get; set; }
         
         public int InspectionQuestionId { get; set; }
 
