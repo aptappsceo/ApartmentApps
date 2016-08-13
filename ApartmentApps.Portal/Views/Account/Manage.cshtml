@@ -99,7 +99,7 @@
                 </div>
                 <div class="ibox-content">
 
-                    @using (Html.BeginForm("ChangePassword"))
+                    @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
 

@@ -285,7 +285,7 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Manage(ProfileEditModel model)
+        public ActionResult Manage(ProfileEditModel model)
         {
             if (ModelState.IsValid)
             {
@@ -311,13 +311,21 @@ namespace ApartmentApps.Portal.Controllers
                     }
 
                     Context.SaveChanges();
+
+                    return RedirectToAction("Index", "Dashboard");
+
                 }
                 //AddErrors(result);
             }
 
+            return View(new ProfileEditModel()
+            {
+                FirstName = CurrentUser.FirstName,
+                LastName = CurrentUser.LastName,
+                Id = CurrentUser.Id,
+                PhoneNumber = CurrentUser.PhoneNumber
+            });
 
-
-            return RedirectToAction("Index","Dashboard");
         }
 
         [HttpPost]
@@ -547,6 +555,7 @@ namespace ApartmentApps.Portal.Controllers
             if (disposing)
             {
                 if (_userManager != null)
+
                 {
                     _userManager.Dispose();
                     _userManager = null;
