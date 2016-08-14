@@ -23,6 +23,9 @@ namespace ApartmentApps.Data
 
         public Guid GroupId { get; set; }
         public string Description { get { return string.Empty; } }
+        public object RelatedId => Id;
+        public FeedItemType Type => FeedItemType.MaintenanceRequest;
+
 
         // 0 = false, 1= yes, 2 = yes contained
         public int PetStatus { get; set; }

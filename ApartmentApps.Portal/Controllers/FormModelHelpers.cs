@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Data;
 using ApartmentApps.Forms;
 
 namespace ApartmentApps.Portal.Controllers
@@ -27,5 +30,32 @@ namespace ApartmentApps.Portal.Controllers
             var formModel = formHelper.CreateFormFor(model);
             return helper.Partial("~/Views/Shared/Forms/Form.cshtml", formModel);
         }
+    }
+
+    public static class FeedItemsHelper
+    {
+        public static HtmlString RenderFeedItems(this HtmlHelper helper, List<FeedItemBindingModel> feedItem)
+        {
+            return helper.Partial("~/Views/Shared/FeedItems/FeedItem1.cshtml", new FeedItemsListModel()
+            {
+                FeedItems = feedItem
+            });
+        }
+
+        public static HtmlString RenderFeedItems(this HtmlHelper helper, List<FeedItemBindingModel> feedItem, Func<FeedItemBindingModel,string> itemUrlSelector)
+        {
+            return helper.Partial("~/Views/Shared/FeedItems/FeedItem1.cshtml", new FeedItemsListModel()
+            {
+                FeedItems = feedItem,
+                ItemUrlSelector  = itemUrlSelector
+            });
+        }
+    }
+
+
+    public class FeedItemsListModel
+    {
+        public List<FeedItemBindingModel> FeedItems { get; set; }
+        public Func<FeedItemBindingModel, string> ItemUrlSelector { get; set; }
     }
 }

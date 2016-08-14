@@ -1,5 +1,6 @@
 ﻿@using System.Activities.Expressions
 @using ApartmentApps.Data
+@using ApartmentApps.Portal.Controllers
 
 @{
     var property = ViewBag.Property as Property;
@@ -100,26 +101,20 @@
 
                 <div>
                     <div class="feed-activity-list">
-                        @foreach (var item in Model.FeedItems)
-                        {
-                            <div class="feed-element">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="@item.User.ImageThumbnailUrl">
-                                </a>
-                                <div class="media-body ">
-                                    
-                                    <strong>@@@item.User.FirstName @item.User.LastName</strong> @item.Description <br>
-                                    <small class="text-muted">@Html.Timeago(item.CreatedOn,property?.TimeZone)</small>
-                                    @if (!string.IsNullOrEmpty(item.Message))
-                                    {
-                                        <div class="well">
-                                            @item.Message
-                                        </div>
-                                    }
-                                    <small class="pull-right">@item.CreatedOn.ToShortDateString()</small>
-                                </div>
-                            </div>
-                        }
+
+                        @Html.RenderFeedItems(Model.FeedItems.ToList(), i =>
+                       {
+                           switch (i.Type)
+                           {
+                               case FeedItemType.MaintenanceRequest:
+                                   return Url.Action("Details","MaitenanceRequests", new {id = i.RelatedId});
+                               case FeedItemType.IncidentReport:
+                                   return Url.Action("Details", "IncidentReports", new {id = i.RelatedId});
+                                case FeedItemType.CourtesyCheckin:
+                                   return null;
+                           }
+                           return null;
+                       });
 
                         @*<div class="feed-element">
                                 <a href="profile.html" class="pull-left">

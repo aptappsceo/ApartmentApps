@@ -1,0 +1,40 @@
+﻿
+@using System.ComponentModel.DataAnnotations
+@using ApartmentApps.Data
+@using Syncfusion.JavaScript.Models
+@model ApartmentApps.Portal.Controllers.FeedItemsListModel
+
+@{
+    var property = ViewBag.Property as Property;
+    string urlC;
+}
+
+<div class="feed-activity-list">
+    @foreach (var item in Model.FeedItems)
+    {
+        <div class="feed-element">
+            <a href="@Url.Action("UserFeed","Dashboard",new {id = @item.User.Id})" class="pull-left">
+                <img alt="image" class="img-circle" src="@item.User.ImageThumbnailUrl">
+            </a>
+            <div class="media-body ">
+
+
+                <a href="@Url.Action("UserFeed","Dashboard",new {id = @item.User.Id})"><strong>@@@item.User.FirstName @item.User.LastName</strong></a> @item.Description <br>
+                <small class="text-muted">@Html.Timeago(item.CreatedOn, property?.TimeZone)</small>
+                @if (!string.IsNullOrEmpty(item.Message))
+                {
+                    <div class="well">
+                        @item.Message
+                    </div>
+                }
+                @if (Model.ItemUrlSelector != null && !string.IsNullOrEmpty((urlC = Model.ItemUrlSelector(item))))
+                {
+                    <small><a class="info" href="@urlC">Details</a></small>
+                }
+                <small class="pull-right">@item.CreatedOn.ToShortDateString()</small>
+            </div>
+        </div>
+    }
+
+</div>
+

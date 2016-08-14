@@ -11,12 +11,20 @@ namespace ApartmentApps.Data
         DateTime CreatedOn { get; }
         ApplicationUser User { get; }
         IEnumerable<IFeedItem> ChildFeedItems { get; } 
-
         string Message { get; }
         Guid GroupId { get; }
-
         string Description { get; }
+        object RelatedId { get; }
+        FeedItemType Type { get; }
     }
+
+    public enum FeedItemType
+    {
+        CourtesyCheckin,
+        IncidentReport,
+        MaintenanceRequest
+    }
+
     public class MaintenanceRequestCheckin : PropertyEntity, IImageContainer, IFeedItem
     {
 
@@ -64,6 +72,9 @@ namespace ApartmentApps.Data
             }
             
         }
+
+        public object RelatedId => MaitenanceRequest.Id;
+        public FeedItemType Type => FeedItemType.MaintenanceRequest;
 
         DateTime IFeedItem.CreatedOn => Date;
 

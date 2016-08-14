@@ -39,7 +39,7 @@ namespace ApartmentApps.Api
             }
         }
 
-        private FeedItemBindingModel ToFeedItemBindingModel(IFeedItem item)
+        public FeedItemBindingModel ToFeedItemBindingModel(IFeedItem item)
         {
             return new FeedItemBindingModel()
             {
@@ -47,7 +47,9 @@ namespace ApartmentApps.Api
                 CreatedOn = item.CreatedOn,
                 Message = item.Message,
                 Photos = BlobStorageService.GetImages(item.GroupId).ToArray(),
-                Description = item.Description
+                Description = item.Description,
+                RelatedId = item.RelatedId,
+                Type = item.Type
             };
         }
     }

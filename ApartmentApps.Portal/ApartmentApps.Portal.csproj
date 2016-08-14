@@ -1246,6 +1246,8 @@
     <Content Include="Views\Messaging\History.cshtml" />
     <Content Include="Views\Messaging\MessageDetails.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Dashboard\UserFeed.cshtml" />
+    <Content Include="Views\Shared\FeedItems\FeedItem1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

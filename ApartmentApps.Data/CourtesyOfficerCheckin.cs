@@ -35,6 +35,11 @@ namespace ApartmentApps.Data
         public string Comments { get; set; }
 
         public Guid GroupId { get; set; }
+
         public string Description => $"checked in at location {CourtesyOfficerLocation.Label}";
+
+        public object RelatedId => null;
+        public FeedItemType Type => FeedItemType.CourtesyCheckin;
+
     }
 }

@@ -2,15 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.ClientServices;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
+
+    public class UserFeedBindingModel
+    {
+        public UserBindingModel User { get; set; }
+        public List<FeedItemBindingModel> MaintenanceCheckins { get; set; }
+        public List<FeedItemBindingModel> IncidentCheckings { get; set; }
+        public List<FeedItemBindingModel> MaintenanceRequests { get; set; }
+        public List<FeedItemBindingModel> IncidentReports { get; set; }
+        public List<FeedItemBindingModel> CourtesyCheckins { get; set; }
+
+        public bool HasIncidentsSubmitted => IncidentReports?.Any() ?? false;
+        public bool HasMaintenanceRequestsSubmitted => MaintenanceRequests?.Any() ?? false;
+        public bool HasIncidentsCheckins => IncidentCheckings?.Any() ?? false;
+        public bool HasMaintenanceChekins => MaintenanceCheckins?.Any() ?? false;
+        public bool HasCourtesyCheckins=> CourtesyCheckins?.Any() ?? false;
+
+    }
+
     public class DashboardBindingModel
     {
         public DateTime? StartDate { get; set; }
@@ -33,12 +55,16 @@ namespace ApartmentApps.Portal.Controllers
 
     public class DashboardController : AAController
     {
+        private ApplicationUserManager _userManager;
         public IFeedSerivce FeedService { get; set; }
         // GET: Dashboard
-        public DashboardController(IKernel kernel, PropertyContext context, IUserContext userContext, IFeedSerivce feedService) : base(kernel, context, userContext)
+        public DashboardController(IKernel kernel, PropertyContext context, IUserContext userContext, IFeedSerivce feedService, IBlobStorageService blobStorageService) : base(kernel, context, userContext)
         {
             FeedService = feedService;
+            BlobStorageService = blobStorageService;
         }
+
+        public IBlobStorageService BlobStorageService { get; set; }
 
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
@@ -78,6 +104,69 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+
+        public ActionResult UserFeed(string id)
+        {
+            ApplicationUser user;
+
+            if (string.IsNullOrEmpty(id))
+            {
+                user = CurrentUser;
+            }
+            else
+            {
+                user = Context.Users.Find(id);
+
+                if (user == null)
+                {
+                    return new HttpNotFoundResult("User Not Found");
+                }
+
+            }
+
+            //If user is courtesy officer: add info about incident checkins
+            //If user is maintenance add info about maintenance checking
+
+            var mt = Context.MaitenanceRequests.Where(r=>r.UserId == user.Id).ToList();
+            var ir = Context.IncidentReports.Where(r => r.UserId == user.Id).ToList();
+            var coc = Context.CourtesyOfficerCheckins.Where(r=>r.OfficerId == user.Id).ToList();
+            var irc = Context.IncidentReportCheckins.Where(r=>r.OfficerId == user.Id).ToList();
+            var mrc = Context.MaintenanceRequestCheckins.Where(r=>r.WorkerId == user.Id).ToList();
+
+            return View(new UserFeedBindingModel()
+            {
+                User = user.ToUserBindingModel(BlobStorageService),
+                MaintenanceRequests = mt.Select(FeedService.ToFeedItemBindingModel)
+                                        .OrderByDescending(_=>_.CreatedOn)
+                                        .ToList(),
+                IncidentReports = ir.Select(FeedService.ToFeedItemBindingModel)
+                                    .OrderByDescending(_ => _.CreatedOn)
+                                    .ToList(),
+                CourtesyCheckins = coc.Select(FeedService.ToFeedItemBindingModel)
+                                        .OrderByDescending(_ => _.CreatedOn)
+                                        .ToList(),
+                IncidentCheckings = irc.Select(FeedService.ToFeedItemBindingModel)
+                                        .OrderByDescending(_ => _.CreatedOn)
+                                        .ToList(),
+                MaintenanceCheckins = mrc.Select(FeedService.ToFeedItemBindingModel)
+                                        .OrderByDescending(_ => _.CreatedOn)
+                                        .ToList()
+            });
+        }
+
         private IQueryable<IncidentReport> IncidentsByRange(DateTime? startDate, DateTime? endDate)
         {
             return Context.IncidentReports.Where(p => p.CreatedOn > startDate && p.CreatedOn < endDate);
@@ -87,9 +176,15 @@ namespace ApartmentApps.Portal.Controllers
         {
             return Context.MaitenanceRequests.Where(p=>p.SubmissionDate > startDate && p.SubmissionDate < endDate);
         }
+
         private IQueryable<MaintenanceRequestCheckin> CheckinsByRange(DateTime? startDate, DateTime? endDate)
         {
             return Context.MaintenanceRequestCheckins.Where(p => p.Date > startDate && p.Date < endDate);
+        }
+
+        private IQueryable<IncidentReportCheckin> IncidentCheckinsByRange(DateTime? startDate, DateTime? endDate)
+        {
+            return Context.IncidentReportCheckins.Where(p => p.CreatedOn > startDate && p.CreatedOn < endDate);
         }
     }
 }

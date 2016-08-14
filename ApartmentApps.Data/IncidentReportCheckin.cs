@@ -31,6 +31,11 @@ namespace ApartmentApps.Data
             }
 
         }
+
+        public object RelatedId => IncidentReport.Id;
+        public FeedItemType Type => FeedItemType.IncidentReport;
+
+
         IEnumerable<IFeedItem> IFeedItem.ChildFeedItems
         {
             get { yield break; }

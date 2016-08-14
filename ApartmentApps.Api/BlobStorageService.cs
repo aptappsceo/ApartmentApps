@@ -168,8 +168,9 @@ namespace ApartmentApps.Api
 
         static bool IsPngHeader(byte[] fourByteHeader)
         {
-            var format = Encoding.ASCII.GetString(fourByteHeader.Take(4).ToArray()).ToLower();
-            return "png" == format;
+            UInt32 marker = BitConverter.ToUInt32(fourByteHeader, 0); // PNG Marker
+            return marker == 0x474E5089;
         }
+
     }
 }

@@ -21,6 +21,9 @@ namespace ApartmentApps.Data
 
         public Guid GroupId { get; set; }
         public string Description => string.Empty;
+        public object RelatedId => Id;
+        public FeedItemType Type => FeedItemType.IncidentReport;
+
 
         public string Comments { get; set; }
         public int? UnitId { get; set; }

@@ -1,0 +1,119 @@
+﻿@using System.Activities.Expressions
+@using ApartmentApps.Data
+@using ApartmentApps.Portal.Controllers
+@{
+    var property = ViewBag.Property as Property;
+}
+
+@model ApartmentApps.Portal.Controllers.UserFeedBindingModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>User Feed</h2>
+        <ul class="nav nav-tabs">
+
+            <li class="active">
+                <a data-toggle="tab" href="#resident_feed">Resident Activity</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#maintenance_feed">Maintenance Activity</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#incidents_feed">Incidents Activity</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#courtesy_feed">Courtesy Activity</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+
+            <div id="resident_feed" class="tab-pane fade in active">
+                <div class="space-15"></div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5>Submitted Workorders</h5>
+                        @if (Model.HasMaintenanceRequestsSubmitted)
+                        {
+                            @Html.RenderFeedItems(Model.MaintenanceRequests, i=>Url.Action("Details","MaitenanceRequests",new {id = i.RelatedId}))
+                        }
+                        else
+                        {
+                            <p>No maintenance request activity by this user</p>
+                        }
+                        @*<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>*@
+                    </div>
+
+                    <div class="col-md-5">
+                        <h5>Reported Incidents</h5>
+                        @if (Model.HasIncidentsSubmitted)
+                        {
+                            @Html.RenderFeedItems(Model.IncidentReports, i => Url.Action("Details", "IncidentReports", new { id = i.RelatedId }))
+                        }
+                        else
+                        {
+                            <p>No incident report activity by this user</p>
+                        }
+                        @*<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>*@
+                    </div>
+
+
+                </div>
+            </div>
+            <div id="maintenance_feed" class="tab-pane fade">
+                <div class="space-15"></div>
+                <div class="row">
+                    <div class="col-md-10">
+                        @if (Model.HasMaintenanceChekins)
+                        {
+                            @Html.RenderFeedItems(Model.MaintenanceCheckins, i => Url.Action("Details", "MaitenanceRequests", new { id = i.RelatedId }))
+                        }
+                        else
+                        {
+                            <p>No maintenance checkins activity by this user</p>
+                        }
+                        @*<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>*@
+                    </div>
+
+                </div>
+            </div>
+            <div id="incidents_feed" class="tab-pane fade">
+                <div class="space-15"></div>
+                <div class="row">
+                    <div class="col-md-10">
+                        @if (Model.HasIncidentsCheckins)
+                        {
+                            @Html.RenderFeedItems(Model.IncidentCheckings, i => Url.Action("Details", "IncidentReports", new { id = i.RelatedId }))
+                        }
+                        else
+                        {
+                            <p>No incident reports activity by this user</p>
+                        }
+                        @*<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>*@
+                    </div>
+                </div>
+            </div>
+            <div id="courtesy_feed" class="tab-pane fade">
+                <div class="space-15"></div>
+                <div class="row">
+                    <div class="col-md-10">
+                        @if (Model.HasCourtesyCheckins)
+                        {
+                            @Html.RenderFeedItems(Model.CourtesyCheckins)
+                        }
+                        else
+                        {
+                            <p>No courtesy checkins activity by this user</p>
+                        }
+                        @*<button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="clear-fix"></div>
+    </div>
+</div>
+
+
+@section scripts {
+}
