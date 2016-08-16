@@ -17,10 +17,9 @@
                     <thead>
                         <tr>
                             <th style="width: 60%;">Subject</th>
-                            <th style="width: 10%;">Sent To</th>
-                            <th style="width: 10%;">Opens</th>
-                            <th style="width: 10%;">Sent On</th>
-                            <th style="width: 10%;"></th>
+                            <th style="width: 13%;">Sent To</th>
+                            <th style="width: 13%;">Sent On</th>
+                            <th style="width: 13%;"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,7 +29,6 @@
                             <tr>
                                 <td>@item.Title</td>
                                 <td>@item.DeliverCount</td>
-                                <td>@item.OpenCount</td>
                                 <td>@item.SentOn</td>
                                 <td><a class="btn btn-info btn-xs" href="@Url.Action("MessageDetails","Messaging", new {id=item.Id})">Details</a></td>
                                 @*<td class="text-navy"> <i class="fa fa-level-up"></i> 40% </td>*@

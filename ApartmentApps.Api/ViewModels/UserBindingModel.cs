@@ -25,5 +25,6 @@ namespace ApartmentApps.Api.ViewModels
         public string City { get; set; }
         public string PostalCode { get; set; }
         public string Email { get; set; }
+        public bool Archived { get; set; }
     }
 }

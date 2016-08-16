@@ -111,7 +111,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: UserManagement
         public override ActionResult Index()
         {
-            return View(Service.GetAll());
+            return View(Service.GetAll().Where(u=>!u.Archived));
         }
         public ActionResult DeleteUser(string id)
         {
@@ -127,7 +127,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             //var unit = Service.Find(id);
             var user = Context.Users.Find(id);
-            //user.Archived = true;
+            user.Archived = true;
             Context.SaveChanges();
             return RedirectToAction("Index");
         }

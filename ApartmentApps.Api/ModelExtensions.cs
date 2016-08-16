@@ -14,6 +14,7 @@ namespace ApartmentApps.Api.BindingModels
         {
             return new UserBindingModel()
             {
+                Archived = user.Archived,
                 Id = user.Id,
                 ImageUrl = blobService.GetPhotoUrl(user.ImageUrl) ?? $"http://www.gravatar.com/avatar/{HashEmailForGravatar(user.Email.ToLower())}.jpg",
                 ImageThumbnailUrl = blobService.GetPhotoUrl(user.ImageThumbnailUrl) ?? $"http://www.gravatar.com/avatar/{HashEmailForGravatar(user.Email.ToLower())}.jpg",

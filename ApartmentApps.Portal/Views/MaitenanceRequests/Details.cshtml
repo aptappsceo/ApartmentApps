@@ -7,11 +7,11 @@
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-4">
-        <h2>Details</h2>
+    <div class="col-sm-12">
+        <h2>Maintenance Request Details</h2>
         <ol class="breadcrumb">
             <li>
-                @Html.ActionLink("List", "Index")
+                @Html.ActionLink("Maintenance Requests Index", "Index")
             </li>
             <li class="active">
                 <strong>Details</strong>
@@ -46,17 +46,18 @@
                                 </div>
                                 <div class="ibox-content profile-content">
                                     <h4><strong>@Model.SubmissionBy.FullName</strong></h4>
-                                    <p><i class="fa fa-map-marker"></i> Unit: @Model.UnitName</p>
-                                    <h5>
-                                        Details
-                                    </h5>
-                                    <p>
-                                        @*<div><b>Permission To Enter</b> @Model.PermissionToEnter</div>*@
-                                        <div><b>Type</b> @Model.Title</div>
-                                        <div><b>Requested</b> @Html.Timeago(Model.RequestDate, property?.TimeZone)</div>
-                                        <div><b>Status</b> @Model.StatusId</div>
+                                    
+                                    <div class="well">
+                                        @Model.Comments
+                                    </div>
+                            
+                                    <div>
+                                        <p><i class="fa fa-fw fa-asterisk"></i><b>Type</b> @Model.Title</p>
+                                        <p><i class="fa fa-fw fa-calendar"></i><b>Requested</b> @Html.Timeago(Model.RequestDate, property?.TimeZone)</p>
+                                        <p><i class="fa fa-fw fa-cog"></i><b>Status</b> @Model.StatusId</p>
+                                        <p><i class="fa fa-fw fa-map-marker"></i><b>Unit:</b>@Model.UnitName</p>
 
-                                    </p>
+                                    </div>
                                     <div class="user-button">
                                 
                                         <div class="row">

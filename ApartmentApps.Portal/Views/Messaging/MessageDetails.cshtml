@@ -44,16 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Opened</h5>
-                </div>
-                <div class="ibox-content">
-                    @Model.OpenCount
-                </div>
-            </div>
-        </div>
+       
     </div>
 </div>
 <div class="row">
@@ -85,7 +76,7 @@
             //c.Field(model => model.Id).Visible(false).Add();
             c.Field(model => model.UserEmail).HeaderText("User Email").DefaultValue("--None--").Add();
             
-            c.Field(model => model.Opened).HeaderText("Opened").DefaultValue("--None--").Add();
+            //c.Field(model => model.Opened).HeaderText("Opened").DefaultValue("--None--").Add();
             c.Field(model => model.Error).HeaderText("Error").DefaultValue("--None--").Add();
             c.Field(model => model.ErrorMessage).HeaderText("Error Message").DefaultValue("--None--").Add();
 

@@ -127,7 +127,7 @@ namespace ApartmentApps.Portal.App_Start
         {
             get
             {
-                if (CurrentUser.PropertyId != null) return CurrentUser.PropertyId.Value;
+                if (CurrentUser?.PropertyId != null) return CurrentUser.PropertyId.Value;
                 return 1;
             }
         }

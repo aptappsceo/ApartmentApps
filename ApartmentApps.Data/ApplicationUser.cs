@@ -69,6 +69,8 @@ namespace ApartmentApps.Data
 
         public int? PropertyId { get; set; }
 
+        public bool Archived { get; set; }
+
         [ForeignKey("PropertyId")]
         public virtual Property Property { get; set; }
 

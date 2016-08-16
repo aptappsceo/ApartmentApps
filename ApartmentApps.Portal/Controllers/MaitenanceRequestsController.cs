@@ -299,19 +299,6 @@ namespace ApartmentApps.Portal.Controllers
             }
         }
 
-        public IEnumerable<FormPropertySelectItem> UserId_Items
-        {
-            get
-            {
-                return
-                    NinjectWebCommon.Kernel.Get<IRepository<ApplicationUser>>()
-                        .ToArray()
-                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName + " " + p.LastName, UserId == p.Id));
-
-
-            }
-        }
-
         [DisplayName("Type")]
         public int MaitenanceRequestTypeId { get; set; }
 
@@ -324,7 +311,9 @@ namespace ApartmentApps.Portal.Controllers
         [DataType("Hidden")]
         public int? Id { get; set; }
 
-        public string UserId { get; set; }
+        [DataType(DataType.MultilineText)]
+        public string Comments { get; set; }
+
 
     }
 
@@ -427,7 +416,8 @@ namespace ApartmentApps.Portal.Controllers
                 MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId,
                 PermissionToEnter = maitenanceRequest.PermissionToEnter,
                 UnitId = maitenanceRequest.UnitId ?? 0,
-                PetStatus = (PetStatus)maitenanceRequest.PetStatus
+                PetStatus = (PetStatus)maitenanceRequest.PetStatus,
+                Comments = maitenanceRequest.Message
             });
         }
 
@@ -456,8 +446,7 @@ namespace ApartmentApps.Portal.Controllers
                 maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
                 maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
                 maitenanceRequest.UnitId = editModel.UnitId;
-                maitenanceRequest.UserId = editModel.UserId;
-
+                maitenanceRequest.Message = editModel.Comments;
                 Context.SaveChanges();
 
                 return RedirectToAction("Details",new {id = id});
