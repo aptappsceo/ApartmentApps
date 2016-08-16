@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 
@@ -67,6 +68,15 @@ namespace ApartmentApps.Api
             }
         }
     }
+    public interface IEntityAdded<TEntityType>
+    {
+        void EntityAdded(TEntityType entity);
+    }
+    public interface IEntityRemoved<TEntityType>
+    {
+        void EntityRemoved(TEntityType entity);
+    }
+
     public class PropertyRepository<TEntity> : IRepository<TEntity> where TEntity : class,IPropertyEntity
     {
         public DbContext Context { get; set; }
@@ -90,7 +100,7 @@ namespace ApartmentApps.Api
         {
             entity.PropertyId = UserContext.PropertyId;
             Context.Set<TEntity>().Add(entity);
-           
+            Modules.Modules.AllModules.Signal<IEntityAdded<TEntity>>(_ => _.EntityAdded(entity));
         }
 
         public virtual void Remove(TEntity entity)
@@ -98,7 +108,7 @@ namespace ApartmentApps.Api
             if (entity.PropertyId == UserContext.PropertyId)
             {
                 Context.Set<TEntity>().Remove(entity);
-            
+                Modules.Modules.AllModules.Signal<IEntityRemoved<TEntity>>(_ => _.EntityRemoved(entity));
             }
         }
 
