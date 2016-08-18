@@ -34,7 +34,6 @@
                              items.AddTool(ToolBarItems.PdfExport);
                          });
                      })
-
                     .FilterSettings(filter => { filter.FilterType(FilterType.Excel).EnableCaseSensitivity(true); })
                     //.EditSettings(edit => { edit.AllowAdding().AllowDeleting().AllowEditing().EditMode(EditMode.Dialog); })
                     .EnableToolbarItems(true)
@@ -46,15 +45,15 @@
                     .ClientSideEvents(_=>_.RecordClick("clicked"))
                     .Columns(c =>
                     {
-
+                        
                         c.Field(model => model.Id).Visible(false).Add();
                         c.Field(model => model.Title).HeaderText("Type").Add();
-                        c.Field(model => model.UnitName).HeaderText("Building Name").Add();
+                        c.Field(model => model.UnitName).HeaderText("Building").Add();
                         c.Field(model => model.Comments).HeaderText("Comments").Add();
                         c.Field(model => model.StatusId).HeaderText("Status").Add();
                         c.Field(model => model.SubmissionByFullName).HeaderText("Requestor").Add();
-                        c.Field(model => model.StartDate).HeaderText("Start Date").Type(ColumnType.DateTime).Add();
-                        c.Field(model => model.CompleteDate).HeaderText("Complete Date").Type(ColumnType.DateTime).Add();
+                        c.Field(model => model.StartDate).HeaderText("Started On").Type(ColumnType.DateTime).Add();
+                        c.Field(model => model.CompleteDate).HeaderText("Complete On").Type(ColumnType.DateTime).Add();
                         c.Field(model => model.CompletedByFullName).HeaderText("Complete By").Add();
 
                         //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Details", "Details", new { id = "{{:Id}}" }).ToHtmlString())).Add();

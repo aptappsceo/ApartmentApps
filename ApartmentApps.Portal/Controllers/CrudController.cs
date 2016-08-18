@@ -16,6 +16,7 @@ using Syncfusion.EJ.Export;
 using Syncfusion.JavaScript;
 using Syncfusion.JavaScript.DataSources;
 using Syncfusion.JavaScript.Models;
+using Syncfusion.Pdf;
 using Syncfusion.XlsIO;
 using PageSettings = Syncfusion.JavaScript.Models.PageSettings;
 
@@ -123,27 +124,57 @@ namespace ApartmentApps.Portal.Controllers
         public void ExportToPdf(string GridModel)
         {
             PdfExport exp = new PdfExport();
+            var doc = new PdfDocument();
+            doc.PageSettings.Orientation = PdfPageOrientation.Landscape;
+
+            doc.DocumentInformation.Title = ExportHeader;
+            doc.DocumentInformation.Author = "Apartment Apps: " + Property.Name;
+            doc.DocumentInformation.CreationDate = Property.TimeZone.Now();
+            doc.DocumentInformation.Creator = "Apartment Apps Portal";
+
             Dm.Skip = 0;
             Dm.Take = 0;
             int count;
             var Data = GetData(Dm, out count);
             //var DataSource = Service.GetAll().OrderBy(p => p.Id);
             GridProperties properties = ConvertGridObject(GridModel);
+
+
+            //properties.AllowTextWrap = true;
+
+
+            //properties.ColumnLayout = ColumnLayout.Fixed;
+
+            var commentsField = properties.Columns.FirstOrDefault(c=>c.Field == "Comments");
+            if (commentsField != null)
+            {
+                properties.Columns.Remove(commentsField);
+                //commentsField. 
+            }
+
+
             //var ds = properties.DataSource;
             //DataManager manager = new DataManager()
             //{
             //    Where =properties.FilterSettings.
             //};
-            
-            properties.AllowPaging = false;
-            properties.PageSettings.PageSize = Int32.MaxValue;
+
+            //properties.AllowPaging = false;
+
+            doc.PageSettings.Size = PdfPageSize.A4;
+
             //var dataSource = new DataOperations().Execute(DataSource.ToArray(), properties,true);
-            exp.Export(properties, Data, $"{ExportFileName}.pdf");
+            exp.Export(properties, Data, $"{ExportFileName}.pdf",false,false,"flat-saffron",true,false,doc,ExportHeader,false);
         }
 
         public virtual string ExportFileName
         {
             get { return "Export"; }
+        }
+
+        public virtual string ExportHeader
+        {
+            get { return ""; }
         }
 
         public virtual ActionResult Remove(int key)
