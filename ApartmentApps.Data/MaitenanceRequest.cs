@@ -12,8 +12,6 @@ namespace ApartmentApps.Data
 
     public partial class MaitenanceRequest : PropertyEntity, IImageContainer, IFeedItem
     {
-        [Key]
-        public int Id { get; set; }
 
         public string UserId { get; set; }
 

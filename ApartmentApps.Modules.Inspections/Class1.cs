@@ -12,6 +12,9 @@ using Ninject;
 
 namespace ApartmentApps.Modules.Inspections
 {
+  
+
+
     [Persistant]
     public class InspectionsModuleConfig : ModuleConfig
     {
@@ -42,6 +45,17 @@ namespace ApartmentApps.Modules.Inspections
 
         [ForeignKey("UnitId")]
         public virtual Unit Unit { get; set; }
+
+        public DateTime CreateDate { get; set; }
+        public string Message { get; set; }
+        
+        public string SubmissionUserId { get; set; }
+
+        [ForeignKey("SubmissionUserId")]
+        public ApplicationUser SubmissionUser { get; set; }
+
+        public int PetStatus { get; set; }
+        public Guid GroupId { get; set; }
     }
 
     [Persistant]
@@ -67,7 +81,7 @@ namespace ApartmentApps.Modules.Inspections
         Great
     }
     [Persistant]
-    public class InspectionCateogryAnswer : PropertyEntity
+    public class InspectionCategoryAnswer : PropertyEntity
     {
         public int InspectionCategoryId { get; set; }
 
@@ -89,7 +103,7 @@ namespace ApartmentApps.Modules.Inspections
         public int InspectionCateogryAnswerId { get; set; }
 
         [ForeignKey("InspectionCateogryAnswerId")]
-        public virtual InspectionCateogryAnswer InspectionCateogryAnswer { get; set; }
+        public virtual InspectionCategoryAnswer InspectionCateogryAnswer { get; set; }
         
         public int InspectionQuestionId { get; set; }
 

@@ -32,12 +32,12 @@ namespace ApartmentApps.IoC
             b.InSingletonScope();
         }
 #endif
-        public static void RegisterMappable<TModel, TViewModel,TService>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel, TViewModel>
+        public static void RegisterMappable<TModel, TViewModel,TService, TDefaultMapper>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel, TViewModel> where TDefaultMapper : IMapper<TModel, TViewModel>
         {
             
-           
+           kernel.Bind<IMapper<TModel,TViewModel>>().To<TDefaultMapper>().InRequestScope();
+
             kernel.Bind< IService,
-                IMapper < TModel, TViewModel >,
                 StandardCrudService <TModel, TViewModel>, IServiceFor<TViewModel>>()
                 .To<TService>().InRequestScope();
 
@@ -157,13 +157,13 @@ namespace ApartmentApps.IoC
             kernel.Bind<DbContext>().ToMethod(_ => _.Kernel.Get<ApplicationDbContext>()).InRequestScope();
             kernel.Bind<IFeedSerivce>().To<FeedSerivce>().InRequestScope();
 
-            kernel.RegisterMappable<Unit, UnitViewModel, UnitService>();
-            kernel.RegisterMappable<Building, BuildingViewModel, BuildingService>();
-            kernel.RegisterMappable<Message, MessageViewModel, MessagingService>();
-            kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService>();
-            kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService>();
-            kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService>();
-            kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService>();
+            kernel.RegisterMappable<Unit, UnitViewModel, UnitService, UnitMapper>();
+            kernel.RegisterMappable<Building, BuildingViewModel, BuildingService, BuildingMapper>();
+            kernel.RegisterMappable<Message, MessageViewModel, MessagingService, MessageMapper>();
+            kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService, UserMapper>();
+            kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService, MaintenanceRequestMapper>();
+            kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService, IncidentReportMapper>();
+            kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService, CourtesyCheckinMapper>();
 
             kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
 

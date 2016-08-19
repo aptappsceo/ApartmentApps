@@ -27,7 +27,7 @@ namespace ApartmentApps.Portal.Controllers
         {
         }
     }
-
+    
     public class AutoFormController<TService, TFormService, TIndexViewModel, TFormViewModel> : AAController
         where TIndexViewModel : new()
         where TFormViewModel : BaseViewModel, new()

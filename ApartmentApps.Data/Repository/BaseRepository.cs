@@ -22,14 +22,14 @@ namespace ApartmentApps.Data.Repository
         public void Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
-            Modules.Modules.AllModules.Signal<IEntityRemoved<TEntity>>(_ => _.EntityRemoved(entity));
+            
             //_dbContext.SaveChanges();
         }
 
         public void Remove(TEntity entity)
         {
             _dbContext.Set<TEntity>().Remove(entity);
-            Modules.Modules.AllModules.Signal<IEntityRemoved<TEntity>>(_ => _.EntityRemoved(entity));
+            
             //_dbContext.SaveChanges();
         }
 
