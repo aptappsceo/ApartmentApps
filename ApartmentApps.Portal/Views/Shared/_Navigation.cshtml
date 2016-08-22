@@ -1,5 +1,7 @@
 ﻿@using ApartmentApps.Api.Modules
 @using ApartmentApps.Data
+@using Microsoft.AspNet.Identity
+
 @{
     var property = ViewBag.Property as Property;
     var properties = ViewBag.Properties as Property[];
@@ -113,14 +115,24 @@
         <ul class="nav" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <a href="#">
+                            <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">@User.Identity.GetUserName()</strong>
+                            </span>
+                        </span>
+                        </a>
+                    }
                     <a href="#">
                         <span class="clear">
                             <span class="block m-t-xs">
-                                <strong class="font-bold">@property.Name</strong>
+                                <strong class="font-noraml">@property.Name</strong>
                             </span>
                         </span>
                     </a>
-            
+
                 </div>
                 <div class="logo-element">
                     AA+

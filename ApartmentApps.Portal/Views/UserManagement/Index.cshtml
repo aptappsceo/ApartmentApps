@@ -30,7 +30,7 @@
                          toolbar.ShowToolbar().ToolbarItems(items =>
                          {
                              items.AddTool(ToolBarItems.ExcelExport);
-                      //       items.AddTool(ToolBarItems.WordExport);
+                             //       items.AddTool(ToolBarItems.WordExport);
                              items.AddTool(ToolBarItems.PdfExport);
                          });
                      })
@@ -48,13 +48,12 @@
                     {
 
                         c.Field(model => model.Id).Visible(false).Add();
-                        c.Field(model => model.BuildingName).HeaderText("Building Name").DefaultValue("--None--").Add();
-                        c.Field(model => model.UnitName).HeaderText("Unit Name").DefaultValue("--None--").Add();
-                        c.Field(model => model.FirstName).HeaderText("FirstName").Add();
-                        c.Field(model => model.LastName).HeaderText("LastName").Add();
+                        c.Field(model => model.BuildingName).HeaderText("Building").DefaultValue("--None--").Add();
+                        c.Field(model => model.UnitName).HeaderText("Unit").DefaultValue("--None--").Add();
+                        c.Field(model => model.FirstName).HeaderText("First Name").Add();
+                        c.Field(model => model.LastName).HeaderText("Last Name").Add();
                         c.Field(model => model.Email).HeaderText("Email").Add();
-                        c.Field(model => model.PhoneNumber).HeaderText("PhoneNumber").Add();
-
+                        c.Field(model => model.PhoneNumber).HeaderText("Phone Number").Add();
                         //c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Details", "Details", new { id = "{{:Id}}" }).ToHtmlString())).Add();
                         c.HeaderText("").Template(WebUtility.UrlDecode(Html.ActionLink("Delete", "DeleteUser", new { id = "{{:Id}}" }).ToHtmlString())).Add();
                     })
