@@ -8,6 +8,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Portal.Controllers;
 using Ninject;
 
 namespace ApartmentApps.Modules.Inspections

@@ -1,11 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Modules.Inspections
 {
-    public class InspectionViewModel
+    public class InspectionViewModel : BaseViewModel
     {
         public DateTime CreateDate { get; set; }
         public DateTime? ScheduleDate { get; set; }
@@ -13,7 +20,6 @@ namespace ApartmentApps.Modules.Inspections
         public string Message { get; set; }
         public UserBindingModel SubmissionUser { get; set; }
         public string Status { get; set; }
-        public string Id { get; set; }
         public string UnitName { get; set; }
         public string BuildingName { get; set; }
         public int PetStatus { get; set; }
@@ -69,8 +75,89 @@ namespace ApartmentApps.Modules.Inspections
             //viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(_blobStorageService));
         }
     }
-    public class InspectionsService
+
+    public class CreateInspectionViewModel
+    {
+        private readonly IRepository<Unit> _unitRepositoy;
+        private readonly IRepository<ApplicationUser> _userRepository;
+
+        public CreateInspectionViewModel()
+        {
+        }
+
+        public CreateInspectionViewModel(IRepository<Unit> unitRepositoy,IRepository<ApplicationUser> userRepository)
+        {
+            _unitRepositoy = unitRepositoy;
+            _userRepository = userRepository;
+        }
+
+        [DisplayName("Unit")]
+        public int UnitId { get; set; }
+
+        public IEnumerable<FormPropertySelectItem> UnitId_Items => _unitRepositoy.ToArray()
+                    .OrderByAlphaNumeric(p => p.Name)
+                    .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
+
+        [DataType(DataType.MultilineText)]
+        public string Notes { get; set; }
+
+        public DateTime ScheduleDate { get; set; }
+
+        [DisplayName("Assign To")]
+        public string WorkerId { get; set; }
+
+        public IEnumerable<FormPropertySelectItem> WorkerId_Items => _userRepository.ToArray()
+                    .Where(p => p.Roles.Any(x => x.RoleId == "Maintenance"))
+                    .OrderByAlphaNumeric(p => p.LastName)
+                    .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName, WorkerId == p.Id));
+    }
+
+    public class FinishInspectionViewModel
+    {
+        private int InspectionId { get; set; }
+
+
+    }
+
+    public class InspectionAnswerViewModel
     {
         
+    }
+
+    public class InspectionsService : StandardCrudService<Inspection, InspectionViewModel>
+    {
+        private readonly IBlobStorageService _blobStorageService;
+        private readonly IUserContext _userContext;
+
+        public InspectionsService(IBlobStorageService blobStorageService, IUserContext userContext, IRepository<Inspection> repository, IMapper<Inspection, InspectionViewModel> mapper) : base(repository, mapper)
+        {
+            _blobStorageService = blobStorageService;
+            _userContext = userContext;
+        }
+
+        public void CreateInspection(CreateInspectionViewModel inspectionViewModel)
+        {
+            var inspection = new Inspection()
+            {
+                ScheduleDate = 
+            };
+            inspection.Unit = inspectionViewModel.UnitId;
+            Repository.Add();
+        }
+
+        public void StartInspection(int id)
+        {
+            
+        }
+
+        public void PauseInspection(int id)
+        {
+            
+        }
+
+        public void FinishInspection(int id)
+        {
+            
+        }
     }
 }

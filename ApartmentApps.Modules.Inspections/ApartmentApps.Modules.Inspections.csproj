@@ -74,6 +74,10 @@
       <Project>{69A819D5-3037-4E56-90E4-A9EDFF41B88A}</Project>
       <Name>ApartmentApps.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Forms\ApartmentApps.Forms.csproj">
+      <Project>{E3722B2C-0EE1-4359-89D2-CD78BDDD59C7}</Project>
+      <Name>ApartmentApps.Forms</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
