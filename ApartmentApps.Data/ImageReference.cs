@@ -13,6 +13,8 @@ namespace ApartmentApps.Data
 
         public string ThumbnailUrl { get; set; }
 
+        public string Name { get; set; }
+
         public Guid GroupId { get; set; }
 
     }

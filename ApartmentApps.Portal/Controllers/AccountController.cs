@@ -308,7 +308,7 @@ namespace ApartmentApps.Portal.Controllers
 
                     if (model.ProfileImage != null && model.ProfileImage.ContentLength != 0)
                     {
-                        var bytes = ReadFully(model.ProfileImage.InputStream);
+                        var bytes = model.ProfileImage.InputStream.ReadFully();
                         var currentUser = CurrentUser;
                         var imageKey = $"{Guid.NewGuid()}.{currentUser.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
                         var filename = _blobStorage.UploadPhoto(bytes, imageKey);
@@ -360,19 +360,6 @@ namespace ApartmentApps.Portal.Controllers
 
         }
 
-        public static byte[] ReadFully(Stream input)
-        {
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
 
         //
         // GET: /Account/ResetPassword
@@ -654,5 +641,25 @@ namespace ApartmentApps.Portal.Controllers
         #endregion
 
         
+    }
+
+
+}
+
+public static class StreamExtensions
+{
+
+    public static byte[] ReadFully(this Stream input)
+    {
+        byte[] buffer = new byte[16 * 1024];
+        using (MemoryStream ms = new MemoryStream())
+        {
+            int read;
+            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                ms.Write(buffer, 0, read);
+            }
+            return ms.ToArray();
+        }
     }
 }

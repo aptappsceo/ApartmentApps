@@ -76,8 +76,33 @@
                         Compose Message
                     </div>
                     <div class="ibox-content">
-                        @Html.EJ().RTE("message")
-                        <br />
+                      @*  @{
+        List<String> toolsList = new List<string>() { "images" };
+        List<String> images = new List<string>() { "image" };
+
+        Html.EJ().RTE("message")
+            .ImageBrowser(img =>
+        {
+            img.FilePath("/")
+                .ExtensionAllow("*.png,*.gif,*.jpg,*.jpeg")
+                .AjaxAction(@Url.Action("FileActionMethods"));
+        }).Render();
+    }
+
+                    *@
+
+                        @{ List<String> images = new List<string>() { "images" };
+                            List<String> image = new List<string>() { "image" };}
+                        @{Html.EJ().RTE("newMessage")
+                                .Width("100%")
+                                .MinWidth("200px")
+                                .ShowFooter(true)
+                                .ImageBrowser(img => img.FilePath("https://apartmentapps.blob.core.windows.net/photos/")
+                                .ExtensionAllow("*.png,*.gif,*.jpg,*.jpeg")
+                                .AjaxAction(@Url.Action("FileActionMethods")))
+                                .Render();}
+                        
+                        <br/>
 
                     </div>
                     <div class="ibox-footer">
@@ -86,4 +111,27 @@
                 </div>
             </div>
         </div><br />
+}
+
+@section csspage {
+
+    <style>
+        #newMessage_img_explorercreation {
+            display: none;
+        }
+
+        #newMessage_img_explorernavigation {
+            display: none;
+        }
+
+        #newMessage_img_exploreraddressBar {
+            display: none;
+        }
+
+        #newMessage_img_explorerDelete {
+            display: none;
+        }
+
+    </style>
+
 }

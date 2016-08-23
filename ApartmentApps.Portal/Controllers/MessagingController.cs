@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
@@ -21,12 +21,15 @@ namespace ApartmentApps.Portal.Controllers
     {
         private readonly MessagingService _messageService;
         private readonly MessagingModule _module;
-
-        public MessagingController(MessagingService messageService, MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, AlertsModule messagingService) : base(kernel,repository, service, context, userContext)
+        private ApplicationDbContext _context;
+        private IBlobStorageService _blobStorageService;
+        public MessagingController(MessagingService messageService, MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, AlertsModule messagingService, ApplicationDbContext context1, IBlobStorageService blobStorageService) : base(kernel,repository, service, context, userContext)
         {
             _messageService = messageService;
             _module = module;
             MessagingService = messagingService;
+            _context = context1;
+            _blobStorageService = blobStorageService;
         }
 
         public AlertsModule MessagingService { get; set; }
@@ -43,6 +46,38 @@ namespace ApartmentApps.Portal.Controllers
         {
             return View("History", _messageService.GetHistory());
         }
+
+
+        public ActionResult FileActionMethods(FileExplorerParams args)
+        {
+
+            SyncfusionAzureBlobStorageOperations opeartion = new SyncfusionAzureBlobStorageOperations(_blobStorageService,CurrentUser,_context);
+            switch (args.ActionType)
+            {
+                case "Read":
+                    var read = opeartion.Read(args.Path, args.ExtensionsAllow);
+                    return Json(read);
+                case "CreateFolder":
+                    return Json(opeartion.CreateFolder(args.Path, args.Name));
+                case "Paste":
+                    return Json(opeartion.Paste(args.LocationFrom, args.LocationTo, args.Names, args.Action, args.CommonFiles));
+                case "Remove":
+                    return Json(opeartion.Remove(args.Names, args.Path));
+                case "Rename":
+                    return Json(opeartion.Rename(args.Path, args.Name, args.NewName, args.CommonFiles));
+                case "GetDetails":
+                    return Json(opeartion.GetDetails(args.Path, args.Names));
+                case "Download":
+                    opeartion.Download(args.Path, args.Names);
+                    break;
+                case "Upload":
+
+                    opeartion.Upload(args.FileUpload, args.Path);
+                    break;
+            }
+            return Json("");
+        }
+
 
         [HttpPost, ValidateInput(false)]
         public ActionResult SendMessage(string subject, string message)
