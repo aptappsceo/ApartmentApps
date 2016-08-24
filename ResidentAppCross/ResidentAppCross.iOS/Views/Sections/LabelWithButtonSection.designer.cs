@@ -11,25 +11,27 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("LabelWithButtonSection")]
-	partial class LabelWithButtonSection
-	{
-		[Outlet]
-		UIKit.UIButton _button { get; set; }
+    [Register ("LabelWithButtonSection")]
+    partial class LabelWithButtonSection
+    {
+        [Outlet]
+        UIKit.UIButton _button { get; set; }
 
-		[Outlet]
-		UIKit.UILabel _label { get; set; }
 
-		void ReleaseDesignerOutlets ()
-		{
-			if (_button != null) {
-				_button.Dispose ();
-				_button = null;
-			}
-			if (_label != null) {
-				_label.Dispose ();
-				_label = null;
-			}
-		}
-	}
+        [Outlet]
+        UIKit.UILabel _label { get; set; }
+
+        void ReleaseDesignerOutlets ()
+        {
+            if (_button != null) {
+                _button.Dispose ();
+                _button = null;
+            }
+
+            if (_label != null) {
+                _label.Dispose ();
+                _label = null;
+            }
+        }
+    }
 }

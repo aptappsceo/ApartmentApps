@@ -358,6 +358,7 @@
     <InterfaceDefinition Include="Views\Sections\VerticalCollectionSection.xib" />
     <InterfaceDefinition Include="Views\CollectionItems\TicketCollectionViewCell.xib" />
     <InterfaceDefinition Include="Views\Sections\TextFieldSection.xib" />
+    <InterfaceDefinition Include="Views\ContainerSection.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -515,6 +516,10 @@
     <Compile Include="Views\Sections\TextFieldSection.cs" />
     <Compile Include="Views\Sections\TextFieldSection.designer.cs">
       <DependentUpon>TextFieldSection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ContainerSection.cs" />
+    <Compile Include="Views\ContainerSection.designer.cs">
+      <DependentUpon>ContainerSection.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

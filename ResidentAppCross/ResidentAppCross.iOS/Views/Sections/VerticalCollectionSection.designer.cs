@@ -11,18 +11,18 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("VerticalCollectionSection")]
-	partial class VerticalCollectionSection
-	{
-		[Outlet]
-		UIKit.UICollectionView _collection { get; set; }
+    [Register ("VerticalCollectionSection")]
+    partial class VerticalCollectionSection
+    {
+        [Outlet]
+        UIKit.UICollectionView _collection { get; set; }
 
-		void ReleaseDesignerOutlets ()
-		{
-			if (_collection != null) {
-				_collection.Dispose ();
-				_collection = null;
-			}
-		}
-	}
+        void ReleaseDesignerOutlets ()
+        {
+            if (_collection != null) {
+                _collection.Dispose ();
+                _collection = null;
+            }
+        }
+    }
 }
