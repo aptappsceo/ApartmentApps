@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -12,13 +11,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vbH-Zb-XcK" userLabel="Container">
-                    <rect key="frame" x="8" y="76" width="584" height="40"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="pcF-OZ-0xF"/>
-                    </constraints>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BoG-KV-lMT" userLabel="CollapseButton">
                     <rect key="frame" x="472" y="8" width="120" height="60"/>
                     <constraints>
@@ -35,10 +27,18 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vbH-Zb-XcK" userLabel="Container">
+                    <rect key="frame" x="8" y="76" width="584" height="524"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="pcF-OZ-0xF"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailingMargin" secondItem="BoG-KV-lMT" secondAttribute="trailing" id="2k9-33-lF1"/>
+                <constraint firstAttribute="bottom" secondItem="vbH-Zb-XcK" secondAttribute="bottom" id="5F4-cn-R8G"/>
                 <constraint firstItem="vbH-Zb-XcK" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="cMa-52-EY2"/>
                 <constraint firstItem="vbH-Zb-XcK" firstAttribute="top" secondItem="D7d-8o-6Cs" secondAttribute="bottom" constant="8" symbolic="YES" id="d3a-K5-bNE"/>
                 <constraint firstAttribute="trailingMargin" secondItem="vbH-Zb-XcK" secondAttribute="trailing" id="dB6-Av-FcP"/>
