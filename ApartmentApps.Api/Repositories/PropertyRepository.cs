@@ -100,7 +100,7 @@ namespace ApartmentApps.Api
         {
             entity.PropertyId = UserContext.PropertyId;
             Context.Set<TEntity>().Add(entity);
-            Modules.Modules.AllModules.Signal<IEntityAdded<TEntity>>(_ => _.EntityAdded(entity));
+            Modules.ModuleHelper.AllModules.Signal<IEntityAdded<TEntity>>(_ => _.EntityAdded(entity));
         }
 
         public virtual void Remove(TEntity entity)
@@ -108,7 +108,7 @@ namespace ApartmentApps.Api
             if (entity.PropertyId == UserContext.PropertyId)
             {
                 Context.Set<TEntity>().Remove(entity);
-                Modules.Modules.AllModules.Signal<IEntityRemoved<TEntity>>(_ => _.EntityRemoved(entity));
+                Modules.ModuleHelper.AllModules.Signal<IEntityRemoved<TEntity>>(_ => _.EntityRemoved(entity));
             }
         }
 

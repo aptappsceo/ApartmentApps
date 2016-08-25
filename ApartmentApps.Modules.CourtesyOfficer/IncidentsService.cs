@@ -101,7 +101,7 @@ namespace ApartmentApps.Api
 
             Checkin(user, incidentReport.Id, incidentReport.Comments, incidentReport.StatusId, null,
               incidentReport.GroupId);
-            Modules.Modules.EnabledModules.Signal<IIncidentReportSubmissionEvent>(_ => _.IncidentReportSubmited(incidentReport));
+            Modules.ModuleHelper.EnabledModules.Signal<IIncidentReportSubmissionEvent>(_ => _.IncidentReportSubmited(incidentReport));
             
 
             return incidentReport.Id;
@@ -144,7 +144,7 @@ namespace ApartmentApps.Api
                 incidentReport.CompletionDate = officer.TimeZone.Now();
             }
             Context.SaveChanges();
-            Modules.Modules.EnabledModules.Signal<IIncidentReportCheckinEvent>( _ => _.IncidentReportCheckin(checkin, incidentReport));
+            Modules.ModuleHelper.EnabledModules.Signal<IIncidentReportCheckinEvent>( _ => _.IncidentReportCheckin(checkin, incidentReport));
             return true;
 
         }

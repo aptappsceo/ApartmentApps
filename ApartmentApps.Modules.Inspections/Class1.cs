@@ -33,14 +33,22 @@ namespace ApartmentApps.Modules.Inspections
 
     }
 
+    public enum InspectionStatus
+    {
+        Created,
+        Started,
+        Paused,
+        Completed,
+    }
+
     [Persistant]
     public class Inspection : PropertyEntity
     {
+        public InspectionStatus Status { get; set; }
+
         public virtual ICollection<InspectionAnswer> InspectionAnswers { get; set; }
         public DateTime? ScheduleDate { get; set; }
         public DateTime? CompleteDate { get; set; }
-
-        public string Status { get; set; }
 
         public int UnitId { get; set; }
 
@@ -57,8 +65,36 @@ namespace ApartmentApps.Modules.Inspections
 
         public int PetStatus { get; set; }
         public Guid GroupId { get; set; }
-    }
+        public string AssignedToId { get; set; }
+        [ForeignKey("AssignedToId")]
+        public ApplicationUser AssignedTo { get; set; }
 
+        public DateTime CompletionDate { get; set; }
+    }
+    [Persistant]
+    public class InspectionCheckin : PropertyEntity
+    {
+        public string Name { get; set; }
+
+        public Guid GroupId { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public string WorkerId { get; set; }
+
+        [ForeignKey("WorkerId")]
+        public ApplicationUser Worker { get; set; }
+
+        public InspectionStatus Status { get; set; }
+        public string Comments { get; set; }
+
+
+
+        public int InspectionId { get; set; }
+
+        [ForeignKey("InspectionId")]
+        public virtual Inspection Inspection { get; set; }
+    }
     [Persistant]
     public class InspectionRoom : PropertyEntity
     {
@@ -101,10 +137,10 @@ namespace ApartmentApps.Modules.Inspections
     [Persistant]
     public class InspectionAnswer : PropertyEntity
     {
-        public int InspectionCateogryAnswerId { get; set; }
+        public int InspectionCategoryAnswerId { get; set; }
 
-        [ForeignKey("InspectionCateogryAnswerId")]
-        public virtual InspectionCategoryAnswer InspectionCateogryAnswer { get; set; }
+        [ForeignKey("InspectionCategoryAnswerId")]
+        public virtual InspectionCategoryAnswer InspectionCategoryAnswer { get; set; }
         
         public int InspectionQuestionId { get; set; }
 

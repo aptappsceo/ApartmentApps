@@ -9,7 +9,8 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
-
+using Ninject.Infrastructure.Language;
+using ApartmentApps.Api.Modules;
 namespace ApartmentApps.Modules.Inspections
 {
     public class InspectionViewModel : BaseViewModel
@@ -19,7 +20,7 @@ namespace ApartmentApps.Modules.Inspections
         public DateTime EndDate { get; set; }
         public string Message { get; set; }
         public UserBindingModel SubmissionUser { get; set; }
-        public string Status { get; set; }
+        public InspectionStatus Status { get; set; }
         public string UnitName { get; set; }
         public string BuildingName { get; set; }
         public int PetStatus { get; set; }
@@ -114,50 +115,154 @@ namespace ApartmentApps.Modules.Inspections
 
     public class FinishInspectionViewModel
     {
-        private int InspectionId { get; set; }
+        public int InspectionId { get; set; }
 
-
+        public List<InspectionCategoryAnswerViewModel> Answers { get; set; }
+        public InspectionCategoryStatus Status { get; set; }
     }
 
+    public class InspectionCategoryAnswerViewModel
+    {
+        public int RoomId { get; set; }
+        public int CategoryId { get; set; }
+        public List<InspectionAnswerViewModel> Answers { get; set; }
+     
+    }
     public class InspectionAnswerViewModel
     {
-        
+        public int QuestionId { get; set; }
+        public string Value { get; set; }
     }
 
     public class InspectionsService : StandardCrudService<Inspection, InspectionViewModel>
     {
+        private readonly PropertyContext _propertyContext;
+        private readonly IRepository<InspectionCheckin> _inspectionCheckins;
+        private readonly IRepository<InspectionCategoryAnswer> _categoryAnswers;
+        private readonly IRepository<InspectionAnswer> _answers;
         private readonly IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
-        public InspectionsService(IBlobStorageService blobStorageService, IUserContext userContext, IRepository<Inspection> repository, IMapper<Inspection, InspectionViewModel> mapper) : base(repository, mapper)
+        public InspectionsService(PropertyContext propertyContext, IRepository<InspectionCheckin> inspectionCheckins,
+            IRepository<InspectionCategoryAnswer> categoryAnswers, IRepository<InspectionAnswer> answers, IBlobStorageService blobStorageService, IUserContext userContext, IRepository<Inspection> repository, IMapper<Inspection, InspectionViewModel> mapper) : base(repository, mapper)
         {
+            _propertyContext = propertyContext;
+            _inspectionCheckins = inspectionCheckins;
+            _categoryAnswers = categoryAnswers;
+            _answers = answers;
             _blobStorageService = blobStorageService;
             _userContext = userContext;
         }
 
         public void CreateInspection(CreateInspectionViewModel inspectionViewModel)
         {
+       
             var inspection = new Inspection()
             {
-                ScheduleDate = 
+                ScheduleDate = inspectionViewModel.ScheduleDate,
+                CreateDate = _userContext.CurrentUser.TimeZone.Now(),
+                SubmissionUserId = _userContext.UserId,
+                UnitId = inspectionViewModel.UnitId,
+                AssignedToId = inspectionViewModel.WorkerId,
+                Message = inspectionViewModel.Notes,
+                Status = InspectionStatus.Created
             };
-            inspection.Unit = inspectionViewModel.UnitId;
-            Repository.Add();
+            Repository.Add(inspection);
+            Repository.Save();
         }
 
         public void StartInspection(int id)
         {
-            
+            var inspection = Repository.Find(id);
+            inspection.Status = InspectionStatus.Started;
+            Repository.Save();
         }
 
         public void PauseInspection(int id)
         {
-            
+            var inspection = Repository.Find(id);
+            inspection.Status = InspectionStatus.Paused;
+            Repository.Save();
         }
 
-        public void FinishInspection(int id)
+        public void FinishInspection(FinishInspectionViewModel vm)
         {
-            
+            var inspection = Repository.Find(vm.InspectionId);
+            inspection.Status = InspectionStatus.Completed;
+            foreach (var item in vm.Answers)
+            {
+                var inspectionCategoryAnswer = new InspectionCategoryAnswer()
+                {
+                    InspectionCategoryId = item.CategoryId,
+                    InspectionRoomId = item.RoomId,
+                    Status = vm.Status
+                    
+                };
+                _categoryAnswers.Add(inspectionCategoryAnswer);
+                _categoryAnswers.Save();
+
+                foreach (var answer in item.Answers)
+                {
+                    _answers.Add(new InspectionAnswer()
+                    {
+                        InspectionCategoryAnswerId = inspectionCategoryAnswer.Id,
+                        InspectionQuestionId = answer.QuestionId,
+                        Value = answer.Value
+                    });
+                }
+            }
+            Repository.Save();
         }
+        private bool Checkin( int inspectionId, string comments, InspectionStatus status, List<byte[]> photos, Guid? groupId = null)
+        {
+            var worker = this._userContext.CurrentUser;
+            var checkin = new InspectionCheckin
+            {
+                InspectionId = inspectionId,
+                Comments = comments,
+                Status = status,
+                WorkerId = this._userContext.CurrentUser.Id,
+                Date = worker.TimeZone.Now(),
+                GroupId = groupId ?? Guid.NewGuid()
+            };
+
+            if (photos != null && groupId == null)
+                foreach (var image in photos)
+                {
+                    var imageKey = $"{Guid.NewGuid()}.{worker.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
+                    var filename = _blobStorageService.UploadPhoto(image, imageKey);
+                    _propertyContext.ImageReferences.Add(new ImageReference()
+                    {
+                        GroupId = checkin.GroupId,
+                        Url = filename,
+                        ThumbnailUrl = filename
+                    });
+                }
+            _inspectionCheckins.Add(checkin);
+            _inspectionCheckins.Save();
+            var request =
+                Repository.Find(inspectionId);
+
+            request.Status = status;
+
+            if (status == InspectionStatus.Completed)
+            {
+                request.CompletionDate = worker.TimeZone.Now();
+            }
+            _propertyContext.SaveChanges();
+
+            ModuleHelper.EnabledModules.Signal<IInspectionCheckin>(_ => _.InspectionCheckin(checkin, request));
+            return true;
+
+        }
+        public IEnumerable<InspectionViewModel> GetAllForUser(string userId)
+        {
+            return Repository.Where(p => p.AssignedToId == userId).ToArray().Select(Mapper.ToViewModel);
+        }
+    }
+
+    internal interface IInspectionCheckin
+    {
+        void InspectionCheckin(InspectionCheckin checkin, Inspection request);
     }
 }

@@ -132,7 +132,7 @@ namespace ApartmentApps.Api
             Checkin(_userContext.CurrentUser, maitenanceRequest.Id, maitenanceRequest.Message,
                 maitenanceRequest.StatusId, null, maitenanceRequest.GroupId);
 
-            Modules.Modules.EnabledModules.Signal<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
+            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
 
             return maitenanceRequest.Id;
 
@@ -178,7 +178,7 @@ namespace ApartmentApps.Api
                 request.CompletionDate = worker.TimeZone.Now();
             }
             Context.SaveChanges();
-            Modules.Modules.EnabledModules.Signal<IMaintenanceRequestCheckinEvent>( _ => _.MaintenanceRequestCheckin(checkin, request));
+            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceRequestCheckinEvent>( _ => _.MaintenanceRequestCheckin(checkin, request));
 
             return true;
 

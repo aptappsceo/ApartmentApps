@@ -212,7 +212,7 @@
     <Compile Include="LogSeverity.cs" />
     <Compile Include="MenuItemViewModel.cs" />
     <Compile Include="Module.cs" />
-    <Compile Include="Modules.cs" />
+    <Compile Include="ModuleHelper.cs" />
     <Compile Include="PortalConfig.cs" />
     <Compile Include="NotificationPayload.cs" />
     <Compile Include="NotificationPayloadExtensions.cs" />
