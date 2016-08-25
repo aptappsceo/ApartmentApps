@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -13,23 +12,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BoG-KV-lMT" userLabel="CollapseButton">
-                    <rect key="frame" x="472" y="8" width="120" height="60"/>
+                    <rect key="frame" x="472" y="8" width="120" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="120" id="lOJ-qn-g3z"/>
                     </constraints>
                     <state key="normal" title="Button"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7d-8o-6Cs">
-                    <rect key="frame" x="8" y="8" width="464" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="60" id="AK6-im-7aL"/>
-                    </constraints>
+                    <rect key="frame" x="8" y="8" width="464" height="20"/>
                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vbH-Zb-XcK" userLabel="Container">
-                    <rect key="frame" x="8" y="76" width="584" height="516"/>
+                    <rect key="frame" x="8" y="36" width="584" height="556"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
@@ -43,7 +39,6 @@
                 <constraint firstAttribute="topMargin" secondItem="D7d-8o-6Cs" secondAttribute="top" id="hWK-Dr-Bho"/>
                 <constraint firstItem="D7d-8o-6Cs" firstAttribute="leading" secondItem="1" secondAttribute="leadingMargin" id="leV-1v-H3A"/>
                 <constraint firstItem="BoG-KV-lMT" firstAttribute="top" secondItem="1" secondAttribute="topMargin" id="oVu-Jb-AJf"/>
-                <constraint firstItem="BoG-KV-lMT" firstAttribute="height" secondItem="D7d-8o-6Cs" secondAttribute="height" id="xim-pp-Shg"/>
                 <constraint firstItem="BoG-KV-lMT" firstAttribute="leading" secondItem="D7d-8o-6Cs" secondAttribute="trailing" id="yTl-le-KIA"/>
             </constraints>
             <connections>
