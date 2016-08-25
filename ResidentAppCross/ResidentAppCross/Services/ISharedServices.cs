@@ -68,8 +68,8 @@ namespace ResidentAppCross.Services
             _loginManager.Logout();
 
 #if DEBUG
-            username = string.IsNullOrEmpty(username) ? "sinitreo@gmail.com" : username;
-            password = string.IsNullOrEmpty(password) ? "Asdf1234!" : password;
+            username = string.IsNullOrEmpty(username) ? "micahosborne@gmail.com" : username;
+            password = string.IsNullOrEmpty(password) ? "micah123" : password;
 #endif
 
             if (!await _loginManager.LoginAsync(username, password))

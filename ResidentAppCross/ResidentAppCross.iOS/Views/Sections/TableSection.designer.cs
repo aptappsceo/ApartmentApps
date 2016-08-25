@@ -11,18 +11,18 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("TableSection")]
-	partial class TableSection
-	{
-		[Outlet]
-		UIKit.UITableView TableView { get; set; }
+    [Register ("TableSection")]
+    partial class TableSection
+    {
+        [Outlet]
+        UIKit.UITableView TableView { get; set; }
 
-		void ReleaseDesignerOutlets ()
-		{
-			if (TableView != null) {
-				TableView.Dispose ();
-				TableView = null;
-			}
-		}
-	}
+        void ReleaseDesignerOutlets ()
+        {
+            if (TableView != null) {
+                TableView.Dispose ();
+                TableView = null;
+            }
+        }
+    }
 }

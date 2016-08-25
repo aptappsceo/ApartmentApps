@@ -156,6 +156,7 @@
     <Compile Include="Services\ViewModelConfigurator.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\DevelopmentViewModel1.cs" />
+    <Compile Include="ViewModels\NestedSectionsViewModel.cs" />
     <Compile Include="ViewModels\Screens\AddCreditCardViewModel.cs" />
     <Compile Include="ViewModels\Screens\CommitPaymentViewModel.cs" />
     <Compile Include="ViewModels\Screens\IncidentReportCheckinDetailsViewModel.cs" />

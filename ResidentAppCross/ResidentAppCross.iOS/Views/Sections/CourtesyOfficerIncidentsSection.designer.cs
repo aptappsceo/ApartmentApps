@@ -11,11 +11,11 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("CourtesyOfficerIncidentsSection")]
-	partial class CourtesyOfficerIncidentsSection
-	{
-		void ReleaseDesignerOutlets ()
-		{
-		}
-	}
+    [Register ("CourtesyOfficerIncidentsSection")]
+    partial class CourtesyOfficerIncidentsSection
+    {
+        void ReleaseDesignerOutlets ()
+        {
+        }
+    }
 }
