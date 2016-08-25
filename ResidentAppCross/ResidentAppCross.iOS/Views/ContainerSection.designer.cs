@@ -13,6 +13,9 @@ namespace ResidentAppCross.iOS
 	partial class ContainerSection
 	{
 		[Outlet]
+		UIKit.UIButton _collapseButton { get; set; }
+
+		[Outlet]
 		UIKit.UIView _container { get; set; }
 
 		[Outlet]
@@ -20,14 +23,19 @@ namespace ResidentAppCross.iOS
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (_container != null) {
+				_container.Dispose ();
+				_container = null;
+			}
+
 			if (_labe != null) {
 				_labe.Dispose ();
 				_labe = null;
 			}
 
-			if (_container != null) {
-				_container.Dispose ();
-				_container = null;
+			if (_collapseButton != null) {
+				_collapseButton.Dispose ();
+				_collapseButton = null;
 			}
 		}
 	}
