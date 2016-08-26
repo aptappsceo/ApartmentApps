@@ -21,7 +21,7 @@ namespace ApartmentApps.Modules.Inspections
     {
         
     }
-    public class InspectionsModule : Module<InspectionsModuleConfig>
+    public class InspectionsModule : Module<InspectionsModuleConfig>, IMenuItemProvider
     {
         private readonly IRepository<Inspection> _inspections;
 
@@ -29,7 +29,25 @@ namespace ApartmentApps.Modules.Inspections
         {
             _inspections = inspections;
         }
+        public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
+        {
 
+            var menuItem = new MenuItemViewModel("Inspections", "fa-briefcase");
+            menuItem.Children.Add(new MenuItemViewModel("New Inspection", "fa-plus-square", "NewInspection", "Inspections"));
+            //if (UserContext.IsInRole("PropertyAdmin"))
+            //{
+            //    menuItem.Children.Add(new MenuItemViewModel("Requests", "fa-folder", "Index", "MaitenanceRequests"));
+            //}
+            //if (UserContext.IsInRole("Maintenance") || UserContext.IsInRole("PropertyAdmin"))
+            //{
+            //    menuItem.Children.Add(new MenuItemViewModel("Schedule", "fa-folder", "MySchedule", "MaitenanceRequests"));
+            //}
+            //if (UserContext.IsInRole("Maintenance") || UserContext.IsInRole("PropertyAdmin"))
+            //{
+            //    menuItem.Children.Add(new MenuItemViewModel("Monthly Report", "fa-folder", "MonthlyReport", "MaitenanceRequests"));
+            //}
+            menuItems.Add(menuItem);
+        }
 
     }
 
@@ -46,7 +64,7 @@ namespace ApartmentApps.Modules.Inspections
     {
         public InspectionStatus Status { get; set; }
 
-        public virtual ICollection<InspectionAnswer> InspectionAnswers { get; set; }
+        public virtual ICollection<InspectionCategoryResult> InspectionCategoryResults { get; set; }
         public DateTime? ScheduleDate { get; set; }
         public DateTime? CompleteDate { get; set; }
 
@@ -68,8 +86,6 @@ namespace ApartmentApps.Modules.Inspections
         public string AssignedToId { get; set; }
         [ForeignKey("AssignedToId")]
         public ApplicationUser AssignedTo { get; set; }
-
-        public DateTime CompletionDate { get; set; }
     }
     [Persistant]
     public class InspectionCheckin : PropertyEntity
@@ -118,29 +134,34 @@ namespace ApartmentApps.Modules.Inspections
         Great
     }
     [Persistant]
-    public class InspectionCategoryAnswer : PropertyEntity
+    public class InspectionCategoryResult : PropertyEntity
     {
+        public int InspectionId { get; set; }
+
+        [ForeignKey("InspectionId")]
+        public Inspection Inspection { get; set; }
+
         public int InspectionCategoryId { get; set; }
 
         [ForeignKey("InspectionCategoryId")]
         public InspectionCategory InspectionCategory { get; set; }
 
-        public int? InspectionRoomId { get; set; }
+        public int InspectionRoomId { get; set; }
 
         [ForeignKey("InspectionRoomId")]
         public virtual InspectionRoom InspectionRoom { get; set; }
 
         public InspectionCategoryStatus Status { get; set; }
 
-        public virtual ICollection<InspectionAnswer> Answers { get; set; } 
+        public virtual ICollection<InspectionResult> Results { get; set; } 
     }
     [Persistant]
-    public class InspectionAnswer : PropertyEntity
+    public class InspectionResult : PropertyEntity
     {
-        public int InspectionCategoryAnswerId { get; set; }
+        public int InspectionCategoryResultId { get; set; }
 
-        [ForeignKey("InspectionCategoryAnswerId")]
-        public virtual InspectionCategoryAnswer InspectionCategoryAnswer { get; set; }
+        [ForeignKey("InspectionCategoryResultId")]
+        public virtual InspectionCategoryResult InspectionCategoryResult { get; set; }
         
         public int InspectionQuestionId { get; set; }
 
