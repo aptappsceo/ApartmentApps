@@ -13,18 +13,22 @@ using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
-    //[Persistant]
-    //public class UserRentInfo
-    //{
-    //    [Key]
-    //    public string UserId { get; set; }
+    [Persistant]
+    public class UserLeaseInfo
+    {
+        [Key]
+        public string UserId { get; set; }
 
-    //    [ForeignKey("UserId")]
-    //    public virtual ApplicationUser User { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; }
 
-    //    public decimal RentAmount { get; set; }
+        public decimal RentAmount { get; set; }
+        public DateTime MoveInDate { get; set; }
+        public DateTime MoveOutDate { get; set; }
 
-    //}
+        public DateTime CreateDate { get; set; }
+
+    }
     public class PaymentsModule : Module<PaymentsConfig>, IMenuItemProvider, IAdminConfigurable, IPaymentsService
     {
         public PropertyContext Context { get; set; }
