@@ -75,6 +75,8 @@
 
             //c.Field(model => model.Id).Visible(false).Add();
             c.Field(model => model.UserEmail).HeaderText("User Email").DefaultValue("--None--").Add();
+            c.Field(model => model.BuildingNumber).HeaderText("User Email").DefaultValue("--None--").Add();
+            c.Field(model => model.UnitNumber).HeaderText("User Email").DefaultValue("--None--").Add();
             
             //c.Field(model => model.Opened).HeaderText("Opened").DefaultValue("--None--").Add();
             c.Field(model => model.Error).HeaderText("Error").DefaultValue("--None--").Add();

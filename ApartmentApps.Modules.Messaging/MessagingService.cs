@@ -43,6 +43,8 @@ namespace ApartmentApps.Portal.Controllers
                 {
                     Id = p.Id,
                     UserEmail = p.User.Email,
+                    UnitNumber = p.User.Unit?.Name,
+                    BuildingNumber = p.User.Unit?.Building?.Name,
                     Opened = p.Opened,
                     ErrorMessage = p.ErrorMessage,
                     Error =  p.Error
