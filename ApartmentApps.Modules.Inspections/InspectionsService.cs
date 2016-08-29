@@ -126,7 +126,7 @@ namespace ApartmentApps.Modules.Inspections
         public int RoomId { get; set; }
         public int CategoryId { get; set; }
         public List<InspectionAnswerViewModel> Answers { get; set; }
-     
+        public InspectionCategoryStatus Status { get; set; }
     }
     public class InspectionAnswerViewModel
     {
@@ -138,13 +138,13 @@ namespace ApartmentApps.Modules.Inspections
     {
         private readonly PropertyContext _propertyContext;
         private readonly IRepository<InspectionCheckin> _inspectionCheckins;
-        private readonly IRepository<InspectionCategoryAnswer> _categoryAnswers;
-        private readonly IRepository<InspectionAnswer> _answers;
+        private readonly IRepository<InspectionCategoryResult> _categoryAnswers;
+        private readonly IRepository<InspectionResult> _answers;
         private readonly IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
         public InspectionsService(PropertyContext propertyContext, IRepository<InspectionCheckin> inspectionCheckins,
-            IRepository<InspectionCategoryAnswer> categoryAnswers, IRepository<InspectionAnswer> answers, IBlobStorageService blobStorageService, IUserContext userContext, IRepository<Inspection> repository, IMapper<Inspection, InspectionViewModel> mapper) : base(repository, mapper)
+            IRepository<InspectionCategoryResult> categoryAnswers, IRepository<InspectionResult> answers, IBlobStorageService blobStorageService, IUserContext userContext, IRepository<Inspection> repository, IMapper<Inspection, InspectionViewModel> mapper) : base(repository, mapper)
         {
             _propertyContext = propertyContext;
             _inspectionCheckins = inspectionCheckins;
@@ -165,53 +165,84 @@ namespace ApartmentApps.Modules.Inspections
                 UnitId = inspectionViewModel.UnitId,
                 AssignedToId = inspectionViewModel.WorkerId,
                 Message = inspectionViewModel.Notes,
-                Status = InspectionStatus.Created
+                Status = InspectionStatus.Created,
+                CompleteDate = null,
+
             };
             Repository.Add(inspection);
             Repository.Save();
+
+            Checkin(inspection.Id, inspectionViewModel.Notes, InspectionStatus.Created, null);
         }
 
         public void StartInspection(int id)
         {
-            var inspection = Repository.Find(id);
-            inspection.Status = InspectionStatus.Started;
-            Repository.Save();
+            //var inspection = Repository.Find(id);
+            //inspection.Status = InspectionStatus.Started;
+            //Repository.Save();
+            Checkin(id, "Inspection Started", InspectionStatus.Started, null);
         }
 
         public void PauseInspection(int id)
         {
-            var inspection = Repository.Find(id);
-            inspection.Status = InspectionStatus.Paused;
-            Repository.Save();
+            //var inspection = Repository.Find(id);
+            Checkin(id, "Inspection Paused", InspectionStatus.Paused, null);
         }
 
+        public void SaveInspectionCategory(int inspectionId, InspectionCategoryAnswerViewModel item)
+        {
+           // var inspection = Repository.Find(inspectionId);
+            var inspectionCategoryAnswer = new InspectionCategoryResult()
+            {
+                InspectionCategoryId = item.CategoryId,
+                InspectionRoomId = item.RoomId,
+               InspectionId = inspectionId,
+                Status = item.Status
+
+            };
+            _categoryAnswers.Add(inspectionCategoryAnswer);
+            _categoryAnswers.Save();
+            foreach (var answer in item.Answers)
+            {
+                _answers.Add(new InspectionResult()
+                {
+                    InspectionCategoryResultId = inspectionCategoryAnswer.Id,
+                    InspectionQuestionId = answer.QuestionId,
+                    Value = answer.Value
+                });
+                _answers.Save();
+            }
+
+        }
         public void FinishInspection(FinishInspectionViewModel vm)
         {
             var inspection = Repository.Find(vm.InspectionId);
-            inspection.Status = InspectionStatus.Completed;
+            
             foreach (var item in vm.Answers)
             {
-                var inspectionCategoryAnswer = new InspectionCategoryAnswer()
+                var inspectionCategoryAnswer = new InspectionCategoryResult()
                 {
                     InspectionCategoryId = item.CategoryId,
                     InspectionRoomId = item.RoomId,
-                    Status = vm.Status
-                    
+                    Status = item.Status
+                    ,InspectionId = vm.InspectionId
                 };
                 _categoryAnswers.Add(inspectionCategoryAnswer);
                 _categoryAnswers.Save();
 
                 foreach (var answer in item.Answers)
                 {
-                    _answers.Add(new InspectionAnswer()
+                    _answers.Add(new InspectionResult()
                     {
-                        InspectionCategoryAnswerId = inspectionCategoryAnswer.Id,
+                        InspectionCategoryResultId = inspectionCategoryAnswer.Id,
                         InspectionQuestionId = answer.QuestionId,
                         Value = answer.Value
                     });
+                    _answers.Save();
                 }
             }
             Repository.Save();
+            Checkin(inspection.Id, "Inspection Finished", InspectionStatus.Completed, null, null);
         }
         private bool Checkin( int inspectionId, string comments, InspectionStatus status, List<byte[]> photos, Guid? groupId = null)
         {
@@ -247,7 +278,7 @@ namespace ApartmentApps.Modules.Inspections
 
             if (status == InspectionStatus.Completed)
             {
-                request.CompletionDate = worker.TimeZone.Now();
+                request.CompleteDate = worker.TimeZone.Now();
             }
             _propertyContext.SaveChanges();
 

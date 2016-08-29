@@ -1282,6 +1282,10 @@
       <Project>{62C439C3-12AF-48C9-B7B2-84BC16893027}</Project>
       <Name>ApartmentApps.Modules.CourtesyOfficer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Inspections\ApartmentApps.Modules.Inspections.csproj">
+      <Project>{11EBF4C6-4475-47DD-9008-0DE0607DD723}</Project>
+      <Name>ApartmentApps.Modules.Inspections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Modules.Maintenance\ApartmentApps.Modules.Maintenance.csproj">
       <Project>{CFDCC102-7E3C-4E49-B438-ADE9D48F6615}</Project>
       <Name>ApartmentApps.Modules.Maintenance</Name>
