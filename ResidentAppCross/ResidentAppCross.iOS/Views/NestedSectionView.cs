@@ -17,6 +17,7 @@ namespace ResidentAppCross.iOS.Views
         private SegmentSelectionSection _incidentReportTypeSegment;
         private TextViewSection _commentsSection;
         private ContainerSection _containerSection2;
+        private TextViewSection _commentsSection2;
         public override string Title => "Inspection";
 
 
@@ -44,6 +45,18 @@ namespace ResidentAppCross.iOS.Views
                     _commentsSection.Editable = true;
                 }
                 return _commentsSection;
+            }
+        }
+        public TextViewSection CommentsSection2
+        {
+            get
+            {
+                if (_commentsSection2 == null)
+                {
+                    _commentsSection2 = Formals.Create<TextViewSection>();
+                    _commentsSection2.Editable = true;
+                }
+                return _commentsSection2;
             }
         }
 
@@ -74,12 +87,10 @@ namespace ResidentAppCross.iOS.Views
         public override void GetContent(List<UIView> content)
         {
             base.GetContent(content);
-            ContainerSection.Clear();
-            ContainerSection.Add(IncidentReportTypeSegment);
-            ContainerSection.Add(CommentsSection);
-            ContainerSection.RefreshContent();
+            ContainerSection.ReplaceContent(IncidentReportTypeSegment, CommentsSection);
         
             content.Add(ContainerSection);
+            content.Add(CommentsSection2);
         }
 
     }
