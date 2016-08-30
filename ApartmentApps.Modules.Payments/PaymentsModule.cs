@@ -9,32 +9,36 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Payments.Forte;
 using ApartmentApps.Payments.Forte.Forte.Client;
+using ApartmentApps.Portal.Controllers;
 using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
     [Persistant]
-    public class UserLeaseInfo
+    public class UserLeaseInfo : PropertyEntity
     {
-        [Key]
+
         public string UserId { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 
         public decimal RentAmount { get; set; }
-        public DateTime MoveInDate { get; set; }
-        public DateTime MoveOutDate { get; set; }
+        public DateTime? MoveInDate { get; set; }
+        public DateTime? MoveOutDate { get; set; }
 
         public DateTime CreateDate { get; set; }
 
     }
+
     public class PaymentsModule : Module<PaymentsConfig>, IMenuItemProvider, IAdminConfigurable, IPaymentsService
     {
+        private readonly IRepository<UserLeaseInfo> _userLeaseInfo;
         public PropertyContext Context { get; set; }
 
-        public PaymentsModule(PropertyContext context, IRepository<PaymentsConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
+        public PaymentsModule(IRepository<UserLeaseInfo> userLeaseInfo, PropertyContext context, IRepository<PaymentsConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
         {
+            _userLeaseInfo = userLeaseInfo;
             Context = context;
         }
 
