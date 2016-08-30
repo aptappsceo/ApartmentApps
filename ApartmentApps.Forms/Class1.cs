@@ -40,7 +40,7 @@ namespace ApartmentApps.Forms
         {
             get
             {
-                return true;
+                return PropertyInfo != null && PropertyInfo.CanWrite || PropertyInfo == null;
             }
         }
 

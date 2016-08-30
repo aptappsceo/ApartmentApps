@@ -356,6 +356,7 @@
     <Compile Include="Controllers\IncidentReportsController.cs" />
     <Compile Include="Controllers\MaitenanceRequestsController.cs" />
     <Compile Include="Controllers\MessagingController.cs" />
+    <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\PropertyEntrataInfoController.cs" />
     <Compile Include="Controllers\PropertyYardiInfoController.cs" />
@@ -1249,6 +1250,9 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Dashboard\UserFeed.cshtml" />
     <Content Include="Views\Shared\FeedItems\FeedItem1.cshtml" />
+    <Content Include="Views\Payments\RentSummary.cshtml" />
+    <Content Include="Views\Payments\PaymentOptions.cshtml" />
+    <Content Include="Views\Payments\PaymentSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

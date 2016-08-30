@@ -1,0 +1,20 @@
+﻿@model ApartmentApps.Api.Modules.PaymentSummaryBindingModel
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Pay Your Rent</h2>
+    </div>
+</div>
+
+<ul>
+    <li>Base Rent: @Model.BaseRent</li>
+    @if (Model.SummaryOptions != null)
+    {
+        foreach (var item in Model.SummaryOptions)
+        {
+            <li>@item.BaseRent</li>
+        }
+    }
+
+</ul>
+  
+<a class="btn btn-lg btn-primary" href="@ViewBag.NextAction">Next</a>

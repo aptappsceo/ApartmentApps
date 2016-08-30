@@ -40,7 +40,7 @@ namespace ApartmentApps.Api.Modules
 
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
         {
-           // menuItems.Add(new MenuItemViewModel("Payments", "payments","Index", "Payments"));
+           menuItems.Add(new MenuItemViewModel("Payments", "payments","Index", "Payments"));
         }
 
         public string SettingsController => "PaymentsConfig";
@@ -55,7 +55,7 @@ namespace ApartmentApps.Api.Modules
 
         public string Key { get; set; } = "18RcFs5F";
 
-        public async Task<PaymentSummaryBindingModel> GetPaymentSummary(int userId)
+        public async Task<PaymentSummaryBindingModel> GetPaymentSummary(string userId)
         {
             var user = Context.Users.Find(userId);
 
@@ -66,7 +66,7 @@ namespace ApartmentApps.Api.Modules
             };
         }
 
-        public async Task<PaymentSummaryBindingModel> GetRentSummary(int userId)
+        public async Task<PaymentSummaryBindingModel> GetRentSummary(string userId)
         {
             var user = Context.Users.Find(userId);
 
@@ -95,22 +95,24 @@ namespace ApartmentApps.Api.Modules
                 {
                     var result = await client.createPaymentMethodAsync(auth, payment);
                     var paymentMethodId = result.Body.createPaymentMethodResult;
-                    Context.PaymentOptions.Add(new UserPaymentOption()
+                    var userPaymentOption = new UserPaymentOption()
                     {
                         UserId = UserContext.UserId,
                         Type = PaymentOptionType.CreditCard,
                         FriendlyName = addCreditCard.FriendlyName,
                         TokenId = paymentMethodId.ToString()
-                    });
+                    };
+                    Context.PaymentOptions.Add(userPaymentOption);
                     Context.SaveChanges();
+                    return new AddCreditCardResult() { PaymentOptionId = userPaymentOption.Id };
                 }
                 catch (Exception ex)
                 {
                     return new AddCreditCardResult() { ErrorMessage = ex.Message };
                 }
-
+               
             }
-            return new AddCreditCardResult();
+           
         }
         public async Task<AddBankAccountResult> AddBankAccount(AddBankAccountBindingModel addCreditCard)
         {
@@ -132,14 +134,16 @@ namespace ApartmentApps.Api.Modules
                     var result = await client.createPaymentMethodAsync(auth, payment);
 
                     var paymentMethodId = result.Body.createPaymentMethodResult;
-                    Context.PaymentOptions.Add(new UserPaymentOption()
+                    var userPaymentOption = new UserPaymentOption()
                     {
                         UserId = UserContext.UserId,
                         Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking,
                         FriendlyName = addCreditCard.FriendlyName,
                         TokenId = paymentMethodId.ToString()
-                    });
+                    };
+                    Context.PaymentOptions.Add(userPaymentOption);
                     Context.SaveChanges();
+                    return new AddBankAccountResult() { PaymentOptionId = userPaymentOption.Id };
                 }
                 catch (Exception ex)
                 {
@@ -147,7 +151,7 @@ namespace ApartmentApps.Api.Modules
                 }
 
             }
-            return new AddBankAccountResult();
+            
         }
 
         public IEnumerable<PaymentOptionBindingModel> GetPaymentOptions()

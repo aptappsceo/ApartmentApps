@@ -38,7 +38,7 @@ namespace ApartmentApps.Forms
                 propertyModel.SetValue = (v) => property.SetValue(model,v);
                 propertyModel.Description = property.GetCustomAttributes(typeof(DescriptionAttribute), true).OfType<DescriptionAttribute>().FirstOrDefault()?.Description;
                 propertyModel.Label = property.GetCustomAttributes(typeof(DisplayNameAttribute), true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? property.Name;
-               
+                propertyModel.PropertyInfo = property;
               
                 if (typeof (Enum).IsAssignableFrom(property.PropertyType))
                 {

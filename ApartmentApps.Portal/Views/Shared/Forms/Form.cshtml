@@ -5,6 +5,10 @@
 <div class="form-horizontal">
     @foreach (var property in Model.Properties)
     {
+        if (!property.Visible)
+        {
+            continue;
+        }
         if (property.Hidden)
         {
             @Html.Hidden(property.Name, property.GetValue())
