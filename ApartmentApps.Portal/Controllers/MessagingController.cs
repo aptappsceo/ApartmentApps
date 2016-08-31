@@ -83,7 +83,7 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult SendMessage(string subject, string message)
         {
             int count;
-            var ids = GetData(Dm, out count).Select(p => p.Id).ToArray();
+            var ids = GetData(Dm, out count, true).Select(p => p.Id).ToArray();
             
             _module.SendMessage(ids, subject, message, HttpContext.Request.Url.Host + Url.Action("EmailMessageRead", "Messaging"));
             ViewBag.SuccessMessage = "Message Sent";

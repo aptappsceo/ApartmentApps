@@ -15,8 +15,9 @@ namespace ApartmentApps.Portal
     {
         protected void Application_Start()
         {
+#if DEBUG
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,ApartmentApps.Data.Migrations.Configuration>());
-            
+#endif   
             ModelBinders.Binders.RegisterUploadedFileModelBinder();
             //ModelBinders.Binders.RegisterUploadedFileModelBinder((file, controllerContext, modelBindingContext) => MyFileStore.StoreFile(file))
             AreaRegistration.RegisterAllAreas();

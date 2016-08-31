@@ -203,7 +203,7 @@ namespace ApartmentApps.Portal.Controllers
 
         }
 
-        protected IEnumerable<TViewModel> GetData(DataManager dm, out int count)
+        protected IEnumerable<TViewModel> GetData(DataManager dm, out int count, bool forceAll = false)
         {
             IEnumerable<TViewModel> Data = Service.GetAll().ToArray();
           
@@ -223,13 +223,16 @@ namespace ApartmentApps.Portal.Controllers
                         operation.PerformWhereFilter(Data, dm.Where, dm.Where[0].Operator).Cast<TViewModel>();
             }
             count = Data.Count();
-            if (dm.Skip != 0)
+            if (!forceAll)
             {
-                Data = (IEnumerable<TViewModel>) Data.Skip(dm.Skip);
-            }
-            if (dm.Take != 0)
-            {
-                Data = (IEnumerable<TViewModel>) Data.Take(dm.Take);
+                if (dm.Skip != 0)
+                {
+                    Data = (IEnumerable<TViewModel>)Data.Skip(dm.Skip);
+                }
+                if (dm.Take != 0)
+                {
+                    Data = (IEnumerable<TViewModel>)Data.Take(dm.Take);
+                }
             }
             return Data;
         }
