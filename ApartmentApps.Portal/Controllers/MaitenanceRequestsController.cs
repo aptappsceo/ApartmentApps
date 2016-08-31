@@ -110,9 +110,37 @@ namespace ApartmentApps.Portal.Controllers
         public DateTime? Date { get; set; }
     }
 
+    public class AssignMaintenanceEditModel
+    {
+        private readonly IRepository<ApplicationUser> _userRepository;
 
+        public AssignMaintenanceEditModel()
+        {
+        }
+
+        public AssignMaintenanceEditModel(IRepository<ApplicationUser> userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
+        [DataType("Hidden")]
+        public int? Id { get; set; }
+
+
+        //[DataType()]
+        [DisplayName("Assigned To")]
+        public string AssignedToId { get; set; }
+
+        public IEnumerable<FormPropertySelectItem> AssignedToId_Items => _userRepository.ToArray()
+                    .Where(p => p.Roles.Any(x => x.RoleId == "Maintenance"))
+                    .OrderByAlphaNumeric(p => p.LastName)
+                    .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName, AssignedToId == p.Id));
+
+    }
     public class MaintenanceRequestEditModel
     {
+
+
 
         //[DataType()]
         [DisplayName("Unit")]
@@ -179,42 +207,6 @@ namespace ApartmentApps.Portal.Controllers
             return View(Service.GetAll().OrderByDescending(p => p.RequestDate));
         }
 
-        public ActionResult Fix()
-        {
-            var units = Context.Units.OrderBy(p => p.Id).ToList();
-            var keep = new int[]
-            {
-                4771,
-                6000,
-                6129,
-                6132,
-                6140,
-                6141,
-                6142,
-                6182
-            };
-
-            var sb = new StringBuilder();
-            foreach (var item in units)
-            {
-                if (item.Id > 4700 && !keep.Contains(item.Id))
-                {
-                    //foreach (var mr in item.MaitenanceRequests)
-                    //{
-                    //    sb.AppendLine(mr.Id.ToString());
-                    //}
-                    foreach (var user in Kernel.Get<ApplicationDbContext>().Users.Where(p => p.UnitId == item.Id).ToArray())
-                    {
-                        user.UnitId = null;
-                        Context.SaveChanges();
-                    }
-                    Context.Units.Remove(item);
-                    Context.SaveChanges();
-                }
-            }
-            
-            return Content(sb.ToString(), "text/plain");
-        }
         public MaitenanceRequestsController(IKernel kernel, IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel, repository, service, context, userContext)
         {
             MaintenanceService = maintenanceService;
@@ -241,6 +233,27 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
+        public ActionResult AssignRequest(int id)
+        {
+            var request = Service.Find(id);
+            return AutoForm(new AssignMaintenanceEditModel(Kernel.Get<IRepository<ApplicationUser>>())
+            {
+                Id = id,
+                AssignedToId = request.AssignedToId
+            },
+                "AssignRequestSubmit", "Assign Maintenance Request");
+        }
+
+        public ActionResult AssignRequestSubmit(AssignMaintenanceEditModel model)
+        {
+            if (ModelState.IsValid && model.Id.HasValue)
+            {
+                MaintenanceService.AssignRequest(model.Id.Value, model.AssignedToId);
+                return new EmptyResult();
+            }
+            return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
+        }
+
         // GET: /MaitenanceRequests/Edit/5
         public ActionResult EditRequest(int? id)
         {
@@ -253,9 +266,6 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return HttpNotFound();
             }
-
-
-
             return View(new MaintenanceRequestEditModel()
             {
                 Id = id.Value,
@@ -288,14 +298,14 @@ namespace ApartmentApps.Portal.Controllers
                     return HttpNotFound();
                 }
 
-                maitenanceRequest.PetStatus = (int) editModel.PetStatus;
+                maitenanceRequest.PetStatus = (int)editModel.PetStatus;
                 maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
                 maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
                 maitenanceRequest.UnitId = editModel.UnitId;
                 maitenanceRequest.Message = editModel.Comments;
                 Context.SaveChanges();
 
-                return RedirectToAction("Details",new {id = id});
+                return RedirectToAction("Details", new { id = id });
             }
 
             return View(editModel);
@@ -405,14 +415,14 @@ namespace ApartmentApps.Portal.Controllers
             var WorkOrdersPerEmployee = CheckinsByRange(startDate, endDate).Where(p => p.StatusId == "Complete")
                 .GroupBy(p => p.Worker)
                 .ToArray();
-            
+
             HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
             string htmlText = $"<html><body style='padding: 40px;font-family: Arial, Helvetica, sans-serif;'>" +
                               $"<div style='text-align: center; font-size: 32px; font-weight: bold'>{UserContext.CurrentUser.Property.Name} Monthly Maintenance Report</div>" +
                               $"<div style='text-align: center; font-size: 20px;'>For {model.StartDate} {model.EndDate}</div>" +
                               $"<br/><br/><table style='width: 100%'>";
 
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Work Orders</td><td>{CheckinsByRange(startDate,endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Work Orders</td><td>{CheckinsByRange(startDate, endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
             foreach (var item in WorkOrdersPerEmployee)
             {
                 htmlText += $"<tr><td>{item.Key.FirstName} {item.Key.LastName} Completed</td><td>{item.Count()} Work Orders</td></tr> ";
@@ -609,7 +619,7 @@ namespace ApartmentApps.Portal.Controllers
             return View(maitenanceRequest);
         }
 
-    
+
 
         // GET: /MaitenanceRequests/Delete/5
         public ActionResult Delete(int? id)

@@ -38,5 +38,7 @@ namespace ApartmentApps.Api.ViewModels
         public DateTime? EndDate { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? CompleteDate { get; set; }
+        public string AssignedToId { get; set; }
+        public UserBindingModel AssignedTo { get; set; }
     }
 }
