@@ -11,11 +11,11 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("ViewController")]
-	partial class ViewController
-	{
-		void ReleaseDesignerOutlets ()
-		{
-		}
-	}
+    [Register ("ViewController")]
+    partial class ViewController
+    {
+        void ReleaseDesignerOutlets ()
+        {
+        }
+    }
 }

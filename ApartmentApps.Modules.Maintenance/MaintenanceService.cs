@@ -12,8 +12,18 @@ using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api
 {
-    public class MaintenanceService : StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> ,IMaintenanceService
+    public class MaintenanceRequestMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestViewModel>
     {
+        public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
+        public IBlobStorageService BlobStorageService { get; set; }
+
+        public MaintenanceRequestMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
+            IBlobStorageService blobStorageService)
+        {
+            UserMapper = userMapper;
+            BlobStorageService = blobStorageService;
+        }
+
         public override void ToModel(MaintenanceRequestViewModel viewModel, MaitenanceRequest model)
         {
 
@@ -46,24 +56,22 @@ namespace ApartmentApps.Api
             viewModel.StartDate = model.Checkins.FirstOrDefault(p => p.StatusId == "Started")?.Date;
             viewModel.CompleteDate = model.Checkins.FirstOrDefault(p => p.StatusId == "Complete")?.Date;
 
-            viewModel.LatestCheckin = model.LatestCheckin?.ToMaintenanceCheckinBindingModel(_blobStorageService);
-            viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(_blobStorageService));
-            //if (viewModel.LatestCheckin != null)
-            //{
-            //    viewModel.MainImage = model.Message.T
-            //} 
+            viewModel.LatestCheckin = model.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService);
+            viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(BlobStorageService));
         }
 
+    }
+    public class MaintenanceService : StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> ,IMaintenanceService
+    {
+ 
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
         public PropertyContext Context { get; set; }
 
         private IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
-        public MaintenanceService(IMapper<ApplicationUser, UserBindingModel> userMapper,IBlobStorageService blobStorageService, PropertyContext context, IUserContext userContext) : base(context.MaitenanceRequests)
+        public MaintenanceService(IRepository<MaitenanceRequest> repository, IMapper<MaitenanceRequest, MaintenanceRequestViewModel> mapper, IBlobStorageService blobStorageService, IUserContext userContext) : base(repository, mapper)
         {
-            UserMapper = userMapper;
-            Context = context;
             _blobStorageService = blobStorageService;
             _userContext = userContext;
         }
@@ -73,8 +81,9 @@ namespace ApartmentApps.Api
             var tz = _userContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(15,0,0,0));
             return
                 Context.MaitenanceRequests.Where(p => p.ScheduleDate != null).ToArray()
-                    .Select(ToViewModel);
+                    .Select(Mapper.ToViewModel);
         }
+        
         public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)
         {
 
@@ -123,7 +132,7 @@ namespace ApartmentApps.Api
             Checkin(_userContext.CurrentUser, maitenanceRequest.Id, maitenanceRequest.Message,
                 maitenanceRequest.StatusId, null, maitenanceRequest.GroupId);
 
-            Modules.Modules.EnabledModules.Signal<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
+            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
 
             return maitenanceRequest.Id;
 
@@ -169,7 +178,7 @@ namespace ApartmentApps.Api
                 request.CompletionDate = worker.TimeZone.Now();
             }
             Context.SaveChanges();
-            Modules.Modules.EnabledModules.Signal<IMaintenanceRequestCheckinEvent>( _ => _.MaintenanceRequestCheckin(checkin, request));
+            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceRequestCheckinEvent>( _ => _.MaintenanceRequestCheckin(checkin, request));
 
             return true;
 

@@ -49,8 +49,14 @@ namespace ResidentAppCross
                 return;
             }
 
+            MenuItems.Add(new HomeMenuItemViewModel()
+            {
+                Name = "Nested Sections",
+                Icon = SharedResources.Icons.PoliceFolder,
+                Command = NestedSectionCommand
+            });
 
-            if(maintenanceEnabled)
+            if (maintenanceEnabled)
             if (_loginManager.UserInfo.Roles.Contains("Maintenance") ||
                 _loginManager.UserInfo.Roles.Contains("PropertyAdmin"))
             {
@@ -145,6 +151,12 @@ namespace ResidentAppCross
             this.Publish(new HomeMenuUpdatedEvent(this));
 
         }
+
+        public ICommand NestedSectionCommand => new MvxCommand(() =>
+        {
+            ShowViewModel<NestedSectionsViewModel>();
+        });
+
 
         public ICommand ChangePasswordCommand => new MvxCommand(() =>
         {

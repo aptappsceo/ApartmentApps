@@ -7,14 +7,9 @@ using Microsoft.AspNet.Identity;
 
 namespace ApartmentApps.Portal.Controllers
 {
-  
 
-    public class BuildingService : StandardCrudService<Building, BuildingViewModel>
+    public class BuildingMapper : BaseMapper<Building, BuildingViewModel>
     {
-        public BuildingService(IRepository<Building> repository) : base(repository)
-        {
-        }
-
         public override void ToModel(BuildingViewModel viewModel, Building model)
         {
             model.Name = viewModel.Name;
@@ -26,6 +21,12 @@ namespace ApartmentApps.Portal.Controllers
         {
             viewModel.Name = model.Name;
             viewModel.Id = model.Id.ToString();
+        }
+    }
+    public class BuildingService : StandardCrudService<Building, BuildingViewModel>
+    {
+        public BuildingService(IRepository<Building> repository, IMapper<Building, BuildingViewModel> mapper) : base(repository, mapper)
+        {
         }
     }
 }

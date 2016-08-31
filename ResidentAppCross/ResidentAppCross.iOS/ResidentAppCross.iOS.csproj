@@ -136,15 +136,6 @@
     <Reference Include="MvvmCross.Plugins.PictureChooser.iOS, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\MvvmCross.Plugin.PictureChooser.4.0.0\lib\Xamarin.iOS10\MvvmCross.Plugins.PictureChooser.iOS.dll</HintPath>
     </Reference>
-    <Reference Include="ZXing.Net.Mobile.Core, Version=2.0.4.19, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\ZXing.Net.Mobile.2.0.4.19\lib\Xamarin.iOS10\ZXing.Net.Mobile.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="zxing.portable, Version=2.0.4.19, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\ZXing.Net.Mobile.2.0.4.19\lib\Xamarin.iOS10\zxing.portable.dll</HintPath>
-    </Reference>
-    <Reference Include="ZXingNetMobile, Version=2.0.4.19, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\ZXing.Net.Mobile.2.0.4.19\lib\Xamarin.iOS10\ZXingNetMobile.dll</HintPath>
-    </Reference>
     <Reference Include="SDWebImage, Version=3.7.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Xamarin.SDWebImage.3.7.5\lib\Xamarin.iOS\SDWebImage.dll</HintPath>
     </Reference>
@@ -159,6 +150,18 @@
     </Reference>
     <Reference Include="MvvmCross.Plugins.Location.iOS, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\MvvmCross.Plugin.Location.4.0.0\lib\Xamarin.iOS10\MvvmCross.Plugins.Location.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing.Net.Mobile.Core, Version=2.1.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ZXing.Net.Mobile.2.1.12\lib\Xamarin.iOS10\ZXing.Net.Mobile.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="zxing.portable, Version=2.1.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ZXing.Net.Mobile.2.1.12\lib\Xamarin.iOS10\zxing.portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ZXingNetMobile, Version=2.1.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ZXing.Net.Mobile.2.1.12\lib\Xamarin.iOS10\ZXingNetMobile.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +358,7 @@
     <InterfaceDefinition Include="Views\Sections\VerticalCollectionSection.xib" />
     <InterfaceDefinition Include="Views\CollectionItems\TicketCollectionViewCell.xib" />
     <InterfaceDefinition Include="Views\Sections\TextFieldSection.xib" />
+    <InterfaceDefinition Include="Views\ContainerSection.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -382,6 +386,7 @@
     <Compile Include="Setup.cs" />
     <Compile Include="Views\MaintenanceCheckinDetailsView.cs" />
     <Compile Include="Views\CourtesyOfficerCheckinsView.cs" />
+    <Compile Include="Views\NestedSectionView.cs" />
     <Compile Include="Views\NotificationDetailsFormView.cs" />
     <Compile Include="Views\NotificationIndexFormView.cs" />
     <Compile Include="Views\AppTheme.cs" />
@@ -512,19 +517,24 @@
     <Compile Include="Views\Sections\TextFieldSection.designer.cs">
       <DependentUpon>TextFieldSection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ContainerSection.cs" />
+    <Compile Include="Views\ContainerSection.designer.cs">
+      <DependentUpon>ContainerSection.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="azure-messaging">
-      <Version>1.1.5.6</Version>
       <Visible>False</Visible>
+      <Version>1.2.5.0</Version>
+      <InstallationInProgress>True</InstallationInProgress>
     </XamarinComponentReference>
     <XamarinComponentReference Include="sdwebimage">
       <Version>3.7.5</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
     <XamarinComponentReference Include="zxing.net.mobile">
-      <Version>2.0.4.17</Version>
       <Visible>False</Visible>
+      <Version>2.1.12</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
@@ -587,7 +597,7 @@
       <Name>ResidentAppCross</Name>
     </ProjectReference>
     <ProjectReference Include="..\SCLAlertViewLib\SCLAlertViewLib.csproj">
-      <Project>{EE36DD11-4F2C-4D9E-A8A7-7EC647B2AD9F}</Project>
+      <Project>{ee36dd11-4f2c-4d9e-a8a7-7ec647b2ad9f}</Project>
       <Name>SCLAlertViewLib</Name>
     </ProjectReference>
   </ItemGroup>

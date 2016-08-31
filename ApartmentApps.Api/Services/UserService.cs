@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using ApartmentApps.Api;
@@ -7,11 +9,11 @@ using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class UserService : StandardCrudService<ApplicationUser, UserBindingModel>
+    public class UserMapper : BaseMapper<ApplicationUser, UserBindingModel>
     {
         private readonly IBlobStorageService _blobService;
 
-        public UserService(IBlobStorageService blobService,IRepository<ApplicationUser> repository) : base(repository)
+        public UserMapper(IBlobStorageService blobService)
         {
             _blobService = blobService;
         }
@@ -21,7 +23,7 @@ namespace ApartmentApps.Portal.Controllers
             model.Id = viewModel.Id.ToString();
             model.FirstName = viewModel.FirstName;
             model.LastName = viewModel.LastName;
-            
+
         }
         /// Hashes an email with MD5.  Suitable for use with Gravatar profile
         /// image urls
@@ -65,6 +67,17 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Address = user?.Address;
             viewModel.City = user?.City;
             viewModel.PostalCode = user?.PostalCode;
+        }
+    }
+    public class UserService : SearchableCrudService<ApplicationUser, UserBindingModel, UserBindingModel>
+    {
+        public UserService(IRepository<ApplicationUser> repository, IMapper<ApplicationUser, UserBindingModel> mapper) : base(repository, mapper)
+        {
+        }
+
+        public override IEnumerable<SearchFieldMutator<ApplicationUser, UserBindingModel>> GetMutators()
+        {
+            yield return Mutator(p => !string.IsNullOrEmpty(p.Email), (x, y) => x.Where(p => p.Email == y.Email));
         }
     }
 }

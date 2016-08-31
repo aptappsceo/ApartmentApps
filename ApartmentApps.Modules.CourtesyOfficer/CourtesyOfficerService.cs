@@ -12,30 +12,40 @@ using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api
 {
-    public class CourtesyOfficerService : StandardCrudService<CourtesyOfficerCheckin, CourtesyCheckinViewModel>
+    public class CourtesyCheckinMapper : BaseMapper<CourtesyOfficerCheckin, CourtesyCheckinViewModel>
     {
-        public IUserContext UserContext { get; set; }
-        public IRepository<CourtesyOfficerLocation> Locations { get; set; }
-
-        public CourtesyOfficerService(IRepository<CourtesyOfficerCheckin> repository) : base(repository)
+        public override void ToModel(CourtesyCheckinViewModel viewModel, CourtesyOfficerCheckin model)
         {
+
         }
 
-        public CourtesyOfficerService(IUserContext userContext, IRepository<CourtesyOfficerLocation> locations, IRepository<CourtesyOfficerCheckin> repository) : base(repository)
+        public override void ToViewModel(CourtesyOfficerCheckin p, CourtesyCheckinViewModel viewModel)
+        {
+
+            //viewModel.Latitude = p.Latitude;
+            //viewModel.Longitude = p.Longitude;
+            //viewModel.Label = p.Label;
+            //viewModel.Id = p.Id;
+            //viewModel.Date = item?.CreatedOn;
+            //viewModel.Complete = item != null;
+            //viewModel.AcceptableCheckinCodes = new List<string>()
+            //{
+            //    $"http://apartmentapps.com?location={p.LocationId}",
+            //    $"http://www.apartmentapps.com?coloc={p.LocationId}"
+            //};
+
+        }
+    }
+    public class CourtesyOfficerService : StandardCrudService<CourtesyOfficerCheckin, CourtesyCheckinViewModel>
+    {
+        public CourtesyOfficerService(IRepository<CourtesyOfficerCheckin> repository, IMapper<CourtesyOfficerCheckin, CourtesyCheckinViewModel> mapper, IUserContext userContext, IRepository<CourtesyOfficerLocation> locations) : base(repository, mapper)
         {
             UserContext = userContext;
             Locations = locations;
         }
 
-        public override void ToModel(CourtesyCheckinViewModel viewModel, CourtesyOfficerCheckin model)
-        {
-            
-        }
-
-        public override void ToViewModel(CourtesyOfficerCheckin model, CourtesyCheckinViewModel viewModel)
-        {
-            
-        }
+        public IUserContext UserContext { get; set; }
+        public IRepository<CourtesyOfficerLocation> Locations { get; set; }
 
         public IEnumerable<CourtesyCheckinBindingModel> ForDay(DateTime? date)
         {

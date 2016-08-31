@@ -11,18 +11,62 @@ using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api
 {
+    public class IncidentReportMapper : BaseMapper<IncidentReport, IncidentReportViewModel>
+    {
+        private readonly IBlobStorageService _blobStorageService;
+        public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
+
+        public IncidentReportMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
+            IBlobStorageService blobStorageService)
+        {
+            _blobStorageService = blobStorageService;
+            UserMapper = userMapper;
+        }
+
+        public override void ToModel(IncidentReportViewModel viewModel, IncidentReport model)
+        {
+            model.Comments = viewModel.Comments;
+            model.StatusId = viewModel.StatusId;
+        }
+
+        public override void ToViewModel(IncidentReport model, IncidentReportViewModel viewModel)
+        {
+            viewModel.Title = model.IncidentType.ToString();
+            viewModel.RequestDate = model.CreatedOn;
+            viewModel.Comments = model.Comments;
+            viewModel.SubmissionBy = UserMapper.ToViewModel(model.User);
+            viewModel.StatusId = model.StatusId;
+            viewModel.Id = model.Id.ToString();
+            viewModel.UnitName = model.Unit?.Name;
+            viewModel.BuildingName = model.Unit?.Building?.Name;
+
+            viewModel.LatestCheckin = model.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
+            viewModel.Checkins = model.Checkins.Select(p => p.ToIncidentCheckinBindingModel(_blobStorageService));
+            //viewModel.Title = x.IncidentType.ToString();
+            //viewModel.Comments = x.Comments;
+            //viewModel.UnitName = x.Unit?.Name;
+            //viewModel.BuildingName = x.Unit?.Building?.Name;
+            //viewModel.RequestDate = x.CreatedOn;
+            //viewModel.SubmissionBy = _userMapper.ToViewModel(x.User);// x.User.ToUserBindingModel(BlobStorageService);
+            //viewModel.StatusId = x.StatusId;
+            //viewModel.LatestCheckin = x.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
+            viewModel.Id = model.Id.ToString();
+
+        }
+    }
     public class IncidentsService : StandardCrudService<IncidentReport, IncidentReportViewModel> ,IIncidentsService
     {
+        public IncidentsService(IRepository<IncidentReport> repository, IMapper<IncidentReport, IncidentReportViewModel> mapper, IBlobStorageService blobStorageService, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper) : base(repository, mapper)
+        {
+            _blobStorageService = blobStorageService;
+            Context = context;
+            UserMapper = userMapper;
+        }
+
         public PropertyContext Context { get; set; }
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; }
         private IBlobStorageService _blobStorageService;
 
-        public IncidentsService(IMapper<ApplicationUser,UserBindingModel> userMapper, IBlobStorageService blobStorageService, PropertyContext context) : base(context.IncidentReports)
-        {
-            Context = context;
-            UserMapper = userMapper;
-            _blobStorageService = blobStorageService;
-        }
 
         public int SubmitIncidentReport(ApplicationUser user, string comments, IncidentType incidentReportTypeId, List<byte[]> images, int unitId = 0)
         {
@@ -57,7 +101,7 @@ namespace ApartmentApps.Api
 
             Checkin(user, incidentReport.Id, incidentReport.Comments, incidentReport.StatusId, null,
               incidentReport.GroupId);
-            Modules.Modules.EnabledModules.Signal<IIncidentReportSubmissionEvent>(_ => _.IncidentReportSubmited(incidentReport));
+            Modules.ModuleHelper.EnabledModules.Signal<IIncidentReportSubmissionEvent>(_ => _.IncidentReportSubmited(incidentReport));
             
 
             return incidentReport.Id;
@@ -100,7 +144,7 @@ namespace ApartmentApps.Api
                 incidentReport.CompletionDate = officer.TimeZone.Now();
             }
             Context.SaveChanges();
-            Modules.Modules.EnabledModules.Signal<IIncidentReportCheckinEvent>( _ => _.IncidentReportCheckin(checkin, incidentReport));
+            Modules.ModuleHelper.EnabledModules.Signal<IIncidentReportCheckinEvent>( _ => _.IncidentReportCheckin(checkin, incidentReport));
             return true;
 
         }
@@ -119,35 +163,6 @@ namespace ApartmentApps.Api
             return Checkin(user, incidentReportId, comments, "Complete", photos);
         }
 
-        public override void ToModel(IncidentReportViewModel viewModel, IncidentReport model)
-        {
-            model.Comments = viewModel.Comments;
-            model.StatusId = viewModel.StatusId;
-        }
-
-        public override void ToViewModel(IncidentReport model, IncidentReportViewModel viewModel)
-        {
-            viewModel.Title = model.IncidentType.ToString();
-            viewModel.RequestDate = model.CreatedOn;
-            viewModel.Comments = model.Comments;
-            viewModel.SubmissionBy = UserMapper.ToViewModel(model.User);
-            viewModel.StatusId = model.StatusId;
-            viewModel.Id = model.Id.ToString();
-            viewModel.UnitName = model.Unit?.Name;
-            viewModel.BuildingName = model.Unit?.Building?.Name;
-
-            viewModel.LatestCheckin = model.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
-            viewModel.Checkins = model.Checkins.Select(p => p.ToIncidentCheckinBindingModel(_blobStorageService));
-            //viewModel.Title = x.IncidentType.ToString();
-            //viewModel.Comments = x.Comments;
-            //viewModel.UnitName = x.Unit?.Name;
-            //viewModel.BuildingName = x.Unit?.Building?.Name;
-            //viewModel.RequestDate = x.CreatedOn;
-            //viewModel.SubmissionBy = _userMapper.ToViewModel(x.User);// x.User.ToUserBindingModel(BlobStorageService);
-            //viewModel.StatusId = x.StatusId;
-            //viewModel.LatestCheckin = x.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
-            viewModel.Id = model.Id.ToString();
-
-        }
+      
     }
 }

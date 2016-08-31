@@ -11,5 +11,6 @@ namespace ApartmentApps.Portal.Controllers
         TViewModel Find(int id);
         TViewModel CreateNew();
         void Save(TViewModel unit);
+      
     }
 }

@@ -12,6 +12,7 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Inspections;
 using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -32,12 +33,12 @@ namespace ApartmentApps.IoC
             b.InSingletonScope();
         }
 #endif
-        public static void RegisterMappable<TModel, TViewModel,TService>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel, TViewModel>
+        public static void RegisterMappable<TModel, TViewModel,TService, TDefaultMapper>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel, TViewModel> where TDefaultMapper : IMapper<TModel, TViewModel>
         {
             
-           
+           kernel.Bind<IMapper<TModel,TViewModel>>().To<TDefaultMapper>().InRequestScope();
+
             kernel.Bind< IService,
-                IMapper < TModel, TViewModel >,
                 StandardCrudService <TModel, TViewModel>, IServiceFor<TViewModel>>()
                 .To<TService>().InRequestScope();
 
@@ -54,7 +55,7 @@ namespace ApartmentApps.IoC
         }
         public static void RegisterServices(IKernel kernel)
         {
-            ApartmentApps.Api.Modules.Modules.Kernel = kernel;
+            ApartmentApps.Api.Modules.ModuleHelper.Kernel = kernel;
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
@@ -93,6 +94,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterModule<MessagingModule, MessagingConfig>();
             //kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<EntrataModule, EntrataConfig>();
+            kernel.RegisterModule<InspectionsModule, InspectionsModuleConfig>();
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
             //ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
@@ -157,13 +159,14 @@ namespace ApartmentApps.IoC
             kernel.Bind<DbContext>().ToMethod(_ => _.Kernel.Get<ApplicationDbContext>()).InRequestScope();
             kernel.Bind<IFeedSerivce>().To<FeedSerivce>().InRequestScope();
 
-            kernel.RegisterMappable<Unit, UnitViewModel, UnitService>();
-            kernel.RegisterMappable<Building, BuildingViewModel, BuildingService>();
-            kernel.RegisterMappable<Message, MessageViewModel, MessagingService>();
-            kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService>();
-            kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService>();
-            kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService>();
-            kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService>();
+            kernel.RegisterMappable<Unit, UnitViewModel, UnitService, UnitMapper>();
+            kernel.RegisterMappable<Inspection, InspectionViewModel, InspectionsService, InspectionViewModelMapper>();
+            kernel.RegisterMappable<Building, BuildingViewModel, BuildingService, BuildingMapper>();
+            kernel.RegisterMappable<Message, MessageViewModel, MessagingService, MessageMapper>();
+            kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService, UserMapper>();
+            kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService, MaintenanceRequestMapper>();
+            kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService, IncidentReportMapper>();
+            kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService, CourtesyCheckinMapper>();
 
             kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
 

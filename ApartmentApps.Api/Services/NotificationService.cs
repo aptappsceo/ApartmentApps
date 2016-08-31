@@ -3,12 +3,8 @@ using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class NotificationService : StandardCrudService<UserAlert, NotificationViewModel>
+    public class NotificationMapper : BaseMapper<UserAlert, NotificationViewModel>
     {
-        public NotificationService(IRepository<UserAlert> repository) : base(repository)
-        {
-
-        }
 
         public override void ToModel(NotificationViewModel viewModel, UserAlert model)
         {
@@ -23,6 +19,12 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Message = model.Message;
             viewModel.HasRead = model.HasRead;
             viewModel.Date = model.CreatedOn;
+        }
+    }
+    public class NotificationService : StandardCrudService<UserAlert, NotificationViewModel>
+    {
+        public NotificationService(IRepository<UserAlert> repository, IMapper<UserAlert, NotificationViewModel> mapper) : base(repository, mapper)
+        {
         }
     }
 }

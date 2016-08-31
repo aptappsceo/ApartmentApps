@@ -27,7 +27,7 @@ namespace ApartmentApps.Portal.Controllers
         {
         }
     }
-
+    
     public class AutoFormController<TService, TFormService, TIndexViewModel, TFormViewModel> : AAController
         where TIndexViewModel : new()
         where TFormViewModel : BaseViewModel, new()
@@ -35,8 +35,8 @@ namespace ApartmentApps.Portal.Controllers
         where TFormService : IServiceFor<TFormViewModel>
     {
         private readonly IKernel _kernel;
-        private readonly TFormService _formService;
-        private readonly TService _indexService;
+        protected readonly TFormService _formService;
+        protected readonly TService _indexService;
 
         public AutoFormController(IKernel kernel, TFormService formService, TService indexService, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {

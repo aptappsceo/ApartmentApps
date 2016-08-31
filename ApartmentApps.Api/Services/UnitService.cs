@@ -4,7 +4,7 @@ using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class UnitService : StandardCrudService<Unit, UnitViewModel>
+    public class UnitMapper : BaseMapper<Unit, UnitViewModel>
     {
         public override void ToModel(UnitViewModel viewModel, Unit model)
         {
@@ -26,9 +26,13 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.BuildingName = model.Building.Name;
         }
 
-        public UnitService(IRepository<Unit> repository) : base(repository)
+    }
+    public class UnitService : StandardCrudService<Unit, UnitViewModel>
+    {
+        public UnitService(IRepository<Unit> repository, IMapper<Unit, UnitViewModel> mapper) : base(repository, mapper)
         {
         }
 
+   
     }
 }
