@@ -927,6 +927,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\bootstrap3-typeahead.min.js" />
     <Content Include="js\Chart.js" />
     <Content Include="js\clndr.js" />
     <Content Include="js\custom.js" />
@@ -1028,6 +1029,7 @@
     <Content Include="Content\ej\web\gradient-lime\ej.theme.less" />
     <Content Include="Content\ej\web\gradient-saffron-dark\ej.theme.less" />
     <Content Include="Content\ej\web\gradient-saffron\ej.theme.less" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <Content Include="Scripts\canvg.js" />
     <Content Include="Scripts\ej\ej.unobtrusive.min.js" />
@@ -1253,6 +1255,9 @@
     <Content Include="Views\Payments\RentSummary.cshtml" />
     <Content Include="Views\Payments\PaymentOptions.cshtml" />
     <Content Include="Views\Payments\PaymentSuccess.cshtml" />
+    <Content Include="Views\Payments\CreateUserLeaseInfo.cshtml" />
+    <Content Include="Views\Shared\Autocomplete\AutoCompleteFor.cshtml" />
+    <Content Include="Views\Payments\UserPaymentsOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

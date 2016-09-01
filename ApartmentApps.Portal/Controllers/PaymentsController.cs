@@ -1,10 +1,12 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
 using Ninject;
@@ -14,7 +16,10 @@ namespace ApartmentApps.Portal.Controllers
     [Authorize]
     public class PaymentsController : AAController
     {
+        private readonly IBlobStorageService _blobStorageService;
         private readonly PaymentsModule _paymentsModule;
+        private readonly IRepository<UserLeaseInfo> _leaseInfos;
+        private readonly IRepository<Invoice> _invoices;
         // GET: Payments
         public ActionResult Index()
         {
@@ -25,9 +30,12 @@ namespace ApartmentApps.Portal.Controllers
             return View("RentSummary"); // TODO Redirect to other pages for property manager
         }
 
-        public PaymentsController(PaymentsModule paymentsModule, IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule, IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices  ,IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
+            _blobStorageService = blobStorageService;
             _paymentsModule = paymentsModule;
+            _leaseInfos = leaseInfos;
+            _invoices = invoices;
         }
 
         public ActionResult RentSummary()
@@ -87,6 +95,64 @@ namespace ApartmentApps.Portal.Controllers
         {
             return AutoForm(new AddBankAccountBindingModel(), "AddBankAccountSubmit", "Add Credit Card");
         }
+
+        public ActionResult CreateUserLeaseInfo()
+        {
+            return View("CreateUserLeaseInfo",new CreateUserLeaseInfoBindingModel()
+            {
+                UserIdItems = Context.Users.GetAll().Where(u=>!u.Archived).ToList().Select(u=>u.ToUserBindingModel(_blobStorageService)).Where(u=>!string.IsNullOrWhiteSpace(u.FullName)).ToList(),
+            });
+        }
+
+        [HttpPost]
+        public ActionResult SubmitCreateUserLeaseInfo(CreateUserLeaseInfoBindingModel data)
+        {
+            if (!ModelState.IsValid)
+            {
+                data.UserIdItems =
+                    Context.Users.GetAll()
+                        .Where(u => !u.Archived)
+                        .ToList()
+                        .Select(u => u.ToUserBindingModel(_blobStorageService))
+                        .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
+                        .ToList();
+                 return View("CreateUserLeaseInfo",data);
+            }
+
+            _paymentsModule.CreateUserLeaseInfo(data);
+
+            return RedirectToAction("UserPaymentsOverview", new { id = data.UserId });
+        }
+
+        public ActionResult UserPaymentsOverview(string id)
+        {
+            var user = Context.Users.Find(id);
+            if (user == null) return HttpNotFound();
+
+            var userLeaseInfos = _leaseInfos.GetAll().Where(s => s.UserId == id).ToList();
+            var userLeaseInfosIds = userLeaseInfos.Select(s => s.Id).ToArray();
+            
+            return View("UserPaymentsOverview",new UserPaymentsOverviewBindingModel()
+            {
+                User = user.ToUserBindingModel(_blobStorageService),
+                Invoices = _invoices.GetAll().Where(s=> userLeaseInfosIds.Contains(s.UserLeaseInfoId)).ToList(),
+                LeaseInfos = userLeaseInfos
+            });
+        }
+
+        public ActionResult MarkAsPaid(int id)
+        {
+            var invoice = _invoices.Find(id);
+            if (invoice == null) return HttpNotFound();
+            var user = invoice.UserLeaseInfo.User;
+            if (user == null) return HttpNotFound();
+            _paymentsModule.MarkAsPaid(id, "Marked as paid by " + CurrentUser.Email);
+            
+            
+
+            return RedirectToAction("UserPaymentsOverview", new { id = user.Id });
+        }
+
         public async Task<ActionResult> AddBankAccountSubmit(AddBankAccountBindingModel cardModel)
         {
             await _paymentsModule.AddBankAccount(cardModel);

@@ -9,7 +9,7 @@ namespace ApartmentApps.Api.Modules
         Task<AddCreditCardResult> AddCreditCard(AddCreditCardBindingModel addCreditCard);
         Task<AddBankAccountResult> AddBankAccount(AddBankAccountBindingModel addCreditCard);
         IEnumerable<PaymentOptionBindingModel> GetPaymentOptions();
-        IEnumerable<PaymentHistoryBindingModel> GetPaymentHistory();
+        IEnumerable<UserInvoiceHistoryBindingModel> GetPaymentHistory();
         Task<PaymentSummaryBindingModel> GetPaymentSummary(string userId);
         Task<PaymentSummaryBindingModel> GetRentSummary(string userId);
     }

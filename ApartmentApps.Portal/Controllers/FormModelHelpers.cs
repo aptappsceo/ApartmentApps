@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -58,4 +60,40 @@ namespace ApartmentApps.Portal.Controllers
         public List<FeedItemBindingModel> FeedItems { get; set; }
         public Func<FeedItemBindingModel, string> ItemUrlSelector { get; set; }
     }
+
+    public static class AutoCompleteHelper
+    {
+
+        public static HtmlString RenderAutoComplete<TModel, TObject, TId>(this HtmlHelper<TModel> html, Expression<Func<TModel, TId>> expression,IEnumerable<TObject> from, Func<TObject, TId> select,Func<TObject, string> title)
+        {
+            var meta = ModelMetadata.FromLambdaExpression(expression, html.ViewData);
+
+            return html.Partial("~/Views/Shared/Autocomplete/AutoCompleteFor",new AutoCompleteForModel()
+            {
+                ModelPropertyId = meta.PropertyName,
+                Entries = from.Select(x=>new AutoCompletePair()
+                {
+                    Id = select(x),
+                    Title = title(x)
+                }).ToList(),
+                Label = "SomeLabel"
+            });
+        }
+    }
+
+    public class AutoCompleteForModel
+    {
+        public string Label { get; set; }
+        public List<AutoCompletePair> Entries { get;set; }
+
+        public string ModelPropertyId { get; set; }
+
+    }
+
+    public class AutoCompletePair
+    {
+        public string Title { get; set; }
+        public object Id { get;set; }
+    }
+
 }

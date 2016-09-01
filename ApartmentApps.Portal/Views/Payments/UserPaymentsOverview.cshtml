@@ -1,0 +1,167 @@
+﻿@using ApartmentApps.Api
+@using ApartmentApps.Api.Modules
+@model ApartmentApps.Api.Modules.UserPaymentsOverviewBindingModel
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Overview for @Model.User.FullName</h2>
+    </div>
+</div>
+
+
+<div class="row wrapper">
+
+    <h2> User Lease Infos </h2>
+    @foreach (var group in Model.LeaseInfos.GroupBy(_ => _.State))
+    {
+        <div class="col-md-4">
+            <h4>@group.Key</h4>
+            <ul class="unstyled">
+
+                @{
+
+                    foreach (var modelLeaseInfo in @group)
+                    {
+                        <li>
+                            <div class="well">
+                                <h5>@modelLeaseInfo.Title ($@modelLeaseInfo.Amount)</h5>
+                                <small>Id: @modelLeaseInfo.Id</small>
+                                <br />
+                                <small>Invoice Date: @modelLeaseInfo.InvoiceDate.ToString("g")</small> <br />
+                                @if (modelLeaseInfo.IsIntervalSet())
+                                {
+                                    <small>Interval: </small>
+                                    if (modelLeaseInfo.IntervalDays.HasValue)
+                                    {
+                                        <small>@modelLeaseInfo.IntervalDays.Value Days </small>
+                                    }
+                                    if (modelLeaseInfo.IntervalMonths.HasValue)
+                                    {
+                                        <small>@modelLeaseInfo.IntervalMonths.Value Months </small>
+                                    }
+                                    if (modelLeaseInfo.IntervalYears.HasValue)
+                                    {
+                                        <small>@modelLeaseInfo.IntervalYears.Value Years</small>
+                                    }
+                                    <br />
+
+                                    if (modelLeaseInfo.RepetitionCompleteDate.HasValue)
+                                    {
+                                        <small>Complete Date: @modelLeaseInfo.RepetitionCompleteDate.Value.ToString("g")</small>
+                                        <br />
+                                    }
+                                }
+                                @if (modelLeaseInfo.State != LeaseState.Archived)
+                                {
+                                    <div class='btn-toolbar'>
+                                        <div class="btn-group-xs">
+                                            <a href="#" class="btn btn-warning">Edit</a>
+                                            <a href="#" class="btn btn-danger">Suspend</a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </li>
+                    }
+                }
+
+            </ul>
+
+        </div>
+                    }
+
+
+
+
+</div>
+
+
+<div class="row wrapper">
+
+    <h2> Invoices </h2>
+
+    @foreach (var group in Model.Invoices.GroupBy(_ => _.State))
+    {
+        <div class="col-md-4">
+            <h4>@group.Key</h4>
+            <ul class="unstyled">
+
+                @{
+
+                    foreach (var invoice in @group)
+                    {
+                        <li style="@(invoice.IsArchived ? "opacity: 0.5" : "")">
+                            <div class="well">
+                                <h5>
+                                    @if (invoice.State == InvoiceState.Paid)
+                                    {
+                                    }
+
+                                    @invoice.Title ($@invoice.Amount)
+
+
+                                    @{
+                                        var dateTime = invoice.UserLeaseInfo.User.Property.TimeZone.Now();
+                                    }
+                                    @if (invoice.State == InvoiceState.Paid)
+                                    {
+                                        <span class="badge badge-success">Paid</span>
+
+                                    }
+                                    else if (invoice.DueDate < dateTime)
+                                    {
+                                        <span class="badge badge-danger">Urgent</span>
+                                    }
+                                    else if (invoice.AvailableDate < dateTime)
+                                    {
+                                        <span class="badge badge-primary">Available</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-default">Upcoming</span>
+                                    }
+
+                                </h5>
+                                <small>Id: @invoice.Id</small>
+                                <br />
+
+                                @if (invoice.State != InvoiceState.Paid)
+                                {
+                                    <small>Due Date: @invoice.DueDate.ToString("g")</small>
+                                    <br />
+                                    <div class='btn-toolbar'>
+                                        <div class="btn-group-xs">
+                                            <a href="@Url.Action("MarkAsPaid",new {id = invoice.Id})" class="btn btn-info">Mark As Paid</a>
+                                            <a href="#" class="btn btn-warning">Edit</a>
+                                            <a href="#" class="btn btn-danger">Cancel</a>
+                                        </div>
+                                    </div>
+                                }
+                                else if (invoice.State == InvoiceState.Pending)
+                                {
+                                   <small>Transaction is in progress...</small> 
+                                }
+                                else
+                                {
+
+                                    <small>Paid </small>
+                                    if (invoice.IsArchived)
+                                    {
+                                        <small> and Archived</small>
+                                    }
+                                }
+                                
+                            
+                            </div>
+                        </li>
+                    }
+                }
+
+            </ul>
+
+        </div>
+                    }
+
+
+</div>

@@ -124,6 +124,8 @@
     <Compile Include="Unit.cs" />
     <Compile Include="UnitMetadata.cs" />
     <Compile Include="UserAlert.cs" />
+    <Compile Include="Utils\PersistableIntCollection.cs" />
+    <Compile Include="Utils\PersistableScalarCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

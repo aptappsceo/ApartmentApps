@@ -37,7 +37,7 @@ namespace ApartmentApps.API.Service.Controllers
         }
 
         [HttpPost, Route("GetPaymentHistory")]
-        public IEnumerable<PaymentHistoryBindingModel> GetPaymentHistory()
+        public IEnumerable<UserInvoiceHistoryBindingModel> GetPaymentHistory()
         {
             return PaymentsService.GetPaymentHistory();
         }
