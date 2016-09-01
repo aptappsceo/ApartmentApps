@@ -73,7 +73,7 @@
     <Compile Include="MakePaymentBindingModel.cs" />
     <Compile Include="MakePaymentResult.cs" />
     <Compile Include="PaymentBindingModel.cs" />
-    <Compile Include="PaymentHistoryBindingModel.cs" />
+    <Compile Include="UserInvoiceHistoryBindingModel.cs" />
     <Compile Include="PaymentOptionBindingModel.cs" />
     <Compile Include="PaymentsConfig.cs" />
     <Compile Include="PaymentsModule.cs" />
