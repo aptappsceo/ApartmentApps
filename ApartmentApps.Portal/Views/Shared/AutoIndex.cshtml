@@ -10,7 +10,10 @@
     <div class="ibox-title">
         <h5></h5>
         <div class="ibox-tools">
-            @Html.ActionLink("Create New", "Entry", null, new { @class = "btn btn-primary btn-xs" })
+            <a class="btn btn-primary btn-xs" data-toggle="modal" href="@Url.Action("SearchForm")" data-target="#myModal">Search</a>
+            <a class="btn btn-primary btn-xs" data-toggle="modal" href="@Url.Action("Entry")" data-target="#myModal">Add New</a>
+
+            @*@Html.ActionLink("Create New", "Entry", null, new {@class = "btn btn-primary btn-xs"})*@
         </div>
     </div>
     <div class="ibox-content">
@@ -18,3 +21,13 @@
     </div>
 </div>
 <div class="clear"></div>
+                         
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+         
+        </div>
+    </div>
+</div>
+
+          

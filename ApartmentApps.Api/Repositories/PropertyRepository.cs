@@ -118,6 +118,7 @@ namespace ApartmentApps.Api
         }
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
         {
+            if (predicate == null) return GetAll();
             return GetAll().Where(predicate);
         }
 

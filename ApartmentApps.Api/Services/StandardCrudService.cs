@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using ApartmentApps.Api;
@@ -9,60 +10,61 @@ using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public delegate IQueryable<TItem> QueryMutator<TItem, TSearch>(IQueryable<TItem> items, TSearch search);
-    public class SearchFieldMutator<TItem, TSearch>
+
+    public interface ISearchable<TViewModel,TSearchViewModel>
     {
-        public Predicate<TSearch> Condition { get; set; }
-        public QueryMutator<TItem, TSearch> Mutator { get; set; }
-
-        public SearchFieldMutator(Predicate<TSearch> condition, QueryMutator<TItem, TSearch> mutator)
-        {
-            Condition = condition;
-            Mutator = mutator;
-        }
-
-        public IQueryable<TItem> Apply(TSearch search, IQueryable<TItem> query)
-        {
-            return Condition(search) ? Mutator(query, search) : query;
-        }
+        IEnumerable<Filter> CreateFilters(TSearchViewModel viewModel);
+        IEnumerable<TViewModel> Search(TSearchViewModel criteria,out int count, int? skip = null, int? take = null);
     }
 
-    public class GridFilterViewModel
+    public class FilterViewModel
     {
-        
+        [DisplayName("Operator")]
+        public ExpressionOperator ExpressionOperator { get; set; }
 
+        [DisplayName("Value")]
+        public string Value { get; set; }
     }
-    public interface ISearchable<TModel, TSearchViewModel>
+    public abstract class SearchableCrudService<TModel, TViewModel, TSearchViewModel> : StandardCrudService<TModel,TViewModel>, ISearchable<TViewModel, TSearchViewModel> where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new()
     {
-        IEnumerable<SearchFieldMutator<TModel, TSearchViewModel>> GetMutators();
+        //public SearchFieldMutator<TModel, TSearchViewModel> Mutator(Predicate<TSearchViewModel> predicate, QueryMutator<TModel,TSearchViewModel> mutator)
+        //{
+        //    return new SearchFieldMutator<TModel, TSearchViewModel>(predicate,mutator);
+        //} 
+        //public abstract IEnumerable<SearchFieldMutator<TModel, TSearchViewModel>> GetMutators();
 
-    }
 
-    public abstract class SearchableCrudService<TModel, TViewModel, TSearchViewModel> : StandardCrudService<TModel,TViewModel>, ISearchable<TModel, TSearchViewModel> where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new()
-    {
-        public SearchFieldMutator<TModel, TSearchViewModel> Mutator(Predicate<TSearchViewModel> predicate, QueryMutator<TModel,TSearchViewModel> mutator)
+        public IEnumerable<Filter> CreateFilters(TSearchViewModel viewModel)
         {
-            return new SearchFieldMutator<TModel, TSearchViewModel>(predicate,mutator);
-        } 
-        public abstract IEnumerable<SearchFieldMutator<TModel, TSearchViewModel>> GetMutators();
-
-        protected IEnumerable<TViewModel> Search(IMapper<TModel,TViewModel> mapper, TSearchViewModel criteria,out int count, int? skip = null, int? take = null)
-        {
-            var result = Repository.GetAll();
-            foreach (var mutator in GetMutators())
+            foreach (var property in typeof (TSearchViewModel).GetProperties().Where(p=>p.PropertyType == typeof(FilterViewModel)))
             {
-                result = mutator.Apply(criteria, result);
+                var obj = property.GetValue(viewModel, null) as FilterViewModel;
+                if (obj == null) continue;
+                if (!string.IsNullOrEmpty(obj.Value))
+                {
+                    yield return new Filter()
+                    {
+                        Value = obj.Value,
+                        Operator = obj.ExpressionOperator
+                    };
+                }
             }
+        }
 
-            if (skip != null)
-                result = result.Skip(skip.Value);
-            if (take != null)
-                result = result.Take(take.Value);
+        public IEnumerable<TViewModel> Search( TSearchViewModel criteria,out int count, int? skip = null, int? take = null)
+        {
+            var result = Repository.Where(ExpressionBuilder.GetExpression<TModel>(CreateFilters(criteria).ToList()));
+         
+            
+            //if (skip != null)
+            //    result = result.Skip(skip.Value);
+            //if (take != null)
+            //    result = result.Take(take.Value);
 
 
-            var res = result.Select(Mapper.ToViewModel).ToArray();
+            var res = result.ToArray();
             count = res.Length;
-            return res;
+            return res.Select(Mapper.ToViewModel);
         }
 
         protected SearchableCrudService(IRepository<TModel> repository, IMapper<TModel, TViewModel> mapper) : base(repository, mapper)

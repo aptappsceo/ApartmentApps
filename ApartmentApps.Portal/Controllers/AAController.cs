@@ -5,9 +5,11 @@ using System.Web.Mvc;
 using System.Web.Services.Description;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Ninject;
+using Syncfusion.JavaScript.DataVisualization.Models;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -20,6 +22,71 @@ namespace ApartmentApps.Portal.Controllers
         }
     }
 
+
+    public class AutoUserController : AutoGridController<UserService,UserBindingModel, UserSearchViewModel>
+    {
+        public AutoUserController(IKernel kernel, UserService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
+        {
+        }
+    }
+
+    public class AutoGridController<TService, TViewModel, TSearchViewModel> :
+        AutoGridController<TService, TService, TViewModel, TViewModel, TSearchViewModel>
+               where TService : class, ISearchable<TViewModel, TSearchViewModel>, IServiceFor<TViewModel> 
+        where TSearchViewModel : new()
+        
+        
+        where TViewModel : BaseViewModel, new()
+    {
+        public AutoGridController(IKernel kernel, TService formService,  PropertyContext context, IUserContext userContext) : base(kernel, formService, formService, context, userContext, formService)
+        {
+        }
+    }
+
+    public class AutoGridController<TService, TFormService, TViewModel, TFormViewModel,TSearchViewModel> : AutoFormController<TService,TFormService,TViewModel, TFormViewModel> 
+        where TService : class,ISearchable<TViewModel, TSearchViewModel>, IServiceFor<TViewModel> where TSearchViewModel : new()
+        where TFormViewModel : BaseViewModel, new()
+        where TFormService : IServiceFor<TFormViewModel> 
+        where TViewModel : new()
+    {
+        public TService Service { get; set; }
+        public ISearchable<TViewModel, TSearchViewModel> Searchable => Service as ISearchable<TViewModel, TSearchViewModel>;
+
+        public AutoGridController(IKernel kernel, TFormService formService, TService indexService, PropertyContext context, IUserContext userContext, TService service) : base(kernel, formService, indexService, context, userContext)
+        {
+            Service = service;
+        }
+
+        public virtual string IndexTitle => this.GetType().Name.Replace("Controller", "");
+        public override ActionResult Index()
+        {
+            return Grid(0, 20);
+        }
+
+        public ActionResult Grid(int skip, int take)
+        {
+
+            var count = 0;
+            var results = Searchable.Search(new TSearchViewModel(),out count,skip,take);
+
+            return AutoIndex(results.ToArray(), IndexTitle);
+        }
+
+        public ActionResult SearchForm()
+        {
+            ViewBag.Layout = null;
+            return AutoForm(new TSearchViewModel(), "SearchFormSubmit", "Search");
+        }
+        [HttpPost]
+        public ActionResult SearchFormSubmit(TSearchViewModel vm)
+        {
+            var count = 0;
+            var results = Searchable.Search(vm, out count);
+
+            return AutoIndex(results.ToArray(), IndexTitle);
+            //return AutoForm(new TSearchViewModel(), "SearchFormSubmit", "Search");
+        }
+    }
     public class AutoFormController<TService, TViewModel> :
         AutoFormController<TService, TService, TViewModel, TViewModel> where TViewModel : BaseViewModel, new() where TService : IServiceFor<TViewModel>
     {

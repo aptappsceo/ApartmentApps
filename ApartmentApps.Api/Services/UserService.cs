@@ -69,15 +69,17 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.PostalCode = user?.PostalCode;
         }
     }
-    public class UserService : SearchableCrudService<ApplicationUser, UserBindingModel, UserBindingModel>
+
+    public class UserSearchViewModel
+    {
+        public FilterViewModel Email { get; set; }
+    }
+    public class UserService : SearchableCrudService<ApplicationUser, UserBindingModel, UserSearchViewModel>
     {
         public UserService(IRepository<ApplicationUser> repository, IMapper<ApplicationUser, UserBindingModel> mapper) : base(repository, mapper)
         {
         }
 
-        public override IEnumerable<SearchFieldMutator<ApplicationUser, UserBindingModel>> GetMutators()
-        {
-            yield return Mutator(p => !string.IsNullOrEmpty(p.Email), (x, y) => x.Where(p => p.Email == y.Email));
-        }
+
     }
 }

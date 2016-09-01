@@ -1,37 +1,50 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @model ApartmentApps.Forms.GridModel
 
+
 <div class="row">
-    @(Html.EJ().Grid<object>("Grid")
-        .Datasource(Model.Items)
-        .AllowSelection(true)
-        .ClientSideEvents(_=>_.RecordDoubleClick("recordDoubleClick"))
-        .AllowPaging(true)
-        //.ToolbarSettings(toolbar =>
-        //{
-        //    toolbar.ShowToolbar().ToolbarItems(items =>
-        //    {
 
-        //        items.AddTool(ToolBarItems.Add);
-        //        items.AddTool(ToolBarItems.Edit);
-        //        items.AddTool(ToolBarItems.Delete);
-        //    });
-
-        //})
-        .Columns(_ =>
-        {
-            foreach(var property in Model.Properties)
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
             {
-
-                var column = _.HeaderText(property.Label).Field(property.Name);
-                if (property.Hidden)
-                {
-                    column.Visible(false);
+                    <th>@property.Label</th>
                 }
-                column.Add();
+                @if (Model.Editable)
+            {
+                    <th></th>
+                }
+                @if (Model.Deletable)
+            {
+                    <th></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
+                {
+                        <td>@property.PropertyInfo.GetValue(item)</td>
+                    }
+                    @if (Model.Editable)
+                {
+                        <td>Edit</td>
+                    }
+                    @if (Model.Deletable)
+                {
+                        <td>Delete</td>
+                    }
+                </tr>
+
             }
-            _.HeaderText().Template(WebUtility.UrlDecode(Html.ActionLink("Edit", "Entry", new {id = "{{:Id}}"}).ToString())).DisableHtmlEncode(true).Add();
-            _.HeaderText().Template(WebUtility.UrlDecode(Html.ActionLink("Delete", "Delete", new {id = "{{:Id}}"}, new { onclick = "return confirm('Are you sure you wish to delete this item?');" }).ToString())).DisableHtmlEncode(true).Add();
-        }))
+        </tbody>
+
+
+
+
+    </table>
 
 </div>

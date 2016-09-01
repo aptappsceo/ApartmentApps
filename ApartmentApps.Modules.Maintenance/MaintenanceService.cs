@@ -55,8 +55,8 @@ namespace ApartmentApps.Api
             viewModel.HasPet = model.PetStatus > 1;
             viewModel.StartDate = model.Checkins.FirstOrDefault(p => p.StatusId == "Started")?.Date;
             viewModel.CompleteDate = model.Checkins.FirstOrDefault(p => p.StatusId == "Complete")?.Date;
-            viewModel.AssignedToId = model.AssignedToId;
-            viewModel.AssignedTo = model.AssignedTo == null ? null : UserMapper.ToViewModel(model.AssignedTo);
+            viewModel.AssignedToId = model.WorkerAssignedId;
+            viewModel.AssignedTo = model.WorkerAssigned == null ? null : UserMapper.ToViewModel(model.WorkerAssigned);
             viewModel.LatestCheckin = model.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService);
             viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(BlobStorageService));
         }
@@ -141,13 +141,13 @@ namespace ApartmentApps.Api
 
         public IEnumerable<MaintenanceRequestViewModel> GetAllUnassigned()
         {
-            return Repository.Where(p => p.AssignedToId == null).ToArray().Select(Mapper.ToViewModel);
+            return Repository.Where(p => p.WorkerAssignedId == null).ToArray().Select(Mapper.ToViewModel);
         }
 
         public void AssignRequest(int requestId, string userId)
         {
             var request = Repository.Find(requestId);
-            request.AssignedToId = userId;
+            request.WorkerAssignedId = userId;
             Repository.Save();
             Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceRequestAssignedEvent>(_ => _.MaintenanceRequestAssigned(request));
              

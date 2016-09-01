@@ -2,20 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 
 namespace ApartmentApps.Data
 {
-
-
-
+    public class MaitenanceRequestConfig : EntityTypeConfiguration<MaitenanceRequest>
+    {
+        public MaitenanceRequestConfig()
+        {
+            this.HasOptional(p => p.WorkerAssigned).WithMany().Map(m=>m.MapKey("WorkerAssignedId"));
+        }
+    }
 
     public partial class MaitenanceRequest : PropertyEntity, IImageContainer, IFeedItem
     {
-        public string AssignedToId { get; set; }
+        [ForeignKey("WorkerAssigned")]
+        public string WorkerAssignedId { get; set; }
 
-        [ForeignKey("AssignedToId")]
-        public virtual ApplicationUser AssignedTo { get; set; }
+        [ForeignKey("WorkerAssignedId")]
+        public virtual ApplicationUser WorkerAssigned { get; set; }
 
         public string UserId { get; set; }
 

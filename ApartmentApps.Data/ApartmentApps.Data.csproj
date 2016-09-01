@@ -92,6 +92,7 @@
     <Compile Include="Building.cs" />
     <Compile Include="BuildingMetadata.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Class2.cs" />
     <Compile Include="Corporation.cs" />
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="CorporationMetadata.cs" />

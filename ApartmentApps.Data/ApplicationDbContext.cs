@@ -40,11 +40,13 @@ namespace ApartmentApps.Data
                   .GetTypes()
                   .Where(t =>
                     t.GetCustomAttributes(typeof(PersistantAttribute), inherit: true)
-                    .Any() );
+                    .Any());
 
+                foreach (var entityType in entityTypes)
+                    modelBuilder.RegisterEntityType(entityType);
                 
-                foreach (var type in entityTypes)
-                    modelBuilder.RegisterEntityType(type);
+                modelBuilder.Configurations.AddFromAssembly(assembly);
+                    
             }
             //modelBuilder.Entity<ApplicationUser>()
             //    .HasMany(p=>p.UserAlerts)
@@ -67,6 +69,10 @@ namespace ApartmentApps.Data
 
     [AttributeUsage(AttributeTargets.Class)]
     public class PersistantAttribute : Attribute
+    {
+    }
+    [AttributeUsage(AttributeTargets.Class)]
+    public class PersistantConfigAttribute : Attribute
     {
     }
 }

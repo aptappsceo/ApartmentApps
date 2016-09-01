@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace ApartmentApps.Forms
 {
+
     public class GridModel
     {
         public List<FormPropertyModel> Properties { get; set; } = new List<FormPropertyModel>();
 
         public object[] Items { get; set; }
+
+        public bool Editable { get; set; } = true;
+        public bool Deletable { get; set; } = true;
+
 
     }
     public class FormModel

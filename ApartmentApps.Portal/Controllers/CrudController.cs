@@ -22,6 +22,7 @@ using PageSettings = Syncfusion.JavaScript.Models.PageSettings;
 
 namespace ApartmentApps.Portal.Controllers
 {
+
     public class CrudController<TViewModel, TModel> : AAController where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new()
     {
       //  public IRepository<TModel> Repository { get; set; }

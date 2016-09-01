@@ -235,7 +235,7 @@ namespace ApartmentApps.Forms
                 propertyModel.Label = property.GetCustomAttributes(typeof(DisplayNameAttribute), true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? property.Name;
                 propertyModel.DataType = property.GetCustomAttributes(typeof(DataTypeAttribute), true).OfType<DataTypeAttribute>().FirstOrDefault();
                 propertyModel.Hidden = propertyModel.DataType.CustomDataType == "Hidden";
-      
+                propertyModel.PropertyInfo = property;
 
                 formModel.Properties.Add(propertyModel);
             }
