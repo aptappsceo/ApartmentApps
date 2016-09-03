@@ -63,23 +63,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddBankAccountBindingModel.cs" />
-    <Compile Include="AddBankAccountResult.cs" />
-    <Compile Include="AddCreditCardBindingModel.cs" />
-    <Compile Include="AddCreditCardResult.cs" />
-    <Compile Include="CardType.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="BindingModels\AddBankAccountBindingModel.cs" />
+    <Compile Include="BindingModels\AddBankAccountResult.cs" />
+    <Compile Include="BindingModels\AddCreditCardBindingModel.cs" />
+    <Compile Include="BindingModels\AddCreditCardResult.cs" />
+    <Compile Include="BindingModels\CancelInvoiceBindingModel.cs" />
+    <Compile Include="BindingModels\CancelTransactionBindingModel.cs" />
+    <Compile Include="BindingModels\InvoiceBindingModel.cs" />
+    <Compile Include="BindingModels\ResumeUserLeaseInfoBindingModel.cs" />
+    <Compile Include="BindingModels\SuspendUserLeaseInfoBindingModel.cs" />
+    <Compile Include="Data\CardType.cs" />
+    <Compile Include="BindingModels\EditLeaseBindingModel.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Data\Invoice.cs" />
+    <Compile Include="Data\InvoiceState.cs" />
+    <Compile Include="Data\InvoiceTransaction.cs" />
+    <Compile Include="Data\InvoiceUrgencyState.cs" />
     <Compile Include="IPaymentsService.cs" />
-    <Compile Include="MakePaymentBindingModel.cs" />
-    <Compile Include="MakePaymentResult.cs" />
-    <Compile Include="PaymentBindingModel.cs" />
-    <Compile Include="UserInvoiceHistoryBindingModel.cs" />
-    <Compile Include="PaymentOptionBindingModel.cs" />
+    <Compile Include="BindingModels\MakePaymentBindingModel.cs" />
+    <Compile Include="BindingModels\MakePaymentResult.cs" />
+    <Compile Include="BindingModels\PaymentBindingModel.cs" />
+    <Compile Include="BindingModels\UserInvoiceHistoryBindingModel.cs" />
+    <Compile Include="BindingModels\PaymentOptionBindingModel.cs" />
+    <Compile Include="Extensions\LeaseExtensions.cs" />
+    <Compile Include="Data\LeaseState.cs" />
     <Compile Include="PaymentsConfig.cs" />
     <Compile Include="PaymentsModule.cs" />
-    <Compile Include="PaymentSummaryBindingModel.cs" />
-    <Compile Include="PaymentSummaryItemBindingModel.cs" />
+    <Compile Include="BindingModels\PaymentSummaryBindingModel.cs" />
+    <Compile Include="BindingModels\PaymentSummaryItemBindingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BindingModels\UserPaymentsOverviewBindingModel.cs" />
+    <Compile Include="Data\TransactionState.cs" />
+    <Compile Include="Data\UserLeaseInfo.cs" />
+    <Compile Include="BindingModels\UserLeaseInfoBindingModel.cs" />
+    <Compile Include="Services\LeaseInfoManagementService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApartmentApps.Api\ApartmentApps.Api.csproj">
@@ -99,6 +116,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
