@@ -11,11 +11,36 @@ namespace ApartmentApps.Portal.Controllers
 {
     public static class FormModelHelpers
     {
-        public static HtmlString RenderGrid(this HtmlHelper helper, Type type, object[] model)
+ 
+        public static string Controller(this HtmlHelper htmlHelper)
+        {
+            var routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
+
+            if (routeValues.ContainsKey("controller"))
+                return (string)routeValues["controller"];
+
+            return string.Empty;
+        }
+
+        public static string Action(this HtmlHelper htmlHelper)
+        {
+            var routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
+
+            if (routeValues.ContainsKey("action"))
+                return (string)routeValues["action"];
+
+            return string.Empty;
+        }
+    
+    public static HtmlString RenderGrid(this HtmlHelper helper, Type type, object[] model, int count, int recordsPerPage, int currentPage, int pageCount)
         {
             var formHelper = new DefaultFormProvider();
             var gridModel = formHelper.CreateGridFor(type, model);
             gridModel.Items = model;
+            gridModel.Count = count;
+            gridModel.RecordsPerPage = recordsPerPage;
+            gridModel.CurrentPage = currentPage;
+            gridModel.PageCount = pageCount;
             return helper.Partial("~/Views/Shared/Forms/Grid.cshtml", gridModel);
         }
         public static HtmlString RenderForm(this HtmlHelper helper, object model)

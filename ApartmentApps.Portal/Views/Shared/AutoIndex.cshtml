@@ -10,19 +10,19 @@
     <div class="ibox-title">
         <h5></h5>
         <div class="ibox-tools">
-            <a class="btn btn-primary btn-xs" data-toggle="modal" href="@Url.Action("SearchForm")" data-target="#myModal">Search</a>
-            <a class="btn btn-primary btn-xs" data-toggle="modal" href="@Url.Action("Entry")" data-target="#myModal">Add New</a>
+            <a class="btn btn-primary btn-xs modal-link"  href="@Url.Action("SearchForm")">Search</a>
+            <a class="btn btn-primary btn-xs modal-link"  href="@Url.Action("Entry")">Add New</a>
 
             @*@Html.ActionLink("Create New", "Entry", null, new {@class = "btn btn-primary btn-xs"})*@
         </div>
     </div>
     <div class="ibox-content">
-            @Html.RenderGrid(Model.Type, Model.Model)
+        @Html.RenderGrid(Model.Type, Model.Model, Model.Count, Model.RecordsPerPage, Model.CurrentPage, Model.Pages)
     </div>
 </div>
 <div class="clear"></div>
                          
-<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal inmodal" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
          

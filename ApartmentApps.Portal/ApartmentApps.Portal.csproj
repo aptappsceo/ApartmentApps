@@ -958,6 +958,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\app\aa.js" />
     <Content Include="Scripts\app\inspinia.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1193,7 +1194,7 @@
     <Content Include="Views\IdentityUserRole\Edit.cshtml" />
     <Content Include="Views\IdentityUserRole\Index.cshtml" />
     <Content Include="Views\UserManagement\Index.cshtml" />
-    <Content Include="Views\UserManagement\EditUser.cshtml" />
+    <Content Include="Views\Shared\EditUser.cshtml" />
     <Content Include="Views\Dashboard\Index2.cshtml" />
     <Content Include="Views\IncidentReports\Delete.cshtml" />
     <Content Include="Views\IncidentReports\Details.cshtml" />
@@ -1250,9 +1251,13 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Dashboard\UserFeed.cshtml" />
     <Content Include="Views\Shared\FeedItems\FeedItem1.cshtml" />
+    <Content Include="Views\Shared\_LayoutDialog.cshtml" />
+    <Content Include="Views\Shared\Forms\FilterViewModel.cshtml" />
+    <Content Include="Views\Shared\SearchForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AutoGrid\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

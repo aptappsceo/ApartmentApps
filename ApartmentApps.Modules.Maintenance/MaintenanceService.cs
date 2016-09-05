@@ -144,7 +144,7 @@ namespace ApartmentApps.Api
             return Repository.Where(p => p.WorkerAssignedId == null).ToArray().Select(Mapper.ToViewModel);
         }
 
-        public void AssignRequest(int requestId, string userId)
+        public void AssignRequest(string requestId, string userId)
         {
             var request = Repository.Find(requestId);
             request.WorkerAssignedId = userId;

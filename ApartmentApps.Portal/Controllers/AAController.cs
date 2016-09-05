@@ -28,12 +28,48 @@ namespace ApartmentApps.Portal.Controllers
         public AutoUserController(IKernel kernel, UserService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
         {
         }
+        [HttpPost]
+        public override ActionResult SearchFormSubmit(UserSearchViewModel vm)
+        {
+            return base.SearchFormSubmit(vm);
+        }
+
+        public override ActionResult Entry(string id = null)
+        {
+            var user = Context.Users.Find(id);
+
+            var userModel = new UserFormModel()
+            {
+                RolesList = Context.Roles.Select(p => p.Id).ToList(),
+
+            };
+            // If we aren't an admin we shouldn't be able to create admin accounts
+            if (!User.IsInRole("Admin"))
+            {
+                userModel.RolesList.Remove("Admin");
+            }
+            if (user != null)
+            {
+                userModel.FirstName = user.FirstName;
+                userModel.LastName = user.LastName;
+                userModel.Email = user.Email;
+                userModel.Id = user.Id;
+                userModel.PhoneNumber = user.PhoneNumber;
+                userModel.UnitId = user.UnitId;
+                userModel.SelectedRoles = user.Roles.Select(p => p.RoleId).ToList();
+
+            }
+            ViewBag.UnitId = new SelectList(Context.Units.OrderBy(p => p.Name), "Id", "Name", user?.UnitId);
+
+            return View("EditUser", userModel);
+            //return base.Entry(id);
+        }
     }
 
     public class AutoGridController<TService, TViewModel, TSearchViewModel> :
         AutoGridController<TService, TService, TViewModel, TViewModel, TSearchViewModel>
                where TService : class, ISearchable<TViewModel, TSearchViewModel>, IServiceFor<TViewModel> 
-        where TSearchViewModel : new()
+        where TSearchViewModel : class, new()
         
         
         where TViewModel : BaseViewModel, new()
@@ -43,8 +79,16 @@ namespace ApartmentApps.Portal.Controllers
         }
     }
 
+    public class GridState
+    {
+        public int Page { get; set; }
+        public int RecordsPerPage { get; set; } = 10;
+
+        public string OrderBy { get; set; }
+        public bool Descending { get; set; }
+    }
     public class AutoGridController<TService, TFormService, TViewModel, TFormViewModel,TSearchViewModel> : AutoFormController<TService,TFormService,TViewModel, TFormViewModel> 
-        where TService : class,ISearchable<TViewModel, TSearchViewModel>, IServiceFor<TViewModel> where TSearchViewModel : new()
+        where TService : class,ISearchable<TViewModel, TSearchViewModel>, IServiceFor<TViewModel> where TSearchViewModel : class, new()
         where TFormViewModel : BaseViewModel, new()
         where TFormService : IServiceFor<TFormViewModel> 
         where TViewModel : new()
@@ -60,30 +104,45 @@ namespace ApartmentApps.Portal.Controllers
         public virtual string IndexTitle => this.GetType().Name.Replace("Controller", "");
         public override ActionResult Index()
         {
-            return Grid(0, 20);
+            return Grid(0);
         }
 
-        public ActionResult Grid(int skip, int take)
+        public ActionResult Grid(int page, string orderBy = null)
         {
-
+            if (page > 0)
+            {
+                GridState.Page = page;
+            }
+           
+            if (orderBy != null)
+            {
+                GridState.OrderBy = orderBy;
+            }
             var count = 0;
-            var results = Searchable.Search(new TSearchViewModel(),out count,skip,take);
-
-            return AutoIndex(results.ToArray(), IndexTitle);
+            var results = Searchable.Search(FilterViewModel, out count, GridState.OrderBy, GridState.Descending,GridState.Page,GridState.RecordsPerPage);
+            return AutoIndex(results.ToArray(), count, page, IndexTitle);
+        }
+        public GridState GridState
+        {
+            get { return Session["GridState"] as GridState ?? (GridState = new GridState()); }
+            set { Session["GridState"] = value; }
+        }
+        public TSearchViewModel FilterViewModel
+        {
+            get { return  Session["FilterViewModel"] as TSearchViewModel ?? (FilterViewModel = new TSearchViewModel()); }
+            set { Session["FilterViewModel"] = value; }
         }
 
         public ActionResult SearchForm()
         {
             ViewBag.Layout = null;
-            return AutoForm(new TSearchViewModel(), "SearchFormSubmit", "Search");
+            return View("SearchForm",FilterViewModel);
         }
         [HttpPost]
-        public ActionResult SearchFormSubmit(TSearchViewModel vm)
+        public virtual ActionResult SearchFormSubmit(TSearchViewModel vm)
         {
-            var count = 0;
-            var results = Searchable.Search(vm, out count);
-
-            return AutoIndex(results.ToArray(), IndexTitle);
+            FilterViewModel = vm;
+            return Grid(0);
             //return AutoForm(new TSearchViewModel(), "SearchFormSubmit", "Search");
         }
     }
@@ -116,13 +175,15 @@ namespace ApartmentApps.Portal.Controllers
         
         public virtual ActionResult Index()
         {
-            return AutoIndex(_indexService.GetAll().ToArray());
+            
+            var array = _indexService.GetAll().ToArray();
+            return AutoIndex(array, array.Length,0);
         }
-        public virtual ActionResult Entry(int? id = null)
+        public virtual ActionResult Entry(string id = null)
         {
-            if (id != null && id != 0)
+            if (id != null && id != "0")
             {
-                return AutoForm(_formService.Find(id.Value), "SaveEntry", "Change");
+                return AutoForm(_formService.Find(id), "SaveEntry", "Change");
             }
             return AutoForm(_formService.CreateNew(), "SaveEntry", "Create New");
         }
@@ -195,11 +256,14 @@ namespace ApartmentApps.Portal.Controllers
             }
 
         }
-        public ActionResult AutoIndex<TViewModel>(TViewModel[] model, string title = null)
+        public ActionResult AutoIndex<TViewModel>(TViewModel[] model, int count,int currentPage, string title = null )
         {
             return View("AutoIndex", new AutoGridModel(model.Cast<object>().ToArray())
             {
                 Title = title,
+                Count = count,
+                CurrentPage = currentPage,
+                RecordsPerPage = 20,
                 Type = typeof(TViewModel)
             });
         }

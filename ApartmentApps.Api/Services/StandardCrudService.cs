@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
+using System.Linq.Expressions;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
@@ -11,10 +12,10 @@ using ApartmentApps.Data.Repository;
 namespace ApartmentApps.Portal.Controllers
 {
 
-    public interface ISearchable<TViewModel,TSearchViewModel>
+    public interface ISearchable<TViewModel, TSearchViewModel>
     {
         IEnumerable<Filter> CreateFilters(TSearchViewModel viewModel);
-        IEnumerable<TViewModel> Search(TSearchViewModel criteria,out int count, int? skip = null, int? take = null);
+        IEnumerable<TViewModel> Search(TSearchViewModel criteria, out int count, string orderBy, bool orderByDesc, int page = 0, int resultsPerPage = 20);
     }
 
     public class FilterViewModel
@@ -25,7 +26,7 @@ namespace ApartmentApps.Portal.Controllers
         [DisplayName("Value")]
         public string Value { get; set; }
     }
-    public abstract class SearchableCrudService<TModel, TViewModel, TSearchViewModel> : StandardCrudService<TModel,TViewModel>, ISearchable<TViewModel, TSearchViewModel> where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new()
+    public abstract class SearchableCrudService<TModel, TViewModel, TSearchViewModel> : StandardCrudService<TModel, TViewModel>, ISearchable<TViewModel, TSearchViewModel> where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new()
     {
         //public SearchFieldMutator<TModel, TSearchViewModel> Mutator(Predicate<TSearchViewModel> predicate, QueryMutator<TModel,TSearchViewModel> mutator)
         //{
@@ -36,7 +37,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public IEnumerable<Filter> CreateFilters(TSearchViewModel viewModel)
         {
-            foreach (var property in typeof (TSearchViewModel).GetProperties().Where(p=>p.PropertyType == typeof(FilterViewModel)))
+            foreach (var property in typeof(TSearchViewModel).GetProperties().Where(p => p.PropertyType == typeof(FilterViewModel)))
             {
                 var obj = property.GetValue(viewModel, null) as FilterViewModel;
                 if (obj == null) continue;
@@ -45,27 +46,44 @@ namespace ApartmentApps.Portal.Controllers
                     yield return new Filter()
                     {
                         Value = obj.Value,
+                        PropertyName = property.Name,
                         Operator = obj.ExpressionOperator
                     };
                 }
             }
         }
-
-        public IEnumerable<TViewModel> Search( TSearchViewModel criteria,out int count, int? skip = null, int? take = null)
+      
+        public IEnumerable<TViewModel> Search(TSearchViewModel criteria, out int count, string orderBy, bool orderByDesc, int page = 0, int resultsPerPage = 20)
         {
             var result = Repository.Where(ExpressionBuilder.GetExpression<TModel>(CreateFilters(criteria).ToList()));
-         
-            
-            //if (skip != null)
-            //    result = result.Skip(skip.Value);
-            //if (take != null)
-            //    result = result.Take(take.Value);
-
-
+            count = result.Count();
+            if (string.IsNullOrEmpty(orderBy))
+            {
+                if (orderByDesc)
+                {
+                    result = result.OrderByDescending(DefaultOrderBy);
+                }
+                else
+                {
+                    result = result.OrderBy(DefaultOrderBy);
+                }
+                
+                result = result.Skip(resultsPerPage * page);
+                result = result.Take(resultsPerPage);
+            }
+            else
+            {
+                result = result.OrderBy(orderBy, orderByDesc);
+                result = result.Skip(resultsPerPage * page);
+                result = result.Take(resultsPerPage);
+            }
             var res = result.ToArray();
-            count = res.Length;
+           
             return res.Select(Mapper.ToViewModel);
         }
+
+        public virtual Expression<Func<TModel, object>> DefaultOrderBy => p => p.Id;
+
 
         protected SearchableCrudService(IRepository<TModel> repository, IMapper<TModel, TViewModel> mapper) : base(repository, mapper)
         {
@@ -80,7 +98,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             Repository = repository;
             Mapper = mapper;
-           
+
         }
 
         public IEnumerable<TViewModel> GetAll()
@@ -88,7 +106,7 @@ namespace ApartmentApps.Portal.Controllers
             return GetAll(Mapper);
         }
 
-        public IEnumerable<TViewModel> GetAll(IMapper<TModel,TViewModel> mapper)
+        public IEnumerable<TViewModel> GetAll(IMapper<TModel, TViewModel> mapper)
         {
             return Repository.GetAll().ToArray().Select(mapper.ToViewModel);
         }
@@ -116,12 +134,12 @@ namespace ApartmentApps.Portal.Controllers
             Repository.Save();
         }
 
-        public TViewModel Find(int id)
+        public TViewModel Find(string id)
         {
             return Find(id, Mapper);
         }
 
-        public TViewModel Find(int id, IMapper<TModel,TViewModel> mapper)
+        public TViewModel Find(string id, IMapper<TModel, TViewModel> mapper)
         {
             var vm = new TViewModel();
             mapper.ToViewModel(Repository.Find(id), vm);

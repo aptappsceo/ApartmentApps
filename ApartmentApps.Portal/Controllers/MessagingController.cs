@@ -98,7 +98,7 @@ namespace ApartmentApps.Portal.Controllers
             Response.Cache.SetLastModified(DateTime.UtcNow);
             return File(Server.MapPath("~/Content/blank.png"), "image/png");
         }
-        public ActionResult MessageDetails(int id)
+        public ActionResult MessageDetails(string id)
         {
             return View("MessageDetails", _messageService.GetMessageWithDetails(id));
         }

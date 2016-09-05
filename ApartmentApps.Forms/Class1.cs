@@ -16,8 +16,10 @@ namespace ApartmentApps.Forms
 
         public bool Editable { get; set; } = true;
         public bool Deletable { get; set; } = true;
-
-
+        public int Count { get; set; }
+        public int RecordsPerPage { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageCount { get; set; }
     }
     public class FormModel
     {

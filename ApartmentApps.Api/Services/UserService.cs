@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 using ApartmentApps.Api;
@@ -72,7 +75,12 @@ namespace ApartmentApps.Portal.Controllers
 
     public class UserSearchViewModel
     {
-        public FilterViewModel Email { get; set; }
+        public FilterViewModel Email { get; set; } = new FilterViewModel();
+        public FilterViewModel FirstName { get; set; } = new FilterViewModel();
+        public FilterViewModel LastName { get; set; } = new FilterViewModel();
+
+        //public FilterViewModel UnitName { get; set; } = new FilterViewModel();
+
     }
     public class UserService : SearchableCrudService<ApplicationUser, UserBindingModel, UserSearchViewModel>
     {
@@ -80,6 +88,6 @@ namespace ApartmentApps.Portal.Controllers
         {
         }
 
-
+        public override Expression<Func<ApplicationUser, object>> DefaultOrderBy => p => p.LastName;
     }
 }

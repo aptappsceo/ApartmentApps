@@ -16,7 +16,7 @@ using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class UserModel
+    public class UserFormModel
     {
         public string Id { get; set; }
         public string FirstName { get; set; }
@@ -135,7 +135,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             var user = Context.Users.Find(id);
 
-            var userModel = new UserModel()
+            var userModel = new UserFormModel()
             {
                 RolesList = Context.Roles.Select(p=>p.Id).ToList(),
                 
@@ -163,7 +163,7 @@ namespace ApartmentApps.Portal.Controllers
     
 
         [HttpPost]
-        public async Task<ActionResult> SaveUser(UserModel model)
+        public async Task<ActionResult> SaveUser(UserFormModel model)
         {
             if (ModelState.IsValid)
             {

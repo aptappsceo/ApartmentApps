@@ -1,4 +1,6 @@
 ﻿@using System.ComponentModel.DataAnnotations
+@using ApartmentApps.Forms
+@using ApartmentApps.Portal.Controllers
 @using Syncfusion.JavaScript.Models
 @model ApartmentApps.Forms.FormModel
 
@@ -68,13 +70,21 @@
                 }
                 else
                 {
-                    if (property.DataType.DataType == DataType.MultilineText)
+                    if (property.SystemType == typeof (string))
                     {
-                        @Html.TextArea(property.Name, property.GetValue()?.ToString())
+                        if (property.DataType.DataType == DataType.MultilineText)
+                        {
+                            @Html.TextArea(property.Name, property.GetValue()?.ToString())
+                        }
+                        else
+                        {
+                            @Html.TextBox(property.Name, property.GetValue()?.ToString())
+                        }
                     }
                     else
                     {
-                        @Html.TextBox(property.Name, property.GetValue()?.ToString())
+                       
+                        @Html.Partial("~/Views/Shared/Forms/" + property.SystemType.Name + ".cshtml", property.GetValue())
                     }
 
                 }

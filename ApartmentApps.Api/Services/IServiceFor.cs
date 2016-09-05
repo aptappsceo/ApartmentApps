@@ -8,7 +8,7 @@ namespace ApartmentApps.Portal.Controllers
         IEnumerable<TViewModel> GetRange(int skip, int take);
         void Add(TViewModel viewModel);
         void Remove(int id);
-        TViewModel Find(int id);
+        TViewModel Find(string id);
         TViewModel CreateNew();
         void Save(TViewModel unit);
       

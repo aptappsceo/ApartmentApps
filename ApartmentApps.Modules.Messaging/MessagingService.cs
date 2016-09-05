@@ -55,7 +55,7 @@ namespace ApartmentApps.Portal.Controllers
             return Repository.GetAll().OrderByDescending(p=>p.SentOn).Take(15).ToArray().Select(Mapper.ToViewModel);
         }
 
-        public MessageViewModel GetMessageWithDetails(int messageId)
+        public MessageViewModel GetMessageWithDetails(string messageId)
         {
             return Find(messageId, new MessageMapperFullDetails());
         }

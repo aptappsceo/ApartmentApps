@@ -124,7 +124,7 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         [DataType("Hidden")]
-        public int? Id { get; set; }
+        public string Id { get; set; }
 
 
         //[DataType()]
@@ -233,7 +233,7 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
-        public ActionResult AssignRequest(int id)
+        public ActionResult AssignRequest(string id)
         {
             var request = Service.Find(id);
             return AutoForm(new AssignMaintenanceEditModel(Kernel.Get<IRepository<ApplicationUser>>())
@@ -246,9 +246,9 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult AssignRequestSubmit(AssignMaintenanceEditModel model)
         {
-            if (ModelState.IsValid && model.Id.HasValue)
+            if (ModelState.IsValid && model.Id != null)
             {
-                MaintenanceService.AssignRequest(model.Id.Value, model.AssignedToId);
+                MaintenanceService.AssignRequest(model.Id, model.AssignedToId);
                 return new EmptyResult();
             }
             return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
@@ -511,7 +511,7 @@ namespace ApartmentApps.Portal.Controllers
                 );
             return RedirectToAction("Details", new { id = request.Id });
         }
-        public ActionResult Print(int id)
+        public ActionResult Print(string id)
         {
             var item = Service.Find(id);
             return View(item);
@@ -530,6 +530,11 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         public Type Type { get; set; }
+        public int Count { get; set; }
+        public int CurrentPage { get; set; }
+        public int RecordsPerPage { get; set; } = 20;
+
+        public int Pages => (int) Math.Ceiling((double) Count/RecordsPerPage);
 
 
         public AutoGridModel(object[] model)

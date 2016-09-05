@@ -1,21 +1,26 @@
 ﻿@using System.ComponentModel.DataAnnotations
+@using System.Reflection
+@using ApartmentApps.Forms
+@using ApartmentApps.Portal.Controllers
 @model ApartmentApps.Forms.GridModel
+@{
+    FormPropertyModel idProperty = Model.Properties.FirstOrDefault(p => p.Name.ToLower() == "id");
+}
 
+<div class="row table-responsive">
 
-<div class="row">
-
-    <table class="table table-bordered">
+    <table class="table table-striped">
         <thead>
             <tr>
                 @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
             {
-                    <th>@property.Label</th>
+                    <th class="sorting_asc">@property.Label</th>
                 }
-                @if (Model.Editable)
+                @if (Model.Editable && idProperty != null)
             {
                     <th></th>
                 }
-                @if (Model.Deletable)
+                @if (Model.Deletable && idProperty != null)
             {
                     <th></th>
                 }
@@ -24,18 +29,19 @@
         <tbody>
             @foreach (var item in Model.Items)
             {
+
                 <tr>
                     @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
-                {
+                    {
                         <td>@property.PropertyInfo.GetValue(item)</td>
                     }
-                    @if (Model.Editable)
-                {
-                        <td>Edit</td>
+                    @if (Model.Editable && idProperty != null)
+                    {
+                        <td><a class="btn btn-primary btn-xs modal-link" href="@Url.Action("Entry", new { id = idProperty.PropertyInfo.GetValue(item) })">Edit</a></td>
                     }
-                    @if (Model.Deletable)
-                {
-                        <td>Delete</td>
+                    @if (Model.Deletable && idProperty != null)
+                    {
+                        <td><a class="btn btn-primary btn-xs modal-link" href="@Url.Action("Delete", new { id = idProperty.PropertyInfo.GetValue(item) })">Delete</a></td>
                     }
                 </tr>
 
@@ -46,5 +52,18 @@
 
 
     </table>
-
+    <div>
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <ul class="pagination">
+                <li class="paginate_button previous disabled" id="editable_previous"><a href="#" aria-controls="editable" data-dt-idx="0" tabindex="0">Previous</a></li>
+                @for (var i = 1; i <= Model.PageCount; i++)
+                {
+                    <li class="paginate_button @(i == Model.CurrentPage ? "active" : "")"><a href="@Url.Action("Grid",Html.Controller(),new {page = i})" aria-controls="editable" data-dt-idx="1" tabindex="0">@i</a></li>
+                }
+                
+                <li class="paginate_button next" id="editable_next"><a href="#" aria-controls="editable" data-dt-idx="7" tabindex="0">Next</a></li>
+            </ul>
+        </div>
+    </div>
 </div>

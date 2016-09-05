@@ -26,7 +26,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public class IncidentReportsController : CrudController<IncidentReportViewModel, IncidentReport>
     {
-        public ActionResult Print(int id)
+        public ActionResult Print(string id)
         {
             var item = Service.Find(id);
             return View(item);

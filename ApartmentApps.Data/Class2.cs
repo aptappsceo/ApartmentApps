@@ -28,7 +28,7 @@ namespace ApartmentApps.Data
         NotEqual
     }
 
-    public class ExpressionBuilder
+    public static class ExpressionBuilder
     {
         // Define some of our default filtering options
         private static MethodInfo containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
@@ -39,7 +39,7 @@ namespace ApartmentApps.Data
         {
             // No filters passed in #KickIT
             if (filters.Count == 0)
-                return null;
+                return Expression.Lambda<Func<T,bool>>(Expression.Constant(true), Expression.Parameter(typeof(T), "parm"));
 
             // Create the parameter for the ObjectType (typically the 'x' in your expression (x => 'x')
             // The "parm" string is used strictly for debugging purposes
@@ -81,7 +81,7 @@ namespace ApartmentApps.Data
                     }
                 }
             }
-
+            
             return Expression.Lambda<Func<T, bool>>(exp, param);
         }
 
@@ -131,7 +131,19 @@ namespace ApartmentApps.Data
             Expression result2 = GetExpression<T>(param, filter2);
             return Expression.AndAlso(result1, result2);
         }
-
+        public static IQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> source, string orderByProperty,
+                          bool desc)
+        {
+            string command = desc ? "OrderByDescending" : "OrderBy";
+            var type = typeof(TEntity);
+            var property = type.GetProperty(orderByProperty);
+            var parameter = Expression.Parameter(type, "p");
+            var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+            var orderByExpression = Expression.Lambda(propertyAccess, parameter);
+            var resultExpression = Expression.Call(typeof(Queryable), command, new Type[] { type, property.PropertyType },
+                                          source.Expression, Expression.Quote(orderByExpression));
+            return source.Provider.CreateQuery<TEntity>(resultExpression);
+        }
 
     }
 }

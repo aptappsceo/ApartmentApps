@@ -245,13 +245,13 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         // GET: /Units/Details/5
-        public virtual ActionResult Details(int? id)
+        public virtual ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vm = Service.Find(id.Value);
+            var vm = Service.Find(id);
             if (vm == null)
             {
                 return HttpNotFound();
@@ -286,14 +286,14 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         // GET: /Units/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var unit = Service.Find(id.Value);
+            var unit = Service.Find(id);
             if (unit == null)
             {
                 return HttpNotFound();
@@ -319,13 +319,13 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         // GET: /Units/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var unit = Service.Find(id.Value);
+            var unit = Service.Find(id);
             if (unit == null)
             {
                 return HttpNotFound();
