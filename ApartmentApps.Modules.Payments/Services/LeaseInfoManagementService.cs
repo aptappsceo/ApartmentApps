@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Payments.BindingModels;
 
@@ -12,14 +13,16 @@ namespace ApartmentApps.Modules.Payments.Services
 {
     public class LeaseInfoManagementService
     {
+        private readonly IRepository<ApplicationUser> _users;
         private readonly IRepository<Invoice> _invoices;
         private PropertyContext _context;
         private IUserContext _userContext;
         private IRepository<UserLeaseInfo> _leases;
         private IRepository<InvoiceTransaction> _transactions;
 
-        public LeaseInfoManagementService(IRepository<Invoice> invoices, PropertyContext context, IUserContext userContext, IRepository<UserLeaseInfo> leases, IRepository<InvoiceTransaction> transactions)
+        public LeaseInfoManagementService(IRepository<ApplicationUser> users, IRepository<Invoice> invoices, PropertyContext context, IUserContext userContext, IRepository<UserLeaseInfo> leases, IRepository<InvoiceTransaction> transactions)
         {
+            _users = users;
             _invoices = invoices;
             _context = context;
             _userContext = userContext;
@@ -44,7 +47,7 @@ namespace ApartmentApps.Modules.Payments.Services
 
             if (model.Amount <= 0) throw new Exception("Amount must be greater than 0");
 
-            if (model.InvoiceDate > user.Property.TimeZone.Now())
+            if (model.InvoiceDate < user.Property.TimeZone.Now())
             {
                 throw new Exception("Invoice Date cannot be set before Today");
             }
@@ -59,14 +62,14 @@ namespace ApartmentApps.Modules.Payments.Services
                 State = LeaseState.Active
             };
 
-            if (model.IsIntervalSet())
+            if (model.UseInterval && model.IsIntervalSet())
             {
 
                 leaseInfo.IntervalDays = model.IntervalDays;
                 leaseInfo.IntervalMonths = model.IntervalMonths;
                 leaseInfo.IntervalYears = model.IntervalYears;
 
-                if (model.RepetitionCompleteDate.HasValue)
+                if (model.UseCompleteDate && model.RepetitionCompleteDate.HasValue)
                 {
                     leaseInfo.RepetitionCompleteDate = model.RepetitionCompleteDate.Value;
                 }
@@ -89,7 +92,7 @@ namespace ApartmentApps.Modules.Payments.Services
 
             if (anyActiveInvoices) throw new Exception($"Another Invoice is active for lease id:{lease.Id}");
 
-            if (lease.InvoiceDate > lease.User.Property.TimeZone.Now())
+            if (lease.InvoiceDate < lease.User.Property.TimeZone.Now())
             {
                 throw new Exception("Invoice cannot be created before Today");
             }
@@ -131,7 +134,7 @@ namespace ApartmentApps.Modules.Payments.Services
             _invoices.Save();
         }
 
-        public void CreateTransaction(string id, Invoice[] invoices, string comments)
+        public string CreateTransaction(string id, string userId, Invoice[] invoices, string comments, DateTime estimatedCompleteDate)
         {
 
             foreach (var invoice in invoices)
@@ -142,11 +145,17 @@ namespace ApartmentApps.Modules.Payments.Services
                 }
             }
 
+            var user = _users.Find(userId);
+            if (user == null) throw new Exception("Not Found User With Id: " + userId);
             var transaction = new InvoiceTransaction()
             {
+                Id = id,
                 State = TransactionState.Pending,
                 Invoices = invoices,
-                Comments = comments
+                Comments = comments,
+                EstimatedCompleteDate = estimatedCompleteDate,
+                UserId = userId,
+                ProcessDate = user.Property.TimeZone.Now()
             };
             
             _transactions.Add(transaction);
@@ -159,7 +168,8 @@ namespace ApartmentApps.Modules.Payments.Services
             }
 
             _invoices.Save();
-            
+
+            return transaction.Id;
 
         }
 
@@ -167,12 +177,15 @@ namespace ApartmentApps.Modules.Payments.Services
         {
             transaction.State = TransactionState.Complete;
             transaction.Comments = comment;
+            transaction.CompleteDate = completeDate;
             var invoices = transaction.Invoices;
             foreach (var invoice in invoices)
             {
                 invoice.State = InvoiceState.Paid;
                 invoice.IsArchived = true;
             }
+
+
 
             _transactions.Save();
             _invoices.Save();
@@ -211,7 +224,7 @@ namespace ApartmentApps.Modules.Payments.Services
 
             if (anyActiveInvoices) return false; //because active invoice exists for this lease
 
-            if (lease.IsIntervalSet()) return false; //because lease is not repetative
+            if (!lease.IsIntervalSet()) return false; //because lease is not repetative
 
             var newDate = ComputeNextDateForInvoice(lease);
 

@@ -31,6 +31,10 @@ namespace ApartmentApps.Api.Modules
         
         public string Title { get; set; }
 
+        public bool UsesInterval { get;set; }
+
+        public bool UsesCompleteDate { get; set; }
+
     }
 
  
@@ -51,7 +55,9 @@ namespace ApartmentApps.Api.Modules
                 IntervalDays = lease.IntervalDays,
                 IntervalMonths = lease.IntervalMonths,
                 IntervalYears = lease.IntervalYears,
-                State = lease.State
+                State = lease.State,
+                UsesInterval = lease.IsIntervalSet(),
+                UsesCompleteDate = lease.RepetitionCompleteDate.HasValue
             };
 
             return bm;

@@ -9,6 +9,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Payments.Services;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
@@ -20,6 +21,8 @@ namespace ApartmentApps.Portal.Controllers
         private readonly PaymentsModule _paymentsModule;
         private readonly IRepository<UserLeaseInfo> _leaseInfos;
         private readonly IRepository<Invoice> _invoices;
+        private readonly IRepository<InvoiceTransaction> _transactions;
+        private LeaseInfoManagementService _leaseService;
         // GET: Payments
         public ActionResult Index()
         {
@@ -30,12 +33,14 @@ namespace ApartmentApps.Portal.Controllers
             return View("RentSummary"); // TODO Redirect to other pages for property manager
         }
 
-        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule, IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices  ,IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule, IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices  ,IKernel kernel, PropertyContext context, IUserContext userContext, IRepository<InvoiceTransaction> transactions, LeaseInfoManagementService leaseService) : base(kernel, context, userContext)
         {
             _blobStorageService = blobStorageService;
             _paymentsModule = paymentsModule;
             _leaseInfos = leaseInfos;
             _invoices = invoices;
+            _transactions = transactions;
+            _leaseService = leaseService;
         }
 
         public ActionResult RentSummary()
@@ -119,7 +124,7 @@ namespace ApartmentApps.Portal.Controllers
                  return View("CreateUserLeaseInfo",data);
             }
 
-            _paymentsModule.CreateUserLeaseInfo(data);
+            _leaseService.CreateUserLeaseInfo(data);
 
             return RedirectToAction("UserPaymentsOverview", new { id = data.UserId });
         }
@@ -130,13 +135,15 @@ namespace ApartmentApps.Portal.Controllers
             if (user == null) return HttpNotFound();
 
             var userLeaseInfos = _leaseInfos.GetAll().Where(s => s.UserId == id).ToList();
+            var transactions = _transactions.GetAll().Where(s => s.UserId == id).ToList();
             var userLeaseInfosIds = userLeaseInfos.Select(s => s.Id).ToArray();
             
             return View("UserPaymentsOverview",new UserPaymentsOverviewBindingModel()
             {
                 User = user.ToUserBindingModel(_blobStorageService),
-                Invoices = _invoices.GetAll().Where(s=> userLeaseInfosIds.Contains(s.UserLeaseInfoId)).ToList(),
-                LeaseInfos = userLeaseInfos
+                Invoices = _invoices.GetAll().Where(s=> userLeaseInfosIds.Contains(s.UserLeaseInfoId)).ToList().Select(s=>s.ToBindingModel(_blobStorageService)).ToList(),
+                LeaseInfos = userLeaseInfos.Select(s=>s.ToBindingModel(_blobStorageService)).ToList(),
+                Transactions = transactions.Select(s=>s.ToBindingModel(_blobStorageService)).ToList() 
             });
         }
 
@@ -148,7 +155,6 @@ namespace ApartmentApps.Portal.Controllers
             if (user == null) return HttpNotFound();
             _paymentsModule.MarkAsPaid(id, "Marked as paid by " + CurrentUser.Email);
             
-            
 
             return RedirectToAction("UserPaymentsOverview", new { id = user.Id });
         }
@@ -157,6 +163,15 @@ namespace ApartmentApps.Portal.Controllers
         {
             await _paymentsModule.AddBankAccount(cardModel);
             return RedirectToAction("MakePayment");
+        }
+
+        public ActionResult CreateUserLeaseInfoFor(string id)
+        {
+            return View("CreateUserLeaseInfo",new CreateUserLeaseInfoBindingModel()
+            {
+                UserId = id,
+                UserIdItems = Context.Users.GetAll().Where(u=>!u.Archived).ToList().Select(u=>u.ToUserBindingModel(_blobStorageService)).Where(u=>!string.IsNullOrWhiteSpace(u.FullName)).ToList(),
+            });
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using ApartmentApps.Api.ViewModels;
 
 namespace ApartmentApps.Api.Modules
@@ -27,10 +28,24 @@ namespace ApartmentApps.Api.Modules
 
     public class CreateUserLeaseInfoBindingModel
     {
+        [Required]
+        [DisplayName("Title")]
+        [Description("User-friendly title")]
         public string Title { get; set; }
+
+        [Required]
+        [DisplayName("User")]
+        [Description("User that will be charged")]
         public string UserId { get; set; }
+
+        [Required]
+        [DisplayName("Amount")]
+        [Description("The user will be charged this amount")]
         public decimal Amount { get; set; }
 
+        [Required]
+        [DisplayName("Invoice Date")]
+        [Description("Date, by which user has to pay the invoice")]
         public DateTime InvoiceDate { get; set; }
         
         public int? IntervalDays { get; set; }
@@ -40,5 +55,8 @@ namespace ApartmentApps.Api.Modules
         public DateTime? RepetitionCompleteDate { get; set; }
 
         public List<UserBindingModel> UserIdItems { get; set; }
+
+        public bool UseInterval { get; set; }
+        public bool UseCompleteDate { get; set; }
     }
 }

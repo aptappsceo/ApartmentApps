@@ -4,6 +4,12 @@
 @{
     ViewBag.Title = "Create";
     UserBindingModel userPlaceholder = null;
+
+    var setIntervalCheckBoxId = nameof(Model.UseInterval);
+    var setCompleteDateCheckBoxId = nameof(Model.UseCompleteDate);
+    var setIntervalCheckBoxTargetContainerId = "setinterval_container";
+    var setCompleteDateCheckBoxTargetContainerId = "setcompletedate_container";
+
 }
 
 
@@ -33,7 +39,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Create MaitenanceRequest</h5>
+                    <h5>Create User Lease Item</h5>
                 </div>
                 <div class="ibox-content">
 
@@ -48,15 +54,16 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Title, "Title", new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(m=>m.Title)
+                                    @Html.EJ().MaskEditTextBoxFor(m=>m.Title)
                                     @Html.ValidationMessageFor(model => model.Title)
                                 </div>
                             </div>
-
+                            
+                           
                             <div class="form-group">
                                 @Html.LabelFor(model => model.UserId, "User", new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EJ().DropDownListFor(s=>s.UserId).Datasource(Model.UserIdItems).DropDownListFields(s=>s.Value("Id").Text("FullName")).EnableFilterSearch()
+                                    @Html.EJ().DropDownListFor(s => s.UserId).Datasource(Model.UserIdItems).DropDownListFields(s => s.Value("Id").Text("FullName")).EnableFilterSearch()
                                     @Html.ValidationMessageFor(model => model.UserId)
                                 </div>
                             </div>
@@ -77,16 +84,43 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.IntervalMonths, "Months Interval", new { @class = "control-label col-md-2" })
+                            <div>
+                                
+                                
+                                <div class="form-group">
+                                    <div class="control-label col-md-2">
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Html.EJ().CheckBox(setIntervalCheckBoxId).Checked(Model.UseInterval).Text("Repeat invoice once in a month(s)?").ClientSideEvents(s => s.Change("intervalCheckboxChanged"))
+                                    </div>
+                                </div>
 
+                                <div id="@(setIntervalCheckBoxTargetContainerId)">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.IntervalMonths, "Months Interval", new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EJ().NumericTextBoxFor(s => s.IntervalMonths).IncrementStep(1).ShowSpinButton().MinValue(0).MaxValue(12)
+                                            @Html.ValidationMessageFor(model => model.IntervalMonths)
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="control-label col-md-2">
+                                        </div>    
+                                         <div class="col-md-10">
+                                            @Html.EJ().CheckBox(setCompleteDateCheckBoxId).Checked(Model.UseCompleteDate).Text("Stop after certain date?").ClientSideEvents(s => s.Change("completeDateCheckboxChanged"))
+                                        </div>
+                                    </div>
 
-                                <div class="col-md-10">
-                                    @Html.EJ().NumericTextBoxFor(s => s.IntervalMonths).IncrementStep(1).ShowSpinButton().MinValue(0).MaxValue(12)
-                                    @Html.ValidationMessageFor(model => model.IntervalMonths)
+                                    <div class="form-group" id="@(setCompleteDateCheckBoxTargetContainerId)">
+                                        @Html.LabelFor(model => model.RepetitionCompleteDate, "Complete After", new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EJ().DatePicker(nameof(Model.RepetitionCompleteDate))
+                                            @Html.ValidationMessageFor(model => model.RepetitionCompleteDate)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
 
                             @*
 
@@ -110,14 +144,7 @@
         </div>
     </div>
 *@
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.RepetitionCompleteDate, "Complete After", new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EJ().DatePicker(nameof(Model.RepetitionCompleteDate))
-                                    @Html.ValidationMessageFor(model => model.RepetitionCompleteDate)
-                                </div>
-                            </div>
-
+                       
                             <div class="form-group">
                                <input class="btn btn-warning" type="submit" value="Create" />
                             </div>
@@ -143,4 +170,39 @@
 @section Scripts {
     @*Scripts.Render("~/bundles/jqueryval")*@
 
+    <script>
+
+        $(function() {
+            var setIntervalContainer = $("#@(setIntervalCheckBoxTargetContainerId)");
+            var container = $("#@(setCompleteDateCheckBoxTargetContainerId)");
+
+            @if (!Model.UseInterval)
+            {
+                @("setIntervalContainer.hide()\n")
+            }
+            @if (!Model.UseCompleteDate)
+            {
+                @("container.hide()\n")
+            }
+        });
+
+        function intervalCheckboxChanged(sender) {
+            var setIntervalContainer = $("#@(setIntervalCheckBoxTargetContainerId)");
+            if (sender.isChecked) {
+                setIntervalContainer.show(200);
+            } else {
+                setIntervalContainer.hide(200);
+            }
+        };
+
+        function completeDateCheckboxChanged(sender) {
+            var container = $("#@(setCompleteDateCheckBoxTargetContainerId)");
+            if (sender.isChecked) {
+                container.show(200);
+            } else {
+                container.hide(200);
+            }
+        };
+
+    </script>
 }

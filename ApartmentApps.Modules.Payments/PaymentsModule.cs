@@ -7,6 +7,7 @@ using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Data.Utils;
+using ApartmentApps.Modules.Payments.Services;
 using ApartmentApps.Payments.Forte;
 using ApartmentApps.Payments.Forte.Forte.Client;
 using Ninject;
@@ -18,14 +19,15 @@ namespace ApartmentApps.Api.Modules
         private readonly IRepository<UserLeaseInfo> _leaseRepository;
         private readonly IRepository<Invoice> _invoiceRepository;
         private readonly IRepository<InvoiceTransaction> _transactionRepository;
+        private LeaseInfoManagementService _leaseService;
         public PropertyContext Context { get; set; }
-
-        public PaymentsModule(IRepository<UserLeaseInfo> leaseRepository, IRepository<Invoice> invoiceRepository, IRepository<InvoiceTransaction> transactionRepository, PropertyContext context, IRepository<PaymentsConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
+        public PaymentsModule(IRepository<UserLeaseInfo> leaseRepository, IRepository<Invoice> invoiceRepository, IRepository<InvoiceTransaction> transactionRepository, PropertyContext context, IRepository<PaymentsConfig> configRepo, IUserContext userContext, IKernel kernel, LeaseInfoManagementService leaseService) : base(kernel, configRepo, userContext)
         {
             _leaseRepository = leaseRepository;
             _invoiceRepository = invoiceRepository;
             _transactionRepository = transactionRepository;
             Context = context;
+            _leaseService = leaseService;
         }
 
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
@@ -211,100 +213,18 @@ namespace ApartmentApps.Api.Modules
             return clientId;
         }
 
-        public void OnTransactionSuccessful(InvoiceTransaction transaction)
-        {
-
-            transaction.State = TransactionState.Complete;
-
-            foreach (var invoice in transaction.Invoices)
-            {
-                var leaseInfo = invoice.UserLeaseInfo;
-
-                invoice.IsArchived = true;
-                invoice.State = InvoiceState.Paid;
-
-                if (leaseInfo.IsIntervalSet())
-                {
-                    var nextInvoiceDate = leaseInfo.InvoiceDate.Offset(
-                        leaseInfo.IntervalDays ?? 0,
-                        leaseInfo.IntervalMonths ?? 0,
-                        leaseInfo.IntervalYears ?? 0);
-
-                    if (leaseInfo.RepetitionCompleteDate.HasValue &&
-                        nextInvoiceDate > leaseInfo.RepetitionCompleteDate.Value)
-                    {
-                        leaseInfo.State = LeaseState.Archived;
-                    }
-                    else
-                    {
-                        leaseInfo.InvoiceDate = nextInvoiceDate;
-                        CreateNextInvoiceFor(leaseInfo);
-                    }
-                }
-                else
-                {
-                    leaseInfo.State = LeaseState.Archived;
-                }
-
-
-            }
-
-            _invoiceRepository.Save();
-            _transactionRepository.Save();
-            _leaseRepository.Save();
-
-
-        }
-
-        public void CreateUserLeaseInfo(CreateUserLeaseInfoBindingModel data)
-        {
-            var user = Context.Users.Find(data.UserId);
-            if(user == null) throw new KeyNotFoundException();
-
-            var leaseInfo = new UserLeaseInfo()
-            {
-                Title = data.Title,
-                User = user,
-                Amount = data.Amount,
-                CreateDate = user.Property.TimeZone.Now(),
-                InvoiceDate = data.InvoiceDate.ToCorrectedDateTime(),
-                State = LeaseState.Active
-            };
-
-            if (data.IsIntervalSet())
-            {
-
-                leaseInfo.IntervalDays = data.IntervalDays;
-                leaseInfo.IntervalMonths = data.IntervalMonths;
-                leaseInfo.IntervalYears = data.IntervalYears;
-
-                if (data.RepetitionCompleteDate.HasValue)
-                {
-                    leaseInfo.RepetitionCompleteDate = data.RepetitionCompleteDate.Value;
-                }
-            }
-
-            _leaseRepository.Add(leaseInfo);
-            _leaseRepository.Save();
-
-            CreateNextInvoiceFor(leaseInfo);
-
-        }
-
         public void MarkAsPaid(int id, string s)
         {
             var invoice = _invoiceRepository.Find(id);
             if (invoice == null) throw new KeyNotFoundException();
             var user = invoice.UserLeaseInfo.User;
             if (user == null) throw new KeyNotFoundException();
-            var surrogateTransaction = new InvoiceTransaction()
-            {
-                Comments = "Marked as paid by moderator",
-                Invoices = new List<Invoice>() { invoice },
-            };
 
+            var opId = Guid.NewGuid().ToString();
+            _leaseService.CreateTransaction(opId, user.Id, new[] {invoice}, "", DateTime.Now);
+            var transaction = _transactionRepository.Find(opId);
+            _leaseService.OnTransactionComplete(transaction,s,user.Property.TimeZone.Now());
             _transactionRepository.Save();
-            OnTransactionSuccessful(surrogateTransaction);
 
         }
     }

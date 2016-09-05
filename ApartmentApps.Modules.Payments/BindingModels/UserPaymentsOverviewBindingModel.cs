@@ -6,7 +6,8 @@ namespace ApartmentApps.Api.Modules
     public class UserPaymentsOverviewBindingModel
     {
         public UserBindingModel User { get; set; }
-        public List<UserLeaseInfo> LeaseInfos { get;set; }
-        public List<Invoice> Invoices { get; set; }
+        public List<UserLeaseInfoBindingModel> LeaseInfos { get;set; }
+        public List<InvoiceBindingModel> Invoices { get; set; }
+        public List<TransactionBindingModel> Transactions { get; set; }
     }
 }
