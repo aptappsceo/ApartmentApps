@@ -55,8 +55,8 @@ namespace ApartmentApps.Api
             viewModel.HasPet = model.PetStatus > 1;
             viewModel.StartDate = model.Checkins.FirstOrDefault(p => p.StatusId == "Started")?.Date;
             viewModel.CompleteDate = model.Checkins.FirstOrDefault(p => p.StatusId == "Complete")?.Date;
-            viewModel.AssignedToId = model.AssignedToId;
-            viewModel.AssignedTo = model.AssignedTo == null ? null : UserMapper.ToViewModel(model.AssignedTo);
+            //viewModel.AssignedToId = model.AssignedToId;
+            //viewModel.AssignedTo = model.AssignedTo == null ? null : UserMapper.ToViewModel(model.AssignedTo);
             viewModel.LatestCheckin = model.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService);
             viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(BlobStorageService));
         }
@@ -71,10 +71,11 @@ namespace ApartmentApps.Api
         private IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
-        public MaintenanceService(IRepository<MaitenanceRequest> repository, IMapper<MaitenanceRequest, MaintenanceRequestViewModel> mapper, IBlobStorageService blobStorageService, IUserContext userContext) : base(repository, mapper)
+        public MaintenanceService(PropertyContext context, IRepository<MaitenanceRequest> repository, IMapper<MaitenanceRequest, MaintenanceRequestViewModel> mapper, IBlobStorageService blobStorageService, IUserContext userContext) : base(repository, mapper)
         {
             _blobStorageService = blobStorageService;
             _userContext = userContext;
+            Context = context;
         }
 
         public IEnumerable<MaintenanceRequestViewModel> GetAppointments()
@@ -139,19 +140,19 @@ namespace ApartmentApps.Api
 
         }
 
-        public IEnumerable<MaintenanceRequestViewModel> GetAllUnassigned()
-        {
-            return Repository.Where(p => p.AssignedToId == null).ToArray().Select(Mapper.ToViewModel);
-        }
+        //public IEnumerable<MaintenanceRequestViewModel> GetAllUnassigned()
+        //{
+        //    return Repository.Where(p => p.AssignedToId == null).ToArray().Select(Mapper.ToViewModel);
+        //}
 
-        public void AssignRequest(int requestId, string userId)
-        {
-            var request = Repository.Find(requestId);
-            request.AssignedToId = userId;
-            Repository.Save();
-            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceRequestAssignedEvent>(_ => _.MaintenanceRequestAssigned(request));
+        //public void AssignRequest(int requestId, string userId)
+        //{
+        //    var request = Repository.Find(requestId);
+        //    request.AssignedToId = userId;
+        //    Repository.Save();
+        //    Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceRequestAssignedEvent>(_ => _.MaintenanceRequestAssigned(request));
              
-        }
+        //}
         public bool PauseRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images)
         {
             return Checkin(worker, requestId, comments, "Paused", images);

@@ -12,10 +12,10 @@ namespace ApartmentApps.Data
 
     public partial class MaitenanceRequest : PropertyEntity, IImageContainer, IFeedItem
     {
-        public string AssignedToId { get; set; }
+        //public string AssignedToId { get; set; }
 
-        [ForeignKey("AssignedToId")]
-        public virtual ApplicationUser AssignedTo { get; set; }
+        //[ForeignKey("AssignedToId")]
+        //public virtual ApplicationUser AssignedTo { get; set; }
 
         public string UserId { get; set; }
 
