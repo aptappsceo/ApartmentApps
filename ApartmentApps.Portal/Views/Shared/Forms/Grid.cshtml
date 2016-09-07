@@ -14,7 +14,9 @@
             <tr>
                 @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
             {
-                    <th class="sorting_asc">@property.Label</th>
+                <th class="sorting_asc">
+                    <a href="@Url.Action("Grid", Html.Controller(), new {page = Model.CurrentPage, orderBy = property.Name, recordsPerPage = Model.RecordsPerPage, descending = !Model.Descending})">@property.Label</a>
+                </th>
                 }
                 @if (Model.Editable && idProperty != null)
             {
@@ -59,9 +61,11 @@
                 <li class="paginate_button previous disabled" id="editable_previous"><a href="#" aria-controls="editable" data-dt-idx="0" tabindex="0">Previous</a></li>
                 @for (var i = 1; i <= Model.PageCount; i++)
                 {
-                    <li class="paginate_button @(i == Model.CurrentPage ? "active" : "")"><a href="@Url.Action("Grid",Html.Controller(),new {page = i})" aria-controls="editable" data-dt-idx="1" tabindex="0">@i</a></li>
+                    <li class="paginate_button @(i == Model.CurrentPage ? "active" : "")">
+                        <a href="@Url.Action("Grid", Html.Controller(), new {page = i, orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})" aria-controls="editable" data-dt-idx="1" tabindex="0">@i</a>
+                    </li>
                 }
-                
+
                 <li class="paginate_button next" id="editable_next"><a href="#" aria-controls="editable" data-dt-idx="7" tabindex="0">Next</a></li>
             </ul>
         </div>

@@ -15,6 +15,15 @@ namespace ApartmentApps.Data
         public ExpressionOperator Operator { get; set; } = ExpressionOperator.Contains;
     }
 
+    public class FilterPath : Attribute
+    {
+        public FilterPath(string path)
+        {
+            Path = path;
+        }
+
+        public string Path { get; set; }
+    }
     public enum ExpressionOperator
     {
         Contains,
@@ -87,9 +96,16 @@ namespace ApartmentApps.Data
 
         private static Expression GetExpression<T>(ParameterExpression param, Filter filter)
         {
+            var members = filter.PropertyName.Split('.');
+
+            MemberExpression member = Expression.Property(param, members[0]);
             // The member you want to evaluate (x => x.FirstName)
-            MemberExpression member = Expression.Property(param, filter.PropertyName);
-   
+            foreach (var item in members.Skip(1))
+            {
+                member = Expression.Property(member, item);
+            }
+           
+    
             // The value you want to evaluate
             ConstantExpression constant = Expression.Constant(filter.Value.ToLower());
 

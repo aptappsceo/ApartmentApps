@@ -67,6 +67,15 @@ namespace ApartmentApps.Data
         }
     }
 
+    [Persistant]
+    public class ProcessInfo : PropertyEntity
+    {
+        public string TypeName { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
+
+        public DateTime? NextRun { get; set; }
+    }
     [AttributeUsage(AttributeTargets.Class)]
     public class PersistantAttribute : Attribute
     {

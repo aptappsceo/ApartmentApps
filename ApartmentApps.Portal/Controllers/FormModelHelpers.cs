@@ -11,7 +11,7 @@ namespace ApartmentApps.Portal.Controllers
 {
     public static class FormModelHelpers
     {
- 
+
         public static string Controller(this HtmlHelper htmlHelper)
         {
             var routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
@@ -31,16 +31,18 @@ namespace ApartmentApps.Portal.Controllers
 
             return string.Empty;
         }
-    
-    public static HtmlString RenderGrid(this HtmlHelper helper, Type type, object[] model, int count, int recordsPerPage, int currentPage, int pageCount)
+
+        public static HtmlString RenderGrid(this HtmlHelper helper, Type type, object[] model, int count, int recordsPerPage, int currentPage, int pageCount, string orderBy, bool descending)
         {
             var formHelper = new DefaultFormProvider();
             var gridModel = formHelper.CreateGridFor(type, model);
             gridModel.Items = model;
             gridModel.Count = count;
             gridModel.RecordsPerPage = recordsPerPage;
+            gridModel.OrderBy = orderBy;
             gridModel.CurrentPage = currentPage;
             gridModel.PageCount = pageCount;
+            gridModel.Descending = descending;
             return helper.Partial("~/Views/Shared/Forms/Grid.cshtml", gridModel);
         }
         public static HtmlString RenderForm(this HtmlHelper helper, object model)
@@ -67,12 +69,12 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
-        public static HtmlString RenderFeedItems(this HtmlHelper helper, List<FeedItemBindingModel> feedItem, Func<FeedItemBindingModel,string> itemUrlSelector)
+        public static HtmlString RenderFeedItems(this HtmlHelper helper, List<FeedItemBindingModel> feedItem, Func<FeedItemBindingModel, string> itemUrlSelector)
         {
             return helper.Partial("~/Views/Shared/FeedItems/FeedItem1.cshtml", new FeedItemsListModel()
             {
                 FeedItems = feedItem,
-                ItemUrlSelector  = itemUrlSelector
+                ItemUrlSelector = itemUrlSelector
             });
         }
     }

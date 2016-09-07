@@ -41,12 +41,15 @@ namespace ApartmentApps.Portal.Controllers
             {
                 var obj = property.GetValue(viewModel, null) as FilterViewModel;
                 if (obj == null) continue;
+                var filterPath =
+                    property.GetCustomAttributes(typeof (FilterPath), true).Cast<FilterPath>().FirstOrDefault();
+
                 if (!string.IsNullOrEmpty(obj.Value))
                 {
                     yield return new Filter()
                     {
                         Value = obj.Value,
-                        PropertyName = property.Name,
+                        PropertyName = filterPath == null ? property.Name : filterPath.Path,
                         Operator = obj.ExpressionOperator
                     };
                 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ApartmentApps.Api.Auth;
@@ -112,6 +113,11 @@ namespace ApartmentApps.Api
             user.Address = address;
             _context.SaveChanges();
         }
+
+        public TimeSpan Frequency => new TimeSpan(1,0,0,0);
+        public int JobStartHour => 1;
+        public int JobStartMinute => 0;
+
         public virtual void Execute(ILogger logger)
         {
             

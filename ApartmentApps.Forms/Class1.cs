@@ -20,6 +20,8 @@ namespace ApartmentApps.Forms
         public int RecordsPerPage { get; set; }
         public int CurrentPage { get; set; }
         public int PageCount { get; set; }
+        public string OrderBy { get; set; }
+        public bool Descending { get; set; }
     }
     public class FormModel
     {

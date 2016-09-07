@@ -107,20 +107,21 @@ namespace ApartmentApps.Portal.Controllers
             return Grid(0);
         }
 
-        public ActionResult Grid(int page, string orderBy = null)
+        public ActionResult Grid(int page, string orderBy = null, int recordsPerPage = 10,bool descending = false)
         {
             if (page > 0)
             {
                 GridState.Page = page;
             }
-           
+            GridState.Descending = descending;
+            GridState.RecordsPerPage = recordsPerPage;
             if (orderBy != null)
             {
                 GridState.OrderBy = orderBy;
             }
             var count = 0;
-            var results = Searchable.Search(FilterViewModel, out count, GridState.OrderBy, GridState.Descending,GridState.Page,GridState.RecordsPerPage);
-            return AutoIndex(results.ToArray(), count, page, IndexTitle);
+            var results = Searchable.Search(FilterViewModel, out count, GridState.OrderBy, GridState.Descending,GridState.Page -1,GridState.RecordsPerPage);
+            return AutoIndex(results.ToArray(), count, page,GridState.RecordsPerPage,GridState.OrderBy,descending, IndexTitle);
         }
         public GridState GridState
         {
@@ -141,6 +142,7 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public virtual ActionResult SearchFormSubmit(TSearchViewModel vm)
         {
+            GridState.Page = 1;
             FilterViewModel = vm;
             return Grid(0);
             //return AutoForm(new TSearchViewModel(), "SearchFormSubmit", "Search");
@@ -177,7 +179,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             
             var array = _indexService.GetAll().ToArray();
-            return AutoIndex(array, array.Length,0);
+            return AutoIndex(array, array.Length,0,20);
         }
         public virtual ActionResult Entry(string id = null)
         {
@@ -256,14 +258,16 @@ namespace ApartmentApps.Portal.Controllers
             }
 
         }
-        public ActionResult AutoIndex<TViewModel>(TViewModel[] model, int count,int currentPage, string title = null )
+        public ActionResult AutoIndex<TViewModel>(TViewModel[] model, int count, int currentPage,int recordsPerPage, string orderBy = null, bool descending =false, string title = null)
         {
             return View("AutoIndex", new AutoGridModel(model.Cast<object>().ToArray())
             {
                 Title = title,
                 Count = count,
                 CurrentPage = currentPage,
-                RecordsPerPage = 20,
+                RecordsPerPage = recordsPerPage,
+                OrderBy = orderBy,
+                Descending = descending,
                 Type = typeof(TViewModel)
             });
         }

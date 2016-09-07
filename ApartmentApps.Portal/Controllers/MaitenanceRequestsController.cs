@@ -535,6 +535,8 @@ namespace ApartmentApps.Portal.Controllers
         public int RecordsPerPage { get; set; } = 20;
 
         public int Pages => (int) Math.Ceiling((double) Count/RecordsPerPage);
+        public string OrderBy { get; set; }
+        public bool Descending { get; set; }
 
 
         public AutoGridModel(object[] model)
