@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ApartmentApps.Modules.Payments.BindingModels
 {
-    public class CancelTransactionBindingModel
+    public class CancelUserLeaseInfoBindingModel
     {
-        public string TransactionId { get; set; }
+        public int Id { get; set; }
     }
 }

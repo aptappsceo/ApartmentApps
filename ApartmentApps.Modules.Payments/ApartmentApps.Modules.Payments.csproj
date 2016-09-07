@@ -68,12 +68,15 @@
     <Compile Include="BindingModels\AddCreditCardBindingModel.cs" />
     <Compile Include="BindingModels\AddCreditCardResult.cs" />
     <Compile Include="BindingModels\CancelInvoiceBindingModel.cs" />
-    <Compile Include="BindingModels\CancelTransactionBindingModel.cs" />
+    <Compile Include="BindingModels\CancelUserLeaseInfoBindingModel.cs" />
+    <Compile Include="BindingModels\EditInvoiceBindingModel.cs" />
+    <Compile Include="BindingModels\EnableUserLeaseInfoBindingModel.cs" />
     <Compile Include="BindingModels\InvoiceBindingModel.cs" />
     <Compile Include="BindingModels\ResumeUserLeaseInfoBindingModel.cs" />
     <Compile Include="BindingModels\SuspendUserLeaseInfoBindingModel.cs" />
+    <Compile Include="BindingModels\UserPaymentOptionsOverviewBindingModel.cs" />
     <Compile Include="Data\CardType.cs" />
-    <Compile Include="BindingModels\EditLeaseBindingModel.cs" />
+    <Compile Include="BindingModels\EditUserLeaseInfoBindingModel.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Data\Invoice.cs" />
     <Compile Include="Data\InvoiceState.cs" />

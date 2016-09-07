@@ -5,9 +5,11 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using System.Web.WebPages;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Forms;
+using ApartmentApps.Portal.Helpers;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -94,6 +96,69 @@ namespace ApartmentApps.Portal.Controllers
     {
         public string Title { get; set; }
         public object Id { get;set; }
+    }
+
+    public static class StepFormExtensions
+    {
+        public static StepFormBuilder<TModel> StepFormFor<TModel>(this HtmlHelper<TModel> html, string id, string action, string controller, object routeValues = null)
+        {
+            return new StepFormBuilder<TModel>(new StepFormModel()
+            {
+                Id = id,
+                Action = action,
+                Controller = controller,
+                RouteValues = routeValues
+            },html);
+        }
+    }
+
+    public class StepFormBuilder<TModel>
+    {
+        private StepFormModel _model;
+        private HtmlHelper _helper;
+        public StepFormBuilder(StepFormModel model, HtmlHelper<TModel> helper)
+        {
+            _model = model;
+            _helper = helper;
+        }
+
+        public StepFormBuilder<TModel> AddPage(string title, Func<object, HelperResult> template)
+        {
+            _model.Items.Add(new StepFormItem()
+            {
+                Title = title,
+                Template = template
+            });
+            return this;
+        }
+
+        public HtmlString Render()
+        {
+            return _helper.Partial("~/Views/Shared/Forms/StepForm.cshtml",_model);
+        }
+
+    }
+
+    public class StepFormModel
+    {
+        private List<StepFormItem> _items;
+
+        public List<StepFormItem> Items
+        {
+            get { return _items ?? (_items = new List<StepFormItem>()); }
+            set { _items = value; }
+        }
+
+        public string Id { get; set; }
+        public string Action { get; set; }
+        public string Controller { get; set; }
+        public object RouteValues { get; set; }
+    }
+
+    public class StepFormItem
+    {
+        public string Title { get;set; }
+        public Func<object, HelperResult> Template { get; set; }
     }
 
 }

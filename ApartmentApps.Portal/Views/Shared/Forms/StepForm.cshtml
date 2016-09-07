@@ -1,0 +1,61 @@
+﻿@model ApartmentApps.Portal.Controllers.StepFormModel
+
+<div class="container" id="@Model.Id">
+
+    <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="@Model.Items.Count" style="width: 20%;">
+            Step 1 of @Model.Items.Count
+        </div>
+    </div>
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <ul class="nav nav-pills">
+
+                @for (int index = 0; index < Model.Items.Count; index++)
+                {
+                    var item = Model.Items[index];
+
+                    if (index == 0)
+                    {
+                        <li class="active"><a href="#step@(index+1)" data-toggle="tab" data-step="@(index+1)">@item.Title</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="#step@(index+1)" data-toggle="tab" data-step="@(index+1)">@item.Title</a></li>
+                    }
+
+                }
+            </ul>
+        </div>
+    </div>
+    @using (Html.BeginForm(Model.Action, Model.Controller, Model.RouteValues))
+    {
+        <div class="tab-content">
+
+            @for (int index = 0; index < Model.Items.Count; index++)
+            {
+                var item = Model.Items[index];
+                var contianerClass = index == 0 ? "tab-pane fade in active" : "tab-pane fade";
+          
+                <div class="@contianerClass" id="step@(index+1)">
+                    <div class="well">
+                        <h2>@item.Title</h2>
+                        @item.Template.Invoke(null)
+                    </div>
+                    @if (index != Model.Items.Count - 1)
+                    {
+                        <a class="btn btn-default next" href="#">Continue</a>
+                    }
+                    else
+                    {
+                        <input type="submit" class="btn btn-primary" value="Submit"/>
+                    }
+                </div>
+               
+            }
+     
+        </div>
+    }
+
+</div>

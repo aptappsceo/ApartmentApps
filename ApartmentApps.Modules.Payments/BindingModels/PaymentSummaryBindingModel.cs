@@ -4,7 +4,8 @@ namespace ApartmentApps.Api.Modules
 {
     public class PaymentSummaryBindingModel
     {
-        public int BaseRent { get; set; }
+        public decimal Amount { get; set; }
+        public string Title { get; set; }
         public List<PaymentSummaryBindingModel> SummaryOptions { get; set; }
     }
 }

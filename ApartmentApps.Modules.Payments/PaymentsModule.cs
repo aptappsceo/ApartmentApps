@@ -47,25 +47,34 @@ namespace ApartmentApps.Api.Modules
 
         public string Key { get; set; } = "18RcFs5F";
 
+        //Includes fee
         public async Task<PaymentSummaryBindingModel> GetPaymentSummary(string userId)
         {
             var user = Context.Users.Find(userId);
 
+
+
             return new PaymentSummaryBindingModel()
             {
-                BaseRent = user.Unit.Building.RentAmount,
+                Amount = user.Unit.Building.RentAmount,
 
             };
         }
-
+        
         public async Task<PaymentSummaryBindingModel> GetRentSummary(string userId)
         {
             var user = Context.Users.Find(userId);
 
+            var invoices = _invoiceRepository.Where(
+                s => s.UserLeaseInfo.UserId == userId && s.AvailableDate < user.Property.TimeZone.Now()).ToArray();
+
             return new PaymentSummaryBindingModel()
             {
-                BaseRent = user.Unit.Building.RentAmount,
-
+                Amount = user.Unit.Building.RentAmount,
+                SummaryOptions = invoices.Select(s=> new PaymentSummaryBindingModel()
+                {
+                    Amount = s.Amount
+                }).ToList()
             };
         }
         public async Task<AddCreditCardResult> AddCreditCard(AddCreditCardBindingModel addCreditCard)

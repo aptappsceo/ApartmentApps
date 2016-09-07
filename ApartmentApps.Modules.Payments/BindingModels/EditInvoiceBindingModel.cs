@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace ApartmentApps.Modules.Payments.BindingModels
 {
-    public class CancelInvoiceBindingModel
+    public class EditInvoiceBindingModel
     {
         public int Id { get; set; }
-        public UserLeaseInfoAction UserLeaseInfoAction { get;set; }
-    }
 
-    public enum UserLeaseInfoAction
-    {
-        GenerateNextInvoice,
-        Cancel
+        public DateTime AvailableDate { get; set; }
+        public DateTime DueDate { get; set; }
+        public decimal Amount { get; set; }
+        public string Title { get; set; }
+
     }
 }

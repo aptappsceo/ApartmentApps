@@ -83,8 +83,7 @@
                                                         @if (User.IsInRole("PropertyAdmin") || User.IsInRole("Admin"))
                                                         {
                                                             <a href="#" class="btn btn-warning btn-xs"><i class="fa fa-edit fa-fw"></i>Edit</a>
-                                                            <a href="#" class="btn btn-warning btn-xs"><i class="fa fa-pause fa-fw"></i>Suspend</a>
-                                                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-remove fa-fw"></i>Cancel</a>
+                                                            <a href="@Url.Action("CancelUserLeaseInfo",new {id = lease.Id})" class="btn btn-danger btn-xs"><i class="fa fa-remove fa-fw"></i>Cancel</a>
                                                         }
                                                     </div>
                                                 </div>
@@ -204,7 +203,8 @@
                                             @if (User.IsInRole("PropertyAdmin") || User.IsInRole("Admin"))
                                             {
                                                 <a href="@Url.Action("MarkAsPaid", new {id = invoice.Id})" class="btn btn-success btn-xs"><i class="fa fa-check-circle fa-fw"></i>Mark As Paid</a>
-                                                <a href="#" class="btn btn-warning btn-xs"><i class="fa fa-remove fa-fw"></i>Cancel</a>
+                                                <a href="@Url.Action("EditInvoice", new {id = invoice.Id})" class="btn btn-warning btn-xs"><i class="fa fa-edit fa-fw"></i>Edit</a>
+                                                <a href="@Url.Action("CancelInvoice", new {id = invoice.Id})" class="btn btn-warning btn-xs"><i class="fa fa-remove fa-fw"></i>Cancel</a>
                                             }
                                         </div>
                                     </div>

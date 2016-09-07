@@ -1,0 +1,177 @@
+﻿@using ApartmentApps.Api.Modules
+@using ApartmentApps.Portal.Controllers
+@model ApartmentApps.Api.Modules.EditUserLeaseInfoBindingModel
+@{
+    ViewBag.Title = "Create";
+
+    var setIntervalCheckBoxId = nameof(Model.UseInterval);
+    var setCompleteDateCheckBoxId = nameof(Model.UseCompleteDate);
+    var setIntervalCheckBoxTargetContainerId = "setinterval_container";
+    var setCompleteDateCheckBoxTargetContainerId = "setcompletedate_container";
+
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Create User Lease Item</h5>
+                </div>
+                <div class="ibox-content">
+
+                    @using (Html.BeginForm("EditUserLeaseInfo", "Payments", "POST"))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Id)
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true)
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Title, "Title", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EJ().MaskEditTextBoxFor(m => m.Title)
+                                    @Html.ValidationMessageFor(model => model.Title)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Amount, "Amount", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EJ().CurrencyTextbox("Amount").DecimalPlaces(2).IncrementStep(0.5).MinValue(0).Name("Amount").Value(Model.Amount)
+                                    @Html.ValidationMessageFor(model => model.Amount)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.InvoiceDate, "Invoice Date", new {@class = "control-label col-md-2"})
+                                <div class="well"></div>
+                                <div class="col-md-10">
+                                    @Html.EJ().DatePicker(nameof(Model.InvoiceDate)).Value(Model.InvoiceDate)
+                                    @Html.ValidationMessageFor(model => model.InvoiceDate)
+                                </div>
+                            </div>
+
+                            <div>
+
+
+                                <div class="form-group">
+                                    <div class="control-label col-md-2">
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Html.EJ().CheckBox(setIntervalCheckBoxId).Checked(Model.UseInterval).Text("Repeat invoice once in a month(s)?").ClientSideEvents(s => s.Change("intervalCheckboxChanged"))
+                                    </div>
+                                </div>
+
+                                <div id="@(setIntervalCheckBoxTargetContainerId)">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.IntervalMonths, "Months Interval", new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EJ().NumericTextBoxFor(s => s.IntervalMonths).IncrementStep(1).ShowSpinButton().MinValue(0).MaxValue(12)
+                                            @Html.ValidationMessageFor(model => model.IntervalMonths)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="control-label col-md-2">
+                                        </div>
+                                        <div class="col-md-10">
+                                            @Html.EJ().CheckBox(setCompleteDateCheckBoxId).Checked(Model.UseCompleteDate).Text("Stop after certain date?").ClientSideEvents(s => s.Change("completeDateCheckboxChanged"))
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" id="@(setCompleteDateCheckBoxTargetContainerId)">
+                                        @Html.LabelFor(model => model.CompleteDate, "Complete After", new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EJ().DatePicker(nameof(Model.CompleteDate)).Value(Model.CompleteDate)
+                                            @Html.ValidationMessageFor(model => model.CompleteDate)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*
+
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.IntervalDays, "Days", new { @class = "control-label col-md-2" })
+
+
+                                                            <div class="col-md-10">
+                                                                @Html.EJ().NumericTextBoxFor(s => s.IntervalDays).IncrementStep(1).ShowSpinButton().MinValue(0).MaxValue(31)
+                                                                @Html.ValidationMessageFor(model => model.IntervalDays)
+                                                            </div>
+                                                        </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.IntervalYears, "Years", new { @class = "control-label col-md-2" })
+
+
+                                    <div class="col-md-10">
+                                        @Html.EJ().NumericTextBoxFor(s => s.IntervalYears).IncrementStep(1).ShowSpinButton().MinValue(0)
+                                        @Html.ValidationMessageFor(model => model.IntervalYears)
+                                    </div>
+                                </div>
+                            *@
+
+                            <div class="form-group">
+                                <input class="btn btn-warning" type="submit" value="Create" />
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section csspage {
+
+    .e-content {
+    height : 200px !important;
+    }
+
+}
+
+@section Scripts {
+    @*Scripts.Render("~/bundles/jqueryval")*@
+
+    <script>
+
+        $(function() {
+            var setIntervalContainer = $("#@(setIntervalCheckBoxTargetContainerId)");
+            var container = $("#@(setCompleteDateCheckBoxTargetContainerId)");
+
+            @if (!Model.UseInterval)
+            {
+                @("setIntervalContainer.hide()\n")
+            }
+            @if (!Model.UseCompleteDate)
+            {
+                @("container.hide()\n")
+            }
+        });
+
+        function intervalCheckboxChanged(sender) {
+            var setIntervalContainer = $("#@(setIntervalCheckBoxTargetContainerId)");
+            if (sender.isChecked) {
+                setIntervalContainer.show(200);
+            } else {
+                setIntervalContainer.hide(200);
+            }
+        };
+
+        function completeDateCheckboxChanged(sender) {
+            var container = $("#@(setCompleteDateCheckBoxTargetContainerId)");
+            if (sender.isChecked) {
+                container.show(200);
+            } else {
+                container.hide(200);
+            }
+        };
+
+    </script>
+}

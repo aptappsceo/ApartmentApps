@@ -9,6 +9,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Payments.BindingModels;
 using ApartmentApps.Modules.Payments.Services;
 using Ninject;
 
@@ -33,7 +34,10 @@ namespace ApartmentApps.Portal.Controllers
             return View("RentSummary"); // TODO Redirect to other pages for property manager
         }
 
-        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule, IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices  ,IKernel kernel, PropertyContext context, IUserContext userContext, IRepository<InvoiceTransaction> transactions, LeaseInfoManagementService leaseService) : base(kernel, context, userContext)
+        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule,
+            IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices, IKernel kernel,
+            PropertyContext context, IUserContext userContext, IRepository<InvoiceTransaction> transactions,
+            LeaseInfoManagementService leaseService) : base(kernel, context, userContext)
         {
             _blobStorageService = blobStorageService;
             _paymentsModule = paymentsModule;
@@ -62,40 +66,35 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public ActionResult MakePaymentSubmit(MakePaymentBindingModel model)
         {
-           
             return View("PaymentSuccess", _paymentsModule.MakePayment(model).Result);
         }
 
 
-       
         public string PaymentOptionId
         {
-            get
-            {
-
-                return Session["PaymentOptionId"] as string;
-            }
-            set
-            {
-                Session["PaymentOptionId"] = value;
-            }
+            get { return Session["PaymentOptionId"] as string; }
+            set { Session["PaymentOptionId"] = value; }
         }
+
         public ActionResult PaymentSummary(string paymentOptionId)
         {
             PaymentOptionId = paymentOptionId;
             ViewBag.NextAction = Url.Action("MakePayment");
             return View("RentSummary", _paymentsModule.GetPaymentSummary(CurrentUser.Id).Result);
         }
+
         public ActionResult AddCreditCard()
         {
             return AutoForm(new AddCreditCardBindingModel(), "AddCreditCardSubmit", "Add Credit Card");
         }
+
         public async Task<ActionResult> AddCreditCardSubmit(AddCreditCardBindingModel cardModel)
         {
             var result = await _paymentsModule.AddCreditCard(cardModel);
             PaymentOptionId = result.PaymentOptionId.ToString();
             return RedirectToAction("MakePayment");
         }
+
         public ActionResult AddBankAccount()
         {
             return AutoForm(new AddBankAccountBindingModel(), "AddBankAccountSubmit", "Add Credit Card");
@@ -103,9 +102,15 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult CreateUserLeaseInfo()
         {
-            return View("CreateUserLeaseInfo",new CreateUserLeaseInfoBindingModel()
+            return View("CreateUserLeaseInfo", new CreateUserLeaseInfoBindingModel()
             {
-                UserIdItems = Context.Users.GetAll().Where(u=>!u.Archived).ToList().Select(u=>u.ToUserBindingModel(_blobStorageService)).Where(u=>!string.IsNullOrWhiteSpace(u.FullName)).ToList(),
+                UserIdItems =
+                    Context.Users.GetAll()
+                        .Where(u => !u.Archived)
+                        .ToList()
+                        .Select(u => u.ToUserBindingModel(_blobStorageService))
+                        .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
+                        .ToList(),
             });
         }
 
@@ -121,12 +126,18 @@ namespace ApartmentApps.Portal.Controllers
                         .Select(u => u.ToUserBindingModel(_blobStorageService))
                         .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
                         .ToList();
-                 return View("CreateUserLeaseInfo",data);
+                return View("CreateUserLeaseInfo", data);
             }
 
             _leaseService.CreateUserLeaseInfo(data);
 
-            return RedirectToAction("UserPaymentsOverview", new { id = data.UserId });
+            return RedirectToAction("UserPaymentsOverview", new {id = data.UserId});
+        }
+
+
+        public async Task<ActionResult> GetPaymentSummary(string userId)
+        {
+            return View("RentSummary", await _paymentsModule.GetRentSummary(userId));
         }
 
         public ActionResult UserPaymentsOverview(string id)
@@ -137,13 +148,18 @@ namespace ApartmentApps.Portal.Controllers
             var userLeaseInfos = _leaseInfos.GetAll().Where(s => s.UserId == id).ToList();
             var transactions = _transactions.GetAll().Where(s => s.UserId == id).ToList();
             var userLeaseInfosIds = userLeaseInfos.Select(s => s.Id).ToArray();
-            
-            return View("UserPaymentsOverview",new UserPaymentsOverviewBindingModel()
+
+            return View("UserPaymentsOverview", new UserPaymentsOverviewBindingModel()
             {
                 User = user.ToUserBindingModel(_blobStorageService),
-                Invoices = _invoices.GetAll().Where(s=> userLeaseInfosIds.Contains(s.UserLeaseInfoId)).ToList().Select(s=>s.ToBindingModel(_blobStorageService)).ToList(),
-                LeaseInfos = userLeaseInfos.Select(s=>s.ToBindingModel(_blobStorageService)).ToList(),
-                Transactions = transactions.Select(s=>s.ToBindingModel(_blobStorageService)).ToList() 
+                Invoices =
+                    _invoices.GetAll()
+                        .Where(s => userLeaseInfosIds.Contains(s.UserLeaseInfoId))
+                        .ToList()
+                        .Select(s => s.ToBindingModel(_blobStorageService))
+                        .ToList(),
+                LeaseInfos = userLeaseInfos.Select(s => s.ToBindingModel(_blobStorageService)).ToList(),
+                Transactions = transactions.Select(s => s.ToBindingModel(_blobStorageService)).ToList()
             });
         }
 
@@ -154,9 +170,9 @@ namespace ApartmentApps.Portal.Controllers
             var user = invoice.UserLeaseInfo.User;
             if (user == null) return HttpNotFound();
             _paymentsModule.MarkAsPaid(id, "Marked as paid by " + CurrentUser.Email);
-            
 
-            return RedirectToAction("UserPaymentsOverview", new { id = user.Id });
+
+            return RedirectToAction("UserPaymentsOverview", new {id = user.Id});
         }
 
         public async Task<ActionResult> AddBankAccountSubmit(AddBankAccountBindingModel cardModel)
@@ -167,11 +183,172 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult CreateUserLeaseInfoFor(string id)
         {
-            return View("CreateUserLeaseInfo",new CreateUserLeaseInfoBindingModel()
+            return View("CreateUserLeaseInfo", new CreateUserLeaseInfoBindingModel()
             {
                 UserId = id,
-                UserIdItems = Context.Users.GetAll().Where(u=>!u.Archived).ToList().Select(u=>u.ToUserBindingModel(_blobStorageService)).Where(u=>!string.IsNullOrWhiteSpace(u.FullName)).ToList(),
+                UserIdItems =
+                    Context.Users.GetAll()
+                        .Where(u => !u.Archived)
+                        .ToList()
+                        .Select(u => u.ToUserBindingModel(_blobStorageService))
+                        .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
+                        .ToList(),
             });
+        }
+
+
+        public ActionResult CancelInvoice(int id)
+        {
+            var invoice = _invoices.Find(id);
+            if (invoice == null) return HttpNotFound();
+
+            return View("CancelInvoice", new CancelInvoiceBindingModel()
+            {
+                Id = id
+            });
+        }
+
+        [HttpPost]
+        public ActionResult CancelInvoice(CancelInvoiceBindingModel data)
+        {
+            if (ModelState.IsValid)
+            {
+                var invoice = _invoices.Find(data.Id);
+                if (invoice == null) return HttpNotFound();
+
+                var user = invoice.UserLeaseInfo.User;
+
+                _leaseService.CancelInvoice(data);
+
+                return RedirectToAction("UserPaymentsOverview", new {id = user.Id});
+            }
+            else
+            {
+                return View("CancelInvoice", data);
+            }
+        }
+
+
+        public ActionResult EditInvoice(int id)
+        {
+                  var invoice = _invoices.Find(id);
+            if (invoice == null) return HttpNotFound();
+
+            return View("EditInvoice", new EditInvoiceBindingModel()
+            {
+                Id = id,
+                Title = invoice.Title,
+                AvailableDate = invoice.AvailableDate,
+                DueDate = invoice.DueDate,
+                Amount = invoice.Amount
+            });
+        }
+
+        [HttpPost]
+        public ActionResult EditInvoice(EditInvoiceBindingModel data)
+        {
+            if (ModelState.IsValid)
+            {
+                var invoice = _invoices.Find(data.Id);
+                if (invoice == null) return HttpNotFound();
+
+                var user = invoice.UserLeaseInfo.User;
+
+                _leaseService.EditInvoice(data);
+
+                return RedirectToAction("UserPaymentsOverview", new {id = user.Id});
+            }
+            else
+            {
+                return View("EditInvoice", data);
+            }
+        }
+
+        public ActionResult EditUserLeaseInfo(int id)
+        {
+            var userLeaseInfo = _leaseInfos.Find(id);
+            if (userLeaseInfo== null) return HttpNotFound();
+
+            return View("EditUserLeaseInfo", new EditUserLeaseInfoBindingModel()
+            {
+                Id = id
+            });
+        }
+
+        [HttpPost]
+        public ActionResult EditUserLeaseInfo(EditUserLeaseInfoBindingModel data)
+        {
+            if (ModelState.IsValid)
+            {
+                var userLeaseInfo = _leaseInfos.Find(data.Id);
+                if (userLeaseInfo== null) return HttpNotFound();
+
+                var user = userLeaseInfo.User;
+
+                _leaseService.EditUserLeaseInfo(data);
+
+                return RedirectToAction("UserPaymentsOverview", new {id = user.Id});
+            }
+            else
+            {
+                return View("EditUserLeaseInfo", data);
+            }
+        }
+
+
+        public ActionResult CancelUserLeaseInfo(int id)
+        {
+            var userLeaseInfo = _leaseInfos.Find(id);
+            if (userLeaseInfo== null) return HttpNotFound();
+
+            return View("CancelUserLeaseInfo", new CancelUserLeaseInfoBindingModel()
+            {
+                Id = id
+            });
+        }
+
+        [HttpPost]
+        public ActionResult CancelUserLeaseInfo(CancelUserLeaseInfoBindingModel data)
+        {
+              if (ModelState.IsValid)
+            {
+                var userLeaseInfo = _leaseInfos.Find(data.Id);
+                if (userLeaseInfo== null) return HttpNotFound();
+
+                var user = userLeaseInfo.User;
+
+                _leaseService.CancelUserLeaseInfo(data);
+
+                return RedirectToAction("UserPaymentsOverview", new {id = user.Id});
+            }
+            else
+            {
+                return View("CancelUserLeaseInfo", data);
+            }
+        }
+
+
+        public ActionResult InvoiceDetails(int id)
+        {
+            var invoice = _invoices.Find(id);
+            if (invoice == null) return HttpNotFound();
+            return View("InvoiceDetails", invoice.ToBindingModel(_blobStorageService));
+        }
+
+
+        public ActionResult UserLeaseInfoDetails(int id)
+        {
+            var userLeaseInfo = _leaseInfos.Find(id);
+            if (userLeaseInfo== null) return HttpNotFound();
+            return View("UserLeaseInfoDetails", userLeaseInfo.ToBindingModel(_blobStorageService));
+        }
+
+
+        public ActionResult TransactionDetails(string id)
+        {
+            var transaction = _transactions.Find(id);
+            if (transaction == null) return HttpNotFound();
+            return View("TransactionDetails", transaction.ToBindingModel(_blobStorageService));
         }
     }
 }
