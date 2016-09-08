@@ -120,7 +120,7 @@ namespace ApartmentApps.Portal.Controllers
                 GridState.OrderBy = orderBy;
             }
             var count = 0;
-            var results = Searchable.Search(FilterViewModel, out count, GridState.OrderBy, GridState.Descending,GridState.Page -1,GridState.RecordsPerPage);
+            var results = Searchable.Search(FilterViewModel, out count, GridState.OrderBy, GridState.Descending,GridState.Page,GridState.RecordsPerPage);
             return AutoIndex(results.ToArray(), count, page,GridState.RecordsPerPage,GridState.OrderBy,descending, IndexTitle);
         }
         public GridState GridState

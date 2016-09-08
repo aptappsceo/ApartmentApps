@@ -79,8 +79,8 @@ namespace ApartmentApps.Portal.Controllers
         public FilterViewModel FirstName { get; set; } = new FilterViewModel();
         public FilterViewModel LastName { get; set; } = new FilterViewModel();
 
-        [FilterPath("Unit.Name")]
-        public FilterViewModel UnitName { get; set; } = new FilterViewModel();
+        //[FilterPath("Unit.Name")]
+        //public FilterViewModel UnitName { get; set; } = new FilterViewModel();
 
     }
     public class UserService : SearchableCrudService<ApplicationUser, UserBindingModel, UserSearchViewModel>
