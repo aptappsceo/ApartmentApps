@@ -71,13 +71,13 @@ namespace ApartmentApps.Portal.Controllers
                     result = result.OrderBy(DefaultOrderBy);
                 }
                 
-                result = result.Skip(resultsPerPage * page);
+                result = result.Skip(resultsPerPage * (page - 1));
                 result = result.Take(resultsPerPage);
             }
             else
             {
                 result = result.OrderBy(orderBy, orderByDesc);
-                result = result.Skip(resultsPerPage * page);
+                result = result.Skip(resultsPerPage * (page - 1));
                 result = result.Take(resultsPerPage);
             }
             var res = result.ToArray();

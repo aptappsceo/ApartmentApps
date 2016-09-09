@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
@@ -23,10 +24,17 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Id = model.Id.ToString();
         }
     }
-    public class BuildingService : StandardCrudService<Building, BuildingViewModel>
+
+    public class BuildingSearchViewModel
+    {
+        public FilterViewModel Name { get; set; }
+    }
+    public class BuildingService : SearchableCrudService<Building, BuildingViewModel, BuildingSearchViewModel>
     {
         public BuildingService(IRepository<Building> repository, IMapper<Building, BuildingViewModel> mapper) : base(repository, mapper)
         {
         }
+
+        public override Expression<Func<Building, object>> DefaultOrderBy => p => p.Name;
     }
 }

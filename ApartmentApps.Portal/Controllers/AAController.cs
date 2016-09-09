@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
 using ApartmentApps.Api;
@@ -8,6 +10,8 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Ninject;
 using Syncfusion.JavaScript.DataVisualization.Models;
 
@@ -22,18 +26,98 @@ namespace ApartmentApps.Portal.Controllers
         }
     }
 
+    public class AutoBuildingController :
+        AutoGridController<BuildingService, BuildingViewModel, BuildingSearchViewModel>
+    {
+        public AutoBuildingController(IKernel kernel, BuildingService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
+        {
+        }
 
+    }
     public class AutoUserController : AutoGridController<UserService,UserBindingModel, UserSearchViewModel>
     {
+        private ApplicationUserManager _userManager;
+
         public AutoUserController(IKernel kernel, UserService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
         {
         }
-        [HttpPost]
-        public override ActionResult SearchFormSubmit(UserSearchViewModel vm)
-        {
-            return base.SearchFormSubmit(vm);
-        }
 
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        [HttpPost]
+        public async Task<ActionResult> SaveUser(UserFormModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = Context.Users.Find(model.Id);
+                var newUser = false;
+                if (user == null)
+                {
+
+                    user = new ApplicationUser
+                    {
+
+                    };
+
+                    newUser = true;
+                }
+                else
+                {
+
+                }
+                if (!User.IsInRole("Admin"))
+                {
+                    model.SelectedRoles.Remove("Admin"); // Just to make sure
+                }
+                user.Email = model.Email;
+                user.PropertyId = PropertyId;
+                user.UserName = model.Email;
+                user.UnitId = model.UnitId;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Roles.Clear();
+                foreach (var item in model.SelectedRoles)
+                {
+                    user.Roles.Add(new IdentityUserRole() { RoleId = item, UserId = user.Id });
+                }
+                if (newUser)
+                {
+
+                    var result = await UserManager.CreateAsync(user, "Temp1234!");
+                    if (result.Succeeded)
+                    {
+
+
+                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    }
+                }
+                else
+                {
+                    Context.SaveChanges();
+                }
+
+
+                //AddErrors(result);
+            }
+
+
+            return RedirectToAction("Index");
+        }
         public override ActionResult Entry(string id = null)
         {
             var user = Context.Users.Find(id);
@@ -81,7 +165,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public class GridState
     {
-        public int Page { get; set; }
+        public int Page { get; set; } = 1;
         public int RecordsPerPage { get; set; } = 10;
 
         public string OrderBy { get; set; }
@@ -121,7 +205,7 @@ namespace ApartmentApps.Portal.Controllers
             }
             var count = 0;
             var results = Searchable.Search(FilterViewModel, out count, GridState.OrderBy, GridState.Descending,GridState.Page,GridState.RecordsPerPage);
-            return AutoIndex(results.ToArray(), count, page,GridState.RecordsPerPage,GridState.OrderBy,descending, IndexTitle);
+            return AutoIndex(results.ToArray(), count, GridState.Page, GridState.RecordsPerPage,GridState.OrderBy, GridState.Descending, IndexTitle);
         }
         public GridState GridState
         {
@@ -142,9 +226,9 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public virtual ActionResult SearchFormSubmit(TSearchViewModel vm)
         {
-            GridState.Page = 1;
+         
             FilterViewModel = vm;
-            return Grid(0);
+            return Grid(1);
             //return AutoForm(new TSearchViewModel(), "SearchFormSubmit", "Search");
         }
     }
