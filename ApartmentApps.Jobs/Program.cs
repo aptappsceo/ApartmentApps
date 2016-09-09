@@ -10,6 +10,7 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.IoC;
+using ApartmentApps.Modules.Inspections;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
@@ -20,10 +21,15 @@ namespace ApartmentApps.Jobs
     {
         static void Main(string[] args)
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
+            IKernel mainKernel = new StandardKernel();
+            Register.RegisterServices(mainKernel);
+            Inspection inspection = new Inspection();
+            PaymentSummaryBindingModel model = new PaymentSummaryBindingModel();
+
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
             
             var context = new ApplicationDbContext();
-            foreach (var item in context.Properties.Where(p=>p.Id == 15).ToArray())
+            foreach (var item in context.Properties.ToArray())
             {
                 IKernel kernel = new StandardKernel();
                 Register.RegisterServices(kernel);
@@ -39,7 +45,10 @@ namespace ApartmentApps.Jobs
                 };
                 
                 kernel.Bind<IUserContext>().ToMethod(p=>userContext);
+                kernel.Bind<ILogger>().To<ConsoleLogger>();
+
                 var modules = kernel.GetAll<IModule>().Where(p=>p.Enabled).OfType<IWebJob>().ToArray();
+
                 foreach (var module in modules)
                 {
                     module.Execute(new ConsoleLogger());

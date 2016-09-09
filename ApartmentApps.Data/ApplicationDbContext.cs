@@ -42,9 +42,14 @@ namespace ApartmentApps.Data
                     t.GetCustomAttributes(typeof(PersistantAttribute), inherit: true)
                     .Any() );
 
-                
+
                 foreach (var type in entityTypes)
+                {
                     modelBuilder.RegisterEntityType(type);
+                    Console.WriteLine(type);
+                }
+                    
+
             }
             //modelBuilder.Entity<ApplicationUser>()
             //    .HasMany(p=>p.UserAlerts)

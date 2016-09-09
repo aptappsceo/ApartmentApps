@@ -12,6 +12,21 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -78,7 +93,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\ApartmentAppsApiServiceDev - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ApartmentAppsAPIService - Web Deploy.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
   <ItemGroup>
@@ -98,8 +113,12 @@
       <Project>{62C439C3-12AF-48C9-B7B2-84BC16893027}</Project>
       <Name>ApartmentApps.Modules.CourtesyOfficer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Entrata\ApartmentApps.Modules.Entrata.csproj">
+      <Project>{903c7cd3-93d3-46d3-993b-fa40eea0bf93}</Project>
+      <Name>ApartmentApps.Modules.Entrata</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Modules.Inspections\ApartmentApps.Modules.Inspections.csproj">
-      <Project>{11EBF4C6-4475-47DD-9008-0DE0607DD723}</Project>
+      <Project>{11ebf4c6-4475-47dd-9008-0de0607dd723}</Project>
       <Name>ApartmentApps.Modules.Inspections</Name>
     </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Modules.Maintenance\ApartmentApps.Modules.Maintenance.csproj">
@@ -114,11 +133,31 @@
       <Project>{CC299297-365F-4643-A0B8-316C788A4EF7}</Project>
       <Name>ApartmentApps.Modules.Payments</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Yardi\ApartmentApps.Modules.Yardi.csproj">
+      <Project>{3227fea6-40ab-4e1b-a371-b9fb08f6fa57}</Project>
+      <Name>ApartmentApps.Modules.Yardi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Payments.Forte\ApartmentApps.Payments.Forte.csproj">
       <Project>{37cb1883-4cf9-4ac2-91e4-036d806657f2}</Project>
       <Name>ApartmentApps.Payments.Forte</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Parameters.xml" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.10\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.10\tools\webjobs.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
