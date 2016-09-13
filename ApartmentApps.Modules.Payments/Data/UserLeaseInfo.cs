@@ -18,7 +18,7 @@ namespace ApartmentApps.Api.Modules
         public decimal Amount { get; set; }
 
         //Starting point: first invoice will be generated with DueDate equal to InvoiceDate
-        public DateTime InvoiceDate { get; set; }
+        public DateTime? NextInvoiceDate { get; set; }
 
         //Will be here for further extensions
         public int? IntervalDays { get; set; }

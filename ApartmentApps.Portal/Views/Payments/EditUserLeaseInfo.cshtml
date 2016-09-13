@@ -44,23 +44,14 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.InvoiceDate, "Invoice Date", new {@class = "control-label col-md-2"})
-                                <div class="well"></div>
-                                <div class="col-md-10">
-                                    @Html.EJ().DatePicker(nameof(Model.InvoiceDate)).Value(Model.InvoiceDate)
-                                    @Html.ValidationMessageFor(model => model.InvoiceDate)
-                                </div>
-                            </div>
-
+                            
                             <div>
-
 
                                 <div class="form-group">
                                     <div class="control-label col-md-2">
                                     </div>
                                     <div class="col-md-10">
-                                        @Html.EJ().CheckBox(setIntervalCheckBoxId).Checked(Model.UseInterval).Text("Repeat invoice once in a month(s)?").ClientSideEvents(s => s.Change("intervalCheckboxChanged"))
+                                        @Html.EJ().CheckBox(setIntervalCheckBoxId).EnableTriState(false).Enabled(true).CheckState(Model.UseInterval ? CheckState.Check : CheckState.Uncheck).Name(nameof(Model.UseInterval)).Id(nameof(Model.UseInterval)).Checked(Model.UseInterval).Text("Create Subscription ( Repeat invoice once in a month(s)) ?").ClientSideEvents(s => s.Change("intervalCheckboxChanged"))
                                     </div>
                                 </div>
 
@@ -72,9 +63,18 @@
                                             @Html.ValidationMessageFor(model => model.IntervalMonths)
                                         </div>
                                     </div>
+                                    
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NextInvoiceDate, "Next Invoice Date", new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EJ().DatePickerFor(m => m.NextInvoiceDate)
+                                            @Html.ValidationMessageFor(model => model.NextInvoiceDate)
+                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="control-label col-md-2">
+                                            @Html.LabelFor(model => model.UseInterval, "Complete After", new { @class = "control-label col-md-2" })
                                         </div>
                                         <div class="col-md-10">
                                             @Html.EJ().CheckBox(setCompleteDateCheckBoxId).Checked(Model.UseCompleteDate).Text("Stop after certain date?").ClientSideEvents(s => s.Change("completeDateCheckboxChanged"))
@@ -84,7 +84,7 @@
                                     <div class="form-group" id="@(setCompleteDateCheckBoxTargetContainerId)">
                                         @Html.LabelFor(model => model.CompleteDate, "Complete After", new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.EJ().DatePicker(nameof(Model.CompleteDate)).Value(Model.CompleteDate)
+                                            @Html.EJ().DatePicker(nameof(Model.CompleteDate)).Value(Model.CompleteDate ?? DateTime.Now)
                                             @Html.ValidationMessageFor(model => model.CompleteDate)
                                         </div>
                                     </div>
@@ -144,10 +144,12 @@
         $(function() {
             var setIntervalContainer = $("#@(setIntervalCheckBoxTargetContainerId)");
             var container = $("#@(setCompleteDateCheckBoxTargetContainerId)");
-
+            $("#@(setIntervalCheckBoxId)").prop('checked', @(Model.UseInterval ? "true" : "false"));
+            $("#@(setCompleteDateCheckBoxId)").prop('checked', @(Model.UseCompleteDate? "true" : "false"));
             @if (!Model.UseInterval)
             {
-                @("setIntervalContainer.hide()\n")
+                @("setIntervalContainer.hide()\n");
+
             }
             @if (!Model.UseCompleteDate)
             {
@@ -162,6 +164,8 @@
             } else {
                 setIntervalContainer.hide(200);
             }
+            $("#@(setIntervalCheckBoxId)").prop('checked', sender.isChecked);
+            return true;
         };
 
         function completeDateCheckboxChanged(sender) {
@@ -171,6 +175,8 @@
             } else {
                 container.hide(200);
             }
+            $("#@(setCompleteDateCheckBoxId)").prop('checked', sender.isChecked);
+            return true;
         };
 
     </script>

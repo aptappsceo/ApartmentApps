@@ -1,8 +1,12 @@
 ﻿@using ApartmentApps.Api.BindingModels
 @using ApartmentApps.Data
+@using Syncfusion.JavaScript.Models
 @using DataSource = Syncfusion.JavaScript.DataSource
 @model IEnumerable<UserBindingModel>
 
+@{
+    var property = ViewBag.Property as Property;
+}
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -73,6 +77,8 @@
             window.location.href = "@Url.Action("EditUser")?id=" + a.data.Id;
 
         }
+
+  
     </script>
 }
 

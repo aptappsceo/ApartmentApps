@@ -53,14 +53,33 @@ namespace ApartmentApps.Portal.Controllers
             return View("RentSummary", _paymentsModule.GetRentSummary(CurrentUser.Id).Result);
         }
 
+        public async Task<ActionResult> RentSummaryFor(string userId)
+        {
+            ViewBag.NextAction = Url.Action("PaymentOptionsFor",new {userId = userId});
+            var rent = await _paymentsModule.GetRentSummary(userId);
+            return View("RentSummary", rent);
+        }
+
         public ActionResult PaymentOptions()
         {
             return View("PaymentOptions", _paymentsModule.GetPaymentOptions());
         }
 
+        public ActionResult PaymentOptionsFor(string userId)
+        {
+            return View("PaymentOptions", _paymentsModule.GetPaymentOptionsFor(userId));
+        }
+
         public ActionResult MakePayment()
         {
             return AutoForm(new MakePaymentBindingModel(), "MakePaymentSubmit", "Make Payment");
+        }
+
+            public ActionResult PaymentSummary(string paymentOptionId)
+        {
+            PaymentOptionId = paymentOptionId;
+            ViewBag.NextAction = Url.Action("MakePayment");
+            return View("RentSummary", _paymentsModule.GetPaymentSummary(CurrentUser.Id).Result);
         }
 
         [HttpPost]
@@ -76,12 +95,7 @@ namespace ApartmentApps.Portal.Controllers
             set { Session["PaymentOptionId"] = value; }
         }
 
-        public ActionResult PaymentSummary(string paymentOptionId)
-        {
-            PaymentOptionId = paymentOptionId;
-            ViewBag.NextAction = Url.Action("MakePayment");
-            return View("RentSummary", _paymentsModule.GetPaymentSummary(CurrentUser.Id).Result);
-        }
+
 
         public ActionResult AddCreditCard()
         {
@@ -159,7 +173,8 @@ namespace ApartmentApps.Portal.Controllers
                         .Select(s => s.ToBindingModel(_blobStorageService))
                         .ToList(),
                 LeaseInfos = userLeaseInfos.Select(s => s.ToBindingModel(_blobStorageService)).ToList(),
-                Transactions = transactions.Select(s => s.ToBindingModel(_blobStorageService)).ToList()
+                Transactions = transactions.Select(s => s.ToBindingModel(_blobStorageService)).ToList(),
+                PaymentOptions = _paymentsModule.GetPaymentOptionsFor(user.Id).ToList()
             });
         }
 
@@ -266,13 +281,21 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult EditUserLeaseInfo(int id)
         {
-            var userLeaseInfo = _leaseInfos.Find(id);
-            if (userLeaseInfo== null) return HttpNotFound();
+            var lease = _leaseInfos.Find(id);
+            if (lease== null) return HttpNotFound();
 
-            return View("EditUserLeaseInfo", new EditUserLeaseInfoBindingModel()
+            var editUserLeaseInfoBindingModel = new EditUserLeaseInfoBindingModel()
             {
-                Id = id
-            });
+                Id = id,
+                Amount = lease.Amount,
+                NextInvoiceDate = lease.NextInvoiceDate,
+                CompleteDate = lease.RepetitionCompleteDate,
+                Title = lease.Title,
+                IntervalMonths = lease.IntervalMonths,
+                UseInterval = lease.IsIntervalSet(),
+                UseCompleteDate = lease.RepetitionCompleteDate.HasValue
+            };
+            return View("EditUserLeaseInfo", editUserLeaseInfoBindingModel);
         }
 
         [HttpPost]

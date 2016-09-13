@@ -14,7 +14,6 @@ namespace ApartmentApps.Modules.Maintenance
 
         public static MaintenanceCheckinBindingModel ToMaintenanceCheckinBindingModel(this MaintenanceRequestCheckin x, IBlobStorageService blob)
         {
-
             return new MaintenanceCheckinBindingModel
             {
                 StatusId = x.StatusId,

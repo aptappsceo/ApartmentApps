@@ -15,7 +15,7 @@ namespace ApartmentApps.Api.Modules
         
         public decimal Amount { get; set; }
 
-        public DateTime InvoiceDate { get; set; }
+        public DateTime? NextInvoiceDate  { get; set; }
 
         public int? IntervalDays { get; set; }
 
@@ -49,7 +49,7 @@ namespace ApartmentApps.Api.Modules
                 Title = lease.Title,
                 User = lease.User.ToUserBindingModel(blobStorageService),
                 CreateDate = lease.CreateDate,
-                InvoiceDate = lease.InvoiceDate,
+                NextInvoiceDate = lease.NextInvoiceDate ,
                 Id = lease.Id,
                 RepetitionCompleteDate = lease.RepetitionCompleteDate,
                 IntervalDays = lease.IntervalDays,

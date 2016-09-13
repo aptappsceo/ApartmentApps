@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ApartmentApps.Api.ViewModels;
+using ExpressiveAnnotations.Attributes;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -49,9 +50,12 @@ namespace ApartmentApps.Api.Modules
         public DateTime InvoiceDate { get; set; }
         
         public int? IntervalDays { get; set; }
+
+        [RequiredIf("UseInterval == true",ErrorMessage = "Month Interval is required. Invoice will be regenerated every X month(s)")]
         public int? IntervalMonths { get; set; }
         public int? IntervalYears { get; set; }
 
+        [RequiredIf("UseInterval == true && UseCompleteDate == true",ErrorMessage = "Expiration date is required. Subscription will expire after given date.")]
         public DateTime? RepetitionCompleteDate { get; set; }
 
         public List<UserBindingModel> UserIdItems { get; set; }

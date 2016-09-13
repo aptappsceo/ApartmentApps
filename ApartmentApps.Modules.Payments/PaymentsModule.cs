@@ -64,16 +64,18 @@ namespace ApartmentApps.Api.Modules
         public async Task<PaymentSummaryBindingModel> GetRentSummary(string userId)
         {
             var user = Context.Users.Find(userId);
+            var dateTime = user.Property.TimeZone.Now();
 
             var invoices = _invoiceRepository.Where(
-                s => s.UserLeaseInfo.UserId == userId && s.AvailableDate < user.Property.TimeZone.Now()).ToArray();
+                s =>! s.IsArchived && s.UserLeaseInfo.UserId == userId && s.AvailableDate < dateTime).ToArray();
 
             return new PaymentSummaryBindingModel()
             {
                 Amount = user.Unit.Building.RentAmount,
                 SummaryOptions = invoices.Select(s=> new PaymentSummaryBindingModel()
                 {
-                    Amount = s.Amount
+                    Title = s.Title,
+                    Amount = s.Amount,
                 }).ToList()
             };
         }
@@ -158,6 +160,17 @@ namespace ApartmentApps.Api.Modules
         public IEnumerable<PaymentOptionBindingModel> GetPaymentOptions()
         {
             return Context.PaymentOptions.Where(p => p.UserId == UserContext.UserId).Select(x =>
+                new PaymentOptionBindingModel()
+                {
+                    FriendlyName = x.FriendlyName,
+                    Type = x.Type,
+                    Id = x.Id,
+                });
+        }
+
+        public IEnumerable<PaymentOptionBindingModel> GetPaymentOptionsFor(string userId)
+        {
+            return Context.PaymentOptions.Where(p => p.UserId == userId).Select(x =>
                 new PaymentOptionBindingModel()
                 {
                     FriendlyName = x.FriendlyName,

@@ -60,7 +60,7 @@ namespace ApartmentApps.Modules.Payments.Services
                 User = user,
                 Amount = model.Amount,
                 CreateDate = user.Property.TimeZone.Now(),
-                InvoiceDate = model.InvoiceDate.ToCorrectedDateTime(),
+                NextInvoiceDate = model.InvoiceDate.ToCorrectedDateTime(),
                 State = LeaseState.Active
             };
 
@@ -82,8 +82,26 @@ namespace ApartmentApps.Modules.Payments.Services
             CreateInvoice(leaseInfo);
         }
 
+        private bool UpdateNextInvoiceDate(UserLeaseInfo info)
+        {
+
+            if (info.NextInvoiceDate != null && IsContinuable(info))
+            {
+                info.NextInvoiceDate = ComputeNextDateForInvoice(info, info.NextInvoiceDate.Value);
+                return true;
+            }
+            else
+            {
+                info.NextInvoiceDate = null;
+                return false; // Cannot set next invoice date, since 
+            }
+        }
+
         public void CreateInvoice(UserLeaseInfo lease)
         {
+
+            if (!lease.NextInvoiceDate.HasValue) throw new Exception("No Next Invoice Date is set for the Lease Info");
+
             var anyActiveInvoices =
                     _invoices.GetAll()
                         .Any(v => v.UserLeaseInfoId == lease.Id && //invoice for same lease
@@ -93,14 +111,14 @@ namespace ApartmentApps.Modules.Payments.Services
 
             if (anyActiveInvoices) throw new Exception($"Another Invoice is active for lease id:{lease.Id}");
 
-            if (lease.InvoiceDate < lease.User.Property.TimeZone.Now())
+            if (lease.NextInvoiceDate < lease.User.Property.TimeZone.Now())
             {
                 throw new Exception("Invoice cannot be created before Today");
             }
 
             if (lease.RepetitionCompleteDate.HasValue)
             {
-                var canContinue = lease.RepetitionCompleteDate > lease.InvoiceDate;
+                var canContinue = lease.RepetitionCompleteDate > lease.NextInvoiceDate;
                 if (!canContinue)
                 {
                     throw new Exception("Invoice cannot be created past Repetition Complete Date");
@@ -111,14 +129,21 @@ namespace ApartmentApps.Modules.Payments.Services
             {
                 UserLeaseInfo = lease,
                 Amount = lease.Amount,
-                AvailableDate = lease.InvoiceDate - TimeSpan.FromDays(14),
-                DueDate = lease.InvoiceDate,
+                AvailableDate = lease.NextInvoiceDate.Value - TimeSpan.FromDays(14),
+                DueDate = lease.NextInvoiceDate.Value,
                 State = InvoiceState.NotPaid,
                 Title = lease.Title
             };
 
+
+
+
             _invoices.Add(invoice);
             _invoices.Save();
+
+            UpdateNextInvoiceDate(lease);
+            _leases.Save();
+
         }
 
         public void CancelInvoice(CancelInvoiceBindingModel model)
@@ -251,9 +276,8 @@ namespace ApartmentApps.Modules.Payments.Services
 
         public void GenerateNextInvoiceOrArchive(UserLeaseInfo lease)
         {
-            if (IsContinuable(lease))
+            if (lease.NextInvoiceDate.HasValue)
             {
-                lease.InvoiceDate = ComputeNextDateForInvoice(lease);
                 CreateInvoice(lease);
             }
             else
@@ -265,20 +289,14 @@ namespace ApartmentApps.Modules.Payments.Services
 
         public bool IsContinuable(UserLeaseInfo lease)
         {
+
             if (lease.State != LeaseState.Active) return false; //because lease is suspended 
-
-            var anyActiveInvoices =
-                    _invoices.GetAll()
-                        .Any(v => v.UserLeaseInfoId == lease.Id && //invoice for same lease
-                                  !v.IsArchived && //invoice is not archived
-                                  (v.State == InvoiceState.NotPaid || v.State == InvoiceState.Pending));
-                //invoice is notpaid or pending
-
-            if (anyActiveInvoices) return false; //because active invoice exists for this lease
 
             if (!lease.IsIntervalSet()) return false; //because lease is not repetative
 
-            var newDate = ComputeNextDateForInvoice(lease);
+            if (!lease.NextInvoiceDate.HasValue) return false;
+
+            var newDate = ComputeNextDateForInvoice(lease, lease.NextInvoiceDate.Value);
 
             if (lease.RepetitionCompleteDate.HasValue && newDate > lease.RepetitionCompleteDate.Value)
                 return false; //because lease is complete
@@ -297,9 +315,9 @@ namespace ApartmentApps.Modules.Payments.Services
             throw new NotImplementedException();
         }
 
-        public DateTime ComputeNextDateForInvoice(UserLeaseInfo lease)
+        public DateTime ComputeNextDateForInvoice(UserLeaseInfo lease, DateTime latestInvoiceDate)
         {
-            return lease.InvoiceDate.Offset(lease.IntervalDays ?? 0, lease.IntervalMonths ?? 0,
+            return latestInvoiceDate.Offset(lease.IntervalDays ?? 0, lease.IntervalMonths ?? 0,
                 lease.IntervalYears ?? 0);
         }
 
@@ -316,7 +334,36 @@ namespace ApartmentApps.Modules.Payments.Services
 
         public void EditUserLeaseInfo(EditUserLeaseInfoBindingModel data)
         {
-            throw new NotImplementedException();
+
+            var lease = _leases.Find(data.Id);
+
+            if (data.UseInterval)
+            {
+                lease.IntervalMonths = data.IntervalMonths;
+            }
+            else
+            {
+                lease.IntervalMonths = null;
+                lease.IntervalDays = null;
+                lease.IntervalYears = null;
+            }
+
+            if (data.UseCompleteDate)
+            {
+                lease.RepetitionCompleteDate = data.CompleteDate;
+            }
+            else
+            {
+                lease.RepetitionCompleteDate = null;
+            }
+
+            lease.NextInvoiceDate = data.NextInvoiceDate;
+
+            lease.Title = data.Title;
+            lease.Amount = data.Amount;
+
+            _leases.Save();
+
         }
 
         public void CancelUserLeaseInfo(CancelUserLeaseInfoBindingModel data)
