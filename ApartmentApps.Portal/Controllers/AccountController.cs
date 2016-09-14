@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -215,6 +216,38 @@ namespace ApartmentApps.Portal.Controllers
 
             //// If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+
+        [HttpGet]
+        public ActionResult FeedBack()
+        {
+            return View("FeedBack", new FeedBackBindingModel());
+        }
+
+        [HttpPost]
+        public ActionResult FeedBack(FeedBackBindingModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userFullName = $"{CurrentUser.FirstName} {CurrentUser.LastName}";
+                var userEmail = CurrentUser.Email;
+                var userProperty = CurrentUser.Property?.Name;
+
+                var body = $"<p>User: {userFullName} ({userEmail}) from {userProperty}</p><br/><p>{model.Message}</p>";
+
+                _email.SendAsync(new IdentityMessage()
+                {
+                    Body = body,
+                    Destination = "info@apartmentapps.com",
+                    Subject = "Apartment Apps Portal Feedback"
+                });
+                return RedirectToAction("Index", "Dashboard");
+            }
+            else
+            {
+                return View("FeedBack", model);
+            }
         }
 
         //
@@ -644,6 +677,12 @@ namespace ApartmentApps.Portal.Controllers
     }
 
 
+}
+
+public class FeedBackBindingModel
+{
+    [Required]
+    public string Message { get; set; }
 }
 
 public static class StreamExtensions
