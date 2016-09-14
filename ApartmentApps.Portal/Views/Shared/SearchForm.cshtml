@@ -12,35 +12,38 @@
         <h4 class="modal-title">Search</h4>
         @*<small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>*@
     </div>
-        <div class="modal-body">
-
+    <div class="modal-body">
+        <table style="width: 100%;">
             @foreach (var property in Model.GetType().GetProperties().Where(p => p.PropertyType == typeof(FilterViewModel)))
             {
                 var value = (FilterViewModel)property.GetValue(Model) ?? new FilterViewModel();
 
 
-                <div class="row">
-                    <div class="form-control">
-                        <label>@property.Name</label>
+                <tr >
+
+                    <td style="padding: 5px;"><label style="margin-top: 5px;">@property.Name</label></td>
+                    <td style="padding: 5px;" >
                         @Html.DropDownList(property.Name + ".ExpressionOperator", Enum.GetNames(typeof(ExpressionOperator)).Select(x => new SelectListItem()
-                           {
-                               Text = x,
-                               Value = x,
-                               Selected = (ExpressionOperator)Enum.Parse(typeof(ExpressionOperator), x, true) == value.ExpressionOperator
-                           }))
-                        @Html.TextBox(property.Name + ".Value", value?.Value)
-                    </div>
-                </div>
+                   {
+                       Text = x,
+                       Value = x,
+                       Selected = (ExpressionOperator)Enum.Parse(typeof(ExpressionOperator), x, true) == value.ExpressionOperator
+                   }), new {style="width: 100%;"})
+                    </td>
+                    <td style="padding: 5px;">@Html.TextBox(property.Name + ".Value", value?.Value,new {@style="width: 100%;"})</td>
+
+
+                </tr>
 
 
 
             }
 
+        </table>
 
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-white close-link" data-dismiss="modal">Close</button>
-            <input type="submit" value="Apply" class="btn btn-primary close-link" />
-        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white close-link" data-dismiss="modal">Close</button>
+        <input type="submit" value="Apply" class="btn btn-primary close-link" />
+    </div>
 }
