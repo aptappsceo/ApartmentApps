@@ -58,6 +58,7 @@ namespace ApartmentApps.Api.Modules
             foreach (var item in ids)
             {
                 var user = _context.Users.Find(item);
+                if (user.Archived) continue;
                 // Send the push notification
                 _alertsService.SendAlert(user, subject, message, "Message", entity.Id);
                 // Send the email
