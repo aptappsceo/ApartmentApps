@@ -18,6 +18,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 Id = p.Id,
                 UserEmail = p.User.Email,
+                UserName = $"{p.User.FirstName} {p.User.LastName}",
                 Opened = p.Opened,
                 ErrorMessage = p.ErrorMessage,
                 Error = p.Error

@@ -9,5 +9,6 @@ namespace ApartmentApps.Api.ViewModels
         public bool Error { get; set; }
         public string ErrorMessage { get; set; }
         public int Id { get; set; }
+        public string UserName { get; set; }
     }
 }
