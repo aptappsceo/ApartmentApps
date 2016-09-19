@@ -182,6 +182,7 @@
     <Compile Include="ViewModels\Screens\MaintenanceRequestIndexViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceRequestStatusViewModel.cs" />
     <Compile Include="ViewModels\Screens\MaintenanceStartFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\PaymentSummaryViewModel.cs" />
     <Compile Include="ViewModels\Screens\PropertyConfigFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\RentSummaryViewModel.cs" />
     <Compile Include="ViewModels\Screens\SettingsFormViewModel.cs" />
