@@ -19,6 +19,11 @@ namespace ResidentAppCross.ViewModels.Screens
         private PaymentSummary _paymentSummary;
         private IApartmentAppsAPIService _service;
 
+        public RentSummaryViewModel(IApartmentAppsAPIService service)
+        {
+            _service = service;
+        }
+
         public override void Start()
         {
             base.Start();
@@ -59,6 +64,8 @@ namespace ResidentAppCross.ViewModels.Screens
                     {
                         PaymentSummary.AddEntry("Some Item "+i,"$50",PaymentSummaryFormat.Default);
                     }
+                    PaymentSummary.AddEntry("Some Payment Fee", "$25", PaymentSummaryFormat.Default);
+                    PaymentSummary.AddEntry("Some Discount", "$25", PaymentSummaryFormat.Discount);
                     PaymentSummary.AddEntry("Total", "$250", PaymentSummaryFormat.Total);
                     
                     this.Publish(new RentSummaryUpdated(this));
@@ -68,6 +75,8 @@ namespace ResidentAppCross.ViewModels.Screens
         }
 
     }
+
+   
 
     public class RentSummaryUpdated : MvxMessage
     {

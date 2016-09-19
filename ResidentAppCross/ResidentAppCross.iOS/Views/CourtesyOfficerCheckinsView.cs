@@ -159,7 +159,148 @@ namespace ResidentAppCross.iOS
     [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
     public partial class AddCreditCardPaymentOptionView : BaseForm<AddCreditCardPaymentOptionViewModel>
     {
-     
+        private TextFieldSection _paymentOptionTitleSection;
+        private TextFieldSection _cardNumberSection;
+        private TextFieldSection _cvcCodeSection;
+        private TextFieldSection _accountHolderSection;
+        private CallToActionSection _callToActionSection;
+        private HeaderSection _headerSection;
+        private ToggleSection _isSavingsSection;
+        private TextFieldSection _yearSection;
+
+        public HeaderSection HeaderSection
+        {
+            get
+            {
+                if (_headerSection == null)
+                {
+                    _headerSection = Formals.Create<HeaderSection>();
+                    _headerSection.HeightConstraint.Constant = AppTheme.HeaderSectionHeight;
+                    _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.WalletPlus, SharedResources.Size.L);
+                    _headerSection.MainLabel.Text = "Add Credit Card";
+                    _headerSection.SubLabel.Text = "Please, fill the information below";
+                }
+                return _headerSection;
+            }
+        }
+
+        public TextFieldSection PaymentOptionTitleSection
+        {
+            get
+            {
+                return _paymentOptionTitleSection ?? (_paymentOptionTitleSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Payment Option Title...")
+                    .WithNextResponder(CardNumberSection));
+            }
+        }
+
+        public TextFieldSection CardNumberSection
+        {
+            get
+            {
+                return _cardNumberSection ?? (_cardNumberSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Routing Number...")
+                    .WithNextResponder(CvcCodeSection));
+            }
+        }
+
+        public TextFieldSection CvcCodeSection
+        {
+            get
+            {
+                return _cvcCodeSection ?? (_cvcCodeSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Account Number...")
+                    .WithNextResponder(MonthSection));
+            }
+        }
+
+        public TextFieldSection MonthSection
+        {
+            get
+            {
+                return _yearSection ?? (_yearSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Expiration Month...")
+                    .WithNextResponder(YearSection));
+            }
+        }
+
+        public TextFieldSection YearSection
+        {
+            get
+            {
+                return _yearSection ?? (_yearSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Expiration Month...")
+                    .WithNextResponder(AccountHolderSection));
+            }
+        }
+
+        public TextFieldSection AccountHolderSection
+        {
+            get
+            {
+                return _accountHolderSection ?? (_accountHolderSection = Formals.Create<TextFieldSection>()
+                    .WithPlaceholder("Credit Card Holder Name..."));
+            }
+        }
+
+        public CallToActionSection CallToActionSection
+        {
+            get
+            {
+                if (_callToActionSection == null)
+                {
+                    _callToActionSection = Formals.Create<CallToActionSection>();
+                    _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
+                    _callToActionSection.MainButton.SetTitle("Add Credit Card");
+                }
+                return _callToActionSection;
+            }
+        }
+
+        public ToggleSection IsSavingsSection
+        {
+            get
+            {
+                if (_isSavingsSection == null)
+                {
+                    _isSavingsSection = Formals.Create<ToggleSection>();
+                    _isSavingsSection.Editable = true;
+                    _isSavingsSection.HeightConstraint.Constant = 66;
+                    _isSavingsSection.HeaderLabel.Text = "Is Savings?";
+                    _isSavingsSection.SubHeaderLabel.Hidden = true;
+                }
+                return _isSavingsSection;
+            }
+        }
+
+        public override void BindForm()
+        {
+            base.BindForm();
+            var set = this.CreateBindingSet<AddCreditCardPaymentOptionView, AddCreditCardPaymentOptionViewModel>();
+            set.Bind(PaymentOptionTitleSection.TextField).To(vm => vm.FriendlyName);
+            set.Bind(AccountHolderSection.TextField).To(vm => vm.AccountHolderName);
+            set.Bind(CardNumberSection.TextField).To(vm => vm.CardNumber);
+            set.Bind(CvcCodeSection.TextField).To(vm => vm.CvcCode);
+           // set.Bind(CardTypeSection.TextField).To(vm => vm.CardType);
+            set.Bind(MonthSection.TextField).To(vm => vm.Month);
+            set.Bind(YearSection.TextField).To(vm => vm.Year);
+            set.Bind(CallToActionSection.MainButton).To(vm => vm.AddCreditCardCommand);
+            set.Apply();
+        }
+
+
+        public override void GetContent(List<UIView> content)
+        {
+            base.GetContent(content);
+            content.Add(HeaderSection);
+            content.Add(PaymentOptionTitleSection);
+            content.Add(CardNumberSection);
+            content.Add(CvcCodeSection);
+            content.Add(MonthSection);
+            content.Add(YearSection);
+            content.Add(AccountHolderSection);
+            content.Add(CallToActionSection);
+        }
     }
 
     [Register("AddBankAccountPaymentOptionView")]
@@ -259,6 +400,20 @@ namespace ResidentAppCross.iOS
                 return _isSavingsSection;
             }
         }
+
+        public override void BindForm()
+        {
+            base.BindForm();
+            var set = this.CreateBindingSet<AddBankAccountPaymentOptionView, AddBankAccountPaymentOptionViewModel>();
+            set.Bind(PaymentOptionTitleSection.TextField).To(vm => vm.FriendlyName);
+            set.Bind(AccountHolderSection.TextField).To(vm => vm.AccountHolderName);
+            set.Bind(AccountNumberSection.TextField).To(vm => vm.AccountNumber);
+            set.Bind(RoutingNumberSection.TextField).To(vm => vm.RoutingNumber);
+            set.Bind(IsSavingsSection.Switch).To(vm => vm.IsSavings);
+            set.Bind(CallToActionSection.MainButton).To(vm => vm.AddBankAccountCommand);
+            set.Apply();
+        }
+
 
         public override void GetContent(List<UIView> content)
         {
