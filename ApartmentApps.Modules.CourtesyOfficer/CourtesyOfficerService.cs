@@ -9,6 +9,7 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
+using Ninject;
 
 namespace ApartmentApps.Api
 {
@@ -36,9 +37,9 @@ namespace ApartmentApps.Api
 
         }
     }
-    public class CourtesyOfficerService : StandardCrudService<CourtesyOfficerCheckin, CourtesyCheckinViewModel>
+    public class CourtesyOfficerService : StandardCrudService<CourtesyOfficerCheckin>
     {
-        public CourtesyOfficerService(IRepository<CourtesyOfficerCheckin> repository, IMapper<CourtesyOfficerCheckin, CourtesyCheckinViewModel> mapper, IUserContext userContext, IRepository<CourtesyOfficerLocation> locations) : base(repository, mapper)
+        public CourtesyOfficerService(IRepository<CourtesyOfficerCheckin> repository, IUserContext userContext, IRepository<CourtesyOfficerLocation> locations, IKernel kernel) : base(kernel,repository)
         {
             UserContext = userContext;
             Locations = locations;

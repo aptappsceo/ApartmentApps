@@ -4,6 +4,7 @@ using System.Linq;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -46,13 +47,14 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.DeliverCount = model.MessageReceipts.Count(p => p.Error == false);
         }
     }
-    public class MessagingService : StandardCrudService<Message, MessageViewModel>
+    public class MessagingService : StandardCrudService<Message>
     {
       
 
-        public IEnumerable<MessageViewModel> GetHistory()
+        public IEnumerable<TViewModel> GetHistory<TViewModel>()
         {
-            return Repository.GetAll().OrderByDescending(p=>p.SentOn).Take(15).ToArray().Select(Mapper.ToViewModel);
+           
+            return Repository.GetAll().OrderByDescending(p=>p.SentOn).Take(15).ToArray().Select(Map<TViewModel>().ToViewModel);
         }
 
         public MessageViewModel GetMessageWithDetails(string messageId)
@@ -60,7 +62,8 @@ namespace ApartmentApps.Portal.Controllers
             return Find(messageId, new MessageMapperFullDetails());
         }
 
-        public MessagingService(IRepository<Message> repository, IMapper<Message, MessageViewModel> mapper) : base(repository, mapper)
+
+        public MessagingService(IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
         {
         }
     }

@@ -35,9 +35,9 @@ namespace ApartmentApps.Tests
             Assert.IsNotNull(property, "Property is null");
             using (var ctx = new PropertyExecutionContext(db, property.Id))
             {
-                var searchable = ctx.Kernel.Get<StandardCrudService<ApplicationUser, UserBindingModel>>() as ISearchable<UserBindingModel, UserSearchViewModel>;
+                var searchable = ctx.Kernel.Get<StandardCrudService<ApplicationUser>>() as ISearchable<UserSearchViewModel>;
                 int c;
-                var results = searchable.Search(new UserSearchViewModel() , out c, "Email", true, 0, 40);
+                var results = searchable.Search<UserBindingModel>(new UserSearchViewModel() , out c, "Email", true, 0, 40);
                 foreach (var item in results)
                 {
                     Console.WriteLine(item.Email);

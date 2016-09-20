@@ -9,6 +9,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -83,12 +84,13 @@ namespace ApartmentApps.Portal.Controllers
         //public FilterViewModel UnitName { get; set; } = new FilterViewModel();
 
     }
-    public class UserService : SearchableCrudService<ApplicationUser, UserBindingModel, UserSearchViewModel>
+    public class UserService : SearchableCrudService<ApplicationUser, UserSearchViewModel>
     {
-        public UserService(IRepository<ApplicationUser> repository, IMapper<ApplicationUser, UserBindingModel> mapper) : base(repository, mapper)
+      
+        public override Expression<Func<ApplicationUser, object>> DefaultOrderBy => p => p.LastName;
+
+        public UserService(IKernel kernel, IRepository<ApplicationUser> repository) : base(kernel, repository)
         {
         }
-
-        public override Expression<Func<ApplicationUser, object>> DefaultOrderBy => p => p.LastName;
     }
 }

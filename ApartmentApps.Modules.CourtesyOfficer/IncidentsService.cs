@@ -8,6 +8,7 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.CourtesyOfficer;
 using ApartmentApps.Portal.Controllers;
+using Ninject;
 
 namespace ApartmentApps.Api
 {
@@ -54,9 +55,9 @@ namespace ApartmentApps.Api
 
         }
     }
-    public class IncidentsService : StandardCrudService<IncidentReport, IncidentReportViewModel> ,IIncidentsService
+    public class IncidentsService : StandardCrudService<IncidentReport> ,IIncidentsService
     {
-        public IncidentsService(IRepository<IncidentReport> repository, IMapper<IncidentReport, IncidentReportViewModel> mapper, IBlobStorageService blobStorageService, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper) : base(repository, mapper)
+        public IncidentsService(IRepository<IncidentReport> repository, IBlobStorageService blobStorageService, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper, IKernel kernel) : base(kernel, repository)
         {
             _blobStorageService = blobStorageService;
             Context = context;

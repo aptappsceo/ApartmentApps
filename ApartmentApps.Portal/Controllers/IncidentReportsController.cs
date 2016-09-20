@@ -28,12 +28,12 @@ namespace ApartmentApps.Portal.Controllers
     {
         public ActionResult Print(string id)
         {
-            var item = Service.Find(id);
+            var item = Service.Find<IncidentReportViewModel>(id);
             return View(item);
         }
         public IncidentsService OfficerService { get; set; }
 
-        public IncidentReportsController(IKernel kernel, IncidentsService officerService, IRepository<IncidentReport> repository, StandardCrudService<IncidentReport, IncidentReportViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel, repository, service, context, userContext)
+        public IncidentReportsController(IKernel kernel, IncidentsService officerService, IRepository<IncidentReport> repository, StandardCrudService<IncidentReport> service, PropertyContext context, IUserContext userContext) : base(kernel, repository, service, context, userContext)
         {
             OfficerService = officerService;
         }

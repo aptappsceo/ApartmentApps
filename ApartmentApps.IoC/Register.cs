@@ -33,13 +33,18 @@ namespace ApartmentApps.IoC
             b.InSingletonScope();
         }
 #endif
-        public static void RegisterMappable<TModel, TViewModel,TService, TDefaultMapper>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel, TViewModel> where TDefaultMapper : IMapper<TModel, TViewModel>
+
+        public static void RegisterMapper<TData, TViewModel, TMapper>(this IKernel kernel) where TMapper : IMapper<TData,TViewModel>
+        {
+            kernel.Bind<IMapper<TData,TViewModel>>().To<TMapper>().InRequestScope();
+        }
+        public static void RegisterMappable<TModel, TViewModel,TService, TDefaultMapper>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel> where TDefaultMapper : IMapper<TModel, TViewModel>
         {
             
            kernel.Bind<IMapper<TModel,TViewModel>>().To<TDefaultMapper>().InRequestScope();
 
             kernel.Bind< IService,
-                StandardCrudService <TModel, TViewModel>, IServiceFor<TViewModel>>()
+                StandardCrudService <TModel>>()
                 .To<TService>().InRequestScope();
 
             //kernel.Bind<IMapper<TModel, TViewModel>>().To<TService>().InRequestScope();
@@ -167,8 +172,9 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService, MaintenanceRequestMapper>();
             kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService, IncidentReportMapper>();
             kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService, CourtesyCheckinMapper>();
-
-            kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
+            kernel.RegisterMapper<Unit,UnitFormModel,UnitFormMapper>();
+    
+            //kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
 
             kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
 

@@ -78,7 +78,7 @@ namespace ApartmentApps.Portal.Controllers
         //    _userManager = userManager;
         //}
 
-        public UserManagementController(IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(kernel, repository, service, context, userContext)
+        public UserManagementController(IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser> service, PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(kernel, repository, service, context, userContext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -111,7 +111,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: UserManagement
         public override ActionResult Index()
         {
-            return View(Service.GetAll().Where(u=>!u.Archived));
+            return View(Service.GetAll<UserBindingModel>().Where(u=>!u.Archived));
         }
         public ActionResult DeleteUser(string id)
         {

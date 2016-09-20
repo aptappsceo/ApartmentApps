@@ -11,6 +11,8 @@ using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
 using Ninject.Infrastructure.Language;
 using ApartmentApps.Api.Modules;
+using Ninject;
+
 namespace ApartmentApps.Modules.Inspections
 {
     public class InspectionViewModel : BaseViewModel
@@ -134,7 +136,7 @@ namespace ApartmentApps.Modules.Inspections
         public string Value { get; set; }
     }
 
-    public class InspectionsService : StandardCrudService<Inspection, InspectionViewModel>
+    public class InspectionsService : StandardCrudService<Inspection>
     {
         private readonly PropertyContext _propertyContext;
         private readonly IRepository<InspectionCheckin> _inspectionCheckins;
@@ -144,7 +146,7 @@ namespace ApartmentApps.Modules.Inspections
         private readonly IUserContext _userContext;
 
         public InspectionsService(PropertyContext propertyContext, IRepository<InspectionCheckin> inspectionCheckins,
-            IRepository<InspectionCategoryResult> categoryAnswers, IRepository<InspectionResult> answers, IBlobStorageService blobStorageService, IUserContext userContext, IRepository<Inspection> repository, IMapper<Inspection, InspectionViewModel> mapper) : base(repository, mapper)
+            IRepository<InspectionCategoryResult> categoryAnswers, IRepository<InspectionResult> answers, IBlobStorageService blobStorageService, IUserContext userContext, IRepository<Inspection> repository, IKernel kernel) : base(kernel, repository)
         {
             _propertyContext = propertyContext;
             _inspectionCheckins = inspectionCheckins;
@@ -286,9 +288,10 @@ namespace ApartmentApps.Modules.Inspections
             return true;
 
         }
-        public IEnumerable<InspectionViewModel> GetAllForUser(string userId)
+        public IEnumerable<TViewModel> GetAllForUser<TViewModel>(string userId)
         {
-            return Repository.Where(p => p.AssignedToId == userId).ToArray().Select(Mapper.ToViewModel);
+            var mapper = _kernel.Get<IMapper<Inspection, TViewModel>>();
+            return Repository.Where(p => p.AssignedToId == userId).ToArray().Select(mapper.ToViewModel);
         }
     }
 

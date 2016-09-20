@@ -1,5 +1,6 @@
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -21,9 +22,9 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Date = model.CreatedOn;
         }
     }
-    public class NotificationService : StandardCrudService<UserAlert, NotificationViewModel>
+    public class NotificationService : StandardCrudService<UserAlert>
     {
-        public NotificationService(IRepository<UserAlert> repository, IMapper<UserAlert, NotificationViewModel> mapper) : base(repository, mapper)
+        public NotificationService(IKernel kernel, IRepository<UserAlert> repository) : base(kernel, repository)
         {
         }
     }

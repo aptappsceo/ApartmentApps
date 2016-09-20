@@ -26,9 +26,9 @@ namespace ApartmentApps.Portal.Controllers
     public class CrudController<TViewModel, TModel> : AAController where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new()
     {
       //  public IRepository<TModel> Repository { get; set; }
-        public StandardCrudService<TModel, TViewModel> Service { get; set; }
+        public StandardCrudService<TModel> Service { get; set; }
 
-        public CrudController(IKernel kernel, IRepository<TModel> repository, StandardCrudService<TModel, TViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        public CrudController(IKernel kernel, IRepository<TModel> repository, StandardCrudService<TModel> service, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             //Repository = repository;
             Service = service;
@@ -185,7 +185,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public virtual ActionResult Index()
         {
-            return View(Service.GetAll());
+            return View(Service.GetAll<TViewModel>());
         }
         public ActionResult DataSource(Syncfusion.JavaScript.DataManager dm)
         {
@@ -206,7 +206,7 @@ namespace ApartmentApps.Portal.Controllers
 
         protected IEnumerable<TViewModel> GetData(DataManager dm, out int count, bool forceAll = false)
         {
-            IEnumerable<TViewModel> Data = Service.GetAll().ToArray();
+            IEnumerable<TViewModel> Data = Service.GetAll<TViewModel>().ToArray();
           
             Syncfusion.JavaScript.DataSources.DataOperations operation = new Syncfusion.JavaScript.DataSources.DataOperations();
             if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting
@@ -251,7 +251,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vm = Service.Find(id);
+            var vm = Service.Find<TViewModel>(id);
             if (vm == null)
             {
                 return HttpNotFound();
@@ -262,7 +262,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /Units/Create
         public virtual ActionResult Create()
         {
-            var vm = Service.CreateNew();
+            var vm = Service.CreateNew<TViewModel>();
             FormViewBag(vm);
             return View(vm);
         }
@@ -293,7 +293,7 @@ namespace ApartmentApps.Portal.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var unit = Service.Find(id);
+            var unit = Service.Find<TViewModel>(id);
             if (unit == null)
             {
                 return HttpNotFound();
@@ -325,7 +325,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var unit = Service.Find(id);
+            var unit = Service.Find<TViewModel>(id);
             if (unit == null)
             {
                 return HttpNotFound();

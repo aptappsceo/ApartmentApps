@@ -204,10 +204,10 @@ namespace ApartmentApps.Portal.Controllers
         public IMaintenanceService MaintenanceService { get; set; }
         public override ActionResult Index()
         {
-            return View(Service.GetAll().OrderByDescending(p => p.RequestDate));
+            return View(Service.GetAll< MaintenanceRequestViewModel>().OrderByDescending(p => p.RequestDate));
         }
 
-        public MaitenanceRequestsController(IKernel kernel, IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel, repository, service, context, userContext)
+        public MaitenanceRequestsController(IKernel kernel, IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest> service, PropertyContext context, IUserContext userContext) : base(kernel, repository, service, context, userContext)
         {
             MaintenanceService = maintenanceService;
         }
@@ -219,7 +219,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public JsonResult MyScheduleData()
         {
-            return Json(MaintenanceService.GetAppointments(), JsonRequestBehavior.AllowGet);
+            return Json(MaintenanceService.GetAppointments<MaintenanceRequestViewModel>(), JsonRequestBehavior.AllowGet);
         }
         public ActionResult NewRequest()
         {
@@ -235,7 +235,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult AssignRequest(string id)
         {
-            var request = Service.Find(id);
+            var request = Service.Find<MaintenanceRequestViewModel>(id);
             return AutoForm(new AssignMaintenanceEditModel(Kernel.Get<IRepository<ApplicationUser>>())
             {
                 Id = id,
@@ -513,7 +513,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public ActionResult Print(string id)
         {
-            var item = Service.Find(id);
+            var item = Service.Find<MaintenanceRequestViewModel>(id);
             return View(item);
         }
 

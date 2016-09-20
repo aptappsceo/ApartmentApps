@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -19,12 +20,7 @@ namespace ApartmentApps.Portal.Controllers
 {
 
 
-    public class NotificationsController : AutoFormController<NotificationService, NotificationViewModel>
-    {
-        public NotificationsController(IKernel kernel, NotificationService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
-        {
-        }
-    }
+
 
     public class AutoBuildingController :
         AutoGridController<BuildingService, BuildingViewModel, BuildingSearchViewModel>
@@ -34,7 +30,7 @@ namespace ApartmentApps.Portal.Controllers
         }
 
     }
-    public class AutoUserController : AutoGridController<UserService,UserBindingModel, UserSearchViewModel>
+    public class AutoUserController : AutoGridController<UserService, UserBindingModel, UserSearchViewModel>
     {
         private ApplicationUserManager _userManager;
 
@@ -152,10 +148,8 @@ namespace ApartmentApps.Portal.Controllers
 
     public class AutoGridController<TService, TViewModel, TSearchViewModel> :
         AutoGridController<TService, TService, TViewModel, TViewModel, TSearchViewModel>
-               where TService : class, ISearchable<TViewModel, TSearchViewModel>, IServiceFor<TViewModel> 
+        where TService : class, ISearchable< TSearchViewModel>, IService
         where TSearchViewModel : class, new()
-        
-        
         where TViewModel : BaseViewModel, new()
     {
         public AutoGridController(IKernel kernel, TService formService,  PropertyContext context, IUserContext userContext) : base(kernel, formService, formService, context, userContext, formService)
@@ -172,13 +166,13 @@ namespace ApartmentApps.Portal.Controllers
         public bool Descending { get; set; }
     }
     public class AutoGridController<TService, TFormService, TViewModel, TFormViewModel,TSearchViewModel> : AutoFormController<TService,TFormService,TViewModel, TFormViewModel> 
-        where TService : class,ISearchable<TViewModel, TSearchViewModel>, IServiceFor<TViewModel> where TSearchViewModel : class, new()
+        where TService : class,ISearchable<TSearchViewModel>, IService where TSearchViewModel : class, new()
         where TFormViewModel : BaseViewModel, new()
-        where TFormService : IServiceFor<TFormViewModel> 
+        where TFormService : IService
         where TViewModel : new()
     {
         public TService Service { get; set; }
-        public ISearchable<TViewModel, TSearchViewModel> Searchable => Service as ISearchable<TViewModel, TSearchViewModel>;
+        public ISearchable< TSearchViewModel> Searchable => Service as ISearchable<TSearchViewModel>;
 
         public AutoGridController(IKernel kernel, TFormService formService, TService indexService, PropertyContext context, IUserContext userContext, TService service) : base(kernel, formService, indexService, context, userContext)
         {
@@ -204,7 +198,7 @@ namespace ApartmentApps.Portal.Controllers
                 GridState.OrderBy = orderBy;
             }
             var count = 0;
-            var results = Searchable.Search(FilterViewModel, out count, GridState.OrderBy, GridState.Descending,GridState.Page,GridState.RecordsPerPage);
+            var results = Searchable.Search<TViewModel>(FilterViewModel, out count, GridState.OrderBy, GridState.Descending,GridState.Page,GridState.RecordsPerPage);
             return AutoIndex(results.ToArray(), count, GridState.Page, GridState.RecordsPerPage,GridState.OrderBy, GridState.Descending, IndexTitle);
         }
         public GridState GridState
@@ -233,7 +227,7 @@ namespace ApartmentApps.Portal.Controllers
         }
     }
     public class AutoFormController<TService, TViewModel> :
-        AutoFormController<TService, TService, TViewModel, TViewModel> where TViewModel : BaseViewModel, new() where TService : IServiceFor<TViewModel>
+        AutoFormController<TService, TService, TViewModel, TViewModel> where TViewModel : BaseViewModel, new() where TService : IService
     {
         public AutoFormController(IKernel kernel, TService service, PropertyContext context, IUserContext userContext) : base(kernel, service, service, context, userContext)
         {
@@ -243,8 +237,8 @@ namespace ApartmentApps.Portal.Controllers
     public class AutoFormController<TService, TFormService, TIndexViewModel, TFormViewModel> : AAController
         where TIndexViewModel : new()
         where TFormViewModel : BaseViewModel, new()
-        where TService : IServiceFor<TIndexViewModel>
-        where TFormService : IServiceFor<TFormViewModel>
+        where TService : IService
+        where TFormService : IService
     {
         private readonly IKernel _kernel;
         protected readonly TFormService _formService;
@@ -262,18 +256,28 @@ namespace ApartmentApps.Portal.Controllers
         public virtual ActionResult Index()
         {
             
-            var array = _indexService.GetAll().ToArray();
+            var array = _indexService.GetAll<TIndexViewModel>().ToArray();
             return AutoIndex(array, array.Length,0,20);
         }
         public virtual ActionResult Entry(string id = null)
         {
             if (id != null && id != "0")
             {
-                return AutoForm(_formService.Find(id), "SaveEntry", "Change");
+                return AutoForm(InitFormModel(_formService.Find<TFormViewModel>(id)), "SaveEntry", "Change");
             }
-            return AutoForm(_formService.CreateNew(), "SaveEntry", "Create New");
+            return AutoForm(InitFormModel(CreateFormModel()), "SaveEntry", "Create New");
         }
 
+        protected virtual TFormViewModel InitFormModel(TFormViewModel createFormModel)
+        {
+            return createFormModel;
+        }
+
+        protected virtual TFormViewModel CreateFormModel()
+        {
+            return _formService.CreateNew<TFormViewModel>();
+        }
+        [HttpPost]
         public virtual ActionResult SaveEntry(TFormViewModel model)
         {
             if (ModelState.IsValid)
@@ -301,6 +305,10 @@ namespace ApartmentApps.Portal.Controllers
     {
         public IUserContext UserContext { get; }
 
+        public IRepository<TModel> Repository<TModel>()
+        {
+            return Kernel.Get<IRepository<TModel>>();
+        }
         public AAController(IKernel kernel,PropertyContext context, IUserContext userContext)
         {
             Kernel = kernel;

@@ -33,7 +33,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
             
             var propertyId = this.CurrentUser.PropertyId;
 
-            return _inspectionsService.GetAllForUser(this.CurrentUser.Id);
+            return _inspectionsService.GetAllForUser<InspectionViewModel>(this.CurrentUser.Id);
 
         }
         [System.Web.Http.HttpPost]

@@ -23,7 +23,7 @@ namespace ApartmentApps.Portal.Controllers
         private readonly MessagingModule _module;
         private ApplicationDbContext _context;
         private IBlobStorageService _blobStorageService;
-        public MessagingController(MessagingService messageService, MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, AlertsModule messagingService, ApplicationDbContext context1, IBlobStorageService blobStorageService) : base(kernel,repository, service, context, userContext)
+        public MessagingController(MessagingService messageService, MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser> service, PropertyContext context, IUserContext userContext, AlertsModule messagingService, ApplicationDbContext context1, IBlobStorageService blobStorageService) : base(kernel,repository, service, context, userContext)
         {
             _messageService = messageService;
             _module = module;
@@ -44,7 +44,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult History()
         {
-            return View("History", _messageService.GetHistory());
+            return View("History", _messageService.GetHistory<MessageViewModel>());
         }
 
 

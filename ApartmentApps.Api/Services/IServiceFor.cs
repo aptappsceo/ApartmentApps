@@ -1,16 +1,16 @@
 using System.Collections.Generic;
+using ApartmentApps.Portal.Controllers;
 
-namespace ApartmentApps.Portal.Controllers
+namespace ApartmentApps.Api
 {
-    public interface IServiceFor<TViewModel>
+    public interface IService
     {
-        IEnumerable<TViewModel> GetAll();
-        IEnumerable<TViewModel> GetRange(int skip, int take);
-        void Add(TViewModel viewModel);
+        IEnumerable<TViewModel> GetAll<TViewModel>();
+    //    IEnumerable<TViewModel> GetRange(int skip, int take);
+        void Add<TViewModel>(TViewModel viewModel);
         void Remove(int id);
-        TViewModel Find(string id);
-        TViewModel CreateNew();
-        void Save(TViewModel unit);
-      
+        TViewModel Find<TViewModel>(string id) where TViewModel : class, new();
+        TViewModel CreateNew<TViewModel>() where TViewModel : new();
+        void Save<TViewModel>(TViewModel unit) where TViewModel : BaseViewModel;
     }
 }

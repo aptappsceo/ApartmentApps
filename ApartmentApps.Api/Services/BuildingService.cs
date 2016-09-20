@@ -5,6 +5,7 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -29,9 +30,9 @@ namespace ApartmentApps.Portal.Controllers
     {
         public FilterViewModel Name { get; set; }
     }
-    public class BuildingService : SearchableCrudService<Building, BuildingViewModel, BuildingSearchViewModel>
+    public class BuildingService : SearchableCrudService<Building, BuildingSearchViewModel>
     {
-        public BuildingService(IRepository<Building> repository, IMapper<Building, BuildingViewModel> mapper) : base(repository, mapper)
+        public BuildingService(IKernel kernel, IRepository<Building> repository) : base(kernel, repository)
         {
         }
 

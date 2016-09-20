@@ -12,7 +12,7 @@ namespace ApartmentApps.Api
         bool CompleteRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images);
         void StartRequest(ApplicationUser worker, int id, string comments, List<byte[]> images);
         void ScheduleRequest(ApplicationUser currentUser, int id, DateTime scheduleDate);
-        IEnumerable<MaintenanceRequestViewModel> GetAppointments();
+        IEnumerable<TViewModel> GetAppointments<TViewModel>();
         void AssignRequest(string requestId, string userId);
     }
 }

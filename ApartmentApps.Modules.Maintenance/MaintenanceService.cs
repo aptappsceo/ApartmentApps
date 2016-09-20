@@ -9,6 +9,7 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Maintenance;
 using ApartmentApps.Portal.Controllers;
+using Ninject;
 
 namespace ApartmentApps.Api
 {
@@ -62,7 +63,7 @@ namespace ApartmentApps.Api
         }
 
     }
-    public class MaintenanceService : StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> ,IMaintenanceService
+    public class MaintenanceService : StandardCrudService<MaitenanceRequest> ,IMaintenanceService
     {
  
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
@@ -71,18 +72,19 @@ namespace ApartmentApps.Api
         private IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
-        public MaintenanceService(IRepository<MaitenanceRequest> repository, IMapper<MaitenanceRequest, MaintenanceRequestViewModel> mapper, IBlobStorageService blobStorageService, IUserContext userContext) : base(repository, mapper)
+        public MaintenanceService(IRepository<MaitenanceRequest> repository, IBlobStorageService blobStorageService, IUserContext userContext, IKernel kernel) : base(kernel, repository)
         {
             _blobStorageService = blobStorageService;
             _userContext = userContext;
         }
 
-        public IEnumerable<MaintenanceRequestViewModel> GetAppointments()
+        public IEnumerable<TViewModel> GetAppointments<TViewModel>()
         {
             var tz = _userContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(15,0,0,0));
+            var mapper = _kernel.Get<IMapper<MaitenanceRequest, TViewModel>>();
             return
                 Context.MaitenanceRequests.Where(p => p.ScheduleDate != null).ToArray()
-                    .Select(Mapper.ToViewModel);
+                    .Select(mapper.ToViewModel);
         }
         
         public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)
@@ -139,9 +141,9 @@ namespace ApartmentApps.Api
 
         }
 
-        public IEnumerable<MaintenanceRequestViewModel> GetAllUnassigned()
+        public IEnumerable<TViewModel> GetAllUnassigned<TViewModel>()
         {
-            return Repository.Where(p => p.WorkerAssignedId == null).ToArray().Select(Mapper.ToViewModel);
+            return Repository.Where(p => p.WorkerAssignedId == null).ToArray().Select(Map<TViewModel>().ToViewModel);
         }
 
         public void AssignRequest(string requestId, string userId)
