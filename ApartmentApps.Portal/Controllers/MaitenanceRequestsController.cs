@@ -48,7 +48,7 @@ namespace ApartmentApps.Portal.Controllers
                         .ToArray().OrderByAlphaNumeric(p => p.Name);
 
 
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
+                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Building.Name + " - " + p.Name, UnitId == p.Id));
 
 
             }
