@@ -31,6 +31,28 @@ namespace ApartmentApps.Client.Models
             set { this._id = value; }
         }
         
+        private string _merchantId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string MerchantId
+        {
+            get { return this._merchantId; }
+            set { this._merchantId = value; }
+        }
+        
+        private string _merchantPassword;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string MerchantPassword
+        {
+            get { return this._merchantPassword; }
+            set { this._merchantPassword = value; }
+        }
+        
         private int? _propertyId;
         
         /// <summary>
@@ -87,6 +109,16 @@ namespace ApartmentApps.Client.Models
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((int)idValue);
+                }
+                JToken merchantIdValue = inputObject["MerchantId"];
+                if (merchantIdValue != null && merchantIdValue.Type != JTokenType.Null)
+                {
+                    this.MerchantId = ((string)merchantIdValue);
+                }
+                JToken merchantPasswordValue = inputObject["MerchantPassword"];
+                if (merchantPasswordValue != null && merchantPasswordValue.Type != JTokenType.Null)
+                {
+                    this.MerchantPassword = ((string)merchantPasswordValue);
                 }
                 JToken propertyIdValue = inputObject["PropertyId"];
                 if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)

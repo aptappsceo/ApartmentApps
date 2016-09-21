@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -31,5 +33,13 @@ namespace ApartmentApps.Api.Modules
 
         public InvoiceState State { get; set; }
         public string Title { get; set; }
+    }
+
+    public static class InvoiceRepositoryExtensions
+    {
+        public static IEnumerable<Invoice> GetAvailableBy(this IRepository<Invoice> repo, DateTime by)
+        {
+            return repo.Where(i => !i.IsArchived && i.AvailableDate < by && i.State == InvoiceState.NotPaid);
+        }
     }
 }

@@ -45,6 +45,17 @@ namespace ApartmentApps.Client.Models
             set { this._propertyId = value; }
         }
         
+        private int? _rentAmount;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? RentAmount
+        {
+            get { return this._rentAmount; }
+            set { this._rentAmount = value; }
+        }
+        
         private IList<Unit> _units;
         
         /// <summary>
@@ -85,6 +96,11 @@ namespace ApartmentApps.Client.Models
                 if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
                 {
                     this.PropertyId = ((int)propertyIdValue);
+                }
+                JToken rentAmountValue = inputObject["RentAmount"];
+                if (rentAmountValue != null && rentAmountValue.Type != JTokenType.Null)
+                {
+                    this.RentAmount = ((int)rentAmountValue);
                 }
                 JToken unitsSequence = ((JToken)inputObject["Units"]);
                 if (unitsSequence != null && unitsSequence.Type != JTokenType.Null)

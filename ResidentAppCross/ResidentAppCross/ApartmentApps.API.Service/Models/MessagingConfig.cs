@@ -20,6 +20,17 @@ namespace ApartmentApps.Client.Models
             set { this._enabled = value; }
         }
         
+        private bool? _fullLogging;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? FullLogging
+        {
+            get { return this._fullLogging; }
+            set { this._fullLogging = value; }
+        }
+        
         private int? _id;
         
         /// <summary>
@@ -42,6 +53,28 @@ namespace ApartmentApps.Client.Models
             set { this._propertyId = value; }
         }
         
+        private string _sendFromEmail;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string SendFromEmail
+        {
+            get { return this._sendFromEmail; }
+            set { this._sendFromEmail = value; }
+        }
+        
+        private string _sendGridApiToken;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string SendGridApiToken
+        {
+            get { return this._sendGridApiToken; }
+            set { this._sendGridApiToken = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the MessagingConfig class.
         /// </summary>
@@ -61,6 +94,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Enabled = ((bool)enabledValue);
                 }
+                JToken fullLoggingValue = inputObject["FullLogging"];
+                if (fullLoggingValue != null && fullLoggingValue.Type != JTokenType.Null)
+                {
+                    this.FullLogging = ((bool)fullLoggingValue);
+                }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
@@ -70,6 +108,16 @@ namespace ApartmentApps.Client.Models
                 if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
                 {
                     this.PropertyId = ((int)propertyIdValue);
+                }
+                JToken sendFromEmailValue = inputObject["SendFromEmail"];
+                if (sendFromEmailValue != null && sendFromEmailValue.Type != JTokenType.Null)
+                {
+                    this.SendFromEmail = ((string)sendFromEmailValue);
+                }
+                JToken sendGridApiTokenValue = inputObject["SendGridApiToken"];
+                if (sendGridApiTokenValue != null && sendGridApiTokenValue.Type != JTokenType.Null)
+                {
+                    this.SendGridApiToken = ((string)sendGridApiTokenValue);
                 }
             }
         }

@@ -135,7 +135,7 @@ namespace ApartmentApps.Client
             this._payments = new Payments(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://apartmentappsapiservicedev.azurewebsites.net");
+            this._baseUri = new Uri("http://localhost:54686");
         }
         
         /// <summary>
@@ -160,7 +160,7 @@ namespace ApartmentApps.Client
             this._payments = new Payments(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://apartmentappsapiservicedev.azurewebsites.net");
+            this._baseUri = new Uri("http://localhost:54686");
         }
         
         /// <summary>
@@ -188,7 +188,7 @@ namespace ApartmentApps.Client
             this._payments = new Payments(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://apartmentappsapiservicedev.azurewebsites.net");
+            this._baseUri = new Uri("http://localhost:54686");
         }
         
         /// <summary>

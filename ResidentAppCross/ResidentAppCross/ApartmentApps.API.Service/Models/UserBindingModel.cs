@@ -20,6 +20,17 @@ namespace ApartmentApps.Client.Models
             set { this._address = value; }
         }
         
+        private bool? _archived;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? Archived
+        {
+            get { return this._archived; }
+            set { this._archived = value; }
+        }
+        
         private string _buildingName;
         
         /// <summary>
@@ -182,6 +193,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Address = ((string)addressValue);
                 }
+                JToken archivedValue = inputObject["Archived"];
+                if (archivedValue != null && archivedValue.Type != JTokenType.Null)
+                {
+                    this.Archived = ((bool)archivedValue);
+                }
                 JToken buildingNameValue = inputObject["BuildingName"];
                 if (buildingNameValue != null && buildingNameValue.Type != JTokenType.Null)
                 {
@@ -210,7 +226,7 @@ namespace ApartmentApps.Client.Models
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
-                    this.Id = idValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                    this.Id = ((string)idValue);
                 }
                 JToken imageThumbnailUrlValue = inputObject["ImageThumbnailUrl"];
                 if (imageThumbnailUrlValue != null && imageThumbnailUrlValue.Type != JTokenType.Null)

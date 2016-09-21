@@ -98,6 +98,17 @@ namespace ApartmentApps.Client.Models
             set { this._propertyId = value; }
         }
         
+        private string _relatedId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string RelatedId
+        {
+            get { return this._relatedId; }
+            set { this._relatedId = value; }
+        }
+        
         private MaintenanceRequestStatus _status;
         
         /// <summary>
@@ -118,6 +129,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._statusId; }
             set { this._statusId = value; }
+        }
+        
+        private int? _type;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         private ApplicationUser _worker;
@@ -198,6 +220,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.PropertyId = ((int)propertyIdValue);
                 }
+                JToken relatedIdValue = inputObject["RelatedId"];
+                if (relatedIdValue != null && relatedIdValue.Type != JTokenType.Null)
+                {
+                    this.RelatedId = relatedIdValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                }
                 JToken statusValue = inputObject["Status"];
                 if (statusValue != null && statusValue.Type != JTokenType.Null)
                 {
@@ -209,6 +236,11 @@ namespace ApartmentApps.Client.Models
                 if (statusIdValue != null && statusIdValue.Type != JTokenType.Null)
                 {
                     this.StatusId = ((string)statusIdValue);
+                }
+                JToken typeValue = inputObject["Type"];
+                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                {
+                    this.Type = ((int)typeValue);
                 }
                 JToken workerValue = inputObject["Worker"];
                 if (workerValue != null && workerValue.Type != JTokenType.Null)

@@ -41,6 +41,30 @@ namespace ApartmentApps.Client
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IAlerts.
         /// </param>
+        public static AlertsCountBindingModel GetCount(this IAlerts operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAlerts)s).GetCountAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IAlerts.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<AlertsCountBindingModel> GetCountAsync(this IAlerts operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.AlertsCountBindingModel> result = await operations.GetCountWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IAlerts.
+        /// </param>
         /// <param name='alertId'>
         /// Required.
         /// </param>

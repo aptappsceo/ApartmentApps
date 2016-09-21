@@ -20,7 +20,7 @@ namespace ApartmentApps.Client
         /// <param name='addBankAccount'>
         /// Required.
         /// </param>
-        public static string AddBankAccount(this IPayments operations, AddBankAccountBindingModel addBankAccount)
+        public static AddBankAccountResult AddBankAccount(this IPayments operations, AddBankAccountBindingModel addBankAccount)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -38,9 +38,9 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<string> AddBankAccountAsync(this IPayments operations, AddBankAccountBindingModel addBankAccount, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<AddBankAccountResult> AddBankAccountAsync(this IPayments operations, AddBankAccountBindingModel addBankAccount, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<string> result = await operations.AddBankAccountWithOperationResponseAsync(addBankAccount, cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.AddBankAccountResult> result = await operations.AddBankAccountWithOperationResponseAsync(addBankAccount, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         
@@ -50,7 +50,7 @@ namespace ApartmentApps.Client
         /// <param name='addCreditCard'>
         /// Required.
         /// </param>
-        public static string AddCreditCard(this IPayments operations, AddCreditCardBindingModel addCreditCard)
+        public static AddCreditCardResult AddCreditCard(this IPayments operations, AddCreditCardBindingModel addCreditCard)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -68,9 +68,9 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        public static async Task<string> AddCreditCardAsync(this IPayments operations, AddCreditCardBindingModel addCreditCard, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public static async Task<AddCreditCardResult> AddCreditCardAsync(this IPayments operations, AddCreditCardBindingModel addCreditCard, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Microsoft.Rest.HttpOperationResponse<string> result = await operations.AddCreditCardWithOperationResponseAsync(addCreditCard, cancellationToken).ConfigureAwait(false);
+            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.AddCreditCardResult> result = await operations.AddCreditCardWithOperationResponseAsync(addCreditCard, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         
@@ -119,6 +119,60 @@ namespace ApartmentApps.Client
         public static async Task<IList<PaymentOptionBindingModel>> GetPaymentOptionsAsync(this IPayments operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.PaymentOptionBindingModel>> result = await operations.GetPaymentOptionsWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IPayments.
+        /// </param>
+        /// <param name='paymentOptionId'>
+        /// Required.
+        /// </param>
+        public static PaymentListBindingModel GetPaymentSummary(this IPayments operations, int paymentOptionId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IPayments)s).GetPaymentSummaryAsync(paymentOptionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IPayments.
+        /// </param>
+        /// <param name='paymentOptionId'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<PaymentListBindingModel> GetPaymentSummaryAsync(this IPayments operations, int paymentOptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.PaymentListBindingModel> result = await operations.GetPaymentSummaryWithOperationResponseAsync(paymentOptionId, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IPayments.
+        /// </param>
+        public static PaymentListBindingModel GetRentSummary(this IPayments operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IPayments)s).GetRentSummaryAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IPayments.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<PaymentListBindingModel> GetRentSummaryAsync(this IPayments operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.PaymentListBindingModel> result = await operations.GetRentSummaryWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         

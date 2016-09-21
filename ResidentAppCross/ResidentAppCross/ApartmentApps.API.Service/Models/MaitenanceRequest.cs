@@ -144,6 +144,17 @@ namespace ApartmentApps.Client.Models
             set { this._propertyId = value; }
         }
         
+        private string _relatedId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string RelatedId
+        {
+            get { return this._relatedId; }
+            set { this._relatedId = value; }
+        }
+        
         private DateTimeOffset? _scheduleDate;
         
         /// <summary>
@@ -197,6 +208,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._timeToComplete; }
             set { this._timeToComplete = value; }
+        }
+        
+        private int? _type;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         private Unit _unit;
@@ -327,6 +349,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.PropertyId = ((int)propertyIdValue);
                 }
+                JToken relatedIdValue = inputObject["RelatedId"];
+                if (relatedIdValue != null && relatedIdValue.Type != JTokenType.Null)
+                {
+                    this.RelatedId = relatedIdValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                }
                 JToken scheduleDateValue = inputObject["ScheduleDate"];
                 if (scheduleDateValue != null && scheduleDateValue.Type != JTokenType.Null)
                 {
@@ -353,6 +380,11 @@ namespace ApartmentApps.Client.Models
                 if (timeToCompleteValue != null && timeToCompleteValue.Type != JTokenType.Null)
                 {
                     this.TimeToComplete = ((string)timeToCompleteValue);
+                }
+                JToken typeValue = inputObject["Type"];
+                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                {
+                    this.Type = ((int)typeValue);
                 }
                 JToken unitValue = inputObject["Unit"];
                 if (unitValue != null && unitValue.Type != JTokenType.Null)

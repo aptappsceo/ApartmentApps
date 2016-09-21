@@ -18,6 +18,11 @@ namespace ApartmentApps.Client
         /// </param>
         Task<HttpOperationResponse<IList<AlertBindingModel>>> GetWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<AlertsCountBindingModel>> GetCountWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
         /// <param name='alertId'>
         /// Required.
         /// </param>

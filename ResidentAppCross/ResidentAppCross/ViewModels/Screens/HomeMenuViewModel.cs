@@ -222,7 +222,7 @@ namespace ResidentAppCross
 
         public ICommand PayRentCommand => new MvxCommand(() =>
         {
-            if(!string.IsNullOrEmpty(PaymentUrl))
+            if(!_loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.UseUrl ?? !string.IsNullOrEmpty(PaymentUrl))
             _dialogService.OpenUrl(PaymentUrl);
             else
             {

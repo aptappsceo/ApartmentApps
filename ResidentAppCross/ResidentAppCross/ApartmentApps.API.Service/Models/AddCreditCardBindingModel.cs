@@ -53,6 +53,28 @@ namespace ApartmentApps.Client.Models
             set { this._expirationDate = value; }
         }
         
+        private string _expirationMonth;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ExpirationMonth
+        {
+            get { return this._expirationMonth; }
+            set { this._expirationMonth = value; }
+        }
+        
+        private string _expirationYear;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ExpirationYear
+        {
+            get { return this._expirationYear; }
+            set { this._expirationYear = value; }
+        }
+        
         private string _friendlyName;
         
         /// <summary>
@@ -98,6 +120,14 @@ namespace ApartmentApps.Client.Models
             if (this.ExpirationDate != null)
             {
                 outputObject["ExpirationDate"] = this.ExpirationDate;
+            }
+            if (this.ExpirationMonth != null)
+            {
+                outputObject["ExpirationMonth"] = this.ExpirationMonth;
+            }
+            if (this.ExpirationYear != null)
+            {
+                outputObject["ExpirationYear"] = this.ExpirationYear;
             }
             if (this.FriendlyName != null)
             {

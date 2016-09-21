@@ -147,7 +147,7 @@ namespace ApartmentApps.Client.Models
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
-                    this.Id = idValue.ToString(Newtonsoft.Json.Formatting.Indented);
+                    this.Id = ((string)idValue);
                 }
                 JToken latestCheckinValue = inputObject["LatestCheckin"];
                 if (latestCheckinValue != null && latestCheckinValue.Type != JTokenType.Null)

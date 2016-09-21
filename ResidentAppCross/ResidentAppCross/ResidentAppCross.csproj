@@ -65,10 +65,13 @@
     <Compile Include="ApartmentApps.API.Service\Messaging.cs" />
     <Compile Include="ApartmentApps.API.Service\MessagingExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AddBankAccountBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\AddBankAccountResult.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AddCreditCardBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\AddCreditCardResult.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AddExternalLoginBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AlertBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AlertBindingModelCollection.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\AlertsCountBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ApplicationUser.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Building.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ChangePasswordBindingModel.cs" />
@@ -108,6 +111,8 @@
     <Compile Include="ApartmentApps.API.Service\Models\ManageInfoViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\MessagingConfig.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ModuleInfo.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\PaymentLineBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\PaymentListBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PaymentOptionBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PaymentOptionBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PaymentsConfig.cs" />

@@ -19,7 +19,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<string>> AddBankAccountWithOperationResponseAsync(AddBankAccountBindingModel addBankAccount, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<AddBankAccountResult>> AddBankAccountWithOperationResponseAsync(AddBankAccountBindingModel addBankAccount, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='addCreditCard'>
         /// Required.
@@ -27,7 +27,7 @@ namespace ApartmentApps.Client
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
-        Task<HttpOperationResponse<string>> AddCreditCardWithOperationResponseAsync(AddCreditCardBindingModel addCreditCard, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        Task<HttpOperationResponse<AddCreditCardResult>> AddCreditCardWithOperationResponseAsync(AddCreditCardBindingModel addCreditCard, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -38,6 +38,19 @@ namespace ApartmentApps.Client
         /// Cancellation token.
         /// </param>
         Task<HttpOperationResponse<IList<PaymentOptionBindingModel>>> GetPaymentOptionsWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='paymentOptionId'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<PaymentListBindingModel>> GetPaymentSummaryWithOperationResponseAsync(int paymentOptionId, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<PaymentListBindingModel>> GetRentSummaryWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='makePaymentBindingModel'>
         /// Required.
