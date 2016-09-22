@@ -73,6 +73,12 @@
       <HintPath>..\..\packages\blocke.circleimageview.1.0\lib\MonoAndroid50\blocke.circleimageview.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HockeySDK">
+      <HintPath>..\..\Components\hockeyappandroid-4.1.0.3\lib\android\HockeySDK.dll</HintPath>
+    </Reference>
+    <Reference Include="HockeySDK.AndroidBindings">
+      <HintPath>..\..\Components\hockeyappandroid-4.1.0.3\lib\android\HockeySDK.AndroidBindings.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialSpinner, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MaterialSpinner-Xamarin.1.1.1\lib\MonoAndroid\MaterialSpinner.dll</HintPath>
       <Private>True</Private>
@@ -390,6 +396,10 @@
     <XamarinComponentReference Include="GCMClient">
       <Version>1.0</Version>
       <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="hockeyappandroid">
+      <Visible>False</Visible>
+      <Version>4.1.0.3</Version>
     </XamarinComponentReference>
     <XamarinComponentReference Include="PhotoView">
       <Version>1.2.4</Version>
