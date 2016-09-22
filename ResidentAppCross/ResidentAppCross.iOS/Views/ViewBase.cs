@@ -203,7 +203,7 @@ namespace ResidentAppCross.iOS.Views
                     alert.HideAnimationType = SCLAlertViewHideAnimation.FadeOut;
                     alert.AlertIsDismissed(() => { onPrompted?.Invoke(reson); });
                     //alert.CustomViewColor = AppTheme.SecondaryBackgoundColor;
-                    alert.ShowError(view, "Oops!", label, "Ok", 5f);
+                    alert.ShowError(view, "Oops!", label, "Ok",0f);
                 });
             }
             else

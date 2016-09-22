@@ -222,8 +222,17 @@ namespace ResidentAppCross
 
         public ICommand PayRentCommand => new MvxCommand(() =>
         {
-            if(!_loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.UseUrl ?? !string.IsNullOrEmpty(PaymentUrl))
-            _dialogService.OpenUrl(PaymentUrl);
+            if (_loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.UseUrl ?? false)
+            {
+                if (!string.IsNullOrEmpty(PaymentUrl))
+                {
+                    _dialogService.OpenUrl(PaymentUrl);
+                }
+                else
+                {
+                    _dialogService.OpenNotification("We are sorry.","Your property has not provided URL for paying rent.","Ok",()=> {});
+                }
+            }
             else
             {
                 ShowViewModel<RentSummaryViewModel>();

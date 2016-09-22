@@ -56,17 +56,12 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 return this.TaskCommand(async context =>
                 {
-                    PaymentSummary.Clear();
+                    var items = await _service.Payments.GetRentSummaryAsync();
 
-                    await Task.Delay(1000);
-                    
-                    for (int i = 0; i < 5; i++)
+                    foreach (var item in items.Items)
                     {
-                        PaymentSummary.AddEntry("Some Item "+i,"$50",PaymentSummaryFormat.Default);
+                        PaymentSummary.AddEntry(item.Title,item.Price,(PaymentSummaryFormat)(item.Format ?? 0));
                     }
-                    PaymentSummary.AddEntry("Some Payment Fee", "$25", PaymentSummaryFormat.Default);
-                    PaymentSummary.AddEntry("Some Discount", "$25", PaymentSummaryFormat.Discount);
-                    PaymentSummary.AddEntry("Total", "$250", PaymentSummaryFormat.Total);
                     
                     this.Publish(new RentSummaryUpdated(this));
 

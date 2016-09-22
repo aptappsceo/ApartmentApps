@@ -167,6 +167,7 @@ namespace ResidentAppCross.iOS
         private HeaderSection _headerSection;
         private ToggleSection _isSavingsSection;
         private TextFieldSection _yearSection;
+        private TextFieldSection _monthSection;
 
         public HeaderSection HeaderSection
         {
@@ -199,7 +200,7 @@ namespace ResidentAppCross.iOS
             get
             {
                 return _cardNumberSection ?? (_cardNumberSection = Formals.Create<TextFieldSection>()
-                    .WithPlaceholder("Routing Number...")
+                    .WithPlaceholder("Card Number...")
                     .WithNextResponder(CvcCodeSection));
             }
         }
@@ -209,7 +210,7 @@ namespace ResidentAppCross.iOS
             get
             {
                 return _cvcCodeSection ?? (_cvcCodeSection = Formals.Create<TextFieldSection>()
-                    .WithPlaceholder("Account Number...")
+                    .WithPlaceholder("CVC Number...")
                     .WithNextResponder(MonthSection));
             }
         }
@@ -218,7 +219,7 @@ namespace ResidentAppCross.iOS
         {
             get
             {
-                return _yearSection ?? (_yearSection = Formals.Create<TextFieldSection>()
+                return _monthSection ?? (_monthSection = Formals.Create<TextFieldSection>()
                     .WithPlaceholder("Expiration Month...")
                     .WithNextResponder(YearSection));
             }
@@ -229,7 +230,7 @@ namespace ResidentAppCross.iOS
             get
             {
                 return _yearSection ?? (_yearSection = Formals.Create<TextFieldSection>()
-                    .WithPlaceholder("Expiration Month...")
+                    .WithPlaceholder("Expiration Year...")
                     .WithNextResponder(AccountHolderSection));
             }
         }

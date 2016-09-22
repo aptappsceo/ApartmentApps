@@ -63,6 +63,7 @@ namespace ResidentAppCross.Commands
             try
             {
                 await _execute(this);
+                Dispatcher.RequestMainThreadAction(ProcessComplete);
             }
 			catch (Microsoft.Rest.HttpOperationException ex) {
 				var message = await ex.Response.Content.ReadAsStringAsync ();
@@ -74,7 +75,6 @@ namespace ResidentAppCross.Commands
                 Dispatcher.RequestMainThreadAction(()=> { ProcessFail(ex); });
                 return;
             }
-            Dispatcher.RequestMainThreadAction(ProcessComplete);
         }
 
         private void ProcessFail(Exception exception)

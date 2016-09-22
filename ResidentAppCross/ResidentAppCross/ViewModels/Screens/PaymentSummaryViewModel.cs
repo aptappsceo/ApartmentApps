@@ -21,6 +21,8 @@ namespace ResidentAppCross.ViewModels.Screens
             _service = service;
         }
 
+        public int PaymentOptionId { get; set; }
+
         public override void Start()
         {
             base.Start();
@@ -53,7 +55,7 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 return this.TaskCommand(async context =>
                 {
-                    var items = await _service.Payments.GetRentSummaryAsync();
+                    var items = await _service.Payments.GetPaymentSummaryAsync(PaymentOptionId);
 
                     foreach (var item in items.Items)
                     {

@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http.Filters;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
@@ -12,6 +15,29 @@ using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api
 {
+
+    public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
+{
+    public override void OnException(HttpActionExecutedContext context)
+    {
+        var exception = context.Exception as ApiException;
+        if (exception != null) {
+            context.Response = context.Request.CreateErrorResponse(exception.StatusCode, exception.Message);
+            context.Exception = exception;
+        }
+    }
+}
+
+    public class ApiException : Exception
+    {
+        public HttpStatusCode StatusCode { get; set; }
+
+        public ApiException(string message, HttpStatusCode statusCode) : base(message)
+        {
+            StatusCode = statusCode;
+        }
+    }
+
     public class MaintenanceService : StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> ,IMaintenanceService
     {
         public override void ToModel(MaintenanceRequestViewModel viewModel, MaitenanceRequest model)

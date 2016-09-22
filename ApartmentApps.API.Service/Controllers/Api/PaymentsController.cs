@@ -1,10 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
+using Microsoft.Rest;
+using Microsoft.Rest.TransientFaultHandling;
 
 namespace ApartmentApps.API.Service.Controllers
 {
@@ -23,10 +28,15 @@ namespace ApartmentApps.API.Service.Controllers
             PaymentsService = paymentsService;
         }
 
-        [HttpPost, Route("AddCreditCard")]
+        [HttpPost, Route("AddCreditCard"),ApiExceptionFilter]
         public async Task<AddCreditCardResult> AddCreditCard(AddCreditCardBindingModel addCreditCard)
         {
-            return await PaymentsService.AddCreditCard(addCreditCard);
+            var result = await PaymentsService.AddCreditCard(addCreditCard);
+            if (result.ErrorMessage != null)
+            {
+                throw new ApiException(result.ErrorMessage,HttpStatusCode.BadRequest);
+            }
+            return result;
         }
         [HttpPost, Route("AddBankAccount")]
         public async Task<AddBankAccountResult> AddBankAccount(AddBankAccountBindingModel addBankAccount)

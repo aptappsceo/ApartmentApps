@@ -75,7 +75,7 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 return this.TaskCommand(async context =>
                 {
-                    await _service.Payments.AddCreditCardWithOperationResponseAsync(new AddCreditCardBindingModel()
+                    await _service.Payments.AddCreditCardAsync(new AddCreditCardBindingModel()
                     {
                         AccountHolderName = AccountHolderName,
                         CardNumber = CardNumber,
