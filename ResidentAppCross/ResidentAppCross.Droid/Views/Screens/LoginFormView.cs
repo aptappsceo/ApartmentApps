@@ -45,6 +45,9 @@ namespace ResidentAppCross.Droid.Views
         [Outlet]
         public Button SignUpButton { get; set; }
 
+        [Outlet]
+        public Button RecoverPasswordButton { get; set; }
+
         public override void Bind()
         {
             base.Bind();
@@ -64,6 +67,7 @@ namespace ResidentAppCross.Droid.Views
             set.Bind(EmailInput).TwoWay().For(v => v.Text).To(vm => vm.Username);
             set.Bind(PasswordInput).TwoWay().For(v => v.Text).To(vm => vm.Password);
             set.Bind(SignUpButton).To(vm => vm.SignUpCommand);
+            set.Bind(RecoverPasswordButton).To(vm => vm.RemindPasswordCommand);
             set.Apply();
 
         }
