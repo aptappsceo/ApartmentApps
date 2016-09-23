@@ -57,13 +57,13 @@ namespace ApartmentApps.Portal.Controllers
 
     }
 
-    public class UnitService : SearchableCrudService<Unit,UnitSearchViewModel>
+    public class UnitService : StandardCrudService<Unit>
     {
         public UnitService(IKernel kernel, IRepository<Unit> repository) : base(kernel, repository)
         {
         }
 
-        public override Expression<Func<Unit, object>> DefaultOrderBy => p => p.Name;
+        public override string DefaultOrderBy => "Name";
         public override TViewModel CreateNew<TViewModel>()
         {
             return new TViewModel() {};

@@ -50,6 +50,14 @@ namespace ApartmentApps.Data.Repository
 
         public TEntity Find(object id)
         {
+            if (id is string)
+            {
+                int result;
+                if (int.TryParse((string)id, out result))
+                {
+                    return _dbContext.Set<TEntity>().Find(result);
+                }
+            }
             return _dbContext.Set<TEntity>().Find(id);
         }
 

@@ -2,78 +2,61 @@
 @using System.Reflection
 @using ApartmentApps.Forms
 @using ApartmentApps.Portal.Controllers
+@using Korzh.EasyQuery.Mvc
 @model ApartmentApps.Forms.GridModel
 @{
     FormPropertyModel idProperty = Model.Properties.FirstOrDefault(p => p.Name.ToLower() == "id");
 }
 
-    <table class="table table-hover table-mail">
-        <tbody>
-        <tr>
-            @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
-            {
-                <th class="sorting_asc">
-                    <a href="@Url.Action("Grid", Html.Controller(), new {page = Model.CurrentPage, orderBy = property.Name, recordsPerPage = Model.RecordsPerPage, descending = !Model.Descending})">@property.Label</a>
-                </th>
-            }
-            @if (Model.Editable && idProperty != null)
-            {
-                <th></th>
-            }
-            @if (Model.Deletable && idProperty != null)
-            {
-                <th></th>
-            }
-        </tr>
-            @foreach (var item in Model.Items)
-            {
+<script type="text/javascript">
 
-                <tr>
-                    @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
-                    {
-                        <td>@property.PropertyInfo.GetValue(item)</td>
-                    }
-                    @if (Model.Editable && idProperty != null)
-                    {
-                        <td style="width: 30px;"><a class="btn btn-primary btn-xs modal-link" href="@Url.Action("Entry", new { id = idProperty.PropertyInfo.GetValue(item) })">Edit</a></td>
-                    }
-                    @if (Model.Deletable && idProperty != null)
-                    {
-                        <td style="width: 30px;"><a class="btn btn-primary btn-xs modal-link" href="@Url.Action("Delete", new { id = idProperty.PropertyInfo.GetValue(item) })">Delete</a></td>
-                    }
-                </tr>
+    // Load the Visualization API and the piechart package.
+    //google.load('visualization', '1.0', { 'packages': ['corechart'] });
 
-            }
-          
-        </tbody>
-    </table>
+    //// Set a callback to run when the Google Visualization API is loaded.
+    //google.setOnLoadCallback(GoogleVisualizationLoaded);
+
+    function GoogleVisualizationLoaded() {
+        //alert("Visualization loaded!!!";)
+    }
+    //Settings for EasyQuery pages
+    window.easyQueryViewSettings = {
+        showChart: false,
+        clearQueryButtonId: "myClearButton"
+    };
+    window.easyQuerySettings = {
+        serviceUrl: getPrefix(),
+        loadDefaultModel: true,
+        useBootstrap:true
+
+    };
+
+    function getPrefix() {
+        var res = window.location.pathname;
+        if (res.charAt(res.length - 1) !== '/')
+            res = res + '/';
+        return res;
+    }
+
+
+</script>
+
+@Html.FilterBar(null)
+<div id="ResultPanel">
+
+ @Html.Partial("~/Views/Shared/Forms/GridPartial.cshtml", Model )
+</div>
 
 
 
-
-    @*<table class="table table-striped" style="margin-bottom: 0px;">
+@*<table class="table table-striped" style="margin-bottom: 0px;">
         <thead>
             <tr>
-             
+
             </tr>
         </thead>
         <tbody>
-    
+
         </tbody>
 
     </table>*@
-<div><ul class="pagination">
-    <li class="paginate_button next">
-        <a href="@Url.Action("Grid", Html.Controller(), new {page = 1, orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})">First</a>
-    </li>
-    <li class="paginate_button previous" id="editable_previous"><a href="@Url.Action("Grid", Html.Controller(), new {page = Math.Max(Model.CurrentPage - 1, 1), orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})" aria-controls="editable" data-dt-idx="0" tabindex="0">Previous</a></li>
-    @for (var i = Math.Max(1, Model.CurrentPage - 5); i <= Math.Min(Model.CurrentPage +10, Model.PageCount); i++)
-    {
-        <li class="paginate_button @(i == Model.CurrentPage ? "active" : "")">
-            <a href="@Url.Action("Grid", Html.Controller(), new {page = i, orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})" aria-controls="editable" data-dt-idx="1" tabindex="0">@i</a>
-        </li>
-    }
-
-    <li class="paginate_button next" ><a href="@Url.Action("Grid", Html.Controller(), new {page = Math.Min(Model.CurrentPage + 1, Model.PageCount), orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})" >Next</a></li>
-    <li class="paginate_button next" ><a href="@Url.Action("Grid", Html.Controller(), new {page = Model.PageCount, orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})" >Last</a></li>
-</ul></div>

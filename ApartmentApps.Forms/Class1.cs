@@ -1,18 +1,83 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Korzh.EasyQuery.Services;
 
 namespace ApartmentApps.Forms
 {
+    public class ActionLinkModel
+    {
+        public string Label { get; set; }
 
+        public ActionLinkModel(string label, string action, string controller, object parameters)
+        {
+            Label = label;
+            Action = action;
+            Controller = controller;
+            Parameters = parameters;
+        }
+
+        public ActionLinkModel(string label, string action, string controller)
+        {
+            Label = label;
+            Action = action;
+            Controller = controller;
+        }
+
+        public ActionLinkModel(string label, string action)
+        {
+            Label = label;
+            Action = action;
+        }
+
+        public ActionLinkModel()
+        {
+        }
+
+        public string Action { get; set; }
+        public string Controller { get; set; }
+        public object Parameters { get; set; }
+    }
+
+    public class GridList<T> : IPagedList<T>, IPaging, IEnumerable<T>, IEnumerable
+    {
+        public GridList(IEnumerable<T> innerList, long pageIndex, long pageSize, long totalRecords)
+        {
+            InnerList = innerList.ToList();
+            PageIndex = pageIndex;
+            PageSize = pageSize;
+   
+            TotalRecords = totalRecords;
+        }
+        public int Pages => (int)Math.Ceiling((double)TotalRecords / PageSize);
+        public List<T> InnerList { get; set; } 
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return InnerList.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public long PageIndex { get; set; }
+        public long PageSize { get; set; }
+        public long PageCount => Pages;
+        public long TotalRecords { get; set; }
+    }
     public class GridModel
     {
+        public List<PropertyInfo> ActionLinks { get; set; } = new List<PropertyInfo>();
         public List<FormPropertyModel> Properties { get; set; } = new List<FormPropertyModel>();
 
-        public object[] Items { get; set; }
+        public IPagedList<object> Items { get; set; }
 
         public bool Editable { get; set; } = true;
         public bool Deletable { get; set; } = true;

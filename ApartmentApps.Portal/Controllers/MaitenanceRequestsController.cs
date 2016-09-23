@@ -20,14 +20,12 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Portal.App_Start;
+using Korzh.EasyQuery.Services;
 using Ninject;
 using Syncfusion.DocIO.DLS;
 using Syncfusion.DocToPDFConverter;
 using Syncfusion.HtmlConverter;
 using Syncfusion.Pdf;
-using Syncfusion.Pdf.Graphics;
-using Syncfusion.MVC;
-using Syncfusion.OfficeChartToImageConverter;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -521,7 +519,7 @@ namespace ApartmentApps.Portal.Controllers
     public class AutoGridModel
     {
         private string _title;
-        public object[] Model { get; set; }
+        public IPagedList<object> Model { get; set; }
 
         public string Title
         {
@@ -539,7 +537,7 @@ namespace ApartmentApps.Portal.Controllers
         public bool Descending { get; set; }
 
 
-        public AutoGridModel(object[] model)
+        public AutoGridModel(IPagedList<object> model)
         {
             Model = model;
         }

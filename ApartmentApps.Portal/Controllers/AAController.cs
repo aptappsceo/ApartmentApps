@@ -11,8 +11,15 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
+using Entrata.Model.Requests;
+using Korzh.EasyQuery;
+using Korzh.EasyQuery.Mvc;
+using Korzh.EasyQuery.Services;
+using Korzh.EasyQuery.Services.Db;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security.Provider;
 using Ninject;
 using Syncfusion.JavaScript.DataVisualization.Models;
 
@@ -22,137 +29,13 @@ namespace ApartmentApps.Portal.Controllers
 
 
 
-    public class AutoBuildingController :
-        AutoGridController<BuildingService, BuildingViewModel, BuildingSearchViewModel>
-    {
-        public AutoBuildingController(IKernel kernel, BuildingService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
-        {
-        }
 
-    }
-    public class AutoUserController : AutoGridController<UserService, UserBindingModel, UserSearchViewModel>
-    {
-        private ApplicationUserManager _userManager;
-
-        public AutoUserController(IKernel kernel, UserService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
-        {
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-        [HttpPost]
-        public async Task<ActionResult> SaveUser(UserFormModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = Context.Users.Find(model.Id);
-                var newUser = false;
-                if (user == null)
-                {
-
-                    user = new ApplicationUser
-                    {
-
-                    };
-
-                    newUser = true;
-                }
-                else
-                {
-
-                }
-                if (!User.IsInRole("Admin"))
-                {
-                    model.SelectedRoles.Remove("Admin"); // Just to make sure
-                }
-                user.Email = model.Email;
-                user.PropertyId = PropertyId;
-                user.UserName = model.Email;
-                user.UnitId = model.UnitId;
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.PhoneNumber = model.PhoneNumber;
-                user.Roles.Clear();
-                foreach (var item in model.SelectedRoles)
-                {
-                    user.Roles.Add(new IdentityUserRole() { RoleId = item, UserId = user.Id });
-                }
-                if (newUser)
-                {
-
-                    var result = await UserManager.CreateAsync(user, "Temp1234!");
-                    if (result.Succeeded)
-                    {
-
-
-                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                        // Send an email with this link
-                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    }
-                }
-                else
-                {
-                    Context.SaveChanges();
-                }
-
-
-                //AddErrors(result);
-            }
-
-
-            return RedirectToAction("Index");
-        }
-        public override ActionResult Entry(string id = null)
-        {
-            var user = Context.Users.Find(id);
-
-            var userModel = new UserFormModel()
-            {
-                RolesList = Context.Roles.Select(p => p.Id).ToList(),
-
-            };
-            // If we aren't an admin we shouldn't be able to create admin accounts
-            if (!User.IsInRole("Admin"))
-            {
-                userModel.RolesList.Remove("Admin");
-            }
-            if (user != null)
-            {
-                userModel.FirstName = user.FirstName;
-                userModel.LastName = user.LastName;
-                userModel.Email = user.Email;
-                userModel.Id = user.Id;
-                userModel.PhoneNumber = user.PhoneNumber;
-                userModel.UnitId = user.UnitId;
-                userModel.SelectedRoles = user.Roles.Select(p => p.RoleId).ToList();
-
-            }
-            ViewBag.UnitId = new SelectList(Context.Units.OrderBy(p => p.Name), "Id", "Name", user?.UnitId);
-
-            return View("EditUser", userModel);
-            //return base.Entry(id);
-        }
-    }
-
-    public class AutoGridController<TService, TViewModel, TSearchViewModel> :
-        AutoGridController<TService, TService, TViewModel, TViewModel, TSearchViewModel>
-        where TService : class, ISearchable< TSearchViewModel>, IService
-        where TSearchViewModel : class, new()
+    public class AutoGridController<TService, TViewModel> :
+        AutoGridController<TService, TService, TViewModel, TViewModel>
+        where TService : class,  IService
         where TViewModel : BaseViewModel, new()
     {
-        public AutoGridController(IKernel kernel, TService formService,  PropertyContext context, IUserContext userContext) : base(kernel, formService, formService, context, userContext, formService)
+        public AutoGridController(IKernel kernel, TService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, formService, context, userContext, formService)
         {
         }
     }
@@ -165,28 +48,75 @@ namespace ApartmentApps.Portal.Controllers
         public string OrderBy { get; set; }
         public bool Descending { get; set; }
     }
-    public class AutoGridController<TService, TFormService, TViewModel, TFormViewModel,TSearchViewModel> : AutoFormController<TService,TFormService,TViewModel, TFormViewModel> 
-        where TService : class,ISearchable<TSearchViewModel>, IService where TSearchViewModel : class, new()
+    public class AutoGridController<TService, TFormService, TViewModel, TFormViewModel> : AutoFormController<TService, TFormService, TViewModel, TFormViewModel>
+        where TService : class, IService 
         where TFormViewModel : BaseViewModel, new()
         where TFormService : IService
         where TViewModel : new()
     {
+        private EqServiceProviderDb eqService;
         public TService Service { get; set; }
-        public ISearchable< TSearchViewModel> Searchable => Service as ISearchable<TSearchViewModel>;
+      
 
         public AutoGridController(IKernel kernel, TFormService formService, TService indexService, PropertyContext context, IUserContext userContext, TService service) : base(kernel, formService, indexService, context, userContext)
         {
             Service = service;
-        }
+            eqService = new EqServiceProviderDb();
+            eqService.DataPath = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
 
+            eqService.ModelLoader = (model, modelName) =>
+            {
+                model.LoadFromType(indexService.ModelType, DataModel.ContextLoadingOptions.ScanOnlyQueryable);
+                model.SortEntities();
+            };
+
+            eqService.QueryLoader = (query, queryId) =>
+            {
+                eqService.DefaultQueryLoader(query, queryId);
+            };
+
+            eqService.QuerySaver = (query, queryId) =>
+            {
+                eqService.DefaultQuerySaver(query, queryId);
+            };
+        }
+        public ActionResult GetModel(string modelName)
+        {
+            var model = eqService.GetModel();
+            return Json(model.SaveToDictionary());
+        }
         public virtual string IndexTitle => this.GetType().Name.Replace("Controller", "");
         public override ActionResult Index()
         {
             return Grid(0);
         }
-
-        public ActionResult Grid(int page, string orderBy = null, int recordsPerPage = 10,bool descending = false)
+        [HttpPost]
+        public ActionResult SyncQuery(string queryJson, string optionsJson)
         {
+
+            var query = eqService.SyncQueryDict(queryJson.ToDictionary());
+            var statement = eqService.BuildQuery(query, optionsJson.ToDictionary());
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            //dict.Add("statement", statement);
+            return Json(dict);
+        }
+
+        public ActionResult ApplyFilter(string queryJson, string optionsJson)
+        {
+
+            FilterQuery = queryJson;
+            GridOptions = optionsJson;
+            return Grid(1);
+            //var resultSet = eqService.GetDataSetByQuery(query, db.Customers, typeof(Customer));
+            //var resultSetDict = eqService.DataSetToDictionary(resultSet, optionsJson.ToDictionary());
+            //Dictionary<string, object> dict = new Dictionary<string, object>();
+            //dict.Add("resultSet", resultSetDict);
+
+            //return Json(dict);
+        }
+        public ActionResult Grid(int page, string orderBy = null, int recordsPerPage = 10, bool descending = false)
+        {
+
             if (page > 0)
             {
                 GridState.Page = page;
@@ -197,34 +127,57 @@ namespace ApartmentApps.Portal.Controllers
             {
                 GridState.OrderBy = orderBy;
             }
+
+            var query = eqService.LoadQueryDict(FilterQuery.ToDictionary());
+
+            var lvo = string.IsNullOrEmpty(GridOptions) ? new ListViewOptions() { PageIndex = 1 } : GridOptions.ToListViewOptions();
+
             var count = 0;
-            var results = Searchable.Search<TViewModel>(FilterViewModel, out count, GridState.OrderBy, GridState.Descending,GridState.Page,GridState.RecordsPerPage);
-            return AutoIndex(results.ToArray(), count, GridState.Page, GridState.RecordsPerPage,GridState.OrderBy, GridState.Descending, IndexTitle);
+            var results = Service.GetAll<TViewModel>(query, out count, lvo.SortBy, GridState.Descending, lvo.PageIndex, GridState.RecordsPerPage);
+            if (Request.IsAjaxRequest())
+            {
+                var formHelper = new DefaultFormProvider();
+                var gridModel = formHelper.CreateGridFor(typeof(TViewModel), null);
+
+                gridModel.Items = new GridList<object>(results.Cast<object>().ToArray(), lvo.PageIndex,
+                    GridState.RecordsPerPage, count);
+
+
+                return View("Forms/GridPartial", gridModel);
+            }
+            return AutoIndex<TViewModel>(new GridList<object>(results.Cast<object>().ToArray(), lvo.PageIndex, GridState.RecordsPerPage, count), IndexTitle);
         }
         public GridState GridState
         {
             get { return Session["GridState"] as GridState ?? (GridState = new GridState()); }
             set { Session["GridState"] = value; }
         }
-        public TSearchViewModel FilterViewModel
-        {
-            get { return  Session["FilterViewModel"] as TSearchViewModel ?? (FilterViewModel = new TSearchViewModel()); }
-            set { Session["FilterViewModel"] = value; }
-        }
 
-        public ActionResult SearchForm()
+        public string FilterQueryKey => typeof(TViewModel).Name + "FilterQuery";
+        public string GridOptionsyKey => typeof(TViewModel).Name + "GridOptions";
+        public string FilterQuery
         {
-            ViewBag.Layout = null;
-            return View("SearchForm",FilterViewModel);
+            get { return Session[FilterQueryKey] == null ? string.Empty : (string)Session[FilterQueryKey]; }
+            set { Session[FilterQueryKey] = value; }
         }
-        [HttpPost]
-        public virtual ActionResult SearchFormSubmit(TSearchViewModel vm)
+        public string GridOptions
         {
-         
-            FilterViewModel = vm;
-            return Grid(1);
-            //return AutoForm(new TSearchViewModel(), "SearchFormSubmit", "Search");
+            get { return Session[GridOptionsyKey] == null ? string.Empty : (string)Session[GridOptionsyKey]; }
+            set { Session[GridOptionsyKey] = value; }
         }
+        //public ActionResult SearchForm()
+        //{
+        //    ViewBag.Layout = null;
+        //    return View("SearchForm",FilterViewModel);
+        //}
+        //[HttpPost]
+        //public virtual ActionResult SearchFormSubmit(TSearchViewModel vm)
+        //{
+
+        //    FilterViewModel = vm;
+        //    return Grid(1);
+        //    //return AutoForm(new TSearchViewModel(), "SearchFormSubmit", "Search");
+        //}
     }
     public class AutoFormController<TService, TViewModel> :
         AutoFormController<TService, TService, TViewModel, TViewModel> where TViewModel : BaseViewModel, new() where TService : IService
@@ -233,7 +186,7 @@ namespace ApartmentApps.Portal.Controllers
         {
         }
     }
-    
+
     public class AutoFormController<TService, TFormService, TIndexViewModel, TFormViewModel> : AAController
         where TIndexViewModel : new()
         where TFormViewModel : BaseViewModel, new()
@@ -244,20 +197,22 @@ namespace ApartmentApps.Portal.Controllers
         protected readonly TFormService _formService;
         protected readonly TService _indexService;
 
+
         public AutoFormController(IKernel kernel, TFormService formService, TService indexService, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             _kernel = kernel;
             _formService = formService;
             _indexService = indexService;
+
         }
 
- 
-        
+
+
         public virtual ActionResult Index()
         {
-            
+
             var array = _indexService.GetAll<TIndexViewModel>().ToArray();
-            return AutoIndex(array, array.Length,0,20);
+            return AutoIndex<TIndexViewModel>(new GridList<object>(array.Cast<object>(), 1, 20, array.Length), this.GetType().Name.Replace("Controller", ""));
         }
         public virtual ActionResult Entry(string id = null)
         {
@@ -309,7 +264,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             return Kernel.Get<IRepository<TModel>>();
         }
-        public AAController(IKernel kernel,PropertyContext context, IUserContext userContext)
+        public AAController(IKernel kernel, PropertyContext context, IUserContext userContext)
         {
             Kernel = kernel;
             Context = context;
@@ -345,21 +300,21 @@ namespace ApartmentApps.Portal.Controllers
 
                 }
                 var menuItems = new List<MenuItemViewModel>();
-                EnabledModules.Signal<IMenuItemProvider>(p=>p.PopulateMenuItems(menuItems));
+                EnabledModules.Signal<IMenuItemProvider>(p => p.PopulateMenuItems(menuItems));
                 ViewBag.MenuItems = menuItems;
             }
 
         }
-        public ActionResult AutoIndex<TViewModel>(TViewModel[] model, int count, int currentPage,int recordsPerPage, string orderBy = null, bool descending =false, string title = null)
+        public ActionResult AutoIndex<TViewModel>(GridList<object> model, string title)
         {
-            return View("AutoIndex", new AutoGridModel(model.Cast<object>().ToArray())
+            return View("AutoIndex", new AutoGridModel(model)
             {
                 Title = title,
-                Count = count,
-                CurrentPage = currentPage,
-                RecordsPerPage = recordsPerPage,
-                OrderBy = orderBy,
-                Descending = descending,
+                //Count = count,
+                //CurrentPage = currentPage,
+                //RecordsPerPage = recordsPerPage,
+                //OrderBy = orderBy,
+                //Descending = descending,
                 Type = typeof(TViewModel)
             });
         }

@@ -30,12 +30,12 @@ namespace ApartmentApps.Portal.Controllers
     {
         public FilterViewModel Name { get; set; }
     }
-    public class BuildingService : SearchableCrudService<Building, BuildingSearchViewModel>
+    public class BuildingService : StandardCrudService<Building>
     {
         public BuildingService(IKernel kernel, IRepository<Building> repository) : base(kernel, repository)
         {
         }
 
-        public override Expression<Func<Building, object>> DefaultOrderBy => p => p.Name;
+        public override string DefaultOrderBy => "Name";
     }
 }

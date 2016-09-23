@@ -227,7 +227,13 @@ namespace ApartmentApps.Forms
             foreach (var property in properties)
             {
                 if (property.Name.EndsWith("_Items")) continue;
+                if (property.PropertyType == typeof(ActionLinkModel))
+                {
+                    formModel.ActionLinks.Add(property);
+                    continue;
+                }
                 var propertyModel = new FormPropertyModel();
+             
                 propertyModel.SystemType = property.PropertyType;
                 propertyModel.Name = property.Name;
                

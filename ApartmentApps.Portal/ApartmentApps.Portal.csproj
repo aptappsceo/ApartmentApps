@@ -46,24 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FormFactory, Version=1.0.5939.32856, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FormFactory.1.3.19\lib\net451\FormFactory.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FormFactory.AspMvc, Version=1.0.5939.32713, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FormFactory.AspMvc.1.3.18\lib\net451\FormFactory.AspMvc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FormFactory.Templates, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FormFactory.Templates.1.3.19\lib\net451\FormFactory.Templates.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -73,6 +61,30 @@
     <Reference Include="Jmelosegui.Mvc.GoogleMap, Version=0.8.0.0, Culture=neutral, PublicKeyToken=bf3d287218d508fe, processorArchitecture=MSIL">
       <HintPath>..\packages\Jmelosegui.Mvc.Googlemap.0.8.0.0\lib\net45\Jmelosegui.Mvc.GoogleMap.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Korzh.EasyQuery.Db.NET45, Version=3.7.3.16, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rdParty\Korzh.EasyQuery.Db.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="Korzh.EasyQuery.EF6.NET45, Version=3.7.3.16, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rdParty\Korzh.EasyQuery.EF6.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="Korzh.EasyQuery.Mvc.NET45, Version=3.7.3.16, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rdParty\Korzh.EasyQuery.Mvc.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="Korzh.EasyQuery.NET45, Version=3.7.3.16, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Korzh.NET\assemblies\NET45\Korzh.EasyQuery.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="Korzh.EasyQuery.Services.Db.NET45, Version=3.7.3.16, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rdParty\Korzh.EasyQuery.Services.Db.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="Korzh.Utils.Db.NET45, Version=3.7.3.16, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rdParty\Korzh.Utils.Db.NET45.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
@@ -139,7 +151,6 @@
     <Reference Include="Syncfusion.DocToPDFConverter.Base, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.EJ, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.EJ.Export, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.EJ.MVC, Version=14.2500.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.EJ.Olap, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.EJ.ReportViewer, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.ExcelChartToImageConverter.WPF, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
@@ -349,6 +360,7 @@
     <Compile Include="Controllers\CourtesyOfficerLocationsController.cs" />
     <Compile Include="Controllers\CrudController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EasyReportController.cs" />
     <Compile Include="Controllers\FormModelHelpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdentityUserRoleController.cs" />
@@ -611,6 +623,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\easyquery.css" />
     <Content Include="Content\ej\web\bootstrap-theme\ej.theme.less" />
     <Content Include="Content\ej\web\bootstrap-theme\ej.theme.min.css" />
     <Content Include="Content\ej\web\bootstrap-theme\ej.web.all.min.css" />
@@ -836,6 +849,7 @@
     <Content Include="Content\ej\web\responsive-css\ejgrid.responsive.css" />
     <Content Include="Content\ej\web\ribbon-css\ej.icons.css" />
     <Content Include="Content\email.css" />
+    <Content Include="Content\eqview.css" />
     <Content Include="Content\FormFactory\FormFactory.css" />
     <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\plugins\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.css" />
@@ -907,6 +921,47 @@
     <Content Include="Content\plugins\touchspin\jquery.bootstrap-touchspin.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <BundleResource Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <BundleResource Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <BundleResource Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <BundleResource Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <BundleResource Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <BundleResource Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <BundleResource Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <BundleResource Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\calendar.css" />
     <Content Include="css\clndr.css" />
@@ -926,6 +981,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="InstallationDummyFile.txt" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\Chart.js" />
     <Content Include="js\clndr.js" />
@@ -950,6 +1006,7 @@
     <Content Include="js\site.js" />
     <Content Include="js\skycons.js" />
     <Content Include="js\underscore-min.js" />
+    <Content Include="LICENSE.txt" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -1038,6 +1095,9 @@
     <Content Include="Scripts\ej\ej.web.all.min.js" />
     <Content Include="Scripts\ej\ej.widget.angular.min.js" />
     <Content Include="Scripts\ej\ej.widget.ko.min.js" />
+    <Content Include="Scripts\eq.all.min.js" />
+    <Content Include="Scripts\eq.view.basic.js" />
+    <Content Include="Scripts\eq.view.grid.js" />
     <Content Include="Scripts\excanvas.min.js" />
     <Content Include="Scripts\FormFactory\FormFactory.js" />
     <Content Include="Scripts\gridmvc.js" />
@@ -1053,6 +1113,8 @@
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.easing.1.3.min.js" />
     <Content Include="Scripts\jquery.linq.js" />
     <Content Include="Scripts\jquery.timeago.js" />
@@ -1254,9 +1316,12 @@
     <Content Include="Views\Shared\_LayoutDialog.cshtml" />
     <Content Include="Views\Shared\Forms\FilterViewModel.cshtml" />
     <Content Include="Views\Shared\SearchForm.cshtml" />
+    <Content Include="Views\Shared\Forms\GridPartial.cshtml" />
+    <Content Include="Views\EasyReport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\" />
     <Folder Include="Views\AutoGrid\" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
@@ -84,13 +85,52 @@ namespace ApartmentApps.Portal.Controllers
         //public FilterViewModel UnitName { get; set; } = new FilterViewModel();
 
     }
-    public class UserService : SearchableCrudService<ApplicationUser, UserSearchViewModel>
+    public class UserService : StandardCrudService<ApplicationUser>
     {
       
-        public override Expression<Func<ApplicationUser, object>> DefaultOrderBy => p => p.LastName;
+        public override string DefaultOrderBy => "LastName";
 
         public UserService(IKernel kernel, IRepository<ApplicationUser> repository) : base(kernel, repository)
         {
         }
+
+        public override void Remove(int id)
+        {
+            //base.Remove(id);
+            Repository.Find(id).Archived = true;
+            Repository.Save();
+        }
+    }
+
+    public class PropertyBindingModel : BaseViewModel
+    {
+        public string Name { get; set; }
+        public ActionLinkModel SwitchProperty => new ActionLinkModel("Switch Property", "ChangeProperty", "Account", new {id=Id});
+    }
+
+    public class PropertySearchModel
+    {
+        public FilterViewModel Name { get; set; }
+    }
+    public class PropertyMapper : BaseMapper<Property, PropertyBindingModel>
+    {
+        public override void ToModel(PropertyBindingModel viewModel, Property model)
+        {
+            model.Name = viewModel.Name;
+        }
+
+        public override void ToViewModel(Property model, PropertyBindingModel viewModel)
+        {
+            viewModel.Name = model.Name;
+            viewModel.Id = model.Id.ToString();
+        }
+    }
+    public class PropertyService : StandardCrudService<Property>
+    {
+        public PropertyService(IKernel kernel, IRepository<Property> repository) : base(kernel, repository)
+        {
+        }
+
+        public override string DefaultOrderBy =>"Name";
     }
 }

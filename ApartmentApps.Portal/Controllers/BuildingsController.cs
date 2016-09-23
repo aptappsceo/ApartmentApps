@@ -14,11 +14,13 @@ using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class BuildingsController : AutoFormController<BuildingService, BuildingViewModel>
+    public class BuildingsController :
+          AutoGridController<BuildingService, BuildingViewModel>
     {
-        public BuildingsController(IKernel kernel, BuildingService service, PropertyContext context, IUserContext userContext) : base(kernel, service, context, userContext)
+        public BuildingsController(IKernel kernel, BuildingService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
         {
         }
+        
     }
     //public class Buildings3Controller : CrudController<BuildingViewModel,Building>
     //{

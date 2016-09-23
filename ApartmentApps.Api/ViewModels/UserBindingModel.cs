@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
+using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api.ViewModels
@@ -30,5 +31,8 @@ namespace ApartmentApps.Api.ViewModels
         public string Email { get; set; }
         [DataType("Hidden")]
         public bool Archived { get; set; }
+
+        
     }
+
 }

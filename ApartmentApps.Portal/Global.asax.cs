@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using ApartmentApps.Data;
-using FormFactory.AspMvc.UploadedFiles;
 
 namespace ApartmentApps.Portal
 {
@@ -18,7 +17,7 @@ namespace ApartmentApps.Portal
 #if DEBUG
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,ApartmentApps.Data.Migrations.Configuration>());
 #endif   
-            ModelBinders.Binders.RegisterUploadedFileModelBinder();
+          
             //ModelBinders.Binders.RegisterUploadedFileModelBinder((file, controllerContext, modelBindingContext) => MyFileStore.StoreFile(file))
             AreaRegistration.RegisterAllAreas();
             //UnityConfig.RegisterComponents();

@@ -35,8 +35,8 @@
     @*@Html.ActionLink("Create New", "Entry", null, new {@class = "btn btn-primary btn-xs"})*@
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="mail-box-header">
-    </div>
+    @*<div class="mail-box-header">
+    </div>*@
         <div class="mail-box">
             @Html.RenderGrid(Model.Type, Model.Model, Model.Count, Model.RecordsPerPage, Model.CurrentPage, Model.Pages, Model.OrderBy, Model.Descending)
             <div class="clear"></div>        

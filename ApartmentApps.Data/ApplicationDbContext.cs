@@ -1,13 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-       
+       public static List<Assembly> SearchAssemblies { get; set; } = new List<Assembly>();
         public virtual IDbSet<MaintenanceRequestStatus> MaintenanceRequestStatuses { get; set; }
         public virtual IDbSet<IncidentReportStatus> IncidentReportStatuses { get; set; }
         public virtual IDbSet<Corporation> Corporations { get; set; }
@@ -32,10 +34,9 @@ namespace ApartmentApps.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            
+            foreach (var assembly in SearchAssemblies.Distinct())
             {
-                if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
                 var entityTypes = assembly
                   .GetTypes()
                   .Where(t =>

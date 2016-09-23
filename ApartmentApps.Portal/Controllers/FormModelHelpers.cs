@@ -6,6 +6,7 @@ using System.Web.Mvc.Html;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Forms;
+using Korzh.EasyQuery.Services;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -32,10 +33,10 @@ namespace ApartmentApps.Portal.Controllers
             return string.Empty;
         }
 
-        public static HtmlString RenderGrid(this HtmlHelper helper, Type type, object[] model, int count, int recordsPerPage, int currentPage, int pageCount, string orderBy, bool descending)
+        public static HtmlString RenderGrid(this HtmlHelper helper, Type type, IPagedList<object> model, int count, int recordsPerPage, int currentPage, int pageCount, string orderBy, bool descending)
         {
             var formHelper = new DefaultFormProvider();
-            var gridModel = formHelper.CreateGridFor(type, model);
+            var gridModel = formHelper.CreateGridFor(type, null);
             gridModel.Items = model;
             gridModel.Count = count;
             gridModel.RecordsPerPage = recordsPerPage;

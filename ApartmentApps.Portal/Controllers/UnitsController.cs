@@ -14,7 +14,7 @@ using Ninject;
 namespace ApartmentApps.Portal.Controllers
 {
     [Authorize(Roles = "PropertyAdmin")]
-    public class UnitsController : AutoGridController<UnitService,UnitService,UnitViewModel,UnitFormModel, UnitSearchViewModel>
+    public class UnitsController : AutoGridController<UnitService,UnitService,UnitViewModel,UnitFormModel>
     {
         public UnitsController(IKernel kernel, UnitService formService, UnitService indexService, PropertyContext context, IUserContext userContext, UnitService service) : base(kernel, formService, indexService, context, userContext, service)
         {

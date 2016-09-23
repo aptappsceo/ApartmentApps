@@ -8,16 +8,18 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Korzh.EasyQuery;
+using Korzh.EasyQuery.Db;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
 
-    public interface ISearchable<TSearchViewModel>
-    {
-        IEnumerable<Filter> CreateFilters(TSearchViewModel viewModel);
-        IEnumerable<TViewModel> Search<TViewModel>(TSearchViewModel criteria, out int count, string orderBy, bool orderByDesc, int page = 0, int resultsPerPage = 20);
-    }
+    //public interface ISearchable<TSearchViewModel>
+    //{
+    //    IEnumerable<Filter> CreateFilters(TSearchViewModel viewModel);
+    //    IEnumerable<TViewModel> Search<TViewModel>(TSearchViewModel criteria, out int count, string orderBy, bool orderByDesc, int page = 0, int resultsPerPage = 20);
+    //}
 
     public class FilterViewModel
     {
@@ -27,75 +29,11 @@ namespace ApartmentApps.Portal.Controllers
         [DisplayName("Value")]
         public string Value { get; set; }
     }
-    public abstract class SearchableCrudService<TModel, TSearchViewModel> : StandardCrudService<TModel>, ISearchable<TSearchViewModel> where TModel : IBaseEntity, new()
-    {
-        //public SearchFieldMutator<TModel, TSearchViewModel> Mutator(Predicate<TSearchViewModel> predicate, QueryMutator<TModel,TSearchViewModel> mutator)
-        //{
-        //    return new SearchFieldMutator<TModel, TSearchViewModel>(predicate,mutator);
-        //} 
-        //public abstract IEnumerable<SearchFieldMutator<TModel, TSearchViewModel>> GetMutators();
-
-
-        public IEnumerable<Filter> CreateFilters(TSearchViewModel viewModel)
-        {
-            foreach (var property in typeof(TSearchViewModel).GetProperties().Where(p => p.PropertyType == typeof(FilterViewModel)))
-            {
-                var obj = property.GetValue(viewModel, null) as FilterViewModel;
-                if (obj == null) continue;
-                var filterPath =
-                    property.GetCustomAttributes(typeof (FilterPath), true).Cast<FilterPath>().FirstOrDefault();
-
-                if (!string.IsNullOrEmpty(obj.Value))
-                {
-                    yield return new Filter()
-                    {
-                        Value = obj.Value,
-                        PropertyName = filterPath == null ? property.Name : filterPath.Path,
-                        Operator = obj.ExpressionOperator
-                    };
-                }
-            }
-        }
-      
-        public IEnumerable<TViewModel> Search<TViewModel>(TSearchViewModel criteria, out int count, string orderBy, bool orderByDesc, int page = 0, int resultsPerPage = 20)
-        {
-            var result = Repository.Where(ExpressionBuilder.GetExpression<TModel>(CreateFilters(criteria).ToList()));
-            count = result.Count();
-            if (string.IsNullOrEmpty(orderBy))
-            {
-                if (orderByDesc)
-                {
-                    result = result.OrderByDescending(DefaultOrderBy);
-                }
-                else
-                {
-                    result = result.OrderBy(DefaultOrderBy);
-                }
-                
-                result = result.Skip(resultsPerPage * (page - 1));
-                result = result.Take(resultsPerPage);
-            }
-            else
-            {
-                result = result.OrderBy(orderBy, orderByDesc);
-                result = result.Skip(resultsPerPage * (page - 1));
-                result = result.Take(resultsPerPage);
-            }
-            var res = result.ToArray();
-            var mapper = _kernel.Get<IMapper<TModel, TViewModel>>();
-            return res.Select(mapper.ToViewModel);
-        }
-
-        public virtual Expression<Func<TModel, object>> DefaultOrderBy => p => p.Id;
-
-        protected SearchableCrudService(IKernel kernel, IRepository<TModel> repository) : base(kernel, repository)
-        {
-        }
-    }
+    
     public abstract class StandardCrudService<TModel> : IService where TModel : IBaseEntity, new()
     {
         protected readonly IKernel _kernel;
-
+        public virtual string DefaultOrderBy => "Id";
         public IMapper<TModel, TViewModel> Map<TViewModel>()
         {
             return _kernel.Get<IMapper<TModel, TViewModel>>();
@@ -103,10 +41,12 @@ namespace ApartmentApps.Portal.Controllers
         public IRepository<TModel> Repository { get; set; }
 
         protected StandardCrudService(IKernel kernel, IRepository<TModel> repository)
-        {
+        {   
             _kernel = kernel;
             Repository = repository;
         }
+
+        public Type ModelType => typeof (TModel);
 
         public IEnumerable<TViewModel> GetAll<TViewModel>()
         {
@@ -114,6 +54,35 @@ namespace ApartmentApps.Portal.Controllers
             return GetAll<TViewModel>(_kernel.Get<IMapper<TModel, TViewModel>>());
         }
 
+        public IEnumerable<TViewModel> GetAll<TViewModel>(DbQuery query, out int count, string orderBy, bool orderByDesc, int page = 0, int resultsPerPage = 20)
+        {
+            var result = Repository.GetAll().DynamicQuery<TModel>(query, !string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, orderByDesc);
+            count = result.Count();
+            //if (string.IsNullOrEmpty(orderBy))
+            //{
+            //    if (orderByDesc)
+            //    {
+            //        result = result.OrderByDescending(DefaultOrderBy);
+            //    }
+            //    else
+            //    {
+            //        result = result.OrderBy(DefaultOrderBy);
+            //    }
+
+            //    result = result.Skip(resultsPerPage * (page - 1));
+            //    result = result.Take(resultsPerPage);
+            //}
+            //else
+            //{
+                result = result.OrderBy(orderBy, orderByDesc);
+                result = result.Skip(resultsPerPage * (page - 1));
+                result = result.Take(resultsPerPage);
+            //}
+            var res = result.ToArray();
+            var mapper = _kernel.Get<IMapper<TModel, TViewModel>>();
+            return res.Select(mapper.ToViewModel);
+           
+        }
         public IEnumerable<TViewModel> GetAll<TViewModel>(IMapper<TModel, TViewModel> mapper)
         {
             return Repository.GetAll().ToArray().Select(mapper.ToViewModel);
@@ -129,14 +98,14 @@ namespace ApartmentApps.Portal.Controllers
         {
             return Repository.GetAll().Skip(skip).Take(take).Select(mapper.ToViewModel);
         }
-        public void Add<TViewModel>(TViewModel viewModel)
+        public virtual void Add<TViewModel>(TViewModel viewModel)
         {
             Repository.Add(_kernel.Get<IMapper<TModel, TViewModel>>().ToModel(viewModel));
             Repository.Save();
 
         }
 
-        public void Remove(int id)
+        public virtual void Remove(int id)
         {
             Repository.Remove(Repository.Find(id));
             Repository.Save();
@@ -180,7 +149,7 @@ namespace ApartmentApps.Portal.Controllers
             return new TViewModel();
         }
 
-        public void Save<TViewModel>(TViewModel unit) where TViewModel : BaseViewModel
+        public virtual void Save<TViewModel>(TViewModel unit) where TViewModel : BaseViewModel
         {
             var result = Repository.Find(unit.Id);
             if (result != null)

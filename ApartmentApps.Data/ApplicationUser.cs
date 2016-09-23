@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Korzh.EasyQuery;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -66,12 +67,13 @@ namespace ApartmentApps.Data
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
+        [EqEntityAttr(UseInConditions = false)]
         public int? PropertyId { get; set; }
 
         public bool Archived { get; set; }
 
         [ForeignKey("PropertyId")]
+        [EqEntityAttr(UseInConditions = false)]
         public virtual Property Property { get; set; }
 
         public int? UnitId { get; set; }
@@ -94,6 +96,7 @@ namespace ApartmentApps.Data
         public string Gender { get; set; }
 
         [NotMapped]
+        [EqEntityAttr(UseInConditions = false)]
         public TimeZoneInfo TimeZone => Property.TimeZone ?? TimeZoneInfo.Local;
 
         public virtual ICollection<MaitenanceRequest> MaitenanceRequests { get; set; }
