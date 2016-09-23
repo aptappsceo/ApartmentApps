@@ -13,6 +13,18 @@ using Ninject;
 
 namespace ApartmentApps.Api
 {
+    public class MaintenanceRequestIndexMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestIndexBindingModel>
+    {
+        public override void ToModel(MaintenanceRequestIndexBindingModel viewModel, MaitenanceRequest model)
+        {
+           
+        }
+
+        public override void ToViewModel(MaitenanceRequest model, MaintenanceRequestIndexBindingModel viewModel)
+        {
+            viewModel.RequestType = model.MaitenanceRequestType.Name;
+        }
+    }
     public class MaintenanceRequestMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestViewModel>
     {
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
@@ -60,6 +72,7 @@ namespace ApartmentApps.Api
             viewModel.AssignedTo = model.WorkerAssigned == null ? null : UserMapper.ToViewModel(model.WorkerAssigned);
             viewModel.LatestCheckin = model.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService);
             viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(BlobStorageService));
+            viewModel.Description = model.Description;
         }
 
     }

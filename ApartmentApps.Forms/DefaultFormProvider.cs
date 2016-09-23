@@ -216,10 +216,22 @@ namespace ApartmentApps.Forms
             return formModel;
         }
 
-        public GridModel CreateGridFor(Type type, object[] items )
+        public GridModel<TItem> CreateGridFor<TItem>()
+        {
+            var model = new GridModel<TItem>();
+            CreateGridFor(model, typeof (TItem));
+            return model;
+        }
+
+        public GridModel CreateGridFor(Type type )
+        {
+            return CreateGridFor(new GridModel(), type);
+        }
+
+        public GridModel CreateGridFor(GridModel formModel, Type type )
         {
           
-            var formModel = new GridModel();
+            
             var properties =
                 type.GetProperties(BindingFlags.Default | BindingFlags.Public | BindingFlags.NonPublic |
                                    BindingFlags.Instance).ToList();

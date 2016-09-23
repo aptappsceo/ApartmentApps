@@ -1,0 +1,83 @@
+﻿@using Korzh.EasyQuery.Mvc
+@using Korzh.EasyQuery.Services
+@model ApartmentApps.Portal.Controllers.MaintenanceRequestOverviewViewModel
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-12 ">
+        <h2>Maintenance Work Orders</h2>
+        <p>Filter work orders on the left side bar.</p>
+
+    </div>
+</div><br />
+<div class="row">
+    <div class="col-md-8">
+        <div id="ResultPanel">
+           
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Search</h5> <span class="label label-primary">IN+</span>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#">Config option 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Config option 2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <script type="text/javascript">
+
+                    // Load the Visualization API and the piechart package.
+                    //google.load('visualization', '1.0', { 'packages': ['corechart'] });
+
+                    //// Set a callback to run when the Google Visualization API is loaded.
+                    //google.setOnLoadCallback(GoogleVisualizationLoaded);
+
+                    function GoogleVisualizationLoaded() {
+                        //alert("Visualization loaded!!!";)
+                    }
+                    //Settings for EasyQuery pages
+                    window.easyQueryViewSettings = {
+                        showChart: false,
+                        clearQueryButtonId: "myClearButton"
+                    };
+                    window.easyQuerySettings = {
+                        serviceUrl: getPrefix(),
+                        loadDefaultModel: true,
+                        useBootstrap: true
+
+                    };
+
+                    function getPrefix() {
+                        var res = window.location.pathname;
+                        if (res.charAt(res.length - 1) !== '/')
+                            res = res + '/';
+                        return res;
+                    }
+
+
+                </script>
+                @Html.FilterBar()
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>

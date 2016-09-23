@@ -63,13 +63,13 @@ namespace ApartmentApps.Data
         public string ImageUrl { get; set; }
 
         public string ImageThumbnailUrl { get; set; }
-
+        [Searchable]
         public string FirstName { get; set; }
-
+        [Searchable]
         public string LastName { get; set; }
-        [EqEntityAttr(UseInConditions = false)]
-        public int? PropertyId { get; set; }
 
+        public int? PropertyId { get; set; }
+        [Searchable]
         public bool Archived { get; set; }
 
         [ForeignKey("PropertyId")]
@@ -78,21 +78,21 @@ namespace ApartmentApps.Data
 
         public int? UnitId { get; set; }
 
-        [ForeignKey("UnitId")]
+        [ForeignKey("UnitId"),Searchable]
         public virtual Unit Unit { get; set; }
 
         public string ThirdPartyId { get; set; }
-
+        [Searchable]
         public string MiddleName { get; set; }
-
+        [Searchable]
         public string Address { get; set; }
-
+        [Searchable]
         public string City { get; set; }
-
+        [Searchable]
         public string State { get; set; }
-
+        [Searchable]
         public string PostalCode { get; set; }
-
+        [Searchable]
         public string Gender { get; set; }
 
         [NotMapped]

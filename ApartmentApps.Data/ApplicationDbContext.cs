@@ -3,10 +3,24 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
+using Korzh.EasyQuery;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data
 {
+    [AttributeUsage(AttributeTargets.Property)]
+    public class Searchable : EqEntityAttrAttribute
+    {
+        public Searchable()
+        {
+            UseInConditions = true;
+            
+        }
+
+        public string Caption { get; set; }
+
+        
+    }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
        public static List<Assembly> SearchAssemblies { get; set; } = new List<Assembly>();

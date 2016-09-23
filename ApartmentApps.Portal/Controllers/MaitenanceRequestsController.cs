@@ -135,7 +135,7 @@ namespace ApartmentApps.Portal.Controllers
                     .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName, AssignedToId == p.Id));
 
     }
-    public class MaintenanceRequestEditModel
+    public class MaintenanceRequestEditModel : BaseViewModel
     {
 
 
@@ -180,8 +180,7 @@ namespace ApartmentApps.Portal.Controllers
         [DisplayName("Pet Status")]
         public PetStatus PetStatus { get; set; }
 
-        [DataType("Hidden")]
-        public int? Id { get; set; }
+       
 
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
@@ -195,20 +194,42 @@ namespace ApartmentApps.Portal.Controllers
         YesContained,
         YesFree
     }
+
+
     [Authorize]
-    public class MaitenanceRequestsController : CrudController<MaintenanceRequestViewModel, MaitenanceRequest>
+    public class MaitenanceRequestsController : AutoGridController
+            <MaintenanceService, MaintenanceService, MaintenanceRequestViewModel, MaintenanceRequestEditModel>
     {
         private PdfDocument _document;
         public IMaintenanceService MaintenanceService { get; set; }
-        public override ActionResult Index()
+
+
+        //public override ActionResult Index()
+        //{
+        //    return View(Service.GetAll< MaintenanceRequestViewModel>().OrderByDescending(p => p.RequestDate));
+        //}
+
+        public override ActionResult GridResult(GridList<MaintenanceRequestViewModel> grid)
         {
-            return View(Service.GetAll< MaintenanceRequestViewModel>().OrderByDescending(p => p.RequestDate));
+            if (Request.IsAjaxRequest())
+            {
+                return View("OverviewListPartial", grid);
+            }
+            return View("Overview", new MaintenanceRequestOverviewViewModel()
+            {
+                FeedItems = grid
+            });
         }
 
-        public MaitenanceRequestsController(IKernel kernel, IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest> service, PropertyContext context, IUserContext userContext) : base(kernel, repository, service, context, userContext)
-        {
-            MaintenanceService = maintenanceService;
-        }
+        //public ActionResult Overview()
+        //{
+        //    this.Grid()
+        //    return View("Overview", new MaintenanceRequestOverviewViewModel()
+        //    {
+                
+        //    });
+        //}
+
 
         public ActionResult MySchedule()
         {
@@ -266,7 +287,7 @@ namespace ApartmentApps.Portal.Controllers
             }
             return View(new MaintenanceRequestEditModel()
             {
-                Id = id.Value,
+                Id = id.Value.ToString(),
                 MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId,
                 PermissionToEnter = maitenanceRequest.PermissionToEnter,
                 UnitId = maitenanceRequest.UnitId ?? 0,
@@ -290,7 +311,7 @@ namespace ApartmentApps.Portal.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
+                MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
                 if (maitenanceRequest == null)
                 {
                     return HttpNotFound();
@@ -337,47 +358,17 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public ActionResult CreateMonthlyReport(MaintenanceReportModel model)
         {
-            //var doc =
-            //    new WordDocument(
-            //        typeof (MaitenanceRequestsController).Assembly.GetManifestResourceStream(
-            //            "ApartmentApps.Portal.MaintenanceReport.docx"));
-
-            //doc.ChartToImageConverter = new ChartToImageConverter();
-
-            ////Create an instance of DocToPDFConverter
-
-            //DocToPDFConverter converter = new DocToPDFConverter();
-
-            ////Convert Word document into PDF document
-
-            //_document = converter.ConvertToPDF(doc);
 
             Thread thread = new Thread(() => { CreateDocument(model); });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();
-
-
-            //HTML string and base URL
-
-            //if (Browser == "Browser")
-            //{
-
             var stream = new MemoryStream();
             _document.Save(stream);
             _document.Close(true);
             return File(stream.ToArray(), "application/pdf", $"MonthlyReport{model.StartDate.Value.Month}{model.StartDate.Value.Day}-{model.EndDate.Value.Month}{model.EndDate.Value.Day}.pdf");
-
-
-
-
-            ////                return doc.ExportAsActionResult("sample.pdf", HttpContext.ApplicationInstance.Response, HttpReadType.Open);
-            //            }
-            //            else
-            //            {
-            //                return doc.ExportAsActionResult("sample.pdf", HttpContext.ApplicationInstance.Response, HttpReadType.Save);
-            //            }
         }
+
         private IQueryable<MaitenanceRequest> WorkOrdersByRange(DateTime? startDate, DateTime? endDate)
         {
             return Context.MaitenanceRequests.Where(p => p.SubmissionDate > startDate && p.SubmissionDate < endDate);
@@ -436,10 +427,10 @@ namespace ApartmentApps.Portal.Controllers
             _document = htmlConverter.Convert(htmlText, baseUrl);
         }
 
-        public override string ExportFileName
-        {
-            get { return "MaintenanceRequests"; }
-        }
+        //public override string ExportFileName
+        //{
+        //    get { return "MaintenanceRequests"; }
+        //}
 
         [HttpPost]
         public ActionResult SubmitRequest(MaitenanceRequestModel request)
@@ -473,7 +464,6 @@ namespace ApartmentApps.Portal.Controllers
         [System.Web.Http.HttpPost]
         public ActionResult PauseRequest(MaintenanceStatusRequestModel request)
         {
-
             MaintenanceService.PauseRequest(
                 CurrentUser,
                 request.Id,
@@ -481,7 +471,6 @@ namespace ApartmentApps.Portal.Controllers
 
                 );
             return RedirectToAction("Details", new { id = request.Id });
-
         }
 
         [System.Web.Http.HttpPost]
@@ -515,31 +504,40 @@ namespace ApartmentApps.Portal.Controllers
             return View(item);
         }
 
+        public MaitenanceRequestsController(IKernel kernel, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service) : base(kernel, formService, indexService, context, userContext, service)
+        {
+        }
+    }
+
+    public class MaintenanceRequestOverviewViewModel
+    {
+        public IPagedList<MaintenanceRequestViewModel>  Requests { get; set; }
+        public GridList<MaintenanceRequestViewModel> FeedItems { get; set; }
+    }
+
+    public class AutoGridModel<TItem> : AutoGridModel
+    {
+        public AutoGridModel() : base()
+        {
+        }
+
+       // public IEnumerable<TItem> ModelTyped => Model.Cast<TItem>();
     }
     public class AutoGridModel
     {
         private string _title;
-        public IPagedList<object> Model { get; set; }
+        //public IEnumerable<object> Model { get; set; }
+        //public IPaging Paging => Model as IPaging;
 
         public string Title
         {
-            get { return _title ?? (_title = Model.GetType().GetCustomAttributes(typeof(DisplayNameAttribute), true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? Model.GetType().Name); }
+            get { return _title ?? (_title = Type.GetCustomAttributes(typeof(DisplayNameAttribute), true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? Type.Name); }
             set { _title = value; }
         }
-
         public Type Type { get; set; }
-        public int Count { get; set; }
-        public int CurrentPage { get; set; }
-        public int RecordsPerPage { get; set; } = 20;
-
-        public int Pages => (int) Math.Ceiling((double) Count/RecordsPerPage);
-        public string OrderBy { get; set; }
-        public bool Descending { get; set; }
-
-
-        public AutoGridModel(IPagedList<object> model)
+        public AutoGridModel()
         {
-            Model = model;
+            //Model = model;
         }
     }
     public class AutoFormModel

@@ -74,7 +74,7 @@ namespace ApartmentApps.Portal.Controllers
             //}
             //else
             //{
-                result = result.OrderBy(orderBy, orderByDesc);
+              //  result = result.OrderBy(orderBy, orderByDesc);
                 result = result.Skip(resultsPerPage * (page - 1));
                 result = result.Take(resultsPerPage);
             //}

@@ -55,7 +55,9 @@ namespace ApartmentApps.Forms
             TotalRecords = totalRecords;
         }
         public int Pages => (int)Math.Ceiling((double)TotalRecords / PageSize);
-        public List<T> InnerList { get; set; } 
+        public List<T> InnerList { get; set; }
+
+
 
         public IEnumerator<T> GetEnumerator()
         {
@@ -72,12 +74,18 @@ namespace ApartmentApps.Forms
         public long PageCount => Pages;
         public long TotalRecords { get; set; }
     }
+
+    public class GridModel<TItem> : GridModel
+    {
+        public virtual IPagedList<TItem> Items { get; set; }
+        public override IEnumerable<object> ObjectItems => Items.Cast<object>();
+    }
     public class GridModel
     {
         public List<PropertyInfo> ActionLinks { get; set; } = new List<PropertyInfo>();
         public List<FormPropertyModel> Properties { get; set; } = new List<FormPropertyModel>();
 
-        public IPagedList<object> Items { get; set; }
+        public virtual IEnumerable<object> ObjectItems { get; set; }
 
         public bool Editable { get; set; } = true;
         public bool Deletable { get; set; } = true;

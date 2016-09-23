@@ -84,7 +84,7 @@
                 }
             };
 
-            EQ.client.init();
+            //EQ.client.init();
 
             this.applyFilterUrl = options.applyFilterUrl || EQ.core.combinePath(EQ.client.serviceUrl, "ApplyFilter");
 
@@ -249,6 +249,8 @@
 
         applyFilter: function (options) {
             var self = this;
+            console.log("YUP", options);
+            console.trace();
             var query = EQ.client.getQuery();
             var resultProgressIndicator = $('<div></div>', { 'class': 'result-panel loader' });
 

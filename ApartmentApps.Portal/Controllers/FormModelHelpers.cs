@@ -33,17 +33,13 @@ namespace ApartmentApps.Portal.Controllers
             return string.Empty;
         }
 
-        public static HtmlString RenderGrid(this HtmlHelper helper, Type type, IPagedList<object> model, int count, int recordsPerPage, int currentPage, int pageCount, string orderBy, bool descending)
+        public static HtmlString RenderGrid(this HtmlHelper helper, Type type, IEnumerable<object> model, int count, int recordsPerPage, int currentPage, int pageCount, string orderBy, bool descending)
         {
             var formHelper = new DefaultFormProvider();
-            var gridModel = formHelper.CreateGridFor(type, null);
-            gridModel.Items = model;
+            var gridModel = formHelper.CreateGridFor(type);
+            gridModel.ObjectItems = model;
             gridModel.Count = count;
-            gridModel.RecordsPerPage = recordsPerPage;
-            gridModel.OrderBy = orderBy;
-            gridModel.CurrentPage = currentPage;
-            gridModel.PageCount = pageCount;
-            gridModel.Descending = descending;
+
             return helper.Partial("~/Views/Shared/Forms/Grid.cshtml", gridModel);
         }
         public static HtmlString RenderForm(this HtmlHelper helper, object model)
@@ -62,7 +58,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public static class FeedItemsHelper
     {
-        public static HtmlString RenderFeedItems(this HtmlHelper helper, List<FeedItemBindingModel> feedItem)
+        public static HtmlString RenderFeedItems(this HtmlHelper helper, IEnumerable<FeedItemBindingModel> feedItem)
         {
             return helper.Partial("~/Views/Shared/FeedItems/FeedItem1.cshtml", new FeedItemsListModel()
             {
@@ -70,7 +66,7 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
-        public static HtmlString RenderFeedItems(this HtmlHelper helper, List<FeedItemBindingModel> feedItem, Func<FeedItemBindingModel, string> itemUrlSelector)
+        public static HtmlString RenderFeedItems(this HtmlHelper helper, IEnumerable<FeedItemBindingModel> feedItem, Func<FeedItemBindingModel, string> itemUrlSelector)
         {
             return helper.Partial("~/Views/Shared/FeedItems/FeedItem1.cshtml", new FeedItemsListModel()
             {
@@ -83,7 +79,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public class FeedItemsListModel
     {
-        public List<FeedItemBindingModel> FeedItems { get; set; }
+        public IEnumerable<FeedItemBindingModel> FeedItems { get; set; }
         public Func<FeedItemBindingModel, string> ItemUrlSelector { get; set; }
     }
 }

@@ -1,0 +1,48 @@
+﻿@using Korzh.EasyQuery.Mvc
+@using Korzh.EasyQuery.Services
+@model ApartmentApps.Forms.GridList<ApartmentApps.Api.ViewModels.MaintenanceRequestViewModel>
+
+@foreach (var item in Model)
+            {
+    <div class="ibox">
+        @*<div class="ibox-title">
+                <h5>Search</h5>
+                <div class="ibox-tools">
+                    <span class="label label-warning-light pull-right"></span>
+                </div>
+            </div>*@
+        <div class="ibox-content">
+
+            <div>
+                <div class="feed-activity-list">
+
+                    <div class="feed-element">
+                        <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})" class="pull-left">
+                            <img alt="image" class="img-circle" src="@item.SubmissionBy.ImageThumbnailUrl">
+                        </a>
+                        <div class="media-body ">
+
+
+                            <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})"><strong>@@@item.SubmissionBy.FirstName @item.SubmissionBy.LastName</strong></a> @item.Title <br>
+                            @*<small class="text-muted">@Html.Timeago(item.RequestDate, property?.TimeZone)</small>*@
+                            @if (!string.IsNullOrEmpty(item.Comments))
+                            {
+                                <div class="well">
+                                    @item.Comments
+                                </div>
+                            }@*@if (Model.ItemUrlSelector != null && !string.IsNullOrEmpty((urlC = Model.ItemUrlSelector(item))))
+                                                {
+                                                    <small><a class="info" href="@urlC">Details</a></small>
+                                                }*@<small class="pull-right">@item.RequestDate.ToShortDateString()</small>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+}
+@Html.PageNavigator(Model as IPaging)

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
+using Korzh.EasyQuery;
 
 namespace ApartmentApps.Data
 {
@@ -20,7 +21,7 @@ namespace ApartmentApps.Data
         [ForeignKey("WorkerAssigned")]
         public string WorkerAssignedId { get; set; }
 
-        [ForeignKey("WorkerAssignedId")]
+        [ForeignKey("WorkerAssignedId"), Searchable(Caption="Worker Assigned"), EqListValueEditor("Workers")]
         public virtual ApplicationUser WorkerAssigned { get; set; }
 
         public string UserId { get; set; }
@@ -59,20 +60,21 @@ namespace ApartmentApps.Data
 
         public string Message { get; set; }
 
-        [NotMapped]
+        [NotMapped, EqEntityAttr(UseInConditions = false)]
         public MaintenanceRequestCheckin LatestCheckin
         {
             get { return Checkins.OrderByDescending(p => p.Date).FirstOrDefault(); }
         }
-
+        [Searchable(Caption = "Status")]
         public string StatusId { get; set; }
+
         [ForeignKey("StatusId")]
         public virtual MaintenanceRequestStatus Status { get; set; }
 
         public DateTime SubmissionDate { get; set; }
         public DateTime? CompletionDate { get; set; }
 
-        [NotMapped]
+        [NotMapped, EqEntityAttr(UseInConditions = false)]
         public TimeSpan? TimeToComplete => CompletionDate?.Subtract(SubmissionDate);
     }
 }

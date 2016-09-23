@@ -1,20 +1,54 @@
 ﻿@using System.ComponentModel
 @using ApartmentApps.Portal.Controllers
-@using FormFactory
-@using FormFactory.AspMvc
+@using Korzh.EasyQuery.Mvc
 @model AutoGridModel
 @{
     ViewBag.Title = Model.Title;
 }
+
+<script type="text/javascript">
+
+    // Load the Visualization API and the piechart package.
+    //google.load('visualization', '1.0', { 'packages': ['corechart'] });
+
+    //// Set a callback to run when the Google Visualization API is loaded.
+    //google.setOnLoadCallback(GoogleVisualizationLoaded);
+
+    function GoogleVisualizationLoaded() {
+        //alert("Visualization loaded!!!";)
+    }
+    //Settings for EasyQuery pages
+    window.easyQueryViewSettings = {
+        showChart: false,
+        clearQueryButtonId: "myClearButton"
+    };
+    window.easyQuerySettings = {
+        serviceUrl: getPrefix(),
+        loadDefaultModel: true,
+        useBootstrap:true
+
+    };
+
+    function getPrefix() {
+        var res = window.location.pathname;
+        if (res.charAt(res.length - 1) !== '/')
+            res = res + '/';
+        return res;
+    }
+
+
+</script>
+
+
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-12 ">
         <h2>@Model.Title</h2>
-        <p>You can filter by clicking the search button.</p>
+        
 
     </div>
 </div>
 <div class="row wrapper border-bottom white-bg page-heading" style="padding-top: 15px; padding-left: 20px;">
-    <a class="btn btn-warning btn-outline btn-s  modal-link" href="@Url.Action("SearchForm")">Search</a>
+    @*<a class="btn btn-warning btn-outline btn-s  modal-link" href="@Url.Action("SearchForm")">Search</a>*@
     <a class="btn btn-success btn-outline btn-s modal-link" href="@Url.Action("Entry")">Add New</a>
     @*<a class="collapse-link">
             <i class="fa fa-chevron-up"></i>
@@ -37,10 +71,15 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     @*<div class="mail-box-header">
     </div>*@
-        <div class="mail-box">
-            @Html.RenderGrid(Model.Type, Model.Model, Model.Count, Model.RecordsPerPage, Model.CurrentPage, Model.Pages, Model.OrderBy, Model.Descending)
-            <div class="clear"></div>        
+    <div class="mail-box">
+        @Html.FilterBar(null)
+        <div id="ResultPanel">
         </div>
+
+
+        @*@Html.RenderGrid(Model.Type, Model.Model, Model.Count, Model.RecordsPerPage, Model.CurrentPage, Model.Pages, Model.OrderBy, Model.Descending)*@
+        <div class="clear"></div>
+    </div>
 
     <div class="clear"></div>
 </div>
