@@ -40,7 +40,7 @@ namespace ResidentAppCross.Droid.Views
         public EditText PasswordInput { get; set; }
 
         [Outlet]
-        public Button LoginButton { get; set; }
+        public AppCompatButton LoginButton { get; set; }
 
         [Outlet]
         public Button SignUpButton { get; set; }
@@ -50,6 +50,8 @@ namespace ResidentAppCross.Droid.Views
 
         public override void Bind()
         {
+            LoginButton.StyleMaterial(this.Context);
+
             base.Bind();
 
             MainActivity.Window.SetSoftInputMode(SoftInput.AdjustResize | SoftInput.StateHidden);

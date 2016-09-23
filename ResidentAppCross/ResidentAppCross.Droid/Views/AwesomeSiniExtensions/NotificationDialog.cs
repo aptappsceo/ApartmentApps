@@ -9,6 +9,7 @@ using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Support.Design.Widget;
+using Android.Support.V4.Content;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
@@ -82,11 +83,11 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
         [Outlet]
         public DatePicker DatePicker { get; set; }
         [Outlet]
-        public Button ShowSelectDateButton { get; set; }
+        public AppCompatButton ShowSelectDateButton { get; set; }
         [Outlet]
-        public Button ConfirmButton { get; set; }
+        public AppCompatButton ConfirmButton { get; set; }
         [Outlet]
-        public Button ShowSelectTimeButton { get; set; }
+        public AppCompatButton ShowSelectTimeButton { get; set; }
         [Outlet]
         public ViewPager DialogPager { get; set; }
 
@@ -134,7 +135,9 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
                 Title = "Time"
             });
 
-
+            ShowSelectDateButton.StyleMaterial(CurrentContext);
+            ConfirmButton.StyleMaterial(CurrentContext);
+            ShowSelectTimeButton.StyleMaterial(CurrentContext);
             TimePicker.SetOnTimeChangedListener(this);
             SelectedDate = DateTime.Now;
 
@@ -185,7 +188,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
         private IList<T> _items;
 
         [Outlet]
-        public EditText SearchInput { get; set; }
+        public AppCompatEditText SearchInput { get; set; }
         [Outlet]
         public RecyclerView SearchOutput { get; set; }
 
@@ -244,10 +247,13 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
                 Dismiss();
             };
 
-
+            //SearchInput.SetCompoundDrawables(ContextCompat.GetDrawable(this.CurrentContext,Resource.Drawable.search),null,null,null);
+            //ContextCompat.GetDrawable(context, identifier)
+            
             SearchOutput.SetLayoutManager(new LinearLayoutManager(CurrentContext,LinearLayoutManager.Vertical, false));
             SearchOutput.SetItemAnimator(new SlideInLeftAnimator());
             SearchOutput.SetAdapter(adapter);
+            SearchInput.SetTextColor(Color.White);
             SearchInput.TextChanged += (sender, args) => UpdateSearch();
             UpdateSearch();
 
@@ -450,13 +456,13 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
             {
                 if (_iconView == null && CurrentContext != null)
                 {
-                    _iconView = new ImageView(CurrentContext);
+                    _iconView = new AppCompatImageView(CurrentContext);
                     _iconView.WithDimensions(IconSizeDp);
                   //  _iconView.SetImageResource(Resource.Drawable.L_Ok);
                     _iconView.SetScaleType(ImageView.ScaleType.FitXy);
-                    _iconView.WithBackground(AppShapes.GetCircle.OfColor(Color.White).OfStroke(Color.White, 2));
-                    _iconView.SetColorFilter(Resources.GetColor(Resource.Color.primary));
-                    _iconView.WithPaddingDp(10, 10, 10, 10);
+                    _iconView.WithBackground(AppShapes.GetCircle.OfColor(CurrentContext.Resources.GetColor(Resource.Color.primary)).OfStroke(Color.White, 8));
+                    _iconView.SetColorFilter(Color.White);
+                    _iconView.WithPaddingDp(20, 20, 20, 20);
 
                     var p = _iconView.EnsureRelativeLayoutParams();
                     //p.AddRule(LayoutRules.CenterHorizontal);
@@ -671,7 +677,7 @@ namespace ResidentAppCross.Droid.Views.AwesomeSiniExtensions
 
         public Color CurrentColor
         {
-            get { return AppTheme.SecondaryBackgoundColor; }
+            get { return Color.White; }
         }
 
         public void OnceOnDismiss(Action onPrompted)

@@ -733,7 +733,10 @@ namespace ResidentAppCross.Droid.Views
         public TicketIndexItemViewHolder(View itemView) : base(itemView)
         {
             itemView.LocateOutlets(this);
+            DetailsButton.StyleMaterial(itemView.Context);
+
         }
+        
     }
 
     public class MessageListItemViewHolder : RecyclerView.ViewHolder
