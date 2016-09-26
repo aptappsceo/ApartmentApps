@@ -11,11 +11,11 @@ namespace ApartmentApps.Api.Modules
         [DisplayName("Month"), Description("Example: 01")]
         public string ExpirationMonth { get; set; }
 
-        [DisplayName("Year"), Description("Example: 17")]
+        [DisplayName("Year"), Description("Example: 2017")]
         public string ExpirationYear { get; set; }
 
 
-        public string ExpirationDate => ExpirationMonth + ExpirationYear;
+        public string ExpirationDate => ExpirationYear + ExpirationMonth;
 
         [DisplayName("Card Type")]
         public CardType CardType { get; set; }

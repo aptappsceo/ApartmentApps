@@ -80,7 +80,8 @@ namespace ResidentAppCross.ViewModels.Screens
                         AccountHolderName = AccountHolderName,
                         CardNumber = CardNumber,
                         CardType = 0,
-                        ExpirationDate = $"{Month}/{Year}",
+                        ExpirationMonth = Month.ToString("00"),
+                        ExpirationYear = Year.ToString(),
                         FriendlyName = FriendlyName
                     });
                 }).OnStart("Adding new payment option...").OnComplete("New credit card added!", ()=>this.Close(this));

@@ -38,10 +38,15 @@ namespace ApartmentApps.API.Service.Controllers
             }
             return result;
         }
-        [HttpPost, Route("AddBankAccount")]
+        [HttpPost, Route("AddBankAccount"),ApiExceptionFilter]
         public async Task<AddBankAccountResult> AddBankAccount(AddBankAccountBindingModel addBankAccount)
         {
-            return await PaymentsService.AddBankAccount(addBankAccount);
+            var result =  await PaymentsService.AddBankAccount(addBankAccount);
+            if (result.ErrorMessage != null)
+            {
+                throw new ApiException(result.ErrorMessage,HttpStatusCode.BadRequest);
+            }
+            return result;
         }
         [HttpPost, Route("GetPaymentOptions")]
         public IEnumerable<PaymentOptionBindingModel> GetPaymentOptions()

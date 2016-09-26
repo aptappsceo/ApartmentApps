@@ -46,7 +46,7 @@
             android:hint="Account Holder Name"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
-            android:inputType="numberDecimal"
+            android:inputType="textPersonName"
             android:minWidth="350dp"
             android:textColor="@color/primary_text_body"
             android:textColorHint="@color/secondary_text_body"

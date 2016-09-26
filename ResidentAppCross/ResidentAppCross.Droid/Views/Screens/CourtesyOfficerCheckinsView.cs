@@ -45,7 +45,13 @@ namespace ResidentAppCross.Droid.Views
         public EditText CreditCardNumberInput { get; set; } //Card number
 
         [Outlet]
-        public EditText CvcInput { get; set; } //Cvc
+        public AppCompatRadioButton CreditCardTypeVisa { get; set; } //Card number
+
+        [Outlet]
+        public AppCompatRadioButton CreditCardTypeMasterCard { get; set; } //Card number
+
+     //   [Outlet]
+     //   public EditText CvcInput { get; set; } //Cvc
 
          [Outlet]
         public EditText CreditCardHolderInput { get; set; } //Holder name
@@ -77,6 +83,8 @@ namespace ResidentAppCross.Droid.Views
             ExpirationMonthSelection.Adapter = monthAdapter;
             ExpirationYearSelection.Adapter = yearAdapter;
 
+
+
             ExpirationMonthSelection.ItemSelected += (sender, args) =>
             {
                 if (args.Position < 0 || args.Position > months.Count) return;
@@ -94,14 +102,32 @@ namespace ResidentAppCross.Droid.Views
                 int year = 0;
                 if (int.TryParse(years[args.Position].ToString(), out year))
                 {
-                    ViewModel.Year = year % 100;
+                    ViewModel.Year = year;
                 }
+            };
+
+            /*
+            VISA = 0,
+            MAST = 1,
+            DISC = 2,
+            AMER = 3,
+            DINE = 4,
+            JCB = 5,
+            */
+            CreditCardTypeVisa.Click += (sender, args) =>
+            {
+                ViewModel.CardType = 0;
+            };
+
+            CreditCardTypeMasterCard.Click += (sender, args) =>
+            {
+                ViewModel.CardType = 1;
             };
 
             var set = this.CreateBindingSet<AddCreditCardPaymentOptionView, AddCreditCardPaymentOptionViewModel>();
             set.Bind(PaymentOptionTitleInput).For(s => s.Text).TwoWay().To(vm => vm.FriendlyName);
             set.Bind(CreditCardNumberInput).For(s => s.Text).TwoWay().To(vm => vm.CardNumber);
-            set.Bind(CvcInput).For(s => s.Text).TwoWay().To(vm => vm.CvcCode);
+            //set.Bind(CvcInput).For(s => s.Text).TwoWay().To(vm => vm.CvcCode);
             set.Bind(CreditCardHolderInput).For(s => s.Text).TwoWay().To(vm => vm.AccountHolderName);
             set.Bind(AddCreditCardButton).To(vm => vm.AddCreditCardCommand);
             set.Apply();
@@ -372,13 +398,19 @@ namespace ResidentAppCross.Droid.Views
             var adapter = new IconTitleBadgeListAdapter<PaymentOptionBindingModel>()
             {
                 Items = ViewModel.PaymentOptions,
-                TitleSelector = i=>i.FriendlyName
+                TitleSelector = i=>i.FriendlyName,
+                ItemSelected = i =>
+                {
+                    ViewModel.SelectedOption = i;
+                    ViewModel.PayWithSelectedPaymentOption.Execute(null);
+                }
             };
+
+            adapter.BindToCollection(ViewModel.PaymentOptions);
 
             PaymentOptionsContainer.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
             PaymentOptionsContainer.SetItemAnimator(new SlideInLeftAnimator());
             PaymentOptionsContainer.SetAdapter(adapter);
-
 
         }
     }

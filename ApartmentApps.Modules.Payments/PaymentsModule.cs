@@ -211,7 +211,7 @@ namespace ApartmentApps.Api.Modules
                 PgMerchantId = MerchantId.ToString(),
                 PgClientId = clientId.ToString(),
                 PgPaymentMethodId = paymentOption.TokenId,
-                PgPassword = MerchantPassword //"LEpLqvx7Y5L200"
+                PgPassword = MerchantPassword, //"LEpLqvx7Y5L200"
             });
 
             return new MakePaymentResult()
