@@ -78,7 +78,9 @@ namespace ResidentAppCross.iOS.Views
             set.Bind(DateSection.TextView).For(f => f.Text).To(vm => vm.Date);
             set.Apply();
 
-            MessageSection.LoadHtmlString(ViewModel.Message,null);
+            var message = ViewModel.Message;
+            if (string.IsNullOrEmpty(ViewModel.Message)) message = "<p>Message is empty.</p>";
+            MessageSection.LoadHtmlString(message,null);
         }
 
         public override void GetContent(List<UIView> content)
