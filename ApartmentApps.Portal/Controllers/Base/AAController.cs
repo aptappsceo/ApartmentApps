@@ -86,6 +86,8 @@ namespace ApartmentApps.Portal.Controllers
                 EnabledModules.Signal<IMenuItemProvider>(p => p.PopulateMenuItems(menuItems));
                 ViewBag.MenuItems = menuItems;
                 ViewBag.Tabs = Tabs;
+
+                
             }
 
         }

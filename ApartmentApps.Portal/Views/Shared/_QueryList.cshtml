@@ -1,0 +1,9 @@
+﻿@using GridMvc.Columns
+@model IEnumerable<ApartmentApps.Api.ServiceQuery>
+<ul class="nav nav-tabs">
+@foreach (var item in Model.ToArray())
+{
+    <li class="@(item == Model.First() ? "active" : "")"> <a href="javascript:void" onclick="EQ.view.grid.loadQuery('@(item.QueryId)'); $(this).parent().parent().children('li').removeClass('active'); $(this).parent().addClass('active'); ">@item.Name</a></li>
+}    
+</ul>
+<br/>

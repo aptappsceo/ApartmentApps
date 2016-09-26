@@ -135,65 +135,8 @@ namespace ApartmentApps.Portal.Controllers
                     .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName, AssignedToId == p.Id));
 
     }
-    public class MaintenanceRequestEditModel : BaseViewModel
-    {
 
 
-
-        //[DataType()]
-        [DisplayName("Unit")]
-        public int UnitId { get; set; }
-
-        public IEnumerable<FormPropertySelectItem> UnitId_Items
-        {
-            get
-            {
-                var items =
-                    NinjectWebCommon.Kernel.Get<IRepository<Unit>>()
-                        .ToArray().OrderByAlphaNumeric(p => p.Name);
-
-
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
-
-
-            }
-        }
-        public IEnumerable<FormPropertySelectItem> MaitenanceRequestTypeId_Items
-        {
-            get
-            {
-                return
-                    NinjectWebCommon.Kernel.Get<IRepository<MaitenanceRequestType>>()
-                        .ToArray()
-                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, MaitenanceRequestTypeId == p.Id));
-
-
-            }
-        }
-
-        [DisplayName("Type")]
-        public int MaitenanceRequestTypeId { get; set; }
-
-        [DisplayName("Permission To Enter")]
-        public bool PermissionToEnter { get; set; }
-
-        [DisplayName("Pet Status")]
-        public PetStatus PetStatus { get; set; }
-
-       
-
-        [DataType(DataType.MultilineText)]
-        public string Comments { get; set; }
-
-
-    }
-
-    public enum PetStatus
-    {
-        NoPet,
-        YesContained,
-        YesFree
-    }
 
 
     [Authorize]
@@ -226,9 +169,10 @@ namespace ApartmentApps.Portal.Controllers
         //    this.Grid()
         //    return View("Overview", new MaintenanceRequestOverviewViewModel()
         //    {
-                
+
         //    });
         //}
+
 
 
         public ActionResult MySchedule()
@@ -274,61 +218,61 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         // GET: /MaitenanceRequests/Edit/5
-        public ActionResult EditRequest(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
-            if (maitenanceRequest == null)
-            {
-                return HttpNotFound();
-            }
-            return View(new MaintenanceRequestEditModel()
-            {
-                Id = id.Value.ToString(),
-                MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId,
-                PermissionToEnter = maitenanceRequest.PermissionToEnter,
-                UnitId = maitenanceRequest.UnitId ?? 0,
-                PetStatus = (PetStatus)maitenanceRequest.PetStatus,
-                Comments = maitenanceRequest.Message
-            });
-        }
+        //public ActionResult EditRequest(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
+        //    if (maitenanceRequest == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(new MaintenanceRequestEditModel()
+        //    {
+        //        Id = id.Value.ToString(),
+        //        MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId,
+        //        PermissionToEnter = maitenanceRequest.PermissionToEnter,
+        //        UnitId = maitenanceRequest.UnitId ?? 0,
+        //        PetStatus = (PetStatus)maitenanceRequest.PetStatus,
+        //        Comments = maitenanceRequest.Message
+        //    });
+        //}
 
-        // POST: /MaitenanceRequests/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditRequest(MaintenanceRequestEditModel editModel)
-        {
+        //// POST: /MaitenanceRequests/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditRequest(MaintenanceRequestEditModel editModel)
+        //{
 
-            if (ModelState.IsValid)
-            {
-                var id = editModel.Id;
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
-                if (maitenanceRequest == null)
-                {
-                    return HttpNotFound();
-                }
+        //    if (ModelState.IsValid)
+        //    {
+        //        var id = editModel.Id;
+        //        if (id == null)
+        //        {
+        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //        }
+        //        MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
+        //        if (maitenanceRequest == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
 
-                maitenanceRequest.PetStatus = (int)editModel.PetStatus;
-                maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
-                maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
-                maitenanceRequest.UnitId = editModel.UnitId;
-                maitenanceRequest.Message = editModel.Comments;
-                Context.SaveChanges();
+        //        maitenanceRequest.PetStatus = (int)editModel.PetStatus;
+        //        maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
+        //        maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
+        //        maitenanceRequest.UnitId = editModel.UnitId;
+        //        maitenanceRequest.Message = editModel.Comments;
+        //        Context.SaveChanges();
 
-                return RedirectToAction("Details", new { id = id });
-            }
+        //        return RedirectToAction("Details", new { id = id });
+        //    }
 
-            return View(editModel);
-        }
+        //    return View(editModel);
+        //}
 
 
         public ActionResult Pause(int id)

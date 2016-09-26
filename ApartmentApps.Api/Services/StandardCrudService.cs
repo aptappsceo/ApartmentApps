@@ -39,14 +39,18 @@ namespace ApartmentApps.Portal.Controllers
             return _kernel.Get<IMapper<TModel, TViewModel>>();
         }
         public IRepository<TModel> Repository { get; set; }
+        public IRepository<ServiceQuery> ServiceQueries { get; set; }
 
         protected StandardCrudService(IKernel kernel, IRepository<TModel> repository)
         {   
             _kernel = kernel;
             Repository = repository;
+         
         }
 
         public Type ModelType => typeof (TModel);
+
+       
 
         public IEnumerable<TViewModel> GetAll<TViewModel>()
         {

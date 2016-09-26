@@ -1323,6 +1323,9 @@
     <Content Include="Views\EasyReport\Index.cshtml" />
     <Content Include="Views\MaitenanceRequests\OverviewListPartial.cshtml" />
     <Content Include="Views\MaitenanceRequests\Overview.cshtml" />
+    <Content Include="Views\MaitenanceRequests\MaintenanceCheckinFeed.cshtml" />
+    <Content Include="Views\Shared\_QueryList.cshtml" />
+    <Content Include="Views\Shared\_QueryToolbar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

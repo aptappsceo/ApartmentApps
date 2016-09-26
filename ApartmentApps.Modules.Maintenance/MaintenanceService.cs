@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using ApartmentApps.Api.BindingModels;
@@ -7,12 +9,93 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
 using ApartmentApps.Modules.Maintenance;
 using ApartmentApps.Portal.Controllers;
 using Ninject;
 
 namespace ApartmentApps.Api
 {
+    public class MaintenanceRequestEditModel : BaseViewModel
+    {
+
+
+
+        //[DataType()]
+        [DisplayName("Unit")]
+        public int UnitId { get; set; }
+
+        public IEnumerable<FormPropertySelectItem> UnitId_Items
+        {
+            get
+            {
+                var items =
+                    ModuleHelper.Kernel.Get<IRepository<Unit>>()
+                        .ToArray().OrderByAlphaNumeric(p => p.Name);
+
+
+                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
+
+
+            }
+        }
+        public IEnumerable<FormPropertySelectItem> MaitenanceRequestTypeId_Items
+        {
+            get
+            {
+                return
+                    ModuleHelper.Kernel.Get<IRepository<MaitenanceRequestType>>()
+                        .ToArray()
+                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, MaitenanceRequestTypeId == p.Id));
+
+
+            }
+        }
+
+        [DisplayName("Type")]
+        public int MaitenanceRequestTypeId { get; set; }
+
+        [DisplayName("Permission To Enter")]
+        public bool PermissionToEnter { get; set; }
+
+        [DisplayName("Pet Status")]
+        public PetStatus PetStatus { get; set; }
+
+
+
+        [DataType(DataType.MultilineText)]
+        public string Comments { get; set; }
+
+
+    }
+    public enum PetStatus
+    {
+        NoPet,
+        YesContained,
+        YesFree
+    }
+
+    public class MaintenanceRequestEditMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestEditModel>
+    {
+        public override void ToModel(MaintenanceRequestEditModel editModel, MaitenanceRequest maitenanceRequest)
+        {
+            maitenanceRequest.PetStatus = (int)editModel.PetStatus;
+            maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
+            maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
+            maitenanceRequest.UnitId = editModel.UnitId;
+            maitenanceRequest.Message = editModel.Comments;
+        }
+
+        public override void ToViewModel(MaitenanceRequest maitenanceRequest, MaintenanceRequestEditModel viewModel)
+        {
+            viewModel.Id = maitenanceRequest.Id.ToString();
+            viewModel.MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId;
+            viewModel.PermissionToEnter = maitenanceRequest.PermissionToEnter;
+            viewModel.UnitId = maitenanceRequest.UnitId ?? 0;
+            viewModel.PetStatus = (PetStatus) maitenanceRequest.PetStatus;
+            viewModel.Comments = maitenanceRequest.Message;
+        }
+    }
     public class MaintenanceRequestIndexMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestIndexBindingModel>
     {
         public override void ToModel(MaintenanceRequestIndexBindingModel viewModel, MaitenanceRequest model)

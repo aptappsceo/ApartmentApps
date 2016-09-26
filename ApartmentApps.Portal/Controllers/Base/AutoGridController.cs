@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
@@ -18,14 +19,37 @@ namespace ApartmentApps.Portal.Controllers
            where TService : class, IService
            where TFormViewModel : BaseViewModel, new()
            where TFormService : IService
-           where TViewModel : new()
+           where TViewModel : class, new()
     {
+        private readonly IRepository<ServiceQuery> _queries;
         private EqServiceProviderDb eqService;
         public TService Service { get; set; }
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            var serviceName = typeof (TService).Name;
+            ViewBag.Queries = Queries.Where(p => p.Service == serviceName).ToArray();
+        }
 
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var maitenanceRequest = Service.Find<TViewModel>(id.Value.ToString());
+            if (maitenanceRequest == null)
+            {
+                return HttpNotFound();
+            }
+            return View(maitenanceRequest);
+        }
+
+        public IRepository<ServiceQuery> Queries => Repository<ServiceQuery>();
 
         public AutoGridController(IKernel kernel, TFormService formService, TService indexService, PropertyContext context, IUserContext userContext, TService service) : base(kernel, formService, indexService, context, userContext)
         {
+
             Service = service;
             eqService = new EqServiceProviderDb();
             eqService.DataPath = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
@@ -39,16 +63,52 @@ namespace ApartmentApps.Portal.Controllers
                 //model.LoadFromType(indexService.ModelType, DataModel.ContextLoadingOptions.ScanOnlyQueryable);
                 model.SortEntities();
             };
-
+            eqService.QueryRemover = (queryId) =>
+            {
+                var q = Queries.FirstOrDefault(p => p.QueryId == queryId);
+                if (q != null)
+                {
+                    Queries.Remove(q);
+                    Queries.Save();
+                }
+            };
             eqService.QueryLoader = (query, queryId) =>
             {
-                eqService.DefaultQueryLoader(query, queryId);
+               
+                var q = Queries.FirstOrDefault(p=>p.QueryId == queryId);
+                if (q != null)
+                {
+                    string queryXml = q.QueryJson;
+                    query.LoadFromString(queryXml);
+                }
+
             };
 
             eqService.QuerySaver = (query, queryId) =>
             {
-                eqService.DefaultQuerySaver(query, queryId);
+               
+                string queryXml = query.SaveToString();
+                //var queryId = query.ID;
+                var q = Queries.FirstOrDefault(p=>p.QueryId == queryId);
+                if (q != null)
+                {
+                    q.QueryJson = queryXml;
+                    Queries.Save();
+                }
+                else
+                {
+                    Queries.Add(new ServiceQuery()
+                    {
+                        Name = query.QueryName,
+                        QueryId = queryId,
+                        QueryJson = queryXml,
+                        Service = typeof(TService).Name
+                    });
+                    Queries.Save();
+                }
+                //save queryXml content into database here
             };
+
         }
         public ActionResult GetModel(string modelName)
         {
@@ -71,6 +131,8 @@ namespace ApartmentApps.Portal.Controllers
             return Json(dict);
         }
 
+
+
         public ActionResult ApplyFilter(string queryJson, string optionsJson)
         {
 
@@ -85,7 +147,7 @@ namespace ApartmentApps.Portal.Controllers
             //return Json(dict);
         }
 
-        
+
         public ActionResult Grid(int page, string orderBy = null, int recordsPerPage = 10, bool descending = false)
         {
 
@@ -106,7 +168,7 @@ namespace ApartmentApps.Portal.Controllers
 
             var count = 0;
             var results = Service.GetAll<TViewModel>(query, out count, lvo.SortBy, GridState.Descending, lvo.PageIndex, GridState.RecordsPerPage);
-   
+
             return GridResult(new GridList<TViewModel>(results.ToArray(), lvo.PageIndex, GridState.RecordsPerPage, count));
         }
 
@@ -140,6 +202,59 @@ namespace ApartmentApps.Portal.Controllers
             get { return Session[GridOptionsyKey] == null ? string.Empty : (string)Session[GridOptionsyKey]; }
             set { Session[GridOptionsyKey] = value; }
         }
+
+        /// <summary>
+        /// Gets the query by its name
+        /// </summary>
+        /// <param name="queryName">The name.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetQuery(string queryName)
+        {
+            var query = eqService.GetQuery(queryName);
+            return Json(query.SaveToDictionary());
+        }
+
+        [HttpPost]
+        public ActionResult NewQuery(string queryName)
+        {
+            var query = eqService.GetQuery();
+            query.Clear();
+            query.QueryName = queryName;
+            query.ID = eqService.GenerateQueryId(queryName);
+            eqService.SaveQuery(query);
+
+            return Json(query.SaveToDictionary());
+        }
+
+
+        /// <summary>
+        /// Saves the query.
+        /// </summary>
+        /// <param name="queryJson">The JSON representation of the query .</param>
+        /// <param name="queryName">Query name.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SaveQuery(string queryJson, string queryName)
+        {
+            var query = eqService.SaveQueryDict(queryJson.ToDictionary(), queryName);
+
+            //we return a JSON object with one property "query" that contains the definition of saved query
+            var dict = new Dictionary<string, object>();
+            dict.Add("query", query.SaveToDictionary());
+            return Json(dict);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveQuery(string queryId)
+        {
+            eqService.RemoveQuery(queryId);
+            var dict = new Dictionary<string, object>();
+            dict.Add("result", "ok");
+            return Json(dict);
+        }
+
+
         //public ActionResult SearchForm()
         //{
         //    ViewBag.Layout = null;
@@ -156,7 +271,7 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class AutoGridController<TService, TViewModel> :
         AutoGridController<TService, TService, TViewModel, TViewModel>
-        where TService : class,  IService
+        where TService : class, IService
         where TViewModel : BaseViewModel, new()
     {
         public AutoGridController(IKernel kernel, TService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, formService, context, userContext, formService)

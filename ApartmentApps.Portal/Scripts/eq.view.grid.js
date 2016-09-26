@@ -80,7 +80,12 @@
 
             EQ.client.onInit = function () {
                 if (options.applyFilterOnStart) {
-                    self.applyFilter();
+                    if (window.initialQuery != null) {
+                        self.loadQuery(window.initialQuery);
+                    } else {
+                        self.applyFilter();
+                    }
+                    
                 }
             };
 
@@ -246,7 +251,70 @@
             });
         },
 
+        loadQuery : function (queryId) {
+            if (!queryId) return;
+            var self = this;
+            EQ.client.loadQuery({
+                queryName: queryId,
+                silent: true,
+                success: function (queryJson) {
+                    console.log(queryJson);
+                    self.applyFilter();
+                }
+            });
+        },
 
+        createQuery: function () {
+            var reportName = prompt("Enter report name", "New report");
+
+            if (reportName) {
+                EQ.client.newQuery({
+                    queryName: reportName,
+                    success: function(query) {
+                        var reportId = query.getId();
+                        self._insertIntoReportList({ id: reportId, name: query.getName() });
+                        self.renderReportList({ reportId: reportId });
+                    }
+                });
+            }
+        },
+        deleteCurrentQuery: function () {
+            var report = EQ.client.getQuery();
+            if (confirm("Remove report '" + report.getName() + "'?")) {
+                var self = this;
+                var query = EQ.client.getQuery();
+                var reportId = query.getId();
+                EQ.client.removeQuery({
+                    queryId : reportId,
+                    success: function () {
+                     
+                        alert("Report removed!");
+                    }
+                });
+            }            
+        },
+        saveQuery: function  (reportName) {
+ 
+            var query = EQ.client.getQuery();
+            var newReportName = query.getName();
+
+            if (newReportName) {
+                EQ.client.saveQuery({
+                    "query": query,
+                    "queryName": newReportName,
+                    "success": function (data) {
+                        var savedQuery = EQ.client.getQuery();
+                        var reportId = savedQuery.getId();
+                        //self.buildAndExecute();
+                        //self._insertIntoReportList({ id: reportId, name: query.getName() });
+                        //self.renderReportList({ reportId: reportId });
+                        //self.setActiveReport(reportId);
+                        //self.renderCurrentReport();
+                    },
+                    error: self._errorHandler
+                });
+            }
+        },
         applyFilter: function (options) {
             var self = this;
             console.log("YUP", options);
@@ -351,7 +419,7 @@
                             }
                         }
 			
-			            //result count
+                        //result count
                         if (result.resultCount) {
                             self._resultCountSpan.text(result.resultCount);
                             self._resultCountSpan.show();
@@ -376,21 +444,21 @@
 
         },
 
-        getCurrentPaging: function () {
-            result = { pageIndex: 1, pageCount: 1 };
-            var pageNavigator = $("#PageNavigator");
-            if (pageNavigator.length > 0) {
-                var pageIndex = pageNavigator.data("pageindex");
-                var pageCount = pageNavigator.data("pagecount");
-                if (pageIndex)
-                    result.pageIndex = pageIndex;
-                if (pageCount)
-                    result.pageCount = pageCount;
-            }
-            return result;
+    getCurrentPaging: function () {
+        result = { pageIndex: 1, pageCount: 1 };
+        var pageNavigator = $("#PageNavigator");
+        if (pageNavigator.length > 0) {
+            var pageIndex = pageNavigator.data("pageindex");
+            var pageCount = pageNavigator.data("pagecount");
+            if (pageIndex)
+                result.pageIndex = pageIndex;
+            if (pageCount)
+                result.pageCount = pageCount;
         }
-
+        return result;
     }
+
+}
 
     $(function () {
         EQ.view.grid.init();

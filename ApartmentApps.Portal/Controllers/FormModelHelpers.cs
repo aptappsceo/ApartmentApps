@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Data;
 using ApartmentApps.Forms;
@@ -58,6 +59,16 @@ namespace ApartmentApps.Portal.Controllers
 
     public static class FeedItemsHelper
     {
+        public static HtmlString RenderQueryList(this HtmlHelper helper)
+        {
+            var queries =  helper.ViewBag.Queries as IEnumerable<ServiceQuery>;
+            return helper.Partial("~/Views/Shared/_QueryList.cshtml", queries);
+        }
+        public static HtmlString RenderQueryActions(this HtmlHelper helper)
+        {
+            var queries = helper.ViewBag.Queries as IEnumerable<ServiceQuery>;
+            return helper.Partial("~/Views/Shared/_QueryToolbar.cshtml", queries);
+        }
         public static HtmlString RenderFeedItems(this HtmlHelper helper, IEnumerable<FeedItemBindingModel> feedItem)
         {
             return helper.Partial("~/Views/Shared/FeedItems/FeedItem1.cshtml", new FeedItemsListModel()

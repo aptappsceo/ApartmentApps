@@ -7,9 +7,20 @@ using System.Linq.Expressions;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Korzh.EasyQuery.Db;
 
 namespace ApartmentApps.Api
 {
+    [Persistant]
+    public class ServiceQuery : PropertyEntity
+    {
+        public string Name { get; set; }
+        public string QueryJson { get; set; }
+
+        public string Service { get; set; }
+        public string QueryId { get; set; }
+    }
+ 
     public class UserRepository<TEntity> : PropertyRepository<TEntity> where TEntity : class, IUserEntity
     {
         //public UserRepository(Func<IQueryable<TEntity>, IDbSet<TEntity>> includes, DbContext context, IUserContext userContext) : base(includes, context, userContext)
@@ -125,7 +136,7 @@ namespace ApartmentApps.Api
         public virtual IQueryable<TEntity> GetAll()
         {
             var propertyId = UserContext.PropertyId;
-            return WithIncludes.Where(p => p.PropertyId == propertyId);
+            return WithIncludes.Where(p => p.PropertyId == null || p.PropertyId == propertyId);
         }
         public IQueryable<TEntity> WithIncludes => this.Includes(Context.Set<TEntity>());
 

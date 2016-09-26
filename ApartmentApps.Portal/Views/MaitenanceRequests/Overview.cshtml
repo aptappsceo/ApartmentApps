@@ -1,6 +1,13 @@
-﻿@using Korzh.EasyQuery.Mvc
+﻿@using System.Collections
+@using ApartmentApps.Api
+@using ApartmentApps.Portal.Controllers
+@using Korzh.EasyQuery.Mvc
 @using Korzh.EasyQuery.Services
 @model ApartmentApps.Portal.Controllers.MaintenanceRequestOverviewViewModel
+@{
+    var queries = ((IEnumerable<ServiceQuery>) ViewBag.Queries).ToArray();
+    var initialQuery = queries.Any() ? queries.First().QueryId : null;
+}
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-12 ">
         <h2>Maintenance Work Orders</h2>
@@ -9,16 +16,17 @@
     </div>
 </div><br />
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
+        @Html.RenderQueryList()
         <div id="ResultPanel">
-           
+
         </div>
 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5">
         <div class="ibox">
             <div class="ibox-title">
-                <h5>Search</h5> <span class="label label-primary">IN+</span>
+                <h5>Search</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -26,20 +34,9 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-wrench"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <a href="#">Config option 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Config option 2</a>
-                        </li>
-                    </ul>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
                 </div>
             </div>
-            <div class="ibox-content">
+            <div class="ibox-content" style="padding: 0px;">
                 <script type="text/javascript">
 
                     // Load the Visualization API and the piechart package.
@@ -51,6 +48,8 @@
                     function GoogleVisualizationLoaded() {
                         //alert("Visualization loaded!!!";)
                     }
+
+                    window.initialQuery = @Html.Raw(initialQuery == null ? "null" : "'" + initialQuery + "'" );
                     //Settings for EasyQuery pages
                     window.easyQueryViewSettings = {
                         showChart: false,
@@ -69,12 +68,21 @@
                             res = res + '/';
                         return res;
                     }
-
-
                 </script>
-                @Html.FilterBar()
+                <div id="QueryPanel"></div>
+                @*@Html.FilterBar()*@
+                <div class="eqjs-fb-buttonsblock">
+                    <a href="javascript:void(0)" class="btn btn-default btn-sm" onclick="EQ.view.grid.applyFilter()">Search</a>
+                    <a href="javascript:void(0)" class="eqjs-fb-button eqjs-fb-button-clear">Clear</a>
+                </div>
+                <hr/>
+                <div style="padding: 4px;">
+                    @Html.RenderQueryActions()
+                </div>
+                
             </div>
         </div>
+       
 
     </div>
 

@@ -41,12 +41,12 @@ namespace ApartmentApps.Data
 
         public int? UnitId { get; set; }
 
-        [ForeignKey("UnitId")]
+        [ForeignKey("UnitId"),Searchable]
         public virtual Unit Unit { get; set; }
 
         DateTime IFeedItem.CreatedOn => SubmissionDate;
 
-        [ForeignKey("UserId")]
+        [ForeignKey("UserId"),Searchable(Caption="Requested By")]
         public virtual ApplicationUser User { get; set; }
 
         IEnumerable<IFeedItem> IFeedItem.ChildFeedItems => Checkins;
@@ -56,6 +56,7 @@ namespace ApartmentApps.Data
 
         public virtual ICollection<MaintenanceRequestCheckin> Checkins { get; set; }
 
+        [Searchable(Caption="Scheduled For")]
         public DateTime? ScheduleDate { get; set; }
 
         public string Message { get; set; }
@@ -70,8 +71,9 @@ namespace ApartmentApps.Data
 
         [ForeignKey("StatusId")]
         public virtual MaintenanceRequestStatus Status { get; set; }
-
+        [Searchable(Caption="Create Date")]
         public DateTime SubmissionDate { get; set; }
+        [Searchable(Caption="Completed On")]
         public DateTime? CompletionDate { get; set; }
 
         [NotMapped, EqEntityAttr(UseInConditions = false)]
