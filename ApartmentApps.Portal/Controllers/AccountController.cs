@@ -373,7 +373,7 @@ namespace ApartmentApps.Portal.Controllers
         public async Task<ActionResult> ChangePassword(ProfileEditModel model)
         {
 
-            if (!ModelState.IsValid)
+            if (string.IsNullOrEmpty(model.NewPassword) || string.IsNullOrEmpty(model.OldPassword) || string.IsNullOrEmpty(model.ConfirmPassword))
             {
                 return View("Manage");
             }
