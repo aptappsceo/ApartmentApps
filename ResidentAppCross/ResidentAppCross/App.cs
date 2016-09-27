@@ -32,9 +32,9 @@ public class App : MvxApplication
         Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
         
         //local sini pc endpoint
-        //var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://82.151.208.56.nip.io:54685"));
+        var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://5.189.103.91.nip.io:54685/"));
 
-        var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://apartmentappsapiservice.azurewebsites.net"));
+       // var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://apartmentappsapiservice.azurewebsites.net"));
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(apartmentAppsApiService);
         Mvx.RegisterSingleton<ILoginManager>(new LoginService(apartmentAppsApiService));
         Mvx.RegisterSingleton<IMvxAppStart>(new CustomAppStart());

@@ -468,7 +468,7 @@ namespace ResidentAppCross.iOS
                 if (_tableSection == null)
                 {
                     _tableSection = Formals.Create<TableSection>();
-                    _tableSection.Table.AllowsSelection = false;
+                    _tableSection.Table.AllowsSelection = true;
                     _tableSection.Source = TableItemsSource;
                     _tableSection.Table.SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine;
                     _tableSection.ReloadData();
@@ -488,7 +488,7 @@ namespace ResidentAppCross.iOS
                         Items = ViewModel.PaymentOptions, //Deliver data
                         Binding = TableItemsBinding, //Deliver binding
                         ItemsEditableByDefault = true, //Set all items editable
-                        ItemsFocusableByDefault = true
+                        ItemsFocusableByDefault = true,
                     };
                 }
                 return _tableItemsSource;
@@ -506,17 +506,15 @@ namespace ResidentAppCross.iOS
                     {
                         Bind = (cell, item, index) => //What to do when cell is created for item
                         {
-
                             cell.TextLabel.Text = item.FriendlyName;
-
                         },
                         //CellHeight = (item, index) => { return TicketItemCell.FullHeight; },
                         ItemSelected = item =>
                         {
-                            //ViewModel.SelectedRequest = item;
-                            //ViewModel.OpenSelectedRequestCommand.Execute(null);
-                        }, //When accessory button clicked
-                        AccessoryType = item => UITableViewCellAccessory.None, //What is displayed on the right edge
+                            ViewModel.SelectedOption = item;
+                            ViewModel.PayWithSelectedPaymentOption.Execute(null);
+                        }, 
+                        AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
                         CellSelector = () => new UITableViewCell(UITableViewCellStyle.Default,"PaymentOptions_CellView"), //Define how to create cell, if reusables not found
                         CellIdentifier = "PaymentOptions_CellView"
                     };
@@ -561,7 +559,6 @@ namespace ResidentAppCross.iOS
             {
                 TableSection.ReloadData();
             });
-
 
             var set = this.CreateBindingSet<PaymentOptionsView, PaymentOptionsViewModel>();
             set.Bind(AddCreditCardSection.MainButton).To(vm => vm.AddCreditCardCommand);

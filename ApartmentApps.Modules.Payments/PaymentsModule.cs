@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using ApartmentApps.Api.BindingModels;
@@ -10,7 +11,12 @@ using ApartmentApps.Data.Utils;
 using ApartmentApps.Modules.Payments.Services;
 using ApartmentApps.Payments.Forte;
 using ApartmentApps.Payments.Forte.Forte.Client;
+using ApartmentApps.Payments.Forte.Forte.Merchant;
+using ApartmentApps.Payments.Forte.Forte.Transaction;
+using ApartmentApps.Payments.Forte.PaymentGateway;
 using Ninject;
+using Ninject.Planning.Bindings;
+using Authentication = ApartmentApps.Payments.Forte.Forte.Client.Authentication;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -205,15 +211,36 @@ namespace ApartmentApps.Api.Modules
             {
                 return new MakePaymentResult() {ErrorMessage = "Payment Option Not Found."};
             }
-            var transactionClient = new Payments.Forte.PaymentGateway.PaymentGatewaySoapClient();
-            transactionClient.ExecuteSocketQuery(new ExecuteSocketQueryParams()
+
+            var invoices = _invoiceRepository.GetAvailableBy(DateTime.Now).ToArray();
+
+            var total = invoices.Sum(s => s.Amount);
+
+            PaymentGatewaySoapClient transactionClient = null;
+
+            try
+            {
+                transactionClient =
+                    new Payments.Forte.PaymentGateway.PaymentGatewaySoapClient("PaymentGatewaySoap");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            var pgTotalAmount = $"{total.ToString("0.00")}";
+
+            var response = transactionClient.ExecuteSocketQuery(new ExecuteSocketQueryParams()
             {
                 PgMerchantId = MerchantId.ToString(),
                 PgClientId = clientId.ToString(),
                 PgPaymentMethodId = paymentOption.TokenId,
                 PgPassword = MerchantPassword, //"LEpLqvx7Y5L200"
+                PgTotalAmount  = pgTotalAmount,
+                PgTransactionType = "10",
             });
 
+            
             return new MakePaymentResult()
             {
 
