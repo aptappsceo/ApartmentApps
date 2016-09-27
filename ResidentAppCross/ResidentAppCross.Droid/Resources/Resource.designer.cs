@@ -4542,6 +4542,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0081
 			public const int AddBankAccountButton = 2131361921;
 			
+			// aapt resource value: 0x7f0a0127
+			public const int AddButton = 2131362087;
 			
 			// aapt resource value: 0x7f0a008b
 			public const int AddCreditCardButton = 2131361931;
@@ -4552,40 +4554,20 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a00b4
 			public const int AddPhotoButton2 = 2131361972;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00ef
-			public const int AddPropertyButton = 2131362031;
-=======
-			// aapt resource value: 0x7f0a010a
-			public const int AddPropertyButton = 2131362058;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a010b
+			public const int AddPropertyButton = 2131362059;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a0106
-			public const int AddressLabel = 2131362054;
-=======
-			// aapt resource value: 0x7f0a0121
-			public const int AddressLabel = 2131362081;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0122
+			public const int AddressLabel = 2131362082;
 			
 			// aapt resource value: 0x7f0a00ac
 			public const int AvatarView = 2131361964;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a0101
-			public const int BackgroundIconView = 2131362049;
-=======
-			// aapt resource value: 0x7f0a011c
-			public const int BackgroundIconView = 2131362076;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a011d
+			public const int BackgroundIconView = 2131362077;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00c2
-			public const int Button = 2131361986;
-=======
-			// aapt resource value: 0x7f0a00dd
-			public const int Button = 2131362013;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00de
+			public const int Button = 2131362014;
 			
 			// aapt resource value: 0x7f0a0076
 			public const int ButtonContainer = 2131361910;
@@ -4620,90 +4602,50 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0083
 			public const int CreditCardTypeVisa = 2131361923;
 			
-			// aapt resource value: 0x7f0a00d6
-			public const int DateLabel = 2131362006;
+			// aapt resource value: 0x7f0a00f2
+			public const int DateLabel = 2131362034;
 			
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a009a
 			public const int DatePage = 2131361946;
-=======
-			// aapt resource value: 0x7f0a00f1
-			public const int DateLabel = 2131362033;
->>>>>>> .theirs
 			
 			// aapt resource value: 0x7f0a009b
 			public const int DatePicker = 2131361947;
 			
-			// aapt resource value: 0x7f0a00b9
-			public const int DescriptionLabel = 2131361977;
+			// aapt resource value: 0x7f0a00d5
+			public const int DescriptionLabel = 2131362005;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00c9
-			public const int DetailsButton = 2131361993;
-=======
-			// aapt resource value: 0x7f0a00d4
-			public const int DescriptionLabel = 2131362004;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00e5
+			public const int DetailsButton = 2131362021;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00c8
-			public const int DetailsLabel = 2131361992;
-=======
 			// aapt resource value: 0x7f0a00e4
-			public const int DetailsButton = 2131362020;
->>>>>>> .theirs
+			public const int DetailsLabel = 2131362020;
 			
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a0099
 			public const int DialogPager = 2131361945;
-=======
-			// aapt resource value: 0x7f0a00e3
-			public const int DetailsLabel = 2131362019;
->>>>>>> .theirs
 			
-			// aapt resource value: 0x7f0a00cd
-			public const int EmailInput = 2131361997;
+			// aapt resource value: 0x7f0a00e9
+			public const int EmailInput = 2131362025;
 			
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a00ae
 			public const int EmailLabel = 2131361966;
-=======
-			// aapt resource value: 0x7f0a00e8
-			public const int EmailInput = 2131362024;
->>>>>>> .theirs
 			
-			// aapt resource value: 0x7f0a00d3
-			public const int EntranceStatusLabel = 2131362003;
+			// aapt resource value: 0x7f0a00ef
+			public const int EntranceStatusLabel = 2131362031;
 			
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a0087
 			public const int ExpirationMonthSelection = 2131361927;
-=======
-			// aapt resource value: 0x7f0a00ee
-			public const int EntranceStatusLabel = 2131362030;
->>>>>>> .theirs
 			
 			// aapt resource value: 0x7f0a0088
 			public const int ExpirationYearSelection = 2131361928;
 			
-			// aapt resource value: 0x7f0a010a
-			public const int FilterButton = 2131362058;
+			// aapt resource value: 0x7f0a0126
+			public const int FilterButton = 2131362086;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00f7
-			public const int FirstnameInput = 2131362039;
-=======
-			// aapt resource value: 0x7f0a0125
-			public const int FilterButton = 2131362085;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0113
+			public const int FirstnameInput = 2131362067;
 			
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a0093
 			public const int FlashButton = 2131361939;
-=======
-			// aapt resource value: 0x7f0a0112
-			public const int FirstnameInput = 2131362066;
->>>>>>> .theirs
 			
 			// aapt resource value: 0x7f0a00af
 			public const int GallerySectionEmptyContainer = 2131361967;
@@ -4717,21 +4659,11 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0077
 			public const int HeaderSection = 2131361911;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00be
-			public const int HistoryPage = 2131361982;
-=======
-			// aapt resource value: 0x7f0a00d9
-			public const int HistoryPage = 2131362009;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00da
+			public const int HistoryPage = 2131362010;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a0103
-			public const int IconBackground = 2131362051;
-=======
-			// aapt resource value: 0x7f0a011e
-			public const int IconBackground = 2131362078;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a011f
+			public const int IconBackground = 2131362079;
 			
 			// aapt resource value: 0x7f0a00b7
 			public const int IconView = 2131361975;
@@ -4739,119 +4671,50 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a00b3
 			public const int ImageContainer = 2131361971;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a0104
-			public const int InformationContainer = 2131362052;
-=======
-			// aapt resource value: 0x7f0a011f
-			public const int InformationContainer = 2131362079;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0120
+			public const int InformationContainer = 2131362080;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00da
-			public const int InputField = 2131362010;
-=======
-			// aapt resource value: 0x7f0a00f5
-			public const int InputField = 2131362037;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00f6
+			public const int InputField = 2131362038;
 			
 			// aapt resource value: 0x7f0a0080
 			public const int IsSavingsInput = 2131361920;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00c1
-			public const int Label = 2131361985;
-=======
-			// aapt resource value: 0x7f0a00dc
-			public const int Label = 2131362012;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00dd
+			public const int Label = 2131362013;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00f8
-			public const int LastnameInput = 2131362040;
-=======
-			// aapt resource value: 0x7f0a0113
-			public const int LastnameInput = 2131362067;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0114
+			public const int LastnameInput = 2131362068;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00ba
-			public const int ListContainer = 2131361978;
-=======
-			// aapt resource value: 0x7f0a00d5
-			public const int ListContainer = 2131362005;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00d6
+			public const int ListContainer = 2131362006;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00d0
-			public const int LoginButton = 2131362000;
-=======
-			// aapt resource value: 0x7f0a00eb
-			public const int LoginButton = 2131362027;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00ec
+			public const int LoginButton = 2131362028;
 			
 			// aapt resource value: 0x7f0a0097
 			public const int Map = 2131361943;
 			
-<<<<<<< .mine
-
-
-
-=======
-			// aapt resource value: 0x7f0a0108
-			public const int MapPage = 2131362056;
-			
->>>>>>> .theirs
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00ed
-			public const int MapPage = 2131362029;
-=======
 			// aapt resource value: 0x7f0a0109
-			public const int MapView = 2131362057;
->>>>>>> .theirs
+			public const int MapPage = 2131362057;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00ee
-			public const int MapView = 2131362030;
+			// aapt resource value: 0x7f0a010a
+			public const int MapView = 2131362058;
 			
-			// aapt resource value: 0x7f0a00bc
-			public const int ModePager = 2131361980;
+			// aapt resource value: 0x7f0a00d8
+			public const int ModePager = 2131362008;
 			
-			// aapt resource value: 0x7f0a00bb
-			public const int ModeTabs = 2131361979;
-=======
 			// aapt resource value: 0x7f0a00d7
-			public const int ModePager = 2131362007;
-
-
-
-
-
-
->>>>>>> .theirs
+			public const int ModeTabs = 2131362007;
 			
-<<<<<<< .mine
-
-
-
-=======
-			// aapt resource value: 0x7f0a00d6
-			public const int ModeTabs = 2131362006;
-			
->>>>>>> .theirs
 			// aapt resource value: 0x7f0a000b
 			public const int MvvmCrossTagId = 2131361803;
 			
 			// aapt resource value: 0x7f0a000c
 			public const int MvxBindingTagUnique = 2131361804;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a0105
-			public const int NameLabel = 2131362053;
-=======
-			// aapt resource value: 0x7f0a0120
-			public const int NameLabel = 2131362080;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0121
+			public const int NameLabel = 2131362081;
 			
 			// aapt resource value: 0x7f0a00ab
 			public const int NavigationHeader = 2131361963;
@@ -4859,29 +4722,14 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0094
 			public const int NoPaymentsIcon = 2131361940;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00db
-			public const int NotificationContainer = 2131362011;
-=======
-			// aapt resource value: 0x7f0a00f6
-			public const int NotificationContainer = 2131362038;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00f7
+			public const int NotificationContainer = 2131362039;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00fc
-			public const int PasswordConfirmInput = 2131362044;
-=======
-			// aapt resource value: 0x7f0a0117
-			public const int PasswordConfirmInput = 2131362071;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0118
+			public const int PasswordConfirmInput = 2131362072;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00cf
-			public const int PasswordInput = 2131361999;
-=======
-			// aapt resource value: 0x7f0a00ea
-			public const int PasswordInput = 2131362026;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00eb
+			public const int PasswordInput = 2131362027;
 			
 			// aapt resource value: 0x7f0a0095
 			public const int PayButton = 2131361941;
@@ -4895,93 +4743,35 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0078
 			public const int PaymentOptionTitleInputLayout = 2131361912;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00e9
-			public const int PaymentOptionsContainer = 2131362025;
-=======
-			// aapt resource value: 0x7f0a0104
-			public const int PaymentOptionsContainer = 2131362052;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0105
+			public const int PaymentOptionsContainer = 2131362053;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00d4
-			public const int PetStatusLabel = 2131362004;
-=======
-			// aapt resource value: 0x7f0a00ef
-			public const int PetStatusLabel = 2131362031;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00fa
-			public const int PhoneInput = 2131362042;
-=======
-			// aapt resource value: 0x7f0a0115
-			public const int PhoneInput = 2131362069;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a0107
-			public const int PhoneLabel = 2131362055;
-=======
-			// aapt resource value: 0x7f0a0122
-			public const int PhoneLabel = 2131362082;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a0100
-			public const int PipeIconView = 2131362048;
-=======
-			// aapt resource value: 0x7f0a011b
-			public const int PipeIconView = 2131362075;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00eb
-			public const int PriceLabel = 2131362027;
-=======
-			// aapt resource value: 0x7f0a0106
-			public const int PriceLabel = 2131362054;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-
-
-
-=======
-			// aapt resource value: 0x7f0a010b
-			public const int PropertiesPage = 2131362059;
-			
->>>>>>> .theirs
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a00f0
-			public const int PropertiesPage = 2131362032;
-=======
+			public const int PetStatusLabel = 2131362032;
+			
+			// aapt resource value: 0x7f0a0116
+			public const int PhoneInput = 2131362070;
+			
+			// aapt resource value: 0x7f0a0123
+			public const int PhoneLabel = 2131362083;
+			
+			// aapt resource value: 0x7f0a011c
+			public const int PipeIconView = 2131362076;
+			
+			// aapt resource value: 0x7f0a0107
+			public const int PriceLabel = 2131362055;
+			
 			// aapt resource value: 0x7f0a010c
-			public const int RadioContainer = 2131362060;
->>>>>>> .theirs
+			public const int PropertiesPage = 2131362060;
 			
-<<<<<<< .mine
-
-
-
-=======
-			// aapt resource value: 0x7f0a00ec
-			public const int RecoverPasswordButton = 2131362028;
-			
->>>>>>> .theirs
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00f1
-			public const int RadioContainer = 2131362033;
-=======
 			// aapt resource value: 0x7f0a010d
-			public const int RentDetailsList = 2131362061;
->>>>>>> .theirs
+			public const int RadioContainer = 2131362061;
 			
-			// aapt resource value: 0x7f0a00d1
-			public const int RecoverPasswordButton = 2131362001;
+			// aapt resource value: 0x7f0a00ed
+			public const int RecoverPasswordButton = 2131362029;
 			
-			// aapt resource value: 0x7f0a00f2
-			public const int RentDetailsList = 2131362034;
+			// aapt resource value: 0x7f0a010e
+			public const int RentDetailsList = 2131362062;
 			
 			// aapt resource value: 0x7f0a007f
 			public const int RoutingNumberInput = 2131361919;
@@ -4989,102 +4779,47 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a007e
 			public const int RoutingNumberInputLayout = 2131361918;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00f5
-			public const int ScrollContainer = 2131362037;
+			// aapt resource value: 0x7f0a0111
+			public const int ScrollContainer = 2131362065;
 			
-			// aapt resource value: 0x7f0a00f3
-			public const int SearchInput = 2131362035;
+			// aapt resource value: 0x7f0a010f
+			public const int SearchInput = 2131362063;
 			
-			// aapt resource value: 0x7f0a00f4
-			public const int SearchOutput = 2131362036;
-=======
 			// aapt resource value: 0x7f0a0110
-			public const int ScrollContainer = 2131362064;
-
-
-
-
-
-
->>>>>>> .theirs
+			public const int SearchOutput = 2131362064;
 			
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a00a1
 			public const int SectionContainerDefault = 2131361953;
-=======
-			// aapt resource value: 0x7f0a010e
-			public const int SearchInput = 2131362062;
->>>>>>> .theirs
 			
-<<<<<<< .mine
-
-
-
-=======
-			// aapt resource value: 0x7f0a010f
-			public const int SearchOutput = 2131362063;
-			
->>>>>>> .theirs
 			// aapt resource value: 0x7f0a00a0
 			public const int ShowSelectDateButton = 2131361952;
 			
 			// aapt resource value: 0x7f0a009c
 			public const int ShowSelectTimeButton = 2131361948;
 			
-			// aapt resource value: 0x7f0a00d2
-			public const int SignUpButton = 2131362002;
+			// aapt resource value: 0x7f0a00ee
+			public const int SignUpButton = 2131362030;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00c0
-			public const int StatusLabel = 2131361984;
-=======
-			// aapt resource value: 0x7f0a00ed
-			public const int SignUpButton = 2131362029;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00dc
+			public const int StatusLabel = 2131362012;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00bd
-			public const int StatusPage = 2131361981;
-=======
-			// aapt resource value: 0x7f0a00db
-			public const int StatusLabel = 2131362011;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00d9
+			public const int StatusPage = 2131362009;
 			
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a00b6
 			public const int SubtitleLabel = 2131361974;
-=======
-			// aapt resource value: 0x7f0a00d8
-			public const int StatusPage = 2131362008;
->>>>>>> .theirs
 			
-			// aapt resource value: 0x7f0a00b8
-			public const int Switch = 2131361976;
+			// aapt resource value: 0x7f0a00d4
+			public const int Switch = 2131362004;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00ff
-			public const int TextInput = 2131362047;
-=======
-			// aapt resource value: 0x7f0a00d3
-			public const int Switch = 2131362003;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a011b
+			public const int TextInput = 2131362075;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00fe
-			public const int TextInputLayout = 2131362046;
-=======
 			// aapt resource value: 0x7f0a011a
-			public const int TextInput = 2131362074;
->>>>>>> .theirs
+			public const int TextInputLayout = 2131362074;
 			
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a009d
 			public const int TimePage = 2131361949;
-=======
-			// aapt resource value: 0x7f0a0119
-			public const int TextInputLayout = 2131362073;
->>>>>>> .theirs
 			
 			// aapt resource value: 0x7f0a009e
 			public const int TimePicker = 2131361950;
@@ -5092,45 +4827,21 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a00b5
 			public const int TitleLabel = 2131361973;
 			
-			// aapt resource value: 0x7f0a0102
-			public const int TopLine = 2131362050;
+			// aapt resource value: 0x7f0a011e
+			public const int TopLine = 2131362078;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00bf
-			public const int TypeLabel = 2131361983;
-=======
-			// aapt resource value: 0x7f0a011d
-			public const int TopLine = 2131362077;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00db
+			public const int TypeLabel = 2131362011;
 			
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a00ad
 			public const int UsernameLabel = 2131361965;
-=======
-			// aapt resource value: 0x7f0a00da
-			public const int TypeLabel = 2131362010;
->>>>>>> .theirs
 			
-			// aapt resource value: 0x7f0a0108
-			public const int WebView = 2131362056;
+			// aapt resource value: 0x7f0a0124
+			public const int WebView = 2131362084;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00dc
-			public const int action0 = 2131362012;
-=======
-			// aapt resource value: 0x7f0a0123
-			public const int WebView = 2131362083;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00f8
+			public const int action0 = 2131362040;
 			
-<<<<<<< .mine
-
-
-
-=======
-			// aapt resource value: 0x7f0a00f7
-			public const int action0 = 2131362039;
-			
->>>>>>> .theirs
 			// aapt resource value: 0x7f0a0067
 			public const int action_bar = 2131361895;
 			
@@ -5155,13 +4866,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0068
 			public const int action_context_bar = 2131361896;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00e0
-			public const int action_divider = 2131362016;
-=======
-			// aapt resource value: 0x7f0a00fb
-			public const int action_divider = 2131362043;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00fc
+			public const int action_divider = 2131362044;
 			
 			// aapt resource value: 0x7f0a0003
 			public const int action_menu_divider = 2131361795;
@@ -5202,13 +4908,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0017
 			public const int auto = 2131361815;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00d7
-			public const int badge = 2131362007;
-=======
-			// aapt resource value: 0x7f0a00f2
-			public const int badge = 2131362034;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00f3
+			public const int badge = 2131362035;
 			
 			// aapt resource value: 0x7f0a0028
 			public const int beginning = 2131361832;
@@ -5219,31 +4920,26 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0051
 			public const int buttonPanel = 2131361873;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00dd
-			public const int cancel_action = 2131362013;
-=======
-			// aapt resource value: 0x7f0a00c4
-			public const int button_add_response = 2131361988;
->>>>>>> .theirs
-			
-			// aapt resource value: 0x7f0a00bf
-			public const int button_attachment = 2131361983;
-			
-			// aapt resource value: 0x7f0a00c9
-			public const int button_login = 2131361993;
-			
 			// aapt resource value: 0x7f0a00c5
-			public const int button_refresh = 2131361989;
+			public const int button_add_response = 2131361989;
 			
 			// aapt resource value: 0x7f0a00c0
-			public const int button_send = 2131361984;
+			public const int button_attachment = 2131361984;
 			
-			// aapt resource value: 0x7f0a00cd
-			public const int button_update = 2131361997;
+			// aapt resource value: 0x7f0a00ca
+			public const int button_login = 2131361994;
 			
-			// aapt resource value: 0x7f0a00f8
-			public const int cancel_action = 2131362040;
+			// aapt resource value: 0x7f0a00c6
+			public const int button_refresh = 2131361990;
+			
+			// aapt resource value: 0x7f0a00c1
+			public const int button_send = 2131361985;
+			
+			// aapt resource value: 0x7f0a00ce
+			public const int button_update = 2131361998;
+			
+			// aapt resource value: 0x7f0a00f9
+			public const int cancel_action = 2131362041;
 			
 			// aapt resource value: 0x7f0a0038
 			public const int center = 2131361848;
@@ -5257,13 +4953,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a005f
 			public const int checkbox = 2131361887;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00e3
-			public const int chronometer = 2131362019;
-=======
-			// aapt resource value: 0x7f0a00fe
-			public const int chronometer = 2131362046;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00ff
+			public const int chronometer = 2131362047;
 			
 			// aapt resource value: 0x7f0a0040
 			public const int clip_horizontal = 2131361856;
@@ -5274,13 +4965,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a002c
 			public const int collapseActionView = 2131361836;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a0109
-			public const int contentFrame = 2131362057;
-=======
-			// aapt resource value: 0x7f0a0124
-			public const int contentFrame = 2131362084;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0125
+			public const int contentFrame = 2131362085;
 			
 			// aapt resource value: 0x7f0a0057
 			public const int contentPanel = 2131361879;
@@ -5291,13 +4977,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a005c
 			public const int customPanel = 2131361884;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00c7
-			public const int cv = 2131361991;
-=======
-			// aapt resource value: 0x7f0a00e2
-			public const int cv = 2131362018;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00e3
+			public const int cv = 2131362019;
 			
 			// aapt resource value: 0x7f0a0018
 			public const int dark = 2131361816;
@@ -5326,74 +5007,32 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a001c
 			public const int disableHome = 2131361820;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00d9
-			public const int drawerList = 2131362009;
-=======
-			// aapt resource value: 0x7f0a00f4
-			public const int drawerList = 2131362036;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00f5
+			public const int drawerList = 2131362037;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a0111
-			public const int drawer_downloaded = 2131362065;
-=======
-			// aapt resource value: 0x7f0a012c
-			public const int drawer_downloaded = 2131362092;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a012d
+			public const int drawer_downloaded = 2131362093;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a010d
-			public const int drawer_favourite = 2131362061;
-			
-			// aapt resource value: 0x7f0a010c
-			public const int drawer_home = 2131362060;
-=======
-			// aapt resource value: 0x7f0a0128
-			public const int drawer_favourite = 2131362088;
-
-
-
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a0110
-			public const int drawer_oops = 2131362064;
-=======
-			// aapt resource value: 0x7f0a0127
-			public const int drawer_home = 2131362087;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a010e
-			public const int drawer_settings = 2131362062;
-=======
-			// aapt resource value: 0x7f0a012b
-			public const int drawer_oops = 2131362091;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-
-
-
-=======
 			// aapt resource value: 0x7f0a0129
-			public const int drawer_settings = 2131362089;
+			public const int drawer_favourite = 2131362089;
 			
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0128
+			public const int drawer_home = 2131362088;
+			
+			// aapt resource value: 0x7f0a012c
+			public const int drawer_oops = 2131362092;
+			
+			// aapt resource value: 0x7f0a012a
+			public const int drawer_settings = 2131362090;
+			
 			// aapt resource value: 0x7f0a0069
 			public const int edit_query = 2131361897;
 			
 			// aapt resource value: 0x7f0a0029
 			public const int end = 2131361833;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00e8
-			public const int end_padder = 2131362024;
-=======
-			// aapt resource value: 0x7f0a0103
-			public const int end_padder = 2131362051;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0104
+			public const int end_padder = 2131362052;
 			
 			// aapt resource value: 0x7f0a0030
 			public const int enterAlways = 2131361840;
@@ -5443,119 +5082,71 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a004c
 			public const int image = 2131361868;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00ca
-			public const int imageView = 2131361994;
-=======
-			// aapt resource value: 0x7f0a00e5
-			public const int imageView = 2131362021;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00e6
+			public const int imageView = 2131362022;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00e7
-			public const int info = 2131362023;
-=======
-			// aapt resource value: 0x7f0a0102
-			public const int info = 2131362050;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00cc
-			public const int input_email_layout = 2131361996;
-=======
-			// aapt resource value: 0x7f0a00bb
-			public const int input_email = 2131361979;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00f6
-			public const int input_firstname_layout = 2131362038;
-=======
-			// aapt resource value: 0x7f0a00e7
-			public const int input_email_layout = 2131362023;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00f9
-			public const int input_lastname_layout = 2131362041;
-=======
-			// aapt resource value: 0x7f0a0111
-			public const int input_firstname_layout = 2131362065;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00ce
-			public const int input_password_layout = 2131361998;
-=======
-			// aapt resource value: 0x7f0a0114
-			public const int input_lastname_layout = 2131362068;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00fd
-			public const int input_passwordconfirm_layout = 2131362045;
-=======
-			// aapt resource value: 0x7f0a00bd
-			public const int input_message = 2131361981;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00fb
-			public const int input_phone_layout = 2131362043;
-=======
-			// aapt resource value: 0x7f0a00ba
-			public const int input_name = 2131361978;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00ea
-			public const int item_layout = 2131362026;
-
-
-
-=======
-			// aapt resource value: 0x7f0a00c8
-			public const int input_password = 2131361992;
-			
-			// aapt resource value: 0x7f0a00e9
-			public const int input_password_layout = 2131362025;
->>>>>>> .theirs
-			
-			// aapt resource value: 0x7f0a0118
-			public const int input_passwordconfirm_layout = 2131362072;
-			
-			// aapt resource value: 0x7f0a0116
-			public const int input_phone_layout = 2131362070;
+			// aapt resource value: 0x7f0a0103
+			public const int info = 2131362051;
 			
 			// aapt resource value: 0x7f0a00bc
-			public const int input_subject = 2131361980;
+			public const int input_email = 2131361980;
 			
-			// aapt resource value: 0x7f0a0105
-			public const int item_layout = 2131362053;
+			// aapt resource value: 0x7f0a00e8
+			public const int input_email_layout = 2131362024;
+			
+			// aapt resource value: 0x7f0a0112
+			public const int input_firstname_layout = 2131362066;
+			
+			// aapt resource value: 0x7f0a0115
+			public const int input_lastname_layout = 2131362069;
+			
+			// aapt resource value: 0x7f0a00be
+			public const int input_message = 2131361982;
+			
+			// aapt resource value: 0x7f0a00bb
+			public const int input_name = 2131361979;
+			
+			// aapt resource value: 0x7f0a00c9
+			public const int input_password = 2131361993;
+			
+			// aapt resource value: 0x7f0a00ea
+			public const int input_password_layout = 2131362026;
+			
+			// aapt resource value: 0x7f0a0119
+			public const int input_passwordconfirm_layout = 2131362073;
+			
+			// aapt resource value: 0x7f0a0117
+			public const int input_phone_layout = 2131362071;
+			
+			// aapt resource value: 0x7f0a00bd
+			public const int input_subject = 2131361981;
+			
+			// aapt resource value: 0x7f0a0106
+			public const int item_layout = 2131362054;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int item_touch_helper_previous_elevation = 2131361792;
 			
-			// aapt resource value: 0x7f0a00cf
-			public const int label_author = 2131361999;
-			
 			// aapt resource value: 0x7f0a00d0
-			public const int label_date = 2131362000;
-			
-			// aapt resource value: 0x7f0a00c2
-			public const int label_last_updated = 2131361986;
-			
-			// aapt resource value: 0x7f0a00b7
-			public const int label_message = 2131361975;
+			public const int label_author = 2131362000;
 			
 			// aapt resource value: 0x7f0a00d1
-			public const int label_text = 2131362001;
+			public const int label_date = 2131362001;
 			
-			// aapt resource value: 0x7f0a00cb
-			public const int label_title = 2131361995;
+			// aapt resource value: 0x7f0a00c3
+			public const int label_last_updated = 2131361987;
+			
+			// aapt resource value: 0x7f0a00b8
+			public const int label_message = 2131361976;
+			
+			// aapt resource value: 0x7f0a00d2
+			public const int label_text = 2131362002;
 			
 			// aapt resource value: 0x7f0a00cc
-			public const int label_version = 2131361996;
+			public const int label_title = 2131361996;
+			
+			// aapt resource value: 0x7f0a00cd
+			public const int label_version = 2131361997;
 			
 			// aapt resource value: 0x7f0a003c
 			public const int left = 2131361852;
@@ -5563,65 +5154,35 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0019
 			public const int light = 2131361817;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00e1
-			public const int line1 = 2131362017;
-=======
-			// aapt resource value: 0x7f0a00fc
-			public const int line1 = 2131362044;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00fd
+			public const int line1 = 2131362045;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00e5
-			public const int line3 = 2131362021;
-=======
-			// aapt resource value: 0x7f0a0100
-			public const int line3 = 2131362048;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0101
+			public const int line3 = 2131362049;
 			
 			// aapt resource value: 0x7f0a001a
 			public const int listMode = 2131361818;
 			
-			// aapt resource value: 0x7f0a00d2
-			public const int list_attachments = 2131362002;
+			// aapt resource value: 0x7f0a00d3
+			public const int list_attachments = 2131362003;
 			
-			// aapt resource value: 0x7f0a00c6
-			public const int list_feedback_messages = 2131361990;
+			// aapt resource value: 0x7f0a00c7
+			public const int list_feedback_messages = 2131361991;
 			
 			// aapt resource value: 0x7f0a004e
 			public const int list_item = 2131361870;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00c5
-			public const int loadingImage = 2131361989;
-=======
-			// aapt resource value: 0x7f0a00e0
-			public const int loadingImage = 2131362016;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00c3
-			public const int loadingProgressBar = 2131361987;
-=======
-			// aapt resource value: 0x7f0a00de
-			public const int loadingProgressBar = 2131362014;
->>>>>>> .theirs
-			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00c6
-			public const int loadingProgressWheel = 2131361990;
-=======
 			// aapt resource value: 0x7f0a00e1
-			public const int loadingProgressWheel = 2131362017;
->>>>>>> .theirs
+			public const int loadingImage = 2131362017;
 			
-<<<<<<< .mine
 			// aapt resource value: 0x7f0a00df
-			public const int media_actions = 2131362015;
-=======
-			// aapt resource value: 0x7f0a00fa
-			public const int media_actions = 2131362042;
->>>>>>> .theirs
+			public const int loadingProgressBar = 2131362015;
+			
+			// aapt resource value: 0x7f0a00e2
+			public const int loadingProgressWheel = 2131362018;
+			
+			// aapt resource value: 0x7f0a00fb
+			public const int media_actions = 2131362043;
 			
 			// aapt resource value: 0x7f0a002a
 			public const int middle = 2131361834;
@@ -5632,13 +5193,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0023
 			public const int multiply = 2131361827;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00d8
-			public const int nav_header_container = 2131362008;
-=======
-			// aapt resource value: 0x7f0a00f3
-			public const int nav_header_container = 2131362035;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00f4
+			public const int nav_header_container = 2131362036;
 			
 			// aapt resource value: 0x7f0a00a6
 			public const int navigation_header_container = 2131361958;
@@ -5733,24 +5289,14 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0074
 			public const int search_voice_btn = 2131361908;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a010f
-			public const int section = 2131362063;
-=======
-			// aapt resource value: 0x7f0a012a
-			public const int section = 2131362090;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a012b
+			public const int section = 2131362091;
 			
 			// aapt resource value: 0x7f0a0075
 			public const int select_dialog_listview = 2131361909;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00ec
-			public const int separator = 2131362028;
-=======
-			// aapt resource value: 0x7f0a0107
-			public const int separator = 2131362055;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0108
+			public const int separator = 2131362056;
 			
 			// aapt resource value: 0x7f0a0060
 			public const int shortcut = 2131361888;
@@ -5764,13 +5310,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0020
 			public const int showTitle = 2131361824;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00d5
-			public const int show_toolbar_switch = 2131362005;
-=======
-			// aapt resource value: 0x7f0a00f0
-			public const int show_toolbar_switch = 2131362032;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00f1
+			public const int show_toolbar_switch = 2131362033;
 			
 			// aapt resource value: 0x7f0a00a5
 			public const int snackbar_action = 2131361957;
@@ -5802,13 +5343,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a003e
 			public const int start = 2131361854;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00de
-			public const int status_bar_latest_event_content = 2131362014;
-=======
-			// aapt resource value: 0x7f0a00f9
-			public const int status_bar_latest_event_content = 2131362041;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00fa
+			public const int status_bar_latest_event_content = 2131362042;
 			
 			// aapt resource value: 0x7f0a0072
 			public const int submit_area = 2131361906;
@@ -5819,51 +5355,26 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0011
 			public const int terrain = 2131361809;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00e6
-			public const int text = 2131362022;
-=======
-			// aapt resource value: 0x7f0a0101
-			public const int text = 2131362049;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0102
+			public const int text = 2131362050;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00e4
-			public const int text2 = 2131362020;
-=======
-			// aapt resource value: 0x7f0a00ff
-			public const int text2 = 2131362047;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a0100
+			public const int text2 = 2131362048;
 			
 			// aapt resource value: 0x7f0a005a
 			public const int textSpacerNoButtons = 2131361882;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00cb
-			public const int textView6 = 2131361995;
-=======
-			// aapt resource value: 0x7f0a00e6
-			public const int textView6 = 2131362022;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00e7
+			public const int textView6 = 2131362023;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00c4
-			public const int textViewStatus = 2131361988;
-=======
-			// aapt resource value: 0x7f0a00df
-			public const int textViewStatus = 2131362015;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00e0
+			public const int textViewStatus = 2131362016;
 			
-<<<<<<< .mine
-			// aapt resource value: 0x7f0a00e2
-			public const int time = 2131362018;
-=======
-			// aapt resource value: 0x7f0a00c7
-			public const int text_headline = 2131361991;
->>>>>>> .theirs
+			// aapt resource value: 0x7f0a00c8
+			public const int text_headline = 2131361992;
 			
-			// aapt resource value: 0x7f0a00fd
-			public const int time = 2131362045;
+			// aapt resource value: 0x7f0a00fe
+			public const int time = 2131362046;
 			
 			// aapt resource value: 0x7f0a0050
 			public const int title = 2131361872;
@@ -5889,14 +5400,14 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0021
 			public const int useLogo = 2131361825;
 			
-			// aapt resource value: 0x7f0a00ca
-			public const int view_header = 2131361994;
+			// aapt resource value: 0x7f0a00cb
+			public const int view_header = 2131361995;
 			
 			// aapt resource value: 0x7f0a000a
 			public const int view_offset_helper = 2131361802;
 			
-			// aapt resource value: 0x7f0a00ce
-			public const int web_update_details = 2131361998;
+			// aapt resource value: 0x7f0a00cf
+			public const int web_update_details = 2131361999;
 			
 			// aapt resource value: 0x7f0a0016
 			public const int wide = 2131361814;
@@ -5907,20 +5418,20 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0022
 			public const int wrap_content = 2131361826;
 			
-			// aapt resource value: 0x7f0a00be
-			public const int wrapper_attachments = 2131361982;
+			// aapt resource value: 0x7f0a00bf
+			public const int wrapper_attachments = 2131361983;
+			
+			// aapt resource value: 0x7f0a00ba
+			public const int wrapper_feedback = 2131361978;
 			
 			// aapt resource value: 0x7f0a00b9
-			public const int wrapper_feedback = 2131361977;
+			public const int wrapper_feedback_scroll = 2131361977;
 			
-			// aapt resource value: 0x7f0a00b8
-			public const int wrapper_feedback_scroll = 2131361976;
+			// aapt resource value: 0x7f0a00c2
+			public const int wrapper_messages = 2131361986;
 			
-			// aapt resource value: 0x7f0a00c1
-			public const int wrapper_messages = 2131361985;
-			
-			// aapt resource value: 0x7f0a00c3
-			public const int wrapper_messages_buttons = 2131361987;
+			// aapt resource value: 0x7f0a00c4
+			public const int wrapper_messages_buttons = 2131361988;
 			
 			static Id()
 			{

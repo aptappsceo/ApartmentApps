@@ -208,7 +208,12 @@ namespace ApartmentApps.Api
                 Context.MaitenanceRequests.Where(p => p.ScheduleDate != null).ToArray()
                     .Select(mapper.ToViewModel);
         }
-        
+
+        public void AssignRequest(int id, string assignedToId)
+        {
+            
+        }
+
         public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)
         {
 

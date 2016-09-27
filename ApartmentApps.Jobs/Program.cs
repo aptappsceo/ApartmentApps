@@ -37,7 +37,7 @@ namespace ApartmentApps.Jobs
                 kernel.Bind<DefaultUserManager>().ToSelf().InSingletonScope();
                 kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InSingletonScope();
                 kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InSingletonScope();
-                var userContext = new JobsUserContext(context)
+                var userContext = new FakeUserContext(context)
                 {
                     PropertyId = item.Id,
                     UserId = context.Users.First(p=>p.UserName == "micahosborne@gmail.com").Id,
@@ -61,55 +61,55 @@ namespace ApartmentApps.Jobs
         }
     }
 
-    public class ConsoleLogger : ILogger
-    {
-        public void Error(string str, params object[] args)
-        {
-            Console.WriteLine(str,args);
-        }
+    //public class ConsoleLogger : ILogger
+    //{
+    //    public void Error(string str, params object[] args)
+    //    {
+    //        Console.WriteLine(str,args);
+    //    }
 
-        public void Warning(string str, params object[] args)
-        {
-            Console.WriteLine(str, args);
-        }
+    //    public void Warning(string str, params object[] args)
+    //    {
+    //        Console.WriteLine(str, args);
+    //    }
 
-        public void Info(string str, params object[] args)
-        {
-            Console.WriteLine(str, args);
-        }
-    }
+    //    public void Info(string str, params object[] args)
+    //    {
+    //        Console.WriteLine(str, args);
+    //    }
+    //}
 
-    public class JobsUserContext : IUserContext
-    {
-        private readonly ApplicationDbContext _dbContext;
+    //public class JobsUserContext : IUserContext
+    //{
+    //    private readonly ApplicationDbContext _dbContext;
 
-        public JobsUserContext(ApplicationDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+    //    public JobsUserContext(ApplicationDbContext dbContext)
+    //    {
+    //        _dbContext = dbContext;
+    //    }
 
-        private ApplicationUser _currentUser;
+    //    private ApplicationUser _currentUser;
 
-        public bool IsInRole(string roleName)
-        {
-            return true;
-        }
+    //    public bool IsInRole(string roleName)
+    //    {
+    //        return true;
+    //    }
 
-        public string UserId { get; set; }
-        public string Email { get; set; }
-        public string Name { get; set; }
-        public int PropertyId { get; set; }
+    //    public string UserId { get; set; }
+    //    public string Email { get; set; }
+    //    public string Name { get; set; }
+    //    public int PropertyId { get; set; }
 
-        public void SetProperty(int propertyId)
-        {
+    //    public void SetProperty(int propertyId)
+    //    {
             
-        }
+    //    }
 
-        public ApplicationUser CurrentUser
-        {
-            get { return _currentUser ?? (_currentUser = _dbContext.Users.Find(UserId)); }
-            set { _currentUser = value; }
-        }
-    }
+    //    public ApplicationUser CurrentUser
+    //    {
+    //        get { return _currentUser ?? (_currentUser = _dbContext.Users.Find(UserId)); }
+    //        set { _currentUser = value; }
+    //    }
+    //}
    
 }

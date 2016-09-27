@@ -12,6 +12,7 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Inspections;
 //using ApartmentApps.Modules.Inspections;
 using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity;
