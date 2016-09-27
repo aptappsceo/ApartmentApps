@@ -129,7 +129,7 @@ namespace ApartmentApps.Api
         private IBlobStorageService _blobStorageService;
 
 
-        public int SubmitIncidentReport(ApplicationUser user, string comments, IncidentType incidentReportTypeId, List<byte[]> images, int unitId = 0)
+        public int SubmitIncidentReport(ApplicationUser user, string comments, IncidentType incidentReportTypeId, List<byte[]> images, int? unitId = null)
         {
 
             var incidentReport = new IncidentReport()
@@ -140,7 +140,7 @@ namespace ApartmentApps.Api
                 StatusId = "Reported",
                 CreatedOn = user.TimeZone.Now(),
                 GroupId = Guid.NewGuid(),
-                UnitId = unitId
+                UnitId = unitId ?? user.UnitId
             };
            
 

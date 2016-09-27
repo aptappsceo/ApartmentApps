@@ -122,8 +122,12 @@ namespace ResidentAppCross.Droid.Views
             set.Bind(SubjectSection.InputField).For(f=>f.Text).To(vm=>vm.Subject);
             set.Bind(DateSection.InputField).For(f=>f.Text).To(vm=>vm.Date);
 
+            
+            var message = ViewModel.Message;
+            if (string.IsNullOrEmpty(ViewModel.Message)) message = "<p>Message is empty.</p>";
+
             MessageSection.WebView.Settings.JavaScriptEnabled = true;
-            MessageSection.WebView.LoadDataWithBaseURL("", ViewModel.Message, "text/html", "UTF-8", "");
+            MessageSection.WebView.LoadDataWithBaseURL("", message, "text/html", "UTF-8", "");
             //set.Bind(MessageSection.InputField).For(f=>f.Text).To(vm=>vm.Message);
             set.Apply();
 

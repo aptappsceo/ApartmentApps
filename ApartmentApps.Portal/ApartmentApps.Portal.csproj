@@ -1151,6 +1151,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template1.txt</LastGenOutput>
     </Content>
+    <None Include="Views\Account\FeedBack.cshtml" />
     <Content Include="Views\Shared\FormFactory\_README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1367,6 +1368,14 @@
       <Project>{62C439C3-12AF-48C9-B7B2-84BC16893027}</Project>
       <Name>ApartmentApps.Modules.CourtesyOfficer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Entrata\ApartmentApps.Modules.Entrata.csproj">
+      <Project>{903c7cd3-93d3-46d3-993b-fa40eea0bf93}</Project>
+      <Name>ApartmentApps.Modules.Entrata</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Inspections\ApartmentApps.Modules.Inspections.csproj">
+      <Project>{11ebf4c6-4475-47dd-9008-0de0607dd723}</Project>
+      <Name>ApartmentApps.Modules.Inspections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Modules.Maintenance\ApartmentApps.Modules.Maintenance.csproj">
       <Project>{CFDCC102-7E3C-4E49-B438-ADE9D48F6615}</Project>
       <Name>ApartmentApps.Modules.Maintenance</Name>
@@ -1378,6 +1387,14 @@
     <ProjectReference Include="..\ApartmentApps.Modules.Payments\ApartmentApps.Modules.Payments.csproj">
       <Project>{CC299297-365F-4643-A0B8-316C788A4EF7}</Project>
       <Name>ApartmentApps.Modules.Payments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Yardi\ApartmentApps.Modules.Yardi.csproj">
+      <Project>{3227fea6-40ab-4e1b-a371-b9fb08f6fa57}</Project>
+      <Name>ApartmentApps.Modules.Yardi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Payments.Forte\ApartmentApps.Payments.Forte.csproj">
+      <Project>{37cb1883-4cf9-4ac2-91e4-036d806657f2}</Project>
+      <Name>ApartmentApps.Payments.Forte</Name>
     </ProjectReference>
     <ProjectReference Include="..\Entrata.Client\Entrata.Client.csproj">
       <Project>{A8CD4A6F-7D69-49A6-A4A8-D199DDC6E490}</Project>

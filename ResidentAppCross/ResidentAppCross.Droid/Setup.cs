@@ -2,6 +2,7 @@ using System;
 using Android.App;
 using Android.Bluetooth;
 using Android.Content;
+using Android.Content.PM;
 using Android.Gms.Common;
 using Android.Gms.Maps;
 using Android.Runtime;
@@ -9,6 +10,8 @@ using Android.Util;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using Gcm;
+using HockeyApp.Android;
+using Java.Lang;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Core.Views;
 using MvvmCross.Droid.Platform;
@@ -23,6 +26,7 @@ using ResidentAppCross.ServiceClient;
 using ResidentAppCross.Services;
 using ResidentAppCross.ViewModels.Screens;
 using ZXing.Mobile;
+using Exception = System.Exception;
 
 namespace ResidentAppCross.Droid
 {
@@ -55,6 +59,7 @@ namespace ResidentAppCross.Droid
                 Application.Context.StartActivity(intent);
             }
         }
+
         public Setup(Context applicationContext)
             : base(applicationContext)
         {
@@ -67,8 +72,9 @@ namespace ResidentAppCross.Droid
         private void HandleExceptions(object sender, UnhandledExceptionEventArgs e)
         {
 
-            Android.Util.Log.WriteLine(LogPriority.Error, "ERROR", string.Format("EXCEPTION: {0} {1} {2}", sender, sender.GetType().Name,
-                e.ExceptionObject));
+            Android.Util.Log.WriteLine(LogPriority.Error, "ERROR",
+                string.Format("EXCEPTION: {0} {1} {2}", sender, sender.GetType().Name,
+                    e.ExceptionObject));
 
         }
 
@@ -86,30 +92,30 @@ namespace ResidentAppCross.Droid
         protected override void InitializeIoC()
         {
             base.InitializeIoC();
-            Mvx.ConstructAndRegisterSingleton<IQRService,AndroidQRService>();
+            Mvx.ConstructAndRegisterSingleton<IQRService, AndroidQRService>();
             Mvx.RegisterSingleton<Application>(DroidApplication.Instance);
-            Mvx.ConstructAndRegisterSingleton<IDialogService,AndroidDialogService>();
-            Mvx.ConstructAndRegisterSingleton<IDefaultViewModelTypeProvider,AndroidDefaultViewModelTypeProvider>();
+            Mvx.ConstructAndRegisterSingleton<IDialogService, AndroidDialogService>();
+            Mvx.ConstructAndRegisterSingleton<IDefaultViewModelTypeProvider, AndroidDefaultViewModelTypeProvider>();
             Mvx.RegisterSingleton<IVersionChecker>(this);
         }
 
         protected override IMvxApplication CreateApp()
         {
-           
+
             return new App();
         }
 
         protected override void FillValueConverters(IMvxValueConverterRegistry registry)
         {
             base.FillValueConverters(registry);
-            registry.AddOrOverwrite("SharedIconsConverter",new SharedIconsConverter());
+            registry.AddOrOverwrite("SharedIconsConverter", new SharedIconsConverter());
             registry.AddOrOverwrite("ByteArrayToImage", new ByteArrayToImage());
         }
     }
 
     public class AndroidDefaultViewModelTypeProvider : IDefaultViewModelTypeProvider
     {
-        public Type DefaultViewModelType => typeof (NotificationIndexFormViewModel);
+        public Type DefaultViewModelType => typeof(NotificationIndexFormViewModel);
     }
 
     [Application]
@@ -129,7 +135,11 @@ namespace ResidentAppCross.Droid
 
         public static ISharedPreferences Preferences
         {
-            get { return _preferences ?? (_preferences = Instance?.GetSharedPreferences("AA_PREFERENCES", FileCreationMode.Private)); }
+            get
+            {
+                return _preferences ??
+                       (_preferences = Instance?.GetSharedPreferences("AA_PREFERENCES", FileCreationMode.Private));
+            }
             set { _preferences = value; }
         }
 
@@ -139,10 +149,16 @@ namespace ResidentAppCross.Droid
             set { _preferencesEditor = value; }
         }
 
+        public override void OnTerminate()
+        {
+            base.OnTerminate();
+        }
 
         public override void OnCreate()
         {
-       
+            var listener = new AptAppsCrashListener();
+            CrashManager.Register(this, "10c2a77679bf4d56a595373625681845", listener);
+            // ExceptionHandler.SaveException(Throwable.FromException(new System.Exception("this is eventual")),Thread.CurrentThread(),listener);
             Instance = this;
 
             App.ApartmentAppsClient.GetAuthToken = () => AuthToken;
@@ -156,12 +172,11 @@ namespace ResidentAppCross.Droid
             LoginService.SetRegistrationId = (v) => HandleId = v;
 
             base.OnCreate();
-
-
-            GcmClient.CheckDevice(this);
-            GcmClient.CheckManifest(this);
-            GcmClient.Register(this, GcmConstants.SenderID);
-
+            if(IsPackageAvailable("com.google.android.gsf")) { 
+                GcmClient.CheckDevice(this);
+                GcmClient.CheckManifest(this);
+                GcmClient.Register(this, GcmConstants.SenderID);
+            }
             try
             {
                 MapsInitializer.Initialize(this);
@@ -171,8 +186,20 @@ namespace ResidentAppCross.Droid
                 e.PrintStackTrace();
             }
 
+        }
 
-
+        //com.google.android.gsf
+        public bool IsPackageAvailable(string package)
+        {
+            try
+            {
+                PackageManager.GetPackageInfo(package, PackageInfoFlags.MetaData);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         public static DroidApplication Instance { get; set; }
@@ -239,4 +266,29 @@ namespace ResidentAppCross.Droid
 
     }
 
+}
+
+public class AptAppsCrashListener : CrashManagerListener
+{
+    public override string UserID
+    {
+        get
+        {
+            ILoginManager loginManager = null;
+            try
+            {
+                loginManager = Mvx.Resolve<ILoginManager>();
+            }
+            catch(System.Exception ex)
+            {
+                //well...
+            }
+            return loginManager?.UserInfo?.Email;
+        }
+    }
+
+    public override bool ShouldAutoUploadCrashes()
+    {
+        return true;
+    }
 }

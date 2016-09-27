@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
+using Android.Content.Res;
 using Android.Gms.Maps;
 using Android.Graphics;
 using Android.OS;
@@ -103,10 +104,10 @@ namespace ResidentAppCross.Droid.Views
         public TextView HeaderLabel { get; set; }
 
         [Outlet]
-        public Button AddPhotoButton1 { get; set; }
+        public AppCompatButton AddPhotoButton1 { get; set; }
 
         [Outlet]
-        public Button AddPhotoButton2 { get; set; }
+        public AppCompatButton AddPhotoButton2 { get; set; }
 
         [Outlet]
         public RecyclerView ImageContainer { get; set; }
@@ -149,6 +150,8 @@ namespace ResidentAppCross.Droid.Views
             ImageContainer.SetItemAnimator(new SlideInUpAnimator());
             ImageContainer.SetLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.Horizontal));
             ImageContainer.SetAdapter(new SlideInLeftAnimationAdapter(Adapter));
+                  AddPhotoButton1.StyleMaterial(Context);
+                  AddPhotoButton2.StyleMaterial(Context);
 
             Editable = false;
 

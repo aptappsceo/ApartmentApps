@@ -83,7 +83,7 @@ namespace ResidentAppCross.Services
         {
             if (!await _loginManager.LoginAsync(null, null))
             {
-                context.FailTask("Invalid login or password!");
+                context.FailTask("Your authentication has expired! Please, log in again.");
             }
         }
 
@@ -126,7 +126,7 @@ namespace ResidentAppCross.Services
                 var password = passwordGetter?.Invoke();
 
 
-                if (_loginManager.IsLoggedIn && !(string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)))
+                if (_loginManager.IsLoggedIn)
                 {
                     await AutoLoginProcedure(ctx);
                 }

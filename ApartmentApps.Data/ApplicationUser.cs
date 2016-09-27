@@ -60,6 +60,8 @@ namespace ApartmentApps.Data
         [Key]
         public override string Id { get; set; }
 
+        
+
         public string ImageUrl { get; set; }
 
         public string ImageThumbnailUrl { get; set; }
@@ -107,6 +109,8 @@ namespace ApartmentApps.Data
         public string DeviceToken { get; set; }
 
         public int? ForteClientId { get; set; }
+
+        public string SyncId { get; set; }
 
         int IBaseEntity.Id => 0;
 

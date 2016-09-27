@@ -46,7 +46,7 @@ namespace ApartmentApps.Portal.Controllers
                         .ToArray().OrderByAlphaNumeric(p => p.Name);
 
 
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
+                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Building.Name + " - " + p.Name, UnitId == p.Id));
 
 
             }
@@ -201,8 +201,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid && model.Id != null)
             {
-                MaintenanceService.AssignRequest(model.Id, model.AssignedToId);
-                return new EmptyResult();
+                MaintenanceService.AssignRequest(model.Id.Value, model.AssignedToId);                return new EmptyResult();
             }
             return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
         }

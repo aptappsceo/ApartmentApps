@@ -44,6 +44,7 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Longitude = model.Longitude;
             viewModel.BuildingId = model.BuildingId;
             viewModel.BuildingName = model.Building.Name;
+            viewModel.SearchAlias = $"{model.Building.Name}-{model.Name}";
         }
 
     }

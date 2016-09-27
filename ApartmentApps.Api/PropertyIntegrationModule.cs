@@ -75,10 +75,10 @@ namespace ApartmentApps.Api
             ImportCustomer(this, unitId, phoneNumber, city, email, firstName, lastName, middleName, gender, postalCode, state, address);
         }
 
-        protected void ImportCustomer(ICreateUser createUser, 
+        protected ApplicationUser ImportCustomer(ICreateUser createUser, 
             int unitId, string phoneNumber, string city, string email, string firstName, string lastName,string middleName, string gender,string postalCode, string state, string address)
         {
-            if (string.IsNullOrEmpty(email)) return;
+            if (string.IsNullOrEmpty(email)) return null;
 
             var user = DbContext.Users.FirstOrDefault(p => p.Email.ToLower() == email.ToLower());
 
@@ -88,7 +88,7 @@ namespace ApartmentApps.Api
             }
             if (user == null)
             {
-                return;
+                return user;
             }
             user.PropertyId = UserContext.PropertyId;
             if (!user.Roles.Any(p => p.RoleId == "Resident"))
@@ -112,6 +112,7 @@ namespace ApartmentApps.Api
             user.UnitId = unitId;
             user.Address = address;
             _context.SaveChanges();
+            return user;
         }
 
         public TimeSpan Frequency => new TimeSpan(1,0,0,0);

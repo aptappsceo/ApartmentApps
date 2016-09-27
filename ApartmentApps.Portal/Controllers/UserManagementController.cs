@@ -36,6 +36,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public int? UnitId { get; set; }
 
+        public List<UnitViewModel> UnitItems { get; set; }
 
     }
 
@@ -197,6 +198,7 @@ namespace ApartmentApps.Portal.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IMapper<Unit, UnitViewModel> _mapper;
 
         //public UserManagementController(PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(context, userContext)
         //{
@@ -204,10 +206,11 @@ namespace ApartmentApps.Portal.Controllers
         //    _userManager = userManager;
         //}
 
-        public UserManagementController2(IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser> service, PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(kernel, repository, service, context, userContext)
+        public UserManagementController(IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager, IMapper<Unit,UnitViewModel> mapper ) : base(kernel, repository, service, context, userContext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public ApplicationSignInManager SignInManager
@@ -282,6 +285,7 @@ namespace ApartmentApps.Portal.Controllers
                 userModel.SelectedRoles = user.Roles.Select(p => p.RoleId).ToList();
 
             }
+            userModel.UnitItems = Context.Units.OrderBy(p => p.Name).Select(u => _mapper.ToViewModel(u)).ToList();
             ViewBag.UnitId = new SelectList(Context.Units.OrderBy(p=>p.Name), "Id", "Name", user?.UnitId);
 
             return View(userModel);

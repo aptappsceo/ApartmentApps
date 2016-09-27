@@ -1,0 +1,36 @@
+﻿@model FeedBackBindingModel
+
+<div class="wrapper">
+
+    <h1 class="page-header">Please, let us know what you think</h1>
+
+    <div class="row wrapper-content">
+        @using (Html.BeginForm("FeedBack"))
+        {
+            <div class="messages"></div>
+
+            <div class="controls">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.LabelFor(s => s.Message, "Message *")
+                        <div class="form-group">
+                            @Html.TextAreaFor(s => s.Message, new Dictionary<string, object>() { {"class" , "form-control"},{"placeholder", "Please, describe what you think about the portal..."}, {"rows", "4"} })
+                            @Html.ValidationMessageFor(s => s.Message)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-success btn-send" value="Send message">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="text-muted">
+                            <strong>*</strong> These fields are required.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

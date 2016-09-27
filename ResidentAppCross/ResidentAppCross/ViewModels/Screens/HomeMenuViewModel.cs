@@ -48,13 +48,15 @@ namespace ResidentAppCross
                 this.Publish(new HomeMenuUpdatedEvent(this));
                 return;
             }
-
+            
+            /*
             MenuItems.Add(new HomeMenuItemViewModel()
             {
                 Name = "Nested Sections",
                 Icon = SharedResources.Icons.PoliceFolder,
                 Command = NestedSectionCommand
             });
+            */
 
             if (maintenanceEnabled)
             if (_loginManager.UserInfo.Roles.Contains("Maintenance") ||
@@ -234,12 +236,11 @@ namespace ResidentAppCross
 
         public ICommand PayRentCommand => new MvxCommand(() =>
         {
-            if(!string.IsNullOrEmpty(PaymentUrl))
-            _dialogService.OpenUrl(PaymentUrl);
-            else
-            {
-                ShowViewModel<RentSummaryViewModel>();
-            }
+            if(!string.IsNullOrEmpty(PaymentUrl)) _dialogService.OpenUrl(PaymentUrl);
+            //else
+            //{
+            //    ShowViewModel<RentSummaryViewModel>();
+            //}
         },()=> _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.Enabled ?? false );
 
         public ICommand CommunityPartnersCommand => StubCommands.NoActionSpecifiedCommand(this);

@@ -12,7 +12,7 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
-using ApartmentApps.Modules.Inspections;
+//using ApartmentApps.Modules.Inspections;
 using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -121,7 +121,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterModule<MessagingModule, MessagingConfig>();
             //kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<EntrataModule, EntrataConfig>();
-            kernel.RegisterModule<InspectionsModule, InspectionsModuleConfig>();
+            //kernel.RegisterModule<InspectionsModule, InspectionsModuleConfig>();
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
             //ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
@@ -186,7 +186,7 @@ namespace ApartmentApps.IoC
             kernel.Bind<IFeedSerivce>().To<FeedSerivce>().InRequestScope();
 
             kernel.RegisterMappable<Unit, UnitViewModel, UnitService, UnitMapper>();
-            kernel.RegisterMappable<Inspection, InspectionViewModel, InspectionsService, InspectionViewModelMapper>();
+            //kernel.RegisterMappable<Inspection, InspectionViewModel, InspectionsService, InspectionViewModelMapper>();
             kernel.RegisterMappable<Building, BuildingViewModel, BuildingService, BuildingMapper>();
             kernel.RegisterMappable<Message, MessageViewModel, MessagingService, MessageMapper>();
             kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService, UserMapper>();
