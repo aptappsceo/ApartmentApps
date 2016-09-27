@@ -20,172 +20,16 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Portal.App_Start;
+using Korzh.EasyQuery.Services;
 using Ninject;
 using Syncfusion.DocIO.DLS;
 using Syncfusion.DocToPDFConverter;
 using Syncfusion.HtmlConverter;
 using Syncfusion.Pdf;
-using Syncfusion.Pdf.Graphics;
-using Syncfusion.MVC;
-using Syncfusion.OfficeChartToImageConverter;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public static class SortExtensions
-    {
-        public static IEnumerable<T> OrderByAlphaNumeric<T>(this IEnumerable<T> source, Func<T, string> selector)
-        {
-            int max = source
-                .SelectMany(i => Regex.Matches(selector(i), @"\d+").Cast<Match>().Select(m => (int?)m.Value.Length))
-                .Max() ?? 0;
 
-            return source.OrderBy(i => Regex.Replace(selector(i), @"\d+", m => m.Value.PadLeft(max, '0')));
-        }
-    }
-    public class AlphanumComparatorFast : IComparer
-    {
-        List<string> GetList(string s1)
-        {
-            List<string> SB1 = new List<string>();
-            string st1, st2, st3;
-            st1 = "";
-            bool flag = char.IsDigit(s1[0]);
-            foreach (char c in s1)
-            {
-                if (flag != char.IsDigit(c) || c == '\'')
-                {
-                    if (st1 != "")
-                        SB1.Add(st1);
-                    st1 = "";
-                    flag = char.IsDigit(c);
-                }
-                if (char.IsDigit(c))
-                {
-                    st1 += c;
-                }
-                if (char.IsLetter(c))
-                {
-                    st1 += c;
-                }
-
-
-            }
-            SB1.Add(st1);
-            return SB1;
-        }
-
-        public int Compare(object x, object y)
-        {
-            string s1 = x as string;
-            if (s1 == null)
-            {
-                return 0;
-            }
-            string s2 = y as string;
-            if (s2 == null)
-            {
-                return 0;
-            }
-            if (s1 == s2)
-            {
-                return 0;
-            }
-            int len1 = s1.Length;
-            int len2 = s2.Length;
-            int marker1 = 0;
-            int marker2 = 0;
-
-            // Walk through two the strings with two markers.
-            List<string> str1 = GetList(s1);
-            List<string> str2 = GetList(s2);
-            while (str1.Count != str2.Count)
-            {
-                if (str1.Count < str2.Count)
-                {
-                    str1.Add("");
-                }
-                else
-                {
-                    str2.Add("");
-                }
-            }
-            int x1 = 0; int res = 0; int x2 = 0; string y2 = "";
-            bool status = false;
-            string y1 = ""; bool s1Status = false; bool s2Status = false;
-            //s1status ==false then string ele int;
-            //s2status ==false then string ele int;
-            int result = 0;
-            for (int i = 0; i < str1.Count && i < str2.Count; i++)
-            {
-                status = int.TryParse(str1[i].ToString(), out res);
-                if (res == 0)
-                {
-                    y1 = str1[i].ToString();
-                    s1Status = false;
-                }
-                else
-                {
-                    x1 = Convert.ToInt32(str1[i].ToString());
-                    s1Status = true;
-                }
-
-                status = int.TryParse(str2[i].ToString(), out res);
-                if (res == 0)
-                {
-                    y2 = str2[i].ToString();
-                    s2Status = false;
-                }
-                else
-                {
-                    x2 = Convert.ToInt32(str2[i].ToString());
-                    s2Status = true;
-                }
-                //checking --the data comparision
-                if (!s2Status && !s1Status)    //both are strings
-                {
-                    result = str1[i].CompareTo(str2[i]);
-                }
-                else if (s2Status && s1Status) //both are intergers
-                {
-                    if (x1 == x2)
-                    {
-                        if (str1[i].ToString().Length < str2[i].ToString().Length)
-                        {
-                            result = 1;
-                        }
-                        else if (str1[i].ToString().Length > str2[i].ToString().Length)
-                            result = -1;
-                        else
-                            result = 0;
-                    }
-                    else
-                    {
-                        int st1ZeroCount = str1[i].ToString().Trim().Length - str1[i].ToString().TrimStart(new char[] { '0' }).Length;
-                        int st2ZeroCount = str2[i].ToString().Trim().Length - str2[i].ToString().TrimStart(new char[] { '0' }).Length;
-                        if (st1ZeroCount > st2ZeroCount)
-                            result = -1;
-                        else if (st1ZeroCount < st2ZeroCount)
-                            result = 1;
-                        else
-                            result = x1.CompareTo(x2);
-
-                    }
-                }
-                else
-                {
-                    result = str1[i].CompareTo(str2[i]);
-                }
-                if (result == 0)
-                {
-                    continue;
-                }
-                else
-                    break;
-
-            }
-            return result;
-        }
-    }
     public class MaitenanceRequestModel
     {
 
@@ -202,7 +46,7 @@ namespace ApartmentApps.Portal.Controllers
                         .ToArray().OrderByAlphaNumeric(p => p.Name);
 
 
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
+                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Building.Name + " - " + p.Name, UnitId == p.Id));
 
 
             }
@@ -264,115 +108,62 @@ namespace ApartmentApps.Portal.Controllers
         public DateTime? Date { get; set; }
     }
 
-
-    public class MaintenanceRequestEditModel
+    public class AssignMaintenanceEditModel
     {
+        private readonly IRepository<ApplicationUser> _userRepository;
 
-        //[DataType()]
-        [DisplayName("Unit")]
-        public int UnitId { get; set; }
-
-        public IEnumerable<FormPropertySelectItem> UnitId_Items
+        public AssignMaintenanceEditModel()
         {
-            get
-            {
-                var items =
-                    NinjectWebCommon.Kernel.Get<IRepository<Unit>>()
-                        .ToArray().OrderByAlphaNumeric(p => p.Name);
-
-
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
-
-
-            }
-        }
-        public IEnumerable<FormPropertySelectItem> MaitenanceRequestTypeId_Items
-        {
-            get
-            {
-                return
-                    NinjectWebCommon.Kernel.Get<IRepository<MaitenanceRequestType>>()
-                        .ToArray()
-                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, MaitenanceRequestTypeId == p.Id));
-
-
-            }
         }
 
-        [DisplayName("Type")]
-        public int MaitenanceRequestTypeId { get; set; }
-
-        [DisplayName("Permission To Enter")]
-        public bool PermissionToEnter { get; set; }
-
-        [DisplayName("Pet Status")]
-        public PetStatus PetStatus { get; set; }
+        public AssignMaintenanceEditModel(IRepository<ApplicationUser> userRepository)
+        {
+            _userRepository = userRepository;
+        }
 
         [DataType("Hidden")]
-        public int? Id { get; set; }
+        public string Id { get; set; }
 
-        [DataType(DataType.MultilineText)]
-        public string Comments { get; set; }
 
+        //[DataType()]
+        [DisplayName("Assigned To")]
+        public string AssignedToId { get; set; }
+
+        public IEnumerable<FormPropertySelectItem> AssignedToId_Items => _userRepository.ToArray()
+                    .Where(p => p.Roles.Any(x => x.RoleId == "Maintenance"))
+                    .OrderByAlphaNumeric(p => p.LastName)
+                    .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName, AssignedToId == p.Id));
 
     }
 
-    public enum PetStatus
-    {
-        NoPet,
-        YesContained,
-        YesFree
-    }
+
+
+
     [Authorize]
-    public class MaitenanceRequestsController : CrudController<MaintenanceRequestViewModel, MaitenanceRequest>
+    public class MaitenanceRequestsController : AutoGridController
+            <MaintenanceService, MaintenanceService, MaintenanceRequestViewModel, MaintenanceRequestEditModel>
     {
         private PdfDocument _document;
         public IMaintenanceService MaintenanceService { get; set; }
-        public override ActionResult Index()
-        {
-            return View(Service.GetAll().OrderByDescending(p => p.RequestDate));
-        }
 
-        public ActionResult Fix()
-        {
-            var units = Context.Units.OrderBy(p => p.Id).ToList();
-            var keep = new int[]
-            {
-                4771,
-                6000,
-                6129,
-                6132,
-                6140,
-                6141,
-                6142,
-                6182
-            };
 
-            var sb = new StringBuilder();
-            foreach (var item in units)
+        //public override ActionResult Index()
+        //{
+        //    return View(Service.GetAll< MaintenanceRequestViewModel>().OrderByDescending(p => p.RequestDate));
+        //}
+
+        public override ActionResult GridResult(GridList<MaintenanceRequestViewModel> grid)
+        {
+            if (Request.IsAjaxRequest())
             {
-                if (item.Id > 4700 && !keep.Contains(item.Id))
-                {
-                    //foreach (var mr in item.MaitenanceRequests)
-                    //{
-                    //    sb.AppendLine(mr.Id.ToString());
-                    //}
-                    foreach (var user in Kernel.Get<ApplicationDbContext>().Users.Where(p => p.UnitId == item.Id).ToArray())
-                    {
-                        user.UnitId = null;
-                        Context.SaveChanges();
-                    }
-                    Context.Units.Remove(item);
-                    Context.SaveChanges();
-                }
+                return View("OverviewListPartial", grid);
             }
-            
-            return Content(sb.ToString(), "text/plain");
+            return View("Overview", new MaintenanceRequestOverviewViewModel()
+            {
+                FeedItems = grid
+            });
         }
-        public MaitenanceRequestsController(IKernel kernel, IMaintenanceService maintenanceService, IRepository<MaitenanceRequest> repository, StandardCrudService<MaitenanceRequest, MaintenanceRequestViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel, repository, service, context, userContext)
-        {
-            MaintenanceService = maintenanceService;
-        }
+
 
         public ActionResult MySchedule()
         {
@@ -381,7 +172,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public JsonResult MyScheduleData()
         {
-            return Json(MaintenanceService.GetAppointments(), JsonRequestBehavior.AllowGet);
+            return Json(MaintenanceService.GetAppointments<MaintenanceRequestViewModel>(), JsonRequestBehavior.AllowGet);
         }
         public ActionResult NewRequest()
         {
@@ -395,65 +186,82 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
+        public ActionResult AssignRequest(string id)
+        {
+            var request = Service.Find<MaintenanceRequestViewModel>(id);
+            return AutoForm(new AssignMaintenanceEditModel(Kernel.Get<IRepository<ApplicationUser>>())
+            {
+                Id = id,
+                AssignedToId = request.AssignedToId
+            },
+                "AssignRequestSubmit", "Assign Maintenance Request");
+        }
+
+        public ActionResult AssignRequestSubmit(AssignMaintenanceEditModel model)
+        {
+            if (ModelState.IsValid && model.Id != null)
+            {
+                MaintenanceService.AssignRequest(model.Id.Value, model.AssignedToId);                return new EmptyResult();
+            }
+            return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
+        }
+
         // GET: /MaitenanceRequests/Edit/5
-        public ActionResult EditRequest(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
-            if (maitenanceRequest == null)
-            {
-                return HttpNotFound();
-            }
+        //public ActionResult EditRequest(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
+        //    if (maitenanceRequest == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(new MaintenanceRequestEditModel()
+        //    {
+        //        Id = id.Value.ToString(),
+        //        MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId,
+        //        PermissionToEnter = maitenanceRequest.PermissionToEnter,
+        //        UnitId = maitenanceRequest.UnitId ?? 0,
+        //        PetStatus = (PetStatus)maitenanceRequest.PetStatus,
+        //        Comments = maitenanceRequest.Message
+        //    });
+        //}
 
+        //// POST: /MaitenanceRequests/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditRequest(MaintenanceRequestEditModel editModel)
+        //{
 
+        //    if (ModelState.IsValid)
+        //    {
+        //        var id = editModel.Id;
+        //        if (id == null)
+        //        {
+        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //        }
+        //        MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
+        //        if (maitenanceRequest == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
 
-            return View(new MaintenanceRequestEditModel()
-            {
-                Id = id.Value,
-                MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId,
-                PermissionToEnter = maitenanceRequest.PermissionToEnter,
-                UnitId = maitenanceRequest.UnitId ?? 0,
-                PetStatus = (PetStatus)maitenanceRequest.PetStatus,
-                Comments = maitenanceRequest.Message
-            });
-        }
+        //        maitenanceRequest.PetStatus = (int)editModel.PetStatus;
+        //        maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
+        //        maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
+        //        maitenanceRequest.UnitId = editModel.UnitId;
+        //        maitenanceRequest.Message = editModel.Comments;
+        //        Context.SaveChanges();
 
-        // POST: /MaitenanceRequests/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditRequest(MaintenanceRequestEditModel editModel)
-        {
+        //        return RedirectToAction("Details", new { id = id });
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                var id = editModel.Id;
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
-                if (maitenanceRequest == null)
-                {
-                    return HttpNotFound();
-                }
-
-                maitenanceRequest.PetStatus = (int) editModel.PetStatus;
-                maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
-                maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
-                maitenanceRequest.UnitId = editModel.UnitId;
-                maitenanceRequest.Message = editModel.Comments;
-                Context.SaveChanges();
-
-                return RedirectToAction("Details",new {id = id});
-            }
-
-            return View(editModel);
-        }
+        //    return View(editModel);
+        //}
 
 
         public ActionResult Pause(int id)
@@ -483,47 +291,17 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public ActionResult CreateMonthlyReport(MaintenanceReportModel model)
         {
-            //var doc =
-            //    new WordDocument(
-            //        typeof (MaitenanceRequestsController).Assembly.GetManifestResourceStream(
-            //            "ApartmentApps.Portal.MaintenanceReport.docx"));
-
-            //doc.ChartToImageConverter = new ChartToImageConverter();
-
-            ////Create an instance of DocToPDFConverter
-
-            //DocToPDFConverter converter = new DocToPDFConverter();
-
-            ////Convert Word document into PDF document
-
-            //_document = converter.ConvertToPDF(doc);
 
             Thread thread = new Thread(() => { CreateDocument(model); });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();
-
-
-            //HTML string and base URL
-
-            //if (Browser == "Browser")
-            //{
-
             var stream = new MemoryStream();
             _document.Save(stream);
             _document.Close(true);
             return File(stream.ToArray(), "application/pdf", $"MonthlyReport{model.StartDate.Value.Month}{model.StartDate.Value.Day}-{model.EndDate.Value.Month}{model.EndDate.Value.Day}.pdf");
-
-
-
-
-            ////                return doc.ExportAsActionResult("sample.pdf", HttpContext.ApplicationInstance.Response, HttpReadType.Open);
-            //            }
-            //            else
-            //            {
-            //                return doc.ExportAsActionResult("sample.pdf", HttpContext.ApplicationInstance.Response, HttpReadType.Save);
-            //            }
         }
+
         private IQueryable<MaitenanceRequest> WorkOrdersByRange(DateTime? startDate, DateTime? endDate)
         {
             return Context.MaitenanceRequests.Where(p => p.SubmissionDate > startDate && p.SubmissionDate < endDate);
@@ -559,14 +337,14 @@ namespace ApartmentApps.Portal.Controllers
             var WorkOrdersPerEmployee = CheckinsByRange(startDate, endDate).Where(p => p.StatusId == "Complete")
                 .GroupBy(p => p.Worker)
                 .ToArray();
-            
+
             HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
             string htmlText = $"<html><body style='padding: 40px;font-family: Arial, Helvetica, sans-serif;'>" +
                               $"<div style='text-align: center; font-size: 32px; font-weight: bold'>{UserContext.CurrentUser.Property.Name} Monthly Maintenance Report</div>" +
                               $"<div style='text-align: center; font-size: 20px;'>For {model.StartDate} {model.EndDate}</div>" +
                               $"<br/><br/><table style='width: 100%'>";
 
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Work Orders</td><td>{CheckinsByRange(startDate,endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Work Orders</td><td>{CheckinsByRange(startDate, endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
             foreach (var item in WorkOrdersPerEmployee)
             {
                 htmlText += $"<tr><td>{item.Key.FirstName} {item.Key.LastName} Completed</td><td>{item.Count()} Work Orders</td></tr> ";
@@ -582,10 +360,10 @@ namespace ApartmentApps.Portal.Controllers
             _document = htmlConverter.Convert(htmlText, baseUrl);
         }
 
-        public override string ExportFileName
-        {
-            get { return "MaintenanceRequests"; }
-        }
+        //public override string ExportFileName
+        //{
+        //    get { return "MaintenanceRequests"; }
+        //}
 
         [HttpPost]
         public ActionResult SubmitRequest(MaitenanceRequestModel request)
@@ -619,7 +397,6 @@ namespace ApartmentApps.Portal.Controllers
         [System.Web.Http.HttpPost]
         public ActionResult PauseRequest(MaintenanceStatusRequestModel request)
         {
-
             MaintenanceService.PauseRequest(
                 CurrentUser,
                 request.Id,
@@ -627,7 +404,6 @@ namespace ApartmentApps.Portal.Controllers
 
                 );
             return RedirectToAction("Details", new { id = request.Id });
-
         }
 
         [System.Web.Http.HttpPost]
@@ -655,30 +431,46 @@ namespace ApartmentApps.Portal.Controllers
                 );
             return RedirectToAction("Details", new { id = request.Id });
         }
-        public ActionResult Print(int id)
+        public ActionResult Print(string id)
         {
-            var item = Service.Find(id);
+            var item = Service.Find<MaintenanceRequestViewModel>(id);
             return View(item);
         }
 
+        public MaitenanceRequestsController(IKernel kernel, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service) : base(kernel, formService, indexService, context, userContext, service)
+        {
+        }
+    }
+
+    public class MaintenanceRequestOverviewViewModel
+    {
+        public IPagedList<MaintenanceRequestViewModel>  Requests { get; set; }
+        public GridList<MaintenanceRequestViewModel> FeedItems { get; set; }
+    }
+
+    public class AutoGridModel<TItem> : AutoGridModel
+    {
+        public AutoGridModel() : base()
+        {
+        }
+
+       // public IEnumerable<TItem> ModelTyped => Model.Cast<TItem>();
     }
     public class AutoGridModel
     {
         private string _title;
-        public object[] Model { get; set; }
+        //public IEnumerable<object> Model { get; set; }
+        //public IPaging Paging => Model as IPaging;
 
         public string Title
         {
-            get { return _title ?? (_title = Model.GetType().GetCustomAttributes(typeof(DisplayNameAttribute), true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? Model.GetType().Name); }
+            get { return _title ?? (_title = Type.GetCustomAttributes(typeof(DisplayNameAttribute), true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? Type.Name); }
             set { _title = value; }
         }
-
         public Type Type { get; set; }
-
-
-        public AutoGridModel(object[] model)
+        public AutoGridModel()
         {
-            Model = model;
+            //Model = model;
         }
     }
     public class AutoFormModel
@@ -763,7 +555,7 @@ namespace ApartmentApps.Portal.Controllers
             return View(maitenanceRequest);
         }
 
-    
+
 
         // GET: /MaitenanceRequests/Delete/5
         public ActionResult Delete(int? id)

@@ -1,13 +1,29 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
+using Korzh.EasyQuery;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data
 {
+    [AttributeUsage(AttributeTargets.Property)]
+    public class Searchable : EqEntityAttrAttribute
+    {
+        public Searchable()
+        {
+            UseInConditions = true;
+            
+        }
+
+        public string Caption { get; set; }
+
+        
+    }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-       
+       public static List<Assembly> SearchAssemblies { get; set; } = new List<Assembly>();
         public virtual IDbSet<MaintenanceRequestStatus> MaintenanceRequestStatuses { get; set; }
         public virtual IDbSet<IncidentReportStatus> IncidentReportStatuses { get; set; }
         public virtual IDbSet<Corporation> Corporations { get; set; }
@@ -32,19 +48,20 @@ namespace ApartmentApps.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            
+            foreach (var assembly in SearchAssemblies.Distinct())
             {
-                if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
                 var entityTypes = assembly
                   .GetTypes()
                   .Where(t =>
                     t.GetCustomAttributes(typeof(PersistantAttribute), inherit: true)
-                    .Any() );
+                    .Any());
 
+                foreach (var entityType in entityTypes)
+                    modelBuilder.RegisterEntityType(entityType);
                 
-                foreach (var type in entityTypes)
-                    modelBuilder.RegisterEntityType(type);
+                modelBuilder.Configurations.AddFromAssembly(assembly);
+                    
             }
             //modelBuilder.Entity<ApplicationUser>()
             //    .HasMany(p=>p.UserAlerts)
@@ -65,8 +82,21 @@ namespace ApartmentApps.Data
         }
     }
 
+    [Persistant]
+    public class ProcessInfo : PropertyEntity
+    {
+        public string TypeName { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
+
+        public DateTime? NextRun { get; set; }
+    }
     [AttributeUsage(AttributeTargets.Class)]
     public class PersistantAttribute : Attribute
+    {
+    }
+    [AttributeUsage(AttributeTargets.Class)]
+    public class PersistantConfigAttribute : Attribute
     {
     }
 }

@@ -19,7 +19,7 @@ namespace ResidentAppCross.iOS.Views
     {
         private TextViewSection _subjectSection;
         private TextViewSection _dateSection;
-        private TextViewSection _messageSection;
+        private UIWebView _messageSection;
 
         public TextViewSection SubjectSection
         {
@@ -54,17 +54,15 @@ namespace ResidentAppCross.iOS.Views
             set { _dateSection = value; }
         }
 
-        public TextViewSection MessageSection
+        public UIWebView MessageSection
         {
             get
             {
                 if (_messageSection == null)
                 {
-                    _messageSection = Formals.Create<TextViewSection>();
-                    _messageSection.HeaderLabel.Text = "Message";
-                    _messageSection.HeightConstraint.Constant = 300;
-
-
+                    _messageSection = new UIWebView();
+                    _messageSection.TranslatesAutoresizingMaskIntoConstraints = false;
+                    _messageSection.WithHeight(300);
                 }
                 return _messageSection;
             }
@@ -78,8 +76,11 @@ namespace ResidentAppCross.iOS.Views
             var set = this.CreateBindingSet<MessageDetailsView, MessageDetailsViewModel>();
             set.Bind(SubjectSection.TextView).For(f => f.Text).To(vm => vm.Subject);
             set.Bind(DateSection.TextView).For(f => f.Text).To(vm => vm.Date);
-            set.Bind(MessageSection.TextView).For(f => f.Text).To(vm => vm.Message);
             set.Apply();
+
+            var message = ViewModel.Message;
+            if (string.IsNullOrEmpty(ViewModel.Message)) message = "<p>Message is empty.</p>";
+            MessageSection.LoadHtmlString(message,null);
         }
 
         public override void GetContent(List<UIView> content)

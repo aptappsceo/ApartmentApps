@@ -11,39 +11,45 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("HeaderSection")]
-	partial class HeaderSection
-	{
-		[Outlet]
-		UIKit.NSLayoutConstraint HeaderBottomAlignmentConstraint { get; set; }
+    [Register ("HeaderSection")]
+    partial class HeaderSection
+    {
+        [Outlet]
+        UIKit.NSLayoutConstraint HeaderBottomAlignmentConstraint { get; set; }
 
-		[Outlet]
-		UIKit.UILabel HeaderLabel { get; set; }
 
-		[Outlet]
-		UIKit.UIImageView LogoImageView { get; set; }
+        [Outlet]
+        UIKit.UILabel HeaderLabel { get; set; }
 
-		[Outlet]
-		UIKit.UILabel SubHeaderLabel { get; set; }
 
-		void ReleaseDesignerOutlets ()
-		{
-			if (HeaderBottomAlignmentConstraint != null) {
-				HeaderBottomAlignmentConstraint.Dispose ();
-				HeaderBottomAlignmentConstraint = null;
-			}
-			if (HeaderLabel != null) {
-				HeaderLabel.Dispose ();
-				HeaderLabel = null;
-			}
-			if (LogoImageView != null) {
-				LogoImageView.Dispose ();
-				LogoImageView = null;
-			}
-			if (SubHeaderLabel != null) {
-				SubHeaderLabel.Dispose ();
-				SubHeaderLabel = null;
-			}
-		}
-	}
+        [Outlet]
+        UIKit.UIImageView LogoImageView { get; set; }
+
+
+        [Outlet]
+        UIKit.UILabel SubHeaderLabel { get; set; }
+
+        void ReleaseDesignerOutlets ()
+        {
+            if (HeaderBottomAlignmentConstraint != null) {
+                HeaderBottomAlignmentConstraint.Dispose ();
+                HeaderBottomAlignmentConstraint = null;
+            }
+
+            if (HeaderLabel != null) {
+                HeaderLabel.Dispose ();
+                HeaderLabel = null;
+            }
+
+            if (LogoImageView != null) {
+                LogoImageView.Dispose ();
+                LogoImageView = null;
+            }
+
+            if (SubHeaderLabel != null) {
+                SubHeaderLabel.Dispose ();
+                SubHeaderLabel = null;
+            }
+        }
+    }
 }

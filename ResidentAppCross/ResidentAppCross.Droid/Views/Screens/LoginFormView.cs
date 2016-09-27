@@ -40,13 +40,18 @@ namespace ResidentAppCross.Droid.Views
         public EditText PasswordInput { get; set; }
 
         [Outlet]
-        public Button LoginButton { get; set; }
+        public AppCompatButton LoginButton { get; set; }
 
         [Outlet]
         public Button SignUpButton { get; set; }
 
+        [Outlet]
+        public Button RecoverPasswordButton { get; set; }
+
         public override void Bind()
         {
+            LoginButton.StyleMaterial(this.Context);
+
             base.Bind();
 
             MainActivity.Window.SetSoftInputMode(SoftInput.AdjustResize | SoftInput.StateHidden);
@@ -64,6 +69,7 @@ namespace ResidentAppCross.Droid.Views
             set.Bind(EmailInput).TwoWay().For(v => v.Text).To(vm => vm.Username);
             set.Bind(PasswordInput).TwoWay().For(v => v.Text).To(vm => vm.Password);
             set.Bind(SignUpButton).To(vm => vm.SignUpCommand);
+            set.Bind(RecoverPasswordButton).To(vm => vm.RemindPasswordCommand);
             set.Apply();
 
         }

@@ -1,0 +1,37 @@
+﻿@using ApartmentApps.Data
+@model IEnumerable<ApartmentApps.Api.BindingModels.MaintenanceCheckinBindingModel>
+@{
+    var property = ViewBag.Property as Property;
+}
+@foreach (var item in Model)
+{
+    <div class="feed-element">
+        <a href="profile.html" class="pull-left">
+            <img alt="image" class="img-circle" src="@item.Worker.ImageThumbnailUrl">
+        </a>
+        <div class="media-body ">
+            <small class="pull-right">@item.Date.ToShortDateString()</small>
+            <strong>@item.Worker.FullName</strong> @item.StatusId <br>
+            <small class="text-muted">@Html.Timeago(item.Date, property?.TimeZone)</small>
+            @if (!string.IsNullOrEmpty(item.Comments))
+            {
+                <div class="well">
+                    @item.Comments
+                </div>
+            }
+            @if (item.Photos != null)
+            {
+                <div class="row">
+                    @foreach (var photo in item.Photos)
+                    {
+                        <div class="col-md-4">
+                            <img src="@photo.Url" style="width: 100%;" />
+                        </div>
+
+                    }
+                </div>
+            }
+
+        </div>
+    </div>
+}

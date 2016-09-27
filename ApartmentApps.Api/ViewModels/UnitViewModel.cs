@@ -9,5 +9,6 @@ namespace ApartmentApps.Api.ViewModels
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public int BuildingId { get; set; }
+        public string SearchAlias { get; set; }
     }
 }

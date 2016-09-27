@@ -11,6 +11,7 @@ using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
@@ -24,19 +25,35 @@ namespace ApartmentApps.Portal.Controllers
         public string Comments { get; set; }
     }
 
-    public class IncidentReportsController : CrudController<IncidentReportViewModel, IncidentReport>
+    public class IncidentReportOverviewViewModel
     {
-        public ActionResult Print(int id)
+        public GridList<IncidentReportViewModel> FeedItems { get; set; }
+    }
+    public class IncidentReportsController : 
+        AutoGridController<IncidentsService,IncidentsService,IncidentReportViewModel, IncidentReportFormModel>
+        //CrudController<IncidentReportViewModel, IncidentReport>
+    {
+        public ActionResult Print(string id)
         {
-            var item = Service.Find(id);
+            var item = Service.Find<IncidentReportViewModel>(id);
             return View(item);
         }
         public IncidentsService OfficerService { get; set; }
 
-        public IncidentReportsController(IKernel kernel, IncidentsService officerService, IRepository<IncidentReport> repository, StandardCrudService<IncidentReport, IncidentReportViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel, repository, service, context, userContext)
+    
+        public override ActionResult GridResult(GridList<IncidentReportViewModel> grid)
         {
-            OfficerService = officerService;
+            if (Request.IsAjaxRequest())
+            {
+                return View("OverviewListPartial", grid);
+            }
+            return View("Overview", new IncidentReportOverviewViewModel()
+            {
+                FeedItems = grid
+            });
         }
+
+
         public ActionResult NewRequest()
         {
 
@@ -87,6 +104,11 @@ namespace ApartmentApps.Portal.Controllers
                 request.Comments, null
                 );
             return RedirectToAction("Index");
+        }
+
+        public IncidentReportsController(IncidentsService officerService, IKernel kernel, IncidentsService formService, IncidentsService indexService, PropertyContext context, IUserContext userContext, IncidentsService service) : base(kernel, formService, indexService, context, userContext, service)
+        {
+            OfficerService = officerService;
         }
     }
   //  public class IncidentReports2Controller : AAController

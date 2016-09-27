@@ -23,7 +23,7 @@ namespace ApartmentApps.Portal.Controllers
         private readonly MessagingModule _module;
         private ApplicationDbContext _context;
         private IBlobStorageService _blobStorageService;
-        public MessagingController(MessagingService messageService, MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, AlertsModule messagingService, ApplicationDbContext context1, IBlobStorageService blobStorageService) : base(kernel,repository, service, context, userContext)
+        public MessagingController(MessagingService messageService, MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser> service, PropertyContext context, IUserContext userContext, AlertsModule messagingService, ApplicationDbContext context1, IBlobStorageService blobStorageService) : base(kernel,repository, service, context, userContext)
         {
             _messageService = messageService;
             _module = module;
@@ -44,7 +44,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult History()
         {
-            return View("History", _messageService.GetHistory());
+            return View("History", _messageService.GetHistory<MessageViewModel>());
         }
 
 
@@ -83,7 +83,7 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult SendMessage(string subject, string message)
         {
             int count;
-            var ids = GetData(Dm, out count).Select(p => p.Id).ToArray();
+            var ids = GetData(Dm, out count, true).Select(p => p.Id).ToArray();
             
             _module.SendMessage(ids, subject, message, HttpContext.Request.Url.Host + Url.Action("EmailMessageRead", "Messaging"));
             ViewBag.SuccessMessage = "Message Sent";
@@ -98,7 +98,7 @@ namespace ApartmentApps.Portal.Controllers
             Response.Cache.SetLastModified(DateTime.UtcNow);
             return File(Server.MapPath("~/Content/blank.png"), "image/png");
         }
-        public ActionResult MessageDetails(int id)
+        public ActionResult MessageDetails(string id)
         {
             return View("MessageDetails", _messageService.GetMessageWithDetails(id));
         }

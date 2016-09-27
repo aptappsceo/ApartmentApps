@@ -12,6 +12,7 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+//using ApartmentApps.Modules.Inspections;
 using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -26,19 +27,46 @@ namespace ApartmentApps.IoC
 {
     public static class Register
     {
+
+        static Register()
+        {
+            RegisterAssemblies();
+            //ApplicationDbContext.SearchAssemblies.Add(typeof(Forte).Assembly);
+        }
+
+        public static void RegisterAssemblies()
+        {
+            ApplicationDbContext.SearchAssemblies.Clear();
+            ApplicationDbContext.SearchAssemblies.Add(typeof (MaitenanceRequest).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (IModule).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (AlertsModule).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (CourtesyModule).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (EntrataModule).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (InspectionsModule).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (MaintenanceModule).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (MessagingModule).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (PaymentsModule).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (YardiModule).Assembly);
+        }
+
 #if JOBS
         public static void InRequestScope<T>(this IBindingWhenInNamedWithOrOnSyntax<T> b)
         {
             b.InSingletonScope();
         }
 #endif
-        public static void RegisterMappable<TModel, TViewModel,TService>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel, TViewModel>
+
+        public static void RegisterMapper<TData, TViewModel, TMapper>(this IKernel kernel) where TMapper : IMapper<TData,TViewModel>
+        {
+            kernel.Bind<IMapper<TData,TViewModel>>().To<TMapper>().InRequestScope();
+        }
+        public static void RegisterMappable<TModel, TViewModel,TService, TDefaultMapper>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel> where TDefaultMapper : IMapper<TModel, TViewModel>
         {
             
-           
+           kernel.Bind<IMapper<TModel,TViewModel>>().To<TDefaultMapper>().InRequestScope();
+
             kernel.Bind< IService,
-                IMapper < TModel, TViewModel >,
-                StandardCrudService <TModel, TViewModel>, IServiceFor<TViewModel>>()
+                StandardCrudService <TModel>>()
                 .To<TService>().InRequestScope();
 
             //kernel.Bind<IMapper<TModel, TViewModel>>().To<TService>().InRequestScope();
@@ -54,7 +82,7 @@ namespace ApartmentApps.IoC
         }
         public static void RegisterServices(IKernel kernel)
         {
-            ApartmentApps.Api.Modules.Modules.Kernel = kernel;
+            ApartmentApps.Api.Modules.ModuleHelper.Kernel = kernel;
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
@@ -93,11 +121,11 @@ namespace ApartmentApps.IoC
             kernel.RegisterModule<MessagingModule, MessagingConfig>();
             //kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<EntrataModule, EntrataConfig>();
+            //kernel.RegisterModule<InspectionsModule, InspectionsModuleConfig>();
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
             //ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
-
-            
+    
 
             kernel.Bind<IRepository<UserPaymentOption>>().To<PropertyRepository<UserPaymentOption>>().InRequestScope();
             kernel.Bind<IRepository<UserTransaction>>().To<PropertyRepository<UserTransaction>>().InRequestScope();
@@ -157,15 +185,21 @@ namespace ApartmentApps.IoC
             kernel.Bind<DbContext>().ToMethod(_ => _.Kernel.Get<ApplicationDbContext>()).InRequestScope();
             kernel.Bind<IFeedSerivce>().To<FeedSerivce>().InRequestScope();
 
-            kernel.RegisterMappable<Unit, UnitViewModel, UnitService>();
-            kernel.RegisterMappable<Building, BuildingViewModel, BuildingService>();
-            kernel.RegisterMappable<Message, MessageViewModel, MessagingService>();
-            kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService>();
-            kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService>();
-            kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService>();
-            kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService>();
-
-            kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
+            kernel.RegisterMappable<Unit, UnitViewModel, UnitService, UnitMapper>();
+            //kernel.RegisterMappable<Inspection, InspectionViewModel, InspectionsService, InspectionViewModelMapper>();
+            kernel.RegisterMappable<Building, BuildingViewModel, BuildingService, BuildingMapper>();
+            kernel.RegisterMappable<Message, MessageViewModel, MessagingService, MessageMapper>();
+            kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService, UserMapper>();
+            kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService, MaintenanceRequestMapper>();
+            kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService, IncidentReportMapper>();
+            kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService, CourtesyCheckinMapper>();
+            kernel.RegisterMappable<Property, PropertyBindingModel, PropertyService, PropertyMapper>();
+            kernel.RegisterMapper<Unit,UnitFormModel,UnitFormMapper>();
+            kernel.RegisterMapper<MaitenanceRequest, MaintenanceRequestEditModel, MaintenanceRequestEditMapper>();
+            kernel.RegisterMapper<IncidentReport, IncidentReportFormModel, IncidentReportFormMapper>();
+           // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
+    
+            //kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
 
             kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
 

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using Korzh.EasyQuery;
 
 namespace ApartmentApps.Data
 {
-  
-    public class Property
+    //[EqEntity(UseInConditions = false, UseInResult = false)]
+    public class Property : IBaseEntity
     {
+        [EqEntityAttr(UseInConditions = false)]
         public TimeZoneInfo TimeZone
         {
             get
@@ -18,10 +20,11 @@ namespace ApartmentApps.Data
         }
 
         [Key]
+        [EqEntityAttr(UseInConditions = false)]
         public int Id { get; set; }
 
         public string Name { get; set; }
-
+        [EqEntityAttr(UseInConditions = false)]
         public int CorporationId { get; set; }
 
         [ForeignKey("CorporationId")]

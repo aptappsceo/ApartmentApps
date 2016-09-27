@@ -13,5 +13,6 @@ namespace ApartmentApps.Api
         void StartRequest(ApplicationUser worker, int id, string comments, List<byte[]> images);
         void ScheduleRequest(ApplicationUser currentUser, int id, DateTime scheduleDate);
         IEnumerable<MaintenanceRequestViewModel> GetAppointments();
+        //void AssignRequest(int requestId, string userId);
     }
 }

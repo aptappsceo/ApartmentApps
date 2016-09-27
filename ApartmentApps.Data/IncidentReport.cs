@@ -10,7 +10,7 @@ namespace ApartmentApps.Data
     {
      
 
-        [ForeignKey("UserId")]
+        [ForeignKey("UserId"),Searchable(Caption = "Submission By")]
         public virtual ApplicationUser User { get; set; }
 
         IEnumerable<IFeedItem> IFeedItem.ChildFeedItems => Checkins;
@@ -28,18 +28,21 @@ namespace ApartmentApps.Data
         public string Comments { get; set; }
         public int? UnitId { get; set; }
 
-        [ForeignKey("UnitId")]
+        [ForeignKey("UnitId"), Searchable(Caption = "Unit")]
         public virtual Unit Unit { get; set; }
 
-
+        [Searchable(Caption = "Incident Type")]
         public IncidentType IncidentType { get; set; }
+        [Searchable(Caption = "Submit Date")]
         public DateTime CreatedOn { get; set; }
+        [Searchable(Caption = "Status")]
         public string StatusId { get; set; }
+
         [ForeignKey("StatusId")]
         public virtual IncidentReportStatus IncidentReportStatus { get; set; }
 
         public virtual ICollection<IncidentReportCheckin> Checkins { get; set; }
-
+        [Searchable(Caption = "Complete Date")]
         public DateTime? CompletionDate { get; set; }
         [NotMapped]
         public IncidentReportCheckin LatestCheckin

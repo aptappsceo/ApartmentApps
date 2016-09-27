@@ -5,7 +5,7 @@ using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
-    public static class Modules
+    public static class ModuleHelper
     {
         public static IKernel Kernel { get; set; }
         public static IEnumerable<IModule> EnabledModules

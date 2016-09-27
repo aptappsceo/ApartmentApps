@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Graphics.Drawables.Shapes;
@@ -21,6 +22,7 @@ using ResidentAppCross.Resources;
 using ResidentAppCross.ViewModels.Screens;
 using ZXing.Rendering;
 using BindingFlags = System.Reflection.BindingFlags;
+using Orientation = Android.Widget.Orientation;
 
 namespace ResidentAppCross.Droid.Views.Sections
 {
@@ -209,6 +211,7 @@ namespace ResidentAppCross.Droid.Views.Sections
 
         public static Color SecondaryBackgoundColor { get; set; } = Color.ParseColor("#145c99");
         public static Color DeepBackgroundColor { get; set; } = Color.ParseColor("#e4e4e4");
+
 
         public static Drawable GetIcon(SharedResources.Icons icon, SharedResources.Size size)
         {

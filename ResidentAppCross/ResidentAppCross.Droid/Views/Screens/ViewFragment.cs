@@ -91,6 +91,15 @@ namespace ResidentAppCross.Droid.Views
         public TextInputLayout TextInputLayout { get; set; }
     }
 
+    public static class AppCompatButtonExtensions
+    {
+        public static void StyleMaterial(this AppCompatButton btn, Context ctx)
+        {
+              btn.SupportBackgroundTintList = ColorStateList.ValueOf(ctx.Resources.GetColor(Resource.Color.accent));
+                btn.SetTextColor(Color.White);
+        }
+    }
+
     public class ActionBarSection : FragmentSection
     {
         [Outlet]
@@ -108,7 +117,7 @@ namespace ResidentAppCross.Droid.Views
                     Hint = "Hint?",
                     Text = item.Title
                 }.WithLinearWeight(1).WithHeightWrapContent().AddTo(ButtonContainer);
-                buttonItem.SupportBackgroundTintList = ColorStateList.ValueOf(Context.Resources.GetColor(Resource.Color.accent));
+                buttonItem.StyleMaterial(Context);
                 item.Button = buttonItem;
                 buttonItem.Click += (sender, args) => item1.Action?.Invoke();
             }
@@ -182,7 +191,14 @@ namespace ResidentAppCross.Droid.Views
         public TextView Label { get; set; }
 
         [Outlet]
-        public Button Button { get; set; }
+        public AppCompatButton Button { get; set; }
+
+        public override void OnInflated()
+        {
+            base.OnInflated();
+               Button.StyleMaterial(Context);
+
+        }
     }
 
     public class SwitchSection : FragmentSection

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using ApartmentApps.Api.Modules;
 
 namespace ApartmentApps.Data.Repository
 {
@@ -21,12 +22,14 @@ namespace ApartmentApps.Data.Repository
         public void Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
+            
             //_dbContext.SaveChanges();
         }
 
         public void Remove(TEntity entity)
         {
             _dbContext.Set<TEntity>().Remove(entity);
+            
             //_dbContext.SaveChanges();
         }
 
@@ -47,6 +50,14 @@ namespace ApartmentApps.Data.Repository
 
         public TEntity Find(object id)
         {
+            if (id is string)
+            {
+                int result;
+                if (int.TryParse((string)id, out result))
+                {
+                    return _dbContext.Set<TEntity>().Find(result);
+                }
+            }
             return _dbContext.Set<TEntity>().Find(id);
         }
 

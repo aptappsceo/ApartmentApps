@@ -10,13 +10,14 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class UserModel
+    public class UserFormModel
     {
         public string Id { get; set; }
         public string FirstName { get; set; }
@@ -35,6 +36,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public int? UnitId { get; set; }
 
+        public List<UnitViewModel> UnitItems { get; set; }
 
     }
 
@@ -65,12 +67,138 @@ namespace ApartmentApps.Portal.Controllers
         public string ConfirmPassword { get; set; }
     }
 
+    public class UserManagementController : AutoGridController<UserService, UserBindingModel>
+    {
+        public override string IndexTitle => "User Management";
+        private ApplicationUserManager _userManager;
+
+        public UserManagementController(IKernel kernel, UserService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
+        {
+        }
+        public override ActionResult GridResult(GridList<UserBindingModel> grid)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return View("OverviewListPartial", grid);
+            }
+            return base.GridResult(grid);
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        [HttpPost]
+        public async Task<ActionResult> SaveUser(UserFormModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = Context.Users.Find(model.Id);
+                var newUser = false;
+                if (user == null)
+                {
+
+                    user = new ApplicationUser
+                    {
+
+                    };
+
+                    newUser = true;
+                }
+                else
+                {
+
+                }
+                if (!User.IsInRole("Admin"))
+                {
+                    model.SelectedRoles.Remove("Admin"); // Just to make sure
+                }
+                user.Email = model.Email;
+                user.PropertyId = PropertyId;
+                user.UserName = model.Email;
+                user.UnitId = model.UnitId;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Roles.Clear();
+                foreach (var item in model.SelectedRoles)
+                {
+                    user.Roles.Add(new IdentityUserRole() { RoleId = item, UserId = user.Id });
+                }
+                if (newUser)
+                {
+
+                    var result = await UserManager.CreateAsync(user, "Temp1234!");
+                    if (result.Succeeded)
+                    {
+
+
+                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    }
+                }
+                else
+                {
+                    Context.SaveChanges();
+                }
+
+
+                //AddErrors(result);
+            }
+
+
+            return RedirectToAction("Index");
+        }
+        public override ActionResult Entry(string id = null)
+        {
+            var user = Context.Users.Find(id);
+
+            var userModel = new UserFormModel()
+            {
+                RolesList = Context.Roles.Select(p => p.Id).ToList(),
+
+            };
+            // If we aren't an admin we shouldn't be able to create admin accounts
+            if (!User.IsInRole("Admin"))
+            {
+                userModel.RolesList.Remove("Admin");
+            }
+            if (user != null)
+            {
+                userModel.FirstName = user.FirstName;
+                userModel.LastName = user.LastName;
+                userModel.Email = user.Email;
+                userModel.Id = user.Id;
+                userModel.PhoneNumber = user.PhoneNumber;
+                userModel.UnitId = user.UnitId;
+                userModel.SelectedRoles = user.Roles.Select(p => p.RoleId).ToList();
+
+            }
+            ViewBag.UnitId = new SelectList(Context.Units.OrderBy(p => p.Name), "Id", "Name", user?.UnitId);
+
+            return View("EditUser", userModel);
+            //return base.Entry(id);
+        }
+        
+    }
 
     [Authorize(Roles = "PropertyAdmin,Admin")]
-    public class UserManagementController : CrudController<UserBindingModel,ApplicationUser>
+    public class UserManagementController2 : CrudController<UserBindingModel,ApplicationUser>
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IMapper<Unit, UnitViewModel> _mapper;
 
         //public UserManagementController(PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(context, userContext)
         //{
@@ -78,10 +206,11 @@ namespace ApartmentApps.Portal.Controllers
         //    _userManager = userManager;
         //}
 
-        public UserManagementController(IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager) : base(kernel, repository, service, context, userContext)
+        public UserManagementController(IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser, UserBindingModel> service, PropertyContext context, IUserContext userContext, ApplicationSignInManager signInManager, ApplicationUserManager userManager, IMapper<Unit,UnitViewModel> mapper ) : base(kernel, repository, service, context, userContext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public ApplicationSignInManager SignInManager
@@ -111,7 +240,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: UserManagement
         public override ActionResult Index()
         {
-            return View(Service.GetAll().Where(u=>!u.Archived));
+            return View(Service.GetAll<UserBindingModel>().Where(u=>!u.Archived));
         }
         public ActionResult DeleteUser(string id)
         {
@@ -135,7 +264,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             var user = Context.Users.Find(id);
 
-            var userModel = new UserModel()
+            var userModel = new UserFormModel()
             {
                 RolesList = Context.Roles.Select(p=>p.Id).ToList(),
                 
@@ -156,6 +285,7 @@ namespace ApartmentApps.Portal.Controllers
                 userModel.SelectedRoles = user.Roles.Select(p => p.RoleId).ToList();
 
             }
+            userModel.UnitItems = Context.Units.OrderBy(p => p.Name).Select(u => _mapper.ToViewModel(u)).ToList();
             ViewBag.UnitId = new SelectList(Context.Units.OrderBy(p=>p.Name), "Id", "Name", user?.UnitId);
 
             return View(userModel);
@@ -163,7 +293,7 @@ namespace ApartmentApps.Portal.Controllers
     
 
         [HttpPost]
-        public async Task<ActionResult> SaveUser(UserModel model)
+        public async Task<ActionResult> SaveUser(UserFormModel model)
         {
             if (ModelState.IsValid)
             {

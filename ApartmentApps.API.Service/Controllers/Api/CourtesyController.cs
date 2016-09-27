@@ -11,10 +11,52 @@ using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.CourtesyOfficer;
+using ApartmentApps.Modules.Inspections;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
+    [System.Web.Http.RoutePrefix("api/Inspections")]
+    [System.Web.Http.Authorize]
+    public class InspectionsController : ApartmentAppsApiController
+    {
+        private readonly InspectionsService _inspectionsService;
 
+        public InspectionsController(InspectionsService inspectionsService,PropertyContext context, IUserContext userContext) : base(context, userContext)
+        {
+            _inspectionsService = inspectionsService;
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("List")]
+        public IEnumerable<InspectionViewModel> Get()
+        {
+            
+            var propertyId = this.CurrentUser.PropertyId;
+
+            return _inspectionsService.GetAllForUser<InspectionViewModel>(this.CurrentUser.Id);
+
+        }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("StartInspection")]
+        public void StartInspection(int id)
+        {
+            _inspectionsService.StartInspection(id);
+
+        }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("PauseInspection")]
+        public void PauseInspection(int id)
+        {
+            _inspectionsService.PauseInspection(id);
+
+        }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("FinishInspection")]
+        public void FinishInspection(FinishInspectionViewModel finishInspectionViewModel)
+        {
+            _inspectionsService.FinishInspection(finishInspectionViewModel);
+        }
+    }
 
     [System.Web.Http.RoutePrefix("api/Courtesy")]
     [System.Web.Http.Authorize]

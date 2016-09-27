@@ -6,14 +6,23 @@
 @{
     ViewBag.Title = Model.Title;
 }
-<div class="ibox">
-    <div class="ibox-title">@ViewBag.Title</div>
-    <div class="ibox-content">
-        @using (var form = Html.BeginForm(Model.PostAction,Model.PostController))
-        {
-            @Html.RenderForm(Model.Model)
-
-            <input type="submit" value="Apply" class="btn btn-primary" />
-        }
+@using (var form = Html.BeginForm(Model.PostAction, Model.PostController))
+{
+    <div class="modal-header">
+        <button type="button" class="close close-link" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        @*<i class="fa fa-laptop modal-icon"></i>*@
+        <h4 class="modal-title">@ViewBag.Title</h4>
+        @*<small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>*@
     </div>
-</div>
+    <div class="modal-body">
+
+        @Html.RenderForm(Model.Model)
+
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white close-link" data-dismiss="modal">Close</button>
+        <input type="submit" value="Apply" class="btn btn-primary close-link" />
+    </div>
+}
