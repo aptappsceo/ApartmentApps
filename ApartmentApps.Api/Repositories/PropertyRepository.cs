@@ -15,6 +15,7 @@ namespace ApartmentApps.Api
     public class ServiceQuery : PropertyEntity
     {
         public string Name { get; set; }
+        public int Index { get; set; }
         public string QueryJson { get; set; }
 
         public string Service { get; set; }

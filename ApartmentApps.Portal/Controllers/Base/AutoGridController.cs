@@ -28,7 +28,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             base.OnActionExecuting(filterContext);
             var serviceName = typeof (TService).Name;
-            ViewBag.Queries = Queries.Where(p => p.Service == serviceName).ToArray();
+            ViewBag.Queries = Queries.Where(p => p.Service == serviceName).OrderBy(p=>p.Index).ToArray();
         }
 
         public ActionResult Details(int? id)

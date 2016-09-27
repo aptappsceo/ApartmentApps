@@ -69,7 +69,7 @@ namespace ApartmentApps.Portal.Controllers
             return AutoForm(model, "SaveEntry");
         }
 
-        public virtual ActionResult Delete(int id)
+        public virtual ActionResult Delete(string id)
         {
             _formService.Remove(id);
             ViewBag.SuccessMessage = "Item Deleted!";

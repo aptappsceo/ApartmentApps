@@ -72,6 +72,7 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Address = user?.Address;
             viewModel.City = user?.City;
             viewModel.PostalCode = user?.PostalCode;
+            viewModel.Roles = user.Roles.Select(p => p.RoleId).ToArray();
         }
     }
 
@@ -94,7 +95,7 @@ namespace ApartmentApps.Portal.Controllers
         {
         }
 
-        public override void Remove(int id)
+        public override void Remove(string id)
         {
             //base.Remove(id);
             Repository.Find(id).Archived = true;

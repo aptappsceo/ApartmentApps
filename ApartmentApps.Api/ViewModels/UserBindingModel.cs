@@ -32,7 +32,7 @@ namespace ApartmentApps.Api.ViewModels
         [DataType("Hidden")]
         public bool Archived { get; set; }
 
-        
+        public string[] Roles { get; set; }
     }
 
 }

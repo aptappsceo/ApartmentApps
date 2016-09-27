@@ -196,6 +196,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<Property, PropertyBindingModel, PropertyService, PropertyMapper>();
             kernel.RegisterMapper<Unit,UnitFormModel,UnitFormMapper>();
             kernel.RegisterMapper<MaitenanceRequest, MaintenanceRequestEditModel, MaintenanceRequestEditMapper>();
+            kernel.RegisterMapper<IncidentReport, IncidentReportFormModel, IncidentReportFormMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
     
             //kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();

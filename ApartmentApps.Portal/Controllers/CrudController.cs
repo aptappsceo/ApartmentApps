@@ -178,7 +178,7 @@ namespace ApartmentApps.Portal.Controllers
             get { return ""; }
         }
 
-        public virtual ActionResult Remove(int key)
+        public virtual ActionResult Remove(string key)
         {
             Service.Remove(key);
             return RedirectToAction("Index");
@@ -336,7 +336,7 @@ namespace ApartmentApps.Portal.Controllers
         // POST: /Units/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
             //var unit = Service.Find(id);
          Service.Remove(id);

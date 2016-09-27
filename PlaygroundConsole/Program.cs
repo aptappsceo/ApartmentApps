@@ -18,7 +18,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PushSharp;
 using PushSharp.Apple;
-using Yardi.Client.ResidentTransactions;
 
 namespace PlaygroundConsole
 {

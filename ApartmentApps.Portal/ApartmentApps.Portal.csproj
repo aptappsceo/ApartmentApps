@@ -1326,6 +1326,9 @@
     <Content Include="Views\MaitenanceRequests\MaintenanceCheckinFeed.cshtml" />
     <Content Include="Views\Shared\_QueryList.cshtml" />
     <Content Include="Views\Shared\_QueryToolbar.cshtml" />
+    <Content Include="Views\IncidentReports\OverviewListPartial.cshtml" />
+    <Content Include="Views\IncidentReports\Overview.cshtml" />
+    <Content Include="Views\UserManagement\OverviewListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

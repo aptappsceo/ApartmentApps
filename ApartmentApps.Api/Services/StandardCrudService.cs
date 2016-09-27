@@ -109,7 +109,7 @@ namespace ApartmentApps.Portal.Controllers
 
         }
 
-        public virtual void Remove(int id)
+        public virtual void Remove(string id)
         {
             Repository.Remove(Repository.Find(id));
             Repository.Save();

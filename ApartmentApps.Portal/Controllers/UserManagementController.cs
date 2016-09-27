@@ -10,6 +10,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Ninject;
@@ -67,10 +68,19 @@ namespace ApartmentApps.Portal.Controllers
 
     public class UserManagementController : AutoGridController<UserService, UserBindingModel>
     {
+        public override string IndexTitle => "User Management";
         private ApplicationUserManager _userManager;
 
         public UserManagementController(IKernel kernel, UserService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
         {
+        }
+        public override ActionResult GridResult(GridList<UserBindingModel> grid)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return View("OverviewListPartial", grid);
+            }
+            return base.GridResult(grid);
         }
 
         public ApplicationUserManager UserManager

@@ -1,17 +1,77 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
 using ApartmentApps.Modules.CourtesyOfficer;
 using ApartmentApps.Portal.Controllers;
 using Ninject;
 
 namespace ApartmentApps.Api
 {
+    public class IncidentReportFormModel : BaseViewModel
+    {
+
+        //[DataType()]
+        [DisplayName("Unit")]
+        public int UnitId { get; set; }
+
+        public IEnumerable<FormPropertySelectItem> UnitId_Items
+        {
+            get
+            {
+                return
+                    ModuleHelper.Kernel.Get<IRepository<Unit>>()
+                        .ToArray()
+                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
+
+
+            }
+        }
+
+
+        [DisplayName("Type")]
+        [Required]
+        public IncidentType ReportType { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        public string Comments { get; set; }
+
+    }
+    public class IncidentReportFormMapper : BaseMapper<IncidentReport, IncidentReportFormModel>
+    {
+        private readonly IBlobStorageService _blobStorageService;
+        public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
+
+        public IncidentReportFormMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
+            IBlobStorageService blobStorageService)
+        {
+            _blobStorageService = blobStorageService;
+            UserMapper = userMapper;
+        }
+
+        public override void ToModel(IncidentReportFormModel viewModel, IncidentReport model)
+        {
+            model.Comments = viewModel.Comments;
+            model.IncidentType = viewModel.ReportType;
+            model.UnitId = viewModel.UnitId;
+        }
+
+        public override void ToViewModel(IncidentReport model, IncidentReportFormModel viewModel)
+        {
+            viewModel.Comments = model.Comments;
+            viewModel.ReportType = model.IncidentType;
+            viewModel.UnitId = model.UnitId ?? 0;
+            viewModel.Id = model.Id.ToString();
+
+        }
+    }
     public class IncidentReportMapper : BaseMapper<IncidentReport, IncidentReportViewModel>
     {
         private readonly IBlobStorageService _blobStorageService;

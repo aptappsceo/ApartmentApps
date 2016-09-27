@@ -1,0 +1,49 @@
+﻿@model ApartmentApps.Forms.GridList<ApartmentApps.Api.ViewModels.UserBindingModel>
+@using ApartmentApps.Data
+@using Korzh.EasyQuery.Mvc
+@using Korzh.EasyQuery.Services
+@{
+    var property = ViewBag.Property as Property;
+}
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-6">
+            <div class="contact-box">
+
+                <div class="col-sm-4">
+                    <div class="text-center">
+                        <img alt="image" class="img-circle m-t-xs img-responsive" src="@item.ImageThumbnailUrl">
+
+                        <div class="m-t-xs font-bold">@(string.Join(", ", item.Roles))</div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <h3>
+                        <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.Id})" class="pull-left">
+                            <strong>@item.FirstName @item.LastName</strong>
+                        </a>
+                    </h3><br/>
+                    <p>
+                        <i class="fa fa-map-marker"></i>  @item.BuildingName - @item.UnitName<br>
+                    </p>
+                    <address>
+
+                        @item.Address<br />
+                        @item.City @item.PostalCode<br />
+                        <abbr title="Phone">Phone:</abbr> @item.PhoneNumber
+                    </address>
+
+                    <a class="btn btn-white btn-xs modal-link" href="@Url.Action("Entry", "UserManagement", new {id = item.Id})"><i class="fa fa-edit"></i> Edit</a>
+                    <a class="btn btn-white btn-xs" href="@Url.Action("Delete", "UserManagement", new {id = item.Id})"><i class="fa fa-remove"></i> Delete</a>
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+
+    }
+    @Html.PageNavigator(Model as IPaging)
+    <div style="clear: both;"></div>
+</div>
+

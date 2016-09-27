@@ -1,0 +1,86 @@
+﻿@using ApartmentApps.Data
+@using Korzh.EasyQuery.Mvc
+@using Korzh.EasyQuery.Services
+@model ApartmentApps.Forms.GridList<ApartmentApps.Api.ViewModels.IncidentReportViewModel>
+@{
+    var property = ViewBag.Property as Property;
+}
+@foreach (var item in Model)
+{
+    <div class="social-feed-box">
+
+        <div class="pull-right social-action dropdown">
+            <button data-toggle="dropdown" class="dropdown-toggle btn-white">
+                <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu m-t-xs">
+                <li><a href="#">Config</a></li>
+            </ul>
+        </div>
+        <div class="social-avatar">
+
+            <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})" class="pull-left">
+                <img alt="image" class="img-circle" src="@item.SubmissionBy.ImageThumbnailUrl">
+            </a>
+
+            <div class="media-body">
+                <a href="#">
+                    <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})"><strong>@@@item.SubmissionBy.FirstName @item.SubmissionBy.LastName</strong></a> @item.Title <br>
+                </a>
+                <small class="text-muted">@Html.Timeago(item.RequestDate, property?.TimeZone)</small>
+            </div>
+        </div>
+        <div class="social-body">
+            <p>
+                @item.Comments
+            </p>
+            @*<img src="img/gallery/11.jpg" class="img-responsive">*@
+            <div class="btn-group">
+                    <a class="btn btn-white btn-xs" href="@Url.Action("Details", "IncidentReports", new {id = item.Id})"><i class="fa fa-info"></i> Details</a>
+                    <a class="btn btn-white btn-xs modal-link" href="@Url.Action("Entry", "IncidentReports", new {id = item.Id})"><i class="fa fa-edit"></i> Edit</a>
+                  
+                </div>
+        </div>
+        <div class="social-footer">
+            @foreach (var checkin in item.Checkins)
+            {
+                <div class="social-comment">
+
+
+                    <a href="@Url.Action("UserFeed", "Dashboard", new {id = @checkin.Officer.Id})" class="pull-left">
+                        <img alt="image" style="width: 40px; height: 40px;" class="img-circle" src="@checkin.Officer.ImageThumbnailUrl">
+                    </a>
+
+                    <div class="media-body">
+                        <a href="#">
+                            @checkin.Officer.FullName
+                        </a>
+                        @checkin.Comments
+                        <br>
+                        @*<a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -*@
+                        <small class="text-muted">@Html.Timeago(checkin.Date, property?.TimeZone) - @checkin.Date.ToShortDateString()</small>
+                        @if (checkin.Photos != null)
+                        {
+                            <div class="row">
+                                @foreach (var photo in checkin.Photos)
+                                {
+                                    <div class="col-md-4">
+                                        <img src="@photo.Url" style="width: 100%;"/>
+                                    </div>
+
+                                }
+                            </div>
+                        }
+                    </div>
+
+                </div>
+                <div style="clear: both;"></div>
+            }
+
+
+        </div>
+
+    </div>
+
+}
+@Html.PageNavigator(Model as IPaging)

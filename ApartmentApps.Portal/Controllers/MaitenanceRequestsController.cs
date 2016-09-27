@@ -164,16 +164,6 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
-        //public ActionResult Overview()
-        //{
-        //    this.Grid()
-        //    return View("Overview", new MaintenanceRequestOverviewViewModel()
-        //    {
-
-        //    });
-        //}
-
-
 
         public ActionResult MySchedule()
         {
