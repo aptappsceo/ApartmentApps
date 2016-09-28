@@ -140,7 +140,7 @@ namespace Entrata.Client.GetMitsLeases
     public class Phone2
     {
 
-        public string PhoneNumber { get; set; }
+        //public string PhoneNumber { get; set; }
     }
 
     public class Attributes10
@@ -329,6 +329,9 @@ namespace Entrata.Client.GetMitsLeases
     {
 
         public string Description { get; set; }
+
+        [JsonProperty("@attributes")]
+        public Attributes20 Attributes { get; set; }
     }
 
     public class LeaseEvents

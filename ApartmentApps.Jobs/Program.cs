@@ -25,11 +25,12 @@ namespace ApartmentApps.Jobs
             Register.RegisterServices(mainKernel);
             Inspection inspection = new Inspection();
             PaymentSummaryBindingModel model = new PaymentSummaryBindingModel();
-
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
-            
+//#if DEBUG
+//            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
+//#endif   
             var context = new ApplicationDbContext();
-            foreach (var item in context.Properties.ToArray())
+            var ids = new int[] {18, 19, 20, 21, 22, 23};
+            foreach (var item in context.Properties.Where(x=>ids.Contains(x.Id)).ToArray())
             {
                 IKernel kernel = new StandardKernel();
                 Register.RegisterServices(kernel);

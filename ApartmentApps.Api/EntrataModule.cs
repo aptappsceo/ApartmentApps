@@ -42,6 +42,9 @@ namespace ApartmentApps.Api
 
                 var customers =
                     entrataClient.GetCustomers(item.EntrataPropertyId).Result.Response.Result.Customers.Customer;
+                var mitsLeasesResult = entrataClient.GetMitsLeases(item.EntrataPropertyId).Result;
+                var leases = mitsLeasesResult.response.result.LeaseApplication.LA_Lease;
+
                 foreach (var customer in customers)
                 {
 
@@ -49,8 +52,27 @@ namespace ApartmentApps.Api
                     Unit unit;
                     ImportUnit(logger,customer.BuildingName,customer.UnitNumber,out unit, out building);
 
-                    ImportCustomer(this,unit.Id, customer.PhoneNumber.NumbersOnly(),customer.City, customer.Email, customer.FirstName, customer.LastName,customer.MiddleName,customer.Gender,customer.PostalCode,customer.State,customer.Address);
+                    var user = ImportCustomer(this,unit.Id, customer.PhoneNumber.NumbersOnly(),customer.City, customer.Email, customer.FirstName, customer.LastName,customer.MiddleName,customer.Gender,customer.PostalCode,customer.State,customer.Address);
+                    if (user == null) continue;
 
+                    var leaseId = customer.LeaseId?.Identification[0]?.IDValue.ToString();
+                    var entrataId = customer.Attributes?.Id;
+                    user.SyncId = entrataId;
+                    _context.SaveChanges();
+
+                    if (leaseId == null || entrataId == null) continue;
+
+                    var lease = leases.FirstOrDefault(p => p.Identification.IDValue == leaseId);
+                    if (lease == null) continue;
+
+                    var moveOutInfo =
+                        lease.LeaseEvents.LeaseEvent.FirstOrDefault(p => p.Attributes.EventType == "ActualMoveOut");
+                    if (moveOutInfo != null)
+                    {
+                        user.Archived = true;
+                        _context.SaveChanges();
+                        logger.Info($"Archiving User {customer.FirstName} {customer.LastName} {leaseId} {entrataId} ");
+                    }
                 }
             }
 
