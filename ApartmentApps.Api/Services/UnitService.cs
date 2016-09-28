@@ -1,12 +1,42 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
+    public class UnitFormModel : BaseViewModel
+    {
+
+        public string Name { get; set; }
+
+        public int BuildingId { get; set; }
+
+        public UnitFormModel()
+        {
+        }
+
+
+        public IEnumerable<FormPropertySelectItem> BuildingId_Items
+        {
+            get
+            {
+                return
+                    ModuleHelper.Kernel.Get<IRepository<Building>>()
+                        .ToArray()
+                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, BuildingId == p.Id));
+
+
+            }
+        }
+
+    }
     public class UnitFormMapper : BaseMapper<Unit, UnitFormModel>
     {
         public override void ToModel(UnitFormModel viewModel, Unit model)
