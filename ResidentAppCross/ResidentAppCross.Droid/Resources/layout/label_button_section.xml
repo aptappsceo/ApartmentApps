@@ -16,6 +16,8 @@
     <android.support.v7.widget.AppCompatButton
         android:layout_weight="1"
         android:visibility="invisible"
+        android:backgroundTint="@color/accent"
+        android:textColor="@color/primary_text"
         android:layout_width="0dp"
         android:paddingTop="0dp"
         android:paddingBottom="0dp"

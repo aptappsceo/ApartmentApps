@@ -11,33 +11,38 @@ using UIKit;
 
 namespace ResidentAppCross.iOS
 {
-	[Register ("TicketIndexTableViewCell")]
-	partial class TicketIndexTableViewCell
-	{
-		[Outlet]
-		UIKit.UILabel _commentsLabel { get; set; }
+    [Register ("TicketIndexTableViewCell")]
+    partial class TicketIndexTableViewCell
+    {
+        [Outlet]
+        UIKit.UILabel _commentsLabel { get; set; }
 
-		[Outlet]
-		UIKit.UILabel _dateLabel { get; set; }
 
-		[Outlet]
-		UIKit.UIImageView _headerIcon { get; set; }
+        [Outlet]
+        UIKit.UILabel _dateLabel { get; set; }
 
-		[Outlet]
-		UIKit.UILabel _headerLabel { get; set; }
 
-		[Outlet]
-		UIKit.UILabel _noPhotosLabel { get; set; }
+        [Outlet]
+        UIKit.UIImageView _headerIcon { get; set; }
 
-		[Outlet]
-		UIKit.UICollectionView _photoContainer { get; set; }
 
-		void ReleaseDesignerOutlets ()
-		{
-			if (_headerLabel != null) {
-				_headerLabel.Dispose ();
-				_headerLabel = null;
-			}
-		}
-	}
+        [Outlet]
+        UIKit.UILabel _headerLabel { get; set; }
+
+
+        [Outlet]
+        UIKit.UILabel _noPhotosLabel { get; set; }
+
+
+        [Outlet]
+        UIKit.UICollectionView _photoContainer { get; set; }
+
+        void ReleaseDesignerOutlets ()
+        {
+            if (_headerLabel != null) {
+                _headerLabel.Dispose ();
+                _headerLabel = null;
+            }
+        }
+    }
 }

@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Korzh.EasyQuery;
 using Newtonsoft.Json;
 
 namespace ApartmentApps.Data
@@ -20,15 +21,18 @@ namespace ApartmentApps.Data
     {
         [DefaultValue(1)]
         [DataType("Hidden")]
+        [EqEntityAttr(UseInConditions = false)]
         public int? PropertyId { get; set; } = 1;
 
         [ForeignKey("PropertyId")]
         [DataType("Ignore")]
         [JsonIgnore]
+        [EqEntityAttr(UseInConditions = false)]
         public virtual Property Property { get; set; }
 
         [Key]
         [DataType("Hidden")]
+        [EqEntityAttr(UseInConditions = false)]
         public int Id { get; set; }
     }
 

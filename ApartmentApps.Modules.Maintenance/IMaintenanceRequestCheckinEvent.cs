@@ -6,4 +6,9 @@ namespace ApartmentApps.Api
     {
         void MaintenanceRequestCheckin( MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request);
     }
+
+    public interface IMaintenanceRequestAssignedEvent
+    {
+        void MaintenanceRequestAssigned(MaitenanceRequest request);
+    }
 }

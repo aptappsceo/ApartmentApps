@@ -1,15 +1,22 @@
+using System;
 using System.Collections.Generic;
+using ApartmentApps.Portal.Controllers;
+using Korzh.EasyQuery.Db;
 
-namespace ApartmentApps.Portal.Controllers
+namespace ApartmentApps.Api
 {
-    public interface IServiceFor<TViewModel>
+    public interface IService
     {
-        IEnumerable<TViewModel> GetAll();
-        IEnumerable<TViewModel> GetRange(int skip, int take);
-        void Add(TViewModel viewModel);
-        void Remove(int id);
-        TViewModel Find(int id);
-        TViewModel CreateNew();
-        void Save(TViewModel unit);
+        Type ModelType { get; }
+
+        IEnumerable<TViewModel> GetAll<TViewModel>(DbQuery query, out int count, string orderBy, bool orderByDesc,
+            int page = 0, int resultsPerPage = 20);
+        IEnumerable<TViewModel> GetAll<TViewModel>();
+    //    IEnumerable<TViewModel> GetRange(int skip, int take);
+        void Add<TViewModel>(TViewModel viewModel);
+        void Remove(string id);
+        TViewModel Find<TViewModel>(string id) where TViewModel : class, new();
+        TViewModel CreateNew<TViewModel>() where TViewModel : new();
+        void Save<TViewModel>(TViewModel unit) where TViewModel : BaseViewModel;
     }
 }

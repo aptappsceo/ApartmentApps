@@ -14,20 +14,13 @@ using Ninject;
 namespace ApartmentApps.Portal.Controllers
 {
     [Authorize(Roles = "PropertyAdmin")]
-    public class UnitsController : CrudController<UnitViewModel,Unit>
+    public class UnitsController : AutoGridController<UnitService,UnitService,UnitViewModel,UnitFormModel>
     {
-        // GET: /Units/
-
-
-        public UnitsController(IKernel kernel, IRepository<Unit> repository, StandardCrudService<Unit, UnitViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel,repository, service, context, userContext)
+        public UnitsController(IKernel kernel, UnitService formService, UnitService indexService, PropertyContext context, IUserContext userContext, UnitService service) : base(kernel, formService, indexService, context, userContext, service)
         {
         }
 
-        public override void FormViewBag(UnitViewModel viewModel)
-        {
-            base.FormViewBag(viewModel);
-            ViewBag.BuildingId = new SelectList(Context.Buildings, "Id", "Name", viewModel?.BuildingId.ToString());
-        }
+    
     }
 
     //[Authorize(Roles = "PropertyAdmin")]

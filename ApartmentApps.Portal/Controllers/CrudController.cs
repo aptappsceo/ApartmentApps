@@ -22,12 +22,13 @@ using PageSettings = Syncfusion.JavaScript.Models.PageSettings;
 
 namespace ApartmentApps.Portal.Controllers
 {
+
     public class CrudController<TViewModel, TModel> : AAController where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new()
     {
       //  public IRepository<TModel> Repository { get; set; }
-        public StandardCrudService<TModel, TViewModel> Service { get; set; }
+        public StandardCrudService<TModel> Service { get; set; }
 
-        public CrudController(IKernel kernel, IRepository<TModel> repository, StandardCrudService<TModel, TViewModel> service, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        public CrudController(IKernel kernel, IRepository<TModel> repository, StandardCrudService<TModel> service, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             //Repository = repository;
             Service = service;
@@ -177,14 +178,14 @@ namespace ApartmentApps.Portal.Controllers
             get { return ""; }
         }
 
-        public virtual ActionResult Remove(int key)
+        public virtual ActionResult Remove(string key)
         {
             Service.Remove(key);
             return RedirectToAction("Index");
         }
         public virtual ActionResult Index()
         {
-            return View(Service.GetAll());
+            return View(Service.GetAll<TViewModel>());
         }
         public ActionResult DataSource(Syncfusion.JavaScript.DataManager dm)
         {
@@ -203,9 +204,9 @@ namespace ApartmentApps.Portal.Controllers
 
         }
 
-        protected IEnumerable<TViewModel> GetData(DataManager dm, out int count)
+        protected IEnumerable<TViewModel> GetData(DataManager dm, out int count, bool forceAll = false)
         {
-            IEnumerable<TViewModel> Data = Service.GetAll().ToArray();
+            IEnumerable<TViewModel> Data = Service.GetAll<TViewModel>().ToArray();
           
             Syncfusion.JavaScript.DataSources.DataOperations operation = new Syncfusion.JavaScript.DataSources.DataOperations();
             if (dm.Sorted != null && dm.Sorted.Count > 0) //Sorting
@@ -223,13 +224,16 @@ namespace ApartmentApps.Portal.Controllers
                         operation.PerformWhereFilter(Data, dm.Where, dm.Where[0].Operator).Cast<TViewModel>();
             }
             count = Data.Count();
-            if (dm.Skip != 0)
+            if (!forceAll)
             {
-                Data = (IEnumerable<TViewModel>) Data.Skip(dm.Skip);
-            }
-            if (dm.Take != 0)
-            {
-                Data = (IEnumerable<TViewModel>) Data.Take(dm.Take);
+                if (dm.Skip != 0)
+                {
+                    Data = (IEnumerable<TViewModel>)Data.Skip(dm.Skip);
+                }
+                if (dm.Take != 0)
+                {
+                    Data = (IEnumerable<TViewModel>)Data.Take(dm.Take);
+                }
             }
             return Data;
         }
@@ -241,13 +245,13 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         // GET: /Units/Details/5
-        public virtual ActionResult Details(int? id)
+        public virtual ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vm = Service.Find(id.Value);
+            var vm = Service.Find<TViewModel>(id);
             if (vm == null)
             {
                 return HttpNotFound();
@@ -258,7 +262,7 @@ namespace ApartmentApps.Portal.Controllers
         // GET: /Units/Create
         public virtual ActionResult Create()
         {
-            var vm = Service.CreateNew();
+            var vm = Service.CreateNew<TViewModel>();
             FormViewBag(vm);
             return View(vm);
         }
@@ -282,14 +286,14 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         // GET: /Units/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var unit = Service.Find(id.Value);
+            var unit = Service.Find<TViewModel>(id);
             if (unit == null)
             {
                 return HttpNotFound();
@@ -315,13 +319,13 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         // GET: /Units/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var unit = Service.Find(id.Value);
+            var unit = Service.Find<TViewModel>(id);
             if (unit == null)
             {
                 return HttpNotFound();
@@ -332,7 +336,7 @@ namespace ApartmentApps.Portal.Controllers
         // POST: /Units/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
             //var unit = Service.Find(id);
          Service.Remove(id);

@@ -5,6 +5,18 @@ using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api.ViewModels
 {
+    public class MaintenanceRequestIndexBindingModel
+    {
+        public string RequestType { get; set; }
+        public string Building { get; set; }
+        public string Unit { get; set; }
+        public string Comments { get; set; }
+        public string Status { get; set; }
+        public string Requestor { get; set; }
+        public DateTime StartedOn { get; set; }
+        public DateTime CompletedOn { get; set; }
+        public DateTime CompletedBy { get; set; }
+    }
     public class MaintenanceRequestViewModel : BaseViewModel
     {
         public DateTime? ScheduleDate { get; set; }
@@ -38,5 +50,11 @@ namespace ApartmentApps.Api.ViewModels
         public DateTime? EndDate { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? CompleteDate { get; set; }
+        public string AssignedToId { get; set; }
+        public UserBindingModel AssignedTo { get; set; }
+        public string Description { get; set; }
     }
+
+
+
 }

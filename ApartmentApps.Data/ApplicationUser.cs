@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Korzh.EasyQuery;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -59,41 +60,45 @@ namespace ApartmentApps.Data
         [Key]
         public override string Id { get; set; }
 
+        
+
         public string ImageUrl { get; set; }
 
         public string ImageThumbnailUrl { get; set; }
-
+        [Searchable]
         public string FirstName { get; set; }
-
+        [Searchable]
         public string LastName { get; set; }
 
         public int? PropertyId { get; set; }
-
+        [Searchable]
         public bool Archived { get; set; }
 
         [ForeignKey("PropertyId")]
+        [EqEntityAttr(UseInConditions = false)]
         public virtual Property Property { get; set; }
 
         public int? UnitId { get; set; }
 
-        [ForeignKey("UnitId")]
+        [ForeignKey("UnitId"),Searchable]
         public virtual Unit Unit { get; set; }
 
         public string ThirdPartyId { get; set; }
-
+        [Searchable]
         public string MiddleName { get; set; }
-
+        [Searchable]
         public string Address { get; set; }
-
+        [Searchable]
         public string City { get; set; }
-
+        [Searchable]
         public string State { get; set; }
-
+        [Searchable]
         public string PostalCode { get; set; }
-
+        [Searchable]
         public string Gender { get; set; }
 
         [NotMapped]
+        [EqEntityAttr(UseInConditions = false)]
         public TimeZoneInfo TimeZone => Property.TimeZone ?? TimeZoneInfo.Local;
 
         public virtual ICollection<MaitenanceRequest> MaitenanceRequests { get; set; }
@@ -104,6 +109,8 @@ namespace ApartmentApps.Data
         public string DeviceToken { get; set; }
 
         public int? ForteClientId { get; set; }
+
+        public string SyncId { get; set; }
 
         int IBaseEntity.Id => 0;
 

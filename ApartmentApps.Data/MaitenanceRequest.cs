@@ -2,18 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
+using Korzh.EasyQuery;
 
 namespace ApartmentApps.Data
 {
-
-
-
+    public class MaitenanceRequestConfig : EntityTypeConfiguration<MaitenanceRequest>
+    {
+        public MaitenanceRequestConfig()
+        {
+            this.HasOptional(p => p.WorkerAssigned).WithMany().Map(m=>m.MapKey("WorkerAssignedId"));
+        }
+    }
 
     public partial class MaitenanceRequest : PropertyEntity, IImageContainer, IFeedItem
     {
-        [Key]
-        public int Id { get; set; }
+        [ForeignKey("WorkerAssigned")]
+        public string WorkerAssignedId { get; set; }
+
+        [ForeignKey("WorkerAssignedId"), Searchable(Caption="Worker Assigned"), EqListValueEditor("Workers")]
+        public virtual ApplicationUser WorkerAssigned { get; set; }
 
         public string UserId { get; set; }
 
@@ -32,12 +41,12 @@ namespace ApartmentApps.Data
 
         public int? UnitId { get; set; }
 
-        [ForeignKey("UnitId")]
+        [ForeignKey("UnitId"),Searchable]
         public virtual Unit Unit { get; set; }
 
         DateTime IFeedItem.CreatedOn => SubmissionDate;
 
-        [ForeignKey("UserId")]
+        [ForeignKey("UserId"),Searchable(Caption="Requested By")]
         public virtual ApplicationUser User { get; set; }
 
         IEnumerable<IFeedItem> IFeedItem.ChildFeedItems => Checkins;
@@ -47,24 +56,27 @@ namespace ApartmentApps.Data
 
         public virtual ICollection<MaintenanceRequestCheckin> Checkins { get; set; }
 
+        [Searchable(Caption="Scheduled For")]
         public DateTime? ScheduleDate { get; set; }
 
         public string Message { get; set; }
 
-        [NotMapped]
+        [NotMapped, EqEntityAttr(UseInConditions = false)]
         public MaintenanceRequestCheckin LatestCheckin
         {
             get { return Checkins.OrderByDescending(p => p.Date).FirstOrDefault(); }
         }
-
+        [Searchable(Caption = "Status")]
         public string StatusId { get; set; }
+
         [ForeignKey("StatusId")]
         public virtual MaintenanceRequestStatus Status { get; set; }
-
+        [Searchable(Caption="Create Date")]
         public DateTime SubmissionDate { get; set; }
+        [Searchable(Caption="Completed On")]
         public DateTime? CompletionDate { get; set; }
 
-        [NotMapped]
+        [NotMapped, EqEntityAttr(UseInConditions = false)]
         public TimeSpan? TimeToComplete => CompletionDate?.Subtract(SubmissionDate);
     }
 }

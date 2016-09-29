@@ -1,14 +1,11 @@
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class NotificationService : StandardCrudService<UserAlert, NotificationViewModel>
+    public class NotificationMapper : BaseMapper<UserAlert, NotificationViewModel>
     {
-        public NotificationService(IRepository<UserAlert> repository) : base(repository)
-        {
-
-        }
 
         public override void ToModel(NotificationViewModel viewModel, UserAlert model)
         {
@@ -23,6 +20,12 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Message = model.Message;
             viewModel.HasRead = model.HasRead;
             viewModel.Date = model.CreatedOn;
+        }
+    }
+    public class NotificationService : StandardCrudService<UserAlert>
+    {
+        public NotificationService(IKernel kernel, IRepository<UserAlert> repository) : base(kernel, repository)
+        {
         }
     }
 }

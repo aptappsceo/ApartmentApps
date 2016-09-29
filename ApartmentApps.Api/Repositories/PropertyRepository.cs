@@ -4,11 +4,24 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Korzh.EasyQuery.Db;
 
 namespace ApartmentApps.Api
 {
+    [Persistant]
+    public class ServiceQuery : PropertyEntity
+    {
+        public string Name { get; set; }
+        public int Index { get; set; }
+        public string QueryJson { get; set; }
+
+        public string Service { get; set; }
+        public string QueryId { get; set; }
+    }
+ 
     public class UserRepository<TEntity> : PropertyRepository<TEntity> where TEntity : class, IUserEntity
     {
         //public UserRepository(Func<IQueryable<TEntity>, IDbSet<TEntity>> includes, DbContext context, IUserContext userContext) : base(includes, context, userContext)
@@ -67,6 +80,15 @@ namespace ApartmentApps.Api
             }
         }
     }
+    public interface IEntityAdded<TEntityType>
+    {
+        void EntityAdded(TEntityType entity);
+    }
+    public interface IEntityRemoved<TEntityType>
+    {
+        void EntityRemoved(TEntityType entity);
+    }
+
     public class PropertyRepository<TEntity> : IRepository<TEntity> where TEntity : class,IPropertyEntity
     {
         public DbContext Context { get; set; }
@@ -90,7 +112,7 @@ namespace ApartmentApps.Api
         {
             entity.PropertyId = UserContext.PropertyId;
             Context.Set<TEntity>().Add(entity);
-           
+            Modules.ModuleHelper.AllModules.Signal<IEntityAdded<TEntity>>(_ => _.EntityAdded(entity));
         }
 
         public virtual void Remove(TEntity entity)
@@ -98,7 +120,7 @@ namespace ApartmentApps.Api
             if (entity.PropertyId == UserContext.PropertyId)
             {
                 Context.Set<TEntity>().Remove(entity);
-            
+                Modules.ModuleHelper.AllModules.Signal<IEntityRemoved<TEntity>>(_ => _.EntityRemoved(entity));
             }
         }
 
@@ -108,13 +130,14 @@ namespace ApartmentApps.Api
         }
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
         {
+            if (predicate == null) return GetAll();
             return GetAll().Where(predicate);
         }
 
         public virtual IQueryable<TEntity> GetAll()
         {
             var propertyId = UserContext.PropertyId;
-            return WithIncludes.Where(p => p.PropertyId == propertyId);
+            return WithIncludes.Where(p => p.PropertyId == null || p.PropertyId == propertyId);
         }
         public IQueryable<TEntity> WithIncludes => this.Includes(Context.Set<TEntity>());
 

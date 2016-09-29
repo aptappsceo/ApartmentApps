@@ -1,0 +1,91 @@
+﻿@using System.Collections
+@using ApartmentApps.Api
+@using ApartmentApps.Portal.Controllers
+@using Korzh.EasyQuery.Mvc
+@using Korzh.EasyQuery.Services
+@model ApartmentApps.Portal.Controllers.MaintenanceRequestOverviewViewModel
+@{
+    var queries = ((IEnumerable<ServiceQuery>) ViewBag.Queries).ToArray();
+    var initialQuery = queries.Any() ? queries.First().QueryId : null;
+}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-12 ">
+        <h2>Maintenance Work Orders</h2>
+        <p>Filter work orders on the right side bar.</p>
+
+    </div>
+</div><br />
+<div class="row">
+    <div class="col-md-7">
+        @Html.RenderQueryList()
+        <div id="ResultPanel">
+
+        </div>
+
+    </div>
+    <div class="col-md-5">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Search</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="padding: 0px;">
+                <script type="text/javascript">
+
+                    // Load the Visualization API and the piechart package.
+                    //google.load('visualization', '1.0', { 'packages': ['corechart'] });
+
+                    //// Set a callback to run when the Google Visualization API is loaded.
+                    //google.setOnLoadCallback(GoogleVisualizationLoaded);
+
+                    function GoogleVisualizationLoaded() {
+                        //alert("Visualization loaded!!!";)
+                    }
+
+                    window.initialQuery = @Html.Raw(initialQuery == null ? "null" : "'" + initialQuery + "'" );
+                    //Settings for EasyQuery pages
+                    window.easyQueryViewSettings = {
+                        showChart: false,
+                        clearQueryButtonId: "myClearButton"
+                    };
+                    window.easyQuerySettings = {
+                        serviceUrl: getPrefix(),
+                        loadDefaultModel: true,
+                        useBootstrap: true
+
+                    };
+
+                    function getPrefix() {
+                        var res = window.location.pathname;
+                        if (res.charAt(res.length - 1) !== '/')
+                            res = res + '/';
+                        return res;
+                    }
+                </script>
+                <div id="QueryPanel"></div>
+                @*@Html.FilterBar()*@
+                <div class="eqjs-fb-buttonsblock">
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="EQ.view.grid.applyFilter()">Apply Filter</a>
+                    <a href="javascript:void(0)" class="btn btn-default">Clear</a>
+                </div>
+                <hr/>
+                <div style="padding: 4px;">
+                    @Html.RenderQueryActions()
+                </div>
+                
+            </div>
+        </div>
+       
+
+    </div>
+
+
+
+</div>

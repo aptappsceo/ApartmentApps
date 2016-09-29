@@ -6,7 +6,7 @@ namespace ApartmentApps.Data
 {
     public partial class Building : PropertyEntity
     {
-  
+        [Searchable]
         public string Name { get; set; }
 
         public virtual ICollection<Unit> Units { get; set; }

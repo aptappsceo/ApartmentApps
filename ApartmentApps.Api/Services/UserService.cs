@@ -1,17 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class UserService : StandardCrudService<ApplicationUser, UserBindingModel>
+    public class UserMapper : BaseMapper<ApplicationUser, UserBindingModel>
     {
         private readonly IBlobStorageService _blobService;
 
-        public UserService(IBlobStorageService blobService,IRepository<ApplicationUser> repository) : base(repository)
+        public UserMapper(IBlobStorageService blobService)
         {
             _blobService = blobService;
         }
@@ -21,7 +28,7 @@ namespace ApartmentApps.Portal.Controllers
             model.Id = viewModel.Id.ToString();
             model.FirstName = viewModel.FirstName;
             model.LastName = viewModel.LastName;
-            
+
         }
         /// Hashes an email with MD5.  Suitable for use with Gravatar profile
         /// image urls
@@ -65,6 +72,66 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Address = user?.Address;
             viewModel.City = user?.City;
             viewModel.PostalCode = user?.PostalCode;
+            viewModel.Roles = user.Roles.Select(p => p.RoleId).ToArray();
         }
+    }
+
+    public class UserSearchViewModel
+    {
+        public FilterViewModel Email { get; set; } = new FilterViewModel();
+        public FilterViewModel FirstName { get; set; } = new FilterViewModel();
+        public FilterViewModel LastName { get; set; } = new FilterViewModel();
+
+        //[FilterPath("Unit.Name")]
+        //public FilterViewModel UnitName { get; set; } = new FilterViewModel();
+
+    }
+    public class UserService : StandardCrudService<ApplicationUser>
+    {
+      
+        public override string DefaultOrderBy => "LastName";
+
+        public UserService(IKernel kernel, IRepository<ApplicationUser> repository) : base(kernel, repository)
+        {
+        }
+
+        public override void Remove(string id)
+        {
+            //base.Remove(id);
+            Repository.Find(id).Archived = true;
+            Repository.Save();
+        }
+    }
+
+    public class PropertyBindingModel : BaseViewModel
+    {
+        public string Name { get; set; }
+        public ActionLinkModel SwitchProperty => new ActionLinkModel("Switch Property", "ChangeProperty", "Account", new {id=Id});
+    }
+
+    public class PropertySearchModel
+    {
+        public FilterViewModel Name { get; set; }
+    }
+    public class PropertyMapper : BaseMapper<Property, PropertyBindingModel>
+    {
+        public override void ToModel(PropertyBindingModel viewModel, Property model)
+        {
+            model.Name = viewModel.Name;
+        }
+
+        public override void ToViewModel(Property model, PropertyBindingModel viewModel)
+        {
+            viewModel.Name = model.Name;
+            viewModel.Id = model.Id.ToString();
+        }
+    }
+    public class PropertyService : StandardCrudService<Property>
+    {
+        public PropertyService(IKernel kernel, IRepository<Property> repository) : base(kernel, repository)
+        {
+        }
+
+        public override string DefaultOrderBy =>"Name";
     }
 }

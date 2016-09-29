@@ -1,20 +1,114 @@
 ﻿@using System.ComponentModel
 @using ApartmentApps.Portal.Controllers
-@using FormFactory
-@using FormFactory.AspMvc
+@using Korzh.EasyQuery.Mvc
 @model AutoGridModel
 @{
     ViewBag.Title = Model.Title;
 }
-<div class="ibox">
-    <div class="ibox-title">
-        <h5></h5>
-        <div class="ibox-tools">
-            @Html.ActionLink("Create New", "Entry", null, new { @class = "btn btn-primary btn-xs" })
-        </div>
-    </div>
-    <div class="ibox-content">
-            @Html.RenderGrid(Model.Type, Model.Model)
+
+<script type="text/javascript">
+
+    // Load the Visualization API and the piechart package.
+    //google.load('visualization', '1.0', { 'packages': ['corechart'] });
+
+    //// Set a callback to run when the Google Visualization API is loaded.
+    //google.setOnLoadCallback(GoogleVisualizationLoaded);
+
+    function GoogleVisualizationLoaded() {
+        //alert("Visualization loaded!!!";)
+    }
+    //Settings for EasyQuery pages
+    window.easyQueryViewSettings = {
+        showChart: false,
+        clearQueryButtonId: "myClearButton"
+    };
+    window.easyQuerySettings = {
+        serviceUrl: getPrefix(),
+        loadDefaultModel: true,
+        useBootstrap:true
+
+    };
+
+    function getPrefix() {
+        var res = window.location.pathname;
+        if (res.charAt(res.length - 1) !== '/')
+            res = res + '/';
+        return res;
+    }
+
+
+</script>
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-12 ">
+        <h2>@Model.Title</h2>
+        
+
     </div>
 </div>
-<div class="clear"></div>
+<div class="row wrapper border-bottom white-bg page-heading" style="padding-top: 15px; padding-left: 20px;">
+    @*<a class="btn btn-warning btn-outline btn-s  modal-link" href="@Url.Action("SearchForm")">Search</a>*@
+    <a class="btn btn-success btn-outline btn-s modal-link" href="@Url.Action("Entry")">Add New</a>
+    @*<a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fa fa-wrench"></i>
+        </a>*@
+    @*<ul class="dropdown-menu dropdown-user">
+            <li>
+                <a href="#">Config option 1</a>
+            </li>
+            <li>
+                <a href="#">Config option 2</a>
+            </li>
+        </ul>*@
+
+
+    @*@Html.ActionLink("Create New", "Entry", null, new {@class = "btn btn-primary btn-xs"})*@
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-7">
+        @Html.RenderQueryList()
+        <div id="ResultPanel">
+
+        </div>
+
+    </div>
+    <div class="col-md-5">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Search</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="padding: 0px;">
+     
+                <div id="QueryPanel"></div>
+                @*@Html.FilterBar()*@
+                <div class="eqjs-fb-buttonsblock">
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="EQ.view.grid.applyFilter()">Apply Filter</a>
+                    <a href="javascript:void(0)" class="btn btn-default">Clear</a>
+                </div>
+                <hr />
+                <div style="padding: 4px;">
+                    @Html.RenderQueryActions()
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</div>

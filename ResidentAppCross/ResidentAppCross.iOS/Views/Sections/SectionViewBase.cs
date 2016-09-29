@@ -21,7 +21,7 @@ namespace ResidentAppCross.iOS
         public bool ShouldStickSectionBelow { get; set; } = false;
 
 
-        public NSLayoutConstraint HeightConstraint
+        public virtual NSLayoutConstraint HeightConstraint
         {
             get
             {

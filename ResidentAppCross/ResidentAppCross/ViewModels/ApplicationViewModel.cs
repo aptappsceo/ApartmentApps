@@ -25,7 +25,11 @@ namespace ResidentAppCross.ViewModels
             {
                 var sharedCommands = Mvx.Resolve<ISharedCommands>();
                 var taskCommandContext = sharedCommands.CheckVersionAndLogInIfNeededCommand(this, null, null)
-                    .OnFail(ex => ShowViewModel<LoginFormViewModel>());
+                    .OnFail(ex =>
+                    {
+                        auth.Logout();
+                        ShowViewModel<LoginFormViewModel>();
+                    });
 
                 taskCommandContext.OnStart("Logging in...").Execute(null);
             }

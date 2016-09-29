@@ -16,7 +16,7 @@ namespace ApartmentApps.Api.Modules
 
             var menuItem = new MenuItemViewModel("Maintenance", "fa-briefcase");
             menuItem.Children.Add(new MenuItemViewModel("New Request", "fa-plus-square", "NewRequest", "MaitenanceRequests"));
-            if (UserContext.IsInRole("PropertyAdmin"))
+            if (UserContext.IsInRole("Maintenance") || UserContext.IsInRole("PropertyAdmin"))
             {
                 menuItem.Children.Add(new MenuItemViewModel("Requests","fa-folder","Index","MaitenanceRequests"));
             }

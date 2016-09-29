@@ -1,20 +1,17 @@
 using System;
+using System.Linq.Expressions;
 using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
-  
 
-    public class BuildingService : StandardCrudService<Building, BuildingViewModel>
+    public class BuildingMapper : BaseMapper<Building, BuildingViewModel>
     {
-        public BuildingService(IRepository<Building> repository) : base(repository)
-        {
-        }
-
         public override void ToModel(BuildingViewModel viewModel, Building model)
         {
             model.Name = viewModel.Name;
@@ -27,5 +24,18 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Name = model.Name;
             viewModel.Id = model.Id.ToString();
         }
+    }
+
+    public class BuildingSearchViewModel
+    {
+        public FilterViewModel Name { get; set; }
+    }
+    public class BuildingService : StandardCrudService<Building>
+    {
+        public BuildingService(IKernel kernel, IRepository<Building> repository) : base(kernel, repository)
+        {
+        }
+
+        public override string DefaultOrderBy => "Name";
     }
 }
