@@ -14,6 +14,9 @@ using ApartmentApps.Payments.Forte.Forte.Client;
 using ApartmentApps.Payments.Forte.Forte.Merchant;
 using ApartmentApps.Payments.Forte.Forte.Transaction;
 using ApartmentApps.Payments.Forte.PaymentGateway;
+using IniParser.Model;
+using IniParser.Model.Configuration;
+using IniParser.Parser;
 using Ninject;
 using Ninject.Planning.Bindings;
 using Authentication = ApartmentApps.Payments.Forte.Forte.Client.Authentication;
@@ -212,9 +215,11 @@ namespace ApartmentApps.Api.Modules
                 return new MakePaymentResult() {ErrorMessage = "Payment Option Not Found."};
             }
 
-            var invoices = _invoiceRepository.GetAvailableBy(DateTime.Now).ToArray();
-
-            var total = invoices.Sum(s => s.Amount);
+            
+            //TODO: change later to get UserId from parameter
+            var invoices = _invoiceRepository.GetAvailableBy(DateTime.Now).Where(s=>s.UserLeaseInfo.UserId == UserContext.UserId).ToArray();
+            decimal convFee = 15;
+            var total = invoices.Sum(s => s.Amount) + convFee;
 
             PaymentGatewaySoapClient transactionClient = null;
 
@@ -237,10 +242,28 @@ namespace ApartmentApps.Api.Modules
                 PgPaymentMethodId = paymentOption.TokenId,
                 PgPassword = MerchantPassword, //"LEpLqvx7Y5L200"
                 PgTotalAmount  = pgTotalAmount,
-                PgTransactionType = "10",
+                PgTransactionType = "10", //sale
             });
 
-            
+
+            ForteMakePaymentResponse typedResponse = null;
+
+            try
+            {
+                typedResponse = ForteMakePaymentResponse.FromIniString(response);
+            }
+            catch (Exception ex)
+            {
+                return new MakePaymentResult()
+                {
+                    ErrorMessage = "Please, contact our support."
+                };    
+            }
+
+            _leaseService.CreateTransaction(typedResponse.TraceNumber, UserContext.UserId, UserContext.UserId, total,
+                convFee, invoices, "Transaction Opened.", DateTime.Now);
+
+
             return new MakePaymentResult()
             {
 
@@ -285,11 +308,70 @@ namespace ApartmentApps.Api.Modules
             if (user == null) throw new KeyNotFoundException();
 
             var opId = Guid.NewGuid().ToString();
-            _leaseService.CreateTransaction(opId, user.Id, new[] {invoice}, "", DateTime.Now);
-            var transaction = _transactionRepository.Find(opId);
-            _leaseService.OnTransactionComplete(transaction,s,user.Property.TimeZone.Now());
-            _transactionRepository.Save();
+            //_leaseService.ÙCreateTransaction(opId, user.Id, new[] {invoice}, "", DateTime.Now);
+            //var transaction = _transactionRepository.Find(opId);
+            //_leaseService.OnTransactionComplete(transaction,s,user.Property.TimeZone.Now());
+            //_transactionRepository.Save();
 
         }
     }
+}
+
+public class ForteMakePaymentResponse
+{
+    /*
+        pg_response_type=A
+        pg_response_code=A01
+        pg_response_description=TEST APPROVAL
+        pg_authorization_code=123456
+        pg_trace_number=796B02B2-35DB-4987-BD62-15F5DD1EDF25
+        pg_avs_code=Y
+        pg_cvv_code=M
+        pg_merchant_id=187762
+        pg_transaction_type=10
+        pg_total_amount=1215.0
+        pg_client_id=2077254
+        pg_payment_method_id=2358399
+        endofdata
+    */
+
+    public string TraceNumber
+    {
+        get { return _traceNumber; }
+        set { _traceNumber = value; }
+    }
+
+    public string ResponseCodeString
+    {
+        get { return _responseCodeString; }
+        set { _responseCodeString = value; }
+    }
+
+    public ForteTransactionResultCode ResponseCode { get; set; }
+    private static IniDataParser Parser = new IniDataParser(new IniParserConfiguration()
+    {
+        SkipInvalidLines = true
+    });
+    private string _traceNumber;
+    private string _responseCodeString;
+
+    public static ForteMakePaymentResponse FromIniString(string ini)
+    {
+        var res = new ForteMakePaymentResponse();
+        res.ReadFromIni(Parser.Parse(ini));
+        return res;
+    }
+
+    public void ReadFromIni(IniData data)
+    {
+        string respCode = null;
+        if(data.TryGetKey("pg_response_code",out _responseCodeString))
+        {
+            ResponseCode = ForteTransactionResultCodeMapping.Codes[_responseCodeString];
+        }
+
+        data.TryGetKey("pg_trace_number", out _traceNumber);
+
+    }
+
 }

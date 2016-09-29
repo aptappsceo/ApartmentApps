@@ -8,6 +8,8 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Payments.BindingModels;
+using ApartmentApps.Modules.Payments.Data;
+using TransactionState = ApartmentApps.Api.Modules.TransactionState;
 
 namespace ApartmentApps.Modules.Payments.Services
 {
@@ -18,11 +20,12 @@ namespace ApartmentApps.Modules.Payments.Services
         private PropertyContext _context;
         private IUserContext _userContext;
         private IRepository<UserLeaseInfo> _leases;
+        private IRepository<TransactionHistoryItem> _transactionHistory;
         private IRepository<InvoiceTransaction> _transactions;
 
         public LeaseInfoManagementService(IRepository<ApplicationUser> users, IRepository<Invoice> invoices,
             PropertyContext context, IUserContext userContext, IRepository<UserLeaseInfo> leases,
-            IRepository<InvoiceTransaction> transactions)
+            IRepository<InvoiceTransaction> transactions, IRepository<TransactionHistoryItem> transactionHistory)
         {
             _users = users;
             _invoices = invoices;
@@ -30,6 +33,7 @@ namespace ApartmentApps.Modules.Payments.Services
             _userContext = userContext;
             _leases = leases;
             _transactions = transactions;
+            _transactionHistory = transactionHistory;
         }
 
         public void ResumeUserLeaseInfo(ResumeUserLeaseInfoBindingModel model)
@@ -205,38 +209,44 @@ namespace ApartmentApps.Modules.Payments.Services
             _leases.Save();
         }
 
-        public string CreateTransaction(string id, string userId, Invoice[] invoices, string comments,
-            DateTime estimatedCompleteDate)
+        public string CreateTransaction(string trace, string userId, string commiterId, decimal totalIncludingConvenienceFee, decimal convenienceFee, Invoice[] invoices, string comments, DateTime estimatedCompleteDate)
         {
             foreach (var invoice in invoices)
             {
                 if (invoice.State != InvoiceState.NotPaid || invoice.IsArchived)
                 {
                     throw new Exception(
-                        $"One of invoices has illegal state: {invoice.Id} is {invoice.State} (Must be NotPaid)");
+                        $"One of invoices has illegal state: {invoice.Id} is {invoice.State} (Must be Not Paid)");
                 }
             }
 
             var user = _users.Find(userId);
             if (user == null) throw new Exception("Not Found User With Id: " + userId);
-            var transaction = new InvoiceTransaction()
+            
+            var commiter = _users.Find(commiterId);
+            if (commiter == null) throw new Exception("Not Found Commiter (User)  With Id: " + userId);
+
+            var transaction = new TransactionHistoryItem()
             {
-                Id = id,
-                State = TransactionState.Pending,
+                Trace= trace,
+                State = TransactionState.Open,
                 Invoices = invoices,
-                Comments = comments,
-                EstimatedCompleteDate = estimatedCompleteDate,
+                OpenDate = user.Property.TimeZone.Now(),
+                Amount= totalIncludingConvenienceFee ,
+                ConvenienceFee = convenienceFee,
+                CommiterId = commiterId,
                 UserId = userId,
-                ProcessDate = user.Property.TimeZone.Now()
+                StateMessage = comments,
+                Service = PaymentVendor.Forte,
             };
 
-            _transactions.Add(transaction);
-            _transactions.Save();
+            _transactionHistory.Add(transaction);
+
+             _transactions.Save();
 
             foreach (var invoice in invoices)
             {
                 invoice.State = InvoiceState.Pending;
-                invoice.PaymentTransactionId = transaction.Id;
             }
 
             _invoices.Save();
@@ -246,8 +256,8 @@ namespace ApartmentApps.Modules.Payments.Services
 
         public void OnTransactionComplete(InvoiceTransaction transaction, string comment, DateTime completeDate)
         {
-            transaction.State = TransactionState.Complete;
-            transaction.Comments = comment;
+            transaction.State = TransactionState.Approved; 
+            transaction.Comments = comment; 
             transaction.CompleteDate = completeDate;
             var invoices = transaction.Invoices;
             foreach (var invoice in invoices)
