@@ -15,8 +15,12 @@ namespace ApartmentApps.Api.ViewModels
         public int OpenCount { get; set; }
 
         public int DeliverCount { get; set; }
+        public string TargetsXml { get; set; }
 
         public IEnumerable<MessageReceiptViewModel>  Receipts { get; set; }
-
+        public UserBindingModel From { get; set; }
+        public int TargetsCount { get; set; }
+        public string TargetsDescription { get; set; }
+        public bool Sent { get; set; }
     }
 }

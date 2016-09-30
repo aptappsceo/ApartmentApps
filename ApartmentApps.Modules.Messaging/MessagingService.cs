@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Ninject;
 
@@ -10,6 +11,10 @@ namespace ApartmentApps.Portal.Controllers
 {
     public class MessageMapperFullDetails : MessageMapper
     {
+        public MessageMapperFullDetails(IMapper<ApplicationUser, UserBindingModel> userMapper) : base(userMapper)
+        {
+        }
+
         public override void ToViewModel(Message model, MessageViewModel viewModel)
         {
             base.ToViewModel(model, viewModel);
@@ -26,11 +31,47 @@ namespace ApartmentApps.Portal.Controllers
             }).ToArray();
         }
     }
+
+    public class MessageTargetsViewModel : BaseViewModel
+    {
+        
+        public int TargetsCount { get; set; }
+        public string TargetsXml { get; set; }
+        public string TargetsDescription { get; set; }
+        public string Subject { get; set; }
+    }
+
+    public class MessageTargetMapper : BaseMapper<Message, MessageTargetsViewModel>
+    {
+        public override void ToModel(MessageTargetsViewModel viewModel, Message model)
+        {
+            model.Filter = viewModel.TargetsXml;
+            model.TargetsCount = viewModel.TargetsCount;
+            model.TargetsDescription = viewModel.TargetsDescription;
+        }
+
+        public override void ToViewModel(Message model, MessageTargetsViewModel viewModel)
+        {
+            viewModel.Subject = model.Subject;
+            viewModel.TargetsXml = model.Filter;
+            viewModel.TargetsDescription = model.TargetsDescription;
+            viewModel.Id = model.Id.ToString();
+            viewModel.TargetsCount = model.TargetsCount;
+        }
+    }
     public class MessageMapper : BaseMapper<Message, MessageViewModel>
     {
+        private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
+
+        public MessageMapper(IMapper<ApplicationUser,UserBindingModel> userMapper)
+        {
+            _userMapper = userMapper;
+        }
+
         public override void ToModel(MessageViewModel viewModel, Message model)
         {
             model.Subject = viewModel.Title;
+            model.Filter = viewModel.TargetsXml;
             model.Body = viewModel.Body;
             model.SentToCount = viewModel.SentToCount;
             model.Id = Convert.ToInt32(viewModel.Id);
@@ -40,17 +81,51 @@ namespace ApartmentApps.Portal.Controllers
         public override void ToViewModel(Message model, MessageViewModel viewModel)
         {
             viewModel.Title = model.Subject;
+            viewModel.From = _userMapper.ToViewModel(model.From);
             viewModel.Body = model.Body;
             viewModel.SentOn = model.SentOn;
             viewModel.SentToCount = model.MessageReceipts.Count();
             viewModel.Id = model.Id.ToString();
             viewModel.OpenCount = model.MessageReceipts.Count(p => !p.Error && p.Opened);
             viewModel.DeliverCount = model.MessageReceipts.Count(p => p.Error == false);
+            viewModel.TargetsXml = model.Filter;
+            viewModel.TargetsDescription = model.TargetsDescription;
+            viewModel.TargetsCount = model.TargetsCount;
+            viewModel.Sent = model.Sent;
         }
     }
+
+    public class MessageFormMapper : BaseMapper<Message,MessageFormViewModel>
+    {
+        public override void ToModel(MessageFormViewModel viewModel, Message model)
+        {
+            model.Body = viewModel.Body;
+            model.Subject = viewModel.Subject;
+        }
+
+        public override void ToViewModel(Message model, MessageFormViewModel viewModel)
+        {
+            viewModel.Id = model.Id.ToString();
+            viewModel.Body = model.Body;
+            viewModel.Subject = model.Subject;
+        }
+    }
+    public class MessageFormViewModel : BaseViewModel
+    {
+        public string Subject { get; set; }
+        public string Body { get; set; }
+    }
+
+
     public class MessagingService : StandardCrudService<Message>
     {
-      
+        private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
+
+
+        public MessagingService(IMapper<ApplicationUser, UserBindingModel> userMapper,IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
+        {
+            _userMapper = userMapper;
+        }
 
         public IEnumerable<TViewModel> GetHistory<TViewModel>()
         {
@@ -60,9 +135,14 @@ namespace ApartmentApps.Portal.Controllers
 
         public MessageViewModel GetMessageWithDetails(string messageId)
         {
-            return Find(messageId, new MessageMapperFullDetails());
+            return Find(messageId, new MessageMapperFullDetails(_userMapper));
         }
 
+        public override void Add<TViewModel>(TViewModel viewModel)
+        {
+
+            base.Add(viewModel);
+        }
 
         public MessagingService(IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
         {

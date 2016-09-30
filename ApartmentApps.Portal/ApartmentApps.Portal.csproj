@@ -1003,7 +1003,6 @@
     <Content Include="Global.asax" />
     <Content Include="InstallationDummyFile.txt" />
     <Content Include="js\bootstrap.min.js" />
-    <Content Include="js\bootstrap3-typeahead.min.js" />
     <Content Include="js\Chart.js" />
     <Content Include="js\clndr.js" />
     <Content Include="js\custom.js" />
@@ -1107,7 +1106,7 @@
     <Content Include="Content\ej\web\gradient-lime\ej.theme.less" />
     <Content Include="Content\ej\web\gradient-saffron-dark\ej.theme.less" />
     <Content Include="Content\ej\web\gradient-saffron\ej.theme.less" />
-    <Content Include="ClassDiagram1.cd" />
+    <None Include="Properties\PublishProfiles\Default Settings %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <Content Include="Scripts\canvg.js" />
     <Content Include="Scripts\ej\ej.unobtrusive.min.js" />
@@ -1364,6 +1363,12 @@
     <Content Include="Views\MaitenanceRequests\MaintenanceCheckinFeed.cshtml" />
     <Content Include="Views\MaitenanceRequests\Overview.cshtml" />
     <Content Include="Views\MaitenanceRequests\OverviewListPartial.cshtml" />
+    <Content Include="Views\Messaging\EditMessage.cshtml" />
+    <Content Include="Views\IncidentReports\Overview.cshtml" />
+    <Content Include="Views\IncidentReports\OverviewListPartial.cshtml" />
+    <Content Include="Views\Messaging\OverviewListPartial.cshtml" />
+    <Content Include="Views\Messaging\Overview.cshtml" />
+    <Content Include="Views\CampaignTargets\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

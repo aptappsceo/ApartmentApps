@@ -3,25 +3,27 @@
 @using ApartmentApps.Portal.Controllers
 @using Korzh.EasyQuery.Mvc
 @using Korzh.EasyQuery.Services
-@model ApartmentApps.Portal.Controllers.MaintenanceRequestOverviewViewModel
+@model ApartmentApps.Forms.GridList<MessageViewModel>
 @{
-    var queries = ((IEnumerable<ServiceQuery>) ViewBag.Queries).ToArray();
+    var queries = ((IEnumerable<ServiceQuery>)ViewBag.Queries).ToArray();
     var initialQuery = queries.Any() ? queries.First().QueryId : null;
 }
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-12 ">
-        <h2>Maintenance Work Orders</h2>
-        <p>Filter work orders on the right side bar.</p>
-
+        <h2>Messaging Campaigns</h2>
+        <p>Send messages to residents via email and push notifications.</p>
     </div>
-</div><br />
+</div>
+<div class="row wrapper border-bottom white-bg page-heading" style="padding-top: 15px; padding-left: 20px;">
+    <a class="btn btn-success btn-outline btn-s" href="@Url.Action("Entry")">Add New</a>
+</div>
+<br />
 <div class="row">
     <div class="col-md-7">
         @Html.RenderQueryList()
         <div id="ResultPanel">
 
         </div>
-        <a href="javascript:void" class="btn btn-primary btn-xs" onclick="EQ.view.grid.saveQuery()">Save Current Filter</a>
     </div>
     <div class="col-md-5">
         <div class="ibox">
@@ -75,13 +77,11 @@
                     <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="EQ.view.grid.applyFilter()">Apply Filter</a>
                     <a href="javascript:void(0)" class="btn btn-default">Clear</a>
                 </div>
-       
-                    @Html.RenderQueryActions()
-           
-                
+
+                @Html.RenderQueryActions()
             </div>
         </div>
-       
+
 
     </div>
 

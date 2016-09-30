@@ -1,3 +1,4 @@
+using System;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
@@ -22,7 +23,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 RelatedId = id,
                 Message = alert.Body,
                 Title = alert.Subject,
-                CreatedOn = alert.SentOn,
+                CreatedOn = alert.SentOn ?? DateTime.Now,
                 Type="Message"
             };
         } 

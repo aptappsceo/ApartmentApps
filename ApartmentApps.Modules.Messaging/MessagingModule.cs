@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity;
@@ -43,31 +45,23 @@ namespace ApartmentApps.Api.Modules
             }
         }
 
-        public void SendMessage(object[] ids, string subject, string message, string host)
+        public void SendMessage(object[] ids, MessageViewModel message, string host)
         {
-            var entity = new Message()
-            {
-                FromId = UserContext.UserId,
-                SentToCount = ids.Length,
-                Subject = subject,
-                Body = message ,
-                SentOn = UserContext.CurrentUser.TimeZone.Now()
-            };
-            Messages.Add(entity);
-            Messages.Save();
+
             foreach (var item in ids)
             {
                 var user = _context.Users.Find(item);
                 if (user.Archived) continue;
                 // Send the push notification
-                _alertsService.SendAlert(user, subject, message, "Message", entity.Id);
+                _alertsService.SendAlert(user, message.Title, message.Body, "Message", Convert.ToInt32(message.Id));
                 // Send the email
-                SendEmailAsync(entity, user, new IdentityMessage() { Body = message + $"<img src='{host}/{entity.Id}/{item}.png' />", Destination = user.Email, Subject = subject }).Wait();
+                //$"<img src='{host}/{message.Id}/{item}.png' />", Destination = user.Email, Subject = message. }
+                SendEmailAsync(message, user, new IdentityMessage() { Subject = message.Title, Body = message.Body, Destination = user.Email}).Wait();
             }
             
 
         }
-        public async Task SendEmailAsync(Message messageRecord,ApplicationUser user, IdentityMessage message)
+        public async Task SendEmailAsync(MessageViewModel messageRecord,ApplicationUser user, IdentityMessage message)
         {
 
             string apiKey = "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";
@@ -94,7 +88,7 @@ namespace ApartmentApps.Api.Modules
                 UserId = user.Id,
                 Error =  status != HttpStatusCode.Accepted,
                 ErrorMessage = Config.FullLogging ? response.StatusCode.ToString() + response.Body.ReadAsStringAsync().Result : response.StatusCode.ToString(),
-                MessageId = messageRecord.Id,
+                MessageId = Convert.ToInt32(messageRecord.Id),
             });
             _messageReceipts.Save();
 

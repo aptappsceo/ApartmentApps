@@ -196,8 +196,10 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService, CourtesyCheckinMapper>();
             kernel.RegisterMappable<Property, PropertyBindingModel, PropertyService, PropertyMapper>();
             kernel.RegisterMapper<Unit,UnitFormModel,UnitFormMapper>();
+            kernel.RegisterMapper<Message,MessageFormViewModel,MessageFormMapper>();
             kernel.RegisterMapper<MaitenanceRequest, MaintenanceRequestEditModel, MaintenanceRequestEditMapper>();
             kernel.RegisterMapper<IncidentReport, IncidentReportFormModel, IncidentReportFormMapper>();
+            kernel.RegisterMapper<Message, MessageTargetsViewModel, MessageTargetMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
     
             //kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();

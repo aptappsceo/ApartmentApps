@@ -1,0 +1,59 @@
+﻿@model ApartmentApps.Forms.GridList<ApartmentApps.Api.ViewModels.MessageViewModel>
+@using ApartmentApps.Data
+@using Korzh.EasyQuery.Mvc
+@using Korzh.EasyQuery.Services
+@{
+    var property = ViewBag.Property as Property;
+}
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-12">
+            <div class="contact-box">
+
+              
+                <div class="col-sm-8">
+                    <h3>
+                        <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.Id})" class="pull-left">
+                            <strong><a href="@Url.Action("MessageDetails","Messaging")">@item.Title</a></strong>
+                        </a>
+                    </h3>
+                    <p>Will send to <b>@item.TargetsCount</b> users.
+                    </p>
+                    
+                    <br/>
+                    @if (string.IsNullOrEmpty(item.TargetsXml))
+                    {
+                        <p><strong>Message Targets not yet set.</strong></p>
+                        
+                    }
+                    else
+                    {
+                        <p><i class="fa fa-users"></i> @item.TargetsDescription</p>
+                        
+
+                     
+                    }
+
+                </div>
+                <div class="col-sm-4">
+                    <a class="btn btn-white" href="@Url.Action("SelectTargets", "Messaging", new {messageId = item.Id})"><i class="fa fa-users"></i> Select Users</a>
+                    <a class="btn btn-white" href="@Url.Action("Entry", "Messaging", new {id = item.Id})"><i class="fa fa-edit"></i> Edit Message</a>
+                    <a class="btn btn-white btn-default" href="@Url.Action("Details", "Messaging", new {id = item.Id})"><i class="fa fa-info"></i> Preview & Send</a>
+                    @if (!string.IsNullOrEmpty(item.TargetsXml))
+                    {
+                        <a class="btn btn-primary" href="@Url.Action("SendMessage", "Messaging", new {id = item.Id})"><i class="fa fa-send"></i> Send Now</a>
+                    }
+
+
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+
+    }
+    @Html.PageNavigator(Model as IPaging)
+    <div style="clear: both;"></div>
+</div>
+
