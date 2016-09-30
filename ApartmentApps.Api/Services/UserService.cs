@@ -14,6 +14,35 @@ using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
+    public class UserListMapper : BaseMapper<ApplicationUser, UserListModel>
+    {
+
+        public UserListMapper()
+        {
+        
+        }
+
+        public override void ToModel(UserListModel viewModel, ApplicationUser model)
+        {
+
+
+        }
+
+        public override void ToViewModel(ApplicationUser user, UserListModel viewModel)
+        {
+            if (user == null) return;
+            viewModel.Id = user.Id;
+        
+            viewModel.FirstName = user.FirstName;
+            viewModel.LastName = user.LastName;
+         
+            viewModel.UnitName = user.Unit?.Name;
+            viewModel.BuildingName = user.Unit?.Building.Name;
+        
+            viewModel.PhoneNumber = user.PhoneNumber;
+            viewModel.Email = user.Email;
+        }
+    }
     public class UserMapper : BaseMapper<ApplicationUser, UserBindingModel>
     {
         private readonly IBlobStorageService _blobService;

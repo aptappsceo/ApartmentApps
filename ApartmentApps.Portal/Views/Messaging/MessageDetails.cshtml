@@ -2,7 +2,7 @@
 @using ApartmentApps.Portal.Controllers
 @model MessageViewModel
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-4">
+    <div class="col-sm-12">
         <h2>Message Details - @Model.Title</h2>
         <ol class="breadcrumb">
             <li class="active">
@@ -16,7 +16,7 @@
     <a class="btn btn-success btn-outline btn-s" href="@Url.Action("Index", "Messaging")">Back to Campaigns</a>
     <a class="btn btn-success btn-outline btn-s" href="@Url.Action("Entry","Messaging", new {id=Model.Id})">Compose</a>
     <a class="btn btn-success btn-outline btn-s" href="@Url.Action("SelectTargets","CampaignTargets", new {messageId=Model.Id})">Select Targets</a>
-    <a class="btn btn-success btn-outline btn-s" href="@Url.Action("SendMessage","Messaging", new {id=Model.Id})">Save & Preview</a>
+    <a class="btn btn-primary btn-s" href="@Url.Action("SendMessage","Messaging", new {id=Model.Id})">Send Now</a>
 
 </div>
 <br />
@@ -52,7 +52,17 @@
                 </div>
             </div>
         </div>
-       
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Campaign Targets</h5>
+                </div>
+                <div class="ibox-content">
+                    @Model.TargetsCount Users
+                    @Model.TargetsDescription
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">

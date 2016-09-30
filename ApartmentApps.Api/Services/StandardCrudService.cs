@@ -158,16 +158,21 @@ namespace ApartmentApps.Portal.Controllers
         public virtual void Save<TViewModel>(TViewModel unit) where TViewModel : BaseViewModel
         {
             var result = Repository.Find(unit.Id);
+            var mapper = _kernel.Get<IMapper<TModel, TViewModel>>();
+            TModel item = default(TModel);
             if (result != null)
             {
                 _kernel.Get<IMapper<TModel,TViewModel>>().ToModel(unit, result);
+                Repository.Save();
+                mapper.ToViewModel(result, unit);
             }
             else
             {
-                Repository.Add(_kernel.Get<IMapper<TModel, TViewModel>>().ToModel(unit));
-
+                var model = mapper.ToModel(unit);
+                Repository.Add(model);
+                Repository.Save();
+                mapper.ToViewModel(model, unit);
             }
-            Repository.Save();
         }
     }
 }

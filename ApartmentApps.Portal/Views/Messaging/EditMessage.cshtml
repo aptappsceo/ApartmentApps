@@ -7,8 +7,12 @@
 </div>
 <div class="row wrapper border-bottom white-bg page-heading" style="padding-top: 15px; padding-left: 20px;">
     @*<a class="btn btn-warning btn-outline btn-s  modal-link" href="@Url.Action("SearchForm")">Search</a>*@
-    <a class="btn btn-success btn-outline btn-s" href="@Url.Action("Index","Messaging")">Back to Campaigns</a>
-    <a class="btn btn-success btn-outline btn-s" href="@Url.Action("SelectTargets","CampaignTargets", new {messageId=Model.Id})">Select Targets</a>
+    <a class="btn btn-success btn-outline btn-s" href="@Url.Action("Index", "Messaging")">Back to Campaigns</a>
+    @if (Model.Id != "0" && !string.IsNullOrEmpty(Model.Id))
+    {
+        <a class="btn btn-success btn-outline btn-s" href="@Url.Action("SelectTargets","CampaignTargets", new {messageId=Model.Id})">Select Targets</a>
+    }
+    
 
 </div>
 <br/>
@@ -67,7 +71,14 @@
 
                 </div>
                 <div class="ibox-footer">
-                    <input type="submit" class="btn btn-primary" value="Save & Preview" />
+                    @if (Model.Id != "0" && !string.IsNullOrEmpty(Model.Id))
+                    {
+                        <input type="submit" class="btn btn-primary" value="Save & Preview"/>
+                    }
+                    else
+                    {
+                        <input type="submit" class="btn btn-primary" value="Create Campaign" />
+                    }
                 </div>
             </div>
         </div>

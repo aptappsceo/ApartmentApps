@@ -19,7 +19,7 @@ using Syncfusion.JavaScript;
 using Korzh.EasyQuery.Mvc;
 namespace ApartmentApps.Portal.Controllers
 {
-    public class CampaignTargetsController : AutoGridController<UserService, UserBindingModel>
+    public class CampaignTargetsController : AutoGridController<UserService, UserListModel>
     {
         private readonly MessagingService _messagingService;
 
@@ -65,13 +65,13 @@ namespace ApartmentApps.Portal.Controllers
             return base.ApplyFilter(queryJson, optionsJson);
         }
 
-        public override ActionResult GridResult(GridList<UserBindingModel> grid)
+        public override ActionResult GridResult(GridList<UserListModel> grid)
         {
             ViewBag.MessageId = MessageId;
             if (Request.IsAjaxRequest())
             {
                 var formHelper = new DefaultFormProvider();
-                var gridModel = formHelper.CreateGridFor<UserBindingModel>();
+                var gridModel = formHelper.CreateGridFor<UserListModel>();
 
                 gridModel.Items = grid;
                 return View("Forms/GridPartial", gridModel);
@@ -189,7 +189,7 @@ namespace ApartmentApps.Portal.Controllers
                 var items = _userService.GetAll<UserBindingModel>(query, out count, null, false, 1, Int32.MaxValue).Select(p=>p.Id).Cast<object>().ToArray();
 
                 _module.SendMessage(items, q, HttpContext.Request.Url.Host + Url.Action("EmailMessageRead", "Messaging"));
-
+                Service.MarkSent(messageId);
                 return RedirectToAction("Details",new {id = messageId});
 
             }
@@ -198,8 +198,16 @@ namespace ApartmentApps.Portal.Controllers
         [ValidateInput(false)]
         public override ActionResult SaveEntry(MessageFormViewModel model)
         {
+            bool isNew = model.Id == "0" || string.IsNullOrEmpty(model.Id);
             base.SaveEntry(model);
-            return RedirectToAction("History", new {id = model.Id});
+            if (isNew)
+            {
+                return RedirectToAction("SelectTargets", "CampaignTargets", new {messageId = model.Id});
+            }
+            else
+            {
+                return RedirectToAction("MessageDetails", new { id = model.Id });
+            }
         }
 
         [Route("Messaging/EmailMessageRead/{messageId:int}/{userId}.jpg")]

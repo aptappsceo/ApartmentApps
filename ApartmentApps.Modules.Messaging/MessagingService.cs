@@ -147,5 +147,12 @@ namespace ApartmentApps.Portal.Controllers
         public MessagingService(IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
         {
         }
+
+        public void MarkSent(int messageId)
+        {
+            var message = Repository.Find(messageId);
+            message.Sent = true;
+            Repository.Save();
+        }
     }
 }
