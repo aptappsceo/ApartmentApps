@@ -1,0 +1,277 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Syncfusion.GeckoHtmlRenderer.Base</name>
+    </assembly>
+    <members>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.PRF_CHECKVISIBLE">
+            <summary>
+            Windows message.
+            </summary>
+        </member>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.PRF_CHILDREN">
+            <summary>
+            Windows message.
+            </summary>
+        </member>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.PRF_CLIENT">
+            <summary>
+            Windows message.
+            </summary>
+        </member>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.PRF_ERASEBKGND">
+            <summary>
+            Windows message.
+            </summary>
+        </member>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.PRF_NONCLIENT">
+            <summary>
+            Windows message.
+            </summary>
+        </member>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.PRF_OWNED">
+            <summary>
+            Windows message.
+            </summary>
+        </member>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.PW_CLIENTONLY">
+            <summary>
+            Windows message.
+            </summary>
+        </member>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.WM_PRINT">
+            <summary>
+            Windows message.
+            </summary>
+        </member>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.WM_PRINTCLIENT">
+            <summary>
+            Windows message.
+            </summary>
+        </member>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.S_OK">
+            <summary>
+            HRESULT S_OK constant.
+            </summary>
+        </member>
+        <member name="F:GeckoHtmlRenderer.Natives.Native.S_FALSE">
+            <summary>
+            HRESULT S_OK constant.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.Native.#ctor">
+            <summary>
+            Creates new object.
+            </summary>
+        </member>
+        <member name="T:GeckoHtmlRenderer.Natives.IOleClientSite">
+            <summary>
+            System interface.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleClientSite.SaveObject">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleClientSite.GetMoniker(System.UInt32,System.UInt32,System.Object)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleClientSite.GetContainer(System.Object)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleClientSite.ShowObject">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleClientSite.OnShowWindow(System.Boolean)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleClientSite.RequestNewObjectLayout">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="T:GeckoHtmlRenderer.Natives.IOleObject">
+            <summary>
+            System interface.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.SetClientSite(GeckoHtmlRenderer.Natives.IOleClientSite)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.GetClientSite(GeckoHtmlRenderer.Natives.IOleClientSite)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.SetHostNames(System.Object,System.Object)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.Close(System.UInt32)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.SetMoniker(System.UInt32,System.Object)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.GetMoniker(System.UInt32,System.UInt32,System.Object)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.InitFromData(System.Runtime.InteropServices.ComTypes.IDataObject,System.Boolean,System.UInt32)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.GetClipboardData(System.UInt32,System.Runtime.InteropServices.ComTypes.IDataObject)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.DoVerb(System.UInt32,System.UInt32,System.Object,System.UInt32,System.UInt32,System.UInt32)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.EnumVerbs(System.Object)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.Update">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.IsUpToDate">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.GetUserClassID(System.UInt32)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.GetUserType(System.UInt32,System.UInt32)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.SetExtent(System.UInt32,System.UInt32)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.GetExtent(System.UInt32,System.UInt32)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.Advise(System.Object,System.UInt32)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.Unadvise(System.UInt32)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.EnumAdvise(System.Object)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.GetMiscStatus(System.UInt32,System.UInt32)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:GeckoHtmlRenderer.Natives.IOleObject.SetColorScheme(System.Object)">
+            <summary>
+            System method.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.Dispose(System.Boolean)">
+            <summary>
+            Disposes component.
+            </summary>
+            <param name="disposing">Indicates whether dispose managed resources or not.</param>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.SetUIHandler">
+            <summary>
+            Register this window as host of the web browser.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.GeckoHtmlRenderer#Natives#IOleClientSite#SaveObject">
+            <summary>
+            Customization method.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.GeckoHtmlRenderer#Natives#IOleClientSite#GetMoniker(System.UInt32,System.UInt32,System.Object)">
+            <summary>
+            Customization method.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.GeckoHtmlRenderer#Natives#IOleClientSite#GetContainer(System.Object)">
+            <summary>
+            Customization method.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.GeckoHtmlRenderer#Natives#IOleClientSite#ShowObject">
+            <summary>
+            Customization method.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.GeckoHtmlRenderer#Natives#IOleClientSite#OnShowWindow(System.Boolean)">
+            <summary>
+            Customization method.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.GeckoHtmlRenderer#Natives#IOleClientSite#RequestNewObjectLayout">
+            <summary>
+            Customization method.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.GetXPCOMPath">
+            <summary>
+            Returns the XPCOM Path read from the registry.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.CalculateImageSize(System.Drawing.Size)">
+            <summary>
+            Calculates size of the resulting image.
+            </summary>
+            <param name="documentSize">Size of the document.</param>
+            <returns>Size of the image.</returns>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.SetWidth">
+            <summary>
+            Sets width of the web browser.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.GeckoHtmlRenderer.GeckoHtmlRendererControl.SetHeight">
+            <summary>
+            Sets height of the web browser.
+            </summary>
+        </member>
+    </members>
+</doc>

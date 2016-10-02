@@ -215,7 +215,12 @@ namespace ApartmentApps.Api
 
         public void AssignRequest(int id, string assignedToId)
         {
-            
+            var request = Repository.Find(id);
+            if (request != null)
+            {
+                request.WorkerAssignedId = assignedToId;
+                Repository.Save();
+            }
         }
 
         public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)

@@ -1,0 +1,465 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Syncfusion.DocToPDFConverter.Base</name>
+    </assembly>
+    <members>
+        <member name="T:Syncfusion.DocToPDFConverter.DocToPDFConverter">
+            <summary>
+            This class provides support for converting WordDocument into an PDF Document.
+            </summary>
+            <seealso cref="T:Syncfusion.DocIO.DLS.WordDocument"/>
+            <seealso cref="T:Syncfusion.Pdf.PdfDocument"/>
+            <remarks>This class is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+            <example>
+            This example converts the specified Word Document in to PDF Document.
+            <code lang="C#">
+                //Loads an existing Word document
+                WordDocument wordDocument = new WordDocument("Template.docx", FormatType.Docx);
+                //Instantiation of DocToPDFConverter for Word to PDF conversion
+                DocToPDFConverter converter = new DocToPDFConverter();
+                //Converts Word document into PDF document
+                PdfDocument pdfDocument = converter.ConvertToPDF(wordDocument);
+               //Saves the PDF file
+                pdfDocument.Save("WordtoPDF.pdf");
+                //Releases all resources used by the object.
+                converter.Dispose();
+                //Closes the instance of document objects
+                pdfDocument.Close(true);
+                wordDocument.Close();
+            </code>
+            <code lang="VB">
+                'Loads an existing Word document
+                Dim wordDocument As New WordDocument("Template.docx", FormatType.Docx)
+                'Instantiation of DocToPDFConverter for Word to PDF conversion
+                Dim converter As New DocToPDFConverter()
+               'Converts Word document into PDF document
+                Dim pdfDocument As PdfDocument = converter.ConvertToPDF(wordDocument)
+               'Saves the PDF file
+                pdfDocument.Save("WordtoPDF.pdf");
+                'Releases all resources used by the object.
+                converter.Dispose();
+                'Closes the instance of document objects
+                pdfDocument.Close(true);
+                wordDocument.Close();
+            </code>
+            </example>
+        </member>
+        <member name="F:Syncfusion.DocToPDFConverter.DocToPDFConverter.DEF_IMAGETYPE">
+            <summary>
+            Specifies the default image type.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.DocToPDFConverter.DocToPDFConverter.m_settings">
+            <summary>
+            converter settings to the document
+            </summary>
+        </member>
+        <member name="F:Syncfusion.DocToPDFConverter.DocToPDFConverter.m_flag">
+            <summary>
+            The m_flag
+            </summary>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.DocToPDFConverter.DocToPDFConverter"/> class.
+            </summary>
+            <remarks>This constructor is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+             <example>
+            This example converts the specified Word Document in to PDF Document.
+            <code lang="C#">
+                //Loads an existing Word document
+                WordDocument wordDocument = new WordDocument("Template.docx", FormatType.Docx);
+                //Instantiation of DocToPDFConverter for Word to PDF conversion
+                DocToPDFConverter converter = new DocToPDFConverter();
+                //Converts Word document into PDF document
+                PdfDocument pdfDocument = converter.ConvertToPDF(wordDocument);
+               //Saves the PDF file
+                pdfDocument.Save("WordtoPDF.pdf");
+                //Releases all resources used by the object.
+                converter.Dispose();
+                //Closes the instance of document objects
+                pdfDocument.Close(true);
+                wordDocument.Close();
+            </code>
+            <code lang="VB">
+                'Loads an existing Word document
+                Dim wordDocument As New WordDocument("Template.docx", FormatType.Docx)
+                'Instantiation of DocToPDFConverter for Word to PDF conversion
+                Dim converter As New DocToPDFConverter()
+               'Converts Word document into PDF document
+                Dim pdfDocument As PdfDocument = converter.ConvertToPDF(wordDocument)
+               'Saves the PDF file
+                pdfDocument.Save("WordtoPDF.pdf");
+                'Releases all resources used by the object.
+                converter.Dispose();
+                'Closes the instance of document objects
+                pdfDocument.Close(true);
+                wordDocument.Close();
+            </code>
+            </example>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.Close">
+            <summary>
+            Release the resources occupied by this <see cref="T:Syncfusion.DocToPDFConverter.DocToPDFConverter"/> instance.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.Dispose">
+            <summary>
+            Releases all resources used by the object.
+            </summary>
+            <remarks>This method is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+             <example>
+            This example converts the specified Word Document in to PDF Document.
+            <code lang="C#">
+                //Loads an existing Word document
+                WordDocument wordDocument = new WordDocument("Template.docx", FormatType.Docx);
+                //Instantiation of DocToPDFConverter for Word to PDF conversion
+                DocToPDFConverter converter = new DocToPDFConverter();
+                //Converts Word document into PDF document
+                PdfDocument pdfDocument = converter.ConvertToPDF(wordDocument);
+               //Saves the PDF file
+                pdfDocument.Save("WordtoPDF.pdf");
+                //Releases all resources used by the object.
+                converter.Dispose();
+                //Closes the instance of document objects
+                pdfDocument.Close(true);
+                wordDocument.Close();
+            </code>
+            <code lang="VB">
+                'Loads an existing Word document
+                Dim wordDocument As New WordDocument("Template.docx", FormatType.Docx)
+                'Instantiation of DocToPDFConverter for Word to PDF conversion
+                Dim converter As New DocToPDFConverter()
+               'Converts Word document into PDF document
+                Dim pdfDocument As PdfDocument = converter.ConvertToPDF(wordDocument)
+               'Saves the PDF file
+                pdfDocument.Save("WordtoPDF.pdf");
+                'Releases all resources used by the object.
+                 converter.Dispose();
+                'Closes the instance of document objects
+                pdfDocument.Close(true);
+                wordDocument.Close();
+            </code>
+            </example>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.ConvertToPDF(Syncfusion.DocIO.DLS.WordDocument)">
+            <summary>
+            Converts the specified WordDocument to PDF.
+            </summary>
+            <param name="wordDocument">The word document.</param>
+            <returns>The PdfDocument.</returns>
+            <remarks>This method is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+            <example>
+            This example converts the specified Word Document in to PDF Document.
+            <code lang="C#">
+                //Loads an existing Word document
+                WordDocument wordDocument = new WordDocument("Template.docx", FormatType.Docx);
+                //Instantiation of DocToPDFConverter for Word to PDF conversion
+                DocToPDFConverter converter = new DocToPDFConverter();
+                //Converts Word document into PDF document
+                PdfDocument pdfDocument = converter.ConvertToPDF(wordDocument);
+               //Saves the PDF file
+                pdfDocument.Save("WordtoPDF.pdf");
+                //Releases all resources used by the object.
+                converter.Dispose();
+                //Closes the instance of document objects
+                pdfDocument.Close(true);
+                wordDocument.Close();
+            </code>
+            <code lang="VB">
+                'Loads an existing Word document
+                Dim wordDocument As New WordDocument("Template.docx", FormatType.Docx)
+                'Instantiation of DocToPDFConverter for Word to PDF conversion
+                Dim converter As New DocToPDFConverter()
+               'Converts Word document into PDF document
+                Dim pdfDocument As PdfDocument = converter.ConvertToPDF(wordDocument)
+               'Saves the PDF file
+                pdfDocument.Save("WordtoPDF.pdf");
+                'Releases all resources used by the object.
+                converter.Dispose();
+                'Closes the instance of document objects
+                pdfDocument.Close(true);
+                wordDocument.Close();
+            </code>
+            </example>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.ConvertToPDF(System.String)">
+            <summary>
+            Converts the specified WordDocument to PDF.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <returns>The PdfDocument.</returns>
+            <remarks>This method is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+            <example>
+            This example converts the specified Word Document in to PDF Document.
+            <code lang="C#">
+                //Instantiation of DocToPDFConverter for Word to PDF conversion
+                DocToPDFConverter converter = new DocToPDFConverter();
+                //Converts the specified WordDocument to PDF.
+                PdfDocument pdfDocument = converter.ConvertToPDF(fileName);
+                //Saves the PDF file
+                pdfDocument.Save("WordtoPDF.pdf");
+                //Releases all resources used by the object.
+                converter.Dispose();
+                //Closes the instance of document objects
+                pdfDocument.Close(true);
+            </code>
+            <code lang="VB">
+               'Creates an instance of the DocToPDFConverter
+                Dim converter As New DocToPDFConverter() for Word to PDF conversion
+               'Instantiation of DocToPDFConverter
+                Dim pdfDocument As PdfDocument = converter.ConvertToPDF(filename)
+                'Save the document in the given name and PDF format
+                pdfDocument.Save("WordtoPDF.pdf");
+                'Releases all resources used by the object.
+                converter.Dispose();
+                'Closes the instance of document objects
+                pdfDocument.Close(true);
+            </code>
+            </example>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.ConvertToPDF(System.IO.Stream)">
+            <summary>
+            Converts to PDF.
+            </summary>
+            <param name="stream">The stream.</param>
+            <returns>The PdfDocument.</returns>
+            <remarks>This method is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+            <example>
+            This example converts the specified Word Document in to PDF Document.
+            <code lang="C#">
+                //Loads an existing Word document
+                Stream fileStream = new FileStream("Template.docx", FileMode.Open, FileAccess.Read, FileShare.Read);
+                //Instantiation of DocToPDFConverter for Word to PDF conversion
+                DocToPDFConverter converter = new DocToPDFConverter();
+                //Converts the specified WordDocument to PDF.
+                PdfDocument pdfDocument = converter.ConvertToPDF(fileStream);
+                //Save the document in the given name and PDF format
+                pdfDocument.Save("WordtoPDF.pdf");
+                //Releases all resources used by the object.
+                converter.Dispose();
+                //Closes the instance of document objects
+                fileStream.Close();
+                pdfDocument.Close(true);
+            </code>
+            <code lang="VB">
+                //Loads an existing Word document
+                Dim fileStream As Stream = New FileStream("Template.docx", FileMode.Open, FileAccess.Read, FileShare.Read)
+               'Instantiation of DocToPDFConverter for Word to PDF conversion
+                Dim converter As New DocToPDFConverter()
+               'Converts Word document into PDF document
+                Dim pdfDocument As PdfDocument = converter.ConvertToPDF(fileStream)
+                'Save the document in the given name and PDF format
+                pdfDocument.Save("WordtoPDF.pdf");
+                'Releases all resources used by the object.
+                converter.Dispose();
+                'Closes the instance of document objects
+                fileStream.Close();
+                pdfDocument.Close(true);
+            </code>
+            </example>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.CreateDocument">
+            <summary>
+            Creates the PDF document.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.AddSection(Syncfusion.DocIO.DLS.WPageSetup)">
+            <summary>
+            Adds the section.
+            </summary>
+            <param name="pageSetup">The page setup.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.InitPagesSettings(Syncfusion.DocIO.DLS.Rendering.DocumentLayouter)">
+            <summary>
+            Sets the pages settings.
+            </summary>
+            <param name="layouter">The layouter.</param>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.AddDocumentProperties(Syncfusion.DocIO.DLS.BuiltinDocumentProperties)">
+            <summary>
+            Adds the document properties.
+            </summary>
+            <param name="docProperties">The doc properties.</param>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.AddHyperLinks(System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.String,System.Drawing.RectangleF}})">
+            <summary>
+            Adds the hyper links.
+            </summary>
+            <param name="hyperlinks">The hyperlinks.</param>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.AddBookmarks(System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.String,Syncfusion.DocIO.Rendering.BookmarkHyperlink}})">
+            <summary>
+            Converts the TOC into Bookmark.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.DrawToPDF(Syncfusion.DocIO.DLS.Rendering.DocumentLayouter)">
+            <summary>
+            Draw To PDF
+            </summary>
+            <param name="layouter">The DocumentLayouter</param>
+            <returns>PdfDocument</returns>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.ShowWarnings">
+            <summary>
+            Shows the warnings.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Syncfusion.DocToPDFConverter.DocToPDFConverter.CreateWarningElmentNames">
+            <summary>
+            Create warning element names into the list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Syncfusion.DocToPDFConverter.DocToPDFConverter.PageSettings">
+            <summary>
+            Gets the page settings.
+            </summary>
+            <value>The page settings.</value>
+        </member>
+        <member name="P:Syncfusion.DocToPDFConverter.DocToPDFConverter.Settings">
+            <summary>
+            Gets or sets the quality.
+            </summary>
+            <remarks>This property is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+        </member>
+        <member name="P:Syncfusion.DocToPDFConverter.DocToPDFConverter.IsCanceled">
+            <summary>
+            Gets a value indicating whether this conversion has been canceled.
+            </summary>
+            <value>
+            <c>true</c> if this conversion is canceled; otherwise, <c>false</c>.
+            </value>
+            <remarks>This method is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+        </member>
+        <member name="T:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings">
+            <summary>
+            Represent class with setting of converter.
+            </summary>
+            <example>This example illustrates DocToPDFConverter settings.
+            <remarks>This class is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+            <code language = "C#">
+               //Loads an existing Word document
+               WordDocument wordDocument = new WordDocument("Template.docx", FormatType.Docx);
+               //Instantiation of DocToPDFConverter for Word to PDF conversion
+               DocToPDFConverter converter = new DocToPDFConverter();
+               //Skip the updating process for Alternate chunks in the Word document
+               converter.Settings.EnableAlternateChunks = false;
+               //Sets the image resolution
+                converter.Settings.ImageResolution = 640;
+               //Sets the jpeg image quality to reduce the Pdf file size
+               converter.Settings.ImageQuality = 100;
+               //Sets true to optimize the memory usage for identical image
+               converter.Settings.OptimizeIdenticalImages = false;
+               //Sets the PdfConformanceLevel
+               converter.Settings.PdfConformanceLevel = PdfConformanceLevel.None;
+               //Converts Word document into PDF document
+               PdfDocument pdfDocument = converter.ConvertToPDF(wordDocument);
+               //Saves the PDF file
+               pdfDocument.Save("WordtoPDF.pdf");
+               //Releases all resources used by the object.
+                converter.Dispose();
+                //Closes the instance of document objects
+                pdfDocument.Close(true);
+                wordDocument.Close();
+            }
+            </code>
+            <code language = "VB">
+                'Loads an existing Word document
+                Dim wordDocument As New WordDocument("Template.docx", FormatType.Docx)
+                'Instantiation of DocToPDFConverter for Word to PDF conversion
+                Dim converter As New DocToPDFConverter()
+                'Skip the updating process for Alternate chunks in the Word document 
+                converter.Settings.EnableAlternateChunks = false;
+                'Sets the image resolution
+                converter.Settings.ImageResolution = 640;
+                'Sets the jpeg image quality to reduce the Pdf file size
+                converter.Settings.ImageQuality = 100;
+                'Sets true to optimize the memory usage for identical image
+                converter.Settings.OptimizeIdenticalImages = false;
+                'Sets the PdfConformanceLevel
+                converter.Settings.PdfConformanceLevel = PdfConformanceLevel.None;
+                'Converts Word document into PDF document
+                Dim pdfDocument As PdfDocument = docToPDFConverter.ConvertToPDF(wordDocument)
+                'Saves the PDF file
+                pdfDocument.Save("WordtoPDF.pdf")
+                'Releases all resources used by the object.
+                converter.Dispose();
+               'Closes the instance of document objects
+                pdfDocument.Close(true);
+                wordDocument.Close();
+            End Sub
+            </code>
+            </example>
+        </member>
+        <member name="F:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings.m_enableAlternateChunks">
+            <summary>
+            Need to enable the Alternate chunks element
+            </summary>
+        </member>
+        <member name="F:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings.m_imageQuality">
+            <summary>
+            Indicates the quality of the image.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings.m_imageResolution">
+            <summary>
+            Indicates the Image resolution
+            </summary>
+        </member>
+        <member name="F:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings.m_warning">
+            <summary>
+            The m_warning
+            </summary>
+        </member>
+        <member name="P:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings.EnableAlternateChunks">
+            <summary>
+            Gets or sets a value indicates to enable the Alternate chunks present in the Word document . Default value is <b>True</b>.
+            </summary>
+            <value><b>True</b> if need to enable the Alternate chunks; otherwise, <b>false</b>.</value>
+            <remarks>This property is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+        </member>
+        <member name="P:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings.ImageQuality">
+            <summary>
+            Gets or sets the quality. The value indicates in percentage, max value represents best quality and min value represents best compression.
+            </summary>
+            <remarks>
+            The value indicates in percentage, max value represents best quality and min value represents best compression
+            This property is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only.
+            </remarks>
+        </member>
+        <member name="P:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings.ImageResolution">
+            <summary>
+            Sets the image resolution to the image, which are Embedded
+            in the Word document
+            </summary>
+            <remarks>This property is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+        </member>
+        <member name="P:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings.OptimizeIdenticalImages">
+            <summary>
+            Gets/Sets a value indicating whether to optimize the memory usage for the identical (duplicate) images in Doc to Pdf conversion and converted Pdf document.
+            </summary>
+            <remarks>This property is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+        </member>
+        <member name="P:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings.Warning">
+            <summary>
+            Gets or sets the warning that describes the unsupported elements found while converting the specified Word document to PDF.
+            </summary>
+            <value>
+            The warning.
+            </value>
+            <remarks>This property is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+        </member>
+        <member name="P:Syncfusion.DocToPDFConverter.DocToPDFConverterSettings.PdfConformanceLevel">
+            <summary>
+            Gets or sets the Pdf document's Conformance-level.
+            </summary>
+            <value>The <see cref="T:Syncfusion.Pdf.PdfConformanceLevel"/> of the PDF document.</value>
+            <remarks>This property is supported on Windows Forms, WPF, ASP.NET and ASP.NET MVC platforms only. </remarks>
+        </member>
+    </members>
+</doc>
