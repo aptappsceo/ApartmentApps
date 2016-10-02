@@ -24,7 +24,39 @@ namespace ApartmentApps.Tests
             SubmitMaintenanceRequest();
 
             var result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
-            Assert.IsNotNull(result,"Maintenance Request Create Not Working");
+            Assert.IsNotNull(result, "Maintenance Request Create Not Working");
+
+            Controller.StartRequest(new MaintenanceStatusRequestModel()
+            {
+                Id = Convert.ToInt32(result.Id),
+                Comments = "Test Pause"
+            });
+            result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
+            Assert.IsTrue(result != null && result.StatusId == "Started");
+
+            Controller.PauseRequest(new MaintenanceStatusRequestModel()
+            {
+                Id = Convert.ToInt32(result.Id),
+                Comments = "Test Pause"
+            });
+            result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
+            Assert.IsTrue(result != null && result.StatusId == "Paused");
+
+            Controller.StartRequest(new MaintenanceStatusRequestModel()
+            {
+                Id = Convert.ToInt32(result.Id),
+                Comments = "Restarting"
+            });
+            result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
+            Assert.IsTrue(result != null && result.StatusId == "Started");
+
+            Controller.CompleteRequest(new MaintenanceStatusRequestModel()
+            {
+                Id = Convert.ToInt32(result.Id),
+                Comments = "Restarting"
+            });
+            result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
+            Assert.IsTrue(result != null && result.StatusId == "Complete");
         }
 
         private void SubmitMaintenanceRequest()
@@ -44,6 +76,7 @@ namespace ApartmentApps.Tests
         [TestCleanup]
         public override void DeInit()
         {
+            RemoveAll<MaintenanceRequestCheckin>();
             RemoveAll<MaitenanceRequest>();
             base.DeInit();
         }
