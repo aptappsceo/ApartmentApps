@@ -43,6 +43,24 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Korzh.EasyQuery.Db.NET45, Version=3.7.3.18, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ApartmentApps.Portal\3rdParty\Korzh.EasyQuery.Db.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="Korzh.EasyQuery.EF6.NET45">
+      <HintPath>..\ApartmentApps.Portal\3rdParty\Korzh.EasyQuery.EF6.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="Korzh.EasyQuery.NET45, Version=3.7.3.18, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ApartmentApps.Portal\3rdParty\Korzh.EasyQuery.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="Korzh.EasyQuery.Services.Db.NET45, Version=3.7.3.18, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ApartmentApps.Portal\3rdParty\Korzh.EasyQuery.Services.Db.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="Korzh.Utils.Db.NET45">
+      <HintPath>..\ApartmentApps.Portal\3rdParty\Korzh.Utils.Db.NET45.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -50,12 +68,40 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ZXing.Net.Mobile.Core, Version=2.1.47.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\portable-net45+netcore45+wpa81+wp8\ZXing.Net.Mobile.Core.dll</HintPath>
       <Private>True</Private>
@@ -95,9 +141,14 @@
       <Link>PropertyExecutionContext.cs</Link>
     </Compile>
     <Compile Include="ExpressionTests.cs" />
+    <Compile Include="MaitenanceRequestsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ApartmentApps.API.Service\ApartmentApps.API.Service.csproj">
+      <Project>{d59a4703-66ef-4ae1-ae35-5c2175abea88}</Project>
+      <Name>ApartmentApps.API.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Api\ApartmentApps.Api.csproj">
       <Project>{81C38E8C-036A-43FA-92C5-446BBCE6E656}</Project>
       <Name>ApartmentApps.Api</Name>
@@ -105,6 +156,10 @@
     <ProjectReference Include="..\ApartmentApps.Data\ApartmentApps.Data.csproj">
       <Project>{69A819D5-3037-4E56-90E4-A9EDFF41B88A}</Project>
       <Name>ApartmentApps.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Forms\ApartmentApps.Forms.csproj">
+      <Project>{E3722B2C-0EE1-4359-89D2-CD78BDDD59C7}</Project>
+      <Name>ApartmentApps.Forms</Name>
     </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Modules.Alerts\ApartmentApps.Modules.Alerts.csproj">
       <Project>{0E9D236A-18F7-46A1-A591-418D14EEE0A3}</Project>
@@ -129,6 +184,10 @@
     <ProjectReference Include="..\ApartmentApps.Modules.Payments\ApartmentApps.Modules.Payments.csproj">
       <Project>{CC299297-365F-4643-A0B8-316C788A4EF7}</Project>
       <Name>ApartmentApps.Modules.Payments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Portal\ApartmentApps.Portal.csproj">
+      <Project>{fa9f282f-5bea-4035-8c41-4ff8ddf24517}</Project>
+      <Name>ApartmentApps.Portal</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

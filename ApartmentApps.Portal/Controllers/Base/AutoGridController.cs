@@ -52,7 +52,7 @@ namespace ApartmentApps.Portal.Controllers
 
             Service = service;
             EqService = new EqServiceProviderDb();
-            EqService.DataPath = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
+            //EqService.DataPath = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
 
             EqService.ModelLoader = (model, modelName) =>
             {

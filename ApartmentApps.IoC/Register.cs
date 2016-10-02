@@ -37,6 +37,11 @@ namespace ApartmentApps.IoC
 
         public static void RegisterAssemblies()
         {
+            EnsureModuleAssemblies();
+        }
+
+        public static void EnsureModuleAssemblies()
+        {
             ApplicationDbContext.SearchAssemblies.Clear();
             ApplicationDbContext.SearchAssemblies.Add(typeof (MaitenanceRequest).Assembly);
             ApplicationDbContext.SearchAssemblies.Add(typeof (IModule).Assembly);
