@@ -12,6 +12,7 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.Azure.NotificationHubs.Messaging;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
@@ -19,7 +20,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
     {
         private NotificationHubClient hub;
 
-        public RegisterController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public RegisterController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             hub = Notifications.Instance.Hub;
         }

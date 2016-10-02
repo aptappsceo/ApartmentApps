@@ -15,6 +15,7 @@ using ApartmentApps.API.Service.Providers;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Maintenance;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers
 {
@@ -135,7 +136,7 @@ namespace ApartmentApps.API.Service.Controllers
             return null;
         }
 
-        public MaitenanceController(IMaintenanceService maintenanceService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public MaitenanceController(IKernel kernel, IMaintenanceService maintenanceService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             MaintenanceService = maintenanceService;
             BlobStorageService = blobStorageService;

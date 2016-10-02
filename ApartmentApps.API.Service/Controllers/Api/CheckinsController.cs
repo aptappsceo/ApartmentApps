@@ -10,6 +10,7 @@ using ApartmentApps.Api.BindingModels;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
@@ -123,7 +124,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 return (rad / Math.PI * 180.0);
             }
         }
-        public CheckinsController(PropertyContext context, IUserContext userContext) : base(context,userContext)
+        public CheckinsController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel,context,userContext)
         {
         }
     }

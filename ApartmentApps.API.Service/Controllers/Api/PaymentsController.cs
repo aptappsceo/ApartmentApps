@@ -10,6 +10,7 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
 using Microsoft.Rest;
 using Microsoft.Rest.TransientFaultHandling;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers
 {
@@ -22,7 +23,7 @@ namespace ApartmentApps.API.Service.Controllers
         private readonly IRepository<Invoice> _invoices;
         public PaymentsModule PaymentsService { get; set; }
 
-        public PaymentsController(IRepository<Invoice> invoices, PaymentsModule paymentsService, PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public PaymentsController(IKernel kernel, IRepository<Invoice> invoices, PaymentsModule paymentsService, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             _invoices = invoices;
             PaymentsService = paymentsService;

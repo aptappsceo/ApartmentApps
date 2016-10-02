@@ -63,7 +63,8 @@ namespace ApartmentApps.API.Service.Controllers
         private ApplicationUserManager _userManager;
 
 
-        public AccountController(IKernel kernel, ApplicationDbContext dbcontext,ApplicationUserManager userManager, PropertyContext context, IBlobStorageService blobStorage, IUserContext userContext) : base(context,userContext)
+        public AccountController(IKernel kernel, ApplicationDbContext dbcontext,ApplicationUserManager userManager, PropertyContext context, IBlobStorageService blobStorage, IUserContext userContext) 
+            : base(kernel, context,userContext)
         {
             _kernel = kernel;
             _dbcontext = dbcontext;
