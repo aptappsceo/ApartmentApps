@@ -1,4 +1,5 @@
 using System;
+using System.Data.Entity;
 using System.Linq;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
@@ -18,6 +19,7 @@ namespace ApartmentApps.Tests
         [TestInitialize]
         public virtual void Init()
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>()); 
             Register.EnsureModuleAssemblies();
             Context = new PropertyExecutionContext(new StandardKernel());
 

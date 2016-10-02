@@ -12,12 +12,6 @@ namespace ApartmentApps.Tests
     [TestClass]
     public class MaitenanceRequestsControllerTests : PropertyControllerTest<MaitenanceRequestsController>
     {
-        [TestInitialize]
-        public override void Init()
-        {
-            base.Init();
-        }
-
         [TestMethod]
         public void TestSubmit()
         {
@@ -57,6 +51,9 @@ namespace ApartmentApps.Tests
             });
             result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
             Assert.IsTrue(result != null && result.StatusId == "Complete");
+
+            RemoveAll<MaintenanceRequestCheckin>();
+            RemoveAll<MaitenanceRequest>();
         }
 
         private void SubmitMaintenanceRequest()
@@ -76,8 +73,7 @@ namespace ApartmentApps.Tests
         [TestCleanup]
         public override void DeInit()
         {
-            RemoveAll<MaintenanceRequestCheckin>();
-            RemoveAll<MaitenanceRequest>();
+     
             base.DeInit();
         }
     }
