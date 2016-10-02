@@ -12,9 +12,16 @@ namespace ApartmentApps.Tests
     [TestClass]
     public class MaitenanceRequestsControllerTests : PropertyControllerTest<MaitenanceRequestsController>
     {
+        [TestInitialize]
+        public override void Init()
+        {
+            base.Init();
+        }
+
         [TestMethod]
         public void TestSubmit()
         {
+
             SubmitMaintenanceRequest();
 
             var result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
