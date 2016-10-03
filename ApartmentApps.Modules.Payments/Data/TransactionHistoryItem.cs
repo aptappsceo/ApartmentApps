@@ -10,8 +10,14 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Modules.Payments.Data
 {
+    [Persistant]
     public class TransactionHistoryItem
     {
+        public TransactionHistoryItem()
+        {
+            Invoices = new HashSet<Invoice>();
+        }
+
         [Key]
         public string Id { get; set; }
 
@@ -36,10 +42,12 @@ namespace ApartmentApps.Modules.Payments.Data
 
         public TransactionState State { get; set; }
 
+        public ForteTransactionStateCode ForteState { get; set; }
         public string Trace { get; set; }
 
         public string StateMessage { get; set; }
 
+        
         [InverseProperty("TransactionHistoryItems")]
         public ICollection<Invoice> Invoices { get; set; }
 

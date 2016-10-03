@@ -80,3 +80,19 @@ public enum ForteTransactionResultCode
     PreauthTimeOut,
     PreauthDecline
 }
+
+public enum ForteTransactionStateCode
+{
+    Authorized,
+    Complete,
+    Declined,
+    Failed,
+    Funded,
+    Ready,
+    Rejected,
+    Review,
+    Settled,
+    Settling,
+    Unfunded,
+    Voided
+}

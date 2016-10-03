@@ -18,5 +18,17 @@ namespace ApartmentApps.Api.Modules
 
         public string MerchantId { get; set; }
         public string MerchantPassword { get; set; }
+
+        [DisplayName("Credit Card Convenience Fee")]
+        public decimal CreditCardConvenienceFee { get; set; }
+
+        [DisplayName("Bank Account Savings Convenience Fee")]
+        public decimal BankAccountSavingsConvenienceFee { get; set; }
+
+        [DisplayName("Bank Account Checking Convenience Fee")]
+        public decimal BankAccountCheckingConvenienceFee { get; set; }
+
+
+
     }
 }

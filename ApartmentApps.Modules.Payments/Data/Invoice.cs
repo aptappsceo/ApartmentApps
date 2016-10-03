@@ -4,13 +4,18 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Payments.Data;
 
 namespace ApartmentApps.Api.Modules
 {
     [Persistant]
     public class Invoice
     {
-        
+        public Invoice()
+        {
+            TransactionHistoryItems = new HashSet<TransactionHistoryItem>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -30,7 +35,7 @@ namespace ApartmentApps.Api.Modules
         public string Title { get; set; }
 
         [InverseProperty("Invoices")]
-        public ICollection<Invoice> TransactionHistoryItems { get; set; }
+        public ICollection<TransactionHistoryItem> TransactionHistoryItems { get; set; }
 
     }
 

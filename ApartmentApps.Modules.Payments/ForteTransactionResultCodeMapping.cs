@@ -1,4 +1,14 @@
+using System;
 using System.Collections.Generic;
+
+
+public static class ForteTransactioNStateCodeMapping
+{
+    public static ForteTransactionStateCode FromString(string code)
+    {
+        return (ForteTransactionStateCode)Enum.Parse(typeof (ForteTransactionStateCode), code,true);
+    }
+}
 
 public static class ForteTransactionResultCodeMapping
 {
