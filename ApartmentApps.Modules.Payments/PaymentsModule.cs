@@ -49,7 +49,7 @@ namespace ApartmentApps.Api.Modules
 
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
         {
-            menuItems.Add(new MenuItemViewModel("Payments", "payments", "Index", "Payments"));
+            menuItems.Add(new MenuItemViewModel("Payments", "fa-credit-card", "Index", "Payments"));
         }
 
         public string SettingsController => "PaymentsConfig";
@@ -446,7 +446,7 @@ namespace ApartmentApps.Api.Modules
             if (user == null) throw new KeyNotFoundException();
 
             var opId = Guid.NewGuid().ToString();
-            //_leaseService.ÙCreateTransaction(opId, user.Id, new[] {invoice}, "", DateTime.Now);
+            //_leaseService.√¥CreateTransaction(opId, user.Id, new[] {invoice}, "", DateTime.Now);
             //var transaction = _transactionRepository.Find(opId);
             //_leaseService.OnTransactionComplete(transaction,s,user.Property.TimeZone.Now());
             //_transactionRepository.Save();
