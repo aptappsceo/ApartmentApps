@@ -22,7 +22,7 @@ var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ??
             else
             {
                 <i class="fa @vm.Icon"></i>
-                @vm.Label
+                 <span class="nav-label">@vm.Label</span>
             }
         </a>
         @if (vm.HasChildren)
