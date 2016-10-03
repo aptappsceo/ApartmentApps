@@ -37,7 +37,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public int? UnitId { get; set; }
 
-        public List<UnitViewModel> UnitItems => ModuleHelper.Kernel.Get<UserService>().GetAll<UnitViewModel>().ToList();
+        public List<UnitViewModel> UnitItems => ModuleHelper.Kernel.Get<UnitService>().GetAll<UnitViewModel>().ToList();
     }
 
     public class ProfileEditModel
