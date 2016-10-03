@@ -81,10 +81,10 @@
 
                                
                                     <div class="btn-group  pull-right">
-                                        @if (User.IsInRole("Admin"))
+                                        @*@if (User.IsInRole("Admin"))
                                         {
                                             @Html.ActionLink("Import Entrata Data", "ImportEntrata", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })
-                                        }
+                                        }*@
                                         @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new {@class = "btn btn-danger btn-xs"})
                                     </div>
 

@@ -9,7 +9,7 @@ namespace ApartmentApps.Api.BindingModels
         public string Title { get; set; }
         public string Comments { get; set; }
         public string StatusId { get; set; }
-        public int Id { get; set; }
+  
         public DateTime RequestDate { get; set; }
         public UserBindingModel SubmissionBy { get; set; }
         public MaintenanceCheckinBindingModel LatestCheckin { get; set; }

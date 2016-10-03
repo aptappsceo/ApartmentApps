@@ -10,12 +10,13 @@ using System.Web.Http;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
     public class NotifiationsController : ApartmentAppsApiController
     {
-        public NotifiationsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public NotifiationsController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
         }
 
@@ -64,7 +65,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
     [RoutePrefix("api/Alerts")]
     public class AlertsController : ApartmentAppsApiController
     {
-        public AlertsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public AlertsController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
         }
 

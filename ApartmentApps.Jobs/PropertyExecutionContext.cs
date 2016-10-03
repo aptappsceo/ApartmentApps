@@ -14,26 +14,32 @@ namespace ApartmentApps.Jobs
     {
         public ApplicationDbContext Context { get; }
 
-        public IKernel Kernel = new StandardKernel();
+        public IKernel Kernel;
 
-        public PropertyExecutionContext(ApplicationDbContext dbContext, int propertyId)
+        public PropertyExecutionContext(IKernel kernel)
         {
-            Context = dbContext;
+            Kernel = kernel;
+           
             Register.RegisterServices(Kernel);
+            Context = Kernel.Get<ApplicationDbContext>();
             Kernel.Bind<DefaultUserManager>().ToSelf().InSingletonScope();
             Kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InSingletonScope();
             Kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InSingletonScope();
-            var userContext = new FakeUserContext(Context)
+            Kernel.Bind<IUserContext>().ToMethod(p => UserContext);
+        }
+
+        public void SetUserWithProperty(int propertyId)
+        {
+            UserContext = new FakeUserContext(Context)
             {
                 PropertyId = propertyId,
                 UserId = Context.Users.First(p => p.UserName == "micahosborne@gmail.com").Id,
                 Email = "micahosborne@gmail.com",
                 Name = "Jobs"
             };
-
-            Kernel.Bind<IUserContext>().ToMethod(p => userContext);
-
         }
+
+        public FakeUserContext UserContext { get; set; }
 
         public void Dispose()
         {

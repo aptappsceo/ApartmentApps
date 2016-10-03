@@ -1,6 +1,8 @@
+using System;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
@@ -8,7 +10,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
     {
         private readonly IRepository<Message> _messages;
 
-        public MessagingController(IRepository<Message> messages, PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public MessagingController(IKernel kernel, IRepository<Message> messages, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             _messages = messages;
         }
@@ -22,7 +24,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 RelatedId = id,
                 Message = alert.Body,
                 Title = alert.Subject,
-                CreatedOn = alert.SentOn,
+                CreatedOn = alert.SentOn ?? DateTime.Now,
                 Type="Message"
             };
         } 

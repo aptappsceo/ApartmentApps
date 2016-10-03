@@ -8,6 +8,7 @@ using System.Web.Http;
 using ApartmentApps.Api;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
@@ -22,7 +23,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
     [Authorize(Roles = "PropertyAdmin")]
     public class ConfigureController : ApartmentAppsApiController
     {
-        public ConfigureController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public ConfigureController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
         }
 

@@ -12,6 +12,7 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.CourtesyOfficer;
 using ApartmentApps.Modules.Inspections;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
@@ -21,7 +22,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
     {
         private readonly InspectionsService _inspectionsService;
 
-        public InspectionsController(InspectionsService inspectionsService,PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public InspectionsController(IKernel kernel, InspectionsService inspectionsService,PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             _inspectionsService = inspectionsService;
         }
@@ -66,7 +67,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public IBlobStorageService BlobStorageService { get; set; }
         public IIncidentsService IncidentsService { get; set; }
 
-        public CourtesyController(IIncidentsService incidentsService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public CourtesyController(IKernel kernel, IIncidentsService incidentsService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             IncidentsService = incidentsService;
             BlobStorageService = blobStorageService;

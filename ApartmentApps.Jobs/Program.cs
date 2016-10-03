@@ -34,6 +34,7 @@ namespace ApartmentApps.Jobs
             {
                 IKernel kernel = new StandardKernel();
                 Register.RegisterServices(kernel);
+
                 kernel.Bind<DefaultUserManager>().ToSelf().InSingletonScope();
                 kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InSingletonScope();
                 kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InSingletonScope();

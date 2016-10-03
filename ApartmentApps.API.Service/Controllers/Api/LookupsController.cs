@@ -9,6 +9,7 @@ using ApartmentApps.Api;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers
 {
@@ -30,7 +31,7 @@ namespace ApartmentApps.API.Service.Controllers
            
         }
 
-        public LookupsController(PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public LookupsController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
         }
     }

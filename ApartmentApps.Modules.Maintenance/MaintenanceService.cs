@@ -105,6 +105,9 @@ namespace ApartmentApps.Api
     {
         public override void ToModel(MaintenanceRequestEditModel editModel, MaitenanceRequest maitenanceRequest)
         {
+            if (string.IsNullOrEmpty(editModel.Id))
+                maitenanceRequest.SubmissionDate = DateTime.Now;
+
             maitenanceRequest.PetStatus = (int)editModel.PetStatus;
             maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
             maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
@@ -194,10 +197,11 @@ namespace ApartmentApps.Api
         private IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
-        public MaintenanceService(IRepository<MaitenanceRequest> repository, IBlobStorageService blobStorageService, IUserContext userContext, IKernel kernel) : base(kernel, repository)
+        public MaintenanceService(PropertyContext propertyContext, IRepository<MaitenanceRequest> repository, IBlobStorageService blobStorageService, IUserContext userContext, IKernel kernel) : base(kernel, repository)
         {
             _blobStorageService = blobStorageService;
             _userContext = userContext;
+            Context = propertyContext;
         }
 
         public IEnumerable<TViewModel> GetAppointments<TViewModel>()
@@ -211,7 +215,12 @@ namespace ApartmentApps.Api
 
         public void AssignRequest(int id, string assignedToId)
         {
-            
+            var request = Repository.Find(id);
+            if (request != null)
+            {
+                request.WorkerAssignedId = assignedToId;
+                Repository.Save();
+            }
         }
 
         public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)

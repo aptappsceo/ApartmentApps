@@ -19,12 +19,13 @@ namespace ApartmentApps.Api
     public class AlertsModule : Module<AlertsModuleConfig>, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent
     {
         public PropertyContext Context { get; set; }
+        private readonly IRepository<ApplicationUser> _userRepository;
         private readonly IEmailService _emailService;
         private IPushNotifiationHandler _pushHandler;
 
-        public AlertsModule(IKernel kernel,  IRepository<AlertsModuleConfig> configRepo, IUserContext userContext, IEmailService emailService, IPushNotifiationHandler pushHandler, PropertyContext context) : base(kernel, configRepo, userContext)
+        public AlertsModule(IKernel kernel, IRepository<ApplicationUser> userRepository, IRepository<AlertsModuleConfig> configRepo, IUserContext userContext, IEmailService emailService, IPushNotifiationHandler pushHandler, PropertyContext context) : base(kernel, configRepo, userContext)
         {
-  
+            _userRepository = userRepository;
             _emailService = emailService;
             _pushHandler = pushHandler;
             Context = context;
@@ -34,7 +35,10 @@ namespace ApartmentApps.Api
         public void MaintenanceRequestSubmited( MaitenanceRequest maitenanceRequest)
         {
             if (maitenanceRequest.User.PropertyId != null)
+            {
                 SendAlert(maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id);
+            }
+                
             
         }
 
@@ -42,7 +46,16 @@ namespace ApartmentApps.Api
         {
             if (request.User?.PropertyId != null)
             {
-                SendAlert( request.User, $"Maintenance", "Your maintenance request has been "+request.StatusId, "Maintenance", request.Id);
+                var unitId = request.UnitId;
+                if (unitId != null)
+                {
+                    var users = _userRepository.GetAll().Where(p => p.UnitId == unitId).ToArray();
+                    foreach (var item in users)
+                    {
+                        SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id);
+                    }
+                }
+              
             }
         }
 
@@ -118,7 +131,18 @@ namespace ApartmentApps.Api
         {
             if (incidentReport.User?.PropertyId != null)
             {
-                SendAlert(incidentReport.User, $"Incident Report {incidentReport.StatusId}", incidentReport.Comments, "Incident", incidentReport.Id);
+                var unitId = incidentReport.UnitId;
+                if (unitId != null)
+                {
+                    var users = _userRepository.GetAll().Where(p => p.UnitId == unitId).ToArray();
+                    foreach (var item in users)
+                    {
+                        
+                        SendAlert(item, $"Incident Report {incidentReport.StatusId}", incidentReport.Comments, "Incident", incidentReport.Id);
+                    }
+                }
+                
+                //SendAlert(incidentReport.User, $"Incident Report {incidentReport.StatusId}", incidentReport.Comments, "Incident", incidentReport.Id);
             }
         }
 

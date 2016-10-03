@@ -31,6 +31,11 @@ namespace ApartmentApps.Portal.Controllers
 
     public class AAController : Controller
     {
+        public TConfig GetConfig<TConfig>() where TConfig : ModuleConfig, new()
+        {
+            var config = Kernel.Get<Module<TConfig>>().Config;
+            return config;
+        }
         public IUserContext UserContext { get; }
 
         public IRepository<TModel> Repository<TModel>()

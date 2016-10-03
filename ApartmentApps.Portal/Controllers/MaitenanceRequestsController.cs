@@ -15,6 +15,7 @@ using System.Threading;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -42,7 +43,7 @@ namespace ApartmentApps.Portal.Controllers
             get
             {
                 var items =
-                    NinjectWebCommon.Kernel.Get<IRepository<Unit>>()
+                    ModuleHelper.Kernel.Get<IRepository<Unit>>()
                         .ToArray().OrderByAlphaNumeric(p => p.Name);
 
 
@@ -56,7 +57,7 @@ namespace ApartmentApps.Portal.Controllers
             get
             {
                 return
-                    NinjectWebCommon.Kernel.Get<IRepository<MaitenanceRequestType>>()
+                    ModuleHelper.Kernel.Get<IRepository<MaitenanceRequestType>>()
                         .ToArray()
                         .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, MaitenanceRequestTypeId == p.Id));
 
@@ -439,6 +440,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public MaitenanceRequestsController(IKernel kernel, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service) : base(kernel, formService, indexService, context, userContext, service)
         {
+            MaintenanceService = formService;
         }
     }
 

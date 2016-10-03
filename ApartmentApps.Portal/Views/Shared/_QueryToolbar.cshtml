@@ -1,6 +1,9 @@
 ﻿@if (User.IsInRole("Admin"))
 {
-    <a href="javascript:void" class="btn btn-primary btn-xs" onclick="EQ.view.grid.createQuery()">Create New Filter</a>
-    <a href="javascript:void" class="btn btn-primary btn-xs" onclick="EQ.view.grid.saveQuery()">Save Current Filter</a>
-    <a href="javascript:void" class="btn btn-primary btn-xs" onclick="EQ.view.grid.deleteCurrentQuery()">Remove Current Filter</a>
+    <hr />
+    <div style="padding: 4px;">
+        <a href="javascript:void" class="btn btn-primary btn-xs" onclick="EQ.view.grid.createQuery()">Create New Filter</a>
+        <a href="javascript:void" class="btn btn-primary btn-xs" onclick="EQ.view.grid.saveQuery()">Save Current Filter</a>
+        <a href="javascript:void" class="btn btn-primary btn-xs" onclick="EQ.view.grid.deleteCurrentQuery()">Remove Current Filter</a>
+    </div>
 }

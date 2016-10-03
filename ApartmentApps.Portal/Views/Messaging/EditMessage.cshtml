@@ -1,0 +1,86 @@
+﻿@model ApartmentApps.Portal.Controllers.MessageFormViewModel
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-12 ">
+        <h2>Design your message.</h2>
+        <p>Edit your message and click "Save & Preview" to continue.</p>
+    </div>
+</div>
+<div class="row wrapper border-bottom white-bg page-heading" style="padding-top: 15px; padding-left: 20px;">
+    @*<a class="btn btn-warning btn-outline btn-s  modal-link" href="@Url.Action("SearchForm")">Search</a>*@
+    <a class="btn btn-success btn-outline btn-s" href="@Url.Action("Index", "Messaging")">Back to Campaigns</a>
+    @if (Model.Id != "0" && !string.IsNullOrEmpty(Model.Id))
+    {
+        <a class="btn btn-success btn-outline btn-s" href="@Url.Action("SelectTargets","CampaignTargets", new {messageId=Model.Id})">Select Targets</a>
+    }
+    
+
+</div>
+<br/>
+@using (var frm = Html.BeginForm("SaveEntry", "Messaging"))
+{
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    Subject/Title
+                </div>
+                <div class="ibox-content">
+                    @Html.HiddenFor(x=>x.Id)
+                    @Html.TextBoxFor(p => p.Subject, new {style = "width: 100%;"})
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    Compose Message
+                </div>
+                <div class="ibox-content">
+                    @*  @{
+                            List<String> toolsList = new List<string>() { "images" };
+                            List<String> images = new List<string>() { "image" };
+
+                            Html.EJ().RTE("message")
+                                .ImageBrowser(img =>
+                            {
+                                img.FilePath("/")
+                                    .ExtensionAllow("*.png,*.gif,*.jpg,*.jpeg")
+                                    .AjaxAction(@Url.Action("FileActionMethods"));
+                            }).Render();
+                        }
+
+                    *@
+
+                    @{ List<String> images = new List<string>() { "images" };
+                        List<String> image = new List<string>() { "image" };}
+                    @{Html.EJ().RTE("Body")
+                            .Value(Model.Body)
+                                .Width("100%")
+                                .MinWidth("200px")
+                                .ShowFooter(true)
+                                .ImageBrowser(img => img.FilePath("https://apartmentapps.blob.core.windows.net/photos/")
+                                .ExtensionAllow("*.png,*.gif,*.jpg,*.jpeg")
+                                .AjaxAction(@Url.Action("FileActionMethods")))
+                                .Render();}
+
+                    <br />
+
+                </div>
+                <div class="ibox-footer">
+                    @if (Model.Id != "0" && !string.IsNullOrEmpty(Model.Id))
+                    {
+                        <input type="submit" class="btn btn-primary" value="Save & Preview"/>
+                    }
+                    else
+                    {
+                        <input type="submit" class="btn btn-primary" value="Create Campaign" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div><br />
+}

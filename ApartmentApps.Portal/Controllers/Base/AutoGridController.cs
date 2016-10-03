@@ -22,7 +22,7 @@ namespace ApartmentApps.Portal.Controllers
            where TViewModel : class, new()
     {
         private readonly IRepository<ServiceQuery> _queries;
-        private EqServiceProviderDb eqService;
+        public EqServiceProviderDb EqService { get; }
         public TService Service { get; set; }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -51,10 +51,10 @@ namespace ApartmentApps.Portal.Controllers
         {
 
             Service = service;
-            eqService = new EqServiceProviderDb();
-            eqService.DataPath = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
+            EqService = new EqServiceProviderDb();
+            //EqService.DataPath = System.Web.HttpContext.Current.Server.MapPath("~/App_Data");
 
-            eqService.ModelLoader = (model, modelName) =>
+            EqService.ModelLoader = (model, modelName) =>
             {
                 model.LoadFromType(typeof(PropertyEntity)); // Ensure the hidden bool is set
                 model.Clear();
@@ -63,7 +63,7 @@ namespace ApartmentApps.Portal.Controllers
                 //model.LoadFromType(indexService.ModelType, DataModel.ContextLoadingOptions.ScanOnlyQueryable);
                 model.SortEntities();
             };
-            eqService.QueryRemover = (queryId) =>
+            EqService.QueryRemover = (queryId) =>
             {
                 var q = Queries.FirstOrDefault(p => p.QueryId == queryId);
                 if (q != null)
@@ -72,7 +72,7 @@ namespace ApartmentApps.Portal.Controllers
                     Queries.Save();
                 }
             };
-            eqService.QueryLoader = (query, queryId) =>
+            EqService.QueryLoader = (query, queryId) =>
             {
                
                 var q = Queries.FirstOrDefault(p=>p.QueryId == queryId);
@@ -84,7 +84,7 @@ namespace ApartmentApps.Portal.Controllers
 
             };
 
-            eqService.QuerySaver = (query, queryId) =>
+            EqService.QuerySaver = (query, queryId) =>
             {
                
                 string queryXml = query.SaveToString();
@@ -112,7 +112,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public ActionResult GetModel(string modelName)
         {
-            var model = eqService.GetModel();
+            var model = EqService.GetModel();
             return Json(model.SaveToDictionary());
         }
         public virtual string IndexTitle => this.GetType().Name.Replace("Controller", "");
@@ -124,8 +124,8 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult SyncQuery(string queryJson, string optionsJson)
         {
 
-            var query = eqService.SyncQueryDict(queryJson.ToDictionary());
-            var statement = eqService.BuildQuery(query, optionsJson.ToDictionary());
+            var query = EqService.SyncQueryDict(queryJson.ToDictionary());
+            var statement = EqService.BuildQuery(query, optionsJson.ToDictionary());
             Dictionary<string, object> dict = new Dictionary<string, object>();
             //dict.Add("statement", statement);
             return Json(dict);
@@ -133,7 +133,7 @@ namespace ApartmentApps.Portal.Controllers
 
 
 
-        public ActionResult ApplyFilter(string queryJson, string optionsJson)
+        public virtual ActionResult ApplyFilter(string queryJson, string optionsJson)
         {
 
             FilterQuery = queryJson;
@@ -147,6 +147,13 @@ namespace ApartmentApps.Portal.Controllers
             //return Json(dict);
         }
 
+
+        public IEnumerable<TViewModel> GetData(out int count)
+        {
+            var query = EqService.LoadQueryDict(FilterQuery.ToDictionary());
+            var results = Service.GetAll<TViewModel>(query, out count, "Id", false, 0, int.MaxValue);
+            return results;
+        }
 
         public ActionResult Grid(int page, string orderBy = null, int recordsPerPage = 10, bool descending = false)
         {
@@ -162,7 +169,7 @@ namespace ApartmentApps.Portal.Controllers
                 GridState.OrderBy = orderBy;
             }
 
-            var query = eqService.LoadQueryDict(FilterQuery.ToDictionary());
+            var query = EqService.LoadQueryDict(FilterQuery.ToDictionary());
 
             var lvo = string.IsNullOrEmpty(GridOptions) ? new ListViewOptions() { PageIndex = 1 } : GridOptions.ToListViewOptions();
 
@@ -211,18 +218,18 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public ActionResult GetQuery(string queryName)
         {
-            var query = eqService.GetQuery(queryName);
+            var query = EqService.GetQuery(queryName);
             return Json(query.SaveToDictionary());
         }
 
         [HttpPost]
         public ActionResult NewQuery(string queryName)
         {
-            var query = eqService.GetQuery();
+            var query = EqService.GetQuery();
             query.Clear();
             query.QueryName = queryName;
-            query.ID = eqService.GenerateQueryId(queryName);
-            eqService.SaveQuery(query);
+            query.ID = EqService.GenerateQueryId(queryName);
+            EqService.SaveQuery(query);
 
             return Json(query.SaveToDictionary());
         }
@@ -237,7 +244,7 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public ActionResult SaveQuery(string queryJson, string queryName)
         {
-            var query = eqService.SaveQueryDict(queryJson.ToDictionary(), queryName);
+            var query = EqService.SaveQueryDict(queryJson.ToDictionary(), queryName);
 
             //we return a JSON object with one property "query" that contains the definition of saved query
             var dict = new Dictionary<string, object>();
@@ -248,7 +255,7 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public ActionResult RemoveQuery(string queryId)
         {
-            eqService.RemoveQuery(queryId);
+            EqService.RemoveQuery(queryId);
             var dict = new Dictionary<string, object>();
             dict.Add("result", "ok");
             return Json(dict);

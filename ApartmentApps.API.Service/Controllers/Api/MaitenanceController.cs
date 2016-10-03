@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Maintenance;
+using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers
 {
@@ -33,6 +35,26 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("List")]
         public IEnumerable<MaintenanceIndexBindingModel> ListRequests()
         {
+            // TODO Move this into mappers
+            if (GetConfig<MaintenanceConfig>().SupervisorMode)
+            {
+                var userId = CurrentUser.Id;
+                return
+                 Context.MaitenanceRequests.GetAll().Where(p=>p.WorkerAssignedId == userId).OrderByDescending(p => p.SubmissionDate).ToArray().Select(
+                     x => new MaintenanceIndexBindingModel()
+                     {
+                         Title = x.MaitenanceRequestType.Name,
+                         RequestDate = x.SubmissionDate,
+                         Comments = x.Message,
+                         SubmissionBy = x.User.ToUserBindingModel(BlobStorageService),
+                         StatusId = x.StatusId,
+                         Id = x.Id.ToString(),
+                         UnitName = x.Unit?.Name,
+                         BuildingName = x.Unit?.Building?.Name,
+                         LatestCheckin = x.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService)
+                     }).ToArray();
+            }
+
             return
                 Context.MaitenanceRequests.GetAll().OrderByDescending(p => p.SubmissionDate).ToArray().Select(
                     x => new MaintenanceIndexBindingModel()
@@ -42,7 +64,7 @@ namespace ApartmentApps.API.Service.Controllers
                         Comments = x.Message,
                         SubmissionBy = x.User.ToUserBindingModel(BlobStorageService),
                         StatusId = x.StatusId,
-                        Id = x.Id,
+                        Id = x.Id.ToString(),
                         UnitName = x.Unit?.Name,
                         BuildingName = x.Unit?.Building?.Name,
                         LatestCheckin = x.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService)
@@ -135,7 +157,7 @@ namespace ApartmentApps.API.Service.Controllers
             return null;
         }
 
-        public MaitenanceController(IMaintenanceService maintenanceService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(context, userContext)
+        public MaitenanceController(IKernel kernel, IMaintenanceService maintenanceService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             MaintenanceService = maintenanceService;
             BlobStorageService = blobStorageService;
