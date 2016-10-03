@@ -66,7 +66,7 @@ namespace ApartmentApps.Portal.App_Start
                 DependencyResolver.SetResolver(new Ninject.Web.Mvc.NinjectDependencyResolver(kernel));
                 return kernel;
             }
-            catch
+            catch(Exception ex)
             {
                 kernel.Dispose();
                 throw;

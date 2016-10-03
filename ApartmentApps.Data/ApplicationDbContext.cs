@@ -63,11 +63,11 @@ namespace ApartmentApps.Data
                 modelBuilder.Configurations.AddFromAssembly(assembly);
                     
             }
-            //modelBuilder.Entity<ApplicationUser>()
+            //modelBuilder<ApplicationUser>()
             //    .HasMany(p=>p.UserAlerts)
             //    .WithRequired(p=>p.User)
-            //    .WillCascadeOnDelete(true);
-           
+            //    .Wntity<>()
+             
         }
 
         public ApplicationDbContext()

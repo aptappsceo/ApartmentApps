@@ -314,7 +314,8 @@ namespace ResidentAppCross.iOS
             {
                 TableSection.ReloadData();
             });
-
+            
+            SectionContainerGesturesEnabled = false;
 
             var set = this.CreateBindingSet<PaymentSummaryView, PaymentSummaryViewModel>();
             set.Bind(CallToActionSection.MainButton).To(vm => vm.CheckOutCommand);

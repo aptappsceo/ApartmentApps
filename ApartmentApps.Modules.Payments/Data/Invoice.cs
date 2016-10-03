@@ -4,13 +4,18 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Payments.Data;
 
 namespace ApartmentApps.Api.Modules
 {
     [Persistant]
     public class Invoice
     {
-        
+        public Invoice()
+        {
+            TransactionHistoryItems = new HashSet<TransactionHistoryItem>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -26,13 +31,12 @@ namespace ApartmentApps.Api.Modules
 
         public bool IsArchived { get; set; }
 
-        [ForeignKey(nameof(PaymentTransactionId))]
-        public virtual InvoiceTransaction PaymentTransaction { get; set; }
-
-        public string PaymentTransactionId { get; set; } //Id of operation on Forte/else where
-
         public InvoiceState State { get; set; }
         public string Title { get; set; }
+
+        [InverseProperty("Invoices")]
+        public ICollection<TransactionHistoryItem> TransactionHistoryItems { get; set; }
+
     }
 
     public static class InvoiceRepositoryExtensions
