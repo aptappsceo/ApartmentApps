@@ -11,8 +11,23 @@ using Korzh.EasyQuery.Services;
 
 namespace ApartmentApps.Portal.Controllers
 {
+    public static class LinkHelpers
+    {
+        public static MvcHtmlString ActionLink(this HtmlHelper helper, ActionLinkModel model, object htmlAttributes = null)
+        {
+            if (model.Allowed)
+                return helper.ActionLink(model.Label, model.Action, model.Controller, model.Parameters, htmlAttributes);
+
+            return MvcHtmlString.Empty;
+        }
+        public static string Action(this UrlHelper urlHelper, ActionLinkModel model)
+        {
+            return urlHelper.Action(model.Action, model.Controller, model.Parameters);
+        }
+    }
     public static class FormModelHelpers
     {
+  
 
         public static string Controller(this HtmlHelper htmlHelper)
         {

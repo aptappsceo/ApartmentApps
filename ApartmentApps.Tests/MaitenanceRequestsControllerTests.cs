@@ -1,11 +1,14 @@
 using System;
 using System.Linq;
+using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
+using MaitenanceRequestModel = ApartmentApps.Portal.Controllers.MaitenanceRequestModel;
 
 namespace ApartmentApps.Tests
 {
@@ -19,7 +22,7 @@ namespace ApartmentApps.Tests
         }
 
         [TestMethod]
-        public void TestSubmit()
+        public void TestProcess()
         {
 
             SubmitMaintenanceRequest();
@@ -59,8 +62,24 @@ namespace ApartmentApps.Tests
             result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
             Assert.IsTrue(result != null && result.StatusId == "Complete");
 
-            RemoveAll<MaintenanceRequestCheckin>();
-            RemoveAll<MaitenanceRequest>();
+        
+        }
+
+        [TestMethod]
+        public void TestAssign()
+        {
+            SubmitMaintenanceRequest();
+            var result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
+            Assert.IsNotNull(result, "Maintenance Request Create Not Working");
+            Controller.AssignRequestSubmit(
+                new AssignMaintenanceEditModel()
+                {
+                    Id = result.Id,
+                    AssignedToId = Context.UserContext.UserId
+                });
+            result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
+            Assert.IsNotNull(result);
+            Assert.AreEqual(Context.UserContext.UserId, result.AssignedToId);
         }
 
         private void SubmitMaintenanceRequest()
@@ -80,7 +99,8 @@ namespace ApartmentApps.Tests
         [TestCleanup]
         public override void DeInit()
         {
-     
+            RemoveAll<MaintenanceRequestCheckin>();
+            RemoveAll<MaitenanceRequest>();
             base.DeInit();
         }
     }

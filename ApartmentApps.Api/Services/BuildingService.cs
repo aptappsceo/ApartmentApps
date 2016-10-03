@@ -12,6 +12,10 @@ namespace ApartmentApps.Portal.Controllers
 
     public class BuildingMapper : BaseMapper<Building, BuildingViewModel>
     {
+        public BuildingMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
         public override void ToModel(BuildingViewModel viewModel, Building model)
         {
             model.Name = viewModel.Name;

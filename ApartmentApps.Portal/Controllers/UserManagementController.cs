@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -36,8 +37,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public int? UnitId { get; set; }
 
-        public List<UnitViewModel> UnitItems { get; set; }
-
+        public List<UnitViewModel> UnitItems => ModuleHelper.Kernel.Get<UserService>().GetAll<UnitViewModel>().ToList();
     }
 
     public class ProfileEditModel

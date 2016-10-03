@@ -101,8 +101,12 @@ namespace ApartmentApps.Api
         YesFree
     }
 
-    public class MaintenanceRequestEditMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestEditModel>
+    public class MaintenanceRequestEditMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestEditModel> 
     {
+        public MaintenanceRequestEditMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
         public override void ToModel(MaintenanceRequestEditModel editModel, MaitenanceRequest maitenanceRequest)
         {
             if (string.IsNullOrEmpty(editModel.Id))
@@ -127,6 +131,10 @@ namespace ApartmentApps.Api
     }
     public class MaintenanceRequestIndexMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestIndexBindingModel>
     {
+        public MaintenanceRequestIndexMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
         public override void ToModel(MaintenanceRequestIndexBindingModel viewModel, MaitenanceRequest model)
         {
            
@@ -143,7 +151,7 @@ namespace ApartmentApps.Api
         public IBlobStorageService BlobStorageService { get; set; }
 
         public MaintenanceRequestMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
-            IBlobStorageService blobStorageService)
+            IBlobStorageService blobStorageService, IUserContext userContext) : base(userContext)
         {
             UserMapper = userMapper;
             BlobStorageService = blobStorageService;
@@ -185,6 +193,15 @@ namespace ApartmentApps.Api
             viewModel.LatestCheckin = model.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService);
             viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(BlobStorageService));
             viewModel.Description = model.Description;
+          
+            viewModel.AssignLink = new ActionLinkModel()
+            {
+                Allowed = UserContext.IsInRole("MaintenanceSupervisor"),
+                Action = "AssignRequest",
+                Controller = "MaitenanceRequests",
+                Label = "Assign Maintenance Request",
+                Parameters = new  { id= model.Id }
+            };
         }
 
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api.ViewModels
@@ -53,6 +54,8 @@ namespace ApartmentApps.Api.ViewModels
         public string AssignedToId { get; set; }
         public UserBindingModel AssignedTo { get; set; }
         public string Description { get; set; }
+
+        public ActionLinkModel AssignLink { get; set; }
     }
 
 

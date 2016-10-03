@@ -50,7 +50,7 @@ namespace ApartmentApps.Api
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
 
         public IncidentReportFormMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
-            IBlobStorageService blobStorageService)
+            IBlobStorageService blobStorageService, IUserContext userContext) : base(userContext)
         {
             _blobStorageService = blobStorageService;
             UserMapper = userMapper;
@@ -78,7 +78,7 @@ namespace ApartmentApps.Api
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
 
         public IncidentReportMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
-            IBlobStorageService blobStorageService)
+            IBlobStorageService blobStorageService, IUserContext userContext) : base(userContext)
         {
             _blobStorageService = blobStorageService;
             UserMapper = userMapper;

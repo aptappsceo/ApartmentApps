@@ -35,42 +35,43 @@
                     else
                     {
                         @Html.DropDownList(property.Name, property.Choices.Select(p => new SelectListItem()
-                   {
-                       Value = p.Id,
-                       Text = p.Value,
-                       Selected = p.Selected
-                   }))
+                        {
+                            Value = p.Id,
+                            Text = p.Value,
+                            Selected = p.Selected
+                        }))
                     }
 
                 }
-                else if (property.SystemType == typeof(DateTime) || property.SystemType == typeof(DateTime?))
+                else if (property.SystemType == typeof (DateTime) || property.SystemType == typeof (DateTime?))
                 {
                     if (property.DataType.DataType == DataType.DateTime)
                     {
                         @Html.EJ().DateTimePicker(property.Name, new DateTimePickerProperties()
-                   {
-                       Value = property.GetValue()
-                   })
+                        {
+                            Value = property.GetValue()
+                        })
                     }
                     else if (property.DataType.DataType == DataType.Time)
 
-                    {  @Html.EJ().TimePicker(property.Name, new TimePickerProperties()
-                  {
-                      Value = property.GetValue()
-                  })
+                    {
+                        @Html.EJ().TimePicker(property.Name, new TimePickerProperties()
+                        {
+                            Value = property.GetValue()
+                        })
 
                     }
                     else
                     {
                         @Html.EJ().DatePicker(property.Name, new DatePickerProperties()
-                   {
-                       Value = property.GetValue(),
-                   })
+                        {
+                            Value = property.GetValue(),
+                        })
                     }
                 }
-                else if (property.SystemType == typeof(bool))
+                else if (property.SystemType == typeof (bool))
                 {
-                    @Html.CheckBox(property.Name, (bool)property.GetValue())
+                    @Html.CheckBox(property.Name, (bool) property.GetValue())
                 }
                 else
                 {
@@ -87,7 +88,7 @@
                     }
                     else
                     {
-                       
+
                         @Html.Partial("~/Views/Shared/Forms/" + property.SystemType.Name + ".cshtml", property.GetValue())
                     }
 
@@ -98,3 +99,7 @@
         </div>
     }
 </div>
+@if (IsAjax)
+{
+    @Html.EJ().ScriptManager()
+}

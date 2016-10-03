@@ -213,10 +213,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>3rdParty\4.5\Syncfusion.Gauge.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.GeckoHtmlRenderer.Base, Version=14.2451.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>3rdParty\4.5\Syncfusion.GeckoHtmlRenderer.Base.dll</HintPath>
-    </Reference>
     <Reference Include="Syncfusion.Grid.WPF, Version=14.2450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>3rdParty\4.5\Syncfusion.Grid.WPF.dll</HintPath>
