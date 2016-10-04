@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Modules.Payments.Services;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -8,7 +9,7 @@ namespace ApartmentApps.Api.Modules
         public UserBindingModel User { get; set; }
         public List<UserLeaseInfoBindingModel> LeaseInfos { get;set; }
         public List<InvoiceBindingModel> Invoices { get; set; }
-        public List<TransactionBindingModel> Transactions { get; set; }
+        public List<TransactionHistoryItemBindingModel> Transactions { get; set; }
         public List<PaymentOptionBindingModel> PaymentOptions { get; set; }
     }
 }
