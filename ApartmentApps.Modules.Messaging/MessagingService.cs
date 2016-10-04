@@ -89,10 +89,14 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.From = _userMapper.ToViewModel(model.From);
             viewModel.Body = model.Body;
             viewModel.SentOn = model.SentOn;
-            viewModel.SentToCount = model.MessageReceipts.Count();
             viewModel.Id = model.Id.ToString();
-            viewModel.OpenCount = model.MessageReceipts.Count(p => !p.Error && p.Opened);
-            viewModel.DeliverCount = model.MessageReceipts.Count(p => p.Error == false);
+            if (model.MessageReceipts != null)
+            {
+                viewModel.SentToCount = model.MessageReceipts.Count();
+                viewModel.OpenCount = model.MessageReceipts.Count(p => !p.Error && p.Opened);
+                viewModel.DeliverCount = model.MessageReceipts.Count(p => p.Error == false);
+            }
+            
             viewModel.TargetsXml = model.Filter;
             viewModel.TargetsDescription = model.TargetsDescription;
             viewModel.TargetsCount = model.TargetsCount;

@@ -5,9 +5,16 @@
     @*<small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>*@
 </div>
 <div class="modal-body">
-
+    @RenderBody()
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-white close-link" data-dismiss="modal">Close</button>
-    <input type="submit" value="Apply" class="btn btn-primary close-link" />
+    @if (IsSectionDefined("Buttons"))
+    {
+        @RenderSection("Buttons", false)
+    }
+    else
+    {
+        <button type="button" class="btn btn-white close-link" data-dismiss="modal">Close</button>
+        <button  class="btn btn-primary close-link" onclick="document.forms[document.forms.length - 1].submit();" >Apply</button>
+    }
 </div>

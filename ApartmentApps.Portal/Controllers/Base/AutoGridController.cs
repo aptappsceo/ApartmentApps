@@ -22,6 +22,9 @@ namespace ApartmentApps.Portal.Controllers
            where TViewModel : class, new()
     {
         private readonly IRepository<ServiceQuery> _queries;
+        private string _filterQuery;
+        private string _gridOptions;
+        private GridState _gridState;
         public EqServiceProviderDb EqService { get; }
         public TService Service { get; set; }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -193,21 +196,29 @@ namespace ApartmentApps.Portal.Controllers
         }
         public GridState GridState
         {
-            get { return Session["GridState"] as GridState ?? (GridState = new GridState()); }
-            set { Session["GridState"] = value; }
+            get { if (Session == null) return _gridState ?? (_gridState = new GridState()); return Session["GridState"] as GridState ?? (GridState = new GridState()); }
+            set { if (Session != null) Session["GridState"] = value; _gridState = value; }
         }
 
         public string FilterQueryKey => typeof(TViewModel).Name + "FilterQuery";
         public string GridOptionsyKey => typeof(TViewModel).Name + "GridOptions";
         public string FilterQuery
         {
-            get { return Session[FilterQueryKey] == null ? string.Empty : (string)Session[FilterQueryKey]; }
-            set { Session[FilterQueryKey] = value; }
+            get
+            {
+                if (Session == null) return _filterQuery;
+                return Session[FilterQueryKey] == null ? string.Empty : (string)Session[FilterQueryKey];
+            }
+            set
+            {
+                if (Session != null) Session[FilterQueryKey] = value;
+                _filterQuery = value;
+            }
         }
         public string GridOptions
         {
-            get { return Session[GridOptionsyKey] == null ? string.Empty : (string)Session[GridOptionsyKey]; }
-            set { Session[GridOptionsyKey] = value; }
+            get { if (Session == null) return _gridOptions; return Session[GridOptionsyKey] == null ? string.Empty : (string)Session[GridOptionsyKey]; }
+            set { if (Session != null) Session[GridOptionsyKey] = value; _gridOptions = value; }
         }
 
         /// <summary>

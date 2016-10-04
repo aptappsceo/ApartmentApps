@@ -118,6 +118,8 @@ namespace ApartmentApps.Portal.Controllers
       
         public override string DefaultOrderBy => "LastName";
 
+        
+
         public UserService(IKernel kernel, IRepository<ApplicationUser> repository) : base(kernel, repository)
         {
         }

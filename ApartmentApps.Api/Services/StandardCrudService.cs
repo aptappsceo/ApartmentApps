@@ -60,7 +60,17 @@ namespace ApartmentApps.Portal.Controllers
 
         public IEnumerable<TViewModel> GetAll<TViewModel>(DbQuery query, out int count, string orderBy, bool orderByDesc, int page = 1, int resultsPerPage = 20)
         {
-            var result = Repository.GetAll().DynamicQuery<TModel>(query, !string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, orderByDesc);
+            if (query == null)
+            {
+                //result = result.Skip(resultsPerPage * (page - 1));
+                //result = result.Take(resultsPerPage);
+                var res2 = Repository.GetAll().ToArray();
+                count = res2.Count();
+                var mapper2 = _kernel.Get<IMapper<TModel, TViewModel>>();
+                return res2.Select(mapper2.ToViewModel);
+
+            }
+            var result = Repository.GetAll().DynamicQuery<TModel>(query, !string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, !string.IsNullOrEmpty(orderBy) ? orderByDesc : DefaultOrderByDesc);
             count = result.Count();
             //if (string.IsNullOrEmpty(orderBy))
             //{
@@ -87,6 +97,9 @@ namespace ApartmentApps.Portal.Controllers
             return res.Select(mapper.ToViewModel);
            
         }
+
+        public virtual bool DefaultOrderByDesc => true;
+
         public IEnumerable<TViewModel> GetAll<TViewModel>(IMapper<TModel, TViewModel> mapper)
         {
             return Repository.GetAll().ToArray().Select(mapper.ToViewModel);
