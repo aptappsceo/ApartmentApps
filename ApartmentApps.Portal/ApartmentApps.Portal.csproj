@@ -1485,6 +1485,7 @@
     <Content Include="Views\Messaging\OverviewListPartial.cshtml" />
     <Content Include="Views\Messaging\Overview.cshtml" />
     <Content Include="Views\CampaignTargets\List.cshtml" />
+    <Content Include="Views\Shared\_ActionLinks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

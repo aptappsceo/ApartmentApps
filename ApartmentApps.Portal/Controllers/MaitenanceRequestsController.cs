@@ -201,7 +201,8 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid && model.Id != null)
             {
-                MaintenanceService.AssignRequest(Convert.ToInt32(model.Id), model.AssignedToId);                return new EmptyResult();
+                MaintenanceService.AssignRequest(Convert.ToInt32(model.Id), model.AssignedToId);
+                return RedirectToAction("Index");
             }
             return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
         }

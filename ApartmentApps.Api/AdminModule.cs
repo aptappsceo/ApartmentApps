@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Forms;
+using ApartmentApps.Portal.Controllers;
 using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class AdminModule : Module<PortalConfig>, IMenuItemProvider
+    public class AdminModule : Module<PortalConfig>, IMenuItemProvider, IFillActions
     {
         public IKernel Kernel { get; set; }
 
@@ -33,18 +36,18 @@ namespace ApartmentApps.Api.Modules
                 checkins.Children.Add(new MenuItemViewModel("Buildings", "fa-building", "Index", "Buildings"));
                 checkins.Children.Add(new MenuItemViewModel("Units", "fa-bed", "Index", "Units"));
                 menuItems.Add(checkins);
-               
+
 
             }
             if (UserContext.IsInRole("Admin"))
             {
-               
+
                 var checkins = new MenuItemViewModel("AA Admin", "fa-heartbeat");
                 foreach (var module in Kernel.GetAll<IModule>().OfType<IAdminConfigurable>())
                 {
                     checkins.Children.Add(new MenuItemViewModel(module.Name, "fa-gear", "Index", module.SettingsController));
                 }
-             
+
                 checkins.Children.Add(new MenuItemViewModel("Corporations", "fa-suitcase", "Index", "Corporations"));
                 checkins.Children.Add(new MenuItemViewModel("Properties", "fa-cubes", "Index", "Property"));
                 checkins.Children.Add(new MenuItemViewModel("Entrata Accounts", "fa-group", "Index", "PropertyEntrataInfo"));
@@ -56,6 +59,23 @@ namespace ApartmentApps.Api.Modules
             }
 
 
+
+        }
+
+        public void FillActions(List<ActionLinkModel> actions, object viewModel)
+        {
+            //   <a class="btn btn-white btn-xs modal-link" href="@Url.Action("Entry", "UserManagement", new {id = item.Id})"><i class="fa fa-edit"></i> Edit</a>
+            //< a class="btn btn-white btn-xs" href="@Url.Action("Delete", "UserManagement", new {id = item.Id})"><i class="fa fa-remove"></i> Delete</a>
+            var vm = viewModel as UserBindingModel;
+            if (vm != null)
+            {
+                actions.Add(new ActionLinkModel("Delete", "Delete", "UserManagement", new { id = vm.Id }));
+                actions.Add(new ActionLinkModel("Edit", "Entry", "UserManagement", new { id = vm.Id })
+                {
+                    IsDialog = true
+                });
+            }
+            
 
         }
     }

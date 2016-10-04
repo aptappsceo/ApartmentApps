@@ -6,9 +6,11 @@ using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Data.Utils;
+using ApartmentApps.Forms;
 using ApartmentApps.Modules.Payments.Data;
 using ApartmentApps.Modules.Payments.Services;
 using ApartmentApps.Payments.Forte;
@@ -16,6 +18,7 @@ using ApartmentApps.Payments.Forte.Forte.Client;
 using ApartmentApps.Payments.Forte.Forte.Merchant;
 using ApartmentApps.Payments.Forte.Forte.Transaction;
 using ApartmentApps.Payments.Forte.PaymentGateway;
+using ApartmentApps.Portal.Controllers;
 using IniParser.Model;
 using IniParser.Model.Configuration;
 using IniParser.Parser;
@@ -25,7 +28,7 @@ using Authentication = ApartmentApps.Payments.Forte.Forte.Client.Authentication;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class PaymentsModule : Module<PaymentsConfig>, IMenuItemProvider, IAdminConfigurable, IPaymentsService
+    public class PaymentsModule : Module<PaymentsConfig>, IMenuItemProvider, IAdminConfigurable, IPaymentsService, IFillActions
     {
         private readonly IRepository<UserLeaseInfo> _leaseRepository;
         private readonly IRepository<Invoice> _invoiceRepository;
@@ -48,28 +51,6 @@ namespace ApartmentApps.Api.Modules
             _transactionHistory = transactionHistory;
         }
 
-        public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
-        {
-            if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin") &&
-                !UserContext.IsInRole("Resident")) return;
-
-
-            var paymentsHome = new MenuItemViewModel("Payments", "fa-money", "Index", "Payments");
-
-            if (UserContext.IsInRole("Admin") || UserContext.IsInRole("PropertyAdmin"))
-            {
-                paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus", "CreateUserLeaseInfoFor", "Payments"));
-                paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
-            }
-
-            if (UserContext.IsInRole("Resident"))
-            {
-                paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments",new {id = UserContext.CurrentUser.Id}));
-            }
-
-            menuItems.Add(paymentsHome);
-
-        }
 
         public string SettingsController => "PaymentsConfig";
 
@@ -474,6 +455,43 @@ namespace ApartmentApps.Api.Modules
             //var transaction = _transactionRepository.Find(opId);
             //_leaseService.OnTransactionComplete(transaction,s,user.Property.TimeZone.Now());
             //_transactionRepository.Save();
+        }
+
+        public void FillActions(List<ActionLinkModel> actions, object viewModel)
+        {
+            var user = viewModel as UserBindingModel;
+            if (user != null)
+            {
+                //paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments",new {id = UserContext.CurrentUser.Id}));
+                actions.Add(new ActionLinkModel("Payments Overview", "UserPaymentsOverview", "Payments", new { id = user.Id})
+                {
+                    Icon = "fa-credit-card",
+                    Group = "Payments"
+                });
+            }
+        }
+
+        public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
+        {
+            if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin") &&
+                !UserContext.IsInRole("Resident")) return;
+
+
+            var paymentsHome = new MenuItemViewModel("Payments", "fa-money", "Index", "Payments");
+
+            if (UserContext.IsInRole("Admin") || UserContext.IsInRole("PropertyAdmin"))
+            {
+                paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus", "CreateUserLeaseInfoFor", "Payments"));
+         //       paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
+            }
+
+            if (UserContext.IsInRole("Resident"))
+            {
+                paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments", new { id = UserContext.CurrentUser.Id }));
+            }
+
+            menuItems.Add(paymentsHome);
+
         }
     }
 }

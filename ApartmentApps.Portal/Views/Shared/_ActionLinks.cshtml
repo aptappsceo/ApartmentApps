@@ -1,0 +1,16 @@
+﻿@model BaseViewModel
+<div class="pull-right social-action dropdown">
+    <button data-toggle="dropdown" class="dropdown-toggle btn-white">
+        <i class="fa fa-angle-down"></i>
+    </button>
+    <ul class="dropdown-menu m-t-xs">
+        @foreach (var x in Model.ActionLinks)
+        {
+            <li>
+                <a class="@(x.IsDialog ? "modal-link" : "")" href="@Url.Action(x)"><i class="fa @x.Icon"></i> @x.Label</a>
+            </li>
+
+        }
+    </ul>
+</div>
+

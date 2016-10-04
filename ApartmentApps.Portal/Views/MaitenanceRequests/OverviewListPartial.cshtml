@@ -2,23 +2,13 @@
 @using Korzh.EasyQuery.Mvc
 @using Korzh.EasyQuery.Services
 @model ApartmentApps.Forms.GridList<ApartmentApps.Api.ViewModels.MaintenanceRequestViewModel>
-@{
-    var property = ViewBag.Property as Property;
-}
-@foreach (var item in Model)
+
+@helper MaintenanceRequestViewModel(MaintenanceRequestViewModel item)
 {
+    var property = ViewBag.Property as Property;
     <div class="social-feed-box">
 
-        <div class="pull-right social-action dropdown">
-            <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu m-t-xs">
-                <li><a class="" href="@Url.Action("Details", "MaitenanceRequests", new {id = item.Id})"><i class="fa fa-info"></i> Details</a></li>
-                <li><a class="modal-link" href="@Url.Action("Entry", "MaitenanceRequests", new {id = item.Id})"><i class="fa fa-edit"></i> Edit</a></li>
-                <li><a class="modal-link" href="@Url.Action(item.AssignLink)"><i class="fa fa-edit"></i> Assign</a></li>
-            </ul>
-        </div>
+       @Html.Partial("_ActionLinks", item)
         <div class="social-avatar">
             <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})" class="pull-left">
                 <img alt="image" class="img-circle" src="@item.SubmissionBy.ImageThumbnailUrl">
@@ -27,7 +17,9 @@
             <div class="media-body">
 
                 <a href="#">
-                    <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})"><strong>@@@item.SubmissionBy.FirstName @item.SubmissionBy.LastName</strong></a> Submitted a Work order involving <b>@item.Title</b> <br>
+                    <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})">
+                        <strong>@@@(item.SubmissionBy.FirstName) @item.SubmissionBy.LastName</strong>
+                    </a> Submitted a Work order involving <b>@item.Title</b> <br>
                 </a>
 
             </div>
@@ -37,23 +29,34 @@
                 <div class="col-lg-5">
                     <dl class="dl-horizontal">
                         <dt>Status</dt>
-                        <dd><span class="badge badge-primary">@item.StatusId</span></dd>
+                        <dd>
+                            <span class="badge badge-primary">@item.StatusId</span></dd>
                         <dt>Created by:</dt>
-                        <dd><a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})"><strong>@@@item.SubmissionBy.FirstName @item.SubmissionBy.LastName</strong></a></dd>
+                        <dd>
+                            <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})">
+                                <strong>@@@(item.SubmissionBy.FirstName) @item.SubmissionBy.LastName</strong>
+                            </a>
+                        </dd>
                         <dt>Location:</dt>
-                        <dd><i class="fa fa-map-marker"></i>  @item.BuildingName - @item.UnitName</dd>
+                        <dd><i class="fa fa-map-marker"></i> @item.BuildingName - @item.UnitName</dd>
                         <dt>Assigned to:</dt>
+
                         @if (item.AssignedTo == null)
                         {
                             <dd>Not Yet Assigned</dd>
                         }
                         else
                         {
-                            <dd><a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.AssignedTo.Id})"><strong>@@@item.AssignedTo.FirstName @item.AssignedTo.LastName</strong></a></dd>
+                            <dd>
+                                <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.AssignedTo.Id})">
+                                    <strong>@@@(item.AssignedTo.FirstName) @item.AssignedTo.LastName</strong>
+                                </a>
+                            </dd>
                         }
 
                         @*<dt>Version:</dt>
                             <dd> 	v1.4.2 </dd>*@
+
                     </dl>
                 </div>
                 <div class="col-lg-7" id="cluster_info">
@@ -61,6 +64,7 @@
 
                         <dt>Last Updated:</dt>
                         <dd>
+
                             @if (item.LatestCheckin != null)
                             {
                                 @Html.Timeago(item.LatestCheckin.Date, property?.TimeZone)
@@ -70,9 +74,13 @@
                         <dd>@Html.Timeago(item.RequestDate, property?.TimeZone)</dd>
                         <dt>Tenants:</dt>
                         <dd>
+
                             @foreach (var tenant in item.Tenants)
                             {
-                                <a href="@Url.Action("UserFeed", "Dashboard", new {id = @tenant.Id})"><strong>@@@tenant.FirstName @tenant.LastName</strong></a><br>
+                                <a href="@Url.Action("UserFeed", "Dashboard", new {id = @tenant.Id})">
+                                    <strong>@@@(tenant.FirstName) @tenant.LastName</strong>
+                                </a>
+                                @:<br>
                             }
                         </dd>
                     </dl>
@@ -80,9 +88,9 @@
             </div>
 
 
-
         </div>
         <div class="social-footer">
+
             @foreach (var checkin in item.Checkins)
             {
                 <div class="social-comment">
@@ -101,16 +109,18 @@
                         @checkin.Comments
                         <br>
                         @*<a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -*@
+
                         <small class="text-muted">@Html.Timeago(checkin.Date, property?.TimeZone) - @checkin.Date.ToShortDateString()</small>
+
                         @if (checkin.Photos != null)
                         {
                             <div class="row">
+
                                 @foreach (var photo in checkin.Photos)
                                 {
                                     <div class="col-md-4">
-                                        <img src="@photo.Url" style="width: 100%;" />
+                                        <img src="@photo.Url" style="width: 100%;"/>
                                     </div>
-
                                 }
                             </div>
                         }
@@ -124,6 +134,12 @@
         </div>
 
     </div>
-
+}
+@{
+    var property = ViewBag.Property as Property;
+}
+@foreach (var item in Model)
+{
+    @MaintenanceRequestViewModel(item)
 }
 @Html.PageNavigator(Model as IPaging)

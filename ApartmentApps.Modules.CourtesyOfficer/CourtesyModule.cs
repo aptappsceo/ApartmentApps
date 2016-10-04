@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
+using ApartmentApps.Portal.Controllers;
 using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class CourtesyModule : Module<CourtesyConfig>, IMenuItemProvider, IAdminConfigurable
+    public class CourtesyModule : Module<CourtesyConfig>, IMenuItemProvider, IAdminConfigurable, IFillActions
     {
         public string SettingsController => "CourtesyConfig";
         public CourtesyModule(IRepository<CourtesyConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
@@ -30,6 +33,22 @@ namespace ApartmentApps.Api.Modules
                 menuItems.Add(checkins);
             }
          
+        }
+
+        public void FillActions(List<ActionLinkModel> actions, object viewModel)
+        {
+            //<li><a class="btn btn-white btn-xs" href="@Url.Action("Details", "IncidentReports", new {id = item.Id})"><i class="fa fa-info"></i> Details</a></li>
+            // <li><a class="btn btn-white btn-xs modal-link" href="@Url.Action("Entry", "IncidentReports", new {id = item.Id})"><i class="fa fa-edit"></i> Edit</a></li>
+            var vm = viewModel as IncidentReportViewModel;
+            if (vm != null)
+            {
+                actions.Add(new ActionLinkModel("Details", "Details", "IncidentReports", new { id = vm.Id }));
+                actions.Add(new ActionLinkModel("Edit", "Entry", "IncidentReports", new { id = vm.Id })
+                {
+                    IsDialog = true
+                });
+            }
+            
         }
     }
 }

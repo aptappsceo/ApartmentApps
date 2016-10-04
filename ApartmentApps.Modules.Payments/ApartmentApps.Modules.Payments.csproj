@@ -149,6 +149,10 @@
       <Project>{69a819d5-3037-4e56-90e4-a9edff41b88a}</Project>
       <Name>ApartmentApps.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Forms\ApartmentApps.Forms.csproj">
+      <Project>{E3722B2C-0EE1-4359-89D2-CD78BDDD59C7}</Project>
+      <Name>ApartmentApps.Forms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Payments.Forte\ApartmentApps.Payments.Forte.csproj">
       <Project>{37CB1883-4CF9-4AC2-91E4-036D806657F2}</Project>
       <Name>ApartmentApps.Payments.Forte</Name>

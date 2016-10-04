@@ -14,6 +14,12 @@ using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
+
+    public interface IFillActions
+    {
+        void FillActions(List<ActionLinkModel> actions, object viewModel);
+    }
+
     public class UserListMapper : BaseMapper<ApplicationUser, UserListModel>
     {
         public UserListMapper(IUserContext userContext) : base(userContext)
