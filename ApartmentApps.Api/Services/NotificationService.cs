@@ -1,3 +1,4 @@
+using ApartmentApps.Api;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Ninject;
@@ -6,6 +7,9 @@ namespace ApartmentApps.Portal.Controllers
 {
     public class NotificationMapper : BaseMapper<UserAlert, NotificationViewModel>
     {
+        public NotificationMapper(IUserContext userContext) : base(userContext)
+        {
+        }
 
         public override void ToModel(NotificationViewModel viewModel, UserAlert model)
         {

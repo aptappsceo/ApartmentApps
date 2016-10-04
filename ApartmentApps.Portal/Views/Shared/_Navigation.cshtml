@@ -7,7 +7,7 @@
     var properties = ViewBag.Properties as Property[];
     var menuItems = ViewBag.MenuItems as List<MenuItemViewModel>;
 }
-@helper item(MenuItemViewModel vm)
+@helper item(MenuItemViewModel vm, bool isRoot)
 {
 var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ?? vm.Children.FirstOrDefault()?.Controller) : Html.IsSelectedBool(controller: vm.Controller, action: vm.Action);
 
@@ -22,7 +22,13 @@ var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ??
             else
             {
                 <i class="fa @vm.Icon"></i>
-                @vm.Label
+                if (isRoot) 
+                {
+                 <span class="nav-label">@vm.Label</span>   
+                } else {
+                     @vm.Label   
+                }
+                 
             }
         </a>
         @if (vm.HasChildren)
@@ -30,7 +36,7 @@ var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ??
             <ul class="nav nav-second-level collapse" aria-expanded="@(expanded ? "true":"false")">
                 @foreach (var menuItem in vm.Children.OrderBy(p => p.Index))
                 {
-                    @item(menuItem)
+                    @item(menuItem, false)
                 }
             </ul>
         }
@@ -147,7 +153,7 @@ var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ??
             </li>
             @foreach (var mi in menuItems.OrderBy(p => p.Index))
             {
-                @item(mi)
+                @item(mi, true)
             }
             @*@if (User.IsInRole("PropertyAdmin") || User.IsInRole("RegionalAdmin"))
                 {

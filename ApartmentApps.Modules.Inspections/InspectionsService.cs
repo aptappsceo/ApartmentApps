@@ -37,7 +37,7 @@ namespace ApartmentApps.Modules.Inspections
     {
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
 
-        public InspectionViewModelMapper(IMapper<ApplicationUser,UserBindingModel>  userMapper)
+        public InspectionViewModelMapper(IMapper<ApplicationUser,UserBindingModel>  userMapper , IUserContext userContext) : base(userContext)
         {
             UserMapper = userMapper;
         }

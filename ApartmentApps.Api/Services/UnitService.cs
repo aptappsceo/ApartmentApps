@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
@@ -39,6 +40,10 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class UnitFormMapper : BaseMapper<Unit, UnitFormModel>
     {
+        public UnitFormMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
         public override void ToModel(UnitFormModel viewModel, Unit model)
         {
             model.Name = viewModel.Name;
@@ -56,6 +61,10 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class UnitMapper : BaseMapper<Unit, UnitViewModel>
     {
+        public UnitMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
         public override void ToModel(UnitViewModel viewModel, Unit model)
         {
 

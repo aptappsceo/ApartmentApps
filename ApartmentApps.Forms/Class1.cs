@@ -42,6 +42,7 @@ namespace ApartmentApps.Forms
         public string Action { get; set; }
         public string Controller { get; set; }
         public object Parameters { get; set; }
+        public bool Allowed { get; set; }
     }
 
     public class GridList<T> : IPagedList<T>, IPaging, IEnumerable<T>, IEnumerable

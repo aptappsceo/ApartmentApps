@@ -15,6 +15,10 @@ namespace ApartmentApps.Api
 {
     public class CourtesyCheckinMapper : BaseMapper<CourtesyOfficerCheckin, CourtesyCheckinViewModel>
     {
+        public CourtesyCheckinMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
         public override void ToModel(CourtesyCheckinViewModel viewModel, CourtesyOfficerCheckin model)
         {
 

@@ -16,10 +16,8 @@ namespace ApartmentApps.Portal.Controllers
 {
     public class UserListMapper : BaseMapper<ApplicationUser, UserListModel>
     {
-
-        public UserListMapper()
+        public UserListMapper(IUserContext userContext) : base(userContext)
         {
-        
         }
 
         public override void ToModel(UserListModel viewModel, ApplicationUser model)
@@ -47,7 +45,7 @@ namespace ApartmentApps.Portal.Controllers
     {
         private readonly IBlobStorageService _blobService;
 
-        public UserMapper(IBlobStorageService blobService)
+        public UserMapper(IBlobStorageService blobService, IUserContext userContext) : base(userContext)
         {
             _blobService = blobService;
         }
@@ -144,6 +142,10 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class PropertyMapper : BaseMapper<Property, PropertyBindingModel>
     {
+        public PropertyMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
         public override void ToModel(PropertyBindingModel viewModel, Property model)
         {
             model.Name = viewModel.Name;

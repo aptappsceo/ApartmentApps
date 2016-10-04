@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
@@ -11,7 +12,7 @@ namespace ApartmentApps.Portal.Controllers
 {
     public class MessageMapperFullDetails : MessageMapper
     {
-        public MessageMapperFullDetails(IMapper<ApplicationUser, UserBindingModel> userMapper) : base(userMapper)
+        public MessageMapperFullDetails(IMapper<ApplicationUser, UserBindingModel> userMapper, IUserContext userContext) : base(userMapper, userContext)
         {
         }
 
@@ -43,6 +44,10 @@ namespace ApartmentApps.Portal.Controllers
 
     public class MessageTargetMapper : BaseMapper<Message, MessageTargetsViewModel>
     {
+        public MessageTargetMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
         public override void ToModel(MessageTargetsViewModel viewModel, Message model)
         {
             model.Filter = viewModel.TargetsXml;
@@ -63,7 +68,7 @@ namespace ApartmentApps.Portal.Controllers
     {
         private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
 
-        public MessageMapper(IMapper<ApplicationUser,UserBindingModel> userMapper)
+        public MessageMapper(IMapper<ApplicationUser,UserBindingModel> userMapper, IUserContext userContext) : base(userContext)
         {
             _userMapper = userMapper;
         }
@@ -97,6 +102,10 @@ namespace ApartmentApps.Portal.Controllers
 
     public class MessageFormMapper : BaseMapper<Message,MessageFormViewModel>
     {
+        public MessageFormMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
         public override void ToModel(MessageFormViewModel viewModel, Message model)
         {
             model.Body = viewModel.Body;
@@ -119,11 +128,13 @@ namespace ApartmentApps.Portal.Controllers
 
     public class MessagingService : StandardCrudService<Message>
     {
+        private readonly IUserContext _userContext;
         private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
 
 
-        public MessagingService(IMapper<ApplicationUser, UserBindingModel> userMapper,IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
+        public MessagingService( IUserContext userContext,IMapper<ApplicationUser, UserBindingModel> userMapper,IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
         {
+            _userContext = userContext;
             _userMapper = userMapper;
         }
 
@@ -135,7 +146,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public MessageViewModel GetMessageWithDetails(string messageId)
         {
-            return Find(messageId, new MessageMapperFullDetails(_userMapper));
+            return Find(messageId, new MessageMapperFullDetails(_userMapper, _userContext));
         }
 
         public override void Add<TViewModel>(TViewModel viewModel)

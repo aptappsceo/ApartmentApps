@@ -1,3 +1,5 @@
+using ApartmentApps.Api;
+
 namespace ApartmentApps.Portal.Controllers
 {
     public interface IMapper<TModel, TViewModel>
@@ -11,6 +13,14 @@ namespace ApartmentApps.Portal.Controllers
 
     public abstract class BaseMapper<TModel, TViewModel> : IMapper<TModel, TViewModel> where TModel : new() where TViewModel : new()
     {
+        public IUserContext UserContext { get; set; }
+
+        protected BaseMapper(IUserContext userContext)
+        {
+            UserContext = userContext;
+        }
+
+
         public abstract void ToModel(TViewModel viewModel, TModel model);
         public TModel ToModel(TViewModel viewModel)
         {
