@@ -403,9 +403,11 @@ namespace ApartmentApps.Modules.Payments.Services
     {
         public string Id { get; set; }
         public string UserEmail { get; set; }
+        public string UserId { get; set; }
         public string UserFullName { get; set; }
         public string CommiterEmail { get; set; }
         public string CommiterFullName { get; set; }
+        public string CommiterId { get; set; }
         public ForteTransactionStateCode ForteState { get; set; }
         public PaymentVendor Service { get; set; }
         public decimal Amount { get; set; }
@@ -415,6 +417,45 @@ namespace ApartmentApps.Modules.Payments.Services
         public TransactionState State { get; set; }
         public string Trace { get; set; }
         public string StateMessage { get; set; }
-        public IList<Invoice> Invoices { get; set; }
+        public IList<TransactionHistoryItemInvoiceBindingModel> Invoices { get; set; }
+    }
+
+    public class TransactionHistoryItemInvoiceBindingModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public decimal Total { get; set; }
+    }
+
+    public static class TransactionHistoryItemExtensions
+    {
+        public static TransactionHistoryItemBindingModel ToBindingModel(this TransactionHistoryItem item)
+        {
+            return new TransactionHistoryItemBindingModel()
+            {
+                Id = item.Id,
+                UserEmail = item.User.Email,
+                UserId = item.User.Id,
+                UserFullName = $"{item.User.FirstName} {item.User.LastName}",
+                CommiterEmail = item.Commiter.Email,
+                CommiterId= item.Commiter.Id,
+                CommiterFullName = $"{item.Commiter.FirstName} {item.Commiter.LastName}",
+                StateMessage = item.StateMessage,
+                ConvenienceFee = item.ConvenienceFee,
+                CloseDate = item.CloseDate,
+                OpenDate = item.OpenDate,
+                Service = item.Service,
+                Amount = item.Amount,
+                State = item.State,
+                Trace = item.Trace,
+                ForteState = item.ForteState,
+                Invoices = item.Invoices.Select(s=>new TransactionHistoryItemInvoiceBindingModel()
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                    Total = s.Amount
+                }).ToList()
+            };
+        }
     }
 }

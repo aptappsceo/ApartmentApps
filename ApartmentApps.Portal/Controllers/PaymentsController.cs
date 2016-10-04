@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -10,6 +11,7 @@ using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Payments.BindingModels;
+using ApartmentApps.Modules.Payments.Data;
 using ApartmentApps.Modules.Payments.Services;
 using Ninject;
 
@@ -22,6 +24,7 @@ namespace ApartmentApps.Portal.Controllers
         private readonly PaymentsModule _paymentsModule;
         private readonly IRepository<UserLeaseInfo> _leaseInfos;
         private readonly IRepository<Invoice> _invoices;
+        private readonly IRepository<TransactionHistoryItem> _invoiceHistory;
         private readonly IRepository<InvoiceTransaction> _transactions;
         private LeaseInfoManagementService _leaseService;
         // GET: Payments
@@ -34,10 +37,7 @@ namespace ApartmentApps.Portal.Controllers
             return View("RentSummary"); // TODO Redirect to other pages for property manager
         }
 
-        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule,
-            IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices, IKernel kernel,
-            PropertyContext context, IUserContext userContext, IRepository<InvoiceTransaction> transactions,
-            LeaseInfoManagementService leaseService) : base(kernel, context, userContext)
+        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule, IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices, IKernel kernel, PropertyContext context, IUserContext userContext, IRepository<InvoiceTransaction> transactions, LeaseInfoManagementService leaseService, IRepository<TransactionHistoryItem> invoiceHistory) : base(kernel, context, userContext)
         {
             _blobStorageService = blobStorageService;
             _paymentsModule = paymentsModule;
@@ -45,6 +45,7 @@ namespace ApartmentApps.Portal.Controllers
             _invoices = invoices;
             _transactions = transactions;
             _leaseService = leaseService;
+            _invoiceHistory = invoiceHistory;
         }
 
         public ActionResult RentSummary()
@@ -160,7 +161,7 @@ namespace ApartmentApps.Portal.Controllers
             if (user == null) return HttpNotFound();
 
             var userLeaseInfos = _leaseInfos.GetAll().Where(s => s.UserId == id).ToList();
-            var transactions = _transactions.GetAll().Where(s => s.UserId == id).ToList();
+            var transactions = _invoiceHistory.GetAll().Include(s=>s.Invoices).Where(s => s.UserId == id).ToList();
             var userLeaseInfosIds = userLeaseInfos.Select(s => s.Id).ToArray();
 
             return View("UserPaymentsOverview", new UserPaymentsOverviewBindingModel()
@@ -173,7 +174,7 @@ namespace ApartmentApps.Portal.Controllers
                         .Select(s => s.ToBindingModel(_blobStorageService))
                         .ToList(),
                 LeaseInfos = userLeaseInfos.Select(s => s.ToBindingModel(_blobStorageService)).ToList(),
-                Transactions = transactions.Select(s => s.ToBindingModel(_blobStorageService)).ToList(),
+                Transactions = transactions.Select(s => s.ToBindingModel()).ToList(),
                 PaymentOptions = _paymentsModule.GetPaymentOptionsFor(user.Id).ToList()
             });
         }
@@ -241,6 +242,28 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return View("CancelInvoice", data);
             }
+        }
+
+        public async Task<ActionResult> ForceRejectTransaction(string id)
+        {
+
+            var transaction = _invoiceHistory.Find(id);
+            if (transaction == null) return HttpNotFound();
+            var user = transaction.User;
+            if (user == null) return HttpNotFound();
+            var s = await _paymentsModule.ForceRejectTransaction(id);
+            return RedirectToAction("UserPaymentsOverview", new {id = user.Id});
+        }
+
+        public async Task<ActionResult> ForceCompleteTransaction(string id)
+        {
+
+            var transaction = _invoiceHistory.Find(id);
+            if (transaction == null) return HttpNotFound();
+            var user = transaction.User;
+            if (user == null) return HttpNotFound();
+            var s = await _paymentsModule.ForceCompleteTransaction(id);
+            return RedirectToAction("UserPaymentsOverview", new {id = user.Id});
         }
 
 

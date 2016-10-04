@@ -11,9 +11,9 @@
     var processingInvoices = Model.Invoices.Where(s => s.State == InvoiceState.Pending).ToArray();
     var archivedInvoices = Model.Invoices.Where(s => s.State == InvoiceState.Canceled || s.State == InvoiceState.Paid).ToArray();
 
-    var pendingTransactions = Model.Transactions.Where(s => s.State == TransactionState.Pending).ToArray();
-    var completeTransactions = Model.Transactions.Where(s => s.State == TransactionState.Complete).ToArray();
-    var failedTransactions = Model.Transactions.Where(s => s.State == TransactionState.Failure).ToArray();
+    var pendingTransactions = Model.Transactions.Where(s => s.State == TransactionState.Open).ToArray();
+    var completeTransactions = Model.Transactions.Where(s => s.State == TransactionState.Approved).ToArray();
+    var failedTransactions = Model.Transactions.Where(s => s.State == TransactionState.Failed).ToArray();
 }
 
 <div class="row">
@@ -327,9 +327,36 @@
                     <div class="well">
                         <strong>Transaction #@transaction.Id</strong>
                         <div class="space-15"></div>
-                        <span>Comments: @transaction.Comments</span><br/>
-                        <span>Process Started: @(transaction.ProcessDate?.ToString("g"))</span><br/>
-                        <span>Estimated Complete Date: @(transaction.EstimatedCompleteDate?.ToString("g"))</span><br/>
+                        <span>Comments: @transaction.StateMessage</span><br/>
+                        <span>Forte State: @transaction.ForteState</span><br/>
+                        <span>Total: $@transaction.Amount</span><br/>
+                        <span>Convenience Fee: $@transaction.ConvenienceFee</span><br/>
+                        <span>Commiter: @transaction.CommiterFullName (@transaction.CommiterEmail)</span><br/>
+                        <span>User: @transaction.UserFullName (@transaction.UserEmail)</span><br/>
+                        <span>Process Started: @(transaction.OpenDate?.ToString("g"))</span><br/>
+                        <div>Invoices
+                            <ul>
+                                @foreach (var invoice in transaction.Invoices)
+                                {
+                                    <li>@invoice.Title #@invoice.Id ($@invoice.Total)</li>
+                                    
+                                }
+                            </ul>
+                        </div><br/>
+                        <div class="space-15"></div>
+                        <div class="user-button">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="btn-group">
+                                        @if (User.IsInRole("PropertyAdmin") || User.IsInRole("Admin"))
+                                        {
+                                            <a href="@Url.Action("ForceRejectTransaction", new {id = transaction.Id})" class="btn btn-warning btn-xs"><i class="fa fa-remove fa-fw"></i>Force Reject</a>
+                                            <a href="@Url.Action("ForceCompleteTransaction", new {id = transaction.Id})" class="btn btn-success btn-xs"><i class="fa fa-check fa-fw"></i>Force Complete</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 }
             }
@@ -347,10 +374,24 @@
                     <div class="well">
                         <strong>Transaction #@transaction.Id</strong>
                         <div class="space-15"></div>
-                        <span class="bg-success">Status: Complete</span><br/>
-                        <span>Comments: @transaction.Comments</span><br/>
-                        <span>Process Started: @(transaction.ProcessDate?.ToString("g"))</span><br/>
-                        <span>Process Complete: @(transaction.CompleteDate?.ToString("g"))</span><br/>
+                        <span>Comments: @transaction.StateMessage</span><br />
+                        <span>Forte State: @transaction.ForteState</span><br />
+                        <span>$Total: @transaction.Amount</span><br />
+                        <span>$Convenience Fee: @transaction.ConvenienceFee</span><br />
+                        <span>Commiter: @transaction.CommiterFullName (@transaction.CommiterEmail)</span><br />
+                        <span>User: @transaction.UserFullName (@transaction.UserEmail)</span><br />
+                        <span>Process Started: @(transaction.OpenDate?.ToString("g"))</span><br />
+                        <span>Process Complete: @(transaction.CloseDate?.ToString("g"))</span><br/>
+                        <div>
+                            Invoices
+                            <ul>
+                                @foreach (var invoice in transaction.Invoices)
+                                {
+                                    <li>@invoice.Title #@invoice.Id ($@invoice.Total)</li>
+
+                                }
+                            </ul>
+                        </div><br />
                     </div>
                 }
             }
@@ -368,10 +409,24 @@
                     <div class="well">
                         <strong>Transaction #@transaction.Id</strong>
                         <div class="space-15"></div>
-                        <span class="bg-danger">Status: Failed</span><br/>
-                        <span>Comments: @transaction.Comments</span><br/>
-                        <span>Process Started: @(transaction.ProcessDate?.ToString("g"))</span><br/>
-                        <span>Process Complete: @(transaction.CompleteDate?.ToString("g"))</span><br/>
+                        <span>Comments: @transaction.StateMessage</span><br />
+                        <span>Forte State: @transaction.ForteState</span><br />
+                        <span>Total: $@transaction.Amount</span><br />
+                        <span>Convenience Fee: $@transaction.ConvenienceFee</span><br />
+                        <span>Commiter: @transaction.CommiterFullName (@transaction.CommiterEmail)</span><br />
+                        <span>User: @transaction.UserFullName (@transaction.UserEmail)</span><br />
+                        <span>Process Started: @(transaction.OpenDate?.ToString("g"))</span><br/>
+                        <span>Process Complete: @(transaction.CloseDate?.ToString("g"))</span><br/>
+                        <div>
+                            Invoices
+                            <ul>
+                                @foreach (var invoice in transaction.Invoices)
+                                {
+                                    <li>@invoice.Title #@invoice.Id ($@invoice.Total)</li>
+
+                                }
+                            </ul>
+                        </div><br />
                     </div>
                 }
             }

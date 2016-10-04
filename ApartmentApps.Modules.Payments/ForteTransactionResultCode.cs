@@ -94,5 +94,7 @@ public enum ForteTransactionStateCode
     Settled,
     Settling,
     Unfunded,
-    Voided
+    Voided,
+    SystemForceRejected,
+    SystemForceComplete,
 }

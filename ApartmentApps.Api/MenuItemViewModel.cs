@@ -27,6 +27,7 @@ namespace ApartmentApps.Api.Modules
             Index = index;
         }
 
+
         public MenuItemViewModel(string label, string icon, string action, string controller, object routeParams, decimal index = 0)
         {
             Label = label;
