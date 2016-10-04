@@ -191,6 +191,18 @@ namespace ApartmentApps.Api
             viewModel.AssignedToId = model.WorkerAssignedId;
             viewModel.AssignedTo = model.WorkerAssigned == null ? null : UserMapper.ToViewModel(model.WorkerAssigned);
             viewModel.LatestCheckin = model.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService);
+
+            if (viewModel.AssignedToId == null && viewModel.LatestCheckin != null)
+            {
+                viewModel.AssignedToId = viewModel.LatestCheckin.Worker.Id;
+                viewModel.AssignedTo = viewModel.LatestCheckin.Worker;
+
+            }
+            if (model.Unit?.Users != null)
+            {
+                viewModel.Tenants = model.Unit.Users.Where(p => p.Archived == false).ToArray().Select(UserMapper.ToViewModel).ToArray();
+            }
+
             viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(BlobStorageService));
             viewModel.Description = model.Description;
           

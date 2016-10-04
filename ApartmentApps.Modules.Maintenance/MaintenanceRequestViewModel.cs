@@ -56,6 +56,7 @@ namespace ApartmentApps.Api.ViewModels
         public string Description { get; set; }
 
         public ActionLinkModel AssignLink { get; set; }
+        public UserBindingModel[] Tenants { get; set; }
     }
 
 

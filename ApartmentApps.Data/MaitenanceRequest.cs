@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
+using ApartmentApps.Api.ViewModels;
 using Korzh.EasyQuery;
 
 namespace ApartmentApps.Data
@@ -78,5 +79,6 @@ namespace ApartmentApps.Data
 
         [NotMapped, EqEntityAttr(UseInConditions = false)]
         public TimeSpan? TimeToComplete => CompletionDate?.Subtract(SubmissionDate);
+
     }
 }

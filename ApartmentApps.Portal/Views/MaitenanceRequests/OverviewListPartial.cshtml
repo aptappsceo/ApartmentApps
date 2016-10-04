@@ -14,32 +14,73 @@
                 <i class="fa fa-angle-down"></i>
             </button>
             <ul class="dropdown-menu m-t-xs">
-                <li><a href="#">Config</a></li>
+                <li><a class="" href="@Url.Action("Details", "MaitenanceRequests", new {id = item.Id})"><i class="fa fa-info"></i> Details</a></li>
+                <li><a class="modal-link" href="@Url.Action("Entry", "MaitenanceRequests", new {id = item.Id})"><i class="fa fa-edit"></i> Edit</a></li>
+                <li><a class="modal-link" href="@Url.Action(item.AssignLink)"><i class="fa fa-edit"></i> Assign</a></li>
             </ul>
         </div>
         <div class="social-avatar">
-
             <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})" class="pull-left">
                 <img alt="image" class="img-circle" src="@item.SubmissionBy.ImageThumbnailUrl">
             </a>
 
             <div class="media-body">
+
                 <a href="#">
-                    <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})"><strong>@@@item.SubmissionBy.FirstName @item.SubmissionBy.LastName</strong></a> @item.Title <br>
+                    <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})"><strong>@@@item.SubmissionBy.FirstName @item.SubmissionBy.LastName</strong></a> Submitted a Work order involving <b>@item.Title</b> <br>
                 </a>
-                <small class="text-muted">@Html.Timeago(item.RequestDate, property?.TimeZone)</small>
+
             </div>
         </div>
         <div class="social-body">
-            <p>
-                @item.Comments
-            </p>
-            @*<img src="img/gallery/11.jpg" class="img-responsive">*@
-            <div class="btn-group">
-                    <a class="btn btn-white btn-xs" href="@Url.Action("Details", "MaitenanceRequests", new {id = item.Id})"><i class="fa fa-info"></i> Details</a>
-                    <a class="btn btn-white btn-xs modal-link" href="@Url.Action("Entry", "MaitenanceRequests", new {id = item.Id})"><i class="fa fa-edit"></i> Edit</a>
-                    @Html.ActionLink(item.AssignLink,new { @class = "btn btn-white btn-xs modal-link"})
+            <div class="row">
+                <div class="col-lg-5">
+                    <dl class="dl-horizontal">
+                        <dt>Status</dt>
+                        <dd><span class="badge badge-primary">@item.StatusId</span></dd>
+                        <dt>Created by:</dt>
+                        <dd><a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})"><strong>@@@item.SubmissionBy.FirstName @item.SubmissionBy.LastName</strong></a></dd>
+                        <dt>Location:</dt>
+                        <dd><i class="fa fa-map-marker"></i>  @item.BuildingName - @item.UnitName</dd>
+                        <dt>Assigned to:</dt>
+                        @if (item.AssignedTo == null)
+                        {
+                            <dd>Not Yet Assigned</dd>
+                        }
+                        else
+                        {
+                            <dd><a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.AssignedTo.Id})"><strong>@@@item.AssignedTo.FirstName @item.AssignedTo.LastName</strong></a></dd>
+                        }
+
+                        @*<dt>Version:</dt>
+                            <dd> 	v1.4.2 </dd>*@
+                    </dl>
                 </div>
+                <div class="col-lg-7" id="cluster_info">
+                    <dl class="dl-horizontal">
+
+                        <dt>Last Updated:</dt>
+                        <dd>
+                            @if (item.LatestCheckin != null)
+                            {
+                                @Html.Timeago(item.LatestCheckin.Date, property?.TimeZone)
+                            }
+                        </dd>
+                        <dt>Created:</dt>
+                        <dd>@Html.Timeago(item.RequestDate, property?.TimeZone)</dd>
+                        <dt>Tenants:</dt>
+                        <dd>
+                            @foreach (var tenant in item.Tenants)
+                            {
+                                <a href="@Url.Action("UserFeed", "Dashboard", new {id = @tenant.Id})"><strong>@@@tenant.FirstName @tenant.LastName</strong></a><br>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+
+
         </div>
         <div class="social-footer">
             @foreach (var checkin in item.Checkins)
@@ -53,8 +94,10 @@
 
                     <div class="media-body">
                         <a href="#">
-                            @checkin.Worker.FullName
+                            <span class="badge badge-info">@checkin.StatusId</span> @checkin.Worker.FullName
                         </a>
+
+
                         @checkin.Comments
                         <br>
                         @*<a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -*@
@@ -65,7 +108,7 @@
                                 @foreach (var photo in checkin.Photos)
                                 {
                                     <div class="col-md-4">
-                                        <img src="@photo.Url" style="width: 100%;"/>
+                                        <img src="@photo.Url" style="width: 100%;" />
                                     </div>
 
                                 }

@@ -150,6 +150,7 @@
     <Compile Include="..\ApartmentApps.Jobs\PropertyExecutionContext.cs">
       <Link>Base\PropertyExecutionContext.cs</Link>
     </Compile>
+    <Compile Include="DbQueryTest.cs" />
     <Compile Include="IncidentReportWebServiceTests.cs" />
     <Compile Include="MaitenanceRequestsControllerTests.cs" />
     <Compile Include="MessagingControllerTests.cs" />

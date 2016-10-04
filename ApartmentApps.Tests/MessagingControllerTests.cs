@@ -3,52 +3,14 @@ using System.Linq;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
-using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
 using ApartmentApps.Portal.Models;
-using Korzh.EasyQuery;
-using Korzh.EasyQuery.Db;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 
 namespace ApartmentApps.Tests
 {
-    [TestClass]
-    public class DbQueryTest : PropertyTest
-    {
-        [TestInitialize]
-        public override void Init()
-        {
-            base.Init();
-        }
-
-        [TestCleanup]
-        public override void DeInit()
-        {
-            base.DeInit();
-        }
-
-        [TestMethod]
-        public void Test()
-        {
-            DbQuery query = new DbQuery();
-            query.Model = new DbModel();
-            query.Model.LoadFromType(typeof(ApplicationUser));
-            var attr = query.Model.EntityRoot.FindAttribute(EntityAttrProp.ID, "ApplicationUser.Archived");
-            var condition = query.CreateSimpleCondition(attr, query.Model.Operators.FindByID("NotTrue"));
-            query.Root.Conditions.Add(condition);
-            var service = Context.Kernel.Get<UserService>();
-            int count;
-            var result = service.GetAll<UserBindingModel>(query, out count, null, false);
-            Console.WriteLine(query.GetConditionsText(QueryTextFormats.Default));
-            Console.WriteLine(count);
-            //SqlQueryBuilder builder = new SqlQueryBuilder(query);
-            //builder.BuildSQL();
-            //string sql = builder.Result.SQL;
-            //Console.WriteLine(sql);
-        }
-    }
     [TestClass]
     public class MessagingControllerTests : PropertyControllerTest<MessagingController>
     {

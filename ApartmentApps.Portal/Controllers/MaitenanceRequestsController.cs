@@ -132,9 +132,8 @@ namespace ApartmentApps.Portal.Controllers
 
         public IEnumerable<FormPropertySelectItem> AssignedToId_Items => _userRepository.ToArray()
                     .Where(p => p.Roles.Any(x => x.RoleId == "Maintenance"))
-                    .OrderByAlphaNumeric(p => p.LastName)
+                    .OrderBy(p => p.LastName)
                     .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName, AssignedToId == p.Id));
-
     }
 
 
