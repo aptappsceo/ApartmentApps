@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -14,6 +15,12 @@ namespace ApartmentApps.Portal.Controllers
 {
     public static class LinkHelpers
     {
+        public static IEnumerable<ActionLinkModel> GetActionLinksFor(object viewModel)
+        {
+            var list = new List<ActionLinkModel>();
+            ModuleHelper.EnabledModules.Signal<IFillActions>(_=> _.FillActions(list,viewModel));
+            return list.OrderBy(p => p.Index);
+        }
         public static MvcHtmlString ActionLink(this HtmlHelper helper, ActionLinkModel model, object htmlAttributes = null)
         {
             if (model.Allowed)

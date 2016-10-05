@@ -24,5 +24,7 @@ namespace ApartmentApps.Api.Modules
             foreach (var module in modules.OfType<TInterface>())
                 item(module);
         }
+
+
     }
 }

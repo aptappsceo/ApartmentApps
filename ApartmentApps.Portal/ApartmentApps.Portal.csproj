@@ -1485,7 +1485,7 @@
     <Content Include="Views\Messaging\OverviewListPartial.cshtml" />
     <Content Include="Views\Messaging\Overview.cshtml" />
     <Content Include="Views\CampaignTargets\List.cshtml" />
-    <Content Include="Views\Shared\Payments\PaymentListSummary.cshtml" />
+    <Content Include="Views\Shared\_ActionLinks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1657,7 +1657,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61984</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58738/</IISUrl>
+          <IISUrl>http://localhost:58739/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

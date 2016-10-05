@@ -78,5 +78,6 @@ namespace ApartmentApps.Data
 
         [NotMapped, EqEntityAttr(UseInConditions = false)]
         public TimeSpan? TimeToComplete => CompletionDate?.Subtract(SubmissionDate);
+
     }
 }

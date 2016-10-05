@@ -22,6 +22,7 @@ namespace ApartmentApps.Portal.Controllers
     public class CampaignTargetsController : AutoGridController<UserService, UserListModel>
     {
         private readonly MessagingService _messagingService;
+        private int _messageId; // UNIT TESTING ONLY
 
         public CampaignTargetsController(MessagingService messagingService, IKernel kernel, UserService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
         {
@@ -68,7 +69,7 @@ namespace ApartmentApps.Portal.Controllers
         public override ActionResult GridResult(GridList<UserListModel> grid)
         {
             ViewBag.MessageId = MessageId;
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 var formHelper = new DefaultFormProvider();
                 var gridModel = formHelper.CreateGridFor<UserListModel>();
@@ -81,8 +82,26 @@ namespace ApartmentApps.Portal.Controllers
 
         public int MessageId
         {
-            get { return (int)Session["MessageId"]; }
-            set { Session["MessageId"] = value; }
+            get
+            {
+                if (Session == null)
+                {
+                    return _messageId;
+                }
+                return (int)Session["MessageId"];
+            }
+            set
+            {
+                if (Session == null)
+                {
+                    _messageId = value;
+                }
+                else
+                {
+                    Session["MessageId"] = value;
+                }
+                
+            }
         }
         public ActionResult SelectTargets(int messageId)
         {
@@ -183,12 +202,24 @@ namespace ApartmentApps.Portal.Controllers
                 var query = new DbQuery();
                 if (!string.IsNullOrEmpty(queryXml))
                 {
-                    query.LoadFromString(queryXml);
+                    if (query.Model != null)
+                    {
+                        query.LoadFromString(queryXml);
+                    }
+                    else
+                    {
+                        query = null;
+                    }
+                    
+                }
+                else
+                {
+                    query = null;
                 }
                 var count = 0;
-                var items = _userService.GetAll<UserBindingModel>(query, out count, null, false, 1, Int32.MaxValue).Select(p=>p.Id).Cast<object>().ToArray();
+                var items = _userService.GetAll<UserBindingModel>(query, out count, null, false, 1, Int32.MaxValue).ToArray().Select(p=>p.Id).Cast<object>().ToArray();
 
-                _module.SendMessage(items, q, HttpContext.Request.Url.Host + Url.Action("EmailMessageRead", "Messaging"));
+                _module.SendMessage(items, q, string.Empty);
                 Service.MarkSent(messageId);
                 return RedirectToAction("Details",new {id = messageId});
 

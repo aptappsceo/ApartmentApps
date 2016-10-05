@@ -13,6 +13,7 @@ namespace ApartmentApps.Forms
     public class ActionLinkModel
     {
         public string Label { get; set; }
+        public bool IsDialog { get; set; }
 
         public ActionLinkModel(string label, string action, string controller, object parameters)
         {
@@ -39,10 +40,16 @@ namespace ApartmentApps.Forms
         {
         }
 
+        public string Group { get; set; }
+        public string GroupName { get; set; }
+
+
         public string Action { get; set; }
         public string Controller { get; set; }
         public object Parameters { get; set; }
         public bool Allowed { get; set; }
+        public int Index { get; set; }
+        public string Icon { get; set; }
     }
 
     public class GridList<T> : IPagedList<T>, IPaging, IEnumerable<T>, IEnumerable

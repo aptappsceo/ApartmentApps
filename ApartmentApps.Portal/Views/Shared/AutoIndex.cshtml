@@ -1,9 +1,12 @@
 ﻿@using System.ComponentModel
+@using ApartmentApps.Api
 @using ApartmentApps.Portal.Controllers
 @using Korzh.EasyQuery.Mvc
 @model AutoGridModel
 @{
     ViewBag.Title = Model.Title;
+    var queries = ((IEnumerable<ServiceQuery>)ViewBag.Queries).ToArray();
+    var initialQuery = queries.Any() ? queries.First().QueryId : null;
 }
 
 <script type="text/javascript">
@@ -13,7 +16,7 @@
 
     //// Set a callback to run when the Google Visualization API is loaded.
     //google.setOnLoadCallback(GoogleVisualizationLoaded);
-
+    window.initialQuery = @Html.Raw(initialQuery == null ? "null" : "'" + initialQuery + "'" );
     function GoogleVisualizationLoaded() {
         //alert("Visualization loaded!!!";)
     }

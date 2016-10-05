@@ -1,4 +1,5 @@
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -35,6 +36,11 @@ namespace ApartmentApps.Portal.Controllers
         {
             var vm = new TViewModel();
             ToViewModel(model, vm);
+            var bvm = vm as BaseViewModel;
+
+            if (bvm != null)
+                ModuleHelper.EnabledModules.Signal<IFillActions>(_=>_.FillActions(bvm.ActionLinks,bvm));
+
             return vm;
         }
     }

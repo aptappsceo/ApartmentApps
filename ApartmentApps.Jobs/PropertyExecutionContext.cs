@@ -10,6 +10,7 @@ using Ninject;
 
 namespace ApartmentApps.Jobs
 {
+
     public class PropertyExecutionContext : IDisposable
     {
         public ApplicationDbContext Context { get; }
@@ -30,20 +31,28 @@ namespace ApartmentApps.Jobs
 
         public void SetUserWithProperty(int propertyId)
         {
+            var user = Context.Users.First(p => p.UserName == "micahosborne@gmail.com");
+            OldPropertyId = user.PropertyId;
+            user.PropertyId = propertyId;
+            Context.SaveChanges();
             UserContext = new FakeUserContext(Context)
             {
                 PropertyId = propertyId,
-                UserId = Context.Users.First(p => p.UserName == "micahosborne@gmail.com").Id,
+                UserId = user.Id,
                 Email = "micahosborne@gmail.com",
                 Name = "Jobs"
             };
         }
 
+        public int? OldPropertyId { get; set; }
+
         public FakeUserContext UserContext { get; set; }
 
         public void Dispose()
         {
-            
+            var user = UserContext.CurrentUser;
+            user.PropertyId = OldPropertyId;
+            Context.SaveChanges();
         }
     }
 }

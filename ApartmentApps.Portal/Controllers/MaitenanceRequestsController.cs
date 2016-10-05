@@ -132,9 +132,8 @@ namespace ApartmentApps.Portal.Controllers
 
         public IEnumerable<FormPropertySelectItem> AssignedToId_Items => _userRepository.ToArray()
                     .Where(p => p.Roles.Any(x => x.RoleId == "Maintenance"))
-                    .OrderByAlphaNumeric(p => p.LastName)
+                    .OrderBy(p => p.LastName)
                     .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName, AssignedToId == p.Id));
-
     }
 
 
@@ -202,7 +201,8 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (ModelState.IsValid && model.Id != null)
             {
-                MaintenanceService.AssignRequest(Convert.ToInt32(model.Id), model.AssignedToId);                return new EmptyResult();
+                MaintenanceService.AssignRequest(Convert.ToInt32(model.Id), model.AssignedToId);
+                return RedirectToAction("Index");
             }
             return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
         }

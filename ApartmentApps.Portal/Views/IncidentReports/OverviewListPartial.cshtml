@@ -8,15 +8,7 @@
 @foreach (var item in Model)
 {
     <div class="social-feed-box">
-
-        <div class="pull-right social-action dropdown">
-            <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu m-t-xs">
-                <li><a href="#">Config</a></li>
-            </ul>
-        </div>
+        @Html.Partial("_ActionLinks", item)
         <div class="social-avatar">
 
             <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.SubmissionBy.Id})" class="pull-left">
@@ -36,8 +28,7 @@
             </p>
             @*<img src="img/gallery/11.jpg" class="img-responsive">*@
             <div class="btn-group">
-                    <a class="btn btn-white btn-xs" href="@Url.Action("Details", "IncidentReports", new {id = item.Id})"><i class="fa fa-info"></i> Details</a>
-                    <a class="btn btn-white btn-xs modal-link" href="@Url.Action("Entry", "IncidentReports", new {id = item.Id})"><i class="fa fa-edit"></i> Edit</a>
+                
                   
                 </div>
         </div>
