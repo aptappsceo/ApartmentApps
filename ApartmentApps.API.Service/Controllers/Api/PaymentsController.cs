@@ -83,7 +83,7 @@ namespace ApartmentApps.API.Service.Controllers
             var items = _invoices.GetAvailableBy(now,UserContext.UserId).ToList();
             var lines = items.Concat(new [] {new Invoice()
             {
-                Amount = PaymentsService.GetConvenienceFeeForPaymentOption(paymentOptionId),
+                Amount = PaymentsService.GetConvenienceFeeForPaymentOption(paymentOptionId,UserContext.UserId),
                 Title = "Convenience Fee",
             } }).ToLines();
 
