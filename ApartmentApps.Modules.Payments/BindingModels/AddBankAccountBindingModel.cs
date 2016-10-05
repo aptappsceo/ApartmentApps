@@ -25,6 +25,9 @@ namespace ApartmentApps.Api.Modules
         [DisplayName("Friendly Name")]
         [Description("A friendly name that you can use for this account.")]
         public string FriendlyName { get; set; }
+
+        [DataType("Hidden")]
+        public string UserId { get; set; }
     }
 
     public class CreateUserLeaseInfoBindingModel

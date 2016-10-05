@@ -20,6 +20,7 @@ namespace ApartmentApps.Api.ViewModels
     }
     public class MaintenanceRequestViewModel : BaseViewModel
     {
+        private UserBindingModel[] _tenants;
         public DateTime? ScheduleDate { get; set; }
         public DateTime SubmissionDate { get; set; }
         public string Title { get; set; }
@@ -56,7 +57,12 @@ namespace ApartmentApps.Api.ViewModels
         public string Description { get; set; }
 
         public ActionLinkModel AssignLink { get; set; }
-        public UserBindingModel[] Tenants { get; set; }
+
+        public UserBindingModel[] Tenants
+        {
+            get { return _tenants ?? (_tenants = new UserBindingModel[0]); }
+            set { _tenants = value; }
+        }
     }
 
 

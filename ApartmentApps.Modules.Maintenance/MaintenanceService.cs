@@ -200,7 +200,8 @@ namespace ApartmentApps.Api
             }
             if (model.Unit?.Users != null)
             {
-                viewModel.Tenants = model.Unit.Users.Where(p => p.Archived == false).ToArray().Select(UserMapper.ToViewModel).ToArray();
+                viewModel.Tenants =
+                    model.Unit.Users.Where(p => p.Archived == false).ToArray().Select(UserMapper.ToViewModel).ToArray();
             }
 
             viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(BlobStorageService));

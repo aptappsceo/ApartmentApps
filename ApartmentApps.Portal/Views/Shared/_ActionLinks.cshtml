@@ -1,16 +1,19 @@
 ﻿@model BaseViewModel
-<div class="pull-right social-action dropdown">
-    <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-        <i class="fa fa-angle-down"></i>
+
+@{
+    var ddId = $"{Model.Id}-dropdown";
+
+}
+<div class="social-action dropdown pull-right">
+    <button data-toggle="dropdown" class="dropdown-toggle btn btn-white"  type="button" id="@ddId" aria-haspopup="true" aria-expanded="true">
+        <i class="fa fa-fw fa-angle-down"></i>
     </button>
-    <ul class="dropdown-menu m-t-xs">
+    <ul class="dropdown-menu m-t-xs " aria-labelledby="@ddId">
         @foreach (var x in Model.ActionLinks)
         {
             <li>
                 <a class="@(x.IsDialog ? "modal-link" : "")" href="@Url.Action(x)"><i class="fa @x.Icon"></i> @x.Label</a>
             </li>
-
         }
     </ul>
 </div>
-

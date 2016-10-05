@@ -56,10 +56,15 @@
         {
             <div class="col-md-4">
                 <div class="jumbotron">
-                    <h2>Create Payment Request</h2>
                     <p>Create new payment request and corresponding invoice for the user.</p>
                     <div class="btn-group pull-right">
                         <a href="@Url.Action("CreateUserLeaseInfoFor", new {id = Model.User.Id})" class="btn btn-warning"><i class="fa fa-plus-square fa-fw"></i>Add Payment Request</a>
+                    </div>
+                </div>
+                <div class="jumbotron">
+                    <p>Stay in sync with forte and update open transactions</p>
+                    <div class="btn-group pull-right">
+                        <a href="@Url.Action("UpdateOpenForteTransactions", new {id = Model.User.Id})" class="btn btn-warning"><i class="fa fa-refresh fa-fw"></i>Synchronize</a>
                     </div>
                 </div>
             </div>

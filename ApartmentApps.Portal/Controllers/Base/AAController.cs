@@ -252,5 +252,14 @@ namespace ApartmentApps.Portal.Controllers
                 Title = title
             });
         }
+
+        public void AddErrorMessage(string message)
+        {
+            TempData["GlobalError"] = message;
+        }
+        public void AddSuccessMessage(string message)
+        {
+            TempData["GlobalSuccess"] = message;
+        }
     }
 }
