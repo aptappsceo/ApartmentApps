@@ -16,18 +16,20 @@
                 <div class="ibox-title">
                     <h5></h5>
                     <div class="ibox-tools">
-                        @Html.ActionLink("Add Credit Card", "AddCreditCard", null, new { @class = "btn btn-primary btn-xs" })
-                        @Html.ActionLink("Add Bank Account", "AddBankAccount", null, new { @class = "btn btn-primary btn-xs" })
-                    </div>
+                        @Html.ActionLink("Add Credit Card", "AddCreditCardFor", new {id = ViewBag.UserId}, new { @class = "btn btn-primary btn-xs" })
+                        @Html.ActionLink("Add Bank Account", "AddBankAccountFor", new {id = ViewBag.UserId}, new { @class = "btn btn-primary btn-xs" })
+                    </div>  
                 </div>
                 <div class="ibox-content">
                     @if (Model.Any())
                     {
                         foreach (var item in Model)
                         {
-                            @Html.ActionLink(item.FriendlyName, "PaymentSummary", new { paymentOptionId = item.Id }, new { @class = "btn btn-primary btn-xs" })
-                        }
 
+                            <div>
+                                @Html.ActionLink($"Checkout with {item.FriendlyName}", "PaymentSummaryFor", new { userId = ViewBag.UserId, paymentOptionId = item.Id }, new { @class = "btn btn-primary" })
+                            </div>
+                        }
                     }
                     else
                     {

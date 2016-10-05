@@ -38,8 +38,8 @@
                 <h2>Payment Options</h2>
                 <p>Add payment options for the user, such as Credit Card or Bank Account. Payment options are used to issue payments from the portal and mobile application.</p>
                 <div class="btn-group pull-right">
-                    <a href="#" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>Add Bank Account</a>
-                    <a href="#" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>Add Credit Card</a>
+                    <a href="@Url.Action("AddBankAccountFor", new {userId = Model.User.Id})" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>Add Bank Account</a>
+                    <a href="@Url.Action("AddCreditCardFor", new {userId = Model.User.Id})" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i>Add Credit Card</a>
                 </div>
             </div>
         </div>
@@ -376,8 +376,8 @@
                         <div class="space-15"></div>
                         <span>Comments: @transaction.StateMessage</span><br />
                         <span>Forte State: @transaction.ForteState</span><br />
-                        <span>$Total: @transaction.Amount</span><br />
-                        <span>$Convenience Fee: @transaction.ConvenienceFee</span><br />
+                        <span>Total: $@transaction.Amount</span><br />
+                        <span>Convenience Fee: $@transaction.ConvenienceFee</span><br />
                         <span>Commiter: @transaction.CommiterFullName (@transaction.CommiterEmail)</span><br />
                         <span>User: @transaction.UserFullName (@transaction.UserEmail)</span><br />
                         <span>Process Started: @(transaction.OpenDate?.ToString("g"))</span><br />

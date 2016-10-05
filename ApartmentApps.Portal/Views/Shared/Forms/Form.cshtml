@@ -73,9 +73,13 @@
                 {
                     @Html.CheckBox(property.Name, (bool) property.GetValue())
                 }
+                else if (property.DataType.DataType == DataType.Currency && property.SystemType == typeof(decimal))
+                {
+                    @Html.EJ().CurrencyTextbox(property.Name).DecimalPlaces(2).IncrementStep(0.5).MinValue(0).Name(property.Name)
+                }
                 else
                 {
-                    if (property.SystemType == typeof (string))
+                    if (property.SystemType == typeof(string))
                     {
                         if (property.DataType.DataType == DataType.MultilineText)
                         {

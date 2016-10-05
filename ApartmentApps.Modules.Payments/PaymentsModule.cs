@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Data.Utils;
@@ -84,33 +86,51 @@ namespace ApartmentApps.Api.Modules
         public string Key { get; set; } = "18RcFs5F";
 
         //Includes fee
-        public async Task<PaymentSummaryBindingModel> GetPaymentSummary(string userId)
+        public async Task<PaymentListBindingModel> GetPaymentSummaryFor(string userId, string paymentOptionId)
         {
             var user = Context.Users.Find(userId);
+            if(user == null) throw new KeyNotFoundException("User Not Found");
 
+            var paymentOption = Context.PaymentOptions.Find(paymentOptionId);
+            if (paymentOption == null) throw new KeyNotFoundException("Payment Option Not Found");
+            var dateTime = user.Property.TimeZone.Now();
 
-            return new PaymentSummaryBindingModel()
+            var invoices = _invoiceRepository.GetAvailableBy(dateTime,userId).ToArray();
+
+            decimal convFee;
+
+            switch (paymentOption.Type)
             {
-                Amount = user.Unit.Building.RentAmount,
+                case PaymentOptionType.CreditCard:
+                    convFee = Config.CreditCardConvenienceFee;
+                    break;
+                case PaymentOptionType.Checking:
+                    convFee = Config.BankAccountCheckingConvenienceFee;
+                    break;
+                case PaymentOptionType.Savings:
+                    convFee = Config.BankAccountSavingsConvenienceFee;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return new PaymentListBindingModel()
+            {
+                Items = invoices.Concat(new [] {new Invoice() {Amount = convFee, Title = "Convenience Fee"} }).ToLines()
             };
         }
 
-        public async Task<PaymentSummaryBindingModel> GetRentSummary(string userId)
+        public async Task<PaymentListBindingModel> GetRentSummaryFor(string userId)
         {
             var user = Context.Users.Find(userId);
+            if (user == null) throw new KeyNotFoundException("User Not Found");
             var dateTime = user.Property.TimeZone.Now();
 
-            var invoices = _invoiceRepository.Where(
-                s => !s.IsArchived && s.UserLeaseInfo.UserId == userId && s.AvailableDate < dateTime).ToArray();
+            var invoices = _invoiceRepository.GetAvailableBy(dateTime, userId).ToArray();
 
-            return new PaymentSummaryBindingModel()
+            return new PaymentListBindingModel()
             {
-                Amount = user.Unit.Building.RentAmount,
-                SummaryOptions = invoices.Select(s => new PaymentSummaryBindingModel()
-                {
-                    Title = s.Title,
-                    Amount = s.Amount,
-                }).ToList()
+                Items = invoices.ToLines()
             };
         }
 
@@ -150,10 +170,7 @@ namespace ApartmentApps.Api.Modules
                     var paymentMethodId = result.Body.createPaymentMethodResult;
                     var userPaymentOption = new UserPaymentOption()
                     {
-                        UserId = UserContext.UserId,
-                        Type = PaymentOptionType.CreditCard,
-                        FriendlyName = addCreditCard.FriendlyName,
-                        TokenId = paymentMethodId.ToString()
+                        UserId = UserContext.UserId, Type = PaymentOptionType.CreditCard, FriendlyName = addCreditCard.FriendlyName, TokenId = paymentMethodId.ToString()
                     };
                     Context.PaymentOptions.Add(userPaymentOption);
                     Context.SaveChanges();
@@ -188,10 +205,7 @@ namespace ApartmentApps.Api.Modules
                     var paymentMethodId = result.Body.createPaymentMethodResult;
                     var userPaymentOption = new UserPaymentOption()
                     {
-                        UserId = UserContext.UserId,
-                        Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking,
-                        FriendlyName = addCreditCard.FriendlyName,
-                        TokenId = paymentMethodId.ToString()
+                        UserId = UserContext.UserId, Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking, FriendlyName = addCreditCard.FriendlyName, TokenId = paymentMethodId.ToString()
                     };
                     Context.PaymentOptions.Add(userPaymentOption);
                     Context.SaveChanges();
@@ -206,24 +220,18 @@ namespace ApartmentApps.Api.Modules
 
         public IEnumerable<PaymentOptionBindingModel> GetPaymentOptions()
         {
-            return Context.PaymentOptions.Where(p => p.UserId == UserContext.UserId).Select(x =>
-                new PaymentOptionBindingModel()
-                {
-                    FriendlyName = x.FriendlyName,
-                    Type = x.Type,
-                    Id = x.Id,
-                });
+            return Context.PaymentOptions.Where(p => p.UserId == UserContext.UserId).Select(x => new PaymentOptionBindingModel()
+            {
+                FriendlyName = x.FriendlyName, Type = x.Type, Id = x.Id,
+            });
         }
 
         public IEnumerable<PaymentOptionBindingModel> GetPaymentOptionsFor(string userId)
         {
-            return Context.PaymentOptions.Where(p => p.UserId == userId).Select(x =>
-                new PaymentOptionBindingModel()
-                {
-                    FriendlyName = x.FriendlyName,
-                    Type = x.Type,
-                    Id = x.Id,
-                });
+            return Context.PaymentOptions.Where(p => p.UserId == userId).Select(x => new PaymentOptionBindingModel()
+            {
+                FriendlyName = x.FriendlyName, Type = x.Type, Id = x.Id,
+            });
         }
 
         public IEnumerable<UserInvoiceHistoryBindingModel> GetPaymentHistory()
@@ -235,8 +243,7 @@ namespace ApartmentApps.Api.Modules
 
         public decimal GetConvenienceFeeForPaymentOption(int paymentOptionId)
         {
-            var paymentOption =
-                Context.PaymentOptions.FirstOrDefault(p => p.UserId == UserContext.UserId && p.Id == paymentOptionId);
+            var paymentOption = Context.PaymentOptions.FirstOrDefault(p => p.UserId == UserContext.UserId && p.Id == paymentOptionId);
 
             if (paymentOption == null)
             {
@@ -258,27 +265,25 @@ namespace ApartmentApps.Api.Modules
 
         public async Task<bool> ForceRejectTransaction(string transactionId)
         {
-            var transaction = _transactionHistory.Find(transactionId);
+            var transaction = _transactionHistory.Where(s => s.Id == transactionId).Include(s => s.Invoices).FirstOrDefault();
             return await ForceRejectTransaction(transaction);
         }
 
         public async Task<bool> ForceCompleteTransaction(string transactionId)
         {
-            var transaction = _transactionHistory.Find(transactionId);
+            var transaction = _transactionHistory.Where(s => s.Id == transactionId).Include(s => s.Invoices).FirstOrDefault();
             return await ForceCompleteTransaction(transaction);
         }
 
         public async Task<bool> ForceRejectTransaction(TransactionHistoryItem transaction)
         {
-            RejectForteTransaction(transaction, "Force Reject by " + UserContext.Email,
-                ForteTransactionStateCode.SystemForceRejected);
+            RejectForteTransaction(transaction, "Force Reject by " + UserContext.Email, ForteTransactionStateCode.SystemForceRejected);
             return false;
         }
 
         public async Task<bool> ForceCompleteTransaction(TransactionHistoryItem transaction)
         {
-            CompleteForteTransaction(transaction, "Force Complete by " + UserContext.Email,
-                ForteTransactionStateCode.SystemForceComplete);
+            CompleteForteTransaction(transaction, "Force Complete by " + UserContext.Email, ForteTransactionStateCode.SystemForceComplete);
             return false;
         }
 
@@ -289,8 +294,7 @@ namespace ApartmentApps.Api.Modules
 
             var paymentOptionId = Convert.ToInt32(makePaymentBindingModel.PaymentOptionId);
 
-            var paymentOption =
-                Context.PaymentOptions.FirstOrDefault(p => p.UserId == UserContext.UserId && p.Id == paymentOptionId);
+            var paymentOption = Context.PaymentOptions.FirstOrDefault(p => p.UserId == UserContext.UserId && p.Id == paymentOptionId);
             if (paymentOption == null)
             {
                 return new MakePaymentResult() {ErrorMessage = "Payment Option Not Found."};
@@ -299,11 +303,7 @@ namespace ApartmentApps.Api.Modules
             decimal convFee = GetConvenienceFeeForPaymentOption(paymentOptionId);
 
             //TODO: change later to get UserId from parameter
-            var invoices =
-                _invoiceRepository.Where(
-                    i =>
-                        !i.IsArchived && i.AvailableDate < DateTime.Now && i.State == InvoiceState.NotPaid &&
-                        i.UserLeaseInfo.UserId == UserContext.UserId).ToArray();
+            var invoices = _invoiceRepository.Where(i => !i.IsArchived && i.AvailableDate < DateTime.Now && i.State == InvoiceState.NotPaid && i.UserLeaseInfo.UserId == UserContext.UserId).ToArray();
             var total = invoices.Sum(s => s.Amount) + convFee;
 
             PaymentGatewaySoapClient transactionClient = null;
@@ -321,12 +321,8 @@ namespace ApartmentApps.Api.Modules
 
             var response = transactionClient.ExecuteSocketQuery(new ExecuteSocketQueryParams()
             {
-                PgMerchantId = MerchantId.ToString(),
-                PgClientId = clientId.ToString(),
-                PgPaymentMethodId = paymentOption.TokenId,
-                PgPassword = MerchantPassword, //"LEpLqvx7Y5L200"
-                PgTotalAmount = pgTotalAmount,
-                PgTransactionType = "10", //sale
+                PgMerchantId = MerchantId.ToString(), PgClientId = clientId.ToString(), PgPaymentMethodId = paymentOption.TokenId, PgPassword = MerchantPassword, //"LEpLqvx7Y5L200"
+                PgTotalAmount = pgTotalAmount, PgTransactionType = "10", //sale
             });
 
 
@@ -344,8 +340,7 @@ namespace ApartmentApps.Api.Modules
                 };
             }
 
-            _leaseService.CreateTransaction(typedResponse.TraceNumber, UserContext.UserId, UserContext.UserId, total,
-                convFee, invoices, "Transaction Opened.", DateTime.Now);
+            _leaseService.CreateTransaction(typedResponse.TraceNumber, UserContext.UserId, UserContext.UserId, total, convFee, invoices, "Transaction Opened.", DateTime.Now);
 
             return new MakePaymentResult()
             {
@@ -365,10 +360,7 @@ namespace ApartmentApps.Api.Modules
                 {
                     var result = await client.createClientAsync(auth, new ClientRecord()
                     {
-                        MerchantID = MerchantId,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Status = ClientStatus.Active
+                        MerchantID = MerchantId, FirstName = user.FirstName, LastName = user.LastName, Status = ClientStatus.Active
                     });
                     UserContext.CurrentUser.ForteClientId = clientId = result.Body.createClientResult;
                     Context.SaveChanges();
@@ -385,8 +377,7 @@ namespace ApartmentApps.Api.Modules
         public void UpdateOpenForteTransactions()
         {
             // get payments module
-            var openedTransactions =
-                _transactionHistory.Where(s => s.State == TransactionState.Open).Include(s => s.Invoices).ToArray();
+            var openedTransactions = _transactionHistory.Where(s => s.State == TransactionState.Open).Include(s => s.Invoices).ToArray();
             var cl = new TransactionServiceClient("BasicHttpBinding_ITransactionService");
             var auth = Authenticate.GetTransactionAuthTicket(ApiLoginId, Key);
             foreach (var tr in openedTransactions)
@@ -402,13 +393,13 @@ namespace ApartmentApps.Api.Modules
             switch (forteState)
             {
                 case ForteTransactionStateCode.Complete:
-                    // eCheck verification was performed and the results were positive (POS) or unknown (UNK).
+                // eCheck verification was performed and the results were positive (POS) or unknown (UNK).
                 case ForteTransactionStateCode.Authorized:
-                    // The customer's payment was authorized. To complete the sale, the item must be captured from the transaction's detail page.
+                // The customer's payment was authorized. To complete the sale, the item must be captured from the transaction's detail page.
                 case ForteTransactionStateCode.Review:
-                    // Transaction was unable to be settled due to a merchant configuration issue. Please contact Customer Service to resolve (1-469-675-9920 x1).
+                // Transaction was unable to be settled due to a merchant configuration issue. Please contact Customer Service to resolve (1-469-675-9920 x1).
                 case ForteTransactionStateCode.Ready:
-                    // Transaction was received and is awaiting origination (echeck) or settlement (credit card).
+                // Transaction was received and is awaiting origination (echeck) or settlement (credit card).
                 case ForteTransactionStateCode.Settling:
                     // eCheck item has been originated and Forte is awaiting the settlement results.
                     UpdateForteTransaction(transaction, forteTransaction.Response.ResponseDescription, forteState);
@@ -419,13 +410,13 @@ namespace ApartmentApps.Api.Modules
                     CompleteForteTransaction(transaction, forteTransaction.Response.ResponseDescription, forteState);
                     break;
                 case ForteTransactionStateCode.Declined:
-                    // Transaction was declined for reasons detailed in Response Code and Response Description.
+                // Transaction was declined for reasons detailed in Response Code and Response Description.
                 case ForteTransactionStateCode.Failed:
-                    // 	eCheck verification was performed and the results were negative (NEG) or the transaction failed for reasons detailed in the Response Code and Response Description.
+                // 	eCheck verification was performed and the results were negative (NEG) or the transaction failed for reasons detailed in the Response Code and Response Description.
                 case ForteTransactionStateCode.Rejected:
-                    // eCheck item has been rejected or returned by the client's financial institution. Merchant will not be funded for the item
+                // eCheck item has been rejected or returned by the client's financial institution. Merchant will not be funded for the item
                 case ForteTransactionStateCode.Unfunded:
-                    // Previously funded eCheck itme has been returned and funding was reversed.
+                // Previously funded eCheck itme has been returned and funding was reversed.
                 case ForteTransactionStateCode.Voided:
                     // 	Transaction was voided and item will not be originated or settled.
                     RejectForteTransaction(transaction, forteTransaction.Response.ResponseDescription, forteState);
@@ -437,15 +428,13 @@ namespace ApartmentApps.Api.Modules
         }
 
 
-        public void UpdateForteTransaction(TransactionHistoryItem target, string message,
-            ForteTransactionStateCode state)
+        public void UpdateForteTransaction(TransactionHistoryItem target, string message, ForteTransactionStateCode state)
         {
             target.StateMessage = message;
             target.ForteState = state;
         }
 
-        public void CompleteForteTransaction(TransactionHistoryItem target, string message,
-            ForteTransactionStateCode state)
+        public void CompleteForteTransaction(TransactionHistoryItem target, string message, ForteTransactionStateCode state)
         {
             target.StateMessage = message;
             target.ForteState = state;
@@ -453,8 +442,7 @@ namespace ApartmentApps.Api.Modules
         }
 
 
-        public void RejectForteTransaction(TransactionHistoryItem target, string message,
-            ForteTransactionStateCode state)
+        public void RejectForteTransaction(TransactionHistoryItem target, string message, ForteTransactionStateCode state)
         {
             target.StateMessage = message;
             target.ForteState = state;
@@ -534,5 +522,31 @@ public class ForteMakePaymentResponse
         }
 
         data.TryGetKey("pg_trace_number", out _traceNumber);
+    }
+}
+
+public static class PaymentsListExtensions
+{
+    public static List<PaymentLineBindingModel> ToLines(this IEnumerable<Invoice> invoices)
+    {
+        var list = new List<PaymentLineBindingModel>();
+        decimal total = 0;
+
+        foreach (var inv in invoices)
+        {
+            var line = new PaymentLineBindingModel()
+            {
+                Format = PaymentSummaryFormat.Default, Price = $"{inv.Amount:$#,##0.00;($#,##0.00);Zero}", Title = inv.Title
+            };
+            total += inv.Amount;
+            list.Add(line);
+        }
+
+        list.Add(new PaymentLineBindingModel()
+        {
+            Format = PaymentSummaryFormat.Total, Price = $"{total:$#,##0.00;($#,##0.00);Zero}", Title = "Total"
+        });
+
+        return list;
     }
 }

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Forms;
 using Korzh.EasyQuery.Services;
@@ -102,6 +103,14 @@ namespace ApartmentApps.Portal.Controllers
         }
     }
 
+
+    public static class PaymentsHelper
+    {
+        public static HtmlString RenderPaymentListSummary(this HtmlHelper helper, PaymentListBindingModel model)
+        {
+            return helper.Partial("~/Views/Shared/Payments/PaymentListSummary.cshtml", model);
+        }
+    }
 
     public class FeedItemsListModel
     {

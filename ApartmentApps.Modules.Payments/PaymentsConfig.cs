@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using ApartmentApps.Data;
 
 namespace ApartmentApps.Api.Modules
@@ -20,12 +21,15 @@ namespace ApartmentApps.Api.Modules
         public string MerchantPassword { get; set; }
 
         [DisplayName("Credit Card Convenience Fee")]
+        [DataType(DataType.Currency)]
         public decimal CreditCardConvenienceFee { get; set; }
 
         [DisplayName("Bank Account Savings Convenience Fee")]
+        [DataType(DataType.Currency)]
         public decimal BankAccountSavingsConvenienceFee { get; set; }
 
         [DisplayName("Bank Account Checking Convenience Fee")]
+        [DataType(DataType.Currency)]
         public decimal BankAccountCheckingConvenienceFee { get; set; }
 
 
