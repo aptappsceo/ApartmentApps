@@ -32,7 +32,7 @@ namespace ResidentAppCross.iOS
             {
                 if (_mapSection == null)
                 {
-                   
+
                     _mapSection = Formals.Create<MapSection>();
                     _mapSection.MapView.Delegate = new PropertyMapViewDelegate();
                     _mapSection.MapView.MapType = MKMapType.SatelliteFlyover;
@@ -67,7 +67,7 @@ namespace ResidentAppCross.iOS
             ViewModel.UpdateLocations.Execute(null);
 
         }
-        
+
         public HeaderSection HeaderSection
         {
             get
@@ -80,7 +80,7 @@ namespace ResidentAppCross.iOS
                     _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.LocationOk, SharedResources.Size.L);
                     _headerSection.LogoImage.TintColor = AppTheme.SecondaryBackgoundColor;
                 }
-                
+
                 return _headerSection;
             }
         }
@@ -119,9 +119,9 @@ namespace ResidentAppCross.iOS
 
         public override MKAnnotationView GetViewForAnnotation(MKMapView mapView, IMKAnnotation annotation)
         {
-         
 
-        
+
+
             if (annotation is MKUserLocation)
                 return base.GetViewForAnnotation(mapView, annotation);
             var checkinAnnotation = annotation as CheckinBindingModelAnnotation;
@@ -144,13 +144,13 @@ namespace ResidentAppCross.iOS
                 {
                     annotationView.Image = unCompleteIcon;
                 }
-               
+
                 annotationView.CanShowCallout = true;
                 return annotationView;
             }
 
             return null;
-            //var result =  
+            //var result =
             //result.Image = UIImage.FromBundle("MaintenaceIcon");
             //return result;
         }
@@ -239,7 +239,7 @@ namespace ResidentAppCross.iOS
             get
             {
                 return _monthSection ?? (_monthSection = Formals.Create<TextFieldSection>()
-                    .WithPlaceholder("Expiration Month...")
+                    .WithPlaceholder("Expiration Month (ex. 02)...")
                     .WithNextResponder(YearSection));
             }
         }
@@ -249,7 +249,7 @@ namespace ResidentAppCross.iOS
             get
             {
                 return _yearSection ?? (_yearSection = Formals.Create<TextFieldSection>()
-                    .WithPlaceholder("Expiration Year...")
+                    .WithPlaceholder("Expiration Year (ex. 2012)...")
                     .WithNextResponder(AccountHolderSection));
             }
         }
@@ -535,7 +535,7 @@ namespace ResidentAppCross.iOS
                         {
                             ViewModel.SelectedOption = item;
                             ViewModel.PayWithSelectedPaymentOption.Execute(null);
-                        }, 
+                        },
                         AccessoryType = item => UITableViewCellAccessory.None, //What is displayed on the right edge
                         CellSelector = () => new UITableViewCell(UITableViewCellStyle.Default,"PaymentOptions_CellView"), //Define how to create cell, if reusables not found
                         CellIdentifier = "PaymentOptions_CellView"
@@ -587,7 +587,7 @@ namespace ResidentAppCross.iOS
             set.Bind(AddBankAccountSection.MainButton).To(vm => vm.AddBankAccountCommand);
             set.Apply();
 
-            
+
 
         }
 
