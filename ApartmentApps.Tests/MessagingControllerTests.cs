@@ -6,11 +6,44 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
 using ApartmentApps.Portal.Models;
+using Entrata.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 
 namespace ApartmentApps.Tests
 {
+
+    [TestClass]
+    public class EntrataTests
+    {
+        [TestMethod]
+        public void TestCustomers()
+        {
+            var entrataClient = new EntrataClient()
+            {
+                Username = "apartmentappsinc",
+                Password = "Password1",
+                EndPoint = "rampartnersllc"
+            };
+            foreach (var item in entrataClient.GetCustomers("45375", "6").Result.Response.Result.Customers.Customer)
+            {
+                if (string.IsNullOrEmpty(item.Email?.Trim()))
+                {
+                    if (!string.IsNullOrEmpty(item.PhoneNumber))
+                    {
+                        Console.WriteLine(item.PhoneNumber.NumbersOnly());
+                    }
+                    
+                }
+                else
+                {
+                    Console.WriteLine(item.Email);
+                }
+                
+            }
+        }
+    }
+
     [TestClass]
     public class MessagingControllerTests : PropertyControllerTest<MessagingController>
     {

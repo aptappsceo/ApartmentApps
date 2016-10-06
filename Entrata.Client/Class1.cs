@@ -62,11 +62,22 @@ namespace Entrata.Client
 
             return result;
         }
-        public async Task<GetCustomersResponse> GetCustomers(string propertyId)
+
+        /// <summary>
+        /// Use leaseStatusTypeIds = 6 for past, 4 = current
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <param name="leaseStatusTypeIds"></param>
+        /// <returns></returns>
+        public async Task<GetCustomersResponse> GetCustomers( string propertyId, string leaseStatusTypeIds = "4" )
         {
             var result = await SendRequest<GetCustomersResponse>("getCustomers", new Dictionary<string, string>()
             {
-                {"propertyId", propertyId}
+                {
+                    "propertyId", propertyId
+                    
+                },
+                {"leaseStatusTypeIds", leaseStatusTypeIds }
             });
 
             return result;

@@ -1,4 +1,4 @@
-﻿;(function ($, window) {
+﻿; (function ($, window) {
 
     //Ensure that global variables exist
     var EQ = window.EQ = window.EQ || {};
@@ -85,7 +85,7 @@
                     } else {
                         self.applyFilter();
                     }
-                    
+
                 }
             };
 
@@ -251,7 +251,7 @@
             });
         },
 
-        loadQuery : function (queryId) {
+        loadQuery: function (queryId) {
             if (!queryId) return;
             var self = this;
             EQ.client.loadQuery({
@@ -270,7 +270,7 @@
             if (reportName) {
                 EQ.client.newQuery({
                     queryName: reportName,
-                    success: function(query) {
+                    success: function (query) {
                         var reportId = query.getId();
                         self._insertIntoReportList({ id: reportId, name: query.getName() });
                         self.renderReportList({ reportId: reportId });
@@ -285,16 +285,16 @@
                 var query = EQ.client.getQuery();
                 var reportId = query.getId();
                 EQ.client.removeQuery({
-                    queryId : reportId,
+                    queryId: reportId,
                     success: function () {
-                     
+
                         alert("Report removed!");
                     }
                 });
-            }            
+            }
         },
-        saveQuery: function  (reportName) {
- 
+        saveQuery: function (reportName) {
+
             var query = EQ.client.getQuery();
             var newReportName = query.getName();
 
@@ -315,10 +315,16 @@
                 });
             }
         },
+        sortBy: null,
+        descending: false,
+        changeSort: function (s, descending) {
+            var self = this;
+            self.sortBy = s;
+            self.descending = descending;
+        },
         applyFilter: function (options) {
             var self = this;
-            console.log("YUP", options);
-            console.trace();
+
             var query = EQ.client.getQuery();
             var resultProgressIndicator = $('<div></div>', { 'class': 'result-panel loader' });
 
@@ -326,6 +332,10 @@
             if (!options.page) {
                 var pg = self.getCurrentPaging();
                 options.page = pg.page;
+                options.sortby = self.sortBy;
+                if (self.descending) {
+                    options.sortby += "DESC";
+                }
             }
 
             var requestData = { queryJson: query.toJSON(), optionsJson: JSON.stringify(options) };
@@ -387,7 +397,7 @@
                                         cssClass: self.pagingOptions ? self.pagingOptions.cssClass : null
                                     });
 
-                                    gridPanel.css("height", resultPanel.innerHeight()-30);
+                                    gridPanel.css("height", resultPanel.innerHeight() - 30);
                                     pageNavigator.appendTo(resultPanel);
                                 }
 
@@ -418,13 +428,13 @@
 
                             }
                         }
-			
+
                         //result count
                         if (result.resultCount) {
                             self._resultCountSpan.text(result.resultCount);
                             self._resultCountSpan.show();
                         }
-  
+
                     }
                     finally {
                         resultProgressIndicator.remove();
@@ -444,21 +454,21 @@
 
         },
 
-    getCurrentPaging: function () {
-        result = { pageIndex: 1, pageCount: 1 };
-        var pageNavigator = $("#PageNavigator");
-        if (pageNavigator.length > 0) {
-            var pageIndex = pageNavigator.data("pageindex");
-            var pageCount = pageNavigator.data("pagecount");
-            if (pageIndex)
-                result.pageIndex = pageIndex;
-            if (pageCount)
-                result.pageCount = pageCount;
+        getCurrentPaging: function () {
+            result = { pageIndex: 1, pageCount: 1 };
+            var pageNavigator = $("#PageNavigator");
+            if (pageNavigator.length > 0) {
+                var pageIndex = pageNavigator.data("pageindex");
+                var pageCount = pageNavigator.data("pagecount");
+                if (pageIndex)
+                    result.pageIndex = pageIndex;
+                if (pageCount)
+                    result.pageCount = pageCount;
+            }
+            return result;
         }
-        return result;
-    }
 
-}
+    }
 
     $(function () {
         EQ.view.grid.init();

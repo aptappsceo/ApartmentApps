@@ -177,7 +177,7 @@ namespace ApartmentApps.Portal.Controllers
             var lvo = string.IsNullOrEmpty(GridOptions) ? new ListViewOptions() { PageIndex = 1 } : GridOptions.ToListViewOptions();
 
             var count = 0;
-            var results = Service.GetAll<TViewModel>(query, out count, lvo.SortBy, GridState.Descending, lvo.PageIndex, GridState.RecordsPerPage);
+            var results = Service.GetAll<TViewModel>(query, out count, lvo.SortBy?.Replace("DESC","") ?? lvo.SortBy,lvo.SortBy?.EndsWith("DESC") ?? false, lvo.PageIndex, GridState.RecordsPerPage);
 
             return GridResult(new GridList<TViewModel>(results.ToArray(), lvo.PageIndex, GridState.RecordsPerPage, count));
         }
