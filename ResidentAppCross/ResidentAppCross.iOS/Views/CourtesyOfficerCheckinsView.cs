@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using ApartmentApps.Client.Models;
 using Cirrious.FluentLayouts.Touch;
 using CoreLocation;
@@ -168,6 +170,23 @@ namespace ResidentAppCross.iOS
         private ToggleSection _isSavingsSection;
         private TextFieldSection _yearSection;
         private TextFieldSection _monthSection;
+        private SegmentSelectionSection _creditCardTypeSection;
+
+
+        public SegmentSelectionSection CreditCardTypeSection
+        {
+            get
+            {
+                if (_creditCardTypeSection== null)
+                {
+                    _creditCardTypeSection= Formals.Create<SegmentSelectionSection>();
+                    _creditCardTypeSection.Label.Text = "Credit Card Type";
+                    _creditCardTypeSection.Editable = true;
+                }
+                return _creditCardTypeSection;
+            }
+        }
+
 
         public HeaderSection HeaderSection
         {
@@ -285,6 +304,8 @@ namespace ResidentAppCross.iOS
            // set.Bind(CardTypeSection.TextField).To(vm => vm.CardType);
             set.Bind(MonthSection.TextField).To(vm => vm.Month);
             set.Bind(YearSection.TextField).To(vm => vm.Year);
+            CreditCardTypeSection.BindTo(((CreditCardType[])(Enum.GetValues(typeof(CreditCardType)))).ToList(),s=>s.ToString(),s=>ViewModel.CardType= (int)s, 0);
+           // b.Bind(PetStatusSection.Selector).For(s => s.SelectedSegment).To(vm => vm.SelectedPetStatus);
             set.Bind(CallToActionSection.MainButton).To(vm => vm.AddCreditCardCommand);
             set.Apply();
         }
@@ -296,9 +317,10 @@ namespace ResidentAppCross.iOS
             content.Add(HeaderSection);
             content.Add(PaymentOptionTitleSection);
             content.Add(CardNumberSection);
-            content.Add(CvcCodeSection);
+            //content.Add(CvcCodeSection);
             content.Add(MonthSection);
             content.Add(YearSection);
+            content.Add(CreditCardTypeSection);
             content.Add(AccountHolderSection);
             content.Add(CallToActionSection);
         }
@@ -514,7 +536,7 @@ namespace ResidentAppCross.iOS
                             ViewModel.SelectedOption = item;
                             ViewModel.PayWithSelectedPaymentOption.Execute(null);
                         }, 
-                        AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
+                        AccessoryType = item => UITableViewCellAccessory.None, //What is displayed on the right edge
                         CellSelector = () => new UITableViewCell(UITableViewCellStyle.Default,"PaymentOptions_CellView"), //Define how to create cell, if reusables not found
                         CellIdentifier = "PaymentOptions_CellView"
                     };

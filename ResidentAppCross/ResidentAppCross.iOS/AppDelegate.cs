@@ -36,9 +36,17 @@ namespace ResidentAppCross.iOS
             App.ApartmentAppsClient.GetAuthToken = () => AuthToken;
             App.ApartmentAppsClient.SetAuthToken = (v) => AuthToken = v;
         }
+
+
+
+        // http://stackoverflow.com/questions/27297435/detect-if-ios-app-is-downloaded-from-apples-testflight
+        // BOOL isRunningTestFlightBeta = [[[[NSBundle mainBundle] appStoreReceiptURL] lastPathComponent] isEqualToString:@"sandboxReceipt"];
+
+        public bool IsTestFlight => NSBundle.MainBundle.AppStoreReceiptUrl.LastPathComponent == "sandboxReceipt";
+
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-          
+
             // For push notifiations
             LoginService.DevicePlatform = "apns";
             LoginService.DeviceHandle = DeviceToken;
@@ -68,6 +76,20 @@ namespace ResidentAppCross.iOS
 
             var setup = new Setup(this, presenter);
             setup.Initialize();
+
+            //Swap endpoint
+            var service = Mvx.Resolve<IApartmentAppsAPIService>();
+
+#if DEBUG
+            service.BaseUri = App.DevEndpoint;
+            Console.WriteLine($"Endpoint Substitues for DEBUG: {App.DevEndpoint}");
+#else
+            if(IsTestFlight){
+              service.BaseUri = App.DevEndpoint;
+              Console.WriteLine($"Endpoint Substitues for TESTFLIGHT: {App.DevEndpoint}")
+            }
+#endif
+
             Mvx.RegisterSingleton<IVersionChecker>(this);
 
 
