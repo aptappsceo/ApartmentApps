@@ -123,10 +123,9 @@ namespace ResidentAppCross.ViewModels.Screens
 
         public ICommand PayWithSelectedPaymentOption => new MvxCommand(() =>
         {
-            ShowViewModel<CommitPaymentViewModel>(vm =>
+            ShowViewModel<PaymentSummaryViewModel>(vm =>
             {
-                vm.SelectedPaymentOption = SelectedOption;
-                vm.SelectedPaymentSummary = PaymentSummary;
+                vm.PaymentOptionId = SelectedOption.Id.Value;
             });
         });
 

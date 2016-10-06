@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ApartmentApps.Client;
@@ -164,7 +165,7 @@ namespace ResidentAppCross.ViewModels.Screens
             get { return _selectedIncident; }
             set { SetProperty(ref _selectedIncident, value); }
         }
-
+        Regex digitsOnly = new Regex(@"[^\d]");   
         public ICommand OpenSelectedIncidentCommand
         {
             get
@@ -172,7 +173,8 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(() =>
                 {
                     if (SelectedIncident == null) return;
-                    int id = Convert.ToInt32(SelectedIncident.Id);
+                    var idvalue = digitsOnly.Replace(SelectedIncident.Id, ""); // somehow we get excaped string ex: \"12\"
+                    int id = Convert.ToInt32(idvalue);
                     if (id == -1) return;
                     ShowViewModel<IncidentReportStatusViewModel>(vm =>
                     {

@@ -295,7 +295,7 @@ namespace ResidentAppCross.Droid.Views
             this.OnViewModelEvent<RentSummaryUpdated>(evt =>
             {
 
-                var anyPayments = ViewModel.SelectedPaymentSummary.Entries.Any();
+                var anyPayments = ViewModel.SelectedPaymentSummary.IsEmpty();
                 if (anyPayments)
                 {
                     SubtitleLabel.Text = "Check the following information and commit payment.";

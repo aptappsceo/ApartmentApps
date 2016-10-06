@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ApartmentApps.Client;
+using ApartmentApps.Client.Models;
 using MvvmCross.Core.ViewModels;
 
 namespace ResidentAppCross.ViewModels.Screens
@@ -26,7 +27,6 @@ namespace ResidentAppCross.ViewModels.Screens
         public override void Start()
         {
             base.Start();
-            UpdateRentSummary.Execute(null);
         }
 
         public PaymentSummary PaymentSummary
@@ -39,12 +39,17 @@ namespace ResidentAppCross.ViewModels.Screens
         {
             get
             {
-                return  new MvxCommand(() =>
+                return this.TaskCommand(async context =>
                 {
-                    ShowViewModel<PaymentOptionsViewModel>(vm =>
+                    var res = await _service.Payments.MakePaymentAsync(new MakePaymentBindingModel()
                     {
-                        vm.PaymentSummary = PaymentSummary;
+                        PaymentOptionId = PaymentOptionId.ToString()
                     });
+
+                    if(res.ErrorMessage != null) context.FailTask(res.ErrorMessage);
+                }).OnStart("Commiting Payment...").OnComplete("Payment commited!", () =>
+                {
+                    ShowViewModel<HomeMenuViewModel>();
                 });
             }
         }

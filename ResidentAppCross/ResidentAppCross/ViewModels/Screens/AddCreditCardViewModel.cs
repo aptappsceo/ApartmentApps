@@ -4,14 +4,20 @@ using ApartmentApps.Client.Models;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
+    public enum CreditCardType
+    {
+        Visa = 0,
+        MasterCard = 1
+    }
+
     public class AddCreditCardPaymentOptionViewModel : ViewModelBase
     {
 
         private IApartmentAppsAPIService _service;
         private AddCreditCardBindingModel _addCreditCardModel;
         private string _friendlyName;
-        private int _month;
-        private int _year;
+        private string _month;
+        private string _year;
         private string _accountHolderName;
         private string _cardNumber;
         private int _cardType;
@@ -24,14 +30,14 @@ namespace ResidentAppCross.ViewModels.Screens
             set { SetProperty(ref _friendlyName, value); }
         }
 
-        public int Month
+        public string Month
         {
             get { return _month; }
             set { SetProperty(ref _month, value); }
 
         }
 
-        public int Year
+        public string Year
         {
             get { return _year; }
             set { SetProperty(ref _year, value); }
@@ -79,9 +85,9 @@ namespace ResidentAppCross.ViewModels.Screens
                     {
                         AccountHolderName = AccountHolderName,
                         CardNumber = CardNumber,
-                        CardType = 0,
-                        ExpirationMonth = Month.ToString("00"),
-                        ExpirationYear = Year.ToString(),
+                        CardType = CardType,
+                        ExpirationMonth = Month,
+                        ExpirationYear = Year,
                         FriendlyName = FriendlyName
                     });
                 }).OnStart("Adding new payment option...").OnComplete("New credit card added!", ()=>this.Close(this));

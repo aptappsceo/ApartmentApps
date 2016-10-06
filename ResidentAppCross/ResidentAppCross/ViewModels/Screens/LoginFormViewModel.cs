@@ -79,7 +79,7 @@ namespace ResidentAppCross
         public ICommand RemindPasswordCommand => new MvxCommand(() =>
         {
             //ShowViewModel<RecoverPasswordViewModel>();
-				this.dialogService.OpenUrl("http://portal.apartmentapps.com/Account/ForgotPassword");
+			this.dialogService.OpenUrl("http://portal.apartmentapps.com/Account/ForgotPassword");
         });
 
         public ICommand SignUpCommand => new MvxCommand(() =>

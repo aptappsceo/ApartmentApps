@@ -26,6 +26,11 @@ public static class Constants
 }
 public class App : MvxApplication
 {
+
+    public static Uri SiniEndpoint = new Uri("http://5.189.103.91.nip.io:54685/");
+    public static Uri DevEndpoint = new Uri("http://devservices.apartmentapps.com/");
+    public static Uri ProductionEndpoint = new Uri("http://apartmentappsapiservice.azurewebsites.net");
+
     public App()
     {
         Mvx.ConstructAndRegisterSingleton<IImageService, ImageService>();
@@ -33,8 +38,10 @@ public class App : MvxApplication
         
         //local sini pc endpoint
         // var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://5.189.103.91.nip.io:54685/"));
-        // var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://devservices.apartmentapps.com/"));
-        var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://apartmentappsapiservice.azurewebsites.net"));
+        //var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://devservices.apartmentapps.com/"));
+        var apartmentAppsApiService = new ApartmentAppsClient(ProductionEndpoint);
+
+
 
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(apartmentAppsApiService);
         Mvx.RegisterSingleton<ILoginManager>(new LoginService(apartmentAppsApiService));
