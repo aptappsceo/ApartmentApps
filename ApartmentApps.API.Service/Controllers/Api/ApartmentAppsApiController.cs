@@ -22,6 +22,7 @@ namespace ApartmentApps.API.Service.Controllers
         //    get { return HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
         //}
 
+        [NonAction]
         public TConfig GetConfig<TConfig>() where TConfig : ModuleConfig, new()
         {
             var config = Kernel.Get<Module<TConfig>>().Config;

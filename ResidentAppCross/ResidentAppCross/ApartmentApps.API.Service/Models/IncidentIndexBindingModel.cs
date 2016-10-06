@@ -2,14 +2,27 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Client.Models;
+using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
     public partial class IncidentIndexBindingModel
     {
+        private IList<ActionLinkModel> _actionLinks;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<ActionLinkModel> ActionLinks
+        {
+            get { return this._actionLinks; }
+            set { this._actionLinks = value; }
+        }
+        
         private string _buildingName;
         
         /// <summary>
@@ -125,6 +138,7 @@ namespace ApartmentApps.Client.Models
         /// </summary>
         public IncidentIndexBindingModel()
         {
+            this.ActionLinks = new LazyList<ActionLinkModel>();
         }
         
         /// <summary>
@@ -134,6 +148,16 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken actionLinksSequence = ((JToken)inputObject["ActionLinks"]);
+                if (actionLinksSequence != null && actionLinksSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken actionLinksValue in ((JArray)actionLinksSequence))
+                    {
+                        ActionLinkModel actionLinkModel = new ActionLinkModel();
+                        actionLinkModel.DeserializeJson(actionLinksValue);
+                        this.ActionLinks.Add(actionLinkModel);
+                    }
+                }
                 JToken buildingNameValue = inputObject["BuildingName"];
                 if (buildingNameValue != null && buildingNameValue.Type != JTokenType.Null)
                 {

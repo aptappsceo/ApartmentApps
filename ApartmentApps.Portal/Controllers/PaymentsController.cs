@@ -27,12 +27,13 @@ namespace ApartmentApps.Portal.Controllers
         private readonly IRepository<TransactionHistoryItem> _invoiceHistory;
         private readonly IRepository<InvoiceTransaction> _transactions;
         private LeaseInfoManagementService _leaseService;
+
         // GET: Payments
         public ActionResult Index()
         {
             if (User.IsInRole("Resident") && CurrentUser.UnitId != null)
             {
-                return RedirectToAction("RentSummary");
+                return RedirectToAction("RentSummaryFor");
             }
             return View("RentSummary"); // TODO Redirect to other pages for property manager
         }
@@ -48,77 +49,108 @@ namespace ApartmentApps.Portal.Controllers
             _invoiceHistory = invoiceHistory;
         }
 
-        public ActionResult RentSummary()
-        {
-            ViewBag.NextAction = Url.Action("PaymentOptions");
-            return View("RentSummary", _paymentsModule.GetRentSummary(CurrentUser.Id).Result);
-        }
-
         public async Task<ActionResult> RentSummaryFor(string userId)
         {
-            ViewBag.NextAction = Url.Action("PaymentOptionsFor",new {userId = userId});
-            var rent = await _paymentsModule.GetRentSummary(userId);
+            IsUserMakingPayment = true;
+            ViewBag.NextAction = Url.Action("PaymentOptionsFor",new {userId});
+            var rent = await _paymentsModule.GetRentSummaryFor(userId);
             return View("RentSummary", rent);
-        }
-
-        public ActionResult PaymentOptions()
-        {
-            return View("PaymentOptions", _paymentsModule.GetPaymentOptions());
         }
 
         public ActionResult PaymentOptionsFor(string userId)
         {
+            ViewBag.UserId = userId;
             return View("PaymentOptions", _paymentsModule.GetPaymentOptionsFor(userId));
         }
 
-        public ActionResult MakePayment()
+        public ActionResult PaymentSummaryFor(string userId, string paymentOptionId)
         {
-            return AutoForm(new MakePaymentBindingModel(), "MakePaymentSubmit", "Make Payment");
+            SelectedPaymentOption = paymentOptionId;
+            ViewBag.UserId = userId;
+            ViewBag.NextAction = Url.Action("SubmitPayment",new MakePaymentBindingModel()
+            {
+                UserId = userId
+            });
+            return View("RentSummary", _paymentsModule.GetPaymentSummaryFor(userId,paymentOptionId).Result);
         }
 
-            public ActionResult PaymentSummary(string paymentOptionId)
+        public ActionResult SubmitPayment(MakePaymentBindingModel model)
         {
-            PaymentOptionId = paymentOptionId;
-            ViewBag.NextAction = Url.Action("MakePayment");
-            return View("RentSummary", _paymentsModule.GetPaymentSummary(CurrentUser.Id).Result);
+            model.PaymentOptionId = SelectedPaymentOption;
+            var makePaymentResult = _paymentsModule.MakePayment(model).Result;
+            if (makePaymentResult.ErrorMessage != null)
+            {
+                this.AddErrorMessage(makePaymentResult.ErrorMessage);
+            }
+            else
+            {
+                this.AddSuccessMessage("Payment will be processed soon.");
+            }
+            return RedirectToAction("UserPaymentsOverview", new {id = model.UserId});
         }
 
-        [HttpPost]
-        public ActionResult MakePaymentSubmit(MakePaymentBindingModel model)
+        public ActionResult AddCreditCardFor(string userId)
         {
-            return View("PaymentSuccess", _paymentsModule.MakePayment(model).Result);
+            return AutoForm(new AddCreditCardBindingModel() {UserId = userId}, "AddCreditCardForSubmit", "Add Credit Card");
         }
 
-
-        public string PaymentOptionId
+        public bool IsUserMakingPayment
         {
-            get { return Session["PaymentOptionId"] as string; }
-            set { Session["PaymentOptionId"] = value; }
+            get { return Session[nameof(IsUserMakingPayment)] != null && bool.Parse(Session[nameof(IsUserMakingPayment)].ToString()); }
+            set { Session[nameof(IsUserMakingPayment)] = value.ToString(); }
         }
 
-
-
-        public ActionResult AddCreditCard()
+        public string SelectedPaymentOption
         {
-            return AutoForm(new AddCreditCardBindingModel(), "AddCreditCardSubmit", "Add Credit Card");
+            get { return (string)Session[nameof(SelectedPaymentOption)]; }
+            set { Session[nameof(SelectedPaymentOption)] = value; }
         }
 
-        public async Task<ActionResult> AddCreditCardSubmit(AddCreditCardBindingModel cardModel)
+        public async Task<ActionResult> AddCreditCardForSubmit(AddCreditCardBindingModel cardModel)
         {
-            var result = await _paymentsModule.AddCreditCard(cardModel);
-            PaymentOptionId = result.PaymentOptionId.ToString();
-            return RedirectToAction("MakePayment");
+            var res = await _paymentsModule.AddCreditCard(cardModel);
+            if (res.ErrorMessage != null)
+            {
+                AddErrorMessage(res.ErrorMessage);
+                return AutoForm(cardModel, "AddCreditCardForSubmit", "Add Credit Card");
+            }
+
+            if (IsUserMakingPayment)
+            {
+                return RedirectToAction("PaymentSummaryFor", new {userId = cardModel.UserId, paymentOptionId = res.PaymentOptionId.ToString()});
+            }
+
+            return RedirectToAction("UserPaymentsOverview", new {id = cardModel.UserId});
+
         }
 
-        public ActionResult AddBankAccount()
+        public ActionResult AddBankAccountFor(string userId)
         {
-            return AutoForm(new AddBankAccountBindingModel(), "AddBankAccountSubmit", "Add Credit Card");
+            return AutoForm(new AddBankAccountBindingModel() { UserId = userId }, "AddBankAccountSubmit", "Add Bank Account");
         }
 
-        public ActionResult CreateUserLeaseInfo()
+        public async Task<ActionResult> AddBankAccountSubmit(AddBankAccountBindingModel cardModel)
+        {
+            var res = await _paymentsModule.AddBankAccount(cardModel);
+            if (res.ErrorMessage != null)
+            {
+                AddErrorMessage(res.ErrorMessage);
+                return AutoForm(cardModel, "AddBankAccountSubmit", "Add Bank Account");
+            }
+
+            if (IsUserMakingPayment)
+            {
+                return RedirectToAction("PaymentSummaryFor", new {userId = cardModel.UserId, paymentOptionId = res.PaymentOptionId.ToString()});
+            }
+
+            return RedirectToAction("UserPaymentsOverview", new {id = cardModel.UserId});
+        }
+
+        public ActionResult CreateUserLeaseInfoFor(string id = null)
         {
             return View("CreateUserLeaseInfo", new CreateUserLeaseInfoBindingModel()
             {
+                UserId = id,
                 UserIdItems =
                     Context.Users.GetAll()
                         .Where(u => !u.Archived)
@@ -147,12 +179,6 @@ namespace ApartmentApps.Portal.Controllers
             _leaseService.CreateUserLeaseInfo(data);
 
             return RedirectToAction("UserPaymentsOverview", new {id = data.UserId});
-        }
-
-
-        public async Task<ActionResult> GetPaymentSummary(string userId)
-        {
-            return View("RentSummary", await _paymentsModule.GetRentSummary(userId));
         }
 
         public ActionResult UserPaymentsOverview(string id)
@@ -187,31 +213,8 @@ namespace ApartmentApps.Portal.Controllers
             if (user == null) return HttpNotFound();
             _paymentsModule.MarkAsPaid(id, "Marked as paid by " + CurrentUser.Email);
 
-
             return RedirectToAction("UserPaymentsOverview", new {id = user.Id});
-        }
-
-        public async Task<ActionResult> AddBankAccountSubmit(AddBankAccountBindingModel cardModel)
-        {
-            await _paymentsModule.AddBankAccount(cardModel);
-            return RedirectToAction("MakePayment");
-        }
-
-        public ActionResult CreateUserLeaseInfoFor(string id)
-        {
-            return View("CreateUserLeaseInfo", new CreateUserLeaseInfoBindingModel()
-            {
-                UserId = id,
-                UserIdItems =
-                    Context.Users.GetAll()
-                        .Where(u => !u.Archived)
-                        .ToList()
-                        .Select(u => u.ToUserBindingModel(_blobStorageService))
-                        .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
-                        .ToList(),
-            });
-        }
-
+        }  
 
         public ActionResult CancelInvoice(int id)
         {
@@ -341,7 +344,6 @@ namespace ApartmentApps.Portal.Controllers
             }
         }
 
-
         public ActionResult CancelUserLeaseInfo(int id)
         {
             var userLeaseInfo = _leaseInfos.Find(id);
@@ -351,6 +353,12 @@ namespace ApartmentApps.Portal.Controllers
             {
                 Id = id
             });
+        }
+
+        public ActionResult UpdateOpenForteTransactions(string id)
+        {
+            _paymentsModule.UpdateOpenForteTransactions();
+            return RedirectToAction("UserPaymentsOverview", new {id = id});
         }
 
         [HttpPost]
@@ -373,28 +381,5 @@ namespace ApartmentApps.Portal.Controllers
             }
         }
 
-
-        public ActionResult InvoiceDetails(int id)
-        {
-            var invoice = _invoices.Find(id);
-            if (invoice == null) return HttpNotFound();
-            return View("InvoiceDetails", invoice.ToBindingModel(_blobStorageService));
-        }
-
-
-        public ActionResult UserLeaseInfoDetails(int id)
-        {
-            var userLeaseInfo = _leaseInfos.Find(id);
-            if (userLeaseInfo== null) return HttpNotFound();
-            return View("UserLeaseInfoDetails", userLeaseInfo.ToBindingModel(_blobStorageService));
-        }
-
-
-        public ActionResult TransactionDetails(string id)
-        {
-            var transaction = _transactions.Find(id);
-            if (transaction == null) return HttpNotFound();
-            return View("TransactionDetails", transaction.ToBindingModel(_blobStorageService));
-        }
     }
 }

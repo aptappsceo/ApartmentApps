@@ -4,6 +4,7 @@ using System.Linq;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
+using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
@@ -221,7 +222,7 @@ namespace ResidentAppCross.Droid.Views
             this.OnViewModelEvent<RentSummaryUpdated>(evt =>
             {
 
-                var anyPayments = ViewModel.PaymentSummary.Entries.Any();
+                var anyPayments = ViewModel.PaymentSummary.IsEmpty();
                 if (anyPayments)
                 {
                     SubtitleLabel.Text = "Pending payments are listed below.";
@@ -350,6 +351,12 @@ namespace ResidentAppCross.Droid.Views
 
         public IEnumerable<View> NoPaymentsViews => Layout.GetChildrenWithTag("NO_PAYMENT_OPTION");
         public IEnumerable<View> PaymentsViews => Layout.GetChildrenWithTag("PAYMENT_OPTIONS");
+
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+            ViewModel.UpdatePaymentOptions.Execute(null);
+        }
 
         public override void Bind()
         {

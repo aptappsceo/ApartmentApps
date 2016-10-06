@@ -1,0 +1,47 @@
+﻿@using ApartmentApps.Api.Modules
+@model ApartmentApps.Api.Modules.PaymentListBindingModel
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <strong>Rent Summary</strong>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <td><strong>Item</strong></td>
+                                <td class="text-right"><strong>Price</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                            @foreach (var item in Model.Items)
+                            {
+                                if (item.Format == PaymentSummaryFormat.Total)
+                                {
+                                    <tr>
+                                        <td class="thick-line">@item.Title</td>
+                                        <td class="thick-line text-right">@item.Price</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>@item.Title</td>
+                                        <td class="text-right">@item.Price</td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

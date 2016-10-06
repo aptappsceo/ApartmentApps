@@ -86,6 +86,17 @@ namespace ApartmentApps.Client.Models
             set { this._friendlyName = value; }
         }
         
+        private string _userId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string UserId
+        {
+            get { return this._userId; }
+            set { this._userId = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the AddCreditCardBindingModel class.
         /// </summary>
@@ -132,6 +143,10 @@ namespace ApartmentApps.Client.Models
             if (this.FriendlyName != null)
             {
                 outputObject["FriendlyName"] = this.FriendlyName;
+            }
+            if (this.UserId != null)
+            {
+                outputObject["UserId"] = this.UserId;
             }
             return outputObject;
         }

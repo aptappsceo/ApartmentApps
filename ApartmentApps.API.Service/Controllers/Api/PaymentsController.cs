@@ -69,10 +69,10 @@ namespace ApartmentApps.API.Service.Controllers
         public async Task<PaymentListBindingModel> GetRentSummary()
         {
             var now = this.CurrentUser.Property.TimeZone.Now();
-            var items = _invoices.GetAvailableBy(now).ToList();
+            var items = _invoices.GetAvailableBy(now,UserContext.UserId).ToList();
             return new PaymentListBindingModel()
             {
-                Items = LinesFromInvoices(items)
+                Items = items.ToLines()
             };
         }
 
@@ -80,12 +80,12 @@ namespace ApartmentApps.API.Service.Controllers
         public async Task<PaymentListBindingModel> GetPaymentSummary(int paymentOptionId)
         {
             var now = this.CurrentUser.Property.TimeZone.Now();
-            var items = _invoices.GetAvailableBy(now).ToList();
-            var lines = LinesFromInvoices(items.Concat(new [] {new Invoice()
+            var items = _invoices.GetAvailableBy(now,UserContext.UserId).ToList();
+            var lines = items.Concat(new [] {new Invoice()
             {
-                Amount = PaymentsService.GetConvenienceFeeForPaymentOption(paymentOptionId),
+                Amount = PaymentsService.GetConvenienceFeeForPaymentOption(paymentOptionId,UserContext.UserId),
                 Title = "Convenience Fee",
-            } }));
+            } }).ToLines();
 
             return new PaymentListBindingModel()
             {
@@ -114,32 +114,7 @@ namespace ApartmentApps.API.Service.Controllers
             return Ok();
         }
 
-        private List<PaymentLineBindingModel> LinesFromInvoices(IEnumerable<Invoice> invoices)
-        {
-            var list = new List<PaymentLineBindingModel>();
-            decimal total = 0;
-
-            foreach (var inv in invoices)
-            {
-                var line = new PaymentLineBindingModel()
-                {
-                    Format = PaymentSummaryFormat.Default,
-                    Price = $"{inv.Amount:$#,##0.00;($#,##0.00);Zero}",
-                    Title = inv.Title
-                };
-                total += inv.Amount;
-                list.Add(line);
-            }
-
-            list.Add(new PaymentLineBindingModel()
-            {
-                Format = PaymentSummaryFormat.Total,
-                Price = $"{total:$#,##0.00;($#,##0.00);Zero}",
-                Title = "Total"
-            });
-
-            return list;
-        }
+        
 
     }
 

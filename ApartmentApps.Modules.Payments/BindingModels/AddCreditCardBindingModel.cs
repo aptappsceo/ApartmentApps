@@ -1,4 +1,7 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Web.Mvc;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -21,5 +24,8 @@ namespace ApartmentApps.Api.Modules
         public CardType CardType { get; set; }
         [DisplayName("Friendly Name"), Description("The name that you can use to identify this card.")]
         public string FriendlyName { get; set; }
+
+        [DataType("Hidden")]
+        public string UserId { get; set; }
     }
 }

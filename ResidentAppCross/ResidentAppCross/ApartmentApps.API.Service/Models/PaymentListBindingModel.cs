@@ -12,6 +12,17 @@ namespace ApartmentApps.Client.Models
 {
     public partial class PaymentListBindingModel
     {
+        private bool? _isEmpty;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? IsEmpty
+        {
+            get { return this._isEmpty; }
+            set { this._isEmpty = value; }
+        }
+        
         private IList<PaymentLineBindingModel> _items;
         
         /// <summary>
@@ -38,6 +49,11 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken isEmptyValue = inputObject["IsEmpty"];
+                if (isEmptyValue != null && isEmptyValue.Type != JTokenType.Null)
+                {
+                    this.IsEmpty = ((bool)isEmptyValue);
+                }
                 JToken itemsSequence = ((JToken)inputObject["Items"]);
                 if (itemsSequence != null && itemsSequence.Type != JTokenType.Null)
                 {

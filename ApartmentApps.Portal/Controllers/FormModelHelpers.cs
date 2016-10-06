@@ -111,6 +111,14 @@ namespace ApartmentApps.Portal.Controllers
     }
 
 
+    public static class PaymentsHelper
+    {
+        public static HtmlString RenderPaymentListSummary(this HtmlHelper helper, PaymentListBindingModel model)
+        {
+            return helper.Partial("~/Views/Shared/Payments/PaymentListSummary.cshtml", model);
+        }
+    }
+
     public class FeedItemsListModel
     {
         public IEnumerable<FeedItemBindingModel> FeedItems { get; set; }

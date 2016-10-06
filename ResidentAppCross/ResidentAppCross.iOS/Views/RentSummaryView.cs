@@ -257,7 +257,7 @@ namespace ResidentAppCross.iOS
                     _headerSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.Wallet, SharedResources.Size.L);
                     _headerSection.LogoImage.TintColor = AppTheme.CreateColor;
                     _headerSection.MainLabel.Text = "Rent Summary";
-                    _headerSection.SubLabel.Text = "Pending payments are listed below";
+                    _headerSection.SubLabel.Text = ViewModel.PaymentSummary.IsEmpty() ? "Nothing to pay at the moment" : "Pending payments are listed below" ;
                 }
                 return _headerSection;
             }
@@ -340,19 +340,25 @@ namespace ResidentAppCross.iOS
                 HeaderSection.AtRightOf(View)
                 );
 
+            if (!ViewModel.PaymentSummary.IsEmpty())
+            {
 
-            View.AddConstraints(
-                TableSection.Below(HeaderSection),
-                TableSection.AtLeftOf(View),
-                TableSection.AtRightOf(View)
-                );
+                View.AddConstraints(
+                    TableSection.Below(HeaderSection),
+                    TableSection.AtLeftOf(View),
+                    TableSection.AtRightOf(View)
+                    );
 
-            View.AddConstraints(
-                CallToActionSection.Below(TableSection),
-                CallToActionSection.AtLeftOf(View),
-                CallToActionSection.AtRightOf(View),
-                CallToActionSection.AtBottomOf(View)
-                );
+                View.AddConstraints(
+                    CallToActionSection.Below(TableSection),
+                    CallToActionSection.AtLeftOf(View),
+                    CallToActionSection.AtRightOf(View),
+                    CallToActionSection.AtBottomOf(View)
+                    );
+            }
+            else
+            {
+            }
         }
     }
 }

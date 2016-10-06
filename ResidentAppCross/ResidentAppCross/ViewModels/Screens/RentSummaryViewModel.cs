@@ -72,7 +72,13 @@ namespace ResidentAppCross.ViewModels.Screens
 
     }
 
-   
+    public static class RentSummaryExtensions
+    {
+        public static bool IsEmpty(this PaymentSummary sum)
+        {
+            return sum.Entries.All(s => s.Format != PaymentSummaryFormat.Default);
+        }
+    }
 
     public class RentSummaryUpdated : MvxMessage
     {
@@ -87,6 +93,7 @@ namespace ResidentAppCross.ViewModels.Screens
         {
         }
     }
+
 
     public class PaymentOptionsViewModel : ViewModelBase
     {
@@ -109,7 +116,7 @@ namespace ResidentAppCross.ViewModels.Screens
         public override void Start()
         {
             base.Start();
-            UpdatePaymentOptions.Execute(null);
+           
         }
 
         public PaymentOptionBindingModel SelectedOption { get; set; }

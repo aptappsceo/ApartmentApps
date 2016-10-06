@@ -18,7 +18,7 @@
         }
         <div class="form-group">
             <label class="control-label col-md-4" for="@property.Name">@property.Label</label>
-            <div class="col-md-8">
+            <div class="col-md-4">
                 @if (property.Choices != null)
                 {
                     if (property.Choices.Length <= 4)
@@ -73,17 +73,21 @@
                 {
                     @Html.CheckBox(property.Name, (bool) property.GetValue())
                 }
+                else if (property.DataType.DataType == DataType.Currency && property.SystemType == typeof(decimal))
+                {
+                    @Html.EJ().CurrencyTextbox(property.Name).Value(property.GetValue()).DecimalPlaces(2).IncrementStep(0.5).MinValue(0).Name(property.Name)
+                }
                 else
                 {
-                    if (property.SystemType == typeof (string))
+                    if (property.SystemType == typeof(string))
                     {
                         if (property.DataType.DataType == DataType.MultilineText)
                         {
-                            @Html.TextArea(property.Name, property.GetValue()?.ToString())
+                            @Html.TextArea(property.Name, property.GetValue()?.ToString(),new { @class = "form-control"})
                         }
                         else
                         {
-                            @Html.TextBox(property.Name, property.GetValue()?.ToString())
+                            @Html.TextBox(property.Name, property.GetValue()?.ToString(), new { @class = "form-control" })
                         }
                     }
                     else
@@ -94,8 +98,9 @@
 
                 }
                 @Html.ValidationMessage(property.Name)
+                <p class="small">@property.Description</p>
+
             </div>
-            <p class="small">@property.Description</p>
         </div>
     }
 </div>

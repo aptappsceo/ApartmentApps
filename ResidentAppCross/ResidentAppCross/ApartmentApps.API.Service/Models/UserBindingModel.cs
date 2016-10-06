@@ -2,13 +2,27 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using ApartmentApps.Client.Models;
+using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
     public partial class UserBindingModel
     {
+        private IList<ActionLinkModel> _actionLinks;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<ActionLinkModel> ActionLinks
+        {
+            get { return this._actionLinks; }
+            set { this._actionLinks = value; }
+        }
+        
         private string _address;
         
         /// <summary>
@@ -163,6 +177,17 @@ namespace ApartmentApps.Client.Models
             set { this._postalCode = value; }
         }
         
+        private IList<string> _roles;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Roles
+        {
+            get { return this._roles; }
+            set { this._roles = value; }
+        }
+        
         private string _unitName;
         
         /// <summary>
@@ -179,6 +204,8 @@ namespace ApartmentApps.Client.Models
         /// </summary>
         public UserBindingModel()
         {
+            this.ActionLinks = new LazyList<ActionLinkModel>();
+            this.Roles = new LazyList<string>();
         }
         
         /// <summary>
@@ -188,6 +215,16 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken actionLinksSequence = ((JToken)inputObject["ActionLinks"]);
+                if (actionLinksSequence != null && actionLinksSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken actionLinksValue in ((JArray)actionLinksSequence))
+                    {
+                        ActionLinkModel actionLinkModel = new ActionLinkModel();
+                        actionLinkModel.DeserializeJson(actionLinksValue);
+                        this.ActionLinks.Add(actionLinkModel);
+                    }
+                }
                 JToken addressValue = inputObject["Address"];
                 if (addressValue != null && addressValue.Type != JTokenType.Null)
                 {
@@ -257,6 +294,14 @@ namespace ApartmentApps.Client.Models
                 if (postalCodeValue != null && postalCodeValue.Type != JTokenType.Null)
                 {
                     this.PostalCode = ((string)postalCodeValue);
+                }
+                JToken rolesSequence = ((JToken)inputObject["Roles"]);
+                if (rolesSequence != null && rolesSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken rolesValue in ((JArray)rolesSequence))
+                    {
+                        this.Roles.Add(((string)rolesValue));
+                    }
                 }
                 JToken unitNameValue = inputObject["UnitName"];
                 if (unitNameValue != null && unitNameValue.Type != JTokenType.Null)

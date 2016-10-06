@@ -10,4 +10,29 @@
         </div>
         @Html.Partial("_LoginPartial")
     </nav>
+        @if (TempData["GlobalError"] != null)
+        {
+            <nav>
+
+                <div class="alert alert-danger">
+                    <strong>Error: </strong> @TempData["GlobalError"]
+                </div>
+            </nav>
+            {
+                TempData["GlobalError"] = null;
+            }
+        }
+        @if (TempData["GlobalSuccess"] != null)
+        {
+
+            <nav>
+
+                <div class="alert alert-success">
+                    <strong>Done! </strong> @TempData["GlobalSuccess"]
+                </div>
+            </nav>
+            {
+                TempData["GlobalSuccess"] = null;
+            }
+        }
 </div>

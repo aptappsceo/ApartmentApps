@@ -41,9 +41,9 @@ namespace ApartmentApps.Api.Modules
 
     public static class InvoiceRepositoryExtensions
     {
-        public static IEnumerable<Invoice> GetAvailableBy(this IRepository<Invoice> repo, DateTime by)
+        public static IEnumerable<Invoice> GetAvailableBy(this IRepository<Invoice> repo, DateTime by, string forUserId)
         {
-            return repo.Where(i => !i.IsArchived && i.AvailableDate < by && i.State == InvoiceState.NotPaid);
+            return repo.Where(i => i.UserLeaseInfo.UserId == forUserId && !i.IsArchived && i.AvailableDate < by && i.State == InvoiceState.NotPaid);
         }
     }
 }

@@ -51,6 +51,11 @@ namespace ApartmentApps.Client
             get; 
         }
         
+        IInspections Inspections
+        {
+            get; 
+        }
+        
         ILookups Lookups
         {
             get; 

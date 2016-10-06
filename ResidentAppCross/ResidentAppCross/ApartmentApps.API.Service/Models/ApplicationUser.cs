@@ -342,6 +342,17 @@ namespace ApartmentApps.Client.Models
             set { this._state = value; }
         }
         
+        private string _syncId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string SyncId
+        {
+            get { return this._syncId; }
+            set { this._syncId = value; }
+        }
+        
         private string _thirdPartyId;
         
         /// <summary>
@@ -609,6 +620,11 @@ namespace ApartmentApps.Client.Models
                 if (stateValue != null && stateValue.Type != JTokenType.Null)
                 {
                     this.State = ((string)stateValue);
+                }
+                JToken syncIdValue = inputObject["SyncId"];
+                if (syncIdValue != null && syncIdValue.Type != JTokenType.Null)
+                {
+                    this.SyncId = ((string)syncIdValue);
                 }
                 JToken thirdPartyIdValue = inputObject["ThirdPartyId"];
                 if (thirdPartyIdValue != null && thirdPartyIdValue.Type != JTokenType.Null)
