@@ -32,17 +32,11 @@
     <WarningLevel>3</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <ConsolePause>false</ConsolePause>
-    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <Debugger>Xamarin</Debugger>
-    <AndroidSupportedAbis>
-    </AndroidSupportedAbis>
-    <MandroidI18n>
-    </MandroidI18n>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
-    <AndroidLinkSkip />
     <BundleAssemblies>False</BundleAssemblies>
     <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-    <AndroidStoreUncompressedFileExtensions />
     <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
@@ -422,10 +416,6 @@
       <Version>0.2.1.0</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
-    <XamarinComponentReference Include="azure-messaging">
-      <Version>1.1.5.6</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
     <XamarinComponentReference Include="GCMClient">
       <Version>1.0</Version>
       <Visible>False</Visible>
@@ -435,12 +425,12 @@
       <Version>4.1.0.3</Version>
     </XamarinComponentReference>
     <XamarinComponentReference Include="PhotoView">
-      <Version>1.2.4</Version>
       <Visible>False</Visible>
+      <Version>1.2.4.1</Version>
     </XamarinComponentReference>
     <XamarinComponentReference Include="zxing.net.mobile">
-      <Version>2.0.4.17</Version>
       <Visible>False</Visible>
+      <Version>2.1.12</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
