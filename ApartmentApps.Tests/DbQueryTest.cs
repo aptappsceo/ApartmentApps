@@ -1,6 +1,7 @@
 using System;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Portal.Controllers;
@@ -47,10 +48,75 @@ namespace ApartmentApps.Tests
                 throw ex;
             }
         }
-
-        public void BackupProdDb()
+//#if !DEBUG
+        [TestMethod]
+        public void MigrateProdDb()
         {
+#if DEBUG
+            return;
+#endif
+            Console.WriteLine("Creating Backup");
+            string backupDbName = $"ApartmentApps_Backup{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Year}_{DateTime.Now.Ticks}";
+            using (var prodDb = new SqlConnection(ConnectionString1))
+            {
+                prodDb.Open();
+                var cmd = new SqlCommand($"CREATE DATABASE {backupDbName} AS COPY OF ApartmentApps;",prodDb);
+                cmd.CommandTimeout = Int32.MaxValue;
+                cmd.ExecuteNonQuery();
+
+                var diffScript = GenerateDiffScript();
+                var cmds = diffScript.Split(new[] {"GO"}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                
+                prodDb.ChangeDatabase(backupDbName);
+                if (prodDb.Database == backupDbName)
+                {
+                    foreach (var c in cmds)
+                    {
+                        try
+                        {
+                            cmd = new SqlCommand(c, prodDb);
+                            cmd.CommandTimeout = Int32.MaxValue;
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            Assert.IsTrue(false, $"Sql command {c} didn't execute successfully" + Environment.NewLine + ex.Message);
+                        }
+                        Console.WriteLine($"Success: {c}");
+                    }
+                }
+                
+            }
             
+        }
+//#endif
+        public string GenerateDiffScript()
+        {
+            Database origin;
+            Database destination;
+            if (TestConnection(ConnectionString1, ConnectionString2))
+            {
+                Generate sql = new Generate();
+                sql.ConnectionString = ConnectionString1;
+                Console.WriteLine("Reading first database...");
+                sql.Options = SqlFilter;
+                origin = sql.Process();
+                sql.ConnectionString = ConnectionString2;
+                Console.WriteLine("Reading second database...");
+                destination = sql.Process();
+                Console.WriteLine("Comparing databases schemas...");
+                origin = Generate.Compare(origin, destination);
+                //if (!arguments.OutputAll)
+                //{
+                //    // temporary work-around: run twice just like GUI
+                //    origin.ToSqlDiff();
+                //}
+                origin.ToSqlDiff();
+                Console.WriteLine("Generating SQL file...");
+                Console.WriteLine();
+                return origin.ToSqlDiff().ToSQL();
+            }
+            return null;
         }
 
         [TestMethod]
@@ -58,34 +124,7 @@ namespace ApartmentApps.Tests
         {
             try
             {
-                Database origin;
-                Database destination;
-                if (TestConnection(ConnectionString1, ConnectionString2))
-                {
-                    Generate sql = new Generate();
-                    sql.ConnectionString = ConnectionString1;
-                    Console.WriteLine("Reading first database...");
-                    sql.Options = SqlFilter;
-                    origin = sql.Process();
-                    sql.ConnectionString = ConnectionString2;
-                    Console.WriteLine("Reading second database...");
-                    destination = sql.Process();
-                    Console.WriteLine("Comparing databases schemas...");
-                    origin = Generate.Compare(origin, destination);
-                    //if (!arguments.OutputAll)
-                    //{
-                    //    // temporary work-around: run twice just like GUI
-                    //    origin.ToSqlDiff();
-                    //}
-                    origin.ToSqlDiff();
-                    Console.WriteLine("Generating SQL file...");
-                    Console.WriteLine();
-
-                    SaveFile("UpgradeDb.sql", origin.ToSqlDiff().ToSQL());
-
-
-                    //completedSuccessfully = true;
-                }
+               
             }
             catch (Exception ex)
             {
