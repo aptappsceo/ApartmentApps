@@ -59,5 +59,10 @@ namespace ApartmentApps.Client
         /// Cancellation token.
         /// </param>
         Task<HttpOperationResponse<MakePaymentResult>> MakePaymentWithOperationResponseAsync(MakePaymentBindingModel makePaymentBindingModel, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<string>> UpdateForteStateWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

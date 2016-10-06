@@ -9,6 +9,39 @@ namespace ApartmentApps.Client.Models
 {
     public partial class PaymentsConfig
     {
+        private double? _bankAccountCheckingConvenienceFee;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public double? BankAccountCheckingConvenienceFee
+        {
+            get { return this._bankAccountCheckingConvenienceFee; }
+            set { this._bankAccountCheckingConvenienceFee = value; }
+        }
+        
+        private double? _bankAccountSavingsConvenienceFee;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public double? BankAccountSavingsConvenienceFee
+        {
+            get { return this._bankAccountSavingsConvenienceFee; }
+            set { this._bankAccountSavingsConvenienceFee = value; }
+        }
+        
+        private double? _creditCardConvenienceFee;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public double? CreditCardConvenienceFee
+        {
+            get { return this._creditCardConvenienceFee; }
+            set { this._creditCardConvenienceFee = value; }
+        }
+        
         private bool? _enabled;
         
         /// <summary>
@@ -100,6 +133,21 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken bankAccountCheckingConvenienceFeeValue = inputObject["BankAccountCheckingConvenienceFee"];
+                if (bankAccountCheckingConvenienceFeeValue != null && bankAccountCheckingConvenienceFeeValue.Type != JTokenType.Null)
+                {
+                    this.BankAccountCheckingConvenienceFee = ((double)bankAccountCheckingConvenienceFeeValue);
+                }
+                JToken bankAccountSavingsConvenienceFeeValue = inputObject["BankAccountSavingsConvenienceFee"];
+                if (bankAccountSavingsConvenienceFeeValue != null && bankAccountSavingsConvenienceFeeValue.Type != JTokenType.Null)
+                {
+                    this.BankAccountSavingsConvenienceFee = ((double)bankAccountSavingsConvenienceFeeValue);
+                }
+                JToken creditCardConvenienceFeeValue = inputObject["CreditCardConvenienceFee"];
+                if (creditCardConvenienceFeeValue != null && creditCardConvenienceFeeValue.Type != JTokenType.Null)
+                {
+                    this.CreditCardConvenienceFee = ((double)creditCardConvenienceFeeValue);
+                }
                 JToken enabledValue = inputObject["Enabled"];
                 if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                 {

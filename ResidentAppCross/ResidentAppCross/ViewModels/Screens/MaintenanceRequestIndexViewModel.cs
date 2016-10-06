@@ -182,7 +182,12 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(() =>
                 {
                     if (SelectedRequest == null) return;
-                    int id = SelectedRequest.Id ?? -1;
+                    var s = SelectedRequest.Id;
+                    int id = -1;
+                    if (!string.IsNullOrEmpty(SelectedRequest.Id))
+                    {
+                        id = Convert.ToInt32(SelectedRequest.Id);
+                    }
                     if (id == -1) return;
                     ShowViewModel<MaintenanceRequestStatusViewModel>(vm =>
                     {

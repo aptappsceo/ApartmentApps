@@ -205,5 +205,29 @@ namespace ApartmentApps.Client
             Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.MakePaymentResult> result = await operations.MakePaymentWithOperationResponseAsync(makePaymentBindingModel, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IPayments.
+        /// </param>
+        public static string UpdateForteState(this IPayments operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IPayments)s).UpdateForteStateAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IPayments.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<string> UpdateForteStateAsync(this IPayments operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<string> result = await operations.UpdateForteStateWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
     }
 }

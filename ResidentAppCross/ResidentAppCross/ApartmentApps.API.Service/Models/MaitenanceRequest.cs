@@ -265,6 +265,28 @@ namespace ApartmentApps.Client.Models
             set { this._userId = value; }
         }
         
+        private ApplicationUser _workerAssigned;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public ApplicationUser WorkerAssigned
+        {
+            get { return this._workerAssigned; }
+            set { this._workerAssigned = value; }
+        }
+        
+        private string _workerAssignedId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string WorkerAssignedId
+        {
+            get { return this._workerAssignedId; }
+            set { this._workerAssignedId = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the MaitenanceRequest class.
         /// </summary>
@@ -409,6 +431,18 @@ namespace ApartmentApps.Client.Models
                 if (userIdValue != null && userIdValue.Type != JTokenType.Null)
                 {
                     this.UserId = ((string)userIdValue);
+                }
+                JToken workerAssignedValue = inputObject["WorkerAssigned"];
+                if (workerAssignedValue != null && workerAssignedValue.Type != JTokenType.Null)
+                {
+                    ApplicationUser applicationUser2 = new ApplicationUser();
+                    applicationUser2.DeserializeJson(workerAssignedValue);
+                    this.WorkerAssigned = applicationUser2;
+                }
+                JToken workerAssignedIdValue = inputObject["WorkerAssignedId"];
+                if (workerAssignedIdValue != null && workerAssignedIdValue.Type != JTokenType.Null)
+                {
+                    this.WorkerAssignedId = ((string)workerAssignedIdValue);
                 }
             }
         }

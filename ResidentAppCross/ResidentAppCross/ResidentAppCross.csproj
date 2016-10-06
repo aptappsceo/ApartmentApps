@@ -51,10 +51,13 @@
     <Compile Include="ApartmentApps.API.Service\ICheckins.cs" />
     <Compile Include="ApartmentApps.API.Service\IConfigure.cs" />
     <Compile Include="ApartmentApps.API.Service\ICourtesy.cs" />
+    <Compile Include="ApartmentApps.API.Service\IInspections.cs" />
     <Compile Include="ApartmentApps.API.Service\ILookups.cs" />
     <Compile Include="ApartmentApps.API.Service\IMaitenance.cs" />
     <Compile Include="ApartmentApps.API.Service\IMessaging.cs" />
     <Compile Include="ApartmentApps.API.Service\INotifiations.cs" />
+    <Compile Include="ApartmentApps.API.Service\Inspections.cs" />
+    <Compile Include="ApartmentApps.API.Service\InspectionsExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\IPayments.cs" />
     <Compile Include="ApartmentApps.API.Service\IRegister.cs" />
     <Compile Include="ApartmentApps.API.Service\IVersion.cs" />
@@ -64,6 +67,7 @@
     <Compile Include="ApartmentApps.API.Service\MaitenanceExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Messaging.cs" />
     <Compile Include="ApartmentApps.API.Service\MessagingExtensions.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\ActionLinkModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AddBankAccountBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AddBankAccountResult.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\AddCreditCardBindingModel.cs" />
@@ -82,6 +86,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\DeviceRegistration.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ExternalLoginViewModelCollection.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\FinishInspectionViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserClaim.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserLogin.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IdentityUserRole.cs" />
@@ -91,6 +96,10 @@
     <Compile Include="ApartmentApps.API.Service\Models\IncidentIndexBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentReportBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\IncidentReportModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\InspectionAnswerViewModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\InspectionCategoryAnswerViewModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\InspectionViewModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\InspectionViewModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LocationBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LocationBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\LookupPairModel.cs" />

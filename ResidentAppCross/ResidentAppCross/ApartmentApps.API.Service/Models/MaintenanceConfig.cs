@@ -42,6 +42,17 @@ namespace ApartmentApps.Client.Models
             set { this._propertyId = value; }
         }
         
+        private bool? _supervisorMode;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? SupervisorMode
+        {
+            get { return this._supervisorMode; }
+            set { this._supervisorMode = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the MaintenanceConfig class.
         /// </summary>
@@ -70,6 +81,11 @@ namespace ApartmentApps.Client.Models
                 if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
                 {
                     this.PropertyId = ((int)propertyIdValue);
+                }
+                JToken supervisorModeValue = inputObject["SupervisorMode"];
+                if (supervisorModeValue != null && supervisorModeValue.Type != JTokenType.Null)
+                {
+                    this.SupervisorMode = ((bool)supervisorModeValue);
                 }
             }
         }

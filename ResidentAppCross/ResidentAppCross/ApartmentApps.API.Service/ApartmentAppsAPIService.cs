@@ -68,6 +68,13 @@ namespace ApartmentApps.Client
             get { return this._courtesy; }
         }
         
+        private IInspections _inspections;
+        
+        public virtual IInspections Inspections
+        {
+            get { return this._inspections; }
+        }
+        
         private ILookups _lookups;
         
         public virtual ILookups Lookups
@@ -128,6 +135,7 @@ namespace ApartmentApps.Client
             this._checkins = new Checkins(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
+            this._inspections = new Inspections(this);
             this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
             this._messaging = new Messaging(this);
@@ -135,7 +143,7 @@ namespace ApartmentApps.Client
             this._payments = new Payments(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://localhost:54686");
+            this._baseUri = new Uri("http://localhost:54685");
         }
         
         /// <summary>
@@ -153,6 +161,7 @@ namespace ApartmentApps.Client
             this._checkins = new Checkins(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
+            this._inspections = new Inspections(this);
             this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
             this._messaging = new Messaging(this);
@@ -160,7 +169,7 @@ namespace ApartmentApps.Client
             this._payments = new Payments(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://localhost:54686");
+            this._baseUri = new Uri("http://localhost:54685");
         }
         
         /// <summary>
@@ -181,6 +190,7 @@ namespace ApartmentApps.Client
             this._checkins = new Checkins(this);
             this._configure = new Configure(this);
             this._courtesy = new Courtesy(this);
+            this._inspections = new Inspections(this);
             this._lookups = new Lookups(this);
             this._maitenance = new Maitenance(this);
             this._messaging = new Messaging(this);
@@ -188,7 +198,7 @@ namespace ApartmentApps.Client
             this._payments = new Payments(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://localhost:54686");
+            this._baseUri = new Uri("http://localhost:54685");
         }
         
         /// <summary>

@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class MaintenanceIndexBindingModel
+    public partial class InspectionViewModel
     {
         private IList<ActionLinkModel> _actionLinks;
         
@@ -34,15 +34,37 @@ namespace ApartmentApps.Client.Models
             set { this._buildingName = value; }
         }
         
-        private string _comments;
+        private DateTimeOffset? _createDate;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Comments
+        public DateTimeOffset? CreateDate
         {
-            get { return this._comments; }
-            set { this._comments = value; }
+            get { return this._createDate; }
+            set { this._createDate = value; }
+        }
+        
+        private DateTimeOffset? _endDate;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public DateTimeOffset? EndDate
+        {
+            get { return this._endDate; }
+            set { this._endDate = value; }
+        }
+        
+        private bool? _hasPet;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? HasPet
+        {
+            get { return this._hasPet; }
+            set { this._hasPet = value; }
         }
         
         private string _id;
@@ -56,59 +78,59 @@ namespace ApartmentApps.Client.Models
             set { this._id = value; }
         }
         
-        private MaintenanceCheckinBindingModel _latestCheckin;
+        private string _message;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public MaintenanceCheckinBindingModel LatestCheckin
+        public string Message
         {
-            get { return this._latestCheckin; }
-            set { this._latestCheckin = value; }
+            get { return this._message; }
+            set { this._message = value; }
         }
         
-        private DateTimeOffset? _requestDate;
+        private int? _petStatus;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public DateTimeOffset? RequestDate
+        public int? PetStatus
         {
-            get { return this._requestDate; }
-            set { this._requestDate = value; }
+            get { return this._petStatus; }
+            set { this._petStatus = value; }
         }
         
-        private string _statusId;
+        private DateTimeOffset? _scheduleDate;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string StatusId
+        public DateTimeOffset? ScheduleDate
         {
-            get { return this._statusId; }
-            set { this._statusId = value; }
+            get { return this._scheduleDate; }
+            set { this._scheduleDate = value; }
         }
         
-        private UserBindingModel _submissionBy;
+        private int? _status;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public UserBindingModel SubmissionBy
+        public int? Status
         {
-            get { return this._submissionBy; }
-            set { this._submissionBy = value; }
+            get { return this._status; }
+            set { this._status = value; }
         }
         
-        private string _title;
+        private UserBindingModel _submissionUser;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Title
+        public UserBindingModel SubmissionUser
         {
-            get { return this._title; }
-            set { this._title = value; }
+            get { return this._submissionUser; }
+            set { this._submissionUser = value; }
         }
         
         private string _unitName;
@@ -123,10 +145,9 @@ namespace ApartmentApps.Client.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the MaintenanceIndexBindingModel
-        /// class.
+        /// Initializes a new instance of the InspectionViewModel class.
         /// </summary>
-        public MaintenanceIndexBindingModel()
+        public InspectionViewModel()
         {
             this.ActionLinks = new LazyList<ActionLinkModel>();
         }
@@ -153,44 +174,52 @@ namespace ApartmentApps.Client.Models
                 {
                     this.BuildingName = ((string)buildingNameValue);
                 }
-                JToken commentsValue = inputObject["Comments"];
-                if (commentsValue != null && commentsValue.Type != JTokenType.Null)
+                JToken createDateValue = inputObject["CreateDate"];
+                if (createDateValue != null && createDateValue.Type != JTokenType.Null)
                 {
-                    this.Comments = ((string)commentsValue);
+                    this.CreateDate = ((DateTimeOffset)createDateValue);
+                }
+                JToken endDateValue = inputObject["EndDate"];
+                if (endDateValue != null && endDateValue.Type != JTokenType.Null)
+                {
+                    this.EndDate = ((DateTimeOffset)endDateValue);
+                }
+                JToken hasPetValue = inputObject["HasPet"];
+                if (hasPetValue != null && hasPetValue.Type != JTokenType.Null)
+                {
+                    this.HasPet = ((bool)hasPetValue);
                 }
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((string)idValue);
                 }
-                JToken latestCheckinValue = inputObject["LatestCheckin"];
-                if (latestCheckinValue != null && latestCheckinValue.Type != JTokenType.Null)
+                JToken messageValue = inputObject["Message"];
+                if (messageValue != null && messageValue.Type != JTokenType.Null)
                 {
-                    MaintenanceCheckinBindingModel maintenanceCheckinBindingModel = new MaintenanceCheckinBindingModel();
-                    maintenanceCheckinBindingModel.DeserializeJson(latestCheckinValue);
-                    this.LatestCheckin = maintenanceCheckinBindingModel;
+                    this.Message = ((string)messageValue);
                 }
-                JToken requestDateValue = inputObject["RequestDate"];
-                if (requestDateValue != null && requestDateValue.Type != JTokenType.Null)
+                JToken petStatusValue = inputObject["PetStatus"];
+                if (petStatusValue != null && petStatusValue.Type != JTokenType.Null)
                 {
-                    this.RequestDate = ((DateTimeOffset)requestDateValue);
+                    this.PetStatus = ((int)petStatusValue);
                 }
-                JToken statusIdValue = inputObject["StatusId"];
-                if (statusIdValue != null && statusIdValue.Type != JTokenType.Null)
+                JToken scheduleDateValue = inputObject["ScheduleDate"];
+                if (scheduleDateValue != null && scheduleDateValue.Type != JTokenType.Null)
                 {
-                    this.StatusId = ((string)statusIdValue);
+                    this.ScheduleDate = ((DateTimeOffset)scheduleDateValue);
                 }
-                JToken submissionByValue = inputObject["SubmissionBy"];
-                if (submissionByValue != null && submissionByValue.Type != JTokenType.Null)
+                JToken statusValue = inputObject["Status"];
+                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                {
+                    this.Status = ((int)statusValue);
+                }
+                JToken submissionUserValue = inputObject["SubmissionUser"];
+                if (submissionUserValue != null && submissionUserValue.Type != JTokenType.Null)
                 {
                     UserBindingModel userBindingModel = new UserBindingModel();
-                    userBindingModel.DeserializeJson(submissionByValue);
-                    this.SubmissionBy = userBindingModel;
-                }
-                JToken titleValue = inputObject["Title"];
-                if (titleValue != null && titleValue.Type != JTokenType.Null)
-                {
-                    this.Title = ((string)titleValue);
+                    userBindingModel.DeserializeJson(submissionUserValue);
+                    this.SubmissionUser = userBindingModel;
                 }
                 JToken unitNameValue = inputObject["UnitName"];
                 if (unitNameValue != null && unitNameValue.Type != JTokenType.Null)

@@ -7,34 +7,34 @@ using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
-    public partial class MakePaymentBindingModel
+    public partial class InspectionAnswerViewModel
     {
-        private string _paymentOptionId;
+        private int? _questionId;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string PaymentOptionId
+        public int? QuestionId
         {
-            get { return this._paymentOptionId; }
-            set { this._paymentOptionId = value; }
+            get { return this._questionId; }
+            set { this._questionId = value; }
         }
         
-        private string _userId;
+        private string _value;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string UserId
+        public string Value
         {
-            get { return this._userId; }
-            set { this._userId = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the MakePaymentBindingModel class.
+        /// Initializes a new instance of the InspectionAnswerViewModel class.
         /// </summary>
-        public MakePaymentBindingModel()
+        public InspectionAnswerViewModel()
         {
         }
         
@@ -42,7 +42,7 @@ namespace ApartmentApps.Client.Models
         /// Serialize the object
         /// </summary>
         /// <returns>
-        /// Returns the json model for the type MakePaymentBindingModel
+        /// Returns the json model for the type InspectionAnswerViewModel
         /// </returns>
         public virtual JToken SerializeJson(JToken outputObject)
         {
@@ -50,13 +50,13 @@ namespace ApartmentApps.Client.Models
             {
                 outputObject = new JObject();
             }
-            if (this.PaymentOptionId != null)
+            if (this.QuestionId != null)
             {
-                outputObject["PaymentOptionId"] = this.PaymentOptionId;
+                outputObject["QuestionId"] = this.QuestionId.Value;
             }
-            if (this.UserId != null)
+            if (this.Value != null)
             {
-                outputObject["UserId"] = this.UserId;
+                outputObject["Value"] = this.Value;
             }
             return outputObject;
         }

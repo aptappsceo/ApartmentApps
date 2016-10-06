@@ -565,7 +565,14 @@ namespace ResidentAppCross.iOS
             set.Bind(AddBankAccountSection.MainButton).To(vm => vm.AddBankAccountCommand);
             set.Apply();
 
+            
 
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            ViewModel.UpdatePaymentOptions.Execute(null);
         }
 
         public override void GetContent(List<UIView> content)
