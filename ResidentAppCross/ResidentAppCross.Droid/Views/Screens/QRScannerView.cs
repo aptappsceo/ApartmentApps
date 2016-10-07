@@ -23,11 +23,6 @@ namespace ResidentAppCross.Droid.Views
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            if (!_scannerInitialized)
-            {
-                MobileBarcodeScanner.Initialize(Application);
-                _scannerInitialized = true;
-            }
         }
     }
 }
