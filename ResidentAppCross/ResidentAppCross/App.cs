@@ -29,6 +29,7 @@ public class App : MvxApplication
 
     public static Uri SiniEndpoint = new Uri("http://5.189.103.91.nip.io:54685/");
     public static Uri DevEndpoint = new Uri("http://devservices.apartmentapps.com/");
+	public static Uri TestEndpoint = new Uri("http://testservices.apartmentapps.com/");
     public static Uri ProductionEndpoint = new Uri("http://apartmentappsapiservice.azurewebsites.net");
 
     public App()
@@ -39,8 +40,11 @@ public class App : MvxApplication
         //local sini pc endpoint
         // var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://5.189.103.91.nip.io:54685/"));
         //var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://devservices.apartmentapps.com/"));
-        var apartmentAppsApiService = new ApartmentAppsClient(ProductionEndpoint);
-
+		#if DEBUG
+        var apartmentAppsApiService = new ApartmentAppsClient(DevEndpoint);
+		#else
+		var apartmentAppsApiService = new ApartmentAppsClient(ProductionEndpoint);
+		#endif
 
 
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(apartmentAppsApiService);
