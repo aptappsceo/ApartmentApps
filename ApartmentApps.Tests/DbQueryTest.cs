@@ -19,8 +19,11 @@ namespace ApartmentApps.Tests
     [TestClass]
     public class DbTasks
     {
-        public static string ConnectionString2 = "Server=aptapps.database.windows.net,1433;Database=ApartmentApps_Development;User ID=aptapps;Password=Asdf1234!@#$;";
-        public static string ConnectionString1 = "Server=aptapps.database.windows.net,1433;Database=ApartmentApps;User ID=aptapps;Password=Asdf1234!@#$;";
+        public static string ConnectionStringTest = "Server=aptapps.database.windows.net,1433;Database=ApartmentApps_Test;User ID=aptapps;Password=Asdf1234!@#$;";
+        public static string ConnectionStringDevelopment = "Server=aptapps.database.windows.net,1433;Database=ApartmentApps_Development;User ID=aptapps;Password=Asdf1234!@#$;";
+        public static string ConnectionStringProduction = "Server=aptapps.database.windows.net,1433;Database=ApartmentApps;User ID=aptapps;Password=Asdf1234!@#$;";
+
+
         public static SqlOption SqlFilter = new SqlOption();
         static void SaveFile(string filenmame, string sql)
         {
@@ -49,56 +52,36 @@ namespace ApartmentApps.Tests
                 throw ex;
             }
         }
-//#if !DEBUG
+        //#if !DEBUG
         [TestMethod]
         public void MigrateProdDb()
         {
 #if DEBUG
             return;
 #endif
-            Console.WriteLine("Creating Backup");
+            
             string backupDbName =
                 $"ApartmentApps_Backup{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Year}_{DateTime.Now.Ticks}";
-            var diffScript = GenerateDiffScript();
-            var cmds = diffScript.Split(new[] { "GO" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            // Copy DB
-            using (var prodDb = new SqlConnection(ConnectionString1))
+
+            // Make Backup
+            MackProdBackup(backupDbName);
+
+            Thread.Sleep(new TimeSpan(0, 0, 1, 0));
+#if RELEASE
+            // Migrate production database
+            using (var productionDb = new SqlConnection(ConnectionStringProduction))
             {
-                prodDb.Open();
-                var cmd = new SqlCommand($"CREATE DATABASE {backupDbName} AS COPY OF ApartmentApps;", prodDb);
-                cmd.CommandTimeout = Int32.MaxValue;
-                cmd.ExecuteNonQuery();
-                Console.WriteLine("Copied Production Database");
+                MigrateDbInternal(productionDb);
             }
-            Thread.Sleep(new TimeSpan(0,0,1,0));
-            // Test DB
+#endif
+#if TEST
+            // Migrate Test database
             using (var testDb = new SqlConnection($"Server=aptapps.database.windows.net,1433;Database={backupDbName};User ID=aptapps;Password=Asdf1234!@#$"))
             {
-                Console.WriteLine("Migrating Database With OpenDBDiff");
-                testDb.Open();
-                SqlCommand cmd = new SqlCommand("DROP TABLE [dbo].[__MigrationHistory]", testDb);
-                cmd.CommandTimeout = Int32.MaxValue;
-                cmd.ExecuteNonQuery();
-                if (testDb.Database == backupDbName)
-                {
-                    foreach (var c in cmds)
-                    {
-                        try
-                        {
-                            cmd = new SqlCommand(c, testDb);
-                            cmd.CommandTimeout = Int32.MaxValue;
-                            cmd.ExecuteNonQuery();
-                        }
-                        catch (Exception ex)
-                        {
-                            Assert.IsTrue(false,
-                                $"Sql command {c} didn't execute successfully" + Environment.NewLine + ex.Message);
-                        }
-                        Console.WriteLine($"Success: {c}");
-                    }
-                }
-                Console.WriteLine("Database migration complete");
+                MigrateDbInternal(testDb);
             }
+
+            // Rename backup database to test database
             using (var masterDb = new SqlConnection($"Server=aptapps.database.windows.net,1433;Database=master;User ID=aptapps;Password=Asdf1234!@#$"))
             {
                 masterDb.Open();
@@ -110,21 +93,64 @@ namespace ApartmentApps.Tests
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("Moved database into place");
             }
+#endif
         }
 
-//#endif
+        private static void MackProdBackup(string backupDbName)
+        {
+            Console.WriteLine("Creating Backup");
+            using (var prodDb = new SqlConnection(ConnectionStringProduction))
+            {
+                prodDb.Open();
+                var cmd = new SqlCommand($"CREATE DATABASE {backupDbName} AS COPY OF ApartmentApps;", prodDb);
+                cmd.CommandTimeout = Int32.MaxValue;
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Copied Production Database");
+            }
+        }
+
+        private void MigrateDbInternal(SqlConnection connection)
+        {
+            var diffScript = GenerateDiffScript();
+            var cmds = diffScript.Split(new[] { "GO" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            Console.WriteLine("Migrating Database With OpenDBDiff");
+            connection.Open();
+            SqlCommand cmd = new SqlCommand("DROP TABLE [dbo].[__MigrationHistory]", connection);
+            cmd.CommandTimeout = Int32.MaxValue;
+            cmd.ExecuteNonQuery();
+
+            foreach (var c in cmds)
+            {
+                try
+                {
+                    cmd = new SqlCommand(c, connection);
+                    cmd.CommandTimeout = Int32.MaxValue;
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsTrue(false,
+                        $"Sql command {c} didn't execute successfully" + Environment.NewLine + ex.Message);
+                }
+                Console.WriteLine($"Success: {c}");
+            }
+
+            Console.WriteLine("Database migration complete");
+        }
+
+        //#endif
         public string GenerateDiffScript()
         {
             Database origin;
             Database destination;
-            if (TestConnection(ConnectionString1, ConnectionString2))
+            if (TestConnection(ConnectionStringProduction, ConnectionStringDevelopment))
             {
                 Generate sql = new Generate();
-                sql.ConnectionString = ConnectionString1;
+                sql.ConnectionString = ConnectionStringProduction;
                 Console.WriteLine("Reading first database...");
                 sql.Options = SqlFilter;
                 origin = sql.Process();
-                sql.ConnectionString = ConnectionString2;
+                sql.ConnectionString = ConnectionStringDevelopment;
                 Console.WriteLine("Reading second database...");
                 destination = sql.Process();
                 Console.WriteLine("Comparing databases schemas...");
@@ -147,7 +173,7 @@ namespace ApartmentApps.Tests
         {
             try
             {
-               
+
             }
             catch (Exception ex)
             {
