@@ -76,7 +76,9 @@ namespace ApartmentApps.Tests
             {
                 Console.WriteLine("Migrating Database With OpenDBDiff");
                 testDb.Open();
-                SqlCommand cmd;
+                SqlCommand cmd = new SqlCommand("DROP TABLE [dbo].[__MigrationHistory]", testDb);
+                cmd.CommandTimeout = Int32.MaxValue;
+                cmd.ExecuteNonQuery();
                 if (testDb.Database == backupDbName)
                 {
                     foreach (var c in cmds)
