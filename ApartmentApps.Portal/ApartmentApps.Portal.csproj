@@ -1486,6 +1486,8 @@
     <Content Include="Views\Messaging\Overview.cshtml" />
     <Content Include="Views\CampaignTargets\List.cshtml" />
     <Content Include="Views\Shared\_ActionLinks.cshtml" />
+    <Content Include="Views\Shared\Forms\GridPartial.cshtml" />
+    <Content Include="Views\Shared\Payments\PaymentListSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
