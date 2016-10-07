@@ -1,6 +1,8 @@
 using System;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Portal.Controllers;
@@ -47,10 +49,97 @@ namespace ApartmentApps.Tests
                 throw ex;
             }
         }
-
-        public void BackupProdDb()
+//#if !DEBUG
+        [TestMethod]
+        public void MigrateProdDb()
         {
-            
+#if DEBUG
+            return;
+#endif
+            Console.WriteLine("Creating Backup");
+            string backupDbName =
+                $"ApartmentApps_Backup{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Year}_{DateTime.Now.Ticks}";
+            var diffScript = GenerateDiffScript();
+            var cmds = diffScript.Split(new[] { "GO" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            // Copy DB
+            using (var prodDb = new SqlConnection(ConnectionString1))
+            {
+                prodDb.Open();
+                var cmd = new SqlCommand($"CREATE DATABASE {backupDbName} AS COPY OF ApartmentApps;", prodDb);
+                cmd.CommandTimeout = Int32.MaxValue;
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Copied Production Database");
+            }
+            Thread.Sleep(new TimeSpan(0,0,1,0));
+            // Test DB
+            using (var testDb = new SqlConnection($"Server=aptapps.database.windows.net,1433;Database={backupDbName};User ID=aptapps;Password=Asdf1234!@#$"))
+            {
+                Console.WriteLine("Migrating Database With OpenDBDiff");
+                testDb.Open();
+                SqlCommand cmd = new SqlCommand("DROP TABLE [dbo].[__MigrationHistory]", testDb);
+                cmd.CommandTimeout = Int32.MaxValue;
+                cmd.ExecuteNonQuery();
+                if (testDb.Database == backupDbName)
+                {
+                    foreach (var c in cmds)
+                    {
+                        try
+                        {
+                            cmd = new SqlCommand(c, testDb);
+                            cmd.CommandTimeout = Int32.MaxValue;
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            Assert.IsTrue(false,
+                                $"Sql command {c} didn't execute successfully" + Environment.NewLine + ex.Message);
+                        }
+                        Console.WriteLine($"Success: {c}");
+                    }
+                }
+                Console.WriteLine("Database migration complete");
+            }
+            using (var masterDb = new SqlConnection($"Server=aptapps.database.windows.net,1433;Database=master;User ID=aptapps;Password=Asdf1234!@#$"))
+            {
+                masterDb.Open();
+                var cmd = new SqlCommand($"IF EXISTS (SELECT name FROM master.sys.databases WHERE name = N'ApartmentApps_Test') ALTER DATABASE ApartmentApps_Test Modify Name = ApartmentApps_Test_{DateTime.Now.Ticks}; ", masterDb);
+                cmd.CommandTimeout = Int32.MaxValue;
+                cmd.ExecuteNonQuery();
+                cmd = new SqlCommand($"ALTER DATABASE {backupDbName} Modify Name = ApartmentApps_Test; ", masterDb);
+                cmd.CommandTimeout = Int32.MaxValue;
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Moved database into place");
+            }
+        }
+
+//#endif
+        public string GenerateDiffScript()
+        {
+            Database origin;
+            Database destination;
+            if (TestConnection(ConnectionString1, ConnectionString2))
+            {
+                Generate sql = new Generate();
+                sql.ConnectionString = ConnectionString1;
+                Console.WriteLine("Reading first database...");
+                sql.Options = SqlFilter;
+                origin = sql.Process();
+                sql.ConnectionString = ConnectionString2;
+                Console.WriteLine("Reading second database...");
+                destination = sql.Process();
+                Console.WriteLine("Comparing databases schemas...");
+                origin = Generate.Compare(origin, destination);
+                //if (!arguments.OutputAll)
+                //{
+                //    // temporary work-around: run twice just like GUI
+                //    origin.ToSqlDiff();
+                //}
+                origin.ToSqlDiff();
+                Console.WriteLine("Generating SQL file...");
+                Console.WriteLine();
+                return origin.ToSqlDiff().ToSQL();
+            }
+            return null;
         }
 
         [TestMethod]
@@ -58,34 +147,7 @@ namespace ApartmentApps.Tests
         {
             try
             {
-                Database origin;
-                Database destination;
-                if (TestConnection(ConnectionString1, ConnectionString2))
-                {
-                    Generate sql = new Generate();
-                    sql.ConnectionString = ConnectionString1;
-                    Console.WriteLine("Reading first database...");
-                    sql.Options = SqlFilter;
-                    origin = sql.Process();
-                    sql.ConnectionString = ConnectionString2;
-                    Console.WriteLine("Reading second database...");
-                    destination = sql.Process();
-                    Console.WriteLine("Comparing databases schemas...");
-                    origin = Generate.Compare(origin, destination);
-                    //if (!arguments.OutputAll)
-                    //{
-                    //    // temporary work-around: run twice just like GUI
-                    //    origin.ToSqlDiff();
-                    //}
-                    origin.ToSqlDiff();
-                    Console.WriteLine("Generating SQL file...");
-                    Console.WriteLine();
-
-                    SaveFile("UpgradeDb.sql", origin.ToSqlDiff().ToSQL());
-
-
-                    //completedSuccessfully = true;
-                }
+               
             }
             catch (Exception ex)
             {

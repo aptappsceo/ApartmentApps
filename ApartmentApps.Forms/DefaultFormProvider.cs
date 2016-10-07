@@ -238,8 +238,8 @@ namespace ApartmentApps.Forms
 
             foreach (var property in properties)
             {
-                if (property.Name.EndsWith("_Items")) continue;
-                if (property.PropertyType == typeof(ActionLinkModel))
+                if (property.Name.EndsWith("_Items") || property.Name == "ActionLinks") continue;
+                if (property.PropertyType == typeof(ActionLinkModel) )
                 {
                     formModel.ActionLinks.Add(property);
                     continue;

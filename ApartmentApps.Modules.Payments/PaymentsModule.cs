@@ -30,7 +30,7 @@ using Authentication = ApartmentApps.Payments.Forte.Forte.Client.Authentication;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class PaymentsModule : Module<PaymentsConfig>, IMenuItemProvider, IAdminConfigurable, IPaymentsService, IFillActions
+    public class PaymentsModule : Module<PaymentsConfig>, IMenuItemProvider, IAdminConfigurable, IPaymentsService, IFillActions, IWebJob
     {
         private readonly IRepository<UserLeaseInfo> _leaseRepository;
         private readonly IRepository<Invoice> _invoiceRepository;
@@ -473,6 +473,15 @@ namespace ApartmentApps.Api.Modules
             //var transaction = _transactionRepository.Find(opId);
             //_leaseService.OnTransactionComplete(transaction,s,user.Property.TimeZone.Now());
             //_transactionRepository.Save();
+        }
+
+        public TimeSpan Frequency => new TimeSpan(5,0,0);
+        public int JobStartHour => 0;
+        public int JobStartMinute => 0;
+        public void Execute(ILogger logger)
+        {
+            UpdateOpenForteTransactions();
+            logger.Info("Open transactions updated from forte.");
         }
     }
 }
