@@ -115,7 +115,7 @@ namespace ApartmentApps.Tests
             var cmds = diffScript.Split(new[] { "GO" }, StringSplitOptions.RemoveEmptyEntries).ToList();
             Console.WriteLine("Migrating Database With OpenDBDiff");
             connection.Open();
-            //SqlCommand cmd = new SqlCommand("DROP TABLE [dbo].[__MigrationHistory]", connection);
+            SqlCommand cmd;// = new SqlCommand("DROP TABLE [dbo].[__MigrationHistory]", connection);
             //cmd.CommandTimeout = Int32.MaxValue;
             //cmd.ExecuteNonQuery();
 
