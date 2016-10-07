@@ -29,7 +29,7 @@ namespace ApartmentApps.Jobs
 //            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
 //#endif   
             var context = new ApplicationDbContext();
-            var ids = new int[] {18, 19, 20, 21, 22, 23};
+            var ids = new int[] {24};
             foreach (var item in context.Properties.Where(x=>ids.Contains(x.Id)).ToArray())
             {
                 IKernel kernel = new StandardKernel();
