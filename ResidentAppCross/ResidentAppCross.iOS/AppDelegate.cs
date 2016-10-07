@@ -86,7 +86,7 @@ namespace ResidentAppCross.iOS
 #else
             if(IsTestFlight){
               service.BaseUri = App.DevEndpoint;
-              Console.WriteLine($"Endpoint Substitues for TESTFLIGHT: {App.DevEndpoint}")
+				Console.WriteLine($"Endpoint Substitues for TESTFLIGHT: {App.TestEndpoint}");
             }
 #endif
 

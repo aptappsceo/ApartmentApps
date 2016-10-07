@@ -31,7 +31,7 @@ namespace ResidentAppCross.iOS
                 if (_callToActionSection == null)
                 {
                     _callToActionSection = Formals.Create<CallToActionSection>();
-                    _callToActionSection.MainButton.SetTitle("Check Out Now");
+                    _callToActionSection.MainButton.SetTitle("Pay Now");
                     _callToActionSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
                 }
                 return _callToActionSection;

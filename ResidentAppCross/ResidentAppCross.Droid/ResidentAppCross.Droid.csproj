@@ -35,9 +35,6 @@
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <Debugger>Xamarin</Debugger>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
-    <BundleAssemblies>False</BundleAssemblies>
-    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -184,9 +181,6 @@
     <Reference Include="Square.Picasso, Version=2.5.2.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Square.Picasso.2.5.2.1\lib\MonoAndroid\Square.Picasso.dll</HintPath>
     </Reference>
-    <Reference Include="PhotoView">
-      <HintPath>..\..\Components\PhotoView-1.2.4\lib\android\PhotoView.dll</HintPath>
-    </Reference>
     <Reference Include="RecyclerViewAnimators, Version=2.1.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\RecyclerViewAnimators.2.1.0.0\lib\MonoAndroid403\RecyclerViewAnimators.dll</HintPath>
     </Reference>
@@ -244,6 +238,9 @@
     <Reference Include="ZXingNetMobile">
       <HintPath>..\..\packages\ZXing.Net.Mobile.2.1.47\lib\MonoAndroid403\ZXingNetMobile.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="PhotoView">
+      <HintPath>..\..\Components\PhotoView-1.2.4.1\lib\android\PhotoView.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
