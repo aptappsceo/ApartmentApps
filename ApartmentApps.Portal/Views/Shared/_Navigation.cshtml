@@ -118,30 +118,31 @@ var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ??
                     </ul>
                 </li>
             </ul>*@
-        <ul class="nav" id="side-menu">
-            <li class="nav-header">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header" style='background-image:url("http://apartmentapps.com/wp-content/uploads/2015/05/parcland-1.png") !important; background-size: 100% 100%;'>
                 <div class="dropdown profile-element">
                     @if (Request.IsAuthenticated)
                     {
+            
                         <a href="#">
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold">@User.Identity.GetUserName()</strong>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <h2 class="font-normal" style="margin: 0px;"><a href="@Url.Action("Index","Property")">@property.Name</a></h2>
+                                    }
+                                    else
+                                    {
+                                        <h2 class="font-normal" style="margin: 0px;">@property.Name</h2>
+                                    }
+
                                 </span>
                             </span>
                         </a>
                         <a href="#">
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <strong class="font-noraml"><a href="@Url.Action("Index","Property")">@property.Name</a></strong>
-                                    }
-                                    else
-                                    {
-                                        <strong class="font-noraml">@property.Name</strong>
-                                    }
-
+                                    <strong class="font-bold">@User.Identity.GetUserName()</strong>
                                 </span>
                             </span>
                         </a>

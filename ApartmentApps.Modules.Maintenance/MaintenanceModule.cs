@@ -51,7 +51,7 @@ namespace ApartmentApps.Api.Modules
             // If its actions for a maintenance request
             if (mr != null && Config.SupervisorMode) // Only allow maintenance assigning when in supervisor mode
             {
-                actions.Add(new ActionLinkModel("Assign To", "AssignRequest", "MaitenanceRequests",new {id=mr.Id}));
+                actions.Add(new ActionLinkModel("Assign To", "AssignRequest", "MaitenanceRequests",new {id=mr.Id}) {IsDialog = true});
             }
         }
     }
