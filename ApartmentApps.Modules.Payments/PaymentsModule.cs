@@ -72,21 +72,24 @@ namespace ApartmentApps.Api.Modules
             if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin") &&
                 !UserContext.IsInRole("Resident")) return;
 
-
-            var paymentsHome = new MenuItemViewModel("Payments", "fa-money", "Index", "Payments");
-
-            if (UserContext.IsInRole("Admin") || UserContext.IsInRole("PropertyAdmin"))
+            if (!Config.UseUrl)
             {
-                paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus", "CreateUserLeaseInfoFor", "Payments"));
-         //       paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
-            }
+                var paymentsHome = new MenuItemViewModel("Payments", "fa-money", "Index", "Payments");
 
-            if (UserContext.IsInRole("Resident"))
-            {
-                paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments", new { id = UserContext.CurrentUser.Id }));
-            }
+                if (UserContext.IsInRole("Admin") || UserContext.IsInRole("PropertyAdmin"))
+                {
+                    paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus", "CreateUserLeaseInfoFor", "Payments"));
+                    //       paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
+                }
 
-            menuItems.Add(paymentsHome);
+                if (UserContext.IsInRole("Resident"))
+                {
+                    paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments", new { id = UserContext.CurrentUser.Id }));
+                }
+
+                menuItems.Add(paymentsHome);
+            }
+            
 
         }
 
