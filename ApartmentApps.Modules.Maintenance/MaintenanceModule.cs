@@ -25,11 +25,11 @@ namespace ApartmentApps.Api.Modules
             }
             if (UserContext.IsInRole("Maintenance") || UserContext.IsInRole("PropertyAdmin"))
             {
-                menuItem.Children.Add(new MenuItemViewModel("Schedule", "fa-folder", "MySchedule", "MaitenanceRequests"));
+                menuItem.Children.Add(new MenuItemViewModel("Schedule", "fa-calendar-o", "MySchedule", "MaitenanceRequests"));
             }
             if (UserContext.IsInRole("Maintenance") || UserContext.IsInRole("PropertyAdmin"))
             {
-                menuItem.Children.Add(new MenuItemViewModel("Monthly Report", "fa-folder", "MonthlyReport", "MaitenanceRequests"));
+                menuItem.Children.Add(new MenuItemViewModel("Monthly Report", "fa-area-chart", "MonthlyReport", "MaitenanceRequests"));
             }
             menuItems.Add(menuItem);
         }

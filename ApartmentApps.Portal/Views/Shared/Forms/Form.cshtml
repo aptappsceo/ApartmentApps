@@ -1,4 +1,5 @@
-﻿@using System.ComponentModel.DataAnnotations
+﻿@using System.Collections
+@using System.ComponentModel.DataAnnotations
 @using ApartmentApps.Forms
 @using ApartmentApps.Portal.Controllers
 @using Syncfusion.JavaScript.Models
@@ -8,6 +9,10 @@
     @foreach (var property in Model.Properties)
     {
         if (!property.Visible)
+        {
+            continue;
+        }
+        if (typeof(IList).IsAssignableFrom(property.SystemType))
         {
             continue;
         }
@@ -90,6 +95,7 @@
                             @Html.TextBox(property.Name, property.GetValue()?.ToString(), new { @class = "form-control" })
                         }
                     }
+                  
                     else
                     {
 

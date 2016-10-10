@@ -15,13 +15,13 @@ namespace ApartmentApps.Api
         public ApplicationDbContext DbContext { get; set; }
         protected readonly PropertyContext _context;
         private readonly DefaultUserManager _manager;
-     
-        public PropertyIntegrationModule(ApplicationDbContext dbContext,PropertyContext context, DefaultUserManager manager, IRepository<TConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
+
+        public PropertyIntegrationModule(ApplicationDbContext dbContext, PropertyContext context, DefaultUserManager manager, IRepository<TConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
         {
             DbContext = dbContext;
             _context = context;
             _manager = manager;
-         
+
         }
 
         protected void ImportUnit(ILogger logger, string buildingName, string unitName)
@@ -69,14 +69,14 @@ namespace ApartmentApps.Api
             return await _manager.CreateUser(email, password, firstName, lastName);
         }
 
-        protected void ImportCustomer(Property property,  
-            int unitId, string phoneNumber, string city, string email, string firstName, string lastName,string middleName, string gender,string postalCode, string state, string address)
+        protected void ImportCustomer(Property property,
+            int unitId, string phoneNumber, string city, string email, string firstName, string lastName, string middleName, string gender, string postalCode, string state, string address)
         {
             ImportCustomer(this, unitId, phoneNumber, city, email, firstName, lastName, middleName, gender, postalCode, state, address);
         }
 
-        protected ApplicationUser ImportCustomer(ICreateUser createUser, 
-            int unitId, string phoneNumber, string city, string email, string firstName, string lastName,string middleName, string gender,string postalCode, string state, string address)
+        protected ApplicationUser ImportCustomer(ICreateUser createUser,
+            int unitId, string phoneNumber, string city, string email, string firstName, string lastName, string middleName, string gender, string postalCode, string state, string address)
         {
             if (string.IsNullOrEmpty(email)) return null;
 
@@ -99,10 +99,14 @@ namespace ApartmentApps.Api
                     UserId = user.Id
                 });
             }
-            user.PhoneNumber = phoneNumber.NumbersOnly();
+            if (!string.IsNullOrEmpty(phoneNumber))
+            {
+                user.PhoneNumber = phoneNumber.NumbersOnly();
+            }
+
             user.PropertyId = UserContext.PropertyId;
             user.City = city;
-            user.Email =email;
+            user.Email = email;
             user.FirstName = firstName;
             user.LastName = lastName;
             user.Gender = gender;
@@ -115,13 +119,13 @@ namespace ApartmentApps.Api
             return user;
         }
 
-        public TimeSpan Frequency => new TimeSpan(1,0,0,0);
+        public TimeSpan Frequency => new TimeSpan(1, 0, 0, 0);
         public int JobStartHour => 1;
         public int JobStartMinute => 0;
 
         public virtual void Execute(ILogger logger)
         {
-            
+
         }
     }
 }

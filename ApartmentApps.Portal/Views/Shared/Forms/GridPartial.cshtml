@@ -35,14 +35,6 @@
                     <td>@property.PropertyInfo.GetValue(item)</td>
                 }
                 <td>
-                    @if (Model.Editable && idProperty != null)
-                    {
-                        <a class="btn btn-primary btn-xs modal-link" href="@Url.Action("Entry", new {id = idProperty.PropertyInfo.GetValue(item)})">Edit</a>
-                    }
-                    @if (Model.Deletable && idProperty != null)
-                    {
-                        <a class="btn btn-primary btn-xs modal-link" href="@Url.Action("Delete", new {id = idProperty.PropertyInfo.GetValue(item)})">Delete</a>
-                    }
                     @if (vm != null)
                     {
                         @Html.Partial("_ActionLinks", vm)
