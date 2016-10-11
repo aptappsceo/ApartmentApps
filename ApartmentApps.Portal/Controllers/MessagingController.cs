@@ -191,8 +191,6 @@ namespace ApartmentApps.Portal.Controllers
             return Json("");
         }
 
-
-        [HttpPost, ValidateInput(false)]
         public ActionResult SendMessage(int messageId)
         {
             var q = Service.Find<MessageViewModel>(messageId.ToString());
