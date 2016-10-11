@@ -77,7 +77,7 @@ namespace ApartmentApps.Portal.Controllers
         public Data.Property Property => CurrentUser?.Property;
 
         [NonAction]
-        public ViewResult View(BaseViewModel viewModel)
+        public ViewResult ViewByModel(BaseViewModel viewModel)
         {
             return View(viewModel.GetType().Name, viewModel);
         }

@@ -40,7 +40,8 @@ namespace ApartmentApps.Api.Modules
             if (mr != null)
             {
                 actions.Add(new ActionLinkModel("Details", "Details", "MaitenanceRequests", new { id = mr.Id }));
-                if (UserContext.IsInRole("MaintenanceSupervisor"))
+                
+                if (UserContext.IsInRole("MaintenanceSupervisor") || UserContext.IsInRole("PropertyAdmin"))
                 {
                     actions.Add(new ActionLinkModel("Edit", "Entry", "MaitenanceRequests", new { id = mr.Id })
                     {
