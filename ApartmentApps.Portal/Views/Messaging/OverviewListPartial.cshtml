@@ -39,7 +39,7 @@
                     <a class="btn btn-white btn-default" href="@Url.Action("MessageDetails", "Messaging", new {id = item.Id})"><i class="fa fa-info"></i> Preview & Send</a>
                     @if (!string.IsNullOrEmpty(item.TargetsXml))
                     {
-                        <a class="btn btn-primary" href="@Url.Action("SendMessage", "Messaging", new {id = item.Id})"><i class="fa fa-send"></i> Send Now</a>
+                        <a class="btn btn-primary" href="@Url.Action("SendMessage", "Messaging", new {messageId = item.Id})"><i class="fa fa-send"></i> Send Now</a>
                     }
                 </div>
                 <div class="clearfix"></div>
