@@ -39,7 +39,7 @@ namespace ApartmentApps.Api.Modules
 
             }
             if (UserContext.IsInRole("Admin"))
-            {
+            {//3D75E8
 
                 var checkins = new MenuItemViewModel("AA Admin", "fa-heartbeat") {Index = Int32.MaxValue};
                 foreach (var module in Kernel.GetAll<IModule>().OfType<IAdminConfigurable>())
