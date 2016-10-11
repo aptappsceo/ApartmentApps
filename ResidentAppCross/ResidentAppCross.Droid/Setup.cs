@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Bluetooth;
 using Android.Content;
@@ -161,8 +162,6 @@ namespace ResidentAppCross.Droid
             // ExceptionHandler.SaveException(Throwable.FromException(new System.Exception("this is eventual")),Thread.CurrentThread(),listener);
             Instance = this;
 
-
-
             App.ApartmentAppsClient.GetAuthToken = () => AuthToken;
             App.ApartmentAppsClient.SetAuthToken = (v) => AuthToken = v;
 
@@ -173,11 +172,7 @@ namespace ResidentAppCross.Droid
             LoginService.SetRegistrationId = (v) => HandleId = v;
 
             base.OnCreate();
-            if(IsPackageAvailable("com.google.android.gsf")) { 
-                GcmClient.CheckDevice(this);
-                GcmClient.CheckManifest(this);
-                GcmClient.Register(this, GcmConstants.SenderID);
-            }
+   
             try
             {
                 MapsInitializer.Initialize(this);
@@ -187,8 +182,7 @@ namespace ResidentAppCross.Droid
                 e.PrintStackTrace();
             }
 
-             MobileBarcodeScanner.Initialize(this);
-
+            MobileBarcodeScanner.Initialize(this);
         }
 
         //com.google.android.gsf
@@ -257,12 +251,10 @@ namespace ResidentAppCross.Droid
         public static void RegisterForHandle(string deviceToken)
         {
             var client = Mvx.Resolve<IApartmentAppsAPIService>();
-
             if (HandleId == null)
             {
                 HandleId = client.Register.Post(HandleId);
             }
-
             DeviceToken = deviceToken.ToString();
             LoginService.DeviceHandle = DeviceToken;
         }

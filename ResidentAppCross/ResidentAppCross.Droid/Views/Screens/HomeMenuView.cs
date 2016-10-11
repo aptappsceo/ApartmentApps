@@ -433,6 +433,7 @@ namespace ResidentAppCross.Droid.Views
 
         public override void OnBind(TicketIndexItemViewHolder holder, int position)
         {
+            if (position < 0 || position >= Items.Count) return;
             var item = Items[position];
             holder.DetailsLabel.Text = DetailsSelector?.Invoke(item) ?? "Details Info";
             holder.TitleLabel.Text = TitleSelector?.Invoke(item) ?? "Unit Information Missing";

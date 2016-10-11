@@ -15,6 +15,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using ApartmentApps.Client;
+using Gcm.Client;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Droid.Shared.Attributes;
 using MvvmCross.Droid.Shared.Caching;
@@ -86,6 +87,19 @@ namespace ResidentAppCross.Droid.Views
             transaction.SetCustomAnimations(Android.Resource.Animation.FadeIn, Android.Resource.Animation.FadeOut, Android.Resource.Animation.FadeIn, Android.Resource.Animation.FadeOut);
         }
 
+         public bool IsPackageAvailable(string package)
+        {
+            try
+            {
+                PackageManager.GetPackageInfo(package, PackageInfoFlags.MetaData);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -96,6 +110,13 @@ namespace ResidentAppCross.Droid.Views
             service.BaseUri = App.DevEndpoint;
             Console.WriteLine($"Endpoint Substitues for DEBUG: {App.DevEndpoint}");
             #endif
+
+            if(IsPackageAvailable("com.google.android.gsf")) { 
+                GcmClient.CheckDevice(this);
+                GcmClient.CheckManifest(this);
+                GcmClient.Register(this, GcmConstants.SenderID);
+            }
+
 
             ProcessIntent(Intent);
         }

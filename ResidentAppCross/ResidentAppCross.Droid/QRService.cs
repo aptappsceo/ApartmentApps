@@ -33,12 +33,12 @@ namespace ResidentAppCross.Droid.Services
                 if (_scanner == null)
                 {
                     var customOverlay = LayoutInflater.FromContext(TopActivity).Inflate(Resource.Layout.barcode_scanner_overlay, null);
+
                     _scanner = new MobileBarcodeScanner()
                     {
                         UseCustomOverlay = true,
                         CustomOverlay = customOverlay,
                     };
-
 
                     var button = customOverlay.FindViewById<Button>(Resource.Id.FlashButton);
                     button.Click += (sender, args) => _scanner.ToggleTorch();
@@ -70,11 +70,13 @@ namespace ResidentAppCross.Droid.Services
                 };
             }
 
-            var data = await Scanner.Scan(new MobileBarcodeScanningOptions()
+            var data = await Scanner.Scan(TopActivity, new MobileBarcodeScanningOptions()
             {
                 
             });
+
             if (data == null) return null;
+
             return new QRData()
             {
                 Data = data.Text,

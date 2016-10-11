@@ -355,8 +355,28 @@ namespace ResidentAppCross.ViewModels.Screens
                 }).OnStart("Scheduling...").OnComplete("Maintenance Scheduled!",()=>UpdateMaintenanceRequest.Execute(null));
             }
         }
-        public bool CanUpdateRequest => _loginManager.UserInfo.Roles.Contains("Maintenance") ||
-                                     _loginManager.UserInfo.Roles.Contains("PropertyAdmin");
+        public bool CanUpdateRequest
+        {
+            get
+            {
+                if (_loginManager == null) throw new Exception("User authentication is not available");
+                if (_loginManager.UserInfo == null)
+                {
+                    _loginManager.RefreshUserInfo();
+                    if (_loginManager.UserInfo == null)
+                    {
+                        throw new Exception("User information is not available");
+                    }
+                }
+
+                if(_loginManager.UserInfo.Roles == null || !_loginManager.UserInfo.Roles.Any()) throw new Exception("User authorization is not available");
+
+                return _loginManager?.UserInfo?.Roles != null &&
+                       (_loginManager.UserInfo.Roles.Contains("Maintenance") ||
+                        _loginManager.UserInfo.Roles.Contains("PropertyAdmin"));
+            }
+        }
+
         public ICommand ScheduleCommand
         {
             get
