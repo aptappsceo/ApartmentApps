@@ -55,11 +55,16 @@ namespace ApartmentApps.Api
                     {
                         var customerEmail = oldCustomer.Email;
                         var user = DbContext.Users.FirstOrDefault(p => p.Email == customerEmail && p.Archived == false);
+
                         if (user != null)
                         {
-                            user.Archived = true;
-                            DbContext.SaveChanges();
-                            logger.Info($"Email {oldCustomer.Email} Archived");
+                            if (user.Roles.Any(p => p.RoleId == "Resident"))
+                            {
+                                user.Archived = true;
+                                DbContext.SaveChanges();
+                                logger.Info($"Email {oldCustomer.Email} Archived");
+                            }
+                            
                         }
 
                     }

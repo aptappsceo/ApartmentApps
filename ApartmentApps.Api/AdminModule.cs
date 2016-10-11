@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Api.ViewModels;
@@ -9,9 +10,7 @@ namespace ApartmentApps.Api.Modules
 {
     public class AdminModule : Module<PortalConfig>, IMenuItemProvider, IFillActions
     {
-        public IKernel Kernel { get; set; }
-
-
+     
         public override PortalConfig Config => new PortalConfig()
         {
             Enabled = true,
@@ -21,7 +20,7 @@ namespace ApartmentApps.Api.Modules
 
         public AdminModule(IKernel kernel, IUserContext userContext) : base(kernel, null, userContext)
         {
-            Kernel = kernel;
+     
         }
 
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
@@ -40,9 +39,9 @@ namespace ApartmentApps.Api.Modules
 
             }
             if (UserContext.IsInRole("Admin"))
-            {
+            {//3D75E8
 
-                var checkins = new MenuItemViewModel("AA Admin", "fa-heartbeat");
+                var checkins = new MenuItemViewModel("AA Admin", "fa-heartbeat") {Index = Int32.MaxValue};
                 foreach (var module in Kernel.GetAll<IModule>().OfType<IAdminConfigurable>())
                 {
                     checkins.Children.Add(new MenuItemViewModel(module.Name, "fa-gear", "Index", module.SettingsController));
@@ -58,14 +57,13 @@ namespace ApartmentApps.Api.Modules
                 menuItems.Add(new MenuItemViewModel("Dashboard", "fa-group", "Index", "Dashboard"));
             }
 
-
-
         }
 
         public void FillActions(List<ActionLinkModel> actions, object viewModel)
         {
             //   <a class="btn btn-white btn-xs modal-link" href="@Url.Action("Entry", "UserManagement", new {id = item.Id})"><i class="fa fa-edit"></i> Edit</a>
             //< a class="btn btn-white btn-xs" href="@Url.Action("Delete", "UserManagement", new {id = item.Id})"><i class="fa fa-remove"></i> Delete</a>
+            
             var vm = viewModel as UserBindingModel;
             if (vm != null)
             {
@@ -75,7 +73,37 @@ namespace ApartmentApps.Api.Modules
                     IsDialog = true
                 });
             }
-            
+
+            if (!UserContext.IsInRole("Admin")) return;
+
+            var unitViewModel = viewModel as UnitViewModel;
+            if (unitViewModel != null)
+            {
+                actions.Add(new ActionLinkModel("Delete", "Delete", "Units", new { id = unitViewModel.Id }));
+                actions.Add(new ActionLinkModel("Edit", "Entry", "Units", new { id = unitViewModel.Id })
+                {
+                    IsDialog = true
+                });
+            }
+            var buildingViewModel = viewModel as BuildingViewModel;
+            if (buildingViewModel != null)
+            {
+                actions.Add(new ActionLinkModel("Delete", "Delete", "Buildings", new { id = buildingViewModel.Id }));
+                actions.Add(new ActionLinkModel("Edit", "Entry", "Buildings", new { id = buildingViewModel.Id })
+                {
+                    IsDialog = true
+                });
+            }
+            var propertyViewModel = viewModel as PropertyBindingModel;
+            if (propertyViewModel != null)
+            {
+                //actions.Add(new ActionLinkModel("Delete", "Delete", "Property", new { id = vm.Id }));
+                actions.Add(new ActionLinkModel("Edit", "Entry", "Property", new { id = propertyViewModel.Id })
+                {
+                    IsDialog = true
+                });
+                actions.Add(new ActionLinkModel("Switch To Property", "ChangeProperty", "Account", new { id = propertyViewModel.Id }));
+            }
 
         }
     }

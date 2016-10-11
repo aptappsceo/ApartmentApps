@@ -103,7 +103,7 @@
                 <h3>Active</h3>
                 foreach (var lease in activeLeaseItems)
                 {
-                    <div class="well">
+                    <div class="social-feed-box social-body">
                         <strong>@lease.Title</strong>
                         @if (lease.UsesInterval)
                         {
@@ -152,7 +152,7 @@
                 <h3>Suspended</h3>
                 foreach (var lease in suspendedLeaseItems)
                 {
-                    <div class="well">
+                    <div class="social-feed-box social-body">
                         <strong>@lease.Title</strong>
                         @if (lease.UsesInterval)
                         {
@@ -197,7 +197,7 @@
                 <h3>Archived</h3>
                 foreach (var lease in archivedLeaseItems)
                 {
-                    <div class="well">
+                    <div class="social-feed-box social-body">
                         <strong>@lease.Title</strong>
                         <div class="space-15"></div>
                         <span>Amount: $@lease.Amount.ToString("#.##")</span><br/>
@@ -223,7 +223,7 @@
                 <h3>Outstanding</h3>
                 foreach (var invoice in outstandingInvoices)
                 {
-                    <div class="well">
+                    <div class="social-feed-box social-body">
                         <strong>@invoice.Title</strong>
                         @if (invoice.UrgencyState == InvoiceUrgencyState.Available)
                         {
@@ -275,7 +275,7 @@
 
                 foreach (var invoice in processingInvoices)
                 {
-                    <div class="well">
+                    <div class="social-feed-box social-body">
                         <strong>@invoice.Title</strong>
                         <div class="space-15"></div>
                         <span>Due: @invoice.DueDate.ToString("g")</span><br/>
@@ -295,7 +295,7 @@
                 <h3>Archived</h3>
                 foreach (var invoice in archivedInvoices)
                 {
-                    <div class="well">
+                    <div class="social-feed-box social-body">
                         <strong>@invoice.Title</strong>
                         <div class="space-15"></div>
                         <span>Amount: $@invoice.Amount.ToString("#.##")</span><br/>
@@ -329,7 +329,7 @@
                 <h3>Pending</h3>
                 foreach (var transaction in pendingTransactions)
                 {
-                    <div class="well">
+                    <div class="social-feed-box social-body">
                         <strong>Transaction #@transaction.Id</strong>
                         <div class="space-15"></div>
                         <span>Comments: @transaction.StateMessage</span><br/>
@@ -376,7 +376,7 @@
                 <h3>Complete</h3>
                 foreach (var transaction in completeTransactions)
                 {
-                    <div class="well">
+                    <div class="social-feed-box social-body">
                         <strong>Transaction #@transaction.Id</strong>
                         <div class="space-15"></div>
                         <span>Comments: @transaction.StateMessage</span><br />
@@ -411,7 +411,7 @@
                 <h3>Failed</h3>
                 foreach (var transaction in failedTransactions)
                 {
-                    <div class="well">
+                    <div class="social-feed-box social-body">
                         <strong>Transaction #@transaction.Id</strong>
                         <div class="space-15"></div>
                         <span>Comments: @transaction.StateMessage</span><br />
@@ -449,7 +449,7 @@
         <h3>Payment Options</h3>
         @foreach (var opt in Model.PaymentOptions)
         {
-            <div class="well panel-info">
+            <div class="social-feed-box social-body panel-info">
                 <h4>@opt.FriendlyName</h4>
                 <strong>Id: @opt.Id</strong>
                 <strong>Type: @opt.Type</strong>

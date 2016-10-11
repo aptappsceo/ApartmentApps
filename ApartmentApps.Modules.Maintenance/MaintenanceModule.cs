@@ -25,11 +25,11 @@ namespace ApartmentApps.Api.Modules
             }
             if (UserContext.IsInRole("Maintenance") || UserContext.IsInRole("PropertyAdmin"))
             {
-                menuItem.Children.Add(new MenuItemViewModel("Schedule", "fa-folder", "MySchedule", "MaitenanceRequests"));
+                menuItem.Children.Add(new MenuItemViewModel("Schedule", "fa-calendar-o", "MySchedule", "MaitenanceRequests"));
             }
             if (UserContext.IsInRole("Maintenance") || UserContext.IsInRole("PropertyAdmin"))
             {
-                menuItem.Children.Add(new MenuItemViewModel("Monthly Report", "fa-folder", "MonthlyReport", "MaitenanceRequests"));
+                menuItem.Children.Add(new MenuItemViewModel("Monthly Report", "fa-area-chart", "MonthlyReport", "MaitenanceRequests"));
             }
             menuItems.Add(menuItem);
         }
@@ -40,7 +40,8 @@ namespace ApartmentApps.Api.Modules
             if (mr != null)
             {
                 actions.Add(new ActionLinkModel("Details", "Details", "MaitenanceRequests", new { id = mr.Id }));
-                if (UserContext.IsInRole("MaintenanceSupervisor"))
+                
+                if (UserContext.IsInRole("MaintenanceSupervisor") || UserContext.IsInRole("PropertyAdmin"))
                 {
                     actions.Add(new ActionLinkModel("Edit", "Entry", "MaitenanceRequests", new { id = mr.Id })
                     {
@@ -51,7 +52,7 @@ namespace ApartmentApps.Api.Modules
             // If its actions for a maintenance request
             if (mr != null && Config.SupervisorMode) // Only allow maintenance assigning when in supervisor mode
             {
-                actions.Add(new ActionLinkModel("Assign To", "AssignRequest", "MaitenanceRequests",new {id=mr.Id}));
+                actions.Add(new ActionLinkModel("Assign To", "AssignRequest", "MaitenanceRequests",new {id=mr.Id}) {IsDialog = true});
             }
         }
     }

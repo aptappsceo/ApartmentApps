@@ -30,7 +30,7 @@ using Authentication = ApartmentApps.Payments.Forte.Forte.Client.Authentication;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class PaymentsModule : Module<PaymentsConfig>, IMenuItemProvider, IAdminConfigurable, IPaymentsService, IFillActions
+    public class PaymentsModule : Module<PaymentsConfig>, IMenuItemProvider, IAdminConfigurable, IPaymentsService, IFillActions, IWebJob
     {
         private readonly IRepository<UserLeaseInfo> _leaseRepository;
         private readonly IRepository<Invoice> _invoiceRepository;
@@ -53,13 +53,13 @@ namespace ApartmentApps.Api.Modules
             _transactionHistory = transactionHistory;
         }
 
-     public void FillActions(List<ActionLinkModel> actions, object viewModel)
+        public void FillActions(List<ActionLinkModel> actions, object viewModel)
         {
             var user = viewModel as UserBindingModel;
-            if (user != null)
+            if (user != null && !Config.UseUrl)
             {
                 //paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments",new {id = UserContext.CurrentUser.Id}));
-                actions.Add(new ActionLinkModel("Payments Overview", "UserPaymentsOverview", "Payments", new { id = user.Id})
+                actions.Add(new ActionLinkModel("Payments Overview", "UserPaymentsOverview", "Payments", new { id = user.Id })
                 {
                     Icon = "fa-credit-card",
                     Group = "Payments"
@@ -72,21 +72,24 @@ namespace ApartmentApps.Api.Modules
             if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin") &&
                 !UserContext.IsInRole("Resident")) return;
 
-
-            var paymentsHome = new MenuItemViewModel("Payments", "fa-money", "Index", "Payments");
-
-            if (UserContext.IsInRole("Admin") || UserContext.IsInRole("PropertyAdmin"))
+            if (!Config.UseUrl)
             {
-                paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus", "CreateUserLeaseInfoFor", "Payments"));
-         //       paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
+                var paymentsHome = new MenuItemViewModel("Payments", "fa-money", "Index", "Payments");
+
+                if (UserContext.IsInRole("Admin") || UserContext.IsInRole("PropertyAdmin"))
+                {
+                    paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus", "CreateUserLeaseInfoFor", "Payments"));
+                    //       paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
+                }
+
+                if (Config.Enabled && UserContext.IsInRole("Resident"))
+                {
+                    paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments", new { id = UserContext.CurrentUser.Id }));
+                }
+
+                menuItems.Add(paymentsHome);
             }
 
-            if (UserContext.IsInRole("Resident"))
-            {
-                paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments", new { id = UserContext.CurrentUser.Id }));
-            }
-
-            menuItems.Add(paymentsHome);
 
         }
 
@@ -106,19 +109,19 @@ namespace ApartmentApps.Api.Modules
         public async Task<PaymentListBindingModel> GetPaymentSummaryFor(string userId, string paymentOptionId)
         {
             var user = Context.Users.Find(userId);
-            if(user == null) throw new KeyNotFoundException("User Not Found");
+            if (user == null) throw new KeyNotFoundException("User Not Found");
 
             var paymentOption = Context.PaymentOptions.Find(paymentOptionId);
             if (paymentOption == null) throw new KeyNotFoundException("Payment Option Not Found");
             var dateTime = user.Property.TimeZone.Now();
 
-            var invoices = _invoiceRepository.GetAvailableBy(dateTime,userId).ToArray();
+            var invoices = _invoiceRepository.GetAvailableBy(dateTime, userId).ToArray();
 
-            decimal convFee =  GetConvenienceFeeForPaymentOption(Convert.ToInt32(paymentOptionId), userId);
-          
+            decimal convFee = GetConvenienceFeeForPaymentOption(Convert.ToInt32(paymentOptionId), userId);
+
             return new PaymentListBindingModel()
             {
-                Items = invoices.Concat(new [] {new Invoice() {Amount = convFee, Title = "Convenience Fee"} }).ToLines()
+                Items = invoices.Concat(new[] { new Invoice() { Amount = convFee, Title = "Convenience Fee" } }).ToLines()
             };
         }
 
@@ -155,12 +158,12 @@ namespace ApartmentApps.Api.Modules
         {
             var auth = Authenticate.GetClientAuthTicket(ApiLoginId, Key);
             var userId = addCreditCard.UserId ?? UserContext.UserId;
-            int clientId = await EnsureClientId(auth,userId);
+            int clientId = await EnsureClientId(auth, userId);
             PaymentMethod payment = new PaymentMethod();
             payment.AcctHolderName = addCreditCard.AccountHolderName;
             payment.CcCardNumber = addCreditCard.CardNumber;
             payment.CcExpirationDate = addCreditCard.ExpirationDate;
-            payment.CcCardType = (CcCardType) Enum.Parse(typeof (CcCardType), addCreditCard.CardType.ToString());
+            payment.CcCardType = (CcCardType)Enum.Parse(typeof(CcCardType), addCreditCard.CardType.ToString());
             payment.Note = addCreditCard.FriendlyName;
             payment.ClientID = clientId;
             payment.MerchantID = MerchantId;
@@ -173,15 +176,18 @@ namespace ApartmentApps.Api.Modules
                     var paymentMethodId = result.Body.createPaymentMethodResult;
                     var userPaymentOption = new UserPaymentOption()
                     {
-                        UserId = userId, Type = PaymentOptionType.CreditCard, FriendlyName = addCreditCard.FriendlyName, TokenId = paymentMethodId.ToString()
+                        UserId = userId,
+                        Type = PaymentOptionType.CreditCard,
+                        FriendlyName = addCreditCard.FriendlyName,
+                        TokenId = paymentMethodId.ToString()
                     };
                     Context.PaymentOptions.Add(userPaymentOption);
                     Context.SaveChanges();
-                    return new AddCreditCardResult() {PaymentOptionId = userPaymentOption.Id};
+                    return new AddCreditCardResult() { PaymentOptionId = userPaymentOption.Id };
                 }
                 catch (Exception ex)
                 {
-                    return new AddCreditCardResult() {ErrorMessage = ex.Message};
+                    return new AddCreditCardResult() { ErrorMessage = ex.Message };
                 }
             }
         }
@@ -209,15 +215,18 @@ namespace ApartmentApps.Api.Modules
                     var paymentMethodId = result.Body.createPaymentMethodResult;
                     var userPaymentOption = new UserPaymentOption()
                     {
-                        UserId = userId, Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking, FriendlyName = addCreditCard.FriendlyName, TokenId = paymentMethodId.ToString()
+                        UserId = userId,
+                        Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking,
+                        FriendlyName = addCreditCard.FriendlyName,
+                        TokenId = paymentMethodId.ToString()
                     };
                     Context.PaymentOptions.Add(userPaymentOption);
                     Context.SaveChanges();
-                    return new AddBankAccountResult() {PaymentOptionId = userPaymentOption.Id};
+                    return new AddBankAccountResult() { PaymentOptionId = userPaymentOption.Id };
                 }
                 catch (Exception ex)
                 {
-                    return new AddBankAccountResult() {ErrorMessage = ex.Message};
+                    return new AddBankAccountResult() { ErrorMessage = ex.Message };
                 }
             }
         }
@@ -226,7 +235,9 @@ namespace ApartmentApps.Api.Modules
         {
             return Context.PaymentOptions.Where(p => p.UserId == UserContext.UserId).Select(x => new PaymentOptionBindingModel()
             {
-                FriendlyName = x.FriendlyName, Type = x.Type, Id = x.Id,
+                FriendlyName = x.FriendlyName,
+                Type = x.Type,
+                Id = x.Id,
             });
         }
 
@@ -234,7 +245,9 @@ namespace ApartmentApps.Api.Modules
         {
             return Context.PaymentOptions.Where(p => p.UserId == userId).Select(x => new PaymentOptionBindingModel()
             {
-                FriendlyName = x.FriendlyName, Type = x.Type, Id = x.Id,
+                FriendlyName = x.FriendlyName,
+                Type = x.Type,
+                Id = x.Id,
             });
         }
 
@@ -295,22 +308,22 @@ namespace ApartmentApps.Api.Modules
         {
             var auth = Authenticate.GetClientAuthTicket(ApiLoginId, Key);
             var userId = makePaymentBindingModel.UserId ?? UserContext.UserId;
-            int clientId = await EnsureClientId(auth,userId);
+            int clientId = await EnsureClientId(auth, userId);
 
             var paymentOptionId = Convert.ToInt32(makePaymentBindingModel.PaymentOptionId);
 
             var paymentOption = Context.PaymentOptions.FirstOrDefault(p => p.UserId == userId && p.Id == paymentOptionId);
             if (paymentOption == null)
             {
-                return new MakePaymentResult() {ErrorMessage = "Payment Option Not Found."};
+                return new MakePaymentResult() { ErrorMessage = "Payment Option Not Found." };
             }
 
-            decimal convFee = GetConvenienceFeeForPaymentOption(paymentOptionId,userId);
+            decimal convFee = GetConvenienceFeeForPaymentOption(paymentOptionId, userId);
 
             var user = Context.Users.Find(userId);
             var by = user.Property.TimeZone.Now();
             //TODO: change later to get UserId from parameter
-            var invoices = _invoiceRepository.GetAvailableBy(by,userId).ToArray();
+            var invoices = _invoiceRepository.GetAvailableBy(by, userId).ToArray();
             var total = invoices.Sum(s => s.Amount) + convFee;
 
             PaymentGatewaySoapClient transactionClient = null;
@@ -328,8 +341,12 @@ namespace ApartmentApps.Api.Modules
 
             var response = transactionClient.ExecuteSocketQuery(new ExecuteSocketQueryParams()
             {
-                PgMerchantId = MerchantId.ToString(), PgClientId = clientId.ToString(), PgPaymentMethodId = paymentOption.TokenId, PgPassword = MerchantPassword, //"LEpLqvx7Y5L200"
-                PgTotalAmount = pgTotalAmount, PgTransactionType = "10", //sale
+                PgMerchantId = MerchantId.ToString(),
+                PgClientId = clientId.ToString(),
+                PgPaymentMethodId = paymentOption.TokenId,
+                PgPassword = MerchantPassword, //"LEpLqvx7Y5L200"
+                PgTotalAmount = pgTotalAmount,
+                PgTransactionType = "10", //sale
             });
 
 
@@ -354,7 +371,7 @@ namespace ApartmentApps.Api.Modules
             };
         }
 
-        private async Task<int> EnsureClientId(Authentication auth,string userId)
+        private async Task<int> EnsureClientId(Authentication auth, string userId)
         {
             var user = UserContext.CurrentUser;
             if (!string.IsNullOrEmpty(userId))
@@ -371,7 +388,10 @@ namespace ApartmentApps.Api.Modules
                 {
                     var result = await client.createClientAsync(auth, new ClientRecord()
                     {
-                        MerchantID = MerchantId, FirstName = user.FirstName, LastName = user.LastName, Status = ClientStatus.Active
+                        MerchantID = MerchantId,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Status = ClientStatus.Active
                     });
                     user.ForteClientId = clientId = result.Body.createClientResult;
                     Context.SaveChanges();
@@ -474,6 +494,15 @@ namespace ApartmentApps.Api.Modules
             //_leaseService.OnTransactionComplete(transaction,s,user.Property.TimeZone.Now());
             //_transactionRepository.Save();
         }
+
+        public TimeSpan Frequency => new TimeSpan(5, 0, 0);
+        public int JobStartHour => 0;
+        public int JobStartMinute => 0;
+        public void Execute(ILogger logger)
+        {
+            UpdateOpenForteTransactions();
+            logger.Info("Open transactions updated from forte.");
+        }
     }
 }
 
@@ -547,7 +576,9 @@ public static class PaymentsListExtensions
         {
             var line = new PaymentLineBindingModel()
             {
-                Format = PaymentSummaryFormat.Default, Price = $"{inv.Amount:$#,##0.00;($#,##0.00);Zero}", Title = inv.Title
+                Format = PaymentSummaryFormat.Default,
+                Price = $"{inv.Amount:$#,##0.00;($#,##0.00);Zero}",
+                Title = inv.Title
             };
             total += inv.Amount;
             list.Add(line);
@@ -555,7 +586,9 @@ public static class PaymentsListExtensions
 
         list.Add(new PaymentLineBindingModel()
         {
-            Format = PaymentSummaryFormat.Total, Price = $"{total:$#,##0.00;($#,##0.00);Zero}", Title = "Total"
+            Format = PaymentSummaryFormat.Total,
+            Price = $"{total:$#,##0.00;($#,##0.00);Zero}",
+            Title = "Total"
         });
 
         return list;

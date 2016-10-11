@@ -32,18 +32,9 @@
     <WarningLevel>3</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <ConsolePause>false</ConsolePause>
-    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <Debugger>Xamarin</Debugger>
-    <AndroidSupportedAbis>
-    </AndroidSupportedAbis>
-    <MandroidI18n>
-    </MandroidI18n>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
-    <AndroidLinkSkip />
-    <BundleAssemblies>False</BundleAssemblies>
-    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-    <AndroidStoreUncompressedFileExtensions />
-    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -64,6 +55,15 @@
     <MandroidI18n>
     </MandroidI18n>
     <Debugger>Xamarin</Debugger>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AndHUD">
@@ -190,9 +190,6 @@
     <Reference Include="Square.Picasso, Version=2.5.2.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Square.Picasso.2.5.2.1\lib\MonoAndroid\Square.Picasso.dll</HintPath>
     </Reference>
-    <Reference Include="PhotoView">
-      <HintPath>..\..\Components\PhotoView-1.2.4\lib\android\PhotoView.dll</HintPath>
-    </Reference>
     <Reference Include="RecyclerViewAnimators, Version=2.1.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\RecyclerViewAnimators.2.1.0.0\lib\MonoAndroid403\RecyclerViewAnimators.dll</HintPath>
     </Reference>
@@ -250,6 +247,9 @@
     <Reference Include="ZXingNetMobile">
       <HintPath>..\..\packages\ZXing.Net.Mobile.2.1.47\lib\MonoAndroid403\ZXingNetMobile.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="PhotoView">
+      <HintPath>..\..\Components\PhotoView-1.2.4.1\lib\android\PhotoView.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -422,10 +422,6 @@
       <Version>0.2.1.0</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
-    <XamarinComponentReference Include="azure-messaging">
-      <Version>1.1.5.6</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
     <XamarinComponentReference Include="GCMClient">
       <Version>1.0</Version>
       <Visible>False</Visible>
@@ -435,12 +431,12 @@
       <Version>4.1.0.3</Version>
     </XamarinComponentReference>
     <XamarinComponentReference Include="PhotoView">
-      <Version>1.2.4</Version>
       <Visible>False</Visible>
+      <Version>1.2.4.1</Version>
     </XamarinComponentReference>
     <XamarinComponentReference Include="zxing.net.mobile">
-      <Version>2.0.4.17</Version>
       <Visible>False</Visible>
+      <Version>2.1.12</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>

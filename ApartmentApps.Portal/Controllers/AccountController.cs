@@ -179,6 +179,12 @@ namespace ApartmentApps.Portal.Controllers
             {
                 var phnNumber = model.PhoneNumber.NumbersOnly();
                 user = _dbcontext.Users.FirstOrDefault(p => p.PhoneNumber == phnNumber);
+
+            }
+            else
+            {
+                user.PhoneNumber = model.PhoneNumber.NumbersOnly();
+                _dbcontext.SaveChanges();
             }
             if (user != null && model.Password == model.ConfirmPassword)
             {

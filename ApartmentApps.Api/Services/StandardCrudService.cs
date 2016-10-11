@@ -29,7 +29,7 @@ namespace ApartmentApps.Portal.Controllers
         [DisplayName("Value")]
         public string Value { get; set; }
     }
-    
+
     public abstract class StandardCrudService<TModel> : IService where TModel : IBaseEntity, new()
     {
         protected readonly IKernel _kernel;
@@ -42,19 +42,19 @@ namespace ApartmentApps.Portal.Controllers
         public IRepository<ServiceQuery> ServiceQueries { get; set; }
 
         protected StandardCrudService(IKernel kernel, IRepository<TModel> repository)
-        {   
+        {
             _kernel = kernel;
             Repository = repository;
-         
+
         }
 
-        public Type ModelType => typeof (TModel);
+        public Type ModelType => typeof(TModel);
 
-       
+
 
         public IEnumerable<TViewModel> GetAll<TViewModel>()
         {
-            
+
             return GetAll<TViewModel>(_kernel.Get<IMapper<TModel, TViewModel>>());
         }
 
@@ -70,7 +70,9 @@ namespace ApartmentApps.Portal.Controllers
                 return res2.Select(mapper2.ToViewModel);
 
             }
-            var result = Repository.GetAll().DynamicQuery<TModel>(query, !string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, !string.IsNullOrEmpty(orderBy) ? orderByDesc : DefaultOrderByDesc);
+            var result = Repository.GetAll().DynamicQuery<TModel>(query, null, !string.IsNullOrEmpty(orderBy) ? orderByDesc : DefaultOrderByDesc);
+
+            //var result = Repository.GetAll().DynamicQuery<TModel>(query, !string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, !string.IsNullOrEmpty(orderBy) ? orderByDesc : DefaultOrderByDesc);
             count = result.Count();
             //if (string.IsNullOrEmpty(orderBy))
             //{
@@ -88,14 +90,15 @@ namespace ApartmentApps.Portal.Controllers
             //}
             //else
             //{
-              //  result = result.OrderBy(orderBy, orderByDesc);
-                result = result.Skip(resultsPerPage * (page - 1));
-                result = result.Take(resultsPerPage);
+            //  result = result.OrderBy(orderBy, orderByDesc);
+            result = result.OrderBy(!string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, orderByDesc);
+            result = result.Skip(resultsPerPage * (page - 1));
+            result = result.Take(resultsPerPage);
             //}
             var res = result.ToArray();
             var mapper = _kernel.Get<IMapper<TModel, TViewModel>>();
             return res.Select(mapper.ToViewModel);
-           
+
         }
 
         public virtual bool DefaultOrderByDesc => true;
@@ -108,7 +111,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public IEnumerable<TViewModel> GetRange<TViewModel>(int skip, int take)
         {
-            return GetRange(_kernel.Get<IMapper<TModel,TViewModel>>(), skip, take);
+            return GetRange(_kernel.Get<IMapper<TModel, TViewModel>>(), skip, take);
         }
 
         public IEnumerable<TViewModel> GetRange<TViewModel>(IMapper<TModel, TViewModel> mapper, int skip, int take)
@@ -130,7 +133,7 @@ namespace ApartmentApps.Portal.Controllers
             Repository.Save();
         }
 
-        public TViewModel Find<TViewModel>(string id) where TViewModel : class,new()
+        public TViewModel Find<TViewModel>(string id) where TViewModel : class, new()
         {
             return Find(id, _kernel.Get<IMapper<TModel, TViewModel>>());
         }
@@ -138,7 +141,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             return _kernel.Get<IRepository<TModel>>();
         }
-        public TViewModel Find<TViewModel>(string id, IMapper<TModel, TViewModel> mapper) where TViewModel : class,new()
+        public TViewModel Find<TViewModel>(string id, IMapper<TModel, TViewModel> mapper) where TViewModel : class, new()
         {
             var vm = CreateNew<TViewModel>();
             var item = Repository.Find(id);
@@ -175,7 +178,7 @@ namespace ApartmentApps.Portal.Controllers
             TModel item = default(TModel);
             if (result != null)
             {
-                _kernel.Get<IMapper<TModel,TViewModel>>().ToModel(unit, result);
+                _kernel.Get<IMapper<TModel, TViewModel>>().ToModel(unit, result);
                 Repository.Save();
                 mapper.ToViewModel(result, unit);
             }

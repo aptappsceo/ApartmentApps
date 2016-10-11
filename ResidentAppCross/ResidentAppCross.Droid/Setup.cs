@@ -166,7 +166,6 @@ namespace ResidentAppCross.Droid
             App.ApartmentAppsClient.GetAuthToken = () => AuthToken;
             App.ApartmentAppsClient.SetAuthToken = (v) => AuthToken = v;
 
-
             LoginService.DevicePlatform = "gcm";
             LoginService.DeviceHandle = DeviceToken;
 
@@ -187,6 +186,8 @@ namespace ResidentAppCross.Droid
             {
                 e.PrintStackTrace();
             }
+
+             MobileBarcodeScanner.Initialize(this);
 
         }
 

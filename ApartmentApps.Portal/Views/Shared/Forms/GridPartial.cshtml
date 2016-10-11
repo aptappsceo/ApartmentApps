@@ -18,51 +18,32 @@
                     <a href="@Url.Action("Grid", Html.Controller(), new {page = Model.CurrentPage, orderBy = property.Name, recordsPerPage = Model.RecordsPerPage, descending = !Model.Descending})">@property.Label</a>
                 </th>
             }
-            @if (Model.Editable && idProperty != null)
-            {
+        
                 <th></th>
-            }
-            @if (Model.Deletable && idProperty != null)
-            {
-                <th></th>
-            }
-            <th></th>
+            
+
         </tr>
     </thead>
     <tbody>
 
-    @foreach (var item in Model.ObjectItems)
-    {
-
-        <tr>
-            @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
-            {
-                <td>@property.PropertyInfo.GetValue(item)</td>
-            }
-
-
-            <td>
-                @if (Model.Editable && idProperty != null)
+        @foreach (var item in Model.ObjectItems)
+        {
+            var vm = item as BaseViewModel;
+            <tr>
+                @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
                 {
-                    <a class="btn btn-primary btn-xs modal-link" href="@Url.Action("Entry", new {id = idProperty.PropertyInfo.GetValue(item)})">Edit</a>
+                    <td>@property.PropertyInfo.GetValue(item)</td>
                 }
-                @if (Model.Deletable && idProperty != null)
-                {
-                    <a class="btn btn-primary btn-xs modal-link" href="@Url.Action("Delete", new {id = idProperty.PropertyInfo.GetValue(item)})">Delete</a>
-                }
-            </td>
-            <td>
-                @foreach (var actionLink in Model.ActionLinks)
-                {
-                    var linkModel = actionLink.GetValue(item) as ActionLinkModel;
-                    <a class="btn btn-primary btn-xs" href="@Url.Action(linkModel.Action, linkModel.Controller, linkModel.Parameters)">@linkModel.Label</a>
+                <td>
+                    @if (vm != null)
+                    {
+                        @Html.Partial("_ActionLinks", vm)
+                    }
+                </td>
 
-                }
-            </td>
+            </tr>
 
-        </tr>
-
-    }
+        }
 
     </tbody>
 </table>
@@ -70,18 +51,18 @@
 <div>
     @Html.PageNavigator(Model.ObjectItems as IPaging)
     @*<ul class="pagination">
-        <li class="paginate_button next">
-            <a href="@Url.Action("Grid", Html.Controller(), new {page = 1, orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})">First</a>
-        </li>
-        <li class="paginate_button previous" id="editable_previous"><a href="@Url.Action("Grid", Html.Controller(), new {page = Math.Max(Model.CurrentPage - 1, 1), orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})" aria-controls="editable" data-dt-idx="0" tabindex="0">Previous</a></li>
-        @for (var i = Math.Max(1, Model.CurrentPage - 5); i <= Math.Min(Model.CurrentPage + 10, Model.PageCount); i++)
-        {
-            <li class="paginate_button @(i == Model.CurrentPage ? "active" : "")">
-                <a href="@Url.Action("Grid", Html.Controller(), new {page = i, orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})" aria-controls="editable" data-dt-idx="1" tabindex="0">@i</a>
+            <li class="paginate_button next">
+                <a href="@Url.Action("Grid", Html.Controller(), new {page = 1, orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})">First</a>
             </li>
-        }
+            <li class="paginate_button previous" id="editable_previous"><a href="@Url.Action("Grid", Html.Controller(), new {page = Math.Max(Model.CurrentPage - 1, 1), orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})" aria-controls="editable" data-dt-idx="0" tabindex="0">Previous</a></li>
+            @for (var i = Math.Max(1, Model.CurrentPage - 5); i <= Math.Min(Model.CurrentPage + 10, Model.PageCount); i++)
+            {
+                <li class="paginate_button @(i == Model.CurrentPage ? "active" : "")">
+                    <a href="@Url.Action("Grid", Html.Controller(), new {page = i, orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})" aria-controls="editable" data-dt-idx="1" tabindex="0">@i</a>
+                </li>
+            }
 
-        <li class="paginate_button next"><a href="@Url.Action("Grid", Html.Controller(), new {page = Math.Min(Model.CurrentPage + 1, Model.PageCount), orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})">Next</a></li>
-        <li class="paginate_button next"><a href="@Url.Action("Grid", Html.Controller(), new {page = Model.PageCount, orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})">Last</a></li>
-    </ul>*@
+            <li class="paginate_button next"><a href="@Url.Action("Grid", Html.Controller(), new {page = Math.Min(Model.CurrentPage + 1, Model.PageCount), orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})">Next</a></li>
+            <li class="paginate_button next"><a href="@Url.Action("Grid", Html.Controller(), new {page = Model.PageCount, orderBy = Model.OrderBy, recordsPerPage = Model.RecordsPerPage, descending = Model.Descending})">Last</a></li>
+        </ul>*@
 </div>

@@ -16,7 +16,7 @@
     <a class="btn btn-success btn-outline btn-s" href="@Url.Action("Index", "Messaging")">Back to Campaigns</a>
     <a class="btn btn-success btn-outline btn-s" href="@Url.Action("Entry","Messaging", new {id=Model.Id})">Compose</a>
     <a class="btn btn-success btn-outline btn-s" href="@Url.Action("SelectTargets","CampaignTargets", new {messageId=Model.Id})">Select Targets</a>
-    <a class="btn btn-primary btn-s" href="@Url.Action("SendMessage","Messaging", new {id=Model.Id})">Send Now</a>
+    <a class="btn btn-primary btn-s" href="@Url.Action("SendMessage","Messaging", new {messageId=Model.Id})">Send Now</a>
 
 </div>
 <br />
