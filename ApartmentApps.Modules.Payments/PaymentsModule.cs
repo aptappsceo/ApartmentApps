@@ -82,7 +82,7 @@ namespace ApartmentApps.Api.Modules
                     //       paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
                 }
 
-                if (UserContext.IsInRole("Resident"))
+                if (Config.Enabled && UserContext.IsInRole("Resident"))
                 {
                     paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments", new { id = UserContext.CurrentUser.Id }));
                 }

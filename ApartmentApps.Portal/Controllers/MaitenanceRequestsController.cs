@@ -435,7 +435,7 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult Print(string id)
         {
             var item = Service.Find<MaintenanceRequestViewModel>(id);
-            return View("Print", item);
+            return View(item);
         }
 
         public MaitenanceRequestsController(IKernel kernel, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service) : base(kernel, formService, indexService, context, userContext, service)
