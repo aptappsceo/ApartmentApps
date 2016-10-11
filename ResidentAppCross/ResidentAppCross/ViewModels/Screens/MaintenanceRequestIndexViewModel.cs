@@ -150,8 +150,7 @@ namespace ResidentAppCross.ViewModels.Screens
 //                });
 
               return this.TaskCommand(async context =>
-                                {
-
+              {
                 this.Publish(new RequestsIndexUpdateStarted(this));
 
                 var requests = await _service.Maitenance.ListRequestsAsync();

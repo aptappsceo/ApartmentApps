@@ -14,6 +14,7 @@ using Android.Support.V4.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using ApartmentApps.Client;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Droid.Shared.Attributes;
 using MvvmCross.Droid.Shared.Caching;
@@ -88,6 +89,14 @@ namespace ResidentAppCross.Droid.Views
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
+            
+            #if DEBUG
+            var service = Mvx.Resolve<IApartmentAppsAPIService>();
+            service.BaseUri = App.DevEndpoint;
+            Console.WriteLine($"Endpoint Substitues for DEBUG: {App.DevEndpoint}");
+            #endif
+
             ProcessIntent(Intent);
         }
 

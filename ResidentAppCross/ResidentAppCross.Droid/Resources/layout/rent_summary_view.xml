@@ -38,7 +38,7 @@
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/PayButton"
-        android:text="CHECK OUT"
+        android:text="PAY NOW"
         android:layout_alignParentBottom="true"
         android:backgroundTint="@color/accent"
         android:layout_width="match_parent"

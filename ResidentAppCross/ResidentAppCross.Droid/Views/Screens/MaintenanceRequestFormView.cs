@@ -51,12 +51,12 @@ namespace ResidentAppCross.Droid.Views
             set.Bind(TypeSelectionSection.Button)
                 .For(b => b.Text)
                 .To(vm => vm.SelectedRequestType.Value)
-                .WithFallback("Select");
+                .WithFallback("Select...");
 
             set.Bind(UnitSelectionSection.Button)
                 .For(b => b.Text)
                 .To(vm => vm.SelectedUnitTitle)
-                .WithFallback("Select");
+                .WithFallback("Select...");
 
             set.Bind(EntrancePermissionSection.Switch).For(s => s.Checked).TwoWay().To(vm => vm.EntrancePermission);
             set.Bind(TypeSelectionSection.Button).To(vm => vm.SelectRequestTypeCommand);

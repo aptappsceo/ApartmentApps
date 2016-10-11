@@ -536,7 +536,7 @@ namespace ResidentAppCross.iOS
                             ViewModel.SelectedOption = item;
                             ViewModel.PayWithSelectedPaymentOption.Execute(null);
                         },
-                        AccessoryType = item => UITableViewCellAccessory.None, //What is displayed on the right edge
+                        AccessoryType = item => UITableViewCellAccessory.DisclosureIndicator, //What is displayed on the right edge
                         CellSelector = () => new UITableViewCell(UITableViewCellStyle.Default,"PaymentOptions_CellView"), //Define how to create cell, if reusables not found
                         CellIdentifier = "PaymentOptions_CellView"
                     };
@@ -587,7 +587,7 @@ namespace ResidentAppCross.iOS
             set.Bind(AddBankAccountSection.MainButton).To(vm => vm.AddBankAccountCommand);
             set.Apply();
 
-
+            SectionContainerGesturesEnabled = false;
 
         }
 

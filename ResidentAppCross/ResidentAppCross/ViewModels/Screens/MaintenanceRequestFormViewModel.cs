@@ -40,7 +40,7 @@ namespace ResidentAppCross.ViewModels
         private string _requestTypeSearchText;
         private int? _selectedPetStatus;
         private string _selectRequestTypeActionTitle;
-        private bool _entrancePermission;
+        private bool _entrancePermission = true;
         
 		public LookupPairModel SelectedUnit {
         	get{
@@ -210,6 +210,7 @@ namespace ResidentAppCross.ViewModels
             {
                 return this.TaskCommand(async context =>
                 {
+                    if(SelectedRequestType == null) context.FailTask("Please, select request type.");
                     var images = Photos.RawImages.Select(p =>
                     {
                         return Convert.ToBase64String(p.Data);
@@ -263,7 +264,7 @@ namespace ResidentAppCross.ViewModels
                         context.FailTask("Failed to load Request Types");
                     }
                     RequestTypes.AddRange(lookupPairModels);
-                    SelectedRequestType = RequestTypes.FirstOrDefault();
+                    //SelectedRequestType = RequestTypes.FirstOrDefault();
                     UpdateRequestTypeSearch();
                 }).OnStart("Loading Request Types...");
             }
@@ -272,7 +273,11 @@ namespace ResidentAppCross.ViewModels
         public bool EntrancePermission
         {
             get { return _entrancePermission; }
-            set { SetProperty(ref _entrancePermission,value); }
+            set
+            {
+                SetProperty(ref _entrancePermission,value); 
+                if(!value) _dialogService.OpenNotification("Attention!", "If you do not give permission to enter, please provide a date and preferred time range (i.e. 1 pm – 5 pm) for a technician to respond to your request in the Comments & Details section of this work order. Appointments are provided Monday – Friday between 9:00 a.m. and 5:00 p.m. only. If we cannot honor your request, we will attempt to contact you to make other arrangements.  Thank you.","Ok");
+            }
         }
 
         public ObservableCollection<PetStatus> PetStatuses

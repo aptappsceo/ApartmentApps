@@ -75,7 +75,7 @@ namespace ResidentAppCross.Droid.Views
 
             /* spinners setup */
             var nowYear = DateTime.Now.Year;
-            var months = Enumerable.Range(1, 12).Select(i => i.ToString()).Select(s => new Java.Lang.String(s)).ToList();
+            var months = Enumerable.Range(1, 12).Select(i => i.ToString("00")).Select(s => new Java.Lang.String(s)).ToList();
             var years = Enumerable.Range(0, 60).Select(i => (nowYear+i).ToString()).Select(s => new Java.Lang.String(s)).ToList();
             ArrayAdapter<String> monthAdapter = new ArrayAdapter<String>(Context, Resource.Layout.spinner_item_text_light, months);
             ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(Context, Resource.Layout.spinner_item_text_light, years);
@@ -89,22 +89,14 @@ namespace ResidentAppCross.Droid.Views
             ExpirationMonthSelection.ItemSelected += (sender, args) =>
             {
                 if (args.Position < 0 || args.Position > months.Count) return;
-                int month = 0;
-                if(int.TryParse(months[args.Position].ToString(),out month))
-                {
-                    ViewModel.Month = month;
-                }
+                ViewModel.Month = months[args.Position].ToString();
 
             };
 
             ExpirationYearSelection.ItemSelected += (sender, args) =>
             {
                 if (args.Position < 0 || args.Position > years.Count) return;
-                int year = 0;
-                if (int.TryParse(years[args.Position].ToString(), out year))
-                {
-                    ViewModel.Year = year;
-                }
+                ViewModel.Year = years[args.Position].ToString();
             };
 
             /*

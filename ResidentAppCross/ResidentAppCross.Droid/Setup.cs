@@ -161,6 +161,8 @@ namespace ResidentAppCross.Droid
             // ExceptionHandler.SaveException(Throwable.FromException(new System.Exception("this is eventual")),Thread.CurrentThread(),listener);
             Instance = this;
 
+
+
             App.ApartmentAppsClient.GetAuthToken = () => AuthToken;
             App.ApartmentAppsClient.SetAuthToken = (v) => AuthToken = v;
 

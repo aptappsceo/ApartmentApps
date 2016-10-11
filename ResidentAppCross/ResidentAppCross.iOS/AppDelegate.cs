@@ -5,6 +5,7 @@ using WindowsAzure.Messaging;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
 using Foundation;
+using HockeyApp.iOS;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Platform;
 using MvvmCross.iOS.Views;
@@ -46,6 +47,11 @@ namespace ResidentAppCross.iOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
+
+            //Analytics
+            var manager = BITHockeyManager.SharedHockeyManager;
+            manager.Configure("397f14a1fe7d4bf68fe8002d8509e45b");
+            manager.StartManager();
 
             // For push notifiations
             LoginService.DevicePlatform = "apns";
