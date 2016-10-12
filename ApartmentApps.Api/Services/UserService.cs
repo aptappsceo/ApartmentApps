@@ -22,7 +22,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public interface IFillSections
     {
-        void FillSections(List<SetionViewModel> )
+        //void FillSections(List<SetionViewModel> )
     }
     public class UserListMapper : BaseMapper<ApplicationUser, UserListModel>
     {

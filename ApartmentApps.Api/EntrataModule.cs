@@ -53,8 +53,10 @@ namespace ApartmentApps.Api
                 {
                     if (!string.IsNullOrEmpty(oldCustomer.Email?.Trim()))
                     {
+                        var entrataId = oldCustomer.Attributes?.Id;
                         var customerEmail = oldCustomer.Email;
-                        var user = DbContext.Users.FirstOrDefault(p => p.Email == customerEmail && p.Archived == false);
+                        var propertyId = (int?)UserContext.PropertyId;
+                        var user = DbContext.Users.FirstOrDefault(p => p.PropertyId == propertyId && (p.SyncId == entrataId || p.Email.ToLower() == customerEmail.ToLower()));
 
                         if (user != null)
                         {
@@ -80,10 +82,11 @@ namespace ApartmentApps.Api
                     Building building;
                     Unit unit;
                     ImportUnit(logger, customer.BuildingName, customer.UnitNumber, out unit, out building);
-
-                    var user = ImportCustomer(this, unit.Id, customer.PhoneNumber.NumbersOnly(), customer.City, customer.Email, customer.FirstName, customer.LastName, customer.MiddleName, customer.Gender, customer.PostalCode, customer.State, customer.Address);
-                    if (user == null) continue;
                     var entrataId = customer.Attributes?.Id;
+                    var user = ImportCustomer(this, entrataId, unit.Id, customer.PhoneNumber.NumbersOnly(), customer.City, customer.Email, customer.FirstName, customer.LastName, customer.MiddleName, customer.Gender, customer.PostalCode, customer.State, customer.Address);
+                    if (user == null) continue;
+                    user.Archived = false;
+
                     user.SyncId = entrataId;
                     _context.SaveChanges();
 
