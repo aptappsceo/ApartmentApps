@@ -80,7 +80,7 @@ namespace ApartmentApps.Api
         {
             if (string.IsNullOrEmpty(email)) return null;
             var propertyId = UserContext.PropertyId;
-            var user = DbContext.Users.FirstOrDefault(p => p.PropertyId == propertyId &&  (p.SyncId == syncId || p.Email.ToLower() == email.ToLower()));
+            var user = DbContext.Users.FirstOrDefault(p =>p.PropertyId == propertyId &&  (p.Email.ToLower() == email.ToLower() || p.SyncId == syncId));
 
             if (user == null)
             {
