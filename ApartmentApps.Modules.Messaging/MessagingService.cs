@@ -159,6 +159,8 @@ namespace ApartmentApps.Portal.Controllers
             base.Add(viewModel);
         }
 
+        public override string DefaultOrderBy => "Id";
+
         public MessagingService(IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
         {
         }
