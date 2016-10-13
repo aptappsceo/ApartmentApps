@@ -82,6 +82,17 @@ namespace ApartmentApps.Portal.Controllers
             return View(viewModel.GetType().Name, viewModel);
         }
 
+        public ViewResult Page<TViewModel>(string title, string description, TViewModel viewModel)
+        {
+            var pageVM = new PageViewModel() {};
+            pageVM.Title = title;
+            pageVM.Description = description;
+            
+            ModuleHelper.EnabledModules.Signal<IFillActions>(_=>_.FillActions(pageVM.ActionLinks,pageVM));
+
+            return View(pageVM.View ?? "Page", pageVM);
+
+        }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);

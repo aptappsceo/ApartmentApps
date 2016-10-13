@@ -42,6 +42,32 @@ namespace ApartmentApps.Tests
                 
             }
         }
+        //[TestMethod]
+        //public void TestCustomersWithOld()
+        //{
+        //    var entrataClient = new EntrataClient()
+        //    {
+        //        Username = "apartmentappsinc",
+        //        Password = "Password1",
+        //        EndPoint = "rampartnersllc"
+        //    };
+        //    var pId = "44706";
+        //    var customers =
+        //          entrataClient.GetCustomers(pId).Result.Response.Result.Customers.Customer;
+        //    var customersOld =
+        //        entrataClient.GetCustomers(pId, "6").Result.Response.Result.Customers.Customer;
+
+
+        //    foreach (var oldCustomer in customersOld)
+        //    {
+        //        if (string.IsNullOrEmpty(oldCustomer.Email)) continue;
+        //        if (customers.Any(p => p.Email != null && p.Email.ToLower() == oldCustomer.Email.ToLower()))
+        //        {
+        //            Console.WriteLine(oldCustomer.FirstName + " " + oldCustomer.LastName);
+        //        }
+
+        //    }
+        //}
     }
 
     [TestClass]

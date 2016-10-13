@@ -53,8 +53,10 @@ namespace ApartmentApps.Api
                 {
                     if (!string.IsNullOrEmpty(oldCustomer.Email?.Trim()))
                     {
+                        var entrataId = oldCustomer.Attributes?.Id;
                         var customerEmail = oldCustomer.Email;
-                        var user = DbContext.Users.FirstOrDefault(p => p.Email == customerEmail && p.Archived == false);
+                        var propertyId = (int?)UserContext.PropertyId;
+                        var user = DbContext.Users.FirstOrDefault(p => p.PropertyId == propertyId && (p.Email.ToLower() == customerEmail.ToLower() || p.SyncId == entrataId));
 
                         if (user != null)
                         {
@@ -80,29 +82,12 @@ namespace ApartmentApps.Api
                     Building building;
                     Unit unit;
                     ImportUnit(logger, customer.BuildingName, customer.UnitNumber, out unit, out building);
-
-                    var user = ImportCustomer(this, unit.Id, customer.PhoneNumber.NumbersOnly(), customer.City, customer.Email, customer.FirstName, customer.LastName, customer.MiddleName, customer.Gender, customer.PostalCode, customer.State, customer.Address);
-                    if (user == null) continue;
                     var entrataId = customer.Attributes?.Id;
+                    var user = ImportCustomer(this, entrataId, unit.Id, customer.PhoneNumber.NumbersOnly(), customer.City, customer.Email, customer.FirstName, customer.LastName, customer.MiddleName, customer.Gender, customer.PostalCode, customer.State, customer.Address);
+                    if (user == null) continue;
+                    user.Archived = false;
                     user.SyncId = entrataId;
                     _context.SaveChanges();
-
-
-                    //var leaseId = customer.LeaseId?.Identification[0]?.IDValue.ToString();
-
-                    //if (leaseId == null || entrataId == null) continue;
-
-                    //var lease = leases.FirstOrDefault(p => p.Identification.IDValue == leaseId);
-                    //if (lease == null) continue;
-
-                    //var moveOutInfo =
-                    //    lease.LeaseEvents.LeaseEvent.FirstOrDefault(p => p.Attributes.EventType == "ActualMoveOut");
-                    //if (moveOutInfo != null)
-                    //{
-                    //    user.Archived = true;
-                    //    _context.SaveChanges();
-                    //    logger.Info($"Archiving User {customer.FirstName} {customer.LastName} {leaseId} {entrataId} ");
-                    //}
                 }
             }
 

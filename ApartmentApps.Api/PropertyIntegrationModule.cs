@@ -69,18 +69,18 @@ namespace ApartmentApps.Api
             return await _manager.CreateUser(email, password, firstName, lastName);
         }
 
-        protected void ImportCustomer(Property property,
+        protected void ImportCustomer(Property property, string syncId,
             int unitId, string phoneNumber, string city, string email, string firstName, string lastName, string middleName, string gender, string postalCode, string state, string address)
         {
-            ImportCustomer(this, unitId, phoneNumber, city, email, firstName, lastName, middleName, gender, postalCode, state, address);
+            ImportCustomer(this,syncId, unitId, phoneNumber, city, email, firstName, lastName, middleName, gender, postalCode, state, address);
         }
 
-        protected ApplicationUser ImportCustomer(ICreateUser createUser,
+        protected ApplicationUser ImportCustomer(ICreateUser createUser,string syncId,
             int unitId, string phoneNumber, string city, string email, string firstName, string lastName, string middleName, string gender, string postalCode, string state, string address)
         {
             if (string.IsNullOrEmpty(email)) return null;
-
-            var user = DbContext.Users.FirstOrDefault(p => p.Email.ToLower() == email.ToLower());
+            var propertyId = UserContext.PropertyId;
+            var user = DbContext.Users.FirstOrDefault(p =>p.PropertyId == propertyId &&  (p.Email.ToLower() == email.ToLower() || p.SyncId == syncId));
 
             if (user == null)
             {
@@ -90,8 +90,9 @@ namespace ApartmentApps.Api
             {
                 return user;
             }
-            user.PropertyId = UserContext.PropertyId;
-            if (!user.Roles.Any(p => p.RoleId == "Resident"))
+          
+     
+            if (user.Roles.All(p => p.RoleId != "Resident"))
             {
                 user.Roles.Add(new IdentityUserRole()
                 {
@@ -103,7 +104,7 @@ namespace ApartmentApps.Api
             {
                 user.PhoneNumber = phoneNumber.NumbersOnly();
             }
-
+            user.SyncId = syncId;
             user.PropertyId = UserContext.PropertyId;
             user.City = city;
             user.Email = email;

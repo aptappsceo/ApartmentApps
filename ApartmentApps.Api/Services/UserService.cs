@@ -20,6 +20,10 @@ namespace ApartmentApps.Portal.Controllers
         void FillActions(List<ActionLinkModel> actions, object viewModel);
     }
 
+    public interface IFillSections
+    {
+        //void FillSections(List<SetionViewModel> )
+    }
     public class UserListMapper : BaseMapper<ApplicationUser, UserListModel>
     {
         public UserListMapper(IUserContext userContext) : base(userContext)
