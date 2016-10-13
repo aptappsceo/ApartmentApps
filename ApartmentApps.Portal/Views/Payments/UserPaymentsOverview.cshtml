@@ -16,20 +16,10 @@
     var failedTransactions = Model.Transactions.Where(s => s.State == TransactionState.Failed).ToArray();
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="col-md-1">
-            <img class="img-rounded" src="@Model.User.ImageThumbnailUrl" style="margin-top: 12px; max-width: 100%; max-height: 100%;"/>
-        </div>
-        <div class="col-md-11">
-            <h2>Payment Overview for @Model.User.FullName #@Model.User.UnitName</h2>
-          
-
-        </div>
-
-        <div class="clear-fix"></div>
-    </div>
-</div>
+@Html.RenderPageHeader(
+    title: $"Payment Overview for { Model.User.FullName } #{ Model.User.UnitName}",
+    imageUrl: Model.User.ImageThumbnailUrl
+    )
 
 <div class="row wrapper">
     <div class="wrapper-content">

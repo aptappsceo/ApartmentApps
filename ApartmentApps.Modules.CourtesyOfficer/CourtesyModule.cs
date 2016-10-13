@@ -17,10 +17,10 @@ namespace ApartmentApps.Api.Modules
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
         {
             var menuItem = new MenuItemViewModel("Incidents", "fa-shield");
-            menuItem.Children.Add(new MenuItemViewModel("New Request", "fa-plus-square", "NewRequest", "IncidentReports"));
+            menuItem.Children.Add(new MenuItemViewModel("New Incident", "fa-plus-square", "NewRequest", "IncidentReports"));
             if (UserContext.IsInRole("PropertyAdmin"))
             {
-                menuItem.Children.Add(new MenuItemViewModel("Requests", "fa-folder", "Index", "IncidentReports"));
+                menuItem.Children.Add(new MenuItemViewModel("Incidents", "fa-folder", "Index", "IncidentReports"));
             }
             menuItems.Add(menuItem);
            

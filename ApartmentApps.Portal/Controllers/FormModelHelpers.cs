@@ -110,6 +110,19 @@ namespace ApartmentApps.Portal.Controllers
         }
     }
 
+    public static class PageHeaderHelper
+    {
+        public static HtmlString RenderPageHeader(this HtmlHelper helper, string title = null, string subtitle = null,
+            string imageUrl = null)
+        {
+                return helper.Partial("~/Views/Shared/StandardPageHeader.cshtml", new PageHeaderModel()
+            {
+                    Title = title,
+                   Subtitle = subtitle,
+                   ImageUrl = imageUrl
+            });
+        }
+    }
 
     public static class PaymentsHelper
     {
@@ -123,5 +136,12 @@ namespace ApartmentApps.Portal.Controllers
     {
         public IEnumerable<FeedItemBindingModel> FeedItems { get; set; }
         public Func<FeedItemBindingModel, string> ItemUrlSelector { get; set; }
+    }
+
+    public class PageHeaderModel
+    {
+        public string Title { get; set; }
+        public string Subtitle { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

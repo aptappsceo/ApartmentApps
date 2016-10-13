@@ -111,6 +111,7 @@ namespace ResidentAppCross.Droid.Views
             Console.WriteLine($"Endpoint Substitues for DEBUG: {App.DevEndpoint}");
             #endif
 
+
             if(IsPackageAvailable("com.google.android.gsf")) { 
                 GcmClient.CheckDevice(this);
                 GcmClient.CheckManifest(this);
