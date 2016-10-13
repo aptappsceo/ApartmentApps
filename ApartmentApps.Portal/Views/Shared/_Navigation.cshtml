@@ -119,17 +119,16 @@ var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ??
                 </li>
             </ul>*@
         <ul class="nav metismenu" id="side-menu">
-            <li class="nav-header" style='background-image:url("http://apartmentapps.com/wp-content/uploads/2015/05/parcland-1.png") !important; background-size: 100% 100%;'>
+            <li class="nav-header" style='background-image: url("@Url.Content("~/Content/Images/rsz_parcland-1.png")") !important; background-size: 100% 100%;'>
                 <div class="dropdown profile-element">
                     @if (Request.IsAuthenticated)
                     {
-            
                         <a href="#">
                             <span class="clear">
                                 <span class="block m-t-xs">
                                     @if (User.IsInRole("Admin"))
                                     {
-                                        <h2 class="font-normal" style="margin: 0px;"><a href="@Url.Action("Index","Property")">@property.Name</a></h2>
+                                        <h2 class="font-normal" style="margin: 0px;"><a href="@Url.Action("Index", "Property")">@property.Name</a></h2>
                                     }
                                     else
                                     {
@@ -152,10 +151,13 @@ var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ??
                     AA+
                 </div>
             </li>
-            @foreach (var mi in menuItems.OrderBy(p => p.Index))
-            {
-                @item(mi, true)
+            @if (menuItems != null){
+                foreach(var mi in menuItems.OrderBy(p => p.Index))
+                {
+                        @item(mi, true)
+                }
             }
+
             @*@if (User.IsInRole("PropertyAdmin") || User.IsInRole("RegionalAdmin"))
                 {
                     <li class="@Html.IsSelected(controller: "Dashboard")">

@@ -473,6 +473,27 @@ namespace ApartmentApps.Api.Modules
         }
 
 
+
+        public PaymentHistoryIndexBindingModel GetPaymentHistoryFor(string userId)
+        {
+            var tranascations = _transactionHistory.GetAll().Where(s => s.UserId == userId);
+            return new PaymentHistoryIndexBindingModel()
+            {
+                UserId = userId,
+                History = tranascations.Select(s => new PaymentHistoryIndexItemBindingModel()
+                {
+
+                }).ToList()
+            };
+        }
+
+        public TransactionHistoryItemBindingModel GetPaymentHistoryItemFor(string transactionId)
+        {
+            var tranascation = _transactionHistory.Find(transactionId);
+            return tranascation.ToBindingModel();
+        }
+
+
         public void RejectForteTransaction(TransactionHistoryItem target, string message, ForteTransactionStateCode state)
         {
             target.StateMessage = message;
@@ -504,6 +525,22 @@ namespace ApartmentApps.Api.Modules
             logger.Info("Open transactions updated from forte.");
         }
     }
+}
+
+public class PaymentHistoryIndexBindingModel
+{
+    public string UserId { get; set; }
+    public List<PaymentHistoryIndexItemBindingModel> History { get; set; } 
+}
+
+public class PaymentHistoryIndexItemBindingModel
+{
+    public string UserId { get; set; }
+    public string Id { get; set; }
+    public TransactionState State { get; set; }
+    public DateTime OpenDate { get; set; }
+    public DateTime? CloseDate { get; set; }
+    public decimal Amount { get; set; }
 }
 
 public class ForteMakePaymentResponse

@@ -1,0 +1,14 @@
+﻿@model PageHeaderModel
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <div class="col-sm-1">
+            <img class="img-rounded img-thumbnail" src="@Model.ImageUrl" style="margin-top: 12px; max-width: 80px; max-height: 80px;"/>
+        </div>
+    }
+    <div class="col-sm-11 ">
+        <h2>@Model.Title</h2>
+        <p>@Model.Subtitle</p>
+    </div>
+</div><br />

@@ -1232,6 +1232,29 @@
     <Content Include="Scripts\ej\ej.web.all.min.js" />
     <Content Include="Scripts\ej\ej.widget.angular.min.js" />
     <Content Include="Scripts\ej\ej.widget.ko.min.js" />
+    <Content Include="Scripts\ej\partial\ej.autocomplete.min.js" />
+    <Content Include="Scripts\ej\partial\ej.button.min.js" />
+    <Content Include="Scripts\ej\partial\ej.checkbox.min.js" />
+    <Content Include="Scripts\ej\partial\ej.core.min.js" />
+    <Content Include="Scripts\ej\partial\ej.data.min.js" />
+    <Content Include="Scripts\ej\partial\ej.datepicker.min.js" />
+    <Content Include="Scripts\ej\partial\ej.datetimepicker.min.js" />
+    <Content Include="Scripts\ej\partial\ej.dialog.min.js" />
+    <Content Include="Scripts\ej\partial\ej.draggable.min.js" />
+    <Content Include="Scripts\ej\partial\ej.dropdownlist.min.js" />
+    <Content Include="Scripts\ej\partial\ej.editor.min.js" />
+    <Content Include="Scripts\ej\partial\ej.globalize.min.js" />
+    <Content Include="Scripts\ej\partial\ej.maskedit.min.js" />
+    <Content Include="Scripts\ej\partial\ej.print.min.js" />
+    <Content Include="Scripts\ej\partial\ej.progressbar.min.js" />
+    <Content Include="Scripts\ej\partial\ej.recurrenceeditor.min.js" />
+    <Content Include="Scripts\ej\partial\ej.rte.min.js" />
+    <Content Include="Scripts\ej\partial\ej.scroller.min.js" />
+    <Content Include="Scripts\ej\partial\ej.timepicker.min.js" />
+    <Content Include="Scripts\ej\partial\ej.touch.min.js" />
+    <Content Include="Scripts\ej\partial\ej.unobtrusive.min.js" />
+    <Content Include="Scripts\ej\partial\ej.uploadbox.min.js" />
+    <Content Include="Scripts\ej\partial\ej.webform.min.js" />
     <Content Include="Scripts\eq.all.min.js" />
     <Content Include="Scripts\eq.view.basic.js" />
     <Content Include="Scripts\eq.view.grid.js" />
@@ -1488,6 +1511,7 @@
     <Content Include="Views\Shared\_ActionLinks.cshtml" />
     <Content Include="Views\Shared\Forms\GridPartial.cshtml" />
     <Content Include="Views\Shared\Payments\PaymentListSummary.cshtml" />
+    <Content Include="Views\Shared\StandardPageHeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
