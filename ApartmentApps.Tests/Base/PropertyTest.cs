@@ -19,7 +19,9 @@ namespace ApartmentApps.Tests
         [TestInitialize]
         public virtual void Init()
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>()); 
+#if DEBUG
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
+#endif
             Register.EnsureModuleAssemblies();
             Context = new PropertyExecutionContext(new StandardKernel());
 
