@@ -109,6 +109,8 @@ namespace ApartmentApps.Portal.Controllers
             ViewBag.MessageId = messageId;
             return RedirectToAction("Index");
         }
+
+   
     }
 
     
@@ -121,7 +123,7 @@ namespace ApartmentApps.Portal.Controllers
         private readonly MessagingModule _module;
         private ApplicationDbContext _context;
         private IBlobStorageService _blobStorageService;
-
+    
         public MessagingController(UserService userService, IKernel kernel, MessagingService formService, MessagingService indexService, PropertyContext context, IUserContext userContext, MessagingService service, MessagingService messageService, MessagingModule module, ApplicationDbContext context2, IBlobStorageService blobStorageService, AlertsModule messagingService) : base(kernel, formService, indexService, context, userContext, service)
         {
             _userService = userService;
@@ -133,7 +135,7 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         public AlertsModule MessagingService { get; set; }
-
+        
         public override ActionResult Entry(string id = null)
         {
             if (id != null && id != "0")

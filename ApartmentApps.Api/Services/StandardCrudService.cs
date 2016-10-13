@@ -30,6 +30,23 @@ namespace ApartmentApps.Portal.Controllers
         public string Value { get; set; }
     }
 
+    public class ConditionItem
+    {
+        public ConditionItem(string attrId, string @operator, params string[] values)
+        {
+            AttrId = attrId;
+            Operator = @operator;
+            Values = values;
+        }
+
+        public ConditionItem()
+        {
+        }
+
+        public string AttrId { get; set; }
+        public string Operator { get; set; }
+        public string[] Values { get; set; }
+    }
     public abstract class StandardCrudService<TModel> : IService where TModel : IBaseEntity, new()
     {
         protected readonly IKernel _kernel;
@@ -50,8 +67,30 @@ namespace ApartmentApps.Portal.Controllers
 
         public Type ModelType => typeof(TModel);
 
+        public DbQuery CreateQuery(string queryName, params ConditionItem[] conditions)
+        {
+            DbQuery query = new DbQuery() {QueryName = queryName, ID =queryName };
+            query.Model = new DbModel();
+            query.Model.LoadFromType(typeof(TModel));
+            foreach (var condition in conditions)
+            {
+                query.Root.Conditions.Add(query.CreateSimpleCondition(condition.AttrId, condition.Operator,
+                    condition.Values));
+            }
+            return query;
+        }
 
 
+        public IEnumerable<DbQuery> GetQueries(int userId = 0)
+        {
+            if (userId > 0)
+            {
+                yield return CreateQuery("My Shit", new ConditionItem("UserId", "EqualTo", userId.ToString()));
+            }
+
+
+        }
+  
         public IEnumerable<TViewModel> GetAll<TViewModel>()
         {
 

@@ -31,7 +31,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             base.OnActionExecuting(filterContext);
             var serviceName = typeof (TService).Name;
-            ViewBag.Queries = Queries.Where(p => p.Service == serviceName).OrderBy(p=>p.Index).ToArray();
+            ViewBag.Queries = GetQueries().Concat(Queries.Where(p => p.Service == serviceName).OrderBy(p=>p.Index)).ToArray();
         }
 
         public ActionResult Details(int? id)
@@ -50,6 +50,10 @@ namespace ApartmentApps.Portal.Controllers
 
         public IRepository<ServiceQuery> Queries => Repository<ServiceQuery>();
 
+        public IEnumerable<ServiceQuery> GetQueries()
+        {
+            return Enumerable.Empty<ServiceQuery>();
+        }
         public AutoGridController(IKernel kernel, TFormService formService, TService indexService, PropertyContext context, IUserContext userContext, TService service) : base(kernel, formService, indexService, context, userContext)
         {
 
@@ -77,8 +81,7 @@ namespace ApartmentApps.Portal.Controllers
             };
             EqService.QueryLoader = (query, queryId) =>
             {
-               
-                var q = Queries.FirstOrDefault(p=>p.QueryId == queryId);
+                var q = GetQueries().FirstOrDefault(p => p.QueryId == queryId) ?? Queries.FirstOrDefault(p=>p.QueryId == queryId);
                 if (q != null)
                 {
                     string queryXml = q.QueryJson;
