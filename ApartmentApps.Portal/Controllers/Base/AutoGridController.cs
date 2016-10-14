@@ -29,6 +29,13 @@ namespace ApartmentApps.Portal.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
+            
+            
+        }
+
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            base.OnActionExecuted(filterContext);
             var queries = GetQueries().OrderBy(p => p.Index).ToArray();
             ViewBag.Queries = queries;
             ViewBag.CurrentQuery = CurrentQueryId ?? queries.First()?.QueryId;
