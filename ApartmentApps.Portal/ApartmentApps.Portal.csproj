@@ -490,6 +490,7 @@
     <Compile Include="Controllers\Base\AutoGridController.cs" />
     <Compile Include="Controllers\Base\GridState.cs" />
     <Compile Include="Controllers\BuildingsController.cs" />
+    <Compile Include="Controllers\CampaignTargetsController.cs" />
     <Compile Include="Controllers\CorporationsController.cs" />
     <Compile Include="Controllers\CourtesyOfficerController.cs" />
     <Compile Include="Controllers\CourtesyOfficerLocationsController.cs" />
@@ -1692,7 +1693,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61984</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58739/</IISUrl>
+          <IISUrl>http://localhost:58731/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

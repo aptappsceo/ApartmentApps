@@ -18,5 +18,10 @@ namespace ApartmentApps.Api
         TViewModel Find<TViewModel>(string id) where TViewModel : class, new();
         TViewModel CreateNew<TViewModel>() where TViewModel : new();
         void Save<TViewModel>(TViewModel unit) where TViewModel : BaseViewModel;
+        IEnumerable<ServiceQuery> GetQueries(IServiceQueryVariableProvider variableProvider);
+        void RemoveQuery(string queryId);
+        void LoadQuery(IServiceQueryVariableProvider provider, DbQuery query, string queryId);
+        void SaveQuery(DbQuery query, string queryId);
+        void LoadModel(DbModel model, string modelName);
     }
 }

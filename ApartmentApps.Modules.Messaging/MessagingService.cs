@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Korzh.EasyQuery.Db;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
@@ -142,6 +144,18 @@ namespace ApartmentApps.Portal.Controllers
             _userMapper = userMapper;
         }
 
+
+        public DbQuery All()
+        {
+            return CreateQuery("All");
+        }
+
+        [DisplayName("Sent By Me")]
+        public DbQuery SentByMe()
+        {
+            return CreateQuery("SentByMe", new ConditionItem("Message.From.Email", "Equal", _userContext.CurrentUser.Email));
+        } 
+
         public IEnumerable<TViewModel> GetHistory<TViewModel>()
         {
            
@@ -170,6 +184,14 @@ namespace ApartmentApps.Portal.Controllers
             var message = Repository.Find(messageId);
             message.Sent = true;
             Repository.Save();
+        }
+
+        [IgnoreQuery]
+        public DbQuery SentByUser(string id)
+        {
+            
+            var user = Repo<ApplicationUser>().Find(id);
+            return CreateQuery("SentBy","Sent By " + user.Email, new ConditionItem("Message.From.Email", "Equal", user.Email));
         }
     }
 }

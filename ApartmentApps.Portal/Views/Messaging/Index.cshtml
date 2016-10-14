@@ -46,10 +46,11 @@
                     };
 
                     function getPrefix() {
-                        var res = window.location.pathname;
-                        if (res.charAt(res.length - 1) !== '/')
-                            res = res + '/';
-                        return res;
+                        return '@(Url.Action("Index")?.Replace("Index",""))';
+                        //var res = window.location.pathname;
+                        //if (res.charAt(res.length - 1) !== '/')
+                        //    res = res + '/';
+                        //return res;
                     }
                 </script>
                 <div id="QueryPanel"></div>

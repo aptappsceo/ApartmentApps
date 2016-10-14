@@ -11,6 +11,7 @@ using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Modules.CourtesyOfficer;
 using ApartmentApps.Portal.Controllers;
+using Korzh.EasyQuery.Db;
 using Ninject;
 
 namespace ApartmentApps.Api
@@ -128,7 +129,22 @@ namespace ApartmentApps.Api
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; }
         private IBlobStorageService _blobStorageService;
 
-
+        public DbQuery Reported()
+        {
+            return CreateQuery("Reported", new ConditionItem("IncidentReport.StatusId", "Equal", "Reported"));
+        }
+        public DbQuery Open()
+        {
+            return CreateQuery("Open", new ConditionItem("IncidentReport.StatusId", "Equal", "Open"));
+        }
+        public DbQuery Paused()
+        {
+            return CreateQuery("Paused", new ConditionItem("IncidentReport.StatusId", "Equal", "Paused"));
+        }
+        public DbQuery Complete()
+        {
+            return CreateQuery("Complete", new ConditionItem("IncidentReport.StatusId", "Equal", "Complete"), new ConditionItem("IncidentReport.CompletionDate","DateWithinThisMonth"));
+        }
         public int SubmitIncidentReport(ApplicationUser user, string comments, IncidentType incidentReportTypeId, List<byte[]> images, int? unitId = null)
         {
 

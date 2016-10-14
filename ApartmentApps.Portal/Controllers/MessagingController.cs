@@ -11,111 +11,13 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
-using Korzh.EasyQuery;
 using Korzh.EasyQuery.Db;
 using Microsoft.AspNet.Identity;
 using Ninject;
 using Syncfusion.JavaScript;
-using Korzh.EasyQuery.Mvc;
+
 namespace ApartmentApps.Portal.Controllers
 {
-    public class CampaignTargetsController : AutoGridController<UserService, UserListModel>
-    {
-        private readonly MessagingService _messagingService;
-        private int _messageId; // UNIT TESTING ONLY
-
-        public CampaignTargetsController(MessagingService messagingService, IKernel kernel, UserService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
-        {
-            _messagingService = messagingService;
-            EqService.QueryLoader = (query, s) =>
-            {
-                var q = _messagingService.Find<MessageTargetsViewModel>(s);
-                if (q != null)
-                {
-                    string queryXml = q.TargetsXml;
-                    if (!string.IsNullOrEmpty(queryXml))
-                    {
-                        query.LoadFromString(queryXml);
-                    }
-                    
-                }
-            };
-            EqService.QuerySaver = (query, s) =>
-            {
-                var q = _messagingService.Find<MessageTargetsViewModel>(s);
-                q.TargetsXml = query.SaveToString();
-                q.TargetsDescription = query.GetConditionsText(QueryTextFormats.Default);
-                var count = 0;
-                Service.GetAll<UserBindingModel>(query, out count, "Id", false, 1, 3);
-                q.TargetsCount = count;
-                _messagingService.Save(q);
-
-            };
-        }
-
-        public override ActionResult ApplyFilter(string queryJson, string optionsJson)
-        {
-            var query = EqService.LoadQueryDict(queryJson.ToDictionary());
-            var q = _messagingService.Find<MessageTargetsViewModel>(MessageId.ToString());
-            q.TargetsXml = query.SaveToString();
-            q.TargetsDescription = query.GetConditionsText(QueryTextFormats.Default);
-            var count = 0;
-            Service.GetAll<UserBindingModel>(query, out count, null, false, 1, 3);
-            q.TargetsCount = count;
-            _messagingService.Save(q);
-            return base.ApplyFilter(queryJson, optionsJson);
-        }
-
-        public override ActionResult GridResult(GridList<UserListModel> grid)
-        {
-            ViewBag.MessageId = MessageId;
-            if (Request != null && Request.IsAjaxRequest())
-            {
-                var formHelper = new DefaultFormProvider();
-                var gridModel = formHelper.CreateGridFor<UserListModel>();
-
-                gridModel.Items = grid;
-                return View("Forms/GridPartial", gridModel);
-            }
-            return View("List", _messagingService.Find<MessageTargetsViewModel>(MessageId.ToString()));
-        }
-
-        public int MessageId
-        {
-            get
-            {
-                if (Session == null)
-                {
-                    return _messageId;
-                }
-                return (int)Session["MessageId"];
-            }
-            set
-            {
-                if (Session == null)
-                {
-                    _messageId = value;
-                }
-                else
-                {
-                    Session["MessageId"] = value;
-                }
-                
-            }
-        }
-        public ActionResult SelectTargets(int messageId)
-        {
-            MessageId = messageId;
-            ViewBag.MessageId = messageId;
-            return RedirectToAction("Index");
-        }
-
-   
-    }
-
-    
-
-
     public class MessagingController : AutoGridController<MessagingService,MessagingService,MessageViewModel, MessageFormViewModel>
     {
         private readonly UserService _userService;
@@ -254,91 +156,12 @@ namespace ApartmentApps.Portal.Controllers
         {
             return View("MessageDetails", _messageService.GetMessageWithDetails(id));
         }
-    }
-    public class Messaging2Controller : CrudController<UserBindingModel, ApplicationUser>
-    {
-        private readonly MessagingService _messageService;
-        private readonly MessagingModule _module;
-        private ApplicationDbContext _context;
-        private IBlobStorageService _blobStorageService;
-        public Messaging2Controller(MessagingService messageService, MessagingModule module, IKernel kernel, IRepository<ApplicationUser> repository, StandardCrudService<ApplicationUser> service, PropertyContext context, IUserContext userContext, AlertsModule messagingService, ApplicationDbContext context1, IBlobStorageService blobStorageService) : base(kernel,repository, service, context, userContext)
+
+        public ActionResult ShowByUser(string id)
         {
-            _messageService = messageService;
-            _module = module;
-            MessagingService = messagingService;
-            _context = context1;
-            _blobStorageService = blobStorageService;
-        }
-
-        public AlertsModule MessagingService { get; set; }
-
-
-
-        public override ActionResult Index()
-        {
-
-            return View("Index");
-        }
-
-        public ActionResult History()
-        {
-            return View("History", _messageService.GetHistory<MessageViewModel>());
-        }
-
-
-        public ActionResult FileActionMethods(FileExplorerParams args)
-        {
-
-            SyncfusionAzureBlobStorageOperations opeartion = new SyncfusionAzureBlobStorageOperations(_blobStorageService,CurrentUser,_context);
-            switch (args.ActionType)
-            {
-                case "Read":
-                    var read = opeartion.Read(args.Path, args.ExtensionsAllow);
-                    return Json(read);
-                case "CreateFolder":
-                    return Json(opeartion.CreateFolder(args.Path, args.Name));
-                case "Paste":
-                    return Json(opeartion.Paste(args.LocationFrom, args.LocationTo, args.Names, args.Action, args.CommonFiles));
-                case "Remove":
-                    return Json(opeartion.Remove(args.Names, args.Path));
-                case "Rename":
-                    return Json(opeartion.Rename(args.Path, args.Name, args.NewName, args.CommonFiles));
-                case "GetDetails":
-                    return Json(opeartion.GetDetails(args.Path, args.Names));
-                case "Download":
-                    opeartion.Download(args.Path, args.Names);
-                    break;
-                case "Upload":
-
-                    opeartion.Upload(args.FileUpload, args.Path);
-                    break;
-            }
-            return Json("");
-        }
-
-
-        //[HttpPost, ValidateInput(false)]
-        //public ActionResult SendMessage(string subject, string message)
-        //{
-        //    int count;
-        //    var ids = GetData(Dm, out count, true).Select(p => p.Id).ToArray();
-            
-        //    _module.SendMessage(ids, subject, message, HttpContext.Request.Url.Host + Url.Action("EmailMessageRead", "Messaging"));
-        //    ViewBag.SuccessMessage = "Message Sent";
-        //    return RedirectToAction("Index");
-        //}
-        [Route("Messaging/EmailMessageRead/{messageId:int}/{userId}.jpg")]
-        public ActionResult EmailMessageRead(int messageId, string userId)
-        {
-            _module.ReadMessage(messageId, userId);
-            Response.Cache.SetCacheability(HttpCacheability.Public);
-            Response.Cache.SetExpires(Cache.NoAbsoluteExpiration);
-            Response.Cache.SetLastModified(DateTime.UtcNow);
-            return File(Server.MapPath("~/Content/blank.png"), "image/png");
-        }
-        public ActionResult MessageDetails(string id)
-        {
-            return View("MessageDetails", _messageService.GetMessageWithDetails(id));
+            this.CustomQuery = Service.SentByUser(id);
+            this.CurrentQueryId = "CustomQuery";
+            return Index();
         }
     }
 

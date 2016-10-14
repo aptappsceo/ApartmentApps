@@ -6,7 +6,6 @@
 @{
     ViewBag.Title = Model.Title;
     var queries = ((IEnumerable<ServiceQuery>)ViewBag.Queries).ToArray();
-    var initialQuery = queries.Any() ? queries.First().QueryId : null;
 }
 
 <script type="text/javascript">
@@ -16,7 +15,7 @@
 
     //// Set a callback to run when the Google Visualization API is loaded.
     //google.setOnLoadCallback(GoogleVisualizationLoaded);
-    window.initialQuery = @Html.Raw(initialQuery == null ? "null" : "'" + initialQuery + "'" );
+    window.initialQuery = @Html.Raw(ViewBag.CurrentQuery == null ? "null" : "'" + ViewBag.CurrentQuery + "'" );
     function GoogleVisualizationLoaded() {
         //alert("Visualization loaded!!!";)
     }
@@ -31,12 +30,12 @@
         useBootstrap:true
 
     };
-
     function getPrefix() {
-        var res = window.location.pathname;
-        if (res.charAt(res.length - 1) !== '/')
-            res = res + '/';
-        return res;
+        return '@(Url.Action("Index")?.Replace("Index",""))';
+        //var res = window.location.pathname;
+        //if (res.charAt(res.length - 1) !== '/')
+        //    res = res + '/';
+        //return res;
     }
 
 

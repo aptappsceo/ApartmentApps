@@ -6,7 +6,7 @@
 @model ApartmentApps.Forms.GridList<MessageViewModel>
 @{
     var queries = ((IEnumerable<ServiceQuery>)ViewBag.Queries).ToArray();
-    var initialQuery = queries.Any() ? queries.First().QueryId : null;
+   
 }
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-12 ">
@@ -51,7 +51,7 @@
                         //alert("Visualization loaded!!!";)
                     }
 
-                    window.initialQuery = @Html.Raw(initialQuery == null ? "null" : "'" + initialQuery + "'" );
+                    window.initialQuery = @Html.Raw(ViewBag.CurrentQuery == null ? "null" : "'" + ViewBag.CurrentQuery + "'" );
                     //Settings for EasyQuery pages
                     window.easyQueryViewSettings = {
                         showChart: false,
@@ -65,10 +65,11 @@
                     };
 
                     function getPrefix() {
-                        var res = window.location.pathname;
-                        if (res.charAt(res.length - 1) !== '/')
-                            res = res + '/';
-                        return res;
+                        return '@(Url.Action("Index")?.Replace("Index",""))';
+                        //var res = window.location.pathname;
+                        //if (res.charAt(res.length - 1) !== '/')
+                        //    res = res + '/';
+                        //return res;
                     }
                 </script>
                 <div id="QueryPanel"></div>

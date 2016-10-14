@@ -15,6 +15,7 @@ using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Modules.Maintenance;
 using ApartmentApps.Portal.Controllers;
+using Korzh.EasyQuery.Db;
 using Ninject;
 
 namespace ApartmentApps.Api
@@ -243,6 +244,26 @@ namespace ApartmentApps.Api
                     .Select(mapper.ToViewModel);
         }
 
+        public DbQuery Submitted()
+        {
+            return CreateQuery("Submitted", new ConditionItem("MaitenanceRequest.StatusId", "Equal", "Submitted"));
+        }
+        public DbQuery Scheduled()
+        {
+            return CreateQuery("Scheduled", new ConditionItem("MaitenanceRequest.StatusId", "Equal", "Scheduled"));
+        }
+        public DbQuery Started()
+        {
+            return CreateQuery("Started", new ConditionItem("MaitenanceRequest.StatusId", "Equal", "Started"));
+        }
+        public DbQuery Paused()
+        {
+            return CreateQuery("Paused", new ConditionItem("MaitenanceRequest.StatusId", "Equal", "Paused"));
+        }
+        public DbQuery Complete()
+        {
+            return CreateQuery("Complete", new ConditionItem("MaitenanceRequest.StatusId", "Equal", "Complete"), new ConditionItem("MaitenanceRequest.CompletionDate", "DateWithinThisMonth"));
+        }
         public void AssignRequest(int id, string assignedToId)
         {
             var request = Repository.Find(id);
