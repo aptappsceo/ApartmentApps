@@ -13,9 +13,81 @@ using Korzh.EasyQuery;
 using Korzh.EasyQuery.Db;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using WatiN.Core;
 
 namespace ApartmentApps.Tests
 {
+    [TestClass]
+    public class WebTest
+    {
+        [TestInitialize]
+        public void Init()
+        {
+            wd = new FirefoxDriver();
+        }
+
+        public FirefoxDriver wd { get; set; }
+
+        [TestMethod]
+        public void Web()
+        {
+            Login();
+            var wait = new WebDriverWait(wd,new TimeSpan(0,0,0,5));
+            wait.Until(p=>p.)
+            wd.Navigate().GoToUrl("http://dev.apartmentapps.com/MaitenanceRequests/NewRequest");
+            if (!wd.FindElement(By.XPath("//select[@id='UnitId']//option[4]")).Selected)
+            {
+                wd.FindElement(By.XPath("//select[@id='UnitId']//option[4]")).Click();
+            }
+            if (!wd.FindElement(By.XPath("//select[@id='MaitenanceRequestTypeId']//option[10]")).Selected)
+            {
+                wd.FindElement(By.XPath("//select[@id='MaitenanceRequestTypeId']//option[10]")).Click();
+            }
+            if (!wd.FindElement(By.Id("PermissionToEnter")).Selected)
+            {
+                wd.FindElement(By.Id("PermissionToEnter")).Click();
+            }
+            wd.FindElement(By.XPath("//div[@class='btn-group']/label[2]"),20).Click();
+            wd.FindElement(By.Id("Comments")).Click();
+            wd.FindElement(By.Id("Comments")).Clear();
+            wd.FindElement(By.Id("Comments")).SendKeys("Selenium Test Request");
+            wd.FindElement(By.CssSelector("input.btn.btn-primary")).Click();
+   
+            wd.FindElement(By.LinkText("Edit"),20).Click();
+            wd.FindElement(By.Id("Comments"),20).Click();
+            wd.FindElement(By.Id("Comments")).Clear();
+            wd.FindElement(By.Id("Comments")).SendKeys("Selenium Test Requests");
+            wd.FindElement(By.XPath("//div[@class='modal-footer']/input")).Click();
+        }
+
+  
+        public void Login()
+        {
+            wd.Navigate().GoToUrl("http://dev.apartmentapps.com/Account/Login");
+            wd.FindElement(By.Id("Email"),20).Click();
+            wd.FindElement(By.Id("Email")).Clear();
+            wd.FindElement(By.Id("Email")).SendKeys("micahosborne@gmail.com");
+            wd.FindElement(By.Id("Password")).Click();
+            wd.FindElement(By.Id("Password")).Clear();
+            wd.FindElement(By.Id("Password")).SendKeys("micah123");
+            wd.FindElement(By.XPath("//form[@id='form0']/div[5]/input")).Click();
+        }
+    }
+    public static class WebDriverExtensions
+    {
+        public static IWebElement FindElement(this IWebDriver driver, By by, int timeoutInSeconds)
+        {
+            if (timeoutInSeconds > 0)
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+                return wait.Until(drv => drv.FindElement(by));
+            }
+            return driver.FindElement(by);
+        }
+    }
     [TestClass]
     public class DbTasks
     {
@@ -59,7 +131,7 @@ namespace ApartmentApps.Tests
 #if DEBUG
             return;
 #endif
-            
+
             string backupDbName =
                 $"ApartmentApps_Backup{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Year}_{DateTime.Now.Ticks}";
 
