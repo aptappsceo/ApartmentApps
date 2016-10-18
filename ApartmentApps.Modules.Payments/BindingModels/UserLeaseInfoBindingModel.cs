@@ -6,11 +6,8 @@ using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class UserLeaseInfoBindingModel
+    public class UserLeaseInfoBindingModel : BaseViewModel
     {
-        [DataType("Hidden")]
-        public int Id { get; set; }
-
         public virtual UserBindingModel User { get; set; }
         
         public decimal Amount { get; set; }

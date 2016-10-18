@@ -79,6 +79,7 @@ namespace ApartmentApps.Api.Modules
                 if (UserContext.IsInRole("Admin") || UserContext.IsInRole("PropertyAdmin"))
                 {
                     paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus", "CreateUserLeaseInfoFor", "Payments"));
+                    paymentsHome.Children.Add(new MenuItemViewModel("Payments Requests", "fa-plus", "Index", "PaymentsRequests"));
                     //       paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
                 }
 
@@ -280,13 +281,13 @@ namespace ApartmentApps.Api.Modules
             }
         }
 
-        public async Task<bool> ForceRejectTransaction(string transactionId)
+        public async Task<bool> ForceRejectTransaction(int transactionId)
         {
             var transaction = _transactionHistory.Where(s => s.Id == transactionId).Include(s => s.Invoices).FirstOrDefault();
             return await ForceRejectTransaction(transaction);
         }
 
-        public async Task<bool> ForceCompleteTransaction(string transactionId)
+        public async Task<bool> ForceCompleteTransaction(int transactionId)
         {
             var transaction = _transactionHistory.Where(s => s.Id == transactionId).Include(s => s.Invoices).FirstOrDefault();
             return await ForceCompleteTransaction(transaction);

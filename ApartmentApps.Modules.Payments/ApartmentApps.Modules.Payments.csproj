@@ -55,6 +55,14 @@
       <HintPath>..\packages\ini-parser.2.3.0\lib\net20\INIFileParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Korzh.EasyQuery.Db.NET45, Version=3.7.3.18, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ApartmentApps.Portal\3rdParty\Korzh.EasyQuery.Db.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="Korzh.EasyQuery.NET45, Version=3.7.3.18, Culture=neutral, PublicKeyToken=fb0d7039c576491c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ApartmentApps.Portal\3rdParty\Korzh.EasyQuery.NET45.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -142,6 +150,7 @@
     <Compile Include="PaymentsModule.cs" />
     <Compile Include="BindingModels\PaymentSummaryBindingModel.cs" />
     <Compile Include="BindingModels\PaymentSummaryItemBindingModel.cs" />
+    <Compile Include="PaymentsRequests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BindingModels\UserPaymentsOverviewBindingModel.cs" />
     <Compile Include="Data\TransactionState.cs" />

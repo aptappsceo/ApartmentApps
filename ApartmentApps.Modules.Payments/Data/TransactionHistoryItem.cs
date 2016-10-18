@@ -11,15 +11,12 @@ using ApartmentApps.Data;
 namespace ApartmentApps.Modules.Payments.Data
 {
     [Persistant]
-    public class TransactionHistoryItem
+    public class TransactionHistoryItem : PropertyEntity
     {
         public TransactionHistoryItem()
         {
             Invoices = new HashSet<Invoice>();
         }
-
-        [Key]
-        public string Id { get; set; }
 
         public string UserId { get; set; }
 

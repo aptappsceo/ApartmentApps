@@ -20,6 +20,7 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
+using ApartmentApps.Modules.Payments;
 using ApartmentApps.Portal.App_Start;
 using Korzh.EasyQuery.Services;
 using Ninject;
@@ -137,6 +138,20 @@ namespace ApartmentApps.Portal.Controllers
     }
 
 
+    [Authorize]
+    public class PaymentRequestsController :
+        AutoGridController
+            <PaymentsRequestsService, PaymentsRequestsService, UserLeaseInfoBindingModel, EditUserLeaseInfoBindingModel>
+    {
+
+        public PaymentsRequestsService PaymentsRequestsService { get; set; }
+
+        public PaymentRequestsController(IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service) : base(kernel, formService, indexService, context, userContext, service)
+        {
+            PaymentsRequestsService = formService;
+        }
+
+    }
 
 
     [Authorize]
