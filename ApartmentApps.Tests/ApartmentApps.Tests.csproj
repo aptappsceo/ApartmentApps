@@ -195,6 +195,7 @@
     <Compile Include="IncidentReportWebServiceTests.cs" />
     <Compile Include="MaitenanceRequestsControllerTests.cs" />
     <Compile Include="MessagingControllerTests.cs" />
+    <Compile Include="PaymentsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\PropertyControllerTest.cs" />
     <Compile Include="Base\PropertyTest.cs" />
