@@ -47,7 +47,7 @@ namespace ApartmentApps.Api.Modules
 
         public void SendMessage(object[] ids, MessageViewModel message, string host)
         {
-
+          
             foreach (var item in ids)
             {
                 var user = _context.Users.Find(item);

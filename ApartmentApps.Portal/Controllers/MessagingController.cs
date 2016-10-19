@@ -100,24 +100,22 @@ namespace ApartmentApps.Portal.Controllers
             var q = Service.Find<MessageViewModel>(messageId.ToString());
             if (q != null)
             {
+                var userService = Kernel.Get<UserService>();
                 string queryXml = q.TargetsXml;
-                var query = new DbQuery();
+                var query = userService.CreateQuery();
                 if (!string.IsNullOrEmpty(queryXml))
                 {
-                    if (query.Model != null)
-                    {
+                  
                         query.LoadFromString(queryXml);
-                    }
-                    else
-                    {
-                        query = null;
-                    }
+                
                     
                 }
                 else
                 {
-                    query = null;
+                    ViewBag.ErrorMessage = "Cannot send message. Targets not set.";
+                    return RedirectToAction("MessageDetails", new { id = messageId });
                 }
+
                 var count = 0;
                 var items = _userService.GetAll<UserBindingModel>(query, out count, null, false, 1, Int32.MaxValue).ToArray().Select(p=>p.Id).Cast<object>().ToArray();
 
