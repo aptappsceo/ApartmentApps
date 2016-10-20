@@ -28,6 +28,8 @@ namespace ApartmentApps.Portal.Controllers
         public TService Service { get; set; }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+     
+          
             base.OnActionExecuting(filterContext);
 
 
@@ -35,10 +37,7 @@ namespace ApartmentApps.Portal.Controllers
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            base.OnActionExecuted(filterContext);
-            var queries = GetQueries().OrderBy(p => p.Index).ToArray();
-            ViewBag.Queries = queries;
-            ViewBag.CurrentQuery = CurrentQueryId ?? queries.FirstOrDefault()?.QueryId;
+            
         }
 
         public ActionResult Details(int? id)
@@ -156,6 +155,9 @@ namespace ApartmentApps.Portal.Controllers
                 gridModel.Items = grid;
                 return View("Forms/GridPartial", gridModel);
             }
+            var queries = GetQueries().OrderBy(p => p.Index).ToArray();
+            ViewBag.Queries = queries;
+            ViewBag.CurrentQuery = CurrentQueryId ?? queries.FirstOrDefault()?.QueryId;
             return AutoIndex<TViewModel>(IndexTitle);
         }
         public GridState GridState

@@ -4,6 +4,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using Korzh.EasyQuery.Db;
 using Microsoft.AspNet.Identity;
 using Ninject;
 
@@ -41,5 +42,9 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         public override string DefaultOrderBy => "Name";
+        public DbQuery All()
+        {
+            return CreateQuery("All");
+        }
     }
 }
