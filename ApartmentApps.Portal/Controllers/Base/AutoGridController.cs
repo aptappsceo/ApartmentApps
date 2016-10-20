@@ -141,7 +141,9 @@ namespace ApartmentApps.Portal.Controllers
 
             var count = 0;
             var results = Service.GetAll<TViewModel>(query, out count, lvo.SortBy?.Replace("DESC", "") ?? lvo.SortBy, lvo.SortBy?.EndsWith("DESC") ?? false, lvo.PageIndex, GridState.RecordsPerPage);
-
+            var queries = GetQueries().OrderBy(p => p.Index).ToArray();
+            ViewBag.Queries = queries;
+            ViewBag.CurrentQuery = string.IsNullOrEmpty(CurrentQueryId) ? (CurrentQueryId = queries.FirstOrDefault()?.QueryId) : CurrentQueryId;
             return GridResult(new GridList<TViewModel>(results.ToArray(), lvo.PageIndex, GridState.RecordsPerPage, count));
         }
 
@@ -155,9 +157,8 @@ namespace ApartmentApps.Portal.Controllers
                 gridModel.Items = grid;
                 return View("Forms/GridPartial", gridModel);
             }
-            var queries = GetQueries().OrderBy(p => p.Index).ToArray();
-            ViewBag.Queries = queries;
-            ViewBag.CurrentQuery = CurrentQueryId ?? queries.FirstOrDefault()?.QueryId;
+        
+         
             return AutoIndex<TViewModel>(IndexTitle);
         }
         public GridState GridState
