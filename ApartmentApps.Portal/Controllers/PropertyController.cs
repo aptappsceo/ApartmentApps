@@ -14,12 +14,39 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
+using ApartmentApps.Modules.Prospect;
 using Entrata.Model.Requests;
 using Microsoft.AspNet.Identity.Owin;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
+    public class ProspectController : AutoGridController<ProspectService, ProspectApplicationBindingModel>
+    {
+        public ProspectController(IKernel kernel, ProspectService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
+        {
+
+        }
+        public override ActionResult GridResult(GridList<ProspectApplicationBindingModel> grid)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return View("OverviewListPartial", grid);
+            }
+            return base.GridResult(grid);
+        }
+        public override ActionResult SaveEntry(ProspectApplicationBindingModel model)
+        {
+            if (string.IsNullOrEmpty(model.Id) || model.Id == "0")
+            {
+                Service.SubmitApplicant(model);
+                return RedirectToAction("Index");
+            }
+            return base.SaveEntry(model);
+        }
+    }
+
     [RoutePrefix("Property")]
     [Authorize(Roles = "Admin")]
     public class PropertyController : AutoGridController<PropertyService, PropertyBindingModel>

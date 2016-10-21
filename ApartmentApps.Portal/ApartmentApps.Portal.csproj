@@ -1510,6 +1510,7 @@
     <Content Include="Views\Shared\Forms\GridPartial.cshtml" />
     <Content Include="Views\Shared\Payments\PaymentListSummary.cshtml" />
     <Content Include="Views\Shared\StandardPageHeader.cshtml" />
+    <Content Include="Views\Prospect\OverviewListPartial.cshtml" />
     <Content Include="Views\PaymentRequests\OverviewListPartial.cshtml" />
     <Content Include="Views\PaymentRequests\Overview.cshtml" />
   </ItemGroup>
@@ -1569,6 +1570,10 @@
     <ProjectReference Include="..\ApartmentApps.Modules.Payments\ApartmentApps.Modules.Payments.csproj">
       <Project>{CC299297-365F-4643-A0B8-316C788A4EF7}</Project>
       <Name>ApartmentApps.Modules.Payments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Prospect\ApartmentApps.Modules.Prospect.csproj">
+      <Project>{4B09DC69-8A16-4029-B5DA-0E494451F9BF}</Project>
+      <Name>ApartmentApps.Modules.Prospect</Name>
     </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Modules.Yardi\ApartmentApps.Modules.Yardi.csproj">
       <Project>{3227fea6-40ab-4e1b-a371-b9fb08f6fa57}</Project>

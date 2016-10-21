@@ -1,0 +1,34 @@
+﻿@using Korzh.EasyQuery.Mvc
+@using Korzh.EasyQuery.Services
+@model ApartmentApps.Forms.GridList<ApartmentApps.Modules.Prospect.ProspectApplicationBindingModel>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-6">
+            <div class="contact-box">
+                @Html.Partial("_ActionLinks", item)
+                <div class="col-sm-4">
+                    <div class="text-center">
+                        <img alt="image" class="img-circle m-t-xs img-responsive" src="@item.SubmittedBy.ImageThumbnailUrl">
+
+                        <div class="m-t-xs font-bold">Submitted Applicant</div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <h3>
+                        <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.Id})" class="pull-left">
+                            <strong>@item.FirstName @item.LastName</strong>
+                        </a>
+                    </h3><br />
+                    <a href="mailto:@(item.Email)">@item.Email</a><br />
+        
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+
+    }
+    @Html.PageNavigator(Model as IPaging)
+    <div style="clear: both;"></div>
+</div>
