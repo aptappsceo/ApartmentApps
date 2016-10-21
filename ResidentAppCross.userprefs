@@ -1,5 +1,5 @@
 ﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupConfiguration="{D8277430-A582-4E04-B474-A48C4A90A313}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/AppDelegate.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ApartmentApps.Api/EntrataModule.cs">
     <Files>
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="74" Column="5" />
       <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="131" Column="42" />
@@ -10,8 +10,30 @@
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/CheckinFormView.cs" Line="120" Column="4" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/Sections/PhotoGallerySection.cs" Line="84" Column="37" />
       <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/AddCreditCardViewModel.cs" Line="91" Column="52" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/AppDelegate.cs" Line="84" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/AppDelegate.cs" Line="28" Column="27" />
+      <File FileName="ApartmentApps.Api/EntrataModule.cs" Line="38" Column="94" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ResidentAppCross" expanded="True">
+            <Node name="Mobile App" expanded="True">
+              <Node name="ResidentAppCross" expanded="True">
+                <Node name="Packages" expanded="True">
+                  <Node name="MvvmCross.Plugin.Messenger" selected="True" />
+                </Node>
+              </Node>
+              <Node name="ResidentAppCross.iOS" expanded="True">
+                <Node name="References" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="Web Stuff" expanded="True">
+              <Node name="ApartmentApps.Api" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

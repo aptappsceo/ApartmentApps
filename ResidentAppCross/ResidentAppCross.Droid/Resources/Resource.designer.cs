@@ -26,43 +26,6 @@ namespace ResidentAppCross.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::AndroidHUD.Resource.Attribute.ahBarColor = global::ResidentAppCross.Droid.Resource.Attribute.ahBarColor;
-			global::AndroidHUD.Resource.Attribute.ahBarLength = global::ResidentAppCross.Droid.Resource.Attribute.ahBarLength;
-			global::AndroidHUD.Resource.Attribute.ahBarWidth = global::ResidentAppCross.Droid.Resource.Attribute.ahBarWidth;
-			global::AndroidHUD.Resource.Attribute.ahCircleColor = global::ResidentAppCross.Droid.Resource.Attribute.ahCircleColor;
-			global::AndroidHUD.Resource.Attribute.ahDelayMillis = global::ResidentAppCross.Droid.Resource.Attribute.ahDelayMillis;
-			global::AndroidHUD.Resource.Attribute.ahRadius = global::ResidentAppCross.Droid.Resource.Attribute.ahRadius;
-			global::AndroidHUD.Resource.Attribute.ahRimColor = global::ResidentAppCross.Droid.Resource.Attribute.ahRimColor;
-			global::AndroidHUD.Resource.Attribute.ahRimWidth = global::ResidentAppCross.Droid.Resource.Attribute.ahRimWidth;
-			global::AndroidHUD.Resource.Attribute.ahSpinSpeed = global::ResidentAppCross.Droid.Resource.Attribute.ahSpinSpeed;
-			global::AndroidHUD.Resource.Attribute.ahText = global::ResidentAppCross.Droid.Resource.Attribute.ahText;
-			global::AndroidHUD.Resource.Attribute.ahTextColor = global::ResidentAppCross.Droid.Resource.Attribute.ahTextColor;
-			global::AndroidHUD.Resource.Attribute.ahTextSize = global::ResidentAppCross.Droid.Resource.Attribute.ahTextSize;
-			global::AndroidHUD.Resource.Drawable.ic_errorstatus = global::ResidentAppCross.Droid.Resource.Drawable.ic_errorstatus;
-			global::AndroidHUD.Resource.Drawable.ic_successstatus = global::ResidentAppCross.Droid.Resource.Drawable.ic_successstatus;
-			global::AndroidHUD.Resource.Drawable.roundedbg = global::ResidentAppCross.Droid.Resource.Drawable.roundedbg;
-			global::AndroidHUD.Resource.Drawable.roundedbgdark = global::ResidentAppCross.Droid.Resource.Drawable.roundedbgdark;
-			global::AndroidHUD.Resource.Id.loadingImage = global::ResidentAppCross.Droid.Resource.Id.loadingImage;
-			global::AndroidHUD.Resource.Id.loadingProgressBar = global::ResidentAppCross.Droid.Resource.Id.loadingProgressBar;
-			global::AndroidHUD.Resource.Id.loadingProgressWheel = global::ResidentAppCross.Droid.Resource.Id.loadingProgressWheel;
-			global::AndroidHUD.Resource.Id.textViewStatus = global::ResidentAppCross.Droid.Resource.Id.textViewStatus;
-			global::AndroidHUD.Resource.Layout.loading = global::ResidentAppCross.Droid.Resource.Layout.loading;
-			global::AndroidHUD.Resource.Layout.loadingimage = global::ResidentAppCross.Droid.Resource.Layout.loadingimage;
-			global::AndroidHUD.Resource.Layout.loadingprogress = global::ResidentAppCross.Droid.Resource.Layout.loadingprogress;
-			global::AndroidHUD.Resource.String.library_name = global::ResidentAppCross.Droid.Resource.String.library_name;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahBarColor;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarLength = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahBarLength;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarWidth = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahBarWidth;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahCircleColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahCircleColor;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahDelayMillis = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahDelayMillis;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRadius = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahRadius;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRimColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahRimColor;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRimWidth = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahRimWidth;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahSpinSpeed = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahSpinSpeed;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahText;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
-			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
 			global::blocke.circleimageview.Resource.Attribute.civ_border_color = global::ResidentAppCross.Droid.Resource.Attribute.civ_border_color;
 			global::blocke.circleimageview.Resource.Attribute.civ_border_overlay = global::ResidentAppCross.Droid.Resource.Attribute.civ_border_overlay;
 			global::blocke.circleimageview.Resource.Attribute.civ_border_width = global::ResidentAppCross.Droid.Resource.Attribute.civ_border_width;
@@ -72,147 +35,6 @@ namespace ResidentAppCross.Droid
 			global::blocke.circleimageview.Resource.Styleable.CircleImageView_civ_border_overlay = global::ResidentAppCross.Droid.Resource.Styleable.CircleImageView_civ_border_overlay;
 			global::blocke.circleimageview.Resource.Styleable.CircleImageView_civ_border_width = global::ResidentAppCross.Droid.Resource.Styleable.CircleImageView_civ_border_width;
 			global::blocke.circleimageview.Resource.Styleable.CircleImageView_civ_fill_color = global::ResidentAppCross.Droid.Resource.Styleable.CircleImageView_civ_fill_color;
-			global::HockeyApp.Resource.Color.hockeyapp_background_header = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_background_header;
-			global::HockeyApp.Resource.Color.hockeyapp_background_light = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_background_light;
-			global::HockeyApp.Resource.Color.hockeyapp_background_white = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_background_white;
-			global::HockeyApp.Resource.Color.hockeyapp_button_background = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_button_background;
-			global::HockeyApp.Resource.Color.hockeyapp_button_background_pressed = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_button_background_pressed;
-			global::HockeyApp.Resource.Color.hockeyapp_button_background_selected = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_button_background_selected;
-			global::HockeyApp.Resource.Color.hockeyapp_text_black = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_text_black;
-			global::HockeyApp.Resource.Color.hockeyapp_text_light = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_text_light;
-			global::HockeyApp.Resource.Color.hockeyapp_text_normal = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_text_normal;
-			global::HockeyApp.Resource.Color.hockeyapp_text_white = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_text_white;
-			global::HockeyApp.Resource.Drawable.hockeyapp_btn_background = global::ResidentAppCross.Droid.Resource.Drawable.hockeyapp_btn_background;
-			global::HockeyApp.Resource.Id.button_add_response = global::ResidentAppCross.Droid.Resource.Id.button_add_response;
-			global::HockeyApp.Resource.Id.button_attachment = global::ResidentAppCross.Droid.Resource.Id.button_attachment;
-			global::HockeyApp.Resource.Id.button_login = global::ResidentAppCross.Droid.Resource.Id.button_login;
-			global::HockeyApp.Resource.Id.button_refresh = global::ResidentAppCross.Droid.Resource.Id.button_refresh;
-			global::HockeyApp.Resource.Id.button_send = global::ResidentAppCross.Droid.Resource.Id.button_send;
-			global::HockeyApp.Resource.Id.button_update = global::ResidentAppCross.Droid.Resource.Id.button_update;
-			global::HockeyApp.Resource.Id.input_email = global::ResidentAppCross.Droid.Resource.Id.input_email;
-			global::HockeyApp.Resource.Id.input_message = global::ResidentAppCross.Droid.Resource.Id.input_message;
-			global::HockeyApp.Resource.Id.input_name = global::ResidentAppCross.Droid.Resource.Id.input_name;
-			global::HockeyApp.Resource.Id.input_password = global::ResidentAppCross.Droid.Resource.Id.input_password;
-			global::HockeyApp.Resource.Id.input_subject = global::ResidentAppCross.Droid.Resource.Id.input_subject;
-			global::HockeyApp.Resource.Id.label_author = global::ResidentAppCross.Droid.Resource.Id.label_author;
-			global::HockeyApp.Resource.Id.label_date = global::ResidentAppCross.Droid.Resource.Id.label_date;
-			global::HockeyApp.Resource.Id.label_last_updated = global::ResidentAppCross.Droid.Resource.Id.label_last_updated;
-			global::HockeyApp.Resource.Id.label_message = global::ResidentAppCross.Droid.Resource.Id.label_message;
-			global::HockeyApp.Resource.Id.label_text = global::ResidentAppCross.Droid.Resource.Id.label_text;
-			global::HockeyApp.Resource.Id.label_title = global::ResidentAppCross.Droid.Resource.Id.label_title;
-			global::HockeyApp.Resource.Id.label_version = global::ResidentAppCross.Droid.Resource.Id.label_version;
-			global::HockeyApp.Resource.Id.list_attachments = global::ResidentAppCross.Droid.Resource.Id.list_attachments;
-			global::HockeyApp.Resource.Id.list_feedback_messages = global::ResidentAppCross.Droid.Resource.Id.list_feedback_messages;
-			global::HockeyApp.Resource.Id.text_headline = global::ResidentAppCross.Droid.Resource.Id.text_headline;
-			global::HockeyApp.Resource.Id.view_header = global::ResidentAppCross.Droid.Resource.Id.view_header;
-			global::HockeyApp.Resource.Id.web_update_details = global::ResidentAppCross.Droid.Resource.Id.web_update_details;
-			global::HockeyApp.Resource.Id.wrapper_attachments = global::ResidentAppCross.Droid.Resource.Id.wrapper_attachments;
-			global::HockeyApp.Resource.Id.wrapper_feedback = global::ResidentAppCross.Droid.Resource.Id.wrapper_feedback;
-			global::HockeyApp.Resource.Id.wrapper_feedback_scroll = global::ResidentAppCross.Droid.Resource.Id.wrapper_feedback_scroll;
-			global::HockeyApp.Resource.Id.wrapper_messages = global::ResidentAppCross.Droid.Resource.Id.wrapper_messages;
-			global::HockeyApp.Resource.Id.wrapper_messages_buttons = global::ResidentAppCross.Droid.Resource.Id.wrapper_messages_buttons;
-			global::HockeyApp.Resource.Layout.hockeyapp_activity_expiry_info = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_activity_expiry_info;
-			global::HockeyApp.Resource.Layout.hockeyapp_activity_feedback = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_activity_feedback;
-			global::HockeyApp.Resource.Layout.hockeyapp_activity_login = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_activity_login;
-			global::HockeyApp.Resource.Layout.hockeyapp_activity_update = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_activity_update;
-			global::HockeyApp.Resource.Layout.hockeyapp_fragment_update = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_fragment_update;
-			global::HockeyApp.Resource.Layout.hockeyapp_view_feedback_message = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_view_feedback_message;
-			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_app_name_fallback = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_app_name_fallback;
-			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_message;
-			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_negative_button;
-			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_neutral_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_neutral_button;
-			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_positive_button;
-			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_title;
-			global::HockeyApp.Resource.String.hockeyapp_dialog_error_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_dialog_error_message;
-			global::HockeyApp.Resource.String.hockeyapp_dialog_error_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_dialog_error_title;
-			global::HockeyApp.Resource.String.hockeyapp_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_dialog_negative_button;
-			global::HockeyApp.Resource.String.hockeyapp_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_dialog_positive_button;
-			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_download_failed_dialog_message;
-			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_download_failed_dialog_negative_button;
-			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_download_failed_dialog_positive_button;
-			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_download_failed_dialog_title;
-			global::HockeyApp.Resource.String.hockeyapp_error_no_network_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_error_no_network_message;
-			global::HockeyApp.Resource.String.hockeyapp_expiry_info_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_expiry_info_text;
-			global::HockeyApp.Resource.String.hockeyapp_expiry_info_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_expiry_info_title;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_attach_file = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_attach_file;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_attach_picture = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_attach_picture;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_button_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_attachment_button_text;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_attachment_error;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_loading = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_attachment_loading;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_email_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_email_hint;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_failed_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_failed_text;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_failed_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_failed_title;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_fetching_feedback_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_fetching_feedback_text;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_generic_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_generic_error;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_last_updated_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_last_updated_text;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_max_attachments_allowed = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_max_attachments_allowed;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_message_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_message_hint;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_name_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_name_hint;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_refresh_button_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_refresh_button_text;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_response_button_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_response_button_text;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_select_file = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_select_file;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_select_picture = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_select_picture;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_send_button_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_send_button_text;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_send_generic_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_send_generic_error;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_send_network_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_send_network_error;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_sending_feedback_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_sending_feedback_text;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_subject_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_subject_hint;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_title;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_email_empty = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_validate_email_empty;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_email_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_validate_email_error;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_name_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_validate_name_error;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_subject_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_validate_subject_error;
-			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_text_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_validate_text_error;
-			global::HockeyApp.Resource.String.hockeyapp_login_email_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_email_hint;
-			global::HockeyApp.Resource.String.hockeyapp_login_headline_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_headline_text;
-			global::HockeyApp.Resource.String.hockeyapp_login_headline_text_email_only = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_headline_text_email_only;
-			global::HockeyApp.Resource.String.hockeyapp_login_login_button_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_login_button_text;
-			global::HockeyApp.Resource.String.hockeyapp_login_missing_credentials_toast = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_missing_credentials_toast;
-			global::HockeyApp.Resource.String.hockeyapp_login_password_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_password_hint;
-			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_dialog_message;
-			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_dialog_negative_button;
-			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_neutral_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_dialog_neutral_button;
-			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_dialog_positive_button;
-			global::HockeyApp.Resource.String.hockeyapp_paint_indicator_toast = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_indicator_toast;
-			global::HockeyApp.Resource.String.hockeyapp_paint_menu_clear = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_menu_clear;
-			global::HockeyApp.Resource.String.hockeyapp_paint_menu_save = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_menu_save;
-			global::HockeyApp.Resource.String.hockeyapp_paint_menu_undo = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_menu_undo;
-			global::HockeyApp.Resource.String.hockeyapp_permission_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_permission_dialog_negative_button;
-			global::HockeyApp.Resource.String.hockeyapp_permission_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_permission_dialog_positive_button;
-			global::HockeyApp.Resource.String.hockeyapp_permission_update_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_permission_update_message;
-			global::HockeyApp.Resource.String.hockeyapp_permission_update_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_permission_update_title;
-			global::HockeyApp.Resource.String.hockeyapp_update_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_button;
-			global::HockeyApp.Resource.String.hockeyapp_update_dialog_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_dialog_message;
-			global::HockeyApp.Resource.String.hockeyapp_update_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_dialog_negative_button;
-			global::HockeyApp.Resource.String.hockeyapp_update_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_dialog_positive_button;
-			global::HockeyApp.Resource.String.hockeyapp_update_dialog_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_dialog_title;
-			global::HockeyApp.Resource.String.hockeyapp_update_mandatory_toast = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_mandatory_toast;
-			global::HockeyApp.Resource.String.hockeyapp_update_version_details_label = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_version_details_label;
-			global::HockeyApp.Resource.String.library_name = global::ResidentAppCross.Droid.Resource.String.library_name;
-			global::HockeyApp.Resource.Style.HockeyApp_ButtonStyle = global::ResidentAppCross.Droid.Resource.Style.HockeyApp_ButtonStyle;
-			global::HockeyApp.Resource.Style.HockeyApp_EditTextStyle = global::ResidentAppCross.Droid.Resource.Style.HockeyApp_EditTextStyle;
-			global::HockeyApp.Resource.Style.HockeyApp_SingleLineInputStyle = global::ResidentAppCross.Droid.Resource.Style.HockeyApp_SingleLineInputStyle;
-			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxBind = global::ResidentAppCross.Droid.Resource.Attribute.MvxBind;
-			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxDropDownItemTemplate;
-			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxGroupItemTemplate;
-			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxItemTemplate;
-			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxLang = global::ResidentAppCross.Droid.Resource.Attribute.MvxLang;
-			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxSource = global::ResidentAppCross.Droid.Resource.Attribute.MvxSource;
-			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxTemplate;
-			global::MvvmCross.Binding.Droid.Resource.Id.MvvmCrossTagId = global::ResidentAppCross.Droid.Resource.Id.MvvmCrossTagId;
-			global::MvvmCross.Binding.Droid.Resource.Id.MvxBindingTagUnique = global::ResidentAppCross.Droid.Resource.Id.MvxBindingTagUnique;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxBinding = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxBinding_MvxBind = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding_MvxBind;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxBinding_MvxLang = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding_MvxLang;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxControl = global::ResidentAppCross.Droid.Resource.Styleable.MvxControl;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxControl_MvxTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxControl_MvxTemplate;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxExpandableListView = global::ResidentAppCross.Droid.Resource.Styleable.MvxExpandableListView;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxImageView = global::ResidentAppCross.Droid.Resource.Styleable.MvxImageView;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxImageView_MvxSource = global::ResidentAppCross.Droid.Resource.Styleable.MvxImageView_MvxSource;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
-			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
 			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxBind = global::ResidentAppCross.Droid.Resource.Attribute.MvxBind;
 			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxDropDownItemTemplate;
 			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxGroupItemTemplate;
@@ -1815,10 +1637,188 @@ namespace ResidentAppCross.Droid
 			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewStubCompat_android_id = global::ResidentAppCross.Droid.Resource.Styleable.ViewStubCompat_android_id;
 			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewStubCompat_android_inflatedId = global::ResidentAppCross.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::MvvmCross.Droid.Support.Design.Resource.Styleable.ViewStubCompat_android_layout = global::ResidentAppCross.Droid.Resource.Styleable.ViewStubCompat_android_layout;
-			global::Gcm.Client.Resource.String.library_name = global::ResidentAppCross.Droid.Resource.String.library_name;
 			global::ZXing.Mobile.Resource.Id.contentFrame = global::ResidentAppCross.Droid.Resource.Id.contentFrame;
 			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::ResidentAppCross.Droid.Resource.Layout.zxingscanneractivitylayout;
 			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::ResidentAppCross.Droid.Resource.Layout.zxingscannerfragmentlayout;
+			global::HockeyApp.Resource.Color.hockeyapp_background_header = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_background_header;
+			global::HockeyApp.Resource.Color.hockeyapp_background_light = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_background_light;
+			global::HockeyApp.Resource.Color.hockeyapp_background_white = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_background_white;
+			global::HockeyApp.Resource.Color.hockeyapp_button_background = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_button_background;
+			global::HockeyApp.Resource.Color.hockeyapp_button_background_pressed = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_button_background_pressed;
+			global::HockeyApp.Resource.Color.hockeyapp_button_background_selected = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_button_background_selected;
+			global::HockeyApp.Resource.Color.hockeyapp_text_black = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_text_black;
+			global::HockeyApp.Resource.Color.hockeyapp_text_light = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_text_light;
+			global::HockeyApp.Resource.Color.hockeyapp_text_normal = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_text_normal;
+			global::HockeyApp.Resource.Color.hockeyapp_text_white = global::ResidentAppCross.Droid.Resource.Color.hockeyapp_text_white;
+			global::HockeyApp.Resource.Drawable.hockeyapp_btn_background = global::ResidentAppCross.Droid.Resource.Drawable.hockeyapp_btn_background;
+			global::HockeyApp.Resource.Id.button_add_response = global::ResidentAppCross.Droid.Resource.Id.button_add_response;
+			global::HockeyApp.Resource.Id.button_attachment = global::ResidentAppCross.Droid.Resource.Id.button_attachment;
+			global::HockeyApp.Resource.Id.button_login = global::ResidentAppCross.Droid.Resource.Id.button_login;
+			global::HockeyApp.Resource.Id.button_refresh = global::ResidentAppCross.Droid.Resource.Id.button_refresh;
+			global::HockeyApp.Resource.Id.button_send = global::ResidentAppCross.Droid.Resource.Id.button_send;
+			global::HockeyApp.Resource.Id.button_update = global::ResidentAppCross.Droid.Resource.Id.button_update;
+			global::HockeyApp.Resource.Id.input_email = global::ResidentAppCross.Droid.Resource.Id.input_email;
+			global::HockeyApp.Resource.Id.input_message = global::ResidentAppCross.Droid.Resource.Id.input_message;
+			global::HockeyApp.Resource.Id.input_name = global::ResidentAppCross.Droid.Resource.Id.input_name;
+			global::HockeyApp.Resource.Id.input_password = global::ResidentAppCross.Droid.Resource.Id.input_password;
+			global::HockeyApp.Resource.Id.input_subject = global::ResidentAppCross.Droid.Resource.Id.input_subject;
+			global::HockeyApp.Resource.Id.label_author = global::ResidentAppCross.Droid.Resource.Id.label_author;
+			global::HockeyApp.Resource.Id.label_date = global::ResidentAppCross.Droid.Resource.Id.label_date;
+			global::HockeyApp.Resource.Id.label_last_updated = global::ResidentAppCross.Droid.Resource.Id.label_last_updated;
+			global::HockeyApp.Resource.Id.label_message = global::ResidentAppCross.Droid.Resource.Id.label_message;
+			global::HockeyApp.Resource.Id.label_text = global::ResidentAppCross.Droid.Resource.Id.label_text;
+			global::HockeyApp.Resource.Id.label_title = global::ResidentAppCross.Droid.Resource.Id.label_title;
+			global::HockeyApp.Resource.Id.label_version = global::ResidentAppCross.Droid.Resource.Id.label_version;
+			global::HockeyApp.Resource.Id.list_attachments = global::ResidentAppCross.Droid.Resource.Id.list_attachments;
+			global::HockeyApp.Resource.Id.list_feedback_messages = global::ResidentAppCross.Droid.Resource.Id.list_feedback_messages;
+			global::HockeyApp.Resource.Id.text_headline = global::ResidentAppCross.Droid.Resource.Id.text_headline;
+			global::HockeyApp.Resource.Id.view_header = global::ResidentAppCross.Droid.Resource.Id.view_header;
+			global::HockeyApp.Resource.Id.web_update_details = global::ResidentAppCross.Droid.Resource.Id.web_update_details;
+			global::HockeyApp.Resource.Id.wrapper_attachments = global::ResidentAppCross.Droid.Resource.Id.wrapper_attachments;
+			global::HockeyApp.Resource.Id.wrapper_feedback = global::ResidentAppCross.Droid.Resource.Id.wrapper_feedback;
+			global::HockeyApp.Resource.Id.wrapper_feedback_scroll = global::ResidentAppCross.Droid.Resource.Id.wrapper_feedback_scroll;
+			global::HockeyApp.Resource.Id.wrapper_messages = global::ResidentAppCross.Droid.Resource.Id.wrapper_messages;
+			global::HockeyApp.Resource.Id.wrapper_messages_buttons = global::ResidentAppCross.Droid.Resource.Id.wrapper_messages_buttons;
+			global::HockeyApp.Resource.Layout.hockeyapp_activity_expiry_info = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_activity_expiry_info;
+			global::HockeyApp.Resource.Layout.hockeyapp_activity_feedback = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_activity_feedback;
+			global::HockeyApp.Resource.Layout.hockeyapp_activity_login = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_activity_login;
+			global::HockeyApp.Resource.Layout.hockeyapp_activity_update = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_activity_update;
+			global::HockeyApp.Resource.Layout.hockeyapp_fragment_update = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_fragment_update;
+			global::HockeyApp.Resource.Layout.hockeyapp_view_feedback_message = global::ResidentAppCross.Droid.Resource.Layout.hockeyapp_view_feedback_message;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_app_name_fallback = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_app_name_fallback;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_message;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_neutral_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_neutral_button;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_crash_dialog_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_crash_dialog_title;
+			global::HockeyApp.Resource.String.hockeyapp_dialog_error_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_dialog_error_message;
+			global::HockeyApp.Resource.String.hockeyapp_dialog_error_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_dialog_error_title;
+			global::HockeyApp.Resource.String.hockeyapp_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_download_failed_dialog_message;
+			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_download_failed_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_download_failed_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_download_failed_dialog_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_download_failed_dialog_title;
+			global::HockeyApp.Resource.String.hockeyapp_error_no_network_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_error_no_network_message;
+			global::HockeyApp.Resource.String.hockeyapp_expiry_info_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_expiry_info_text;
+			global::HockeyApp.Resource.String.hockeyapp_expiry_info_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_expiry_info_title;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_attach_file = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_attach_file;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_attach_picture = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_attach_picture;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_button_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_attachment_button_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_attachment_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_attachment_loading = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_attachment_loading;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_email_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_email_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_failed_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_failed_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_failed_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_failed_title;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_fetching_feedback_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_fetching_feedback_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_generic_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_generic_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_last_updated_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_last_updated_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_max_attachments_allowed = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_max_attachments_allowed;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_message_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_message_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_name_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_name_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_refresh_button_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_refresh_button_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_response_button_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_response_button_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_select_file = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_select_file;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_select_picture = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_select_picture;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_send_button_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_send_button_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_send_generic_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_send_generic_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_send_network_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_send_network_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_sending_feedback_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_sending_feedback_text;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_subject_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_subject_hint;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_title;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_email_empty = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_validate_email_empty;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_email_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_validate_email_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_name_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_validate_name_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_subject_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_validate_subject_error;
+			global::HockeyApp.Resource.String.hockeyapp_feedback_validate_text_error = global::ResidentAppCross.Droid.Resource.String.hockeyapp_feedback_validate_text_error;
+			global::HockeyApp.Resource.String.hockeyapp_login_email_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_email_hint;
+			global::HockeyApp.Resource.String.hockeyapp_login_headline_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_headline_text;
+			global::HockeyApp.Resource.String.hockeyapp_login_headline_text_email_only = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_headline_text_email_only;
+			global::HockeyApp.Resource.String.hockeyapp_login_login_button_text = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_login_button_text;
+			global::HockeyApp.Resource.String.hockeyapp_login_missing_credentials_toast = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_missing_credentials_toast;
+			global::HockeyApp.Resource.String.hockeyapp_login_password_hint = global::ResidentAppCross.Droid.Resource.String.hockeyapp_login_password_hint;
+			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_dialog_message;
+			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_neutral_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_dialog_neutral_button;
+			global::HockeyApp.Resource.String.hockeyapp_paint_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_paint_indicator_toast = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_indicator_toast;
+			global::HockeyApp.Resource.String.hockeyapp_paint_menu_clear = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_menu_clear;
+			global::HockeyApp.Resource.String.hockeyapp_paint_menu_save = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_menu_save;
+			global::HockeyApp.Resource.String.hockeyapp_paint_menu_undo = global::ResidentAppCross.Droid.Resource.String.hockeyapp_paint_menu_undo;
+			global::HockeyApp.Resource.String.hockeyapp_permission_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_permission_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_permission_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_permission_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_permission_update_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_permission_update_message;
+			global::HockeyApp.Resource.String.hockeyapp_permission_update_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_permission_update_title;
+			global::HockeyApp.Resource.String.hockeyapp_update_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_button;
+			global::HockeyApp.Resource.String.hockeyapp_update_dialog_message = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_dialog_message;
+			global::HockeyApp.Resource.String.hockeyapp_update_dialog_negative_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_dialog_negative_button;
+			global::HockeyApp.Resource.String.hockeyapp_update_dialog_positive_button = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_dialog_positive_button;
+			global::HockeyApp.Resource.String.hockeyapp_update_dialog_title = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_dialog_title;
+			global::HockeyApp.Resource.String.hockeyapp_update_mandatory_toast = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_mandatory_toast;
+			global::HockeyApp.Resource.String.hockeyapp_update_version_details_label = global::ResidentAppCross.Droid.Resource.String.hockeyapp_update_version_details_label;
+			global::HockeyApp.Resource.String.library_name = global::ResidentAppCross.Droid.Resource.String.library_name;
+			global::HockeyApp.Resource.Style.HockeyApp_ButtonStyle = global::ResidentAppCross.Droid.Resource.Style.HockeyApp_ButtonStyle;
+			global::HockeyApp.Resource.Style.HockeyApp_EditTextStyle = global::ResidentAppCross.Droid.Resource.Style.HockeyApp_EditTextStyle;
+			global::HockeyApp.Resource.Style.HockeyApp_SingleLineInputStyle = global::ResidentAppCross.Droid.Resource.Style.HockeyApp_SingleLineInputStyle;
+			global::AndroidHUD.Resource.Attribute.ahBarColor = global::ResidentAppCross.Droid.Resource.Attribute.ahBarColor;
+			global::AndroidHUD.Resource.Attribute.ahBarLength = global::ResidentAppCross.Droid.Resource.Attribute.ahBarLength;
+			global::AndroidHUD.Resource.Attribute.ahBarWidth = global::ResidentAppCross.Droid.Resource.Attribute.ahBarWidth;
+			global::AndroidHUD.Resource.Attribute.ahCircleColor = global::ResidentAppCross.Droid.Resource.Attribute.ahCircleColor;
+			global::AndroidHUD.Resource.Attribute.ahDelayMillis = global::ResidentAppCross.Droid.Resource.Attribute.ahDelayMillis;
+			global::AndroidHUD.Resource.Attribute.ahRadius = global::ResidentAppCross.Droid.Resource.Attribute.ahRadius;
+			global::AndroidHUD.Resource.Attribute.ahRimColor = global::ResidentAppCross.Droid.Resource.Attribute.ahRimColor;
+			global::AndroidHUD.Resource.Attribute.ahRimWidth = global::ResidentAppCross.Droid.Resource.Attribute.ahRimWidth;
+			global::AndroidHUD.Resource.Attribute.ahSpinSpeed = global::ResidentAppCross.Droid.Resource.Attribute.ahSpinSpeed;
+			global::AndroidHUD.Resource.Attribute.ahText = global::ResidentAppCross.Droid.Resource.Attribute.ahText;
+			global::AndroidHUD.Resource.Attribute.ahTextColor = global::ResidentAppCross.Droid.Resource.Attribute.ahTextColor;
+			global::AndroidHUD.Resource.Attribute.ahTextSize = global::ResidentAppCross.Droid.Resource.Attribute.ahTextSize;
+			global::AndroidHUD.Resource.Drawable.ic_errorstatus = global::ResidentAppCross.Droid.Resource.Drawable.ic_errorstatus;
+			global::AndroidHUD.Resource.Drawable.ic_successstatus = global::ResidentAppCross.Droid.Resource.Drawable.ic_successstatus;
+			global::AndroidHUD.Resource.Drawable.roundedbg = global::ResidentAppCross.Droid.Resource.Drawable.roundedbg;
+			global::AndroidHUD.Resource.Drawable.roundedbgdark = global::ResidentAppCross.Droid.Resource.Drawable.roundedbgdark;
+			global::AndroidHUD.Resource.Id.loadingImage = global::ResidentAppCross.Droid.Resource.Id.loadingImage;
+			global::AndroidHUD.Resource.Id.loadingProgressBar = global::ResidentAppCross.Droid.Resource.Id.loadingProgressBar;
+			global::AndroidHUD.Resource.Id.loadingProgressWheel = global::ResidentAppCross.Droid.Resource.Id.loadingProgressWheel;
+			global::AndroidHUD.Resource.Id.textViewStatus = global::ResidentAppCross.Droid.Resource.Id.textViewStatus;
+			global::AndroidHUD.Resource.Layout.loading = global::ResidentAppCross.Droid.Resource.Layout.loading;
+			global::AndroidHUD.Resource.Layout.loadingimage = global::ResidentAppCross.Droid.Resource.Layout.loadingimage;
+			global::AndroidHUD.Resource.Layout.loadingprogress = global::ResidentAppCross.Droid.Resource.Layout.loadingprogress;
+			global::AndroidHUD.Resource.String.library_name = global::ResidentAppCross.Droid.Resource.String.library_name;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahBarColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarLength = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahBarLength;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahBarWidth = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahBarWidth;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahCircleColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahCircleColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahDelayMillis = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahDelayMillis;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRadius = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahRadius;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRimColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahRimColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahRimWidth = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahRimWidth;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahSpinSpeed = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahSpinSpeed;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahText;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
+			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::ResidentAppCross.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
+			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxBind = global::ResidentAppCross.Droid.Resource.Attribute.MvxBind;
+			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxDropDownItemTemplate;
+			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxGroupItemTemplate;
+			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxItemTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxItemTemplate;
+			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxLang = global::ResidentAppCross.Droid.Resource.Attribute.MvxLang;
+			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxSource = global::ResidentAppCross.Droid.Resource.Attribute.MvxSource;
+			global::MvvmCross.Binding.Droid.Resource.Attribute.MvxTemplate = global::ResidentAppCross.Droid.Resource.Attribute.MvxTemplate;
+			global::MvvmCross.Binding.Droid.Resource.Id.MvvmCrossTagId = global::ResidentAppCross.Droid.Resource.Id.MvvmCrossTagId;
+			global::MvvmCross.Binding.Droid.Resource.Id.MvxBindingTagUnique = global::ResidentAppCross.Droid.Resource.Id.MvxBindingTagUnique;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxBinding = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxBinding_MvxBind = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding_MvxBind;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxBinding_MvxLang = global::ResidentAppCross.Droid.Resource.Styleable.MvxBinding_MvxLang;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxControl = global::ResidentAppCross.Droid.Resource.Styleable.MvxControl;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxControl_MvxTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxControl_MvxTemplate;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxExpandableListView = global::ResidentAppCross.Droid.Resource.Styleable.MvxExpandableListView;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxImageView = global::ResidentAppCross.Droid.Resource.Styleable.MvxImageView;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxImageView_MvxSource = global::ResidentAppCross.Droid.Resource.Styleable.MvxImageView_MvxSource;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
+			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxItemTemplate = global::ResidentAppCross.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
+			global::Gcm.Client.Resource.String.library_name = global::ResidentAppCross.Droid.Resource.String.library_name;
 		}
 		
 		public partial class Animation
@@ -1885,26 +1885,26 @@ namespace ResidentAppCross.Droid
 		public partial class Attribute
 		{
 			
-			// aapt resource value: 0x7f01013f
-			public const int MvxBind = 2130772287;
-			
-			// aapt resource value: 0x7f010143
-			public const int MvxDropDownItemTemplate = 2130772291;
-			
-			// aapt resource value: 0x7f010144
-			public const int MvxGroupItemTemplate = 2130772292;
-			
-			// aapt resource value: 0x7f010142
-			public const int MvxItemTemplate = 2130772290;
+			// aapt resource value: 0x7f01013c
+			public const int MvxBind = 2130772284;
 			
 			// aapt resource value: 0x7f010140
-			public const int MvxLang = 2130772288;
-			
-			// aapt resource value: 0x7f010145
-			public const int MvxSource = 2130772293;
+			public const int MvxDropDownItemTemplate = 2130772288;
 			
 			// aapt resource value: 0x7f010141
-			public const int MvxTemplate = 2130772289;
+			public const int MvxGroupItemTemplate = 2130772289;
+			
+			// aapt resource value: 0x7f01013f
+			public const int MvxItemTemplate = 2130772287;
+			
+			// aapt resource value: 0x7f01013d
+			public const int MvxLang = 2130772285;
+			
+			// aapt resource value: 0x7f010142
+			public const int MvxSource = 2130772290;
+			
+			// aapt resource value: 0x7f01013e
+			public const int MvxTemplate = 2130772286;
 			
 			// aapt resource value: 0x7f010061
 			public const int actionBarDivider = 2130772065;
@@ -2008,41 +2008,41 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f010083
 			public const int activityChooserViewStyle = 2130772099;
 			
-			// aapt resource value: 0x7f01015f
-			public const int ahBarColor = 2130772319;
+			// aapt resource value: 0x7f010146
+			public const int ahBarColor = 2130772294;
 			
-			// aapt resource value: 0x7f010167
-			public const int ahBarLength = 2130772327;
+			// aapt resource value: 0x7f01014e
+			public const int ahBarLength = 2130772302;
 			
-			// aapt resource value: 0x7f010166
-			public const int ahBarWidth = 2130772326;
+			// aapt resource value: 0x7f01014d
+			public const int ahBarWidth = 2130772301;
 			
-			// aapt resource value: 0x7f010164
-			public const int ahCircleColor = 2130772324;
+			// aapt resource value: 0x7f01014b
+			public const int ahCircleColor = 2130772299;
 			
-			// aapt resource value: 0x7f010163
-			public const int ahDelayMillis = 2130772323;
+			// aapt resource value: 0x7f01014a
+			public const int ahDelayMillis = 2130772298;
 			
-			// aapt resource value: 0x7f010165
-			public const int ahRadius = 2130772325;
+			// aapt resource value: 0x7f01014c
+			public const int ahRadius = 2130772300;
 			
-			// aapt resource value: 0x7f010160
-			public const int ahRimColor = 2130772320;
+			// aapt resource value: 0x7f010147
+			public const int ahRimColor = 2130772295;
 			
-			// aapt resource value: 0x7f010161
-			public const int ahRimWidth = 2130772321;
+			// aapt resource value: 0x7f010148
+			public const int ahRimWidth = 2130772296;
 			
-			// aapt resource value: 0x7f010162
-			public const int ahSpinSpeed = 2130772322;
+			// aapt resource value: 0x7f010149
+			public const int ahSpinSpeed = 2130772297;
 			
-			// aapt resource value: 0x7f01015c
-			public const int ahText = 2130772316;
+			// aapt resource value: 0x7f010143
+			public const int ahText = 2130772291;
 			
-			// aapt resource value: 0x7f01015d
-			public const int ahTextColor = 2130772317;
+			// aapt resource value: 0x7f010144
+			public const int ahTextColor = 2130772292;
 			
-			// aapt resource value: 0x7f01015e
-			public const int ahTextSize = 2130772318;
+			// aapt resource value: 0x7f010145
+			public const int ahTextSize = 2130772293;
 			
 			// aapt resource value: 0x7f0100a6
 			public const int alertDialogButtonGroupStyle = 2130772134;
@@ -2185,17 +2185,17 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f010013
 			public const int circleCrop = 2130771987;
 			
-			// aapt resource value: 0x7f010159
-			public const int civ_border_color = 2130772313;
+			// aapt resource value: 0x7f010165
+			public const int civ_border_color = 2130772325;
 			
-			// aapt resource value: 0x7f01015a
-			public const int civ_border_overlay = 2130772314;
+			// aapt resource value: 0x7f010166
+			public const int civ_border_overlay = 2130772326;
 			
-			// aapt resource value: 0x7f010158
-			public const int civ_border_width = 2130772312;
+			// aapt resource value: 0x7f010164
+			public const int civ_border_width = 2130772324;
 			
-			// aapt resource value: 0x7f01015b
-			public const int civ_fill_color = 2130772315;
+			// aapt resource value: 0x7f010167
+			public const int civ_fill_color = 2130772327;
 			
 			// aapt resource value: 0x7f0100d3
 			public const int closeIcon = 2130772179;
@@ -2542,62 +2542,62 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f01011a
 			public const int menu = 2130772250;
 			
-			// aapt resource value: 0x7f01013c
-			public const int minTextSize = 2130772284;
-			
-			// aapt resource value: 0x7f010151
-			public const int ms_alignLabels = 2130772305;
-			
-			// aapt resource value: 0x7f010155
-			public const int ms_arrowColor = 2130772309;
-			
-			// aapt resource value: 0x7f010154
-			public const int ms_arrowSize = 2130772308;
-			
-			// aapt resource value: 0x7f010146
-			public const int ms_baseColor = 2130772294;
-			
-			// aapt resource value: 0x7f010157
-			public const int ms_enableErrorLabel = 2130772311;
-			
-			// aapt resource value: 0x7f010156
-			public const int ms_enableFloatingLabel = 2130772310;
-			
-			// aapt resource value: 0x7f010149
-			public const int ms_error = 2130772297;
-			
-			// aapt resource value: 0x7f010148
-			public const int ms_errorColor = 2130772296;
-			
-			// aapt resource value: 0x7f01014d
-			public const int ms_floatingLabelColor = 2130772301;
-			
-			// aapt resource value: 0x7f01014c
-			public const int ms_floatingLabelText = 2130772300;
-			
-			// aapt resource value: 0x7f010147
-			public const int ms_highlightColor = 2130772295;
-			
-			// aapt resource value: 0x7f01014a
-			public const int ms_hint = 2130772298;
-			
-			// aapt resource value: 0x7f01014b
-			public const int ms_hintColor = 2130772299;
-			
-			// aapt resource value: 0x7f01014e
-			public const int ms_multiline = 2130772302;
-			
 			// aapt resource value: 0x7f01014f
-			public const int ms_nbErrorLines = 2130772303;
+			public const int minTextSize = 2130772303;
+			
+			// aapt resource value: 0x7f01015d
+			public const int ms_alignLabels = 2130772317;
+			
+			// aapt resource value: 0x7f010161
+			public const int ms_arrowColor = 2130772321;
+			
+			// aapt resource value: 0x7f010160
+			public const int ms_arrowSize = 2130772320;
 			
 			// aapt resource value: 0x7f010152
-			public const int ms_thickness = 2130772306;
+			public const int ms_baseColor = 2130772306;
+			
+			// aapt resource value: 0x7f010163
+			public const int ms_enableErrorLabel = 2130772323;
+			
+			// aapt resource value: 0x7f010162
+			public const int ms_enableFloatingLabel = 2130772322;
+			
+			// aapt resource value: 0x7f010155
+			public const int ms_error = 2130772309;
+			
+			// aapt resource value: 0x7f010154
+			public const int ms_errorColor = 2130772308;
+			
+			// aapt resource value: 0x7f010159
+			public const int ms_floatingLabelColor = 2130772313;
+			
+			// aapt resource value: 0x7f010158
+			public const int ms_floatingLabelText = 2130772312;
 			
 			// aapt resource value: 0x7f010153
-			public const int ms_thickness_error = 2130772307;
+			public const int ms_highlightColor = 2130772307;
 			
-			// aapt resource value: 0x7f010150
-			public const int ms_typeface = 2130772304;
+			// aapt resource value: 0x7f010156
+			public const int ms_hint = 2130772310;
+			
+			// aapt resource value: 0x7f010157
+			public const int ms_hintColor = 2130772311;
+			
+			// aapt resource value: 0x7f01015a
+			public const int ms_multiline = 2130772314;
+			
+			// aapt resource value: 0x7f01015b
+			public const int ms_nbErrorLines = 2130772315;
+			
+			// aapt resource value: 0x7f01015e
+			public const int ms_thickness = 2130772318;
+			
+			// aapt resource value: 0x7f01015f
+			public const int ms_thickness_error = 2130772319;
+			
+			// aapt resource value: 0x7f01015c
+			public const int ms_typeface = 2130772316;
 			
 			// aapt resource value: 0x7f010047
 			public const int multiChoiceItemLayout = 2130772039;
@@ -2638,8 +2638,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f010087
 			public const int popupWindowStyle = 2130772103;
 			
-			// aapt resource value: 0x7f01013d
-			public const int precision = 2130772285;
+			// aapt resource value: 0x7f010150
+			public const int precision = 2130772304;
 			
 			// aapt resource value: 0x7f0100cc
 			public const int preserveIconSpacing = 2130772172;
@@ -2710,8 +2710,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f010048
 			public const int singleChoiceItemLayout = 2130772040;
 			
-			// aapt resource value: 0x7f01013e
-			public const int sizeToFit = 2130772286;
+			// aapt resource value: 0x7f010151
+			public const int sizeToFit = 2130772305;
 			
 			// aapt resource value: 0x7f010018
 			public const int spanCount = 2130771992;
@@ -3219,14 +3219,14 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f08002a
 			public const int dim_foreground_material_light = 2131230762;
 			
-			// aapt resource value: 0x7f080059
-			public const int disabled_color = 2131230809;
+			// aapt resource value: 0x7f080063
+			public const int disabled_color = 2131230819;
 			
 			// aapt resource value: 0x7f08006d
 			public const int divider = 2131230829;
 			
-			// aapt resource value: 0x7f08005a
-			public const int error_color = 2131230810;
+			// aapt resource value: 0x7f080064
+			public const int error_color = 2131230820;
 			
 			// aapt resource value: 0x7f08002b
 			public const int foreground_material_dark = 2131230763;
@@ -3249,35 +3249,35 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f080030
 			public const int hint_foreground_material_light = 2131230768;
 			
+			// aapt resource value: 0x7f080059
+			public const int hockeyapp_background_header = 2131230809;
+			
+			// aapt resource value: 0x7f08005a
+			public const int hockeyapp_background_light = 2131230810;
+			
 			// aapt resource value: 0x7f08005b
-			public const int hockeyapp_background_header = 2131230811;
+			public const int hockeyapp_background_white = 2131230811;
 			
 			// aapt resource value: 0x7f08005c
-			public const int hockeyapp_background_light = 2131230812;
+			public const int hockeyapp_button_background = 2131230812;
 			
 			// aapt resource value: 0x7f08005d
-			public const int hockeyapp_background_white = 2131230813;
+			public const int hockeyapp_button_background_pressed = 2131230813;
 			
 			// aapt resource value: 0x7f08005e
-			public const int hockeyapp_button_background = 2131230814;
+			public const int hockeyapp_button_background_selected = 2131230814;
 			
 			// aapt resource value: 0x7f08005f
-			public const int hockeyapp_button_background_pressed = 2131230815;
+			public const int hockeyapp_text_black = 2131230815;
 			
 			// aapt resource value: 0x7f080060
-			public const int hockeyapp_button_background_selected = 2131230816;
+			public const int hockeyapp_text_light = 2131230816;
 			
 			// aapt resource value: 0x7f080061
-			public const int hockeyapp_text_black = 2131230817;
+			public const int hockeyapp_text_normal = 2131230817;
 			
 			// aapt resource value: 0x7f080062
-			public const int hockeyapp_text_light = 2131230818;
-			
-			// aapt resource value: 0x7f080063
-			public const int hockeyapp_text_normal = 2131230819;
-			
-			// aapt resource value: 0x7f080064
-			public const int hockeyapp_text_white = 2131230820;
+			public const int hockeyapp_text_white = 2131230818;
 			
 			// aapt resource value: 0x7f080073
 			public const int invert_form_field_background = 2131230835;
@@ -6029,11 +6029,11 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f060086
 			public const int empty_string_placeholder = 2131099782;
 			
-			// aapt resource value: 0x7f060037
-			public const int fab_scroll_shrink_grow_autohide_behavior = 2131099703;
+			// aapt resource value: 0x7f06007e
+			public const int fab_scroll_shrink_grow_autohide_behavior = 2131099774;
 			
-			// aapt resource value: 0x7f060038
-			public const int fab_scroll_translation_autohide_behavior = 2131099704;
+			// aapt resource value: 0x7f06007f
+			public const int fab_scroll_translation_autohide_behavior = 2131099775;
 			
 			// aapt resource value: 0x7f060080
 			public const int hello = 2131099776;
@@ -6047,218 +6047,218 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f060088
 			public const int hint_new_password = 2131099784;
 			
+			// aapt resource value: 0x7f060037
+			public const int hockeyapp_crash_dialog_app_name_fallback = 2131099703;
+			
+			// aapt resource value: 0x7f060038
+			public const int hockeyapp_crash_dialog_message = 2131099704;
+			
 			// aapt resource value: 0x7f060039
-			public const int hockeyapp_crash_dialog_app_name_fallback = 2131099705;
+			public const int hockeyapp_crash_dialog_negative_button = 2131099705;
 			
 			// aapt resource value: 0x7f06003a
-			public const int hockeyapp_crash_dialog_message = 2131099706;
+			public const int hockeyapp_crash_dialog_neutral_button = 2131099706;
 			
 			// aapt resource value: 0x7f06003b
-			public const int hockeyapp_crash_dialog_negative_button = 2131099707;
+			public const int hockeyapp_crash_dialog_positive_button = 2131099707;
 			
 			// aapt resource value: 0x7f06003c
-			public const int hockeyapp_crash_dialog_neutral_button = 2131099708;
+			public const int hockeyapp_crash_dialog_title = 2131099708;
 			
 			// aapt resource value: 0x7f06003d
-			public const int hockeyapp_crash_dialog_positive_button = 2131099709;
+			public const int hockeyapp_dialog_error_message = 2131099709;
 			
 			// aapt resource value: 0x7f06003e
-			public const int hockeyapp_crash_dialog_title = 2131099710;
+			public const int hockeyapp_dialog_error_title = 2131099710;
 			
 			// aapt resource value: 0x7f06003f
-			public const int hockeyapp_dialog_error_message = 2131099711;
+			public const int hockeyapp_dialog_negative_button = 2131099711;
 			
 			// aapt resource value: 0x7f060040
-			public const int hockeyapp_dialog_error_title = 2131099712;
+			public const int hockeyapp_dialog_positive_button = 2131099712;
 			
 			// aapt resource value: 0x7f060041
-			public const int hockeyapp_dialog_negative_button = 2131099713;
+			public const int hockeyapp_download_failed_dialog_message = 2131099713;
 			
 			// aapt resource value: 0x7f060042
-			public const int hockeyapp_dialog_positive_button = 2131099714;
+			public const int hockeyapp_download_failed_dialog_negative_button = 2131099714;
 			
 			// aapt resource value: 0x7f060043
-			public const int hockeyapp_download_failed_dialog_message = 2131099715;
+			public const int hockeyapp_download_failed_dialog_positive_button = 2131099715;
 			
 			// aapt resource value: 0x7f060044
-			public const int hockeyapp_download_failed_dialog_negative_button = 2131099716;
+			public const int hockeyapp_download_failed_dialog_title = 2131099716;
 			
 			// aapt resource value: 0x7f060045
-			public const int hockeyapp_download_failed_dialog_positive_button = 2131099717;
+			public const int hockeyapp_error_no_network_message = 2131099717;
 			
 			// aapt resource value: 0x7f060046
-			public const int hockeyapp_download_failed_dialog_title = 2131099718;
+			public const int hockeyapp_expiry_info_text = 2131099718;
 			
 			// aapt resource value: 0x7f060047
-			public const int hockeyapp_error_no_network_message = 2131099719;
+			public const int hockeyapp_expiry_info_title = 2131099719;
 			
 			// aapt resource value: 0x7f060048
-			public const int hockeyapp_expiry_info_text = 2131099720;
+			public const int hockeyapp_feedback_attach_file = 2131099720;
 			
 			// aapt resource value: 0x7f060049
-			public const int hockeyapp_expiry_info_title = 2131099721;
+			public const int hockeyapp_feedback_attach_picture = 2131099721;
 			
 			// aapt resource value: 0x7f06004a
-			public const int hockeyapp_feedback_attach_file = 2131099722;
+			public const int hockeyapp_feedback_attachment_button_text = 2131099722;
 			
 			// aapt resource value: 0x7f06004b
-			public const int hockeyapp_feedback_attach_picture = 2131099723;
+			public const int hockeyapp_feedback_attachment_error = 2131099723;
 			
 			// aapt resource value: 0x7f06004c
-			public const int hockeyapp_feedback_attachment_button_text = 2131099724;
+			public const int hockeyapp_feedback_attachment_loading = 2131099724;
 			
 			// aapt resource value: 0x7f06004d
-			public const int hockeyapp_feedback_attachment_error = 2131099725;
+			public const int hockeyapp_feedback_email_hint = 2131099725;
 			
 			// aapt resource value: 0x7f06004e
-			public const int hockeyapp_feedback_attachment_loading = 2131099726;
+			public const int hockeyapp_feedback_failed_text = 2131099726;
 			
 			// aapt resource value: 0x7f06004f
-			public const int hockeyapp_feedback_email_hint = 2131099727;
+			public const int hockeyapp_feedback_failed_title = 2131099727;
 			
 			// aapt resource value: 0x7f060050
-			public const int hockeyapp_feedback_failed_text = 2131099728;
+			public const int hockeyapp_feedback_fetching_feedback_text = 2131099728;
 			
 			// aapt resource value: 0x7f060051
-			public const int hockeyapp_feedback_failed_title = 2131099729;
+			public const int hockeyapp_feedback_generic_error = 2131099729;
 			
 			// aapt resource value: 0x7f060052
-			public const int hockeyapp_feedback_fetching_feedback_text = 2131099730;
+			public const int hockeyapp_feedback_last_updated_text = 2131099730;
 			
 			// aapt resource value: 0x7f060053
-			public const int hockeyapp_feedback_generic_error = 2131099731;
+			public const int hockeyapp_feedback_max_attachments_allowed = 2131099731;
 			
 			// aapt resource value: 0x7f060054
-			public const int hockeyapp_feedback_last_updated_text = 2131099732;
+			public const int hockeyapp_feedback_message_hint = 2131099732;
 			
 			// aapt resource value: 0x7f060055
-			public const int hockeyapp_feedback_max_attachments_allowed = 2131099733;
+			public const int hockeyapp_feedback_name_hint = 2131099733;
 			
 			// aapt resource value: 0x7f060056
-			public const int hockeyapp_feedback_message_hint = 2131099734;
+			public const int hockeyapp_feedback_refresh_button_text = 2131099734;
 			
 			// aapt resource value: 0x7f060057
-			public const int hockeyapp_feedback_name_hint = 2131099735;
+			public const int hockeyapp_feedback_response_button_text = 2131099735;
 			
 			// aapt resource value: 0x7f060058
-			public const int hockeyapp_feedback_refresh_button_text = 2131099736;
+			public const int hockeyapp_feedback_select_file = 2131099736;
 			
 			// aapt resource value: 0x7f060059
-			public const int hockeyapp_feedback_response_button_text = 2131099737;
+			public const int hockeyapp_feedback_select_picture = 2131099737;
 			
 			// aapt resource value: 0x7f06005a
-			public const int hockeyapp_feedback_select_file = 2131099738;
+			public const int hockeyapp_feedback_send_button_text = 2131099738;
 			
 			// aapt resource value: 0x7f06005b
-			public const int hockeyapp_feedback_select_picture = 2131099739;
+			public const int hockeyapp_feedback_send_generic_error = 2131099739;
 			
 			// aapt resource value: 0x7f06005c
-			public const int hockeyapp_feedback_send_button_text = 2131099740;
+			public const int hockeyapp_feedback_send_network_error = 2131099740;
 			
 			// aapt resource value: 0x7f06005d
-			public const int hockeyapp_feedback_send_generic_error = 2131099741;
+			public const int hockeyapp_feedback_sending_feedback_text = 2131099741;
 			
 			// aapt resource value: 0x7f06005e
-			public const int hockeyapp_feedback_send_network_error = 2131099742;
+			public const int hockeyapp_feedback_subject_hint = 2131099742;
 			
 			// aapt resource value: 0x7f06005f
-			public const int hockeyapp_feedback_sending_feedback_text = 2131099743;
+			public const int hockeyapp_feedback_title = 2131099743;
 			
 			// aapt resource value: 0x7f060060
-			public const int hockeyapp_feedback_subject_hint = 2131099744;
+			public const int hockeyapp_feedback_validate_email_empty = 2131099744;
 			
 			// aapt resource value: 0x7f060061
-			public const int hockeyapp_feedback_title = 2131099745;
+			public const int hockeyapp_feedback_validate_email_error = 2131099745;
 			
 			// aapt resource value: 0x7f060062
-			public const int hockeyapp_feedback_validate_email_empty = 2131099746;
+			public const int hockeyapp_feedback_validate_name_error = 2131099746;
 			
 			// aapt resource value: 0x7f060063
-			public const int hockeyapp_feedback_validate_email_error = 2131099747;
+			public const int hockeyapp_feedback_validate_subject_error = 2131099747;
 			
 			// aapt resource value: 0x7f060064
-			public const int hockeyapp_feedback_validate_name_error = 2131099748;
+			public const int hockeyapp_feedback_validate_text_error = 2131099748;
 			
 			// aapt resource value: 0x7f060065
-			public const int hockeyapp_feedback_validate_subject_error = 2131099749;
+			public const int hockeyapp_login_email_hint = 2131099749;
 			
 			// aapt resource value: 0x7f060066
-			public const int hockeyapp_feedback_validate_text_error = 2131099750;
+			public const int hockeyapp_login_headline_text = 2131099750;
 			
 			// aapt resource value: 0x7f060067
-			public const int hockeyapp_login_email_hint = 2131099751;
+			public const int hockeyapp_login_headline_text_email_only = 2131099751;
 			
 			// aapt resource value: 0x7f060068
-			public const int hockeyapp_login_headline_text = 2131099752;
+			public const int hockeyapp_login_login_button_text = 2131099752;
 			
 			// aapt resource value: 0x7f060069
-			public const int hockeyapp_login_headline_text_email_only = 2131099753;
+			public const int hockeyapp_login_missing_credentials_toast = 2131099753;
 			
 			// aapt resource value: 0x7f06006a
-			public const int hockeyapp_login_login_button_text = 2131099754;
+			public const int hockeyapp_login_password_hint = 2131099754;
 			
 			// aapt resource value: 0x7f06006b
-			public const int hockeyapp_login_missing_credentials_toast = 2131099755;
+			public const int hockeyapp_paint_dialog_message = 2131099755;
 			
 			// aapt resource value: 0x7f06006c
-			public const int hockeyapp_login_password_hint = 2131099756;
+			public const int hockeyapp_paint_dialog_negative_button = 2131099756;
 			
 			// aapt resource value: 0x7f06006d
-			public const int hockeyapp_paint_dialog_message = 2131099757;
+			public const int hockeyapp_paint_dialog_neutral_button = 2131099757;
 			
 			// aapt resource value: 0x7f06006e
-			public const int hockeyapp_paint_dialog_negative_button = 2131099758;
+			public const int hockeyapp_paint_dialog_positive_button = 2131099758;
 			
 			// aapt resource value: 0x7f06006f
-			public const int hockeyapp_paint_dialog_neutral_button = 2131099759;
+			public const int hockeyapp_paint_indicator_toast = 2131099759;
 			
 			// aapt resource value: 0x7f060070
-			public const int hockeyapp_paint_dialog_positive_button = 2131099760;
+			public const int hockeyapp_paint_menu_clear = 2131099760;
 			
 			// aapt resource value: 0x7f060071
-			public const int hockeyapp_paint_indicator_toast = 2131099761;
+			public const int hockeyapp_paint_menu_save = 2131099761;
 			
 			// aapt resource value: 0x7f060072
-			public const int hockeyapp_paint_menu_clear = 2131099762;
+			public const int hockeyapp_paint_menu_undo = 2131099762;
 			
 			// aapt resource value: 0x7f060073
-			public const int hockeyapp_paint_menu_save = 2131099763;
+			public const int hockeyapp_permission_dialog_negative_button = 2131099763;
 			
 			// aapt resource value: 0x7f060074
-			public const int hockeyapp_paint_menu_undo = 2131099764;
+			public const int hockeyapp_permission_dialog_positive_button = 2131099764;
 			
 			// aapt resource value: 0x7f060075
-			public const int hockeyapp_permission_dialog_negative_button = 2131099765;
+			public const int hockeyapp_permission_update_message = 2131099765;
 			
 			// aapt resource value: 0x7f060076
-			public const int hockeyapp_permission_dialog_positive_button = 2131099766;
+			public const int hockeyapp_permission_update_title = 2131099766;
 			
 			// aapt resource value: 0x7f060077
-			public const int hockeyapp_permission_update_message = 2131099767;
+			public const int hockeyapp_update_button = 2131099767;
 			
 			// aapt resource value: 0x7f060078
-			public const int hockeyapp_permission_update_title = 2131099768;
+			public const int hockeyapp_update_dialog_message = 2131099768;
 			
 			// aapt resource value: 0x7f060079
-			public const int hockeyapp_update_button = 2131099769;
+			public const int hockeyapp_update_dialog_negative_button = 2131099769;
 			
 			// aapt resource value: 0x7f06007a
-			public const int hockeyapp_update_dialog_message = 2131099770;
+			public const int hockeyapp_update_dialog_positive_button = 2131099770;
 			
 			// aapt resource value: 0x7f06007b
-			public const int hockeyapp_update_dialog_negative_button = 2131099771;
+			public const int hockeyapp_update_dialog_title = 2131099771;
 			
 			// aapt resource value: 0x7f06007c
-			public const int hockeyapp_update_dialog_positive_button = 2131099772;
+			public const int hockeyapp_update_mandatory_toast = 2131099772;
 			
 			// aapt resource value: 0x7f06007d
-			public const int hockeyapp_update_dialog_title = 2131099773;
-			
-			// aapt resource value: 0x7f06007e
-			public const int hockeyapp_update_mandatory_toast = 2131099774;
-			
-			// aapt resource value: 0x7f06007f
-			public const int hockeyapp_update_version_details_label = 2131099775;
+			public const int hockeyapp_update_version_details_label = 2131099773;
 			
 			// aapt resource value: 0x7f060036
 			public const int library_name = 2131099702;
@@ -8065,9 +8065,9 @@ namespace ResidentAppCross.Droid
 			
 			public static int[] AutofitTextView = new int[]
 			{
-					2130772284,
-					2130772285,
-					2130772286};
+					2130772303,
+					2130772304,
+					2130772305};
 			
 			// aapt resource value: 0
 			public const int AutofitTextView_minTextSize = 0;
@@ -8153,10 +8153,10 @@ namespace ResidentAppCross.Droid
 			
 			public static int[] CircleImageView = new int[]
 			{
-					2130772312,
-					2130772313,
-					2130772314,
-					2130772315};
+					2130772324,
+					2130772325,
+					2130772326,
+					2130772327};
 			
 			// aapt resource value: 1
 			public const int CircleImageView_civ_border_color = 1;
@@ -8546,24 +8546,24 @@ namespace ResidentAppCross.Droid
 			
 			public static int[] MaterialSpinner = new int[]
 			{
-					2130772294,
-					2130772295,
-					2130772296,
-					2130772297,
-					2130772298,
-					2130772299,
-					2130772300,
-					2130772301,
-					2130772302,
-					2130772303,
-					2130772304,
-					2130772305,
 					2130772306,
 					2130772307,
 					2130772308,
 					2130772309,
 					2130772310,
-					2130772311};
+					2130772311,
+					2130772312,
+					2130772313,
+					2130772314,
+					2130772315,
+					2130772316,
+					2130772317,
+					2130772318,
+					2130772319,
+					2130772320,
+					2130772321,
+					2130772322,
+					2130772323};
 			
 			// aapt resource value: 11
 			public const int MaterialSpinner_ms_alignLabels = 11;
@@ -8754,8 +8754,8 @@ namespace ResidentAppCross.Droid
 			
 			public static int[] MvxBinding = new int[]
 			{
-					2130772287,
-					2130772288};
+					2130772284,
+					2130772285};
 			
 			// aapt resource value: 0
 			public const int MvxBinding_MvxBind = 0;
@@ -8765,29 +8765,29 @@ namespace ResidentAppCross.Droid
 			
 			public static int[] MvxControl = new int[]
 			{
-					2130772289};
+					2130772286};
 			
 			// aapt resource value: 0
 			public const int MvxControl_MvxTemplate = 0;
 			
 			public static int[] MvxExpandableListView = new int[]
 			{
-					2130772292};
+					2130772289};
 			
 			// aapt resource value: 0
 			public const int MvxExpandableListView_MvxGroupItemTemplate = 0;
 			
 			public static int[] MvxImageView = new int[]
 			{
-					2130772293};
+					2130772290};
 			
 			// aapt resource value: 0
 			public const int MvxImageView_MvxSource = 0;
 			
 			public static int[] MvxListView = new int[]
 			{
-					2130772290,
-					2130772291};
+					2130772287,
+					2130772288};
 			
 			// aapt resource value: 1
 			public const int MvxListView_MvxDropDownItemTemplate = 1;
@@ -8858,18 +8858,18 @@ namespace ResidentAppCross.Droid
 			
 			public static int[] ProgressWheel = new int[]
 			{
-					2130772316,
-					2130772317,
-					2130772318,
-					2130772319,
-					2130772320,
-					2130772321,
-					2130772322,
-					2130772323,
-					2130772324,
-					2130772325,
-					2130772326,
-					2130772327};
+					2130772291,
+					2130772292,
+					2130772293,
+					2130772294,
+					2130772295,
+					2130772296,
+					2130772297,
+					2130772298,
+					2130772299,
+					2130772300,
+					2130772301,
+					2130772302};
 			
 			// aapt resource value: 3
 			public const int ProgressWheel_ahBarColor = 3;
