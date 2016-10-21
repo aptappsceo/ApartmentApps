@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://dlpws.idware.net" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://app1.idware.net/DriverLicenseParser.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:element name="ParseBase64Utf16String">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="authKey" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="data" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="terminalId" nillable="true" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParseBase64Utf16StringResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://dlpws.idware.net" minOccurs="0" name="ParseBase64Utf16StringResult" nillable="true" type="q1:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Response">
+    <xs:sequence>
+      <xs:element xmlns:q2="http://dlpws.idware.net" minOccurs="0" name="ComplementaryServices" nillable="true" type="q2:ArrayOfComplementaryService" />
+      <xs:element xmlns:q3="http://dlpws.idware.net" minOccurs="0" name="DriverLicense" nillable="true" type="q3:DriverLicense" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Reference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q4="http://dlpws.idware.net" name="Response" nillable="true" type="q4:Response" />
+  <xs:complexType name="ArrayOfComplementaryService">
+    <xs:sequence>
+      <xs:element xmlns:q5="http://dlpws.idware.net" minOccurs="0" maxOccurs="unbounded" name="ComplementaryService" nillable="true" type="q5:ComplementaryService" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q6="http://dlpws.idware.net" name="ArrayOfComplementaryService" nillable="true" type="q6:ArrayOfComplementaryService" />
+  <xs:complexType name="ComplementaryService">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q7="http://dlpws.idware.net" name="ComplementaryService" nillable="true" type="q7:ComplementaryService" />
+  <xs:complexType name="DriverLicense">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Birthdate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CardRevisionDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClassificationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ComplianceType" nillable="true" type="ser:char" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndorsementCodeDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndorsementsCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpirationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EyeColor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Gender" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HAZMATExpDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="HairColor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Height" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IIN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssueDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IssuedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="JurisdictionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LicenseNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LimitedDurationDocument" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NamePrefix" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NameSuffix" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrganDonor" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PostalCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Race" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RestrictionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RestrictionCodeDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VehicleClassCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VehicleClassCodeDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Veteran" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WeightKG" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WeightLBS" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element xmlns:q8="http://dlpws.idware.net" name="DriverLicense" nillable="true" type="q8:DriverLicense" />
+  <xs:element name="ParseBase64AsciiString">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="authKey" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="data" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="terminalId" nillable="true" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParseBase64AsciiStringResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://dlpws.idware.net" minOccurs="0" name="ParseBase64AsciiStringResult" nillable="true" type="q9:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParseBase64Binary">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="authKey" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="data" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="terminalId" nillable="true" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParseBase64BinaryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://dlpws.idware.net" minOccurs="0" name="ParseBase64BinaryResult" nillable="true" type="q10:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParseString">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="authKey" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="licenseText" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="terminalId" nillable="true" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParseStringResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://dlpws.idware.net" minOccurs="0" name="ParseStringResult" nillable="true" type="q11:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParseImage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="authKey" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="data" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="terminalId" nillable="true" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParseImageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://dlpws.idware.net" minOccurs="0" name="ParseImageResult" nillable="true" type="q12:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParseBase64EncodedImage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="authKey" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="data" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="terminalId" nillable="true" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ParseBase64EncodedImageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://dlpws.idware.net" minOccurs="0" name="ParseBase64EncodedImageResult" nillable="true" type="q13:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Echo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="base64AsciiEncodedString" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EchoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EchoResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

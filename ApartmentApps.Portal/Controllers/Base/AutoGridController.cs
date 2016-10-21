@@ -28,17 +28,16 @@ namespace ApartmentApps.Portal.Controllers
         public TService Service { get; set; }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+     
+          
             base.OnActionExecuting(filterContext);
-            
-            
+
+
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            base.OnActionExecuted(filterContext);
-            var queries = GetQueries().OrderBy(p => p.Index).ToArray();
-            ViewBag.Queries = queries;
-            ViewBag.CurrentQuery = CurrentQueryId ?? queries.First()?.QueryId;
+            
         }
 
         public ActionResult Details(int? id)
@@ -75,7 +74,7 @@ namespace ApartmentApps.Portal.Controllers
             EqService.ModelLoader = (model, modelName) =>
             {
                 Service.LoadModel(model, modelName);
-            
+
             };
 
             EqService.QueryRemover = (queryId) => Service.RemoveQuery(queryId);
@@ -137,12 +136,14 @@ namespace ApartmentApps.Portal.Controllers
             }
 
             var query = EqService.LoadQueryDict(FilterQuery.ToDictionary());
-            CurrentQueryId = query.ID;
+            CurrentQueryId = query.QueryName;
             var lvo = string.IsNullOrEmpty(GridOptions) ? new ListViewOptions() { PageIndex = 1 } : GridOptions.ToListViewOptions();
 
             var count = 0;
-            var results = Service.GetAll<TViewModel>(query, out count, lvo.SortBy?.Replace("DESC","") ?? lvo.SortBy,lvo.SortBy?.EndsWith("DESC") ?? false, lvo.PageIndex, GridState.RecordsPerPage);
-
+            var results = Service.GetAll<TViewModel>(query, out count, lvo.SortBy?.Replace("DESC", "") ?? lvo.SortBy, lvo.SortBy?.EndsWith("DESC") ?? false, lvo.PageIndex, GridState.RecordsPerPage);
+            var queries = GetQueries().OrderBy(p => p.Index).ToArray();
+            ViewBag.Queries = queries;
+            ViewBag.CurrentQuery = string.IsNullOrEmpty(CurrentQueryId) ? (CurrentQueryId = queries.FirstOrDefault()?.QueryId) : CurrentQueryId;
             return GridResult(new GridList<TViewModel>(results.ToArray(), lvo.PageIndex, GridState.RecordsPerPage, count));
         }
 
@@ -156,6 +157,8 @@ namespace ApartmentApps.Portal.Controllers
                 gridModel.Items = grid;
                 return View("Forms/GridPartial", gridModel);
             }
+        
+         
             return AutoIndex<TViewModel>(IndexTitle);
         }
         public GridState GridState
@@ -251,7 +254,7 @@ namespace ApartmentApps.Portal.Controllers
             set
             {
                 if (Session != null)
-                Session[this.GetType().Name + "CustomQuery"] = value;
+                    Session[this.GetType().Name + "CustomQuery"] = value;
             }
         }
 

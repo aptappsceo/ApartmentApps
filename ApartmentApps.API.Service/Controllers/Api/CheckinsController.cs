@@ -10,10 +10,46 @@ using ApartmentApps.Api.BindingModels;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Prospect;
 using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
+    [System.Web.Http.RoutePrefix("api/ProspectId")]
+    [System.Web.Http.Authorize()]
+    public class ProspectController : ApartmentAppsApiController
+    {
+        private readonly ProspectService _service;
+
+        public ProspectController(ProspectService service, IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        {
+            _service = service;
+        }
+
+        [System.Web.Mvc.HttpGet, Route("SubmitApplicant")]
+        public IHttpActionResult SubmitApplicant(ProspectApplicationBindingModel vm)
+        {
+            try
+            {
+                _service.SubmitApplicant(vm);
+            } catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+            return Ok();
+        }
+
+        [HttpPost, Route("ScanId")]
+        public ScanIdResult ScanId(string base64Image)
+        {
+            var result = _service.ScanId(base64Image);
+            if (result != null)
+                return result;
+            InternalServerError(new Exception("Couldn't scan ID."));
+            return null;
+        }
+    }
+
     [System.Web.Http.RoutePrefix("api/Checkins")]
     [System.Web.Http.Authorize()]
     public class CheckinsController : ApartmentAppsApiController
