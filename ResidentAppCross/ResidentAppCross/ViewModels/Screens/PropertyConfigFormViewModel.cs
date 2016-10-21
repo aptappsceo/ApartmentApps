@@ -68,7 +68,7 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(async () =>
                 {
                     ScanResult = await _qrService.ScanAsync();
-                    if (!string.IsNullOrEmpty(ScanResult.Data))
+                    if (!string.IsNullOrEmpty(ScanResult?.Data))
                     {
                         this.TaskCommand(async context =>
                         {
