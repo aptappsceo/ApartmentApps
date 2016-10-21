@@ -1,46 +1,54 @@
 ﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupConfiguration="{D8277430-A582-4E04-B474-A48C4A90A313}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ApartmentApps.Api/EntrataModule.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Prospect.cs">
     <Files>
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="74" Column="5" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="131" Column="42" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/HomeMenuViewModel.cs" Line="247" Column="8" />
-      <File FileName="ResidentAppCross/ResidentAppCross/app.config" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross/App.cs" Line="31" Column="73" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/CheckinFormViewModel.cs" Line="120" Column="31" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/CheckinFormView.cs" Line="120" Column="4" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/Sections/PhotoGallerySection.cs" Line="84" Column="37" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/AddCreditCardViewModel.cs" Line="91" Column="52" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/AppDelegate.cs" Line="28" Column="27" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="77" Column="4" />
       <File FileName="ApartmentApps.Api/EntrataModule.cs" Line="38" Column="94" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/ViewBase.cs" Line="81" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationFormViewModel.cs" Line="52" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/HomeMenuViewModel.cs" Line="244" Column="22" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/CheckinFormView.cs" Line="243" Column="33" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/ProspectExtensions.cs" Line="28" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/IProspect.cs" Line="21" Column="51" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/ApartmentAppsAPIService.cs" Line="178" Column="38" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Prospect.cs" Line="87" Column="14" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="ResidentAppCross" expanded="True">
-            <Node name="Mobile App" expanded="True">
-              <Node name="ResidentAppCross" expanded="True">
-                <Node name="Packages" expanded="True">
-                  <Node name="MvvmCross.Plugin.Messenger" selected="True" />
-                </Node>
-              </Node>
-              <Node name="ResidentAppCross.iOS" expanded="True">
-                <Node name="References" expanded="True" />
-              </Node>
-            </Node>
-            <Node name="Web Stuff" expanded="True">
-              <Node name="ApartmentApps.Api" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/micahosborne/ApartmentApps/ResidentAppCross/ResidentAppCross/ViewModels/Screens/CheckinFormViewModel.cs" line="116" column="1" />
+      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationViewModel.cs" line="48" column="1" />
+      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationViewModel.cs" line="50" column="1" />
+      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationViewModel.cs" line="52" column="1" />
+      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationFormViewModel.cs" line="49" column="1" />
+      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationFormViewModel.cs" line="52" column="1" />
+      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationFormViewModel.cs" line="53" column="1" />
+      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Prospect.cs" line="94" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Mobile_220App.ResidentAppCross.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
+  <DisabledProjects>
+    <String>ResidentAppCross/ResidentAppCross.Droid/ResidentAppCross.Droid.csproj</String>
+    <String>ApartmentApps.Api/ApartmentApps.Api.csproj</String>
+    <String>ApartmentApps.API.Service/ApartmentApps.API.Service.csproj</String>
+    <String>ApartmentApps.Data/ApartmentApps.Data.csproj</String>
+    <String>ApartmentApps.Forms/ApartmentApps.Forms.csproj</String>
+    <String>ApartmentApps.IoC/ApartmentApps.IoC.csproj</String>
+    <String>ApartmentApps.Jobs/ApartmentApps.Jobs.csproj</String>
+    <String>ApartmentApps.Portal/ApartmentApps.Portal.csproj</String>
+    <String>Entrata.Client/Entrata.Client.csproj</String>
+    <String>PlaygroundConsole/PlaygroundConsole.csproj</String>
+    <String>Yardi.Client/Yardi.Client.csproj</String>
+    <String>ApartmentApps.Modules.Alerts/ApartmentApps.Modules.Alerts.csproj</String>
+    <String>ApartmentApps.Modules.CourtesyOfficer/ApartmentApps.Modules.CourtesyOfficer.csproj</String>
+    <String>ApartmentApps.Modules.Entrata/ApartmentApps.Modules.Entrata.csproj</String>
+    <String>ApartmentApps.Modules.Inspections/ApartmentApps.Modules.Inspections.csproj</String>
+    <String>ApartmentApps.Modules.Maintenance/ApartmentApps.Modules.Maintenance.csproj</String>
+    <String>ApartmentApps.Modules.Messaging/ApartmentApps.Modules.Messaging.csproj</String>
+    <String>ApartmentApps.Modules.Payments/ApartmentApps.Modules.Payments.csproj</String>
+    <String>ApartmentApps.Modules.Prospect/ApartmentApps.Modules.Prospect.csproj</String>
+    <String>ApartmentApps.Modules.Yardi/ApartmentApps.Modules.Yardi.csproj</String>
+    <String>ApartmentApps.Payments.Forte/ApartmentApps.Payments.Forte.csproj</String>
+  </DisabledProjects>
+  <MonoDevelop.Ide.ItemProperties.Mobile_220App.ResidentAppCross.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.cdecbacd172337a3846417fb89f4e0b4b4e0a955" />
 </Properties>

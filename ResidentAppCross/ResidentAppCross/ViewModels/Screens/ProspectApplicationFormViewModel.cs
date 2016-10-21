@@ -6,7 +6,7 @@ using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
-    public class ProspectApplicationViewModel : ViewModelBase
+    public class ProspectApplicationFormViewModel : ViewModelBase
     {
         private string _comments = "";
         private string _actionText = "";
@@ -17,7 +17,7 @@ namespace ResidentAppCross.ViewModels.Screens
         public bool ShouldScanQr { get; set; } = true;
         public IApartmentAppsAPIService _service;
         public IDialogService _dialogService;
-        public ProspectApplicationViewModel( IApartmentAppsAPIService service, IDialogService dialogService)
+        public ProspectApplicationFormViewModel( IApartmentAppsAPIService service, IDialogService dialogService)
         {
 
             _service = service;
@@ -41,12 +41,15 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        public void SetProsepectInfo(byte[] image)
+	
+		public byte[] Image { get; set; }
+        public void LoadProspectInfo()
         {
-            if (image != null)
+			
+            if (Image != null)
             {
-                var base64 = Convert.ToBase64String(image);
-                var result = _service.Prospect.ScanId(base64);
+                var base64 = Convert.ToBase64String(Image);
+               var result = _service.Prospect.ScanId(base64);
                 if (result != null)
                 {
                     FirstName = result.FirstName;
