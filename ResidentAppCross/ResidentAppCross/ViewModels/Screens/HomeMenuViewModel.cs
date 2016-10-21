@@ -117,7 +117,7 @@ namespace ResidentAppCross
 				{
 					Name = "Scan Prospect Id",
 					Icon = SharedResources.Icons.Wallet,
-					Command = RequestCourtesyOfficerCommand
+					Command = ScanIdCommand
 				});
 
 			}
