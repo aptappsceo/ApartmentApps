@@ -69,12 +69,6 @@ namespace ApartmentApps.Client
             // Construct URL
             string url = "";
             url = url + "/api/ProspectId/ScanId";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("base64Image=" + Uri.EscapeDataString(base64Image));
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -93,12 +87,21 @@ namespace ApartmentApps.Client
             httpRequest.Method = HttpMethod.Post;
             httpRequest.RequestUri = new Uri(url);
             
+            // Set Headers
+            
             // Set Credentials
             if (this.Client.Credentials != null)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             }
+            
+            // Serialize Request
+            string requestContent = null;
+            JToken requestDoc = new JValue(base64Image);
+            requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+            httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+            httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
             
             // Send Request
             if (shouldTrace)
