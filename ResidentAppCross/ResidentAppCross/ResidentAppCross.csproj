@@ -213,6 +213,7 @@
     <Compile Include="ViewModels\Screens\MaintenanceStartFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\PaymentSummaryViewModel.cs" />
     <Compile Include="ViewModels\Screens\PropertyConfigFormViewModel.cs" />
+    <Compile Include="ViewModels\Screens\ProspectApplicationViewModel.cs" />
     <Compile Include="ViewModels\Screens\RentSummaryViewModel.cs" />
     <Compile Include="ViewModels\Screens\SettingsFormViewModel.cs" />
     <Compile Include="ViewModels\Screens\SignUpFormViewModel.cs" />
