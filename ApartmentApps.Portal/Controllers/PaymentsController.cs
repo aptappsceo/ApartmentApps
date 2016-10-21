@@ -312,7 +312,7 @@ namespace ApartmentApps.Portal.Controllers
 
             var editUserLeaseInfoBindingModel = new EditUserLeaseInfoBindingModel()
             {
-                Id = id,
+                Id = id.ToString(),
                 Amount = lease.Amount,
                 NextInvoiceDate = lease.NextInvoiceDate,
                 CompleteDate = lease.RepetitionCompleteDate,

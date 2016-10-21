@@ -15,6 +15,7 @@ namespace ApartmentApps.Api.Modules
         public virtual ApplicationUser User { get; set; }
 
         //Amount of money to pay
+           [Searchable(Caption = "Amount")]
         public decimal Amount { get; set; }
 
         //Starting point: first invoice will be generated with DueDate equal to InvoiceDate
@@ -22,8 +23,8 @@ namespace ApartmentApps.Api.Modules
 
         //Will be here for further extensions
         public int? IntervalDays { get; set; }
-        public int? IntervalYears { get; set; }
 
+        public int? IntervalYears { get; set; }
 
         public int? IntervalMonths { get; set; }
 
@@ -33,6 +34,7 @@ namespace ApartmentApps.Api.Modules
         //The moment when leaseinfo is created
         public DateTime CreateDate { get; set; }
 
+           [Searchable(Caption = "State")]
         public LeaseState State { get; set; }
         
         public string Title { get; set; }

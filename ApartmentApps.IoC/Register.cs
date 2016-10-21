@@ -13,6 +13,7 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Inspections;
+using ApartmentApps.Modules.Payments;
 //using ApartmentApps.Modules.Inspections;
 using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity;
@@ -197,6 +198,8 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<Message, MessageViewModel, MessagingService, MessageMapper>();
             kernel.RegisterMappable<ApplicationUser, UserBindingModel, UserService, UserMapper>();
             kernel.RegisterMappable<MaitenanceRequest, MaintenanceRequestViewModel, MaintenanceService, MaintenanceRequestMapper>();
+            kernel.RegisterMappable<UserLeaseInfo, UserLeaseInfoBindingModel, PaymentsRequestsService, PaymentsRequestsMapper>();
+            kernel.RegisterMappable<Invoice, PaymentRequestInvoiceViewModel, InvoicesService, PaymentsRequestsInvoiceMapper>();
             kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService, IncidentReportMapper>();
             kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService, CourtesyCheckinMapper>();
             kernel.RegisterMappable<Property, PropertyBindingModel, PropertyService, PropertyMapper>();

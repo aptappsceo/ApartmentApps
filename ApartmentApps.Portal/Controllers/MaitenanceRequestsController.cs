@@ -151,6 +151,18 @@ namespace ApartmentApps.Portal.Controllers
             PaymentsRequestsService = formService;
         }
 
+        public override ActionResult GridResult(GridList<UserLeaseInfoBindingModel> grid)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return View("OverviewListPartial", grid);
+            }
+            return View("Overview", new PaymentsRequestOverviewViewModel()
+            {
+                FeedItems = grid
+            });
+        }
+
     }
 
 
@@ -463,6 +475,12 @@ namespace ApartmentApps.Portal.Controllers
     {
         public IPagedList<MaintenanceRequestViewModel>  Requests { get; set; }
         public GridList<MaintenanceRequestViewModel> FeedItems { get; set; }
+    }
+
+    public class PaymentsRequestOverviewViewModel
+    {
+        public IPagedList<UserLeaseInfoBindingModel>  Requests { get; set; }
+        public GridList<UserLeaseInfoBindingModel> FeedItems { get; set; }
     }
 
     public class AutoGridModel<TItem> : AutoGridModel

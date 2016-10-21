@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
@@ -32,6 +33,7 @@ namespace ApartmentApps.Api.Modules
 
         public bool UsesCompleteDate { get; set; }
 
+        public List<PaymentRequestInvoiceViewModel> Invoices { get; set; }
     }
 
  
@@ -47,7 +49,7 @@ namespace ApartmentApps.Api.Modules
                 User = lease.User.ToUserBindingModel(blobStorageService),
                 CreateDate = lease.CreateDate,
                 NextInvoiceDate = lease.NextInvoiceDate ,
-                Id = lease.Id,
+                Id = lease.Id.ToString(),
                 RepetitionCompleteDate = lease.RepetitionCompleteDate,
                 IntervalDays = lease.IntervalDays,
                 IntervalMonths = lease.IntervalMonths,
