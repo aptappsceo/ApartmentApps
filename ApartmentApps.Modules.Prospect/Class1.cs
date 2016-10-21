@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Prospect.IDScan;
 using ApartmentApps.Portal.Controllers;
+using Korzh.EasyQuery.Db;
 using Ninject;
 
 namespace ApartmentApps.Modules.Prospect
@@ -40,6 +43,10 @@ namespace ApartmentApps.Modules.Prospect
         public string PhoneNumber { get; set; }
         public DateTime? DesiredMoveInDate { get; set; }
 
+        [ForeignKey("SubmittedById")]
+        public virtual ApplicationUser SubmittedBy { get; set; }
+
+        public string SubmittedById { get; set; }
 
     }
 
@@ -57,8 +64,7 @@ namespace ApartmentApps.Modules.Prospect
                 {
                     Children = new List<MenuItemViewModel>()
                     {
-                        new MenuItemViewModel("New Campaign","fa-plus-square","Entry","Messaging"),
-                        new MenuItemViewModel("Campaigns","fa-history","Index","Messaging"),
+                        new MenuItemViewModel("Prospects","fa-plus-square","Index","Prospect")
                     }
                 });
             }
@@ -74,6 +80,11 @@ namespace ApartmentApps.Modules.Prospect
         public ProspectService(IKernel kernel, IRepository<ProspectApplication> repository, IUserContext userContext) : base(kernel, repository)
         {
             _userContext = userContext;
+        }
+
+        public DbQuery All()
+        {
+            return CreateQuery("All");
         }
 
         public void SubmitApplicant(ProspectApplicationBindingModel vm)
@@ -156,8 +167,11 @@ namespace ApartmentApps.Modules.Prospect
 
     public class ProspectApplicationMapper : BaseMapper<ProspectApplication, ProspectApplicationBindingModel>
     {
-        public ProspectApplicationMapper(IUserContext userContext) : base(userContext)
+        private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
+
+        public ProspectApplicationMapper(IMapper<ApplicationUser, UserBindingModel> userMapper, IUserContext userContext) : base(userContext)
         {
+            _userMapper = userMapper;
         }
 
         public override void ToModel(ProspectApplicationBindingModel bindingModel, ProspectApplication model)
@@ -185,6 +199,11 @@ namespace ApartmentApps.Modules.Prospect
             bindingModel.Email = model.Email;
             bindingModel.PhoneNumber = model.PhoneNumber;
             bindingModel.DesiredMoveInDate = model.DesiredMoveInDate;
+            if (model.SubmittedBy != null)
+            {
+                bindingModel.SubmittedBy = _userMapper.ToViewModel(model.SubmittedBy);
+            }
+            
         }
     }
     public class ProspectApplicationBindingModel : BaseViewModel
@@ -203,5 +222,8 @@ namespace ApartmentApps.Modules.Prospect
 
         [DisplayName("Desired Move In Date")]
         public DateTime? DesiredMoveInDate { get; set; }
+
+        
+        public UserBindingModel SubmittedBy { get; set; }
     }
 }
