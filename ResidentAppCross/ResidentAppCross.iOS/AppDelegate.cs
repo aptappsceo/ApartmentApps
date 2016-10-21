@@ -49,9 +49,9 @@ namespace ResidentAppCross.iOS
         {
 
             //Analytics
-            //var manager = BITHockeyManager.SharedHockeyManager;
-            //manager.Configure("397f14a1fe7d4bf68fe8002d8509e45b");
-            //manager.StartManager();
+            var manager = BITHockeyManager.SharedHockeyManager;
+            manager.Configure("397f14a1fe7d4bf68fe8002d8509e45b");
+            manager.StartManager();
 
             // For push notifiations
             LoginService.DevicePlatform = "apns";

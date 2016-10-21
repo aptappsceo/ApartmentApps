@@ -47,6 +47,53 @@ namespace ApartmentApps.Data.Repository
     //        return source;
     //    }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public class PropertyContext
     {
         private readonly ApplicationDbContext _db;
