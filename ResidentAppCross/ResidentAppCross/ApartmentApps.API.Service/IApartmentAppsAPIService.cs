@@ -81,6 +81,11 @@ namespace ApartmentApps.Client
             get; 
         }
         
+        IProspect Prospect
+        {
+            get; 
+        }
+        
         IRegister Register
         {
             get; 

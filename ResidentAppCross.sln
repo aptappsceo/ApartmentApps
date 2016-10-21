@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResidentAppCross.Droid", "ResidentAppCross\ResidentAppCross.Droid\ResidentAppCross.Droid.csproj", "{E84A8D3E-4FB5-4A76-B8F3-74F5BEEDDEB3}"
 EndProject
@@ -67,6 +67,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentApps.Modules.Inspections", "ApartmentApps.Modules.Inspections\ApartmentApps.Modules.Inspections.csproj", "{11EBF4C6-4475-47DD-9008-0DE0607DD723}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentApps.Tests", "ApartmentApps.Tests\ApartmentApps.Tests.csproj", "{AD9187BB-8707-49EF-B0AB-E39D55F84AA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentApps.Modules.Prospect", "ApartmentApps.Modules.Prospect\ApartmentApps.Modules.Prospect.csproj", "{4B09DC69-8A16-4029-B5DA-0E494451F9BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -900,6 +902,36 @@ Global
 		{AD9187BB-8707-49EF-B0AB-E39D55F84AA0}.Test|iPhoneSimulator.Build.0 = Test|Any CPU
 		{AD9187BB-8707-49EF-B0AB-E39D55F84AA0}.Test|x86.ActiveCfg = Test|Any CPU
 		{AD9187BB-8707-49EF-B0AB-E39D55F84AA0}.Test|x86.Build.0 = Test|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Debug|ARM.Build.0 = Debug|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Debug|x86.Build.0 = Debug|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Release|ARM.ActiveCfg = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Release|ARM.Build.0 = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Release|iPhone.Build.0 = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Release|x86.ActiveCfg = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Release|x86.Build.0 = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Test|Any CPU.Build.0 = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Test|ARM.ActiveCfg = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Test|ARM.Build.0 = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Test|iPhone.ActiveCfg = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Test|iPhone.Build.0 = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Test|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Test|iPhoneSimulator.Build.0 = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Test|x86.ActiveCfg = Release|Any CPU
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF}.Test|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -931,5 +963,6 @@ Global
 		{0E9D236A-18F7-46A1-A591-418D14EEE0A3} = {4458D440-05CC-404B-A8E0-C717E7F4DCAB}
 		{11EBF4C6-4475-47DD-9008-0DE0607DD723} = {4458D440-05CC-404B-A8E0-C717E7F4DCAB}
 		{AD9187BB-8707-49EF-B0AB-E39D55F84AA0} = {92D9B48E-F939-40A8-8EDB-A50A37567A16}
+		{4B09DC69-8A16-4029-B5DA-0E494451F9BF} = {4458D440-05CC-404B-A8E0-C717E7F4DCAB}
 	EndGlobalSection
 EndGlobal

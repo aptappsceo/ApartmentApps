@@ -146,6 +146,10 @@
       <Project>{CC299297-365F-4643-A0B8-316C788A4EF7}</Project>
       <Name>ApartmentApps.Modules.Payments</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Prospect\ApartmentApps.Modules.Prospect.csproj">
+      <Project>{4b09dc69-8a16-4029-b5da-0e494451f9bf}</Project>
+      <Name>ApartmentApps.Modules.Prospect</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Modules.Yardi\ApartmentApps.Modules.Yardi.csproj">
       <Project>{3227fea6-40ab-4e1b-a371-b9fb08f6fa57}</Project>
       <Name>ApartmentApps.Modules.Yardi</Name>

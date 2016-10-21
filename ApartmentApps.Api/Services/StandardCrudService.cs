@@ -125,8 +125,8 @@ namespace ApartmentApps.Portal.Controllers
 
             return query;
         }
-        ///
-        protected DbQuery CreateQuery(string queryName, params ConditionItem[] conditions)
+        [IgnoreQuery]
+        public DbQuery CreateQuery(string queryName = null, params ConditionItem[] conditions)
         {
             DbQuery query = new DbQuery() {QueryName = queryName, ID =queryName };
             query.Model = new DbModel();

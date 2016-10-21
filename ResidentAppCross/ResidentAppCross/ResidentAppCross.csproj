@@ -67,6 +67,7 @@
     <Compile Include="ApartmentApps.API.Service\Inspections.cs" />
     <Compile Include="ApartmentApps.API.Service\InspectionsExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\IPayments.cs" />
+    <Compile Include="ApartmentApps.API.Service\IProspect.cs" />
     <Compile Include="ApartmentApps.API.Service\IRegister.cs" />
     <Compile Include="ApartmentApps.API.Service\IVersion.cs" />
     <Compile Include="ApartmentApps.API.Service\Lookups.cs" />
@@ -137,9 +138,12 @@
     <Compile Include="ApartmentApps.API.Service\Models\PropertyAddon.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PropertyAddonType.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PropertyConfig.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\ProspectApplicationBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\ProspectModuleConfig.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\RegisterExternalBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\RegisterFromPhoneBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\RemoveLoginBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\ScanIdResult.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\SetPasswordBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\StringCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Unit.cs" />
@@ -152,6 +156,8 @@
     <Compile Include="ApartmentApps.API.Service\NotifiationsExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Payments.cs" />
     <Compile Include="ApartmentApps.API.Service\PaymentsExtensions.cs" />
+    <Compile Include="ApartmentApps.API.Service\Prospect.cs" />
+    <Compile Include="ApartmentApps.API.Service\ProspectExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Register.cs" />
     <Compile Include="ApartmentApps.API.Service\RegisterExtensions.cs" />
     <Compile Include="ApartmentApps.API.Service\Version.cs" />
@@ -240,10 +246,6 @@
       <HintPath>..\..\packages\MvvmCross.Core.4.2.3\lib\portable-net45+win+wpa81+wp80\MvvmCross.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MvvmCross.Platform">
-      <HintPath>..\..\packages\MvvmCross.Platform.4.2.3\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MvvmCross.Plugins.File">
       <HintPath>..\..\packages\MvvmCross.Plugin.File.4.2.3\lib\portable-net45+win+wpa81+wp80\MvvmCross.Plugins.File.dll</HintPath>
       <Private>True</Private>
@@ -260,10 +262,6 @@
       <HintPath>..\..\packages\MvvmCross.Plugin.Network.4.2.3\lib\portable-net45+win+wpa81+wp80\MvvmCross.Plugins.Network.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MvvmCross.Plugins.PictureChooser">
-      <HintPath>..\..\packages\MvvmCross.Plugin.PictureChooser.4.2.3\lib\portable-net45+win+wpa81+wp80\MvvmCross.Plugins.PictureChooser.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net45+win8+wpa81\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
@@ -275,6 +273,12 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Platform">
+      <HintPath>..\..\packages\MvvmCross.Platform.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Plugins.PictureChooser">
+      <HintPath>..\..\packages\MvvmCross.Plugin.PictureChooser.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Plugins.PictureChooser.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />

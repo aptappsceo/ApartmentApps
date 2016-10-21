@@ -14,6 +14,7 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Inspections;
 using ApartmentApps.Modules.Payments;
+using ApartmentApps.Modules.Prospect;
 //using ApartmentApps.Modules.Inspections;
 using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity;
@@ -54,6 +55,7 @@ namespace ApartmentApps.IoC
             ApplicationDbContext.SearchAssemblies.Add(typeof (MessagingModule).Assembly);
             ApplicationDbContext.SearchAssemblies.Add(typeof (PaymentsModule).Assembly);
             ApplicationDbContext.SearchAssemblies.Add(typeof (YardiModule).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (ProspectModule).Assembly);
         }
 
 #if JOBS
@@ -69,7 +71,7 @@ namespace ApartmentApps.IoC
         }
         public static void RegisterMappable<TModel, TViewModel,TService, TDefaultMapper>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel> where TDefaultMapper : IMapper<TModel, TViewModel>
         {
-            
+
            kernel.Bind<IMapper<TModel,TViewModel>>().To<TDefaultMapper>().InRequestScope();
 
             kernel.Bind< IService,
@@ -84,7 +86,7 @@ namespace ApartmentApps.IoC
         public static void RegisterModule<TModule, TModuleConfig>( this IKernel kernel ) where TModule : Module<TModuleConfig> where TModuleConfig : ModuleConfig, new()
         {
             kernel.Bind<TModule, IModule, Module<TModuleConfig>>().To<TModule>().InRequestScope();
-            
+
             //kernel.Bind<IRepository<TModuleConfig>>().To<Module<TModuleConfig>.ConfigRepository>().InRequestScope();
         }
         public static void RegisterServices(IKernel kernel)
@@ -118,7 +120,7 @@ namespace ApartmentApps.IoC
 
                     }
                 }
-                    
+
             }
             kernel.RegisterModule<AlertsModule, AlertsModuleConfig>();
             kernel.RegisterModule<AdminModule, PortalConfig>();
@@ -128,11 +130,13 @@ namespace ApartmentApps.IoC
             kernel.RegisterModule<MessagingModule, MessagingConfig>();
             //kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<EntrataModule, EntrataConfig>();
+            kernel.RegisterModule<ProspectModule,ProspectModuleConfig>();
+
             //kernel.RegisterModule<InspectionsModule, InspectionsModuleConfig>();
-            
+
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
             //ServiceExtensions.GetServices = () => kernel.GetAll<IService>();
-    
+
 
             kernel.Bind<IRepository<UserPaymentOption>>().To<PropertyRepository<UserPaymentOption>>().InRequestScope();
             kernel.Bind<IRepository<UserTransaction>>().To<PropertyRepository<UserTransaction>>().InRequestScope();
@@ -158,9 +162,9 @@ namespace ApartmentApps.IoC
             kernel.Bind<IRepository<IdentityRole>>().To<BaseRepository<IdentityRole>>().InRequestScope();
 
             kernel.Bind<IRepository<Building>>().To<PropertyRepository<Building>>().InRequestScope();
-            
+
             kernel.Bind<IRepository<Unit>>().To<UnitRepository>().InRequestScope();
-          
+
             kernel.Bind<IRepository<MaitenanceRequest>>().To<MaintenanceRepository>().InRequestScope();
             kernel.Bind<IRepository<MaintenanceRequestCheckin>>()
                 .To<PropertyRepository<MaintenanceRequestCheckin>>()
@@ -203,6 +207,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService, IncidentReportMapper>();
             kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService, CourtesyCheckinMapper>();
             kernel.RegisterMappable<Property, PropertyBindingModel, PropertyService, PropertyMapper>();
+            kernel.RegisterMappable<ProspectApplication, ProspectApplicationBindingModel, ProspectService,ProspectApplicationMapper>();
             kernel.RegisterMapper<Unit,UnitFormModel,UnitFormMapper>();
             kernel.RegisterMapper<Message,MessageFormViewModel,MessageFormMapper>();
             kernel.RegisterMapper<MaitenanceRequest, MaintenanceRequestEditModel, MaintenanceRequestEditMapper>();
@@ -210,7 +215,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterMapper<Message, MessageTargetsViewModel, MessageTargetMapper>();
             kernel.RegisterMapper<ApplicationUser, UserListModel, UserListMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
-    
+
             //kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
 
             kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
@@ -246,7 +251,7 @@ namespace ApartmentApps.IoC
     }
     //public sealed class GalleryDbMigrationConfiguration : DbMigrationsConfiguration
     //{
-      
-       
+
+
     //}
 }

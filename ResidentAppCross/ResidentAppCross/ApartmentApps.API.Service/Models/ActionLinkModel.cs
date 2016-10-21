@@ -185,5 +185,60 @@ namespace ApartmentApps.Client.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// Serialize the object
+        /// </summary>
+        /// <returns>
+        /// Returns the json model for the type ActionLinkModel
+        /// </returns>
+        public virtual JToken SerializeJson(JToken outputObject)
+        {
+            if (outputObject == null)
+            {
+                outputObject = new JObject();
+            }
+            if (this.Action != null)
+            {
+                outputObject["Action"] = this.Action;
+            }
+            if (this.Allowed != null)
+            {
+                outputObject["Allowed"] = this.Allowed.Value;
+            }
+            if (this.Controller != null)
+            {
+                outputObject["Controller"] = this.Controller;
+            }
+            if (this.Group != null)
+            {
+                outputObject["Group"] = this.Group;
+            }
+            if (this.GroupName != null)
+            {
+                outputObject["GroupName"] = this.GroupName;
+            }
+            if (this.Icon != null)
+            {
+                outputObject["Icon"] = this.Icon;
+            }
+            if (this.Index != null)
+            {
+                outputObject["Index"] = this.Index.Value;
+            }
+            if (this.IsDialog != null)
+            {
+                outputObject["IsDialog"] = this.IsDialog.Value;
+            }
+            if (this.Label != null)
+            {
+                outputObject["Label"] = this.Label;
+            }
+            if (this.Parameters != null)
+            {
+                outputObject["Parameters"] = JObject.Parse(this.Parameters);
+            }
+            return outputObject;
+        }
     }
 }
