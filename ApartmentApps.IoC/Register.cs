@@ -13,6 +13,7 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Inspections;
+using ApartmentApps.Modules.Prospect;
 //using ApartmentApps.Modules.Inspections;
 using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity;
@@ -53,6 +54,7 @@ namespace ApartmentApps.IoC
             ApplicationDbContext.SearchAssemblies.Add(typeof (MessagingModule).Assembly);
             ApplicationDbContext.SearchAssemblies.Add(typeof (PaymentsModule).Assembly);
             ApplicationDbContext.SearchAssemblies.Add(typeof (YardiModule).Assembly);
+            ApplicationDbContext.SearchAssemblies.Add(typeof (ProspectModule).Assembly);
         }
 
 #if JOBS
@@ -127,6 +129,8 @@ namespace ApartmentApps.IoC
             kernel.RegisterModule<MessagingModule, MessagingConfig>();
             //kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<EntrataModule, EntrataConfig>();
+            kernel.RegisterModule<ProspectModule,ProspectModuleConfig>();
+            
             //kernel.RegisterModule<InspectionsModule, InspectionsModuleConfig>();
             
             //kernel.Bind<IKernel>().ToMethod((v) => kernel).InRequestScope();
@@ -200,6 +204,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService, IncidentReportMapper>();
             kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService, CourtesyCheckinMapper>();
             kernel.RegisterMappable<Property, PropertyBindingModel, PropertyService, PropertyMapper>();
+            kernel.RegisterMappable<ProspectApplication, ProspectApplicationBindingModel, ProspectService,ProspectApplicationMapper>();
             kernel.RegisterMapper<Unit,UnitFormModel,UnitFormMapper>();
             kernel.RegisterMapper<Message,MessageFormViewModel,MessageFormMapper>();
             kernel.RegisterMapper<MaitenanceRequest, MaintenanceRequestEditModel, MaintenanceRequestEditMapper>();

@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A7A41793-D1A8-4FF3-BAFD-207C43E73F32}</ProjectGuid>
+    <ProjectGuid>{4B09DC69-8A16-4029-B5DA-0E494451F9BF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ApartmentApps.IoC</RootNamespace>
-    <AssemblyName>ApartmentApps.IoC</AssemblyName>
+    <RootNamespace>ApartmentApps.Modules.Prospect</RootNamespace>
+    <AssemblyName>ApartmentApps.Modules.Prospect</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,26 +26,17 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
-    <OutputPath>bin\Test\</OutputPath>
-    <DefineConstants>TRACE;TEST</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -55,20 +47,15 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security">
-      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -77,12 +64,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Register.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <Compile Include="Service References\IDScan\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApartmentApps.Api\ApartmentApps.Api.csproj">
@@ -93,34 +81,38 @@
       <Project>{69A819D5-3037-4E56-90E4-A9EDFF41B88A}</Project>
       <Name>ApartmentApps.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ApartmentApps.Modules.Alerts\ApartmentApps.Modules.Alerts.csproj">
-      <Project>{0E9D236A-18F7-46A1-A591-418D14EEE0A3}</Project>
-      <Name>ApartmentApps.Modules.Alerts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ApartmentApps.Modules.CourtesyOfficer\ApartmentApps.Modules.CourtesyOfficer.csproj">
-      <Project>{62C439C3-12AF-48C9-B7B2-84BC16893027}</Project>
-      <Name>ApartmentApps.Modules.CourtesyOfficer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ApartmentApps.Modules.Inspections\ApartmentApps.Modules.Inspections.csproj">
-      <Project>{11ebf4c6-4475-47dd-9008-0de0607dd723}</Project>
-      <Name>ApartmentApps.Modules.Inspections</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ApartmentApps.Modules.Maintenance\ApartmentApps.Modules.Maintenance.csproj">
-      <Project>{CFDCC102-7E3C-4E49-B438-ADE9D48F6615}</Project>
-      <Name>ApartmentApps.Modules.Maintenance</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ApartmentApps.Modules.Messaging\ApartmentApps.Modules.Messaging.csproj">
-      <Project>{D1766F08-A347-4694-97CF-8AAA5749B6B2}</Project>
-      <Name>ApartmentApps.Modules.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ApartmentApps.Modules.Payments\ApartmentApps.Modules.Payments.csproj">
-      <Project>{CC299297-365F-4643-A0B8-316C788A4EF7}</Project>
-      <Name>ApartmentApps.Modules.Payments</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ApartmentApps.Modules.Prospect\ApartmentApps.Modules.Prospect.csproj">
-      <Project>{4b09dc69-8a16-4029-b5da-0e494451f9bf}</Project>
-      <Name>ApartmentApps.Modules.Prospect</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Service References\IDScan\ApartmentApps.Modules.Prospect.IDScan.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IDScan\DriverLicenseParser.wsdl" />
+    <None Include="Service References\IDScan\DriverLicenseParser.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\IDScan\DriverLicenseParser1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\IDScan\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IDScan\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IDScan\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IDScan\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

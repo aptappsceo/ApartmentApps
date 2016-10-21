@@ -240,6 +240,10 @@
       <Project>{CC299297-365F-4643-A0B8-316C788A4EF7}</Project>
       <Name>ApartmentApps.Modules.Payments</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Modules.Prospect\ApartmentApps.Modules.Prospect.csproj">
+      <Project>{4b09dc69-8a16-4029-b5da-0e494451f9bf}</Project>
+      <Name>ApartmentApps.Modules.Prospect</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Portal\ApartmentApps.Portal.csproj">
       <Project>{fa9f282f-5bea-4035-8c41-4ff8ddf24517}</Project>
       <Name>ApartmentApps.Portal</Name>
