@@ -1,19 +1,20 @@
 ﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupConfiguration="{D8277430-A582-4E04-B474-A48C4A90A313}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/Views/RentSummaryView.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross.iOS/Views/Sections/PhotoGallerySection.cs">
     <Files>
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="78" Column="4" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="74" Column="5" />
       <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="131" Column="42" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/HomeMenuViewModel.cs" Line="227" Column="13" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/AppDelegate.cs" Line="88" Column="49" />
-      <File FileName="ResidentAppCross/ResidentAppCross/App.cs" Line="48" Column="3" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/RentSummaryView.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/HomeMenuViewModel.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/app.config" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/App.cs" Line="31" Column="73" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/CheckinFormViewModel.cs" Line="86" Column="59" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/CheckinFormView.cs" Line="89" Column="79" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/Sections/PhotoGallerySection.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Mobile_220App.ResidentAppCross.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
+  <MonoDevelop.Ide.ItemProperties.Mobile_220App.ResidentAppCross.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.00422D79-764D-4BCD-B6C7-E7B529EBE5A4" />
 </Properties>

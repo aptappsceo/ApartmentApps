@@ -41,13 +41,14 @@ namespace ResidentAppCross
             var courtesyEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.CourtesyConfig?.Enabled ?? false;
             var maintenanceEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.MaintenanceConfig?.Enabled ?? false;
             var messagingEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.MessagingConfig?.Enabled ?? false;
-
+			var prospectEnabled = true;
 
             if (_loginManager?.UserInfo?.Roles == null)
             {
                 this.Publish(new HomeMenuUpdatedEvent(this));
                 return;
             }
+
 
 
             if(maintenanceEnabled)
@@ -106,7 +107,20 @@ namespace ResidentAppCross
                 Icon = SharedResources.Icons.Maintenance,
                 Command = MaintenaceRequestCommand
             });
+			if (prospectEnabled && (
+				_loginManager.UserInfo.Roles.Contains("PropertyAdmin") || 
+				_loginManager.UserInfo.Roles.Contains("Admin") ||
+				_loginManager.UserInfo.Roles.Contains("ProspectAdmin")
+			))
+			{
+				MenuItems.Add(new HomeMenuItemViewModel()
+				{
+					Name = "Scan Prospect Id",
+					Icon = SharedResources.Icons.Wallet,
+					Command = RequestCourtesyOfficerCommand
+				});
 
+			}
             if(courtesyEnabled)
             MenuItems.Add(new HomeMenuItemViewModel()
             {
@@ -220,6 +234,17 @@ namespace ResidentAppCross
             });
         });
 
+		public ICommand ScanIdCommand => new MvxCommand(async () =>
+	   {
+
+		   var image = await Mvx.Resolve<IDialogService>().OpenImageDialog();
+
+			ShowViewModel<ProspectApplicationViewModel>(vm =>
+		    {
+				vm.SetProsepectInfo(image);
+				//vm.Url = Mvx.Resolve<IApartmentAppsAPIService>().BaseUri + "/generalviews/index";
+			});
+	   });
         public ICommand PayRentCommand => new MvxCommand(() =>
         {
             if (_loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.PaymentsConfig?.UseUrl ?? false)
