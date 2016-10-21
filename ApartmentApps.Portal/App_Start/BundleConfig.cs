@@ -38,10 +38,29 @@ namespace ApartmentApps.Portal
                 .Include("~/Scripts/ej/partial/ej.print.min.js")
                 .Include("~/Scripts/ej/partial/ej.progressbar.min.js")
                 .Include("~/Scripts/ej/partial/ej.recurrenceeditor.min.js")
-                .Include("~/Scripts/ej/partial/ej.rte.min.js")
                 .Include("~/Scripts/ej/partial/ej.timepicker.min.js")
                 .Include("~/Scripts/ej/partial/ej.uploadbox.min.js")
                 .Include("~/Scripts/ej/partial/ej.maskedit.min.js")
+
+                /* Rich Text Editor and it's dependencies */
+                .Include("~/Scripts/ej/partial/ej.rte.min.js")
+                .Include("~/Scripts/ej/partial/ej.fileexplorer.min.js")
+                .Include("~/Scripts/ej/partial/ej.toolbar.min.js")
+                .Include("~/Scripts/ej/partial/ej.tooltip.min.js")
+                .Include("~/Scripts/ej/partial/ej.splitter.min.js")
+                .Include("~/Scripts/ej/partial/ej.waitingpopup.min.js")
+                .Include("~/Scripts/ej/partial/ej.treeview.min.js")
+                .Include("~/Scripts/ej/partial/ej.tab.min.js")
+                .Include("~/Scripts/ej/partial/ej.colorpicker.min.js")
+                .Include("~/Scripts/ej/partial/ej.splitbutton.min.js")
+                .Include("~/Scripts/ej/partial/ej.togglebutton.min.js")
+                .Include("~/Scripts/ej/partial/ej.radiobutton.min.js")
+                .Include("~/Scripts/ej/partial/ej.slider.min.js")
+                .Include("~/Scripts/ej/partial/ej.menu.min.js")
+                .Include("~/Scripts/ej/partial/ej.grid.min.js")
+
+
+
                 .Include("~/Scripts/jquery.timeago.js")
                 );
 

@@ -23,6 +23,15 @@ namespace ResidentAppCross.iOS.Views
 	
         private CallToActionSection _actionSection;
         private PhotoGallerySection _photosSection;
+        private TextViewSection _addressLine1Section;
+        private TextViewSection _addressLine2Section;
+        private TextViewSection _addressCitySection;
+        private TextViewSection _addressStateSection;
+        private TextViewSection _ZipCodeSection;
+        private TextViewSection _emailSection;
+        private TextViewSection _phoneNumberSection;
+        private LabelWithButtonSection _desiredMoveInDateSection;
+       
 
         public ProspectApplicationFormView()
         {
@@ -78,8 +87,125 @@ namespace ResidentAppCross.iOS.Views
 				return _lastNameSection;
 			}
 		}
+        public TextViewSection AddressLine1Section
+        {
+            get
+            {
+                if (_addressLine1Section == null)
+                {
+                    _addressLine1Section = Formals.Create<TextViewSection>();
+                    _addressLine1Section.HeaderLabel.Text = "Address Line 1";
+                    _addressLine1Section.HeightConstraint.Constant = 100;
+                    _addressLine1Section.SetEditable(true);
+                }
+                return _addressLine1Section;
+            }
+        }
 
-		public CallToActionSection ActionSection
+        public TextViewSection AddressLine2Section
+        {
+            get
+            {
+                if (_addressLine2Section == null)
+                {
+                    _addressLine2Section = Formals.Create<TextViewSection>();
+                    _addressLine2Section.HeaderLabel.Text = "Address Line 2";
+                    _addressLine2Section.HeightConstraint.Constant = 100;
+                    _addressLine2Section.SetEditable(true);
+                }
+                return _addressLine2Section;
+            }
+        }
+
+        public TextViewSection AddressCitySection
+        {
+            get
+            {
+                if (_addressCitySection == null)
+                {
+                    _addressCitySection = Formals.Create<TextViewSection>();
+                    _addressCitySection.HeaderLabel.Text = "Address City";
+                    _addressCitySection.HeightConstraint.Constant = 100;
+                    _addressCitySection.SetEditable(true);
+                }
+                return _addressCitySection;
+            }
+        }
+
+        public TextViewSection AddressStateSection
+        {
+            get
+            {
+                if (_addressStateSection == null)
+                {
+                    _addressStateSection = Formals.Create<TextViewSection>();
+                    _addressStateSection.HeaderLabel.Text = "Address State";
+                    _addressStateSection.HeightConstraint.Constant = 100;
+                    _addressStateSection.SetEditable(true);
+                }
+                return _addressStateSection;
+            }
+        }
+
+
+        public TextViewSection ZipCodeSection
+        {
+            get
+            {
+                if (_ZipCodeSection == null)
+                {
+                    _ZipCodeSection = Formals.Create<TextViewSection>();
+                    _ZipCodeSection.HeaderLabel.Text = "Zip Code";
+                    _ZipCodeSection.HeightConstraint.Constant = 100;
+                    _ZipCodeSection.SetEditable(true);
+                }
+                return _ZipCodeSection;
+            }
+        }
+
+
+        public TextViewSection EmailSection
+        {
+            get
+            {
+                if (_emailSection == null)
+                {
+                    _emailSection = Formals.Create<TextViewSection>();
+                    _emailSection.HeaderLabel.Text = "Email";
+                    _emailSection.HeightConstraint.Constant = 100;
+                    _emailSection.SetEditable(true);
+                }
+                return _emailSection;
+            }
+        }
+        public TextViewSection PhoneNumberSection
+        {
+            get
+            {
+                if (_phoneNumberSection == null)
+                {
+                    _phoneNumberSection = Formals.Create<TextViewSection>();
+                    _phoneNumberSection.HeaderLabel.Text = "Phone Number";
+                    _phoneNumberSection.HeightConstraint.Constant = 100;
+                    _phoneNumberSection.SetEditable(true);
+                }
+                return _phoneNumberSection;
+            }
+        }
+        public LabelWithButtonSection DesiredMoveInDateSection
+        {
+            get
+            {
+                if (_desiredMoveInDateSection == null)
+                {
+                    _desiredMoveInDateSection = Formals.Create<LabelWithButtonSection>();
+                    _desiredMoveInDateSection.Label.Text = "Desired Move-In Date";
+                    //_desiredMoveInDateSection.HeightConstraint.Constant = 100;
+                }
+                return _desiredMoveInDateSection;
+            }
+        }
+        public CallToActionSection ActionSection
         {
             get
             {
@@ -104,6 +230,15 @@ namespace ResidentAppCross.iOS.Views
 			set.Bind(ActionSection.MainButton).To(vm => vm.SubmitApplicationCommand);
 			set.Bind(FirstNameSection.TextView).For(t=>t.Text).TwoWay().To(vm => vm.FirstName);
 			set.Bind(LastNameSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
+			set.Bind(AddressLine1Section.TextView).For(t => t.Text).TwoWay().To(vm => vm.AddressLine1);
+			set.Bind(AddressLine2Section.TextView).For(t => t.Text).TwoWay().To(vm => vm.AddressLine2);
+			set.Bind(AddressCitySection.TextView).For(t => t.Text).TwoWay().To(vm => vm.AddressCity);
+			set.Bind(AddressStateSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.AddressState);
+			set.Bind(ZipCodeSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.ZipCode);
+			set.Bind(EmailSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.Email);
+			set.Bind(PhoneNumberSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.PhoneNumber);
+			//set.Bind(LastNameSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
+			//set.Bind(DesiredMoveInDateSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
             set.Apply();
 
         }
@@ -116,6 +251,14 @@ namespace ResidentAppCross.iOS.Views
             content.Add(HeaderSection);
 			content.Add(FirstNameSection);
 			content.Add(LastNameSection);
+			content.Add(AddressLine1Section);
+			content.Add(AddressLine2Section);
+			content.Add(AddressCitySection);
+			content.Add(AddressStateSection);
+			content.Add(ZipCodeSection);
+			content.Add(EmailSection);
+			content.Add(PhoneNumberSection);
+			content.Add(DesiredMoveInDateSection);
             content.Add(ActionSection);
 
         }
