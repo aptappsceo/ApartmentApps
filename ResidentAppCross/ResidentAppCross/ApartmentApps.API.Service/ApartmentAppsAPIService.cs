@@ -151,7 +151,7 @@ namespace ApartmentApps.Client
             this._prospect = new Prospect(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://localhost:54630");
+            this._baseUri = new Uri("http://devservices.apartmentapps.com");
         }
         
         /// <summary>
@@ -178,7 +178,7 @@ namespace ApartmentApps.Client
             this._prospect = new Prospect(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://localhost:54630");
+            this._baseUri = new Uri("http://devservices.apartmentapps.com");
         }
         
         /// <summary>
@@ -208,7 +208,7 @@ namespace ApartmentApps.Client
             this._prospect = new Prospect(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://localhost:54630");
+            this._baseUri = new Uri("http://devservices.apartmentapps.com");
         }
         
         /// <summary>

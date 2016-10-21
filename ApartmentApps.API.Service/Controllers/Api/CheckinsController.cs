@@ -39,8 +39,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
             return Ok();
         }
 
-        [HttpPost, Route("ScanId")]
-        public ScanIdResult ScanId(string base64Image)
+        [HttpPost, Route("ScanId"), System.Web.Mvc.HttpPost]
+        public ScanIdResult ScanId([FromBody] string base64Image)
         {
             var result = _service.ScanId(base64Image);
             if (result != null)

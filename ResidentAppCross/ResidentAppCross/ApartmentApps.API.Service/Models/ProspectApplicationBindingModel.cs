@@ -144,6 +144,17 @@ namespace ApartmentApps.Client.Models
             set { this._phoneNumber = value; }
         }
         
+        private UserBindingModel _submittedBy;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public UserBindingModel SubmittedBy
+        {
+            get { return this._submittedBy; }
+            set { this._submittedBy = value; }
+        }
+        
         private int? _zipCode;
         
         /// <summary>
@@ -235,6 +246,10 @@ namespace ApartmentApps.Client.Models
             if (this.PhoneNumber != null)
             {
                 outputObject["PhoneNumber"] = this.PhoneNumber;
+            }
+            if (this.SubmittedBy != null)
+            {
+                outputObject["SubmittedBy"] = this.SubmittedBy.SerializeJson(null);
             }
             if (this.ZipCode != null)
             {

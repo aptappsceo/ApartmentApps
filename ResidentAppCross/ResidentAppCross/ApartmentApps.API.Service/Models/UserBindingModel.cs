@@ -310,5 +310,112 @@ namespace ApartmentApps.Client.Models
                 }
             }
         }
+        
+        /// <summary>
+        /// Serialize the object
+        /// </summary>
+        /// <returns>
+        /// Returns the json model for the type UserBindingModel
+        /// </returns>
+        public virtual JToken SerializeJson(JToken outputObject)
+        {
+            if (outputObject == null)
+            {
+                outputObject = new JObject();
+            }
+            JArray actionLinksSequence = null;
+            if (this.ActionLinks != null)
+            {
+                if (this.ActionLinks is ILazyCollection<ActionLinkModel> == false || ((ILazyCollection<ActionLinkModel>)this.ActionLinks).IsInitialized)
+                {
+                    actionLinksSequence = new JArray();
+                    outputObject["ActionLinks"] = actionLinksSequence;
+                    foreach (ActionLinkModel actionLinksItem in this.ActionLinks)
+                    {
+                        if (actionLinksItem != null)
+                        {
+                            actionLinksSequence.Add(actionLinksItem.SerializeJson(null));
+                        }
+                    }
+                }
+            }
+            if (this.Address != null)
+            {
+                outputObject["Address"] = this.Address;
+            }
+            if (this.Archived != null)
+            {
+                outputObject["Archived"] = this.Archived.Value;
+            }
+            if (this.BuildingName != null)
+            {
+                outputObject["BuildingName"] = this.BuildingName;
+            }
+            if (this.City != null)
+            {
+                outputObject["City"] = this.City;
+            }
+            if (this.Email != null)
+            {
+                outputObject["Email"] = this.Email;
+            }
+            if (this.FirstName != null)
+            {
+                outputObject["FirstName"] = this.FirstName;
+            }
+            if (this.FullName != null)
+            {
+                outputObject["FullName"] = this.FullName;
+            }
+            if (this.Id != null)
+            {
+                outputObject["Id"] = this.Id;
+            }
+            if (this.ImageThumbnailUrl != null)
+            {
+                outputObject["ImageThumbnailUrl"] = this.ImageThumbnailUrl;
+            }
+            if (this.ImageUrl != null)
+            {
+                outputObject["ImageUrl"] = this.ImageUrl;
+            }
+            if (this.IsTenant != null)
+            {
+                outputObject["IsTenant"] = this.IsTenant.Value;
+            }
+            if (this.LastName != null)
+            {
+                outputObject["LastName"] = this.LastName;
+            }
+            if (this.PhoneNumber != null)
+            {
+                outputObject["PhoneNumber"] = this.PhoneNumber;
+            }
+            if (this.PostalCode != null)
+            {
+                outputObject["PostalCode"] = this.PostalCode;
+            }
+            JArray rolesSequence = null;
+            if (this.Roles != null)
+            {
+                if (this.Roles is ILazyCollection<string> == false || ((ILazyCollection<string>)this.Roles).IsInitialized)
+                {
+                    rolesSequence = new JArray();
+                    outputObject["Roles"] = rolesSequence;
+                    foreach (string rolesItem in this.Roles)
+                    {
+                        if (rolesItem != null)
+                        {
+                            rolesSequence.Add(rolesItem);
+                        }
+                    }
+                }
+            }
+            if (this.UnitName != null)
+            {
+                outputObject["UnitName"] = this.UnitName;
+            }
+            return outputObject;
+        }
     }
 }
