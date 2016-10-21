@@ -9,15 +9,12 @@ using ApartmentApps.Modules.Payments.Data;
 namespace ApartmentApps.Api.Modules
 {
     [Persistant]
-    public class Invoice
+    public class Invoice : PropertyEntity
     {
         public Invoice()
         {
             TransactionHistoryItems = new HashSet<TransactionHistoryItem>();
         }
-
-        [Key]
-        public int Id { get; set; }
 
         public int UserLeaseInfoId { get; set; }
 

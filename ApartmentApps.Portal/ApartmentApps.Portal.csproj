@@ -1150,6 +1150,7 @@
     </Content>
     <Content Include="Scripts\app\aa.js" />
     <Content Include="Scripts\app\inspinia.js" />
+    <Content Include="Scripts\arrive.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -1510,6 +1511,8 @@
     <Content Include="Views\Shared\Payments\PaymentListSummary.cshtml" />
     <Content Include="Views\Shared\StandardPageHeader.cshtml" />
     <Content Include="Views\Prospect\OverviewListPartial.cshtml" />
+    <Content Include="Views\PaymentRequests\OverviewListPartial.cshtml" />
+    <Content Include="Views\PaymentRequests\Overview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

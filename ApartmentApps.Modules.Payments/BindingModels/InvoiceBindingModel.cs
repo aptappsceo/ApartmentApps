@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -25,6 +26,24 @@ namespace ApartmentApps.Api.Modules
         public InvoiceState State { get; set; }
 
     }
+
+    public class PaymentRequestInvoiceViewModel : BaseViewModel
+    {
+
+        public decimal Amount { get; set; }
+
+        public string Title { get; set; }
+
+        public DateTime DueDate { get; set; }
+
+        public DateTime AvailableDate { get; set; }
+
+        public InvoiceUrgencyState UrgencyState { get; set; }
+
+        public InvoiceState State { get; set; }
+
+    }
+
 
     public class TransactionBindingModel
     {

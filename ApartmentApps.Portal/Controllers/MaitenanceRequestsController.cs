@@ -20,6 +20,7 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
+using ApartmentApps.Modules.Payments;
 using ApartmentApps.Portal.App_Start;
 using Korzh.EasyQuery.Services;
 using Ninject;
@@ -137,6 +138,32 @@ namespace ApartmentApps.Portal.Controllers
     }
 
 
+    [Authorize]
+    public class PaymentRequestsController :
+        AutoGridController
+            <PaymentsRequestsService, PaymentsRequestsService, UserLeaseInfoBindingModel, EditUserLeaseInfoBindingModel>
+    {
+
+        public PaymentsRequestsService PaymentsRequestsService { get; set; }
+
+        public PaymentRequestsController(IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service) : base(kernel, formService, indexService, context, userContext, service)
+        {
+            PaymentsRequestsService = formService;
+        }
+
+        public override ActionResult GridResult(GridList<UserLeaseInfoBindingModel> grid)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return View("OverviewListPartial", grid);
+            }
+            return View("Overview", new PaymentsRequestOverviewViewModel()
+            {
+                FeedItems = grid
+            });
+        }
+
+    }
 
 
     [Authorize]
@@ -448,6 +475,12 @@ namespace ApartmentApps.Portal.Controllers
     {
         public IPagedList<MaintenanceRequestViewModel>  Requests { get; set; }
         public GridList<MaintenanceRequestViewModel> FeedItems { get; set; }
+    }
+
+    public class PaymentsRequestOverviewViewModel
+    {
+        public IPagedList<UserLeaseInfoBindingModel>  Requests { get; set; }
+        public GridList<UserLeaseInfoBindingModel> FeedItems { get; set; }
     }
 
     public class AutoGridModel<TItem> : AutoGridModel

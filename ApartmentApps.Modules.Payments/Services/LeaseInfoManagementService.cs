@@ -211,7 +211,7 @@ namespace ApartmentApps.Modules.Payments.Services
             _leases.Save();
         }
 
-        public string CreateTransaction(string trace, string userId, string commiterId, decimal totalIncludingConvenienceFee, decimal convenienceFee, Invoice[] invoices, string comments, DateTime estimatedCompleteDate)
+        public int CreateTransaction(string trace, string userId, string commiterId, decimal totalIncludingConvenienceFee, decimal convenienceFee, Invoice[] invoices, string comments, DateTime estimatedCompleteDate)
         {
             foreach (var invoice in invoices) 
             {
@@ -230,7 +230,6 @@ namespace ApartmentApps.Modules.Payments.Services
 
             var transaction = new TransactionHistoryItem()
             {
-                Id = trace,
                 Trace= trace,
                 State = TransactionState.Open,
                 Invoices = invoices,
@@ -401,7 +400,7 @@ namespace ApartmentApps.Modules.Payments.Services
 
     public class TransactionHistoryItemBindingModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string UserEmail { get; set; }
         public string UserId { get; set; }
         public string UserFullName { get; set; }

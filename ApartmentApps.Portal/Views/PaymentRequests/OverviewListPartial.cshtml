@@ -1,0 +1,178 @@
+﻿@using ApartmentApps.Api.Modules
+@using ApartmentApps.Data
+@using Korzh.EasyQuery.Mvc
+@using Korzh.EasyQuery.Services
+@model ApartmentApps.Forms.GridList<UserLeaseInfoBindingModel>
+
+@helper PaymentRequestViewModel(UserLeaseInfoBindingModel item)
+{
+    var property = ViewBag.Property as Property;
+    var userDashboardLink = Url.Action("UserFeed", "Dashboard", new {id = @item.User.Id});
+
+    <div class="social-feed-box">
+
+        @Html.Partial("_ActionLinks", item)
+        <div class="social-avatar">
+
+            <a href="@userDashboardLink" class="pull-left">
+                <img alt="image" class="img-circle" src="@item.User.ImageThumbnailUrl">
+            </a>
+
+            <div class="media-body">
+
+                <a href="#">
+                    <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.User.Id})">
+                        <strong>@@@(item.User.FirstName) @item.User.LastName</strong>
+                    </a> @(item.UsesInterval ? "Subscription" : "Onetime payment request") opened for <b>@item.Title</b> @Html.Timeago(item.CreateDate, property?.TimeZone) <br>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="social-body">
+            
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <dl class="dl-horizontal">
+                        <dt>Type:</dt>
+                        <dd>
+                            <span class="badge badge-info">@(item.UsesInterval ? "Subscription" : "Onetime payment request")</span>
+                        </dd>
+                        <dt>Amount:</dt>
+                        <dd>
+                            <span >$@item.Amount.ToString("0.00")</span>
+                        </dd>
+                        
+                        <dt>Charge Strategy:</dt>
+                        @if (item.UsesInterval)
+                        {
+                            <dd>
+                                <span>User is charged every @(item.IntervalMonths) month(s) </span> 
+                            </dd>
+                            <dt>Next Invoice Date:</dt>
+                            <dd>
+                                <span>@(item.NextInvoiceDate?.ToString("g"))</span>
+                            </dd>
+                        }
+                        else
+                        {
+                            <dd>
+                                <span>User is charged only once</span>
+                            </dd>
+                        }
+
+                        @if (item.UsesCompleteDate)
+                        {
+                            <dt>Subscription Expires On:</dt>
+                            <dd>
+                                <span>@(item.RepetitionCompleteDate?.ToString("g"))</span>
+                            </dd>
+                          
+                        }
+
+
+                        <dt>Created On:</dt>
+                           <dd>
+                                <span>@item.CreateDate.ToString("g")</span>
+                            </dd>
+                 
+                    </dl>
+                </div>
+                <div class="col-lg-6" id="cluster_info">
+                    <dl class="dl-horizontal">
+
+                        <dt>Unit:</dt>
+                        <dd>
+                            @item.User.BuildingName - @item.User.UnitName
+                        </dd>
+                        <dt>Contact :</dt>
+                        <dd>
+                            <i class="fa fa-fw fa-envelope-o"></i>@(item.User.Email ?? "-") <br/>
+                            <i class="fa fa-fw fa-phone-square"></i>@(item.User.PhoneNumber ?? "-") <br/>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+        </div>
+        <div class="social-footer">
+
+            @foreach (var invoice in item.Invoices)
+            {
+                string labelclass = "";
+                string labeltxt = "";
+                switch (invoice.State)
+                {
+                    case InvoiceState.Canceled:
+                        labelclass = "badge-disable";
+                        labeltxt = "Canceled";
+                        break;
+                    case InvoiceState.NotPaid:
+                        if (invoice.UrgencyState == InvoiceUrgencyState.Upcoming)
+                        {
+                            labelclass = "badge-white";
+                            labeltxt = "Upcoming";
+
+
+                        }
+                        else if (invoice.UrgencyState == InvoiceUrgencyState.Available)
+                        {
+                            labeltxt = "Available";
+
+                            labelclass = "badge-primary";
+
+                        }
+                        else if (invoice.UrgencyState == InvoiceUrgencyState.Urgent)
+                        {
+                            labelclass = "badge-warning";
+                            labeltxt = "Urgent";
+
+                        }
+
+                        break;
+                    case InvoiceState.Pending:
+                        labelclass = "badge-info";
+
+                        labeltxt = "Pending";
+
+                        break;
+                    case InvoiceState.Paid:
+                        labelclass = "badge-success";
+                        labeltxt = "Paid";
+
+                        break;
+                }
+
+                <div class="social-comment">
+                    <div>
+                        <h5>Invoice #@invoice.Id <span class="pull-right badge @(labelclass)">@labeltxt</span></h5>
+                    </div>
+                    <table class="table table-condensed">
+                        <tbody>
+                        <tr>
+                            <td>@invoice.Title</td>
+                            <td>$@invoice.Amount.ToString("0.00")</td>
+                            <td>Available from @invoice.AvailableDate.ToString("d MMM yyyy")</td>
+                            <td>Due @invoice.DueDate.ToString("d MMM yyyy")</td>
+                        </tr> 
+                       </tbody>
+                    </table>
+                    
+                </div>
+            }
+
+            
+
+        </div>
+
+    </div>
+}
+@{
+    var property = ViewBag.Property as Property;
+}
+@foreach (var item in Model)
+{
+    @PaymentRequestViewModel(item)
+}
+@Html.PageNavigator(Model as IPaging)

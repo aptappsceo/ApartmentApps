@@ -128,6 +128,7 @@ namespace ApartmentApps.Portal.Controllers
                 Type = typeof(TViewModel)
             });
         }
+
         public ActionResult AutoForm(object model, string postAction, string title = null)
         {
             return View("AutoForm", new AutoFormModel(model, postAction, this.GetType().Name.Replace("Controller", ""))

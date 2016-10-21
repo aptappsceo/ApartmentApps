@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
@@ -6,11 +7,8 @@ using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class UserLeaseInfoBindingModel
+    public class UserLeaseInfoBindingModel : BaseViewModel
     {
-        [DataType("Hidden")]
-        public int Id { get; set; }
-
         public virtual UserBindingModel User { get; set; }
         
         public decimal Amount { get; set; }
@@ -35,6 +33,7 @@ namespace ApartmentApps.Api.Modules
 
         public bool UsesCompleteDate { get; set; }
 
+        public List<PaymentRequestInvoiceViewModel> Invoices { get; set; }
     }
 
  
@@ -50,7 +49,7 @@ namespace ApartmentApps.Api.Modules
                 User = lease.User.ToUserBindingModel(blobStorageService),
                 CreateDate = lease.CreateDate,
                 NextInvoiceDate = lease.NextInvoiceDate ,
-                Id = lease.Id,
+                Id = lease.Id.ToString(),
                 RepetitionCompleteDate = lease.RepetitionCompleteDate,
                 IntervalDays = lease.IntervalDays,
                 IntervalMonths = lease.IntervalMonths,

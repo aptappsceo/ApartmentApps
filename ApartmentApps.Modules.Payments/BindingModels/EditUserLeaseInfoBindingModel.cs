@@ -1,14 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using ApartmentApps.Portal.Controllers;
 using ExpressiveAnnotations.Attributes;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class EditUserLeaseInfoBindingModel
+    public class EditUserLeaseInfoBindingModel : BaseViewModel
     {
-
-        [Required]
-        public int Id { get; set; }
 
         [Required]
         public string Title { get; set; }

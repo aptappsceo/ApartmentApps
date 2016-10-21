@@ -247,7 +247,7 @@ namespace ApartmentApps.Portal.Controllers
             }
         }
 
-        public async Task<ActionResult> ForceRejectTransaction(string id)
+        public async Task<ActionResult> ForceRejectTransaction(int id)
         {
 
             var transaction = _invoiceHistory.Find(id);
@@ -258,7 +258,7 @@ namespace ApartmentApps.Portal.Controllers
             return RedirectToAction("UserPaymentsOverview", new {id = user.Id});
         }
 
-        public async Task<ActionResult> ForceCompleteTransaction(string id)
+        public async Task<ActionResult> ForceCompleteTransaction(int id)
         {
 
             var transaction = _invoiceHistory.Find(id);
@@ -312,7 +312,7 @@ namespace ApartmentApps.Portal.Controllers
 
             var editUserLeaseInfoBindingModel = new EditUserLeaseInfoBindingModel()
             {
-                Id = id,
+                Id = id.ToString(),
                 Amount = lease.Amount,
                 NextInvoiceDate = lease.NextInvoiceDate,
                 CompleteDate = lease.RepetitionCompleteDate,
