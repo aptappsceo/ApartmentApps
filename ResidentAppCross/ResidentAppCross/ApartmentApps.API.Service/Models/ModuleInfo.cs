@@ -54,6 +54,17 @@ namespace ApartmentApps.Client.Models
             set { this._paymentsConfig = value; }
         }
         
+        private ProspectModuleConfig _prospectConfig;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public ProspectModuleConfig ProspectConfig
+        {
+            get { return this._prospectConfig; }
+            set { this._prospectConfig = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ModuleInfo class.
         /// </summary>
@@ -95,6 +106,13 @@ namespace ApartmentApps.Client.Models
                     PaymentsConfig paymentsConfig = new PaymentsConfig();
                     paymentsConfig.DeserializeJson(paymentsConfigValue);
                     this.PaymentsConfig = paymentsConfig;
+                }
+                JToken prospectConfigValue = inputObject["ProspectConfig"];
+                if (prospectConfigValue != null && prospectConfigValue.Type != JTokenType.Null)
+                {
+                    ProspectModuleConfig prospectModuleConfig = new ProspectModuleConfig();
+                    prospectModuleConfig.DeserializeJson(prospectConfigValue);
+                    this.ProspectConfig = prospectModuleConfig;
                 }
             }
         }

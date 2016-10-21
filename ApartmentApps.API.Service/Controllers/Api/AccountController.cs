@@ -24,6 +24,7 @@ using ApartmentApps.API.Service.Providers;
 using ApartmentApps.API.Service.Results;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Prospect;
 using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers
@@ -35,6 +36,7 @@ namespace ApartmentApps.API.Service.Controllers
         public MessagingConfig MessagingConfig { get; set; }
         public CourtesyConfig CourtesyConfig { get; set; }
         public MaintenanceConfig MaintenanceConfig { get; set; }
+        public ProspectModuleConfig ProspectConfig { get; set; }
     }
     [Authorize]
     [RoutePrefix("api/Account")]
@@ -128,7 +130,7 @@ namespace ApartmentApps.API.Service.Controllers
                         MessagingConfig = _kernel.Get<Module<MessagingConfig>>().Config,
                         CourtesyConfig = _kernel.Get<Module<CourtesyConfig>>().Config,
                         MaintenanceConfig = _kernel.Get<Module<MaintenanceConfig>>().Config,
-                      
+                        ProspectConfig = _kernel.Get<Module<ProspectModuleConfig>>().Config
                         
                     }
                  

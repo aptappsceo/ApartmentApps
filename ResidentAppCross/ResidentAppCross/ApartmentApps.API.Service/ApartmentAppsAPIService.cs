@@ -110,6 +110,13 @@ namespace ApartmentApps.Client
             get { return this._payments; }
         }
         
+        private IProspect _prospect;
+        
+        public virtual IProspect Prospect
+        {
+            get { return this._prospect; }
+        }
+        
         private IRegister _register;
         
         public virtual IRegister Register
@@ -141,9 +148,10 @@ namespace ApartmentApps.Client
             this._messaging = new Messaging(this);
             this._notifiations = new Notifiations(this);
             this._payments = new Payments(this);
+            this._prospect = new Prospect(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://localhost:54685");
+            this._baseUri = new Uri("http://localhost:54630");
         }
         
         /// <summary>
@@ -167,9 +175,10 @@ namespace ApartmentApps.Client
             this._messaging = new Messaging(this);
             this._notifiations = new Notifiations(this);
             this._payments = new Payments(this);
+            this._prospect = new Prospect(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://localhost:54685");
+            this._baseUri = new Uri("http://localhost:54630");
         }
         
         /// <summary>
@@ -196,9 +205,10 @@ namespace ApartmentApps.Client
             this._messaging = new Messaging(this);
             this._notifiations = new Notifiations(this);
             this._payments = new Payments(this);
+            this._prospect = new Prospect(this);
             this._register = new Register(this);
             this._version = new Version(this);
-            this._baseUri = new Uri("http://localhost:54685");
+            this._baseUri = new Uri("http://localhost:54630");
         }
         
         /// <summary>

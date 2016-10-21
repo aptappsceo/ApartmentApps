@@ -26,7 +26,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
             _service = service;
         }
 
-        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.HttpGet, Route("SubmitApplicant")]
         public IHttpActionResult SubmitApplicant(ProspectApplicationBindingModel vm)
         {
             try
@@ -39,7 +39,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost, Route("ScanId")]
         public ScanIdResult ScanId(string base64Image)
         {
             var result = _service.ScanId(base64Image);
