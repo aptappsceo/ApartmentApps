@@ -97,12 +97,12 @@ namespace ApartmentApps.Api.Modules
             var propertyViewModel = viewModel as PropertyBindingModel;
             if (propertyViewModel != null)
             {
-                //actions.Add(new ActionLinkModel("Delete", "Delete", "Property", new { id = vm.Id }));
                 actions.Add(new ActionLinkModel("Edit", "Entry", "Property", new { id = propertyViewModel.Id })
                 {
                     IsDialog = true
                 });
                 actions.Add(new ActionLinkModel("Switch To Property", "ChangeProperty", "Account", new { id = propertyViewModel.Id }));
+                actions.Add(new ActionLinkModel("Import Residents/Units", "ImportResidentCSV", "Property", new { propertyId = propertyViewModel.Id }));
             }
 
         }

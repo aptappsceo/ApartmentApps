@@ -76,40 +76,34 @@
                 <h5>Receipts</h5>
             </div>
             <div class="ibox-content">
-                @(
-    Html.EJ().Grid<MessageReceiptViewModel>("UserGrid")
-        .Datasource(Model.Receipts)
-        .FilterSettings(filter =>
-        {
-            filter.FilterType(FilterType.Excel).EnableCaseSensitivity(true);
-        })
-        .AllowPaging(true)
-        .AllowSelection(false)
-        //.AllowGrouping()
-        //.AllowSorting(true)
-        .AllowFiltering()
-        .Columns(c =>
-        {
-
-            //c.Field(model => model.Id).Visible(false).Add();
-            c.Field(model => model.UserEmail).HeaderText("User Email").DefaultValue("--None--").Add();
-            c.Field(model => model.UserName).HeaderText("User").DefaultValue("--None--").Add();
-            c.Field(model => model.BuildingNumber).HeaderText("Building").DefaultValue("--None--").Add();
-            c.Field(model => model.UnitNumber).HeaderText("Unit").DefaultValue("--None--").Add();
-            
-            //c.Field(model => model.Opened).HeaderText("Opened").DefaultValue("--None--").Add();
-            c.Field(model => model.Error).HeaderText("Error").DefaultValue("--None--").Add();
-            c.Field(model => model.ErrorMessage).HeaderText("Error Message").DefaultValue("--None--").Add();
-
-        })
-                )
-
-                @*@(Html.EJ().Grid<MessageReceipt>("Receipts").)*@
+                <table class="table table-hover table-mail">
+                    <thead>
+                        <tr>
+                            <th>
+                                Email
+                            </th>
+                            <th>Building</th>
+                            <th>Unit</th>
+                            <th>Error</th>
+                            <th>Error Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Receipts)
+                        {
+                            <tr>
+                                <td>@item.UserEmail</td>
+                                <td>@item.BuildingNumber</td>
+                                <td>@item.UnitNumber</td>
+                                <td>@item.Error</td>
+                                <td>@item.ErrorMessage</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    
-
 </div>
 
 
