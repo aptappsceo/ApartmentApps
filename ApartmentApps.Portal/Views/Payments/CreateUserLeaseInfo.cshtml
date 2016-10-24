@@ -2,9 +2,13 @@
 @using ApartmentApps.Portal.Controllers
 @model ApartmentApps.Api.Modules.CreateUserLeaseInfoBindingModel
 @{
+
     ViewBag.Title = "Create";
     UserBindingModel userPlaceholder = null;
-
+    if (Request.IsAjaxRequest())
+    {
+        Layout = "~/Views/Shared/_LayoutDialog.cshtml";
+    }
     var setIntervalCheckBoxId = nameof(Model.UseInterval);
     var setCompleteDateCheckBoxId = nameof(Model.UseCompleteDate);
     var setIntervalCheckBoxTargetContainerId = "setinterval_container";

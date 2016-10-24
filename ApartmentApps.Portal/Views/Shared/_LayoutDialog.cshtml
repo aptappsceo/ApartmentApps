@@ -1,4 +1,9 @@
-﻿<div class="modal-header">
+﻿@if (IsSectionDefined("csspage"))
+{
+    @RenderSection("csspage", false)
+}
+
+<div class="modal-header">
     <button type="button" class="close close-link" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     @*<i class="fa fa-laptop modal-icon"></i>*@
     <h4 class="modal-title">@ViewBag.Title</h4>
@@ -15,6 +20,10 @@
     else
     {
         <button type="button" class="btn btn-white close-link" data-dismiss="modal">Close</button>
-        <button  class="btn btn-primary close-link" onclick="document.forms[document.forms.length - 1].submit();" >Apply</button>
+        <button class="btn btn-primary close-link" onclick="document.forms[document.forms.length - 1].submit();">Apply</button>
     }
 </div>
+@if (IsSectionDefined("Scripts"))
+{
+    @RenderSection("Scripts", false)
+}

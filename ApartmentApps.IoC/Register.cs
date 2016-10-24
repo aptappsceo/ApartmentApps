@@ -180,11 +180,12 @@ namespace ApartmentApps.IoC
                 .To<PropertyRepository<CourtesyOfficerCheckin>>()
                 .InRequestScope();
             kernel.Bind<IRepository<IncidentReport>>().To<IncidentReportRepository>().InRequestScope();
-            kernel.Bind<IRepository<IncidentReportCheckin>>()
+            kernel.Bind<IRepository<IncidentReportCheckin>>()   
                 .To<PropertyRepository<IncidentReportCheckin>>()
                 .InRequestScope();
             kernel.Bind<IRepository<UserAlert>>().To<PropertyRepository<UserAlert>>().InRequestScope();
             kernel.Bind<IRepository<ApplicationUser>>().To<UserRepository>().InRequestScope();
+
 
             kernel.Bind<IPushNotifiationHandler>().To<AzurePushNotificationHandler>().InRequestScope();
             kernel.Bind<IBlobStorageService>().To<BlobStorageService>().InRequestScope();
@@ -214,6 +215,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterMapper<IncidentReport, IncidentReportFormModel, IncidentReportFormMapper>();
             kernel.RegisterMapper<Message, MessageTargetsViewModel, MessageTargetMapper>();
             kernel.RegisterMapper<ApplicationUser, UserListModel, UserListMapper>();
+            kernel.RegisterMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel, PaymentsRequestsEditMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
 
             //kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
