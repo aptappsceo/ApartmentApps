@@ -107,6 +107,7 @@ namespace ApartmentApps.Portal.App_Start
         {
             get
             {
+                if (_user != null) return _user;
                 if (!User.IsAuthenticated) return null;
                 return _user ?? (_user = _db.Users.FirstOrDefault(p => p.Email == Email));
             }
