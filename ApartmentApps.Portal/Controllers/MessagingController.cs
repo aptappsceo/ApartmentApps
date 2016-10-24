@@ -121,7 +121,7 @@ namespace ApartmentApps.Portal.Controllers
 
                 _module.SendMessage(items, q, string.Empty);
                 Service.MarkSent(messageId);
-                return RedirectToAction("MessageDetails",new {id = messageId});
+                return RedirectToAction("MessageDetails",new {id = messageId.ToString()});
 
             }
             return RedirectToAction("Index");
