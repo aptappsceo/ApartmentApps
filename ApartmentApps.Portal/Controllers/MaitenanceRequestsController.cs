@@ -172,8 +172,11 @@ namespace ApartmentApps.Portal.Controllers
             return View("EditUserLeaseInfo", new EditUserLeaseInfoBindingModel());
         }
 
-        override 
 
+        public override ActionResult SaveEntry(EditUserLeaseInfoBindingModel model)
+        {
+            return base.SaveEntry(model);
+        }
     }
 
 

@@ -68,17 +68,25 @@ namespace ApartmentApps.Portal.Controllers
         }
         public static HtmlString RenderForm(this HtmlHelper helper, object model)
         {
-            var formHelper = new DefaultFormProvider();
+            var formHelper = new DefaultFormProvider()
+            {
+                ModelState = helper.ViewData.ModelState
+            };
             var formModel = formHelper.CreateFormFor(model);
             return helper.Partial("~/Views/Shared/Forms/Form.cshtml", formModel);
         }
         public static HtmlString RenderForm<TModel>(this HtmlHelper<TModel> helper, TModel model)
         {
-            var formHelper = new DefaultFormProvider();
+            var formHelper = new DefaultFormProvider()
+            {
+                ModelState = helper.ViewData.ModelState
+            };
             var formModel = formHelper.CreateFormFor(model);
             return helper.Partial("~/Views/Shared/Forms/Form.cshtml", formModel);
         }
     }
+
+
 
     public static class FeedItemsHelper
     {

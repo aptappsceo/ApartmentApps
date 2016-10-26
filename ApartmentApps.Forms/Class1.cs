@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
@@ -126,6 +127,10 @@ namespace ApartmentApps.Forms
 
         public Type SystemType { get; set; }
 
+        public bool IsList => typeof (IList).IsAssignableFrom(SystemType);
+
+        public bool HasChoices => Choices?.Any() ?? false;
+
         public bool Visible
         {
             get
@@ -145,6 +150,8 @@ namespace ApartmentApps.Forms
         public Func<object> GetValue { get; set; }
         public Action<object> SetValue { get; set; }
         public bool Hidden { get; set; }
+        public List<string> Errors { get; set; }
+        public bool HasErrors => Errors?.Any() ?? false;
     }
 
     public class FormPropertySelectItem

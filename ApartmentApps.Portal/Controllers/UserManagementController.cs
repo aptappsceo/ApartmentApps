@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
@@ -18,26 +20,49 @@ using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
+
+
     public class UserFormModel
     {
+        [AutoformHidden]
         public string Id { get; set; }
+
+        [Required]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
+
+        [Required]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
-
-        public List<string> RolesList { get; set; }
+    
+        [Required]
+        [SelectFrom(nameof(RolesList))]
         public List<string> SelectedRoles { get; set; }
-
-
+    
+        [DisplayName("Phone Number")]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        [DisplayName("Email Adress")]
         public string Email { get; set; }
 
-        public string Password { get; set; }
-
+        [Required]
+        [DisplayName("Is Tenant ?")]
         public bool IsTenant { get; set; }
 
+        [Required]
+        [SelectFrom(nameof(UnitItems))]
+        [DisplayName("Assigned Unit")]
         public int? UnitId { get; set; }
 
+        [AutoformIgnore]
         public List<UnitViewModel> UnitItems => ModuleHelper.Kernel.Get<UnitService>().GetAll<UnitViewModel>().ToList();
+
+        [AutoformIgnore]
+        public List<RoleBindingModel> RolesList { get; set; }
+        
+        [AutoformIgnore]
+        public string Password { get; set; }
     }
 
     public class ProfileEditModel
@@ -95,6 +120,10 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public async Task<ActionResult> SaveUser(UserFormModel model)
         {
+
+
+
+
             if (ModelState.IsValid)
             {
                 var user = Context.Users.Find(model.Id);
@@ -153,9 +182,21 @@ namespace ApartmentApps.Portal.Controllers
 
                 //AddErrors(result);
             }
+            else
+            {
+                return AutoForm(model, nameof(SaveUser), "Find a way to pass header");
+            }
 
+            if (Request.IsAjaxRequest())
+            {
+                //got no furhter deals
+                return Content("");
+            }
+            else
+            {
+               return RedirectToAction("Index");
+            }
 
-            return RedirectToAction("Index");
         }
 
         public override ActionResult Entry(string id = null)
@@ -164,13 +205,16 @@ namespace ApartmentApps.Portal.Controllers
 
             var userModel = new UserFormModel()
             {
-                RolesList = Context.Roles.Select(p => p.Id).ToList(),
-
+                RolesList = Context.Roles.Select(p => new RoleBindingModel()
+                {
+                    Id = p.Id,
+                    Title = p.Name
+                }).ToList(),
             };
             // If we aren't an admin we shouldn't be able to create admin accounts
             if (!User.IsInRole("Admin"))
             {
-                userModel.RolesList.Remove("Admin");
+                userModel.RolesList.RemoveAll(s=>s.Title == "Admin");
             }
             if (user != null)
             {
@@ -181,14 +225,22 @@ namespace ApartmentApps.Portal.Controllers
                 userModel.PhoneNumber = user.PhoneNumber;
                 userModel.UnitId = user.UnitId;
                 userModel.SelectedRoles = user.Roles.Select(p => p.RoleId).ToList();
-
+                userModel.IsTenant = user.Roles.Any(p => p.RoleId == "Resident");
             }
             ViewBag.UnitId = new SelectList(Context.Units.OrderBy(p => p.Name), "Id", "Name", user?.UnitId);
 
-            return View("EditUser", userModel);
+            return AutoForm(userModel, nameof(SaveUser), user == null ? "Create User" : "Edit User Information");
+
+            //return View("EditUser", userModel);
             //return base.Entry(id);
         }
 
+    }
+
+    public class RoleBindingModel
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
     }
 }
 

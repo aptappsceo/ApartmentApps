@@ -1527,6 +1527,7 @@
     <Content Include="Views\Prospect\OverviewListPartial.cshtml" />
     <Content Include="Views\PaymentRequests\OverviewListPartial.cshtml" />
     <Content Include="Views\PaymentRequests\Overview.cshtml" />
+    <Content Include="Views\PaymentRequests\EditUserLeaseInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
