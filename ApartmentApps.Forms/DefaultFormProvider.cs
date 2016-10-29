@@ -195,7 +195,8 @@ namespace ApartmentApps.Forms
             var asList = selected as IList;
             var idProperty = list[0].GetType().GetProperty(mapId);
             var titleRetriever = list[0].GetType().GetProperty(mapTitle);
-            var selectedId = many ? null : GetPropValue(selected, mapId);
+            var selectedId = many ? null : selected;
+            var selectedIdString = selected?.ToString();
 
             foreach (var obj in list)
             {
@@ -207,7 +208,7 @@ namespace ApartmentApps.Forms
                 {
                     if (!many)
                     {
-                        if (selectedId == idValue) isselected = true;
+                        if (idString == selectedIdString) isselected = true;
                     }
                     else
                     {
@@ -235,29 +236,17 @@ namespace ApartmentApps.Forms
                 if (property.Name.EndsWith("_Items")) continue;
 
                 var propertyModel = new FormPropertyModel();
-                propertyModel.DataType =
-                    property.GetCustomAttributes(typeof (DataTypeAttribute), true)
-                        .OfType<DataTypeAttribute>()
-                        .FirstOrDefault();
-                if (propertyModel.DataType?.CustomDataType == "Ignore") continue;
 
-                if (propertyModel.DataType != null)
-                    propertyModel.Hidden = propertyModel.DataType.CustomDataType == "Hidden";
+                propertyModel.DataType = property.Get<DataTypeAttribute>();
+                if (propertyModel.DataType?.CustomDataType == "Ignore") continue;
+                if (propertyModel.DataType != null) propertyModel.Hidden = propertyModel.DataType.CustomDataType == "Hidden";
 
                 propertyModel.SystemType = property.PropertyType;
                 propertyModel.Name = property.Name;
                 propertyModel.GetValue = () => property.GetValue(model);
                 propertyModel.SetValue = (v) => property.SetValue(model, v);
-                propertyModel.Description =
-                    property.GetCustomAttributes(typeof (DescriptionAttribute), true)
-                        .OfType<DescriptionAttribute>()
-                        .FirstOrDefault()?
-                        .Description;
-                propertyModel.Label =
-                    property.GetCustomAttributes(typeof (DisplayNameAttribute), true)
-                        .OfType<DisplayNameAttribute>()
-                        .FirstOrDefault()?
-                        .DisplayName ?? property.Name;
+                propertyModel.Description = property.Get<DescriptionAttribute>()?.Description;
+                propertyModel.Label = property.Get<DisplayNameAttribute>()?.DisplayName ?? property.Name;
 
                 propertyModel.PropertyInfo = property;
 
@@ -267,7 +256,8 @@ namespace ApartmentApps.Forms
                     propertyModel.Choices =
                         names.Select(p => new FormPropertySelectItem(p, p, p == property.GetValue(model).ToString()) {})
                             .ToArray();
-                } else if(propertyModel.DataType?.CustomDataType == "SelectSingle")
+                }
+                else if(propertyModel.DataType is SelectFromAttribute)
                 {
                     var data = propertyModel.DataType as SelectFromAttribute;
                     propertyModel.Choices = CreateChoices(model,data.PropertyName,data.MapId,data.MapTitle,propertyModel.GetValue()).ToArray();
@@ -288,6 +278,12 @@ namespace ApartmentApps.Forms
                         .Select(s => s.ErrorMessage)
                         .ToList();
                 }
+
+                propertyModel.Placeholder = property.Get<PlaceholderAttribute>()?.Text;
+                propertyModel.Category = property.Get<WithCategory>()?.Text;
+                propertyModel.ToggleCategory = property.Get<ToggleCategory>()?.Text;
+
+
                 formModel.Properties.Add(propertyModel);
             }
 
@@ -349,11 +345,14 @@ namespace ApartmentApps.Forms
         }
 
         public ModelStateDictionary ModelState { get; set; }
+
+
+
     }
 
     public class SelectFromAttribute : DataTypeAttribute
     {
-        public SelectFromAttribute(string property, string mapId = "Id", string mapTitle = "Title") : base("SelectSingle")
+        public SelectFromAttribute(string property, string mapId = "Id", string mapTitle = "Title") : base("SelectFrom")
         {
             this.PropertyName = property;
             this.MapId = mapId;
@@ -363,6 +362,36 @@ namespace ApartmentApps.Forms
         public string MapTitle { get; set; }
         public string MapId { get; set; }
         public string PropertyName { get; set; }
+    }
+
+    public class PlaceholderAttribute : Attribute
+    {
+        public string Text { get; set; }
+
+        public PlaceholderAttribute(string text)
+        {
+            Text = text;
+        }
+    }
+
+    public class WithCategory : Attribute
+    {
+        public string Text { get; set; }
+
+        public WithCategory(string text)
+        {
+            Text = text;
+        }
+    }
+
+    public class ToggleCategory : Attribute
+    {
+        public string Text { get; set; }
+
+        public ToggleCategory(string text)
+        {
+            Text = text;
+        }
     }
 
     public class AutoformHiddenAttribute : DataTypeAttribute
@@ -378,9 +407,17 @@ namespace ApartmentApps.Forms
         {
         }
     }
+
+    public static class PropertyInfoExtensions
+    {
+        public static TA Get<TA>(this PropertyInfo info)
+        {
+            return info.GetCustomAttributes(typeof (TA), true)
+                .OfType<TA>()
+                .FirstOrDefault();
+        }
+    }
+
 }
 
-/* may come usefull the other day
-
-*/
  

@@ -67,7 +67,7 @@ namespace ApartmentApps.Api.Modules
                 });
             } else if ( paymentRequest != null )
             {
-              actions.Add(new ActionLinkModel("Edit Request","EditUserLeaseInfo","Payments",new {id = paymentRequest.Id})
+              actions.Add(new ActionLinkModel("Edit Request","Entry","PaymentRequests",new {id = paymentRequest.Id})
               {
                   Icon = "fa-edit",
                   Group = "Manage",

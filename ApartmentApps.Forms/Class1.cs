@@ -152,6 +152,9 @@ namespace ApartmentApps.Forms
         public bool Hidden { get; set; }
         public List<string> Errors { get; set; }
         public bool HasErrors => Errors?.Any() ?? false;
+        public string Placeholder { get; set; }
+        public string Category { get; set; }
+        public string ToggleCategory { get; set; }
     }
 
     public class FormPropertySelectItem

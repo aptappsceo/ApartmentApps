@@ -1,35 +1,18 @@
 ﻿
-$('.row').on("click", ".modal-link", function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    var href = $(this).attr('href');
-    AAControls.ModalForm.loadForm(href);
-});
-
 /*
+AA Modal AutoForm controller
+See usage in AutoForm.cshtml
 
-    $(document).ready(function () {
-        $("#@submitButtonId").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "@postUrl", //process to mail
-                data: $('#@formId').serialize(),
-                success: function (msg) {
-                    //$("#thanks").html(msg) //hide button and show thank you
-                    $("#modal").modal('hide'); //hide popup
-                    $('#modal').removeClass('in');
-                },
-                error: function () {
-                    alert("failure");
-                }
-            });
-        });
-    });
-
-    */
-
+*/
 
 (function() {
+
+    $('.row').on("click", ".modal-link", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var href = $(this).attr('href');
+        AAControls.ModalForm.loadForm(href);
+    });
 
     var controls = window.AAControls;
     if (!controls) controls = window.AAControls = {};
@@ -95,9 +78,6 @@ $('.row').on("click", ".modal-link", function (event) {
                 that.sendForm(formId, postUrl);
             });
 
-
-
-
         }
 
         this.setLoading = function()
@@ -108,7 +88,7 @@ $('.row').on("click", ".modal-link", function (event) {
 
         this.sendForm = function(formId, postUrl) {
 
-            //that.setLoading();
+            that.setLoading();
 
             $.ajax({
                 type: "POST",
@@ -140,21 +120,3 @@ $('.row').on("click", ".modal-link", function (event) {
 
 })();
 
-
-/*
-$("#@submitButtonId").click(function () {
-    $.ajax({
-        type: "POST",
-        url: "@postUrl", //process to mail
-        data: $('#@formId').serialize(),
-        success: function (msg) {
-            //$("#thanks").html(msg) //hide button and show thank you
-            $("#modal").modal('hide'); //hide popup
-            $('#modal').removeClass('in');
-        },
-        error: function () {
-            alert("failure");
-        }
-    });
-});
-*/

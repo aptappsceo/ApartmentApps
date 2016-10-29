@@ -122,8 +122,6 @@ namespace ApartmentApps.Portal.Controllers
         {
 
 
-
-
             if (ModelState.IsValid)
             {
                 var user = Context.Users.Find(model.Id);
@@ -178,7 +176,6 @@ namespace ApartmentApps.Portal.Controllers
                 {
                     Context.SaveChanges();
                 }
-
 
                 //AddErrors(result);
             }

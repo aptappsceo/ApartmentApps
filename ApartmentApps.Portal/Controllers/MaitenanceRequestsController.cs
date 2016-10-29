@@ -169,7 +169,8 @@ namespace ApartmentApps.Portal.Controllers
             UserLeaseInfo paymentRequest = Context.UserLeaseInfos.Find(id);
             EditUserLeaseInfoBindingModel editPaymentRequestModel = 
                 _editPaymentRequestMapper.ToViewModel(paymentRequest); //for null paymentRequest will return empty but prepared EditModel ready for Creation of Payment Request
-            return View("EditUserLeaseInfo", new EditUserLeaseInfoBindingModel());
+            return AutoForm(editPaymentRequestModel, nameof(SaveEntry), paymentRequest == null ? "Create Payment Request" : "Edit Payment Request Information");
+            //return View("EditUserLeaseInfo", new EditUserLeaseInfoBindingModel());
         }
 
 

@@ -3,18 +3,19 @@
 @if (Model.ActionLinks.Any())
 {
     var ddId = $"{Model.Id}-dropdown";
-    <div class="dropdown pull-right">
-        <button data-toggle="dropdown" class="dropdown-toggle btn btn-white" style="padding: 0px !important" type="button" id="@ddId" aria-haspopup="true" aria-expanded="true">
-            <i class="fa fa-fw fa-angle-down"></i>
+    <span class="dropdown pull-right">
+        
+        <button data-toggle="dropdown" class="dropdown-toggle btn btn-link" style="padding: 0px !important" type="button" id="@ddId" aria-haspopup="true" aria-expanded="true">
+            <i class="text-muted fa fa-fw fa-chevron-down"></i>
         </button>
         <ul class="dropdown-menu" aria-labelledby="@ddId">
             @foreach (var x in Model.ActionLinks)
             {
                 <li>
-                    <a class="@(x.IsDialog ? "modal-link" : "")" href="@Url.Action(x)"><i class="fa fa-fw @x.Icon"></i>@x.Label</a>
+                    <a style="padding: 3px 3px" class="@(x.IsDialog ? "modal-link" : "")" href="@Url.Action(x)"><i class="fa fa-fw @x.Icon"></i>@x.Label</a>
                 </li>
             }
         </ul>
-    </div>
+    </span>
 }
 

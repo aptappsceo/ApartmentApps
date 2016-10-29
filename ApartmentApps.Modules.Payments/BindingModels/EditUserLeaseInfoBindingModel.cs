@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
 using ExpressiveAnnotations.Attributes;
 
@@ -12,32 +13,42 @@ namespace ApartmentApps.Api.Modules
     {
 
         [Required]
-        [DisplayName("Title")]
-        [Description("User-friendly title")]
+        [DisplayName("Reasonable name for the payment request")]
         public string Title { get; set; }
 
         [Required]
-        [DisplayName("User")]
-        [Description("User that will be charged")]
+        [DisplayName("User that will be charged")]
+        [SelectFrom(nameof(UserIdItems))]
         public string UserId { get; set; }
 
         [Required]
-        [DisplayName("Amount")]
-        [Description("The user will be charged this amount")]
+        [DataType(DataType.Currency)]
+        [DisplayName("Amount that will be charged in USD")]
         public decimal Amount { get; set; }
 
+        [DisplayName("Create invoice due")]
+        [RequiredIf("UseInterval == true")]
+        public DateTime? NextInvoiceDate { get;set; }
+
+        [DisplayName("Create subscription ?")]
+        [Description("Subscription allows to repeat invoices with a certain interval")]
+        [ToggleCategory("IntervalSettings")]
         public bool UseInterval { get; set; }
 
-        public bool UseCompleteDate { get; set; }
-
-        [RequiredIf("UseInterval == true && UseCompleteDate == true",ErrorMessage = "Expiration date is required. Subscription will expire after given date.")]
-        public DateTime? CompleteDate { get; set; }
-
-        [RequiredIf("UseInterval == true",ErrorMessage = "Month Interval is required. Invoice will be regenerated every X month(s)")]
+        [DisplayName("Interval in months")]
+        [WithCategory("IntervalSettings")]
+        [RequiredIf("UseInterval == true")]
         public int? IntervalMonths { get; set; }
 
-        [RequiredIf("UseInterval == true",ErrorMessage = "Next Invoice Date is required. Invoice will be regenerated due to given date")]
-        public DateTime? NextInvoiceDate { get;set; }
+        [DisplayName("Set expiration date ?")]
+        [WithCategory("IntervalSettings")]
+        [ToggleCategory("ExpirationSettings")]
+        public bool UseCompleteDate { get; set; }
+
+        [DisplayName("Close subscription on")]
+        [WithCategory("IntervalSettings ExpirationSettings")]
+        [RequiredIf("UseInterval == true && UseCompleteDate == true")]
+        public DateTime? CompleteDate { get; set; }
         
         public List<UserBindingModel> UserIdItems { get; set; }
 

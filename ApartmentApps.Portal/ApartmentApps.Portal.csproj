@@ -509,6 +509,7 @@
     <Compile Include="Controllers\SyncfusionAzureBlobStorageOperations.cs" />
     <Compile Include="Controllers\UnitsController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
+    <Compile Include="Extensions\JSDateTimeExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

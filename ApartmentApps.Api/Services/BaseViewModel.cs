@@ -10,6 +10,8 @@ namespace ApartmentApps.Portal.Controllers
         [DataType("Hidden")]
         public string Id { get; set; }
 
+        public string Title { get; set; } //Let this be some user friendly name for the item. This is used for autoform to auto-extract selectables
+
         public List<ActionLinkModel> ActionLinks { get; set; } = new List<ActionLinkModel>();
     }
 

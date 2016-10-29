@@ -11,237 +11,371 @@
 
 
 
-        @foreach (var property in Model.Properties)
-        {
-            if (!property.Visible)
+@foreach (var property in Model.Properties)
+{
+    if (!property.Visible)
+    {
+        continue;
+    }
+    if (property.IsList && !property.HasChoices)
+    {
+        continue;
+    }
+    if (property.Hidden)
+    {
+        @Html.Hidden(property.Name, property.GetValue())
+        continue;
+    }
+
+    var propertyName = property.Name;
+    var propertyLabel = property.Label;
+    var propertyValue = property.GetValue();
+    var inputid = $"{Model.GetHashCode()}{propertyName}";
+    var containerid = $"{Model.GetHashCode()}{propertyName}Container";
+
+    if (property.Choices != null)
+    {
+        <div id="@containerid" class="form-group @(property.HasErrors ? "has-error" : "" )" data-category="@(property.Category)">
+            <label class="control-label" for="@propertyName">@propertyLabel</label>
+
+            <select id="@inputid" class="form-control m-b" name="@(propertyName + (property.IsList ? "[]" : ""))" @(property.IsList ? "multiple='multiple'" : "")>
+                <option></option>
+                @foreach (var choice in property.Choices)
+                {
+                    <option @(choice.Selected ? "selected" : "") value="@choice.Id">@choice.Value</option>
+                }
+            </select>
+
+            <span class="help-block m-b-none">@property.Description</span>
+
+            @if (property.HasErrors)
             {
-                continue;
+                foreach (var error in property.Errors)
+                {
+                    <span class="help-block m-b-none">@error</span>
+                }
             }
-            if (property.IsList && !property.HasChoices)
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                var input = $("#@(inputid)");
+                input.select2({
+                    dropdownParent: $("#@(containerid)"),
+                    placeholder: 'Please, select item from the list...',
+                    allowClear: true
+                });
+            });
+        </script>
+
+        continue;
+    }
+    else if (property.SystemType == typeof (string))
+    {
+        <div class="form-group @(property.HasErrors ? "has-error" : "" )"  data-category="@(property.Category)">
+            <label class="control-label" for="@propertyName">@propertyLabel</label>
+
+
+            @if (property.DataType.DataType == DataType.MultilineText)
             {
-                continue;
+                <textarea class="form-control" name="" type="text" value="@propertyValue">@propertyValue</textarea>
             }
-            if (property.Hidden)
+            else
             {
-                @Html.Hidden(property.Name, property.GetValue())
-                continue;
+                <input type="text" class="form-control" value="@propertyValue">
             }
 
-            var propertyName = property.Name;
-            var errors = property.Errors;
-            var propertyLabel = property.Label;
-            var propertyValue = property.GetValue();
-            var inputid = $"{Model.GetHashCode()}{propertyName}";
-            var containerid = $"{Model.GetHashCode()}{propertyName}Container";
-            if (property.Choices != null)
-            {
-
-                <div id="@containerid" class="form-group @(property.HasErrors ? "has-error" : "" )">
-                    <label class="control-label" for="@propertyName">@propertyLabel</label>
-
-                    <select id="@inputid" class="form-control m-b" name="@(propertyName + (property.IsList ? "[]" : ""))" @(property.IsList ? "multiple='multiple'" : "")>
-                        <option></option>
-                        @foreach (var choice in property.Choices)
-                        {
-                            <option @(choice.Selected ? "selected":"") value="@choice.Id">@choice.Value</option>
-                        }
-                    </select>
-
-                    <span class="help-block m-b-none">@property.Description</span>
-
-                    @if (property.HasErrors)
-                    {
-                        foreach (var error in property.Errors)
-                        {
-                            <span class="help-block m-b-none">@error</span>
-                        }
-                    }
-                </div>
-
-                <script>
-                    $(document).ready(function() {
-                        var input = $("#@(inputid)");
-                        input.select2({
-                            dropdownParent: $("#@(containerid)"),
-                            placeholder: 'Please, select item from the list...',
-                            allowClear : true
-                        });
-                    });
-                </script>
-
-                continue;
-            } else if (property.SystemType == typeof(string))
-            {
-
-                <div class="form-group @(property.HasErrors ? "has-error" : "" )">
-                    <label class="control-label" for="@propertyName">@propertyLabel</label>
-    
-
-                    @if (property.DataType.DataType == DataType.MultilineText)
-                    {
-                        <textarea class="form-control" name="" type="text" value="@propertyValue">@propertyValue</textarea>
-                    }
-                    else
-                    {
-                        <input type="text" class="form-control" value="@propertyValue">
-                    }
-
-                    <span class="help-block m-b-none">@property.Description</span>
+            <span class="help-block m-b-none">@property.Description</span>
                     
-                    @if (property.HasErrors)
-                    {
-                            foreach (var error in property.Errors)
-                            {
-                                <span class="help-block m-b-none">@error</span>
-                            }
-                    }
-                </div>
-
-                continue;
-            }
-            else if (property.SystemType == typeof(bool) || property.SystemType == typeof(bool?))
+            @if (property.HasErrors)
             {
-
-                var bValue = false;
-                if (propertyValue is bool)
+                foreach (var error in property.Errors)
                 {
-                    bValue = (bool) @propertyValue;
+                    <span class="help-block m-b-none">@error</span>
                 }
-                else if(propertyValue is bool?)
-                {
-                    bValue = ((bool?) @propertyValue) ?? false;
-                }
+            }
+        </div>
 
-                var sValue = bValue.ToString();
+        continue;
+    }
+    else if (property.SystemType == typeof (bool) || property.SystemType == typeof (bool?))
+    {
+        var bValue = false;
+        if (property.SystemType == typeof (bool))
+        {
+            bValue = (bool) @propertyValue;
+        }
+        else if (property.SystemType == typeof (bool?))
+        {
+            bValue = ((bool?) @propertyValue) ?? false;
+        }
 
-                <div class="form-group @(property.HasErrors ? "has-error" : "" )">
+        var sValue = bValue.ToString();
 
-                    <div class="input-group">
-                        <span class="input-group-addon">
+        <div class="form-group @(property.HasErrors ? "has-error" : "" )" data-category="@(property.Category)">
+
+            <div class="input-group">
+                <span class="input-group-addon">
                             <input id="@inputid" type="checkbox" name="@propertyName" value="true" @(bValue ? "checked" : "")>
                             <input name="@propertyName" type="hidden" value="false" /> 
                         </span>
-                        <input type="text" class="form-control" readonly value="@propertyLabel">
-                    </div>
+                <input type="text" class="form-control" readonly value="@propertyLabel">
+            </div>
 
 
-                    @if (property.HasErrors)
-                    {
-                        foreach (var error in property.Errors)
-                        {
-                            <span class="help-block m-b-none">@error</span>
-                        }
-                    }
-                </div>
+            @if (property.HasErrors)
+            {
+                foreach (var error in property.Errors)
+                {
+                    <span class="help-block m-b-none">@error</span>
+                }
+            }
+        </div>
 
-                <script>
+        <script>
 
-                    $(document).ready(function() {
-                        $('#@inputid').iCheck({
-                            checkboxClass: 'icheckbox_flat-blue',
-                            radioClass: 'iradio_flat-blue',
-                            increaseArea: '0%' // optional
-                        });
+
+            $(document).ready(function () {
+
+                var togglesCategory = @(string.IsNullOrEmpty(property.ToggleCategory) ? "false" : "true" );
+
+                var checkbox = $('#@inputid');
+                checkbox.iCheck({
+                    checkboxClass: 'icheckbox_flat-blue',
+                    radioClass: 'iradio_flat-blue',
+                    increaseArea: '0%' // optional
+                });
+
+                if (togglesCategory) {
+
+                    var categoryId = "@property.ToggleCategory";
+                    var targets = checkbox.closest('form').find("[data-category*='"+categoryId+"']");
+
+                    checkbox.on('ifChecked', function(evt) {
+                        targets.show(100);
+                    });
+                    checkbox.on('ifUnchecked', function(evt) {
+                        targets.hide(100);
                     });
                     
-                </script>
+
+                }
+
+            });
 
 
-                continue;
-            }
 
 
+        </script>
 
 
-            <div class="form-group">
-                <label class="control-label col-md-4" for="@property.Name">@property.Label</label>
-                <div class="col-md-4">
-                    @if (property.Choices != null)
+        continue;
+    }
+    else if (property.SystemType == typeof (decimal))
+    {
+        if (property.DataType.DataType == DataType.Currency)
+        {
+            <div class="form-group @(property.HasErrors ? "has-error" : "" )" data-category="@(property.Category)">
+                <label class="control-label" for="@propertyName">@propertyLabel</label>
+                <div class="input-group m-b">
+                    <span class="input-group-addon">$</span>
+                
+                    <input id="@inputid" type="text" class="form-control" name="@propertyName" value="@propertyValue">
+
+                </div>
+
+                @if (property.HasErrors)
                 {
-                    if (property.Choices.Length <= 4)
+                    foreach (var error in property.Errors)
                     {
-                            <div data-toggle="buttons" class="btn-group">
-                                @foreach (var item in property.Choices)
-                                {
-                                    <label class="btn btn-sm btn-white @(item.Selected ? "active" : string.Empty)">
-                                        <input type="radio" id="option1" name="@property.Name" value="@item.Id" @(item.Selected ? "checked" : string.Empty)> @item.Value
-                                    </label>
-                                }
-                            </div>
-                        }
-                        else
-                        {
-                            @Html.DropDownList(property.Name, property.Choices.Select(p => new SelectListItem()
-                   {
-                       Value = p.Id,
-                       Text = p.Value,
-                       Selected = p.Selected
-                   }))
-                        }
-
+                        <span class="help-block m-b-none">@error</span>
                     }
-                    else if (property.SystemType == typeof(DateTime) || property.SystemType == typeof(DateTime?))
-                    {
-                        if (property.DataType.DataType == DataType.DateTime)
-                        {
-                            @Html.EJ().DateTimePicker(property.Name, new DateTimePickerProperties()
-                   {
-                       Value = property.GetValue()
-                   })
-                        }
-                        else if (property.DataType.DataType == DataType.Time)
+                }
+            </div>
 
-                        {
-                            @Html.EJ().TimePicker(property.Name, new TimePickerProperties()
-                   {
-                       Value = property.GetValue()
-                   })
+            <script>
 
-                        }
-                        else
+                $(document).ready(function() {
+                    $('#@inputid').priceFormat({
+                        prefix: ''
+                    });
+                });
+
+            </script>
+        }
+
+
+        continue;
+    }
+    else if (property.SystemType == typeof (int) || property.SystemType == typeof (int?))
+    {
+        <div class="form-group @(property.HasErrors ? "has-error" : "" )" data-category="@(property.Category)">
+            <label class="control-label" for="@propertyName">@propertyLabel</label>
+
+            <input id="@inputid" type="number" name="@propertyName" class="form-control" value="@propertyValue">
+
+            @if (property.HasErrors)
+            {
+                foreach (var error in property.Errors)
+                {
+                    <span class="help-block m-b-none">@error</span>
+                }
+            }
+        </div>
+
+
+        continue;
+    }
+    else if (property.SystemType == typeof (DateTime) || property.SystemType == typeof (DateTime?))
+    {
+        var sValue = "";
+        if (property.SystemType == typeof (DateTime))
+        {
+            sValue = ((DateTime) @propertyValue).ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz", System.Globalization.CultureInfo.InvariantCulture) + "Z";
+        }
+        else if (property.SystemType == typeof (DateTime?))
+        {
+            sValue = (((DateTime?) @propertyValue)?.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz", System.Globalization.CultureInfo.InvariantCulture)) + "Z" ?? "";
+        }
+
+        string format = null;
+        if (property.DataType.DataType == DataType.Date)
+        {
+            format = "L";
+        }
+        else if (property.DataType.DataType == DataType.Time)
+        {
+            format = "LTS";
+        }
+        else
+        {
+            format = "L LTS";
+        }
+
+
+        <style>
+            .ui-datepicker { z-index: 1151 !important; }
+        </style>
+
+
+        <div id="@(containerid)" class="form-group @(property.HasErrors ? "has-error" : "" )" data-category="@(property.Category)">
+            <label class="control-label" for="@propertyName">@propertyLabel</label>
+            <div class="input-group m-b">
+                <span class="input-group-addon"><i class="fa fa-fw fa-calendar"></i></span>
+                <input id="@inputid" type="text" class="form-control" name="@propertyName">
+            </div>
+
+            @if (property.HasErrors)
+            {
+                foreach (var error in property.Errors)
+                {
+                    <span class="help-block m-b-none">@error</span>
+                }
+            }
+        </div>
+
+        <script>
+
+            $(document).ready(function() {
+                $('#@inputid').datetimepicker({
+                    allowInputToggle: true,
+                    format: '@(format)',
+                    defaultDate: "@(sValue)"
+                });
+                // $('#@inputid').data("DateTimePicker").date("@(sValue)");
+
+            });
+
+        </script>
+
+        continue;
+    }
+
+    <div class="form-group">
+        <label class="control-label col-md-4" for="@property.Name">@property.Label</label>
+        <div class="col-md-4">
+            @if (property.Choices != null)
+            {
+                if (property.Choices.Length <= 4)
+                {
+                    <div data-toggle="buttons" class="btn-group">
+                        @foreach (var item in property.Choices)
                         {
-                            @Html.EJ().DatePicker(property.Name, new DatePickerProperties()
-                   {
-                       Value = property.GetValue(),
-                   })
+                            <label class="btn btn-sm btn-white @(item.Selected ? "active" : string.Empty)">
+                                <input type="radio" id="option1" name="@property.Name" value="@item.Id" @(item.Selected ? "checked" : string.Empty)> @item.Value
+                            </label>
                         }
-                    }
-                    else if (property.SystemType == typeof(bool))
+                    </div>
+                }
+                else
+                {
+                    @Html.DropDownList(property.Name, property.Choices.Select(p => new SelectListItem()
                     {
-                        @Html.CheckBox(property.Name, (bool)property.GetValue())
-                    }
-                    else if (property.DataType.DataType == DataType.Currency && property.SystemType == typeof(decimal))
+                        Value = p.Id,
+                        Text = p.Value,
+                        Selected = p.Selected
+                    }))
+                }
+            }
+            else if (property.SystemType == typeof (DateTime) || property.SystemType == typeof (DateTime?))
+            {
+                if (property.DataType.DataType == DataType.DateTime)
+                {
+                    @Html.EJ().DateTimePicker(property.Name, new DateTimePickerProperties()
                     {
-                        @Html.EJ().CurrencyTextbox(property.Name).Value(property.GetValue()).DecimalPlaces(2).IncrementStep(0.5).MinValue(0).Name(property.Name)
+                        Value = property.GetValue()
+                    })
+                }
+                else if (property.DataType.DataType == DataType.Time)
+
+                {
+                    @Html.EJ().TimePicker(property.Name, new TimePickerProperties()
+                    {
+                        Value = property.GetValue()
+                    })
+                }
+                else
+                {
+                    @Html.EJ().DatePicker(property.Name, new DatePickerProperties()
+                    {
+                        Value = property.GetValue(),
+                    })
+                }
+            }
+            else if (property.SystemType == typeof (bool))
+            {
+                @Html.CheckBox(property.Name, (bool) property.GetValue())
+            }
+            else if (property.DataType.DataType == DataType.Currency && property.SystemType == typeof (decimal))
+            {
+                @Html.EJ().CurrencyTextbox(property.Name).Value(property.GetValue()).DecimalPlaces(2).IncrementStep(0.5).MinValue(0).Name(property.Name)
+            }
+            else
+            {
+                if (property.SystemType == typeof (string))
+                {
+                    if (property.DataType.DataType == DataType.MultilineText)
+                    {
+                        @Html.TextArea(property.Name, property.GetValue()?.ToString(), new {@class = "form-control"})
                     }
                     else
                     {
-                        if (property.SystemType == typeof(string))
-                        {
-                            if (property.DataType.DataType == DataType.MultilineText)
-                            {
-                                @Html.TextArea(property.Name, property.GetValue()?.ToString(), new { @class = "form-control" })
-                            }
-                            else
-                            {
-                                @Html.TextBox(property.Name, property.GetValue()?.ToString(), new { @class = "form-control" })
-                            }
-                        }
-
-                        else
-                        {
-
-                            @Html.Partial("~/Views/Shared/Forms/" + property.SystemType.Name + ".cshtml", property.GetValue())
-                        }
-
+                        @Html.TextBox(property.Name, property.GetValue()?.ToString(), new {@class = "form-control"})
                     }
-                    @Html.ValidationMessage(property.Name)
-                    <p class="small">@property.Description</p>
+                }
 
-                </div>
-            </div>
-        }
- 
+                else
+                {
+                    @Html.Partial("~/Views/Shared/Forms/" + property.SystemType.Name + ".cshtml", property.GetValue())
+                }
+            }
+            @Html.ValidationMessage(property.Name)
+            <p class="small">@property.Description</p>
+
+        </div>
+    </div>
+}
+
 
 @if (IsAjax)
 {

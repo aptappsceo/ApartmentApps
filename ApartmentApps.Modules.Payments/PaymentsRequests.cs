@@ -95,6 +95,7 @@ namespace ApartmentApps.Modules.Payments
             viewModel.NextInvoiceDate = model?.NextInvoiceDate;
             viewModel.CompleteDate = model?.RepetitionCompleteDate;
             viewModel.Title = model?.Title;
+            viewModel.UserId = model?.User?.Id;
             viewModel.IntervalMonths = model?.IntervalMonths;
             viewModel.UseInterval = model?.IsIntervalSet() ?? false;
             viewModel.UseCompleteDate = model?.RepetitionCompleteDate.HasValue ?? false;

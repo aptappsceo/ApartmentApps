@@ -104,6 +104,10 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.FullName = user.FirstName + " " + user.LastName;
             viewModel.UnitName = user.Unit?.Name;
             viewModel.BuildingName = user.Unit?.Building.Name;
+
+            viewModel.Title = $"{viewModel.FullName}";
+            if (user.Unit != null) viewModel.Title+=$" [ {user.Unit?.Building.Name} {user.Unit?.Name} ]";
+
             viewModel.IsTenant = user.Unit != null;
             viewModel.PhoneNumber = user.PhoneNumber;
             viewModel.Email = user.Email;
