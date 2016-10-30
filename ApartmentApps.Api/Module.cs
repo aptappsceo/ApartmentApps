@@ -47,20 +47,25 @@ namespace ApartmentApps.Api.Modules
         }
         public virtual ModuleConfig ModuleConfig => Config;
 
+        private TConfig _config;
+
         public virtual TConfig Config
         {
             get
             {
 
-
-                var config = _configRepo.GetAll().AsNoTracking().FirstOrDefault();
-                if (config == null)
+                if (_config == null)
                 {
-                    config = CreateDefaultConfig();
-                    _configRepo.Add(config);
-                    _configRepo.Save();
+                    _config = _configRepo.GetAll().AsNoTracking().FirstOrDefault();
+                    if (_config == null)
+                    {
+                        _config = CreateDefaultConfig();
+                        _configRepo.Add(_config);
+                        _configRepo.Save();
+                    }
                 }
-                return config;
+                
+                return _config;
             }
         }
 

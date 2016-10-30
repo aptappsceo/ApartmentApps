@@ -36,7 +36,7 @@ namespace ApartmentApps.Api.Modules
             }
             if (UserContext.IsInRole("Admin"))
             {
-//3D75E8
+
 
                 var checkins = new MenuItemViewModel("AA Admin", "fa-heartbeat") {Index = Int32.MaxValue};
                 foreach (var module in Kernel.GetAll<IModule>().OfType<IAdminConfigurable>())
@@ -107,17 +107,21 @@ namespace ApartmentApps.Api.Modules
             var propertyViewModel = viewModel as PropertyBindingModel;
             if (propertyViewModel != null)
             {
+
                 //actions.Add(new ActionLinkModel("Delete", "Delete", "Property", new { id = vm.Id }));
                 actions.Add(new ActionLinkModel("Edit", "Entry", "Property", new {id = propertyViewModel.Id})
                 {
                     Icon = "fa-edit",
                     IsDialog = true
                 });
+
                 actions.Add(new ActionLinkModel("Switch To Property", "ChangeProperty", "Account",
                     new {id = propertyViewModel.Id})
                 {
                     Icon = "fa-sign-in",
                 });
+              actions.Add(new ActionLinkModel("Import Residents/Units", "ImportResidentCSV", "Property", new { propertyId = propertyViewModel.Id }));
+
             }
         }
     }

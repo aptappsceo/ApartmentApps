@@ -185,6 +185,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>3rdParty\4.5\Syncfusion.EJ.Export.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.EJ.MVC, Version=14.2500.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rdParty\Syncfusion.EJ.MVC.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.EJ.Olap, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>3rdParty\4.5\Syncfusion.EJ.Olap.dll</HintPath>

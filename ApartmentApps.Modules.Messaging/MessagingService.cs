@@ -137,6 +137,7 @@ namespace ApartmentApps.Portal.Controllers
         private readonly IUserContext _userContext;
         private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
 
+        public override bool DefaultOrderByDesc => true;
 
         public MessagingService( IUserContext userContext,IMapper<ApplicationUser, UserBindingModel> userMapper,IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
         {
@@ -172,9 +173,7 @@ namespace ApartmentApps.Portal.Controllers
 
             base.Add(viewModel);
         }
-
-        public override string DefaultOrderBy => "Id";
-
+       
         public MessagingService(IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
         {
         }

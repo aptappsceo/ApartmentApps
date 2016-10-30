@@ -186,7 +186,7 @@ namespace ApartmentApps.Portal.Controllers
             //else
             //{
             //  result = result.OrderBy(orderBy, orderByDesc);
-            result = result.OrderBy(!string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, orderByDesc);
+            result = result.OrderBy(!string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, !string.IsNullOrEmpty(orderBy) ? orderByDesc : DefaultOrderByDesc);
             result = result.Skip(resultsPerPage * (page - 1));
             result = result.Take(resultsPerPage);
             //}

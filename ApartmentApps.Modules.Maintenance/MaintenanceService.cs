@@ -409,5 +409,7 @@ namespace ApartmentApps.Api
             Checkin(currentUser, id,
                 $"Schedule date set to {scheduleDate.ToString("g",CultureInfo.GetCultureInfo("en-US"))}", "Scheduled", null);
         }
+        
+        public override bool DefaultOrderByDesc => true;
     }
 }

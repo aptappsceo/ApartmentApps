@@ -120,6 +120,7 @@ namespace ApartmentApps.Portal.Controllers
         [Description("Should the first row be skipped (AKA are the column names in the first row?)")]
         public bool SkipFirstRow { get; set; }
         [Description("The csv file. Open in notepad and copy and paste the file contents here")]
+        [DataType(DataType.MultilineText)]
         public string File { get; set; }
         [DataType("Hidden")]
         public int PropertyId { get; set; }
