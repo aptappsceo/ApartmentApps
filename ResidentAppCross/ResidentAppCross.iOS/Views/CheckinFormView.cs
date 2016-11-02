@@ -240,7 +240,7 @@ namespace ResidentAppCross.iOS.Views
 			//set.Bind(LastNameSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
 			//set.Bind(DesiredMoveInDateSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
             set.Apply();
-			ViewModel.LoadProspectInfo();
+			ViewModel.LoadProspectInfo.Execute(null);
         }
 
 
