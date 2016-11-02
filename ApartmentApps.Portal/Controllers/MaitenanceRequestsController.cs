@@ -145,10 +145,11 @@ namespace ApartmentApps.Portal.Controllers
     {
 
         public PaymentsRequestsService PaymentsRequestsService { get; set; }
-
-        public PaymentRequestsController(IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service) : base(kernel, formService, indexService, context, userContext, service)
+        private IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> _editPaymentRequestMapper;
+        public PaymentRequestsController(IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper) : base(kernel, formService, indexService, context, userContext, service)
         {
             PaymentsRequestsService = formService;
+            _editPaymentRequestMapper = editPaymentRequestMapper;
         }
 
         public override ActionResult GridResult(GridList<UserLeaseInfoBindingModel> grid)
@@ -163,6 +164,20 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
+        public override ActionResult Entry(string id = null)
+        {
+            UserLeaseInfo paymentRequest = Context.UserLeaseInfos.Find(id);
+            EditUserLeaseInfoBindingModel editPaymentRequestModel = 
+                _editPaymentRequestMapper.ToViewModel(paymentRequest); //for null paymentRequest will return empty but prepared EditModel ready for Creation of Payment Request
+            return AutoForm(editPaymentRequestModel, nameof(SaveEntry), paymentRequest == null ? "Create Payment Request" : "Edit Payment Request Information");
+            //return View("EditUserLeaseInfo", new EditUserLeaseInfoBindingModel());
+        }
+
+
+        public override ActionResult SaveEntry(EditUserLeaseInfoBindingModel model)
+        {
+            return base.SaveEntry(model);
+        }
     }
 
 

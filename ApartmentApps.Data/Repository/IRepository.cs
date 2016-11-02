@@ -4,6 +4,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using ApartmentApps.Api.Modules;
+using ApartmentApps.Modules.Payments.Data;
 using Korzh.EasyQuery;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -12,87 +14,41 @@ namespace ApartmentApps.Data.Repository
     public static class LinqBuilderExtensions
     {
 
-    //    public static IQueryable<T> DynamicQueryEx<T>(this IQueryable<T> source, Query query, string orderByProperty = null, bool descending = false)
-    //    {
-    //        LinqQueryBuilder linqQueryBuilder = new LinqQueryBuilder(query, (IDictionary<string, object>)null);
-    //        if (linqQueryBuilder.CanBuild)
-    //        {
-    //            LinqQueryBuilder.BuilderResult<T> builderResult = linqQueryBuilder.Build<T>();
-    //            if (builderResult != null)
-    //                source = Queryable.Where<T>(source, builderResult.WhereExpression);
-    //        }
-    //        if (orderByProperty == null)
-    //            return source;
-    //        if (orderByProperty == string.Empty)
-    //        {
-    //            Dictionary<Type, string> dictionary = query.Model.entityKey;
-    //            orderByProperty = dictionary.ContainsKey(typeof(T)) ? dictionary[typeof(T)] : Enumerable.First<PropertyInfo>((IEnumerable<PropertyInfo>)typeof(T).GetProperties()).Name;
-    //        }
-    //        ParameterExpression parameterExpression = Expression.Parameter(typeof(T), "d");
-    //        MemberExpression memberExpression = Expression.Property((Expression)parameterExpression, orderByProperty);
-    //        LambdaExpression lambdaExpression = Expression.Lambda((Expression)memberExpression, new ParameterExpression[1]
-    //        {
-    //    parameterExpression
-    //        });
-    //        MethodCallExpression methodCallExpression = Expression.Call(typeof(Queryable), descending ? "OrderByDescending" : "OrderBy", new Type[2]
-    //        {
-    //    typeof (T),
-    //    memberExpression.Type
-    //        }, new Expression[2]
-    //        {
-    //    source.Expression,
-    //    (Expression) lambdaExpression
-    //        });
-    //        source = (IQueryable<T>)(source.Provider.CreateQuery<T>((Expression)methodCallExpression) as IOrderedQueryable<T>);
-    //        return source;
-    //    }
+        //    public static IQueryable<T> DynamicQueryEx<T>(this IQueryable<T> source, Query query, string orderByProperty = null, bool descending = false)
+        //    {
+        //        LinqQueryBuilder linqQueryBuilder = new LinqQueryBuilder(query, (IDictionary<string, object>)null);
+        //        if (linqQueryBuilder.CanBuild)
+        //        {
+        //            LinqQueryBuilder.BuilderResult<T> builderResult = linqQueryBuilder.Build<T>();
+        //            if (builderResult != null)
+        //                source = Queryable.Where<T>(source, builderResult.WhereExpression);
+        //        }
+        //        if (orderByProperty == null)
+        //            return source;
+        //        if (orderByProperty == string.Empty)
+        //        {
+        //            Dictionary<Type, string> dictionary = query.Model.entityKey;
+        //            orderByProperty = dictionary.ContainsKey(typeof(T)) ? dictionary[typeof(T)] : Enumerable.First<PropertyInfo>((IEnumerable<PropertyInfo>)typeof(T).GetProperties()).Name;
+        //        }
+        //        ParameterExpression parameterExpression = Expression.Parameter(typeof(T), "d");
+        //        MemberExpression memberExpression = Expression.Property((Expression)parameterExpression, orderByProperty);
+        //        LambdaExpression lambdaExpression = Expression.Lambda((Expression)memberExpression, new ParameterExpression[1]
+        //        {
+        //    parameterExpression
+        //        });
+        //        MethodCallExpression methodCallExpression = Expression.Call(typeof(Queryable), descending ? "OrderByDescending" : "OrderBy", new Type[2]
+        //        {
+        //    typeof (T),
+        //    memberExpression.Type
+        //        }, new Expression[2]
+        //        {
+        //    source.Expression,
+        //    (Expression) lambdaExpression
+        //        });
+        //        source = (IQueryable<T>)(source.Provider.CreateQuery<T>((Expression)methodCallExpression) as IOrderedQueryable<T>);
+        //        return source;
+        //    }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public class PropertyContext
     {
@@ -103,6 +59,9 @@ namespace ApartmentApps.Data.Repository
             IRepository<IncidentReportStatus> incidentReportStatuses, 
             IRepository<Corporation> corporations, 
             IRepository<Property> properties, 
+            IRepository<UserLeaseInfo> userLeaseInfos, 
+            IRepository<Invoice> invoices, 
+            IRepository<TransactionHistoryItem> transactionHistoryItems, 
             IRepository<ImageReference> imageReferences, 
             IRepository<Building> buildings, 
             IRepository<Unit> units, 
@@ -126,10 +85,25 @@ namespace ApartmentApps.Data.Repository
             IncidentReportStatuses = incidentReportStatuses;
             Corporations = corporations;
             Properties = properties;
+            UserLeaseInfos = userLeaseInfos;
+            Invoices = invoices;
+            TransactionHistoryItems = transactionHistoryItems;
             ImageReferences = imageReferences;
             Buildings = buildings;
             Units = units;
        
+
+
+
+
+
+
+
+
+
+
+
+
             MaitenanceRequests = maitenanceRequests;
             MaintenanceRequestCheckins = maintenanceRequestCheckins;
             MaitenanceRequestTypes = maitenanceRequestTypes;
@@ -153,6 +127,9 @@ namespace ApartmentApps.Data.Repository
         public virtual IRepository<IncidentReportStatus> IncidentReportStatuses { get; set; }
         public virtual IRepository<Corporation> Corporations { get; set; }
         public virtual IRepository<Property> Properties { get; set; }
+        public virtual IRepository<UserLeaseInfo> UserLeaseInfos { get; set; }
+        public virtual IRepository<Invoice> Invoices { get; set; }
+        public virtual IRepository<TransactionHistoryItem> TransactionHistoryItems { get; set; }
         public virtual IRepository<ImageReference> ImageReferences { get; set; }
         public virtual IRepository<Building> Buildings { get; set; }
         public virtual IRepository<Unit> Units { get; set; }

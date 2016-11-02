@@ -7,20 +7,14 @@
 @{
     var queries = ((IEnumerable<ServiceQuery>) ViewBag.Queries).ToArray();
 }
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-12 ">
-        <h2>Payments requests</h2>
-        <p>Filter payments requests on the right side bar.</p>
 
-    </div>
-</div><br />
+@Html.RenderPageHeader("Payments requests", "Filter payments requests on the right side bar")
+
 <div class="row">
     <div class="col-md-7">
         @Html.RenderQueryList()
         <div id="ResultPanel">
-
         </div>
-       
     </div>
     <div class="col-md-5">
         <div class="ibox">
@@ -38,17 +32,10 @@
             <div class="ibox-content" style="padding: 0px;">
                 <script type="text/javascript">
 
-                    // Load the Visualization API and the piechart package.
-                    //google.load('visualization', '1.0', { 'packages': ['corechart'] });
-
-                    //// Set a callback to run when the Google Visualization API is loaded.
-                    //google.setOnLoadCallback(GoogleVisualizationLoaded);
-
                     function GoogleVisualizationLoaded() {
-                        //alert("Visualization loaded!!!";)
                     }
 
-                    window.initialQuery = @Html.Raw(ViewBag.CurrentQuery == null ? "null" : "'" + ViewBag.CurrentQuery + "'" );
+                    window.initialQuery = @Html.Raw(ViewBag.CurrentQuery == null ? "null" : "'" + ViewBag.CurrentQuery + "'");
                     //Settings for EasyQuery pages
                     window.easyQueryViewSettings = {
                         showChart: false,
@@ -58,15 +45,10 @@
                         serviceUrl: getPrefix(),
                         loadDefaultModel: true,
                         useBootstrap: true
-
                     };
 
                     function getPrefix() {
-                        return '@(Url.Action("Index")?.Replace("Index",""))';
-                        //var res = window.location.pathname;
-                        //if (res.charAt(res.length - 1) !== '/')
-                        //    res = res + '/';
-                        //return res;
+                        return '@(Url.Action("Index")?.Replace("Index", ""))';
                     }
                 </script>
                 <div id="QueryPanel"></div>
@@ -75,13 +57,44 @@
                     <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="EQ.view.grid.applyFilter()">Apply Filter</a>
                     <a href="javascript:void(0)" class="btn btn-default">Clear</a>
                 </div>
-       
-                    @Html.RenderQueryActions()
-           
-                
+
+                @Html.RenderQueryActions()
+
+
+            </div>
+   
+        </div>
+
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Tools</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="display: block;">
+
+                <a class="btn btn-primary modal-link" href="@Url.Action("CreateUserLeaseInfoFor", "Payments")">
+                    <h4><i class="fa fa-fw fa-plus-square"></i>Create Request</h4>
+                    <hr style="margin: 0 0 0 0"/>
+                    <span class="small">
+                        Create new payment request <br/> and assign it to a resident
+                    </span>
+                </a>
+
+                <a class="btn btn-info" href="@Url.Action("UpdateOpenForteTransactions", "Payments")">
+                    <h4><i class="fa fa-fw fa-refresh"></i>Synchronize with Forte</h4>
+                    <hr style="margin: 0 0 0 0"/>
+                    <span class="small">
+                        Perform synchronization of all <br/> transactions with Forte Service
+                    </span>
+                </a>
+
+
             </div>
         </div>
-       
 
     </div>
 

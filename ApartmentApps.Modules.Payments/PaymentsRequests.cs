@@ -71,6 +71,44 @@ namespace ApartmentApps.Modules.Payments
     }
 
 
+    public class PaymentsRequestsEditMapper : BaseMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel>
+    {
+        public PropertyContext Context { get; set; }
+        public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
+
+        public PaymentsRequestsEditMapper(IUserContext userContext, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper ) : base(userContext)
+        {
+            Context = context;
+            UserMapper = userMapper;
+        }
+
+        public override void ToModel(EditUserLeaseInfoBindingModel viewModel, UserLeaseInfo model)
+        {
+            throw new NotImplementedException();
+            
+        }
+
+        public override void ToViewModel(UserLeaseInfo model, EditUserLeaseInfoBindingModel viewModel)
+        {
+            viewModel.Id = model?.Id.ToString();
+            viewModel.Amount = model?.Amount ?? 0;
+            viewModel.NextInvoiceDate = model?.NextInvoiceDate;
+            viewModel.CompleteDate = model?.RepetitionCompleteDate;
+            viewModel.Title = model?.Title;
+            viewModel.UserId = model?.User?.Id;
+            viewModel.IntervalMonths = model?.IntervalMonths;
+            viewModel.UseInterval = model?.IsIntervalSet() ?? false;
+            viewModel.UseCompleteDate = model?.RepetitionCompleteDate.HasValue ?? false;
+            viewModel.UserIdItems =
+                Context.Users.GetAll()
+                    .Where(u => !u.Archived)
+                    .ToList()
+                    .Select(u => UserMapper.ToViewModel(u))
+                    .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
+                    .ToList();
+        }
+    }
+
     public class PaymentsRequestsInvoiceMapper : BaseMapper<Invoice, PaymentRequestInvoiceViewModel>
     {
         public PaymentsRequestsInvoiceMapper(IUserContext userContext) : base(userContext)

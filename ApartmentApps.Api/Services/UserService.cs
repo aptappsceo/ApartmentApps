@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -104,6 +106,10 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.FullName = user.FirstName + " " + user.LastName;
             viewModel.UnitName = user.Unit?.Name;
             viewModel.BuildingName = user.Unit?.Building.Name;
+
+            viewModel.Title = $"{viewModel.FullName}";
+            if (user.Unit != null) viewModel.Title+=$" [ {user.Unit?.Building.Name} {user.Unit?.Name} ]";
+
             viewModel.IsTenant = user.Unit != null;
             viewModel.PhoneNumber = user.PhoneNumber;
             viewModel.Email = user.Email;
@@ -146,6 +152,20 @@ namespace ApartmentApps.Portal.Controllers
     public class PropertyBindingModel : BaseViewModel
     {
         public string Name { get; set; }
+        [DisplayName("Corporation")]
+        public int CorporationId { get; set; }
+        public IEnumerable<FormPropertySelectItem> CorporationId_Items
+        {
+            get
+            {
+                return
+                    ModuleHelper.Kernel.Get<IRepository<Corporation>>()
+                        .ToArray()
+                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, CorporationId == p.Id));
+
+
+            }
+        }
         public ActionLinkModel SwitchProperty => new ActionLinkModel("Switch Property", "ChangeProperty", "Account", new {id=Id});
     }
 
@@ -162,6 +182,7 @@ namespace ApartmentApps.Portal.Controllers
         public override void ToModel(PropertyBindingModel viewModel, Property model)
         {
             model.Name = viewModel.Name;
+            model.CorporationId = viewModel.CorporationId;
         }
 
         public override void ToViewModel(Property model, PropertyBindingModel viewModel)

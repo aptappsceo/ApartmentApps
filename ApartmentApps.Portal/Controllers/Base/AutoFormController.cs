@@ -39,7 +39,8 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (id != null && id != "0")
             {
-                return AutoForm(InitFormModel(_formService.Find<TFormViewModel>(id)), "SaveEntry", "Change");
+                var entry = _formService.Find<TFormViewModel>(id);
+                return AutoForm(InitFormModel(entry), "SaveEntry", "Change");
             }
             return AutoForm(InitFormModel(CreateFormModel()), "SaveEntry", "Create New");
         }

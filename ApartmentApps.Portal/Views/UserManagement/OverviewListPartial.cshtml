@@ -6,43 +6,59 @@
 @{
     var property = ViewBag.Property as Property;
 }
+
 <div class="row">
     @foreach (var item in Model)
     {
         <div class="col-lg-6">
-            <div class="contact-box">
-                @Html.Partial("_ActionLinks", item)
-                <div class="col-sm-4">
-                    <div class="text-center">
-                        <img alt="image" class="img-circle m-t-xs img-responsive" src="@item.ImageThumbnailUrl">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="col-sm-3">
+                        <div class="text-center">
+                            <img alt="image" class="img-circle m-t-xs img-responsive" style="width: 75px; height: 75px" src="@item.ImageThumbnailUrl">
+                            <div class="m-t-xs font-bold"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        @Html.Partial("_ActionLinks", item)
 
-                        <div class="m-t-xs font-bold">@(string.Join(", ", item.Roles))</div>
+
+                        <h3>
+                            <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.Id})" class="pull-left">
+                                <strong>@item.FirstName @item.LastName</strong>
+                            </a>
+                        </h3>
+                        <br/>
+                        <small class="font-bold">@(string.Join(", ", item.Roles))</small>
+                        <br/>
+                        <br/>
+                        <ul class="list-unstyled">
+                            <li><a href="mailto:@(item.Email)"><i class="fa fa-fw fa-envelope-o"></i> @item.Email</a></li>
+                            <li><i class="fa fa-fw fa-phone"></i> @(item.PhoneNumber ?? "-")</li>
+                            <li><i class="fa fa-fw fa-map-marker"></i> @item.BuildingName - @item.UnitName</li>
+                        </ul>
+                        <address>
+                            @item.Address<br/>
+                            @item.City @item.PostalCode<br/>
+                        </address>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+                <div class="ibox-footer">
+                    <div class="row">
+                        <div class="col-md-6"><small><!--SMALL CONTROL--></small></div>
+                        <div class="col-md-6"><small class="pull-right"><!--SMALL CONTROL--></small ></div>
                     </div>
                 </div>
-                <div class="col-sm-8">
-                    <h3>
-                        <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.Id})" class="pull-left">
-                            <strong>@item.FirstName @item.LastName</strong>
-                        </a>
-                    </h3><br/>
-                    <a href="mailto:@(item.Email)">@item.Email</a><br/>
-                    <p>
-                        <i class="fa fa-map-marker"></i>  @item.BuildingName - @item.UnitName<br>
-                    </p>
-                    <address>
-
-                        @item.Address<br />
-                        @item.City @item.PostalCode<br />
-                        <abbr title="Phone">Phone:</abbr> @item.PhoneNumber
-                    </address>
-                </div>
-                <div class="clearfix"></div>
-
             </div>
         </div>
 
     }
-    @Html.PageNavigator(Model as IPaging)
-    <div style="clear: both;"></div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+            @Html.PageNavigator(Model as IPaging)
+    </div>
 </div>
 

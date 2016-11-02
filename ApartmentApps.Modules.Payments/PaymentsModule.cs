@@ -56,6 +56,7 @@ namespace ApartmentApps.Api.Modules
         public void FillActions(List<ActionLinkModel> actions, object viewModel)
         {
             var user = viewModel as UserBindingModel;
+            var paymentRequest = viewModel as UserLeaseInfoBindingModel;
             if (user != null && !Config.UseUrl)
             {
                 //paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments",new {id = UserContext.CurrentUser.Id}));
@@ -64,7 +65,22 @@ namespace ApartmentApps.Api.Modules
                     Icon = "fa-credit-card",
                     Group = "Payments"
                 });
+            } else if ( paymentRequest != null )
+            {
+              actions.Add(new ActionLinkModel("Edit Request","Entry","PaymentRequests",new {id = paymentRequest.Id})
+              {
+                  Icon = "fa-edit",
+                  Group = "Manage",
+                  IsDialog = true
+              });  
+              actions.Add(new ActionLinkModel("Cancel Request","","",new {id = paymentRequest.Id})
+              {
+                  Icon = "fa-remove",
+                  Group = "Manage"
+              });  
             }
+
+            
         }
 
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
@@ -79,7 +95,7 @@ namespace ApartmentApps.Api.Modules
                 if (UserContext.IsInRole("Admin") || UserContext.IsInRole("PropertyAdmin"))
                 {
                     paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus", "CreateUserLeaseInfoFor", "Payments"));
-                    paymentsHome.Children.Add(new MenuItemViewModel("Payments Requests", "fa-plus", "Index", "PaymentsRequests"));
+                    paymentsHome.Children.Add(new MenuItemViewModel("Payments Requests", "fa-plus", "Index", "PaymentRequests"));
                     //       paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
                 }
 

@@ -2,7 +2,9 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
+using ApartmentApps.API.Service.Controllers;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
@@ -12,6 +14,8 @@ using MaitenanceRequestModel = ApartmentApps.Portal.Controllers.MaitenanceReques
 
 namespace ApartmentApps.Tests
 {
+
+
     [TestClass]
     public class MaitenanceRequestsControllerTests : PropertyControllerTest<MaitenanceRequestsController>
     {
@@ -19,7 +23,11 @@ namespace ApartmentApps.Tests
         public override void Init()
         {
             base.Init();
+            Context.Kernel.Bind<ApartmentApps.API.Service.Controllers.MaitenanceController>().ToSelf();
+            ApiController = Context.Kernel.Get<API.Service.Controllers.MaitenanceController>();
         }
+
+        public MaitenanceController ApiController { get; set; }
 
         [TestMethod]
         public void TestProcess()
@@ -80,6 +88,16 @@ namespace ApartmentApps.Tests
             result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
             Assert.IsNotNull(result);
             Assert.AreEqual(Context.UserContext.UserId, result.AssignedToId);
+            // Submit another request to test the list
+            SubmitMaintenanceRequest();
+
+            var config = Context.Kernel.Get<MaintenanceModule>().Config;
+            config.SupervisorMode = true;
+            var controllerRequestList = ApiController.ListRequests();
+            Assert.AreEqual(controllerRequestList.Count(),1);
+            config.SupervisorMode = false;
+            controllerRequestList = ApiController.ListRequests();
+            Assert.AreEqual(controllerRequestList.Count(), 2);
         }
 
         private void SubmitMaintenanceRequest()

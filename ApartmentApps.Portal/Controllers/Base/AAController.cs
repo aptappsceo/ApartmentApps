@@ -129,12 +129,17 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
-        public ActionResult AutoForm(object model, string postAction, string title = null)
+        public ActionResult AutoForm(object model, string postAction, string postController, string title = null)
         {
-            return View("AutoForm", new AutoFormModel(model, postAction, this.GetType().Name.Replace("Controller", ""))
+            return View("AutoForm", new AutoFormModel(model, postAction, postController)
             {
                 Title = title
             });
+        }
+
+        public ActionResult AutoForm(object model, string postAction, string title = null)
+        {
+            return AutoForm(model, postAction, this.GetType().Name.Replace("Controller", ""), title);
         }
 
         public void AddErrorMessage(string message)

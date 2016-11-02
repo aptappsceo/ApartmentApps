@@ -355,10 +355,18 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
-        public ActionResult UpdateOpenForteTransactions(string id)
+        public ActionResult UpdateOpenForteTransactions(string id = null)
         {
             _paymentsModule.UpdateOpenForteTransactions();
-            return RedirectToAction("UserPaymentsOverview", new {id = id});
+            this.AddSuccessMessage("System was synchronized with Forte!");
+            if (!string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("UserPaymentsOverview", new {id = id});
+            }
+            else
+            {
+                return RedirectToAction("Index", "PaymentRequests");
+            }
         }
 
         [HttpPost]

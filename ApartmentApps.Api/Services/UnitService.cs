@@ -80,6 +80,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             viewModel.Id = model.Id.ToString();
             viewModel.Name = model.Name;
+            viewModel.Title = $"{model.Building.Name} - {model.Name}";
             viewModel.Latitude = model.Latitude;
             viewModel.Longitude = model.Longitude;
             viewModel.BuildingId = model.BuildingId;

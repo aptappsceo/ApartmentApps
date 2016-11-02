@@ -15,13 +15,13 @@ var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ??
         <a href="@Url.Action(vm.Action, vm.Controller, vm.RouteParams)" aria-expanded="@(expanded ? "true":"false")">
             @if (vm.HasChildren)
             {
-                <i class="fa @vm.Icon"></i>
+                <i class="fa fa-fw @vm.Icon"></i>
                 <span class="nav-label">@vm.Label</span>
                 <span class="fa arrow"></span>
             }
             else
             {
-                <i class="fa @vm.Icon"></i>
+                <i class="fa fa-fw @vm.Icon"></i>
                 if (isRoot) 
                 {
                  <span class="nav-label">@vm.Label</span>   
