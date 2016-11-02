@@ -1,18 +1,18 @@
 ﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupConfiguration="{D8277430-A582-4E04-B474-A48C4A90A313}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceStartFormViewModel.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="98" Column="51" />
       <File FileName="ApartmentApps.Api/EntrataModule.cs" Line="38" Column="94" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/ViewBase.cs" Line="79" Column="34" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationFormViewModel.cs" Line="49" Column="8" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationFormViewModel.cs" Line="33" Column="6" />
       <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/HomeMenuViewModel.cs" Line="244" Column="22" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/CheckinFormView.cs" Line="243" Column="25" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/CheckinFormView.cs" Line="230" Column="60" />
       <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/ProspectExtensions.cs" Line="28" Column="48" />
       <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/IProspect.cs" Line="21" Column="51" />
       <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/ApartmentAppsAPIService.cs" Line="178" Column="38" />
       <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Prospect.cs" Line="87" Column="14" />
       <File FileName="ResidentAppCross/ResidentAppCross/ServiceClient/ILoginManager.cs" Line="11" Column="35" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" Line="305" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" Line="291" Column="1" />
       <File FileName="ResidentAppCross/SCLAlertViewLib/obj/Debug/ios/ObjCRuntime/Trampolines.g.cs" Line="1" Column="1" />
       <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
       <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="76" Column="14" />
@@ -21,25 +21,15 @@
       <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceStartFormViewModel.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/micahosborne/ApartmentApps/ResidentAppCross/ResidentAppCross/ViewModels/Screens/CheckinFormViewModel.cs" line="116" column="1" />
       <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationViewModel.cs" line="48" column="1" />
       <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationViewModel.cs" line="50" column="1" />
       <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationViewModel.cs" line="52" column="1" />
-      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationFormViewModel.cs" line="55" column="1" />
-      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationFormViewModel.cs" line="58" column="1" />
-      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationFormViewModel.cs" line="59" column="1" />
       <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Prospect.cs" line="94" column="1" />
-      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" line="295" column="1" />
-      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" line="291" column="1" />
-      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" line="437" column="1" />
-      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" line="402" column="1" />
-      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" line="430" column="1" />
       <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" line="368" column="1" />
-      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" line="303" column="1" />
-      <Breakpoint file="/Users/micahosborne/ApartmentApps2/ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" line="310" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
