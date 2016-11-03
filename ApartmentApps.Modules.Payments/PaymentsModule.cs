@@ -118,7 +118,7 @@ namespace ApartmentApps.Api.Modules
 
         public int MerchantId => string.IsNullOrEmpty(Config.MerchantId) ? 0 : Convert.ToInt32(Config.MerchantId);
 
-        public string ApiLoginId { get; set; } = "5KwrM3b7T7";
+        public string ApiLoginId { get; set; } = "5fI7K8FciZ";
 
         public string Key { get; set; } = "18RcFs5F";
 
@@ -416,9 +416,11 @@ namespace ApartmentApps.Api.Modules
             {
                 if (clientId == 0)
                 {
+                    
                     var result = await client.createClientAsync(auth, new ClientRecord()
                     {
                         MerchantID = MerchantId,
+                        
                         FirstName = user.FirstName,
                         LastName = user.LastName,
                         Status = ClientStatus.Active
