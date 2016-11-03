@@ -364,6 +364,13 @@ namespace ApartmentApps.Forms
         public string PropertyName { get; set; }
     }
 
+    public class DataTypePercentage : DataTypeAttribute
+    {
+        public DataTypePercentage() : base("Percentage")
+        {
+        }
+    }
+
     public class PlaceholderAttribute : Attribute
     {
         public string Text { get; set; }

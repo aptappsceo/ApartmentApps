@@ -112,29 +112,15 @@ namespace ApartmentApps.Portal.Controllers
 
     public class AssignMaintenanceEditModel
     {
-        private readonly IRepository<ApplicationUser> _userRepository;
-
-        public AssignMaintenanceEditModel()
-        {
-        }
-
-        public AssignMaintenanceEditModel(IRepository<ApplicationUser> userRepository)
-        {
-            _userRepository = userRepository;
-        }
 
         [DataType("Hidden")]
         public string Id { get; set; }
 
-
-        //[DataType()]
         [DisplayName("Assigned To")]
+        [SelectFrom(nameof(PossibleAssignees))]
         public string AssignedToId { get; set; }
 
-        public IEnumerable<FormPropertySelectItem> AssignedToId_Items => _userRepository.ToArray()
-                    .Where(p => p.Roles.Any(x => x.RoleId == "Maintenance"))
-                    .OrderBy(p => p.LastName)
-                    .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName, AssignedToId == p.Id));
+        public List<UserLookupBindingModel> PossibleAssignees { get; set; }
     }
 
 
@@ -185,6 +171,7 @@ namespace ApartmentApps.Portal.Controllers
     public class MaitenanceRequestsController : AutoGridController
             <MaintenanceService, MaintenanceService, MaintenanceRequestViewModel, MaintenanceRequestEditModel>
     {
+        private readonly UserService _usersService;
         private PdfDocument _document;
         public IMaintenanceService MaintenanceService { get; set; }
 
@@ -231,12 +218,15 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult AssignRequest(string id)
         {
             var request = Service.Find<MaintenanceRequestViewModel>(id);
-            return AutoForm(new AssignMaintenanceEditModel(Kernel.Get<IRepository<ApplicationUser>>())
+            var assignMaintenanceEditModel = new AssignMaintenanceEditModel()
             {
                 Id = id,
-                AssignedToId = request.AssignedToId
-            },
-                "AssignRequestSubmit", "Assign Maintenance Request");
+                AssignedToId = request.AssignedToId,
+                PossibleAssignees = _usersService.GetUsersInRole<UserLookupBindingModel>("Maintenance")
+                    .OrderBy(p => p.Title).ToList()
+
+            };
+            return AutoForm(assignMaintenanceEditModel,"AssignRequestSubmit", "Assign Maintenance Request");
         }
 
         public ActionResult AssignRequestSubmit(AssignMaintenanceEditModel model)
@@ -480,8 +470,9 @@ namespace ApartmentApps.Portal.Controllers
             return View(item);
         }
 
-        public MaitenanceRequestsController(IKernel kernel, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service) : base(kernel, formService, indexService, context, userContext, service)
+        public MaitenanceRequestsController(IKernel kernel, UserService usersService, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service) : base(kernel, formService, indexService, context, userContext, service)
         {
+            _usersService = usersService;
             MaintenanceService = formService;
         }
     }

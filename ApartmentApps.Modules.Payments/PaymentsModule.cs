@@ -134,7 +134,10 @@ namespace ApartmentApps.Api.Modules
 
             var invoices = _invoiceRepository.GetAvailableBy(dateTime, userId).ToArray();
 
-            decimal convFee = GetConvenienceFeeForPaymentOption(Convert.ToInt32(paymentOptionId), userId);
+            var subtotal = invoices.Sum(s => s.Amount);
+
+            var confFeefunction = GetConvenienceFeeForPaymentOption(Convert.ToInt32(paymentOptionId), userId);
+            decimal convFee = confFeefunction(subtotal);
 
             return new PaymentListBindingModel()
             {
@@ -194,7 +197,7 @@ namespace ApartmentApps.Api.Modules
                     var userPaymentOption = new UserPaymentOption()
                     {
                         UserId = userId,
-                        Type = PaymentOptionType.CreditCard,
+                        Type = PaymentOptionType.VisaCard,
                         FriendlyName = addCreditCard.FriendlyName,
                         TokenId = paymentMethodId.ToString()
                     };
@@ -275,7 +278,7 @@ namespace ApartmentApps.Api.Modules
         }
 
 
-        public decimal GetConvenienceFeeForPaymentOption(int paymentOptionId, string userId)
+        public Func<decimal,decimal> GetConvenienceFeeForPaymentOption(int paymentOptionId, string userId)
         {
             var paymentOption = Context.PaymentOptions.FirstOrDefault(p => p.UserId == userId && p.Id == paymentOptionId);
 
@@ -286,14 +289,20 @@ namespace ApartmentApps.Api.Modules
 
             switch (paymentOption.Type)
             {
-                case PaymentOptionType.CreditCard:
-                    return Config.CreditCardConvenienceFee;
+                case PaymentOptionType.VisaCard:
+                    return cash => (cash/100)*Config.VisaConvenienceFee;
+                case PaymentOptionType.AmericanExpressCard:
+                    return cash => (cash/100)*Config.AmericanExpressConvenienceFee;
+                case PaymentOptionType.DiscoveryCard:
+                    return cash => (cash/100)*Config.DiscoverConvenienceFee;
+                case PaymentOptionType.MasterCard:
+                    return cash => (cash/100)*Config.MastercardConvenienceFee;
                 case PaymentOptionType.Checking:
-                    return Config.BankAccountCheckingConvenienceFee;
+                    return cash => Config.BankAccountCheckingConvenienceFee;
                 case PaymentOptionType.Savings:
-                    return Config.BankAccountSavingsConvenienceFee;
+                    return cash => Config.BankAccountSavingsConvenienceFee;
                 default:
-                    return 0;
+                    return cash => 0m;
             }
         }
 
@@ -335,13 +344,17 @@ namespace ApartmentApps.Api.Modules
                 return new MakePaymentResult() { ErrorMessage = "Payment Option Not Found." };
             }
 
-            decimal convFee = GetConvenienceFeeForPaymentOption(paymentOptionId, userId);
 
             var user = Context.Users.Find(userId);
             var by = user.Property.TimeZone.Now();
             //TODO: change later to get UserId from parameter
             var invoices = _invoiceRepository.GetAvailableBy(by, userId).ToArray();
-            var total = invoices.Sum(s => s.Amount) + convFee;
+            var subtotal = invoices.Sum(s => s.Amount);
+            var convFeeFunction = GetConvenienceFeeForPaymentOption(paymentOptionId, userId);
+            var convFee = convFeeFunction(subtotal);
+            var total = subtotal + convFee;
+
+
 
             PaymentGatewaySoapClient transactionClient = null;
 
