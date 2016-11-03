@@ -135,7 +135,11 @@ namespace ApartmentApps.Portal.Controllers
       
         public override string DefaultOrderBy => "LastName";
 
-        
+        public IEnumerable<TViewModel> GetActive<TViewModel>(DbQuery query, out int count, string orderBy, bool orderByDesc, int page = 1, int resultsPerPage = 20)
+        {
+            return GetAll<TViewModel>(Repository.Where(p=>!p.Archived), query, out count, orderBy, orderByDesc, page, resultsPerPage);
+        }
+
 
         public UserService(IKernel kernel, IRepository<ApplicationUser> repository) : base(kernel, repository)
         {

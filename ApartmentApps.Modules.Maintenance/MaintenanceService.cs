@@ -80,6 +80,7 @@ namespace ApartmentApps.Api
         }
 
         [DisplayName("Type")]
+        [Required]
         public int MaitenanceRequestTypeId { get; set; }
 
         [DisplayName("Permission To Enter")]
