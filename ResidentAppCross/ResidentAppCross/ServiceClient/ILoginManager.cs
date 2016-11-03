@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
-using MvvmCross.Plugins.Network.Rest;
 using Newtonsoft.Json.Linq;
 
 namespace ResidentAppCross.ServiceClient

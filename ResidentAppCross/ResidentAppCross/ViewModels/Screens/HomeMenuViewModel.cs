@@ -239,9 +239,9 @@ namespace ResidentAppCross
 
 		   var image = await Mvx.Resolve<IDialogService>().OpenImageDialog();
 
-			ShowViewModel<ProspectApplicationViewModel>(vm =>
+			ShowViewModel<ProspectApplicationFormViewModel>(vm =>
 		    {
-				vm.SetProsepectInfo(image);
+				vm.Image = image;
 				//vm.Url = Mvx.Resolve<IApartmentAppsAPIService>().BaseUri + "/generalviews/index";
 			});
 	   });
