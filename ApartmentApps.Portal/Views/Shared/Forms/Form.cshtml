@@ -78,11 +78,11 @@
 
             @if (property.DataType.DataType == DataType.MultilineText)
             {
-                <textarea class="form-control" name="" type="text" value="@propertyValue">@propertyValue</textarea>
+                <textarea class="form-control" name="@propertyName" type="text" value="@propertyValue">@propertyValue</textarea>
             }
             else
             {
-                <input type="text" class="form-control" value="@propertyValue">
+                <input type="text" class="form-control" name="@propertyName" value="@propertyValue">
             }
 
             <span class="help-block m-b-none">@property.Description</span>
@@ -151,14 +151,21 @@
                     var categoryId = "@property.ToggleCategory";
                     var targets = checkbox.closest('form').find("[data-category*='"+categoryId+"']");
 
-                    checkbox.on('ifChecked', function(evt) {
+                    var currentValue = checkbox.prop('checked');
+                    if (!currentValue) {
+                        targets.hide(100);
+                    } else {
                         targets.show(100);
+                    }
+
+                    checkbox.on('ifChecked', function(evt) {
+                        targets.show();
                     });
                     checkbox.on('ifUnchecked', function(evt) {
-                        targets.hide(100);
+                        targets.hide();
                     });
-                    
 
+               
                 }
 
             });
@@ -203,11 +210,50 @@
 
             </script>
         }
+        else if (property.DataType.CustomDataType == "Percentage")
+        {
+            <div class="form-group @(property.HasErrors ? "has-error" : "" )" data-category="@(property.Category)">
+                <label class="control-label" for="@propertyName">@propertyLabel</label>
+                <input id="@inputid" class="form-control" name="@propertyName" value="@propertyValue">
+
+                @if (property.HasErrors)
+                {
+                    foreach (var error in property.Errors)
+                    {
+                        <span class="help-block m-b-none">@error</span>
+                    }
+                }
+
+                @if (!string.IsNullOrEmpty(property.Description))
+                {
+                    <span class="help-block m-b-none">@property.Description</span>
+                }
+
+            </div>
+
+            <script>
+
+                $(document).ready(function() {
+
+                    var input = $('#@inputid');
+                    input.TouchSpin({
+                    min: 0,
+                    max: 100,
+                    step: 0.01,
+                    decimals: 2,
+                    boostat: 5,
+                    maxboostedstep: 10,
+           
+            });
+        });
+
+            </script>
+        }
 
 
         continue;
     }
-    else if (property.SystemType == typeof (int) || property.SystemType == typeof (int?))
+    else if (property.SystemType == typeof(int) || property.SystemType == typeof(int?))
     {
         <div class="form-group @(property.HasErrors ? "has-error" : "" )" data-category="@(property.Category)">
             <label class="control-label" for="@propertyName">@propertyLabel</label>

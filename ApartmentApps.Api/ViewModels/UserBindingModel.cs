@@ -23,6 +23,11 @@ namespace ApartmentApps.Api.ViewModels
         public bool Archived { get; set; }
 
     }
+
+    public class UserLookupBindingModel : BaseViewModel
+    {
+    }
+
     // Models used as parameters to AccountController actions.
     public class UserBindingModel : BaseViewModel
     {

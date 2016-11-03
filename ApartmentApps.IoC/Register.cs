@@ -215,6 +215,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterMapper<IncidentReport, IncidentReportFormModel, IncidentReportFormMapper>();
             kernel.RegisterMapper<Message, MessageTargetsViewModel, MessageTargetMapper>();
             kernel.RegisterMapper<ApplicationUser, UserListModel, UserListMapper>();
+            kernel.RegisterMapper<ApplicationUser, UserLookupBindingModel, UserLookupMapper>();
             kernel.RegisterMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel, PaymentsRequestsEditMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
 

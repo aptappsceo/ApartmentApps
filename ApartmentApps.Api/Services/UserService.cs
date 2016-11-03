@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
@@ -54,6 +55,27 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Email = user.Email;
         }
     }
+
+    public class UserLookupMapper : BaseMapper<ApplicationUser, UserLookupBindingModel>
+    {
+        public UserLookupMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
+        public override void ToModel(UserLookupBindingModel viewModel, ApplicationUser model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ToViewModel(ApplicationUser model, UserLookupBindingModel viewModel)
+        {
+               if (model == null) return;
+            viewModel.Id = model.Id;
+            viewModel.Title = $"{model.FirstName} {model.LastName}";
+            if (model.Unit != null) viewModel.Title+=$" [ {model.Unit?.Building.Name} {model.Unit?.Name} ]";
+        }
+    }
+
     public class UserMapper : BaseMapper<ApplicationUser, UserBindingModel>
     {
         private readonly IBlobStorageService _blobService;
@@ -132,8 +154,30 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class UserService : StandardCrudService<ApplicationUser>
     {
-      
+        private readonly ApplicationDbContext _ctx;
+
+        
+
         public override string DefaultOrderBy => "LastName";
+        
+        public UserService(IKernel kernel, IRepository<ApplicationUser> repository, ApplicationDbContext ctx) : base(kernel, repository)
+        {
+            _ctx = ctx;
+        }
+
+        public IQueryable<ApplicationUser> GetUsersInRole(string roleName)
+        {
+          if (_ctx != null && roleName != null)
+          {
+            var roles = _ctx.Roles.Where(r => r.Name == roleName);
+            if (roles.Any())
+            {
+              var roleId = roles.First().Id;
+              return Repository.Where(user => user.Roles.Any(r => r.RoleId == roleId));
+            }
+          }
+          return null;
+        }
 
         public IEnumerable<TViewModel> GetActive<TViewModel>(DbQuery query, out int count, string orderBy, bool orderByDesc, int page = 1, int resultsPerPage = 20)
         {
@@ -141,8 +185,12 @@ namespace ApartmentApps.Portal.Controllers
         }
 
 
-        public UserService(IKernel kernel, IRepository<ApplicationUser> repository) : base(kernel, repository)
+
+        public List<TViewModel> GetUsersInRole<TViewModel>(string roleName)
         {
+            var transform = _kernel.Get<IMapper<ApplicationUser, TViewModel>>();
+            var users = GetUsersInRole(roleName);
+            return users?.ToArray().Select(s => transform.ToViewModel(s)).ToList();
         }
 
         public override void Remove(string id)

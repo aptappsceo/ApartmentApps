@@ -12,7 +12,10 @@ namespace ApartmentApps.Data
 {
     public enum PaymentOptionType
     {
-        CreditCard,
+        VisaCard,
+        DiscoveryCard,
+        MasterCard,
+        AmericanExpressCard,
         Checking,
         Savings
     }

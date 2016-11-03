@@ -88,12 +88,13 @@ See usage in AutoForm.cshtml
 
         this.sendForm = function(formId, postUrl) {
 
+            var form = $("#" + formId);
+            var serialize = form.serialize();
             that.setLoading();
-
             $.ajax({
                 type: "POST",
                 url: postUrl, //process to mail
-                data: $("#" + formId).serialize(),
+                data: serialize,
                 success: function (msg) {
                     if (msg === "") {
                         that.close(); //be friendly and show message
