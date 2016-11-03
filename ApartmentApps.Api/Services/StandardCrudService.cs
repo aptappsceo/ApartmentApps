@@ -155,41 +155,27 @@ namespace ApartmentApps.Portal.Controllers
 
         public IEnumerable<TViewModel> GetAll<TViewModel>(DbQuery query, out int count, string orderBy, bool orderByDesc, int page = 1, int resultsPerPage = 20)
         {
+            return GetAll<TViewModel>(Repository.GetAll(), query, out count, orderBy, orderByDesc, page, resultsPerPage);
+        }
+
+        public IEnumerable<TViewModel> GetAll<TViewModel>(IQueryable<TModel> items, DbQuery query, out int count, string orderBy, bool orderByDesc, int page = 1, int resultsPerPage = 20)
+        {
             if (query == null)
             {
-                //result = result.Skip(resultsPerPage * (page - 1));
-                //result = result.Take(resultsPerPage);
-                var res2 = Repository.GetAll().ToArray();
+                var res2 = items.ToArray();
                 count = res2.Count();
                 var mapper2 = _kernel.Get<IMapper<TModel, TViewModel>>();
                 return res2.Select(mapper2.ToViewModel);
 
             }
-            var result = Repository.GetAll().DynamicQuery<TModel>(query, null, !string.IsNullOrEmpty(orderBy) ? orderByDesc : DefaultOrderByDesc);
+            var result = items.DynamicQuery<TModel>(query, null, !string.IsNullOrEmpty(orderBy) ? orderByDesc : DefaultOrderByDesc);
 
-            //var result = Repository.GetAll().DynamicQuery<TModel>(query, !string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, !string.IsNullOrEmpty(orderBy) ? orderByDesc : DefaultOrderByDesc);
             count = result.Count();
-            //if (string.IsNullOrEmpty(orderBy))
-            //{
-            //    if (orderByDesc)
-            //    {
-            //        result = result.OrderByDescending(DefaultOrderBy);
-            //    }
-            //    else
-            //    {
-            //        result = result.OrderBy(DefaultOrderBy);
-            //    }
-
-            //    result = result.Skip(resultsPerPage * (page - 1));
-            //    result = result.Take(resultsPerPage);
-            //}
-            //else
-            //{
-            //  result = result.OrderBy(orderBy, orderByDesc);
+   
             result = result.OrderBy(!string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, !string.IsNullOrEmpty(orderBy) ? orderByDesc : DefaultOrderByDesc);
             result = result.Skip(resultsPerPage * (page - 1));
             result = result.Take(resultsPerPage);
-            //}
+     
             var res = result.ToArray();
             var mapper = _kernel.Get<IMapper<TModel, TViewModel>>();
             return res.Select(mapper.ToViewModel);

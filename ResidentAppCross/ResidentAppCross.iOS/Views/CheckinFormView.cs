@@ -15,7 +15,7 @@ namespace ResidentAppCross.iOS.Views
     [Register("ProspectApplicationFormView")]
     [NavbarStyling]
     [StatusBarStyling(Style = UIStatusBarStyle.BlackOpaque)]
-	public class ProspectApplicationFormView : BaseForm<ProspectApplicationViewModel> 
+	public class ProspectApplicationFormView : BaseForm<ProspectApplicationFormViewModel> 
     {
         private HeaderSection _headerSection;
         private TextViewSection _firstNameSection;
@@ -226,7 +226,7 @@ namespace ResidentAppCross.iOS.Views
             base.BindForm();
             
 
-			var set = this.CreateBindingSet<ProspectApplicationFormView, ProspectApplicationViewModel>();
+			var set = this.CreateBindingSet<ProspectApplicationFormView, ProspectApplicationFormViewModel>();
 			set.Bind(ActionSection.MainButton).To(vm => vm.SubmitApplicationCommand);
 			set.Bind(FirstNameSection.TextView).For(t=>t.Text).TwoWay().To(vm => vm.FirstName);
 			set.Bind(LastNameSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
@@ -240,7 +240,7 @@ namespace ResidentAppCross.iOS.Views
 			//set.Bind(LastNameSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
 			//set.Bind(DesiredMoveInDateSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
             set.Apply();
-
+			ViewModel.LoadProspectInfo.Execute(null);
         }
 
 

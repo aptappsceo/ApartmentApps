@@ -145,7 +145,7 @@ namespace ApartmentApps.Portal.Controllers
             _userMapper = userMapper;
         }
 
-
+     
         public DbQuery All()
         {
             return CreateQuery("All");

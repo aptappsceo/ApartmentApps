@@ -6,7 +6,7 @@ using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
-    public class ProspectApplicationViewModel : ViewModelBase
+    public class ProspectApplicationFormViewModel : ViewModelBase
     {
         private string _comments = "";
         private string _actionText = "";
@@ -17,7 +17,7 @@ namespace ResidentAppCross.ViewModels.Screens
         public bool ShouldScanQr { get; set; } = true;
         public IApartmentAppsAPIService _service;
         public IDialogService _dialogService;
-        public ProspectApplicationViewModel( IApartmentAppsAPIService service, IDialogService dialogService)
+        public ProspectApplicationFormViewModel( IApartmentAppsAPIService service, IDialogService dialogService)
         {
 
             _service = service;
@@ -30,10 +30,19 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 return this.TaskCommand(async context =>
                 {
+					
                     var result = await _service.Prospect.SubmitApplicantAsync(new ProspectApplicationBindingModel()
                     {
                         FirstName = FirstName,
-                        LastName = LastName
+                        LastName = LastName,
+						AddressCity = AddressCity,
+						AddressState = AddressState,
+						ZipCode = Convert.ToInt32(ZipCode),
+						Email = Email,
+						PhoneNumber = PhoneNumber,
+						AddressLine1 = AddressLine1,
+						AddressLine2 = AddressLine2,
+						//DesiredMoveInDate = DesiredMoveInDate
                     });
 
                 }).OnStart("Submitting Application").OnComplete("Application Submitted!", () => this.Close(this));
@@ -41,24 +50,32 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
-        public void SetProsepectInfo(byte[] image)
-        {
-            if (image != null)
-            {
-                var base64 = Convert.ToBase64String(image);
-                var result = _service.Prospect.ScanId(base64);
-                if (result != null)
-                {
-                    FirstName = result.FirstName;
-                    LastName = result.LastName;
-                }
-                else {
-                    _dialogService.OpenNotification("Error", "Couldn't scan ID", "OK", () => { } );
-                }
-            }
+	
+		public byte[] Image { get; set; }
+
+		public ICommand LoadProspectInfo => this.TaskCommand( async (context) => {
+			if (Image != null)
+			{
+				var base64 = Convert.ToBase64String(Image);
+				var result = await _service.Prospect.ScanIdAsync(base64);
+				if (result != null)
+				{
+					FirstName = result.FirstName;
+					LastName = result.LastName;
+					this.AddressLine1 = result.AddressLine1;
+					this.AddressLine2 = result.AddressLine2;
+					this.AddressCity = result.City;
+					this.AddressState = result.IssuedBy;
+					this.ZipCode = result.PostalCode;
+
+				}
+				else {
+					_dialogService.OpenNotification("Error", "Couldn't scan ID", "OK", () => { });
+				}
+			}
+		}).OnStart("Scanning");
 
 
-        }
         public string Comments
         {
             get { return _comments; }

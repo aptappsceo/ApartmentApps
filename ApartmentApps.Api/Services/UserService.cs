@@ -156,6 +156,8 @@ namespace ApartmentApps.Portal.Controllers
     {
         private readonly ApplicationDbContext _ctx;
 
+        
+
         public override string DefaultOrderBy => "LastName";
         
         public UserService(IKernel kernel, IRepository<ApplicationUser> repository, ApplicationDbContext ctx) : base(kernel, repository)
@@ -176,6 +178,13 @@ namespace ApartmentApps.Portal.Controllers
           }
           return null;
         }
+
+        public IEnumerable<TViewModel> GetActive<TViewModel>(DbQuery query, out int count, string orderBy, bool orderByDesc, int page = 1, int resultsPerPage = 20)
+        {
+            return GetAll<TViewModel>(Repository.Where(p=>!p.Archived), query, out count, orderBy, orderByDesc, page, resultsPerPage);
+        }
+
+
 
         public List<TViewModel> GetUsersInRole<TViewModel>(string roleName)
         {

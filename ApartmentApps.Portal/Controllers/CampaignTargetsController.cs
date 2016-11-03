@@ -36,7 +36,7 @@ namespace ApartmentApps.Portal.Controllers
                 q.TargetsXml = query.SaveToString();
                 q.TargetsDescription = query.GetConditionsText(QueryTextFormats.Default);
                 var count = 0;
-                Service.GetAll<UserBindingModel>(query, out count, "Id", false, 1, 3);
+                Service.GetActive<UserBindingModel>(query, out count, "Id", false, 1, 3);
                 q.TargetsCount = count;
                 _messagingService.Save(q);
 

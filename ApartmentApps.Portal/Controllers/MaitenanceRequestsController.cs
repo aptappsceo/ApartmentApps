@@ -371,17 +371,54 @@ namespace ApartmentApps.Portal.Controllers
                 .GroupBy(p => p.Worker)
                 .ToArray();
 
+            var within24 = Context.MaitenanceRequests
+                .Count(p => p.CompletionDate != null &&
+                            p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
+                            (p.CompletionDate - p.SubmissionDate).Value.Hours <= 24
+                            );
+            var within48 = Context.MaitenanceRequests
+                                    .Count(p => p.CompletionDate != null &&
+                                                p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
+                                                (p.CompletionDate - p.SubmissionDate).Value.Hours > 24 && (p.CompletionDate - p.SubmissionDate).Value.Hours <= 48
+                                                );
+            var within72 = Context.MaitenanceRequests
+                                  .Count(p => p.CompletionDate != null &&
+                                              p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
+                                              (p.CompletionDate - p.SubmissionDate).Value.Hours > 48 && (p.CompletionDate - p.SubmissionDate).Value.Hours <= 72
+                                              );
+
+            var greaterThan72 = Context.MaitenanceRequests
+                    .Count(p => p.CompletionDate != null &&
+                          p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
+                          (p.CompletionDate - p.SubmissionDate).Value.Hours > 72
+                  );
+            var paused = Context.MaitenanceRequests
+                 .Count(p => p.CompletionDate != null &&
+               p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate && p.StatusId == "Paused"
+               
+               );
             HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
             string htmlText = $"<html><body style='padding: 40px;font-family: Arial, Helvetica, sans-serif;'>" +
                               $"<div style='text-align: center; font-size: 32px; font-weight: bold'>{UserContext.CurrentUser.Property.Name} Monthly Maintenance Report</div>" +
                               $"<div style='text-align: center; font-size: 20px;'>For {model.StartDate} {model.EndDate}</div>" +
                               $"<br/><br/><table style='width: 100%'>";
 
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Work Orders</td><td>{CheckinsByRange(startDate, endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Completed</td><td>{CheckinsByRange(startDate, endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Paused</td><td>{paused} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24 hours</td><td>{within24} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24-48 hours</td><td>{within48} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 48-72 hours</td><td>{within72} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 72+ hours</td><td>{greaterThan72} Work Orders</td></tr> ";
+        
+
+
+
             foreach (var item in WorkOrdersPerEmployee)
             {
                 htmlText += $"<tr><td>{item.Key.FirstName} {item.Key.LastName} Completed</td><td>{item.Count()} Work Orders</td></tr> ";
             }
+
+
             htmlText += $"" +
                               $"</table>" +
                               $"</body></html>";
