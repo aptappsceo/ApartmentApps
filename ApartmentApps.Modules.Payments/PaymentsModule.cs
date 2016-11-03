@@ -118,9 +118,9 @@ namespace ApartmentApps.Api.Modules
 
         public int MerchantId => string.IsNullOrEmpty(Config.MerchantId) ? 0 : Convert.ToInt32(Config.MerchantId);
 
-        public string ApiLoginId { get; set; } = "5fI7K8FciZ";
+        public string ApiLoginId { get; set; } = Config.ApiLoginId;
 
-        public string Key { get; set; } = "18RcFs5F";
+        public string Key { get; set; } = Config.SecureTransactionKey;
 
         //Includes fee
         public async Task<PaymentListBindingModel> GetPaymentSummaryFor(string userId, string paymentOptionId)
