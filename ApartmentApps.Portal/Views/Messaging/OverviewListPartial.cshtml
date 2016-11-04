@@ -48,7 +48,11 @@
         </div>
 
     }
-    @Html.PageNavigator(Model as IPaging)
+    <div class="row">
+        <div class="col-md-12 text-center">
+            @Html.PageNavigator(Model as IPaging)
+        </div>
+    </div>
     <div style="clear: both;"></div>
 </div>
 

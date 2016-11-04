@@ -234,18 +234,16 @@
             <script>
 
                 $(document).ready(function() {
-
                     var input = $('#@inputid');
                     input.TouchSpin({
-                    min: 0,
-                    max: 100,
-                    step: 0.01,
-                    decimals: 2,
-                    boostat: 5,
-                    maxboostedstep: 10,
-           
-            });
-        });
+                        min: 0,
+                        max: 100,
+                        step: 0.01,
+                        decimals: 2,
+                        boostat: 5,
+                        maxboostedstep: 10 
+                    });
+                });
 
             </script>
         }
@@ -281,7 +279,8 @@
         }
         else if (property.SystemType == typeof (DateTime?))
         {
-            sValue = (((DateTime?) @propertyValue)?.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz", System.Globalization.CultureInfo.InvariantCulture)) + "Z" ?? "";
+            //"Z" val - concatenation with null.
+             sValue = (((DateTime?) @propertyValue)?.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz", System.Globalization.CultureInfo.InvariantCulture)) + "Z" ?? "";
         }
 
         string format = null;
@@ -321,6 +320,11 @@
         </div>
 
         <script>
+            
+            @if (sValue == "Z")
+            {
+                sValue = "";
+            } 
 
             $(document).ready(function() {
                 $('#@inputid').datetimepicker({

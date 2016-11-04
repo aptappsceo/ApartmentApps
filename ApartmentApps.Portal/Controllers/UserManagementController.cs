@@ -177,23 +177,24 @@ namespace ApartmentApps.Portal.Controllers
                     Context.SaveChanges();
                 }
 
+                if (Request.IsAjaxRequest())
+                {
+                    return AutoFormUpdate();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+
+
                 //AddErrors(result);
             }
             else
             {
-                return AutoForm(model, nameof(SaveUser), "Find a way to pass header");
+                return AutoForm(model, nameof(SaveUser), "Create/Update User Information");
             }
 
-            if (Request.IsAjaxRequest())
-            {
-                //got no furhter deals
-                return Content("");
-            }
-            else
-            {
-               return RedirectToAction("Index");
-            }
-
+        
         }
 
         public override ActionResult Entry(string id = null)

@@ -96,11 +96,16 @@ See usage in AutoForm.cshtml
                 url: postUrl, //process to mail
                 data: serialize,
                 success: function (msg) {
-                    if (msg === "") {
-                        that.close(); //be friendly and show message
-                    } else {
+                    if (msg.update) {
+                        if (EQ && EQ.view && EQ.view.grid) EQ.view.grid.applyFilter();
+                    } else if(msg.redirect) {
+                        window.location = msg.redirect;
+                    } else
+                    {
                         that.setContent(msg);
                     }
+                    that.close(); //be friendly and show message
+
                 },
                 error: function (msg) {
                     that.setContent(msg.responseText);

@@ -47,7 +47,6 @@ namespace ApartmentApps.Portal.Controllers
                     ModuleHelper.Kernel.Get<IRepository<Unit>>()
                         .ToArray().OrderByAlphaNumeric(p => p.Name);
 
-
                 return items.Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Building.Name + " - " + p.Name, UnitId == p.Id));
 
 
@@ -205,7 +204,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public ActionResult NewRequest()
         {
-
+            ViewBag.Title = "Submit Maintenance Request";
             return View(new MaitenanceRequestModel()
             {
                 //MaitenanceRequestTypeId_choices =
@@ -234,7 +233,14 @@ namespace ApartmentApps.Portal.Controllers
             if (ModelState.IsValid && model.Id != null)
             {
                 MaintenanceService.AssignRequest(Convert.ToInt32(model.Id), model.AssignedToId);
-                return RedirectToAction("Index");
+                if (Request.IsAjaxRequest())
+                {
+                    return AutoFormUpdate();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
         }

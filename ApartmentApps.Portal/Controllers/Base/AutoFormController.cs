@@ -65,10 +65,31 @@ namespace ApartmentApps.Portal.Controllers
                 }
                 _formService.Save(model);
                 ViewBag.SuccessMessage = "Success!";
-                return RedirectToAction("Index");
+
+
+                if (Request.IsAjaxRequest())
+                {
+                    return AutoFormUpdate();
+                }
+                else
+                {
+                   return RedirectToAction("Index");
+                }
             }
             return AutoForm(model, "SaveEntry");
         }
+
+        protected ActionResult AutoFormUpdate()
+        {
+            return Json(new { update = true });
+        }
+
+        protected ActionResult AutoFormRedirect(string url)
+        {
+            return Json(new { redirect = url });
+        }
+
+
 
         public virtual ActionResult Delete(string id)
         {
