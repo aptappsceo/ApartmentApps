@@ -23,6 +23,8 @@ namespace ApartmentApps.Api.Modules
         [DisplayName("Forte Merchant ID")]
         public string MerchantId { get; set; }
 
+        [DisplayName("API Login Id (From forte virtual terminal->Gateway Key")]
+        public string ApiLoginId { get; set; }
 
         [DisplayName("Forte Merchant Password")]
         [DataType(DataType.Password)]
@@ -55,8 +57,7 @@ namespace ApartmentApps.Api.Modules
         [DisplayName("Bank Account Checking Convenience Fee")]
         [DataType(DataType.Currency)]
         public decimal BankAccountCheckingConvenienceFee { get; set; }
-
-
-
+        [DisplayName("Secure Transaction Key (From forte virtual terminal->Gateway Key")]
+        public string SecureTransactionKey { get; set; }
     }
 }

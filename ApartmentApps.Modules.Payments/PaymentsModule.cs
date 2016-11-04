@@ -118,9 +118,9 @@ namespace ApartmentApps.Api.Modules
 
         public int MerchantId => string.IsNullOrEmpty(Config.MerchantId) ? 0 : Convert.ToInt32(Config.MerchantId);
 
-        public string ApiLoginId { get; set; } = "5KwrM3b7T7";
+        public string ApiLoginId => Config.ApiLoginId;
 
-        public string Key { get; set; } = "18RcFs5F";
+        public string Key => Config.SecureTransactionKey;
 
         //Includes fee
         public async Task<PaymentListBindingModel> GetPaymentSummaryFor(string userId, string paymentOptionId)
@@ -261,7 +261,10 @@ namespace ApartmentApps.Api.Modules
                     var paymentMethodId = result.Body.createPaymentMethodResult;
                     var userPaymentOption = new UserPaymentOption()
                     {
-                        UserId = userId, Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking, FriendlyName = addCreditCard.FriendlyName, TokenId = paymentMethodId.ToString()
+                        UserId = userId,
+                        Type = addCreditCard.IsSavings ? PaymentOptionType.Savings : PaymentOptionType.Checking,
+                        FriendlyName = addCreditCard.FriendlyName,
+                        TokenId = paymentMethodId.ToString()
                     };
                     Context.PaymentOptions.Add(userPaymentOption);
                     Context.SaveChanges();
@@ -278,7 +281,9 @@ namespace ApartmentApps.Api.Modules
         {
             return Context.PaymentOptions.Where(p => p.UserId == UserContext.UserId).Select(x => new PaymentOptionBindingModel()
             {
-                FriendlyName = x.FriendlyName, Type = x.Type, Id = x.Id,
+                FriendlyName = x.FriendlyName,
+                Type = x.Type,
+                Id = x.Id,
             });
         }
 
@@ -286,7 +291,9 @@ namespace ApartmentApps.Api.Modules
         {
             return Context.PaymentOptions.Where(p => p.UserId == userId).Select(x => new PaymentOptionBindingModel()
             {
-                FriendlyName = x.FriendlyName, Type = x.Type, Id = x.Id,
+                FriendlyName = x.FriendlyName,
+                Type = x.Type,
+                Id = x.Id,
             });
         }
 
@@ -389,8 +396,12 @@ namespace ApartmentApps.Api.Modules
 
             var response = transactionClient.ExecuteSocketQuery(new ExecuteSocketQueryParams()
             {
-                PgMerchantId = MerchantId.ToString(), PgClientId = clientId.ToString(), PgPaymentMethodId = paymentOption.TokenId, PgPassword = MerchantPassword, //"LEpLqvx7Y5L200"
-                PgTotalAmount = pgTotalAmount, PgTransactionType = "10", //sale
+                PgMerchantId = MerchantId.ToString(),
+                PgClientId = clientId.ToString(),
+                PgPaymentMethodId = paymentOption.TokenId,
+                PgPassword = MerchantPassword, //"LEpLqvx7Y5L200"
+                PgTotalAmount = pgTotalAmount,
+                PgTransactionType = "10", //sale
             });
 
 
@@ -430,9 +441,14 @@ namespace ApartmentApps.Api.Modules
             {
                 if (clientId == 0)
                 {
+                    
                     var result = await client.createClientAsync(auth, new ClientRecord()
                     {
-                        MerchantID = MerchantId, FirstName = user.FirstName, LastName = user.LastName, Status = ClientStatus.Active
+
+                        MerchantID = MerchantId,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Status = ClientStatus.Active
                     });
                     user.ForteClientId = clientId = result.Body.createClientResult;
                     Context.SaveChanges();
@@ -519,7 +535,8 @@ namespace ApartmentApps.Api.Modules
             var tranascations = _transactionHistory.GetAll().Where(s => s.UserId == userId);
             return new PaymentHistoryIndexBindingModel()
             {
-                UserId = userId, History = tranascations.Select(s => new PaymentHistoryIndexItemBindingModel()
+                UserId = userId,
+                History = tranascations.Select(s => new PaymentHistoryIndexItemBindingModel()
                 {
                 }).ToList()
             };
@@ -652,7 +669,9 @@ public static class PaymentsListExtensions
         {
             var line = new PaymentLineBindingModel()
             {
-                Format = PaymentSummaryFormat.Default, Price = $"{inv.Amount:$#,##0.00;($#,##0.00);Zero}", Title = inv.Title
+                Format = PaymentSummaryFormat.Default,
+                Price = $"{inv.Amount:$#,##0.00;($#,##0.00);Zero}",
+                Title = inv.Title
             };
             total += inv.Amount;
             list.Add(line);
@@ -660,7 +679,9 @@ public static class PaymentsListExtensions
 
         list.Add(new PaymentLineBindingModel()
         {
-            Format = PaymentSummaryFormat.Total, Price = $"{total:$#,##0.00;($#,##0.00);Zero}", Title = "Total"
+            Format = PaymentSummaryFormat.Total,
+            Price = $"{total:$#,##0.00;($#,##0.00);Zero}",
+            Title = "Total"
         });
 
         return list;
