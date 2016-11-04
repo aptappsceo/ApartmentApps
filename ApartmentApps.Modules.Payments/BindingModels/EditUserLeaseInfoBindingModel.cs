@@ -27,7 +27,7 @@ namespace ApartmentApps.Api.Modules
         public decimal Amount { get; set; }
 
         [DisplayName("Create invoice due")]
-        [RequiredIf("UseInterval == true")]
+        [RequiredIf("UseInterval == true || Id == null")]
         public DateTime? NextInvoiceDate { get;set; }
 
         [DisplayName("Create subscription ?")]

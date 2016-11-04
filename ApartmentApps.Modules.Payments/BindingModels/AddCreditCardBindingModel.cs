@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Web.Mvc;
+using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Forms;
 
 namespace ApartmentApps.Api.Modules
 {
@@ -17,15 +20,18 @@ namespace ApartmentApps.Api.Modules
         [DisplayName("Year"), Description("Example: 2017")]
         public string ExpirationYear { get; set; }
 
-
         public string ExpirationDate => ExpirationYear + ExpirationMonth;
 
         [DisplayName("Card Type")]
         public CardType CardType { get; set; }
+
         [DisplayName("Friendly Name"), Description("The name that you can use to identify this card.")]
         public string FriendlyName { get; set; }
 
         [DataType("Hidden")]
+        [SelectFrom(nameof(Users))]
         public string UserId { get; set; }
+
+        public List<UserLookupBindingModel> Users { get; set; }
     }
 }

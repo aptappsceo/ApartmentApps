@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Forms;
+using ApartmentApps.Portal.Controllers;
 using ExpressiveAnnotations.Attributes;
 
 namespace ApartmentApps.Api.Modules
@@ -27,7 +29,10 @@ namespace ApartmentApps.Api.Modules
         public string FriendlyName { get; set; }
 
         [DataType("Hidden")]
+        [SelectFrom(nameof(Users))]
         public string UserId { get; set; }
+
+        public List<UserLookupBindingModel> Users { get; set; }
     }
 
     public class CreateUserLeaseInfoBindingModel
@@ -40,6 +45,7 @@ namespace ApartmentApps.Api.Modules
         [Required]
         [DisplayName("User")]
         [Description("User that will be charged")]
+        [SelectFrom(nameof(Users))]
         public string UserId { get; set; }
 
         [Required]
@@ -61,9 +67,10 @@ namespace ApartmentApps.Api.Modules
         [RequiredIf("UseInterval == true && UseCompleteDate == true",ErrorMessage = "Expiration date is required. Subscription will expire after given date.")]
         public DateTime? RepetitionCompleteDate { get; set; }
 
-        public List<UserBindingModel> UserIdItems { get; set; }
+        public List<UserLookupBindingModel> Users { get; set; }
 
         public bool UseInterval { get; set; }
+
         public bool UseCompleteDate { get; set; }
     }
 }

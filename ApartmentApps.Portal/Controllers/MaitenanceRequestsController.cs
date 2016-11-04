@@ -21,6 +21,7 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Modules.Payments;
+using ApartmentApps.Modules.Payments.Services;
 using ApartmentApps.Portal.App_Start;
 using Korzh.EasyQuery.Services;
 using Ninject;
@@ -131,10 +132,13 @@ namespace ApartmentApps.Portal.Controllers
 
         public PaymentsRequestsService PaymentsRequestsService { get; set; }
         private IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> _editPaymentRequestMapper;
-        public PaymentRequestsController(IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper) : base(kernel, formService, indexService, context, userContext, service)
+        private LeaseInfoManagementService _leaseService;
+
+        public PaymentRequestsController(IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper, LeaseInfoManagementService leaseService) : base(kernel, formService, indexService, context, userContext, service)
         {
             PaymentsRequestsService = formService;
             _editPaymentRequestMapper = editPaymentRequestMapper;
+            _leaseService = leaseService;
         }
 
         public override ActionResult GridResult(GridList<UserLeaseInfoBindingModel> grid)
@@ -161,7 +165,44 @@ namespace ApartmentApps.Portal.Controllers
 
         public override ActionResult SaveEntry(EditUserLeaseInfoBindingModel model)
         {
-            return base.SaveEntry(model);
+
+            if (ModelState.IsValid)
+            {
+
+                var newRequest = model.Id == null;
+                UserLeaseInfo paymentRequest = null;
+                if (newRequest)
+                {
+                     _leaseService.CreateUserLeaseInfo(new CreateUserLeaseInfoBindingModel()
+                     {
+                         Amount = model.Amount,
+                         IntervalMonths = model.IntervalMonths,
+                         Title = model.Title,
+                         RepetitionCompleteDate = model.CompleteDate,
+                         UserId = model.UserId,
+                         UseCompleteDate = model.UseCompleteDate,
+                         UseInterval = model.UseInterval,
+                         InvoiceDate = model.NextInvoiceDate.Value, //not null due to validation
+                     });
+                }
+                else
+                {
+                    _leaseService.EditUserLeaseInfo(model);
+                }
+
+                if (Request.IsAjaxRequest())
+                {
+                    return AutoFormUpdate();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return AutoForm(model, nameof(SaveEntry), "Create/Update Payment Request Information");
+            
+
         }
     }
 

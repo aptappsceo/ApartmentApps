@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Payments.BindingModels;
 using ApartmentApps.Modules.Payments.Data;
@@ -26,6 +27,7 @@ namespace ApartmentApps.Portal.Controllers
         private readonly IRepository<Invoice> _invoices;
         private readonly IRepository<TransactionHistoryItem> _invoiceHistory;
         private readonly IRepository<InvoiceTransaction> _transactions;
+        private readonly UserService _users;
         private LeaseInfoManagementService _leaseService;
 
         // GET: Payments
@@ -38,7 +40,7 @@ namespace ApartmentApps.Portal.Controllers
             return View("RentSummary"); // TODO Redirect to other pages for property manager
         }
 
-        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule, IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices, IKernel kernel, PropertyContext context, IUserContext userContext, IRepository<InvoiceTransaction> transactions, LeaseInfoManagementService leaseService, IRepository<TransactionHistoryItem> invoiceHistory) : base(kernel, context, userContext)
+        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule, IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices, IKernel kernel, PropertyContext context, IUserContext userContext, IRepository<InvoiceTransaction> transactions, LeaseInfoManagementService leaseService, IRepository<TransactionHistoryItem> invoiceHistory, UserService users) : base(kernel, context, userContext)
         {
             _blobStorageService = blobStorageService;
             _paymentsModule = paymentsModule;
@@ -47,6 +49,7 @@ namespace ApartmentApps.Portal.Controllers
             _transactions = transactions;
             _leaseService = leaseService;
             _invoiceHistory = invoiceHistory;
+            _users = users;
         }
 
         public async Task<ActionResult> RentSummaryFor(string userId)
@@ -91,7 +94,19 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult AddCreditCardFor(string userId)
         {
-            return AutoForm(new AddCreditCardBindingModel() {UserId = userId}, "AddCreditCardForSubmit", "Add Credit Card");
+            return AutoForm(new AddCreditCardBindingModel()
+            {
+                Users = _users.GetAll<UserLookupBindingModel>().ToList(),
+                UserId = userId
+            }, "AddCreditCardForSubmit", "Add Credit Card");
+        }
+
+        public ActionResult AddCreditCard()
+        {
+            return AutoForm(new AddCreditCardBindingModel()
+            {
+                Users = _users.GetAll<UserLookupBindingModel>().ToList()
+            }, "AddCreditCardForSubmit", "Add Credit Card");
         }
 
         public bool IsUserMakingPayment
@@ -126,7 +141,19 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult AddBankAccountFor(string userId)
         {
-            return AutoForm(new AddBankAccountBindingModel() { UserId = userId }, "AddBankAccountSubmit", "Add Bank Account");
+            return AutoForm(new AddBankAccountBindingModel()
+            {
+                Users = _users.GetAll<UserLookupBindingModel>().ToList(),
+                UserId = userId
+            }, "AddBankAccountSubmit", "Add Bank Account");
+        }
+
+        public ActionResult AddBankAccount(string userId)
+        {
+            return AutoForm(new AddBankAccountBindingModel()
+            {
+                Users = _users.GetAll<UserLookupBindingModel>().ToList(),
+            }, "AddBankAccountSubmit", "Add Bank Account");
         }
 
         public async Task<ActionResult> AddBankAccountSubmit(AddBankAccountBindingModel cardModel)
@@ -151,13 +178,6 @@ namespace ApartmentApps.Portal.Controllers
             return View("CreateUserLeaseInfo", new CreateUserLeaseInfoBindingModel()
             {
                 UserId = id,
-                UserIdItems =
-                    Context.Users.GetAll()
-                        .Where(u => !u.Archived)
-                        .ToList()
-                        .Select(u => u.ToUserBindingModel(_blobStorageService))
-                        .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
-                        .ToList(),
             });
         }
 
@@ -166,13 +186,6 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (!ModelState.IsValid)
             {
-                data.UserIdItems =
-                    Context.Users.GetAll()
-                        .Where(u => !u.Archived)
-                        .ToList()
-                        .Select(u => u.ToUserBindingModel(_blobStorageService))
-                        .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
-                        .ToList();
                 return View("CreateUserLeaseInfo", data);
             }
 
@@ -330,7 +343,7 @@ namespace ApartmentApps.Portal.Controllers
             if (ModelState.IsValid)
             {
                 var userLeaseInfo = _leaseInfos.Find(data.Id);
-                if (userLeaseInfo== null) return HttpNotFound();
+                if (userLeaseInfo== null) return HttpNotFound("Payment request not found");
 
                 var user = userLeaseInfo.User;
 
