@@ -155,7 +155,8 @@ namespace ApartmentApps.Portal.Controllers
 
         public override ActionResult Entry(string id = null)
         {
-            UserLeaseInfo paymentRequest = Context.UserLeaseInfos.Find(id);
+            
+            UserLeaseInfo paymentRequest = Repository<UserLeaseInfo>().Find(id);
             EditUserLeaseInfoBindingModel editPaymentRequestModel = 
                 _editPaymentRequestMapper.ToViewModel(paymentRequest); //for null paymentRequest will return empty but prepared EditModel ready for Creation of Payment Request
             return AutoForm(editPaymentRequestModel, nameof(SaveEntry), paymentRequest == null ? "Create Payment Request" : "Edit Payment Request Information");
