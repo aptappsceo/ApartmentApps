@@ -190,7 +190,7 @@ namespace ApartmentApps.Portal.Controllers
                     _leaseService.EditUserLeaseInfo(model);
                 }
 
-                if (Request  != null || Request.IsAjaxRequest())
+                if (Request  != null && Request.IsAjaxRequest())
                 {
                     return AutoFormUpdate();
                 }

@@ -67,7 +67,7 @@ namespace ApartmentApps.Portal.Controllers
                 ViewBag.SuccessMessage = "Success!";
 
 
-                if (Request.IsAjaxRequest())
+                if (Request != null && Request.IsAjaxRequest())
                 {
                     return AutoFormUpdate();
                 }
