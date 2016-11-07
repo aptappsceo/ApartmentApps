@@ -190,7 +190,7 @@ namespace ApartmentApps.Portal.Controllers
                     _leaseService.EditUserLeaseInfo(model);
                 }
 
-                if (Request == null || Request.IsAjaxRequest())
+                if (Request  != null || Request.IsAjaxRequest())
                 {
                     return AutoFormUpdate();
                 }
@@ -223,7 +223,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public override ActionResult GridResult(GridList<MaintenanceRequestViewModel> grid)
         {
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return View("OverviewListPartial", grid);
             }

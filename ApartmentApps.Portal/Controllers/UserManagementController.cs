@@ -50,7 +50,6 @@ namespace ApartmentApps.Portal.Controllers
         [DisplayName("Is Tenant ?")]
         public bool IsTenant { get; set; }
 
-        [Required]
         [SelectFrom(nameof(UnitItems))]
         [DisplayName("Assigned Unit")]
         public int? UnitId { get; set; }
@@ -104,7 +103,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public override ActionResult GridResult(GridList<UserBindingModel> grid)
         {
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return View("OverviewListPartial", grid);
             }
@@ -177,7 +176,7 @@ namespace ApartmentApps.Portal.Controllers
                     Context.SaveChanges();
                 }
 
-                if (Request.IsAjaxRequest())
+                if (Request != null && Request.IsAjaxRequest())
                 {
                     return AutoFormUpdate();
                 }
