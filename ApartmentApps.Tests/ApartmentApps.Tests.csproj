@@ -199,6 +199,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\PropertyControllerTest.cs" />
     <Compile Include="Base\PropertyTest.cs" />
+    <Compile Include="ProspectTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApartmentApps.API.Service\ApartmentApps.API.Service.csproj">

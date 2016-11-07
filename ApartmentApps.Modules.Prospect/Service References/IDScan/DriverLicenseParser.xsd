@@ -178,4 +178,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ValidateLicenseNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="authKey" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="licenseNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="jurisdictionCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="countryCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidateLicenseNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ValidateLicenseNumberResult" nillable="true" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
