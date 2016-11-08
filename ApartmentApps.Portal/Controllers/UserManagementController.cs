@@ -179,7 +179,7 @@ namespace ApartmentApps.Portal.Controllers
 
                 if (Request.IsAjaxRequest())
                 {
-                    return AutoFormUpdate();
+                    return JsonUpdate();
                 }
                 else
                 {

@@ -22,22 +22,52 @@
 
     </script>
 
-        <div class="modal-body" id="autoform-modal-body">
+
+    <div class="modal-body" id="autoform-modal-body">
+        
+        @if (TempData["GlobalError"] != null)
+        {
             <div class="row">
-                <div class="col-sm-12">
-                    <h3 class="m-t-none m-b">@ViewBag.Title</h3>
-                    <p>Please, fill the information below.</p>
-                    @using (var form = Html.BeginForm(Model.PostAction, Model.PostController, FormMethod.Post, new {id = formId}))
-                    {
-                        @Html.RenderForm(Model.Model)
-                    }
+
+                <div class="alert alert-danger">
+                    <strong>Error: </strong> @TempData["GlobalError"]
                 </div>
             </div>
+            {
+                TempData["GlobalError"] = null;
+            }
+        }
+        @if (TempData["GlobalSuccess"] != null)
+        {
+
+            <div class="row">
+
+                <div class="alert alert-success">
+                    <strong>Done! </strong> @TempData["GlobalSuccess"]
+                </div>
+            </div>
+            {
+                TempData["GlobalSuccess"] = null;
+            }
+        }
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="m-t-none m-b">@ViewBag.Title</h3>
+                <p>Please, fill the information below.</p>
+
+
+                @using (var form = Html.BeginForm(Model.PostAction, Model.PostController, FormMethod.Post, new {id = formId}))
+                {
+                    @Html.RenderForm(Model.Model)
+                }
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-white close-link" data-dismiss="modal">Close</button>
-            <input type="submit" value="Apply" class="btn btn-primary" id="@submitButtonId"/>
-        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white close-link" data-dismiss="modal">Close</button>
+        <input type="submit" value="Apply" class="btn btn-primary" id="@submitButtonId"/>
+    </div>
 }
 else
 {
@@ -49,7 +79,7 @@ else
                         <h5>@ViewBag.Title</h5>
                     </div>
                     <div class="ibox-content">
-                        @using (var form = Html.BeginForm(Model.PostAction, Model.PostController, FormMethod.Post, new { id = formId }))
+                        @using (var form = Html.BeginForm(Model.PostAction, Model.PostController, FormMethod.Post, new {id = formId}))
                         {
                             @Html.RenderForm(Model.Model)
                             <div>

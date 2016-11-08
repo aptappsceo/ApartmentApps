@@ -192,7 +192,7 @@ namespace ApartmentApps.Portal.Controllers
 
                 if (Request.IsAjaxRequest())
                 {
-                    return AutoFormUpdate();
+                    return JsonUpdate();
                 }
                 else
                 {
@@ -276,7 +276,7 @@ namespace ApartmentApps.Portal.Controllers
                 MaintenanceService.AssignRequest(Convert.ToInt32(model.Id), model.AssignedToId);
                 if (Request.IsAjaxRequest())
                 {
-                    return AutoFormUpdate();
+                    return JsonUpdate();
                 }
                 else
                 {

@@ -69,7 +69,7 @@ namespace ApartmentApps.Portal.Controllers
 
                 if (Request.IsAjaxRequest())
                 {
-                    return AutoFormUpdate();
+                    return JsonUpdate();
                 }
                 else
                 {
@@ -79,15 +79,6 @@ namespace ApartmentApps.Portal.Controllers
             return AutoForm(model, "SaveEntry");
         }
 
-        protected ActionResult AutoFormUpdate()
-        {
-            return Json(new { update = true });
-        }
-
-        protected ActionResult AutoFormRedirect(string url)
-        {
-            return Json(new { redirect = url });
-        }
 
 
 

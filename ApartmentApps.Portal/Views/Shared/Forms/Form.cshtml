@@ -46,7 +46,10 @@
                 }
             </select>
 
-            <span class="help-block m-b-none">@property.Description</span>
+            @if (!string.IsNullOrEmpty(property.Description))
+            {
+                <span class="help-block m-b-none">@property.Description</span>
+            }
 
             @if (property.HasErrors)
             {
@@ -85,7 +88,12 @@
                 <input type="text" class="form-control" name="@propertyName" value="@propertyValue">
             }
 
-            <span class="help-block m-b-none">@property.Description</span>
+            @if (!string.IsNullOrEmpty(property.Description))
+            {
+                <span class="help-block m-b-none">@property.Description</span>
+            }
+
+
                     
             @if (property.HasErrors)
             {
@@ -121,6 +129,12 @@
                         </span>
                 <input type="text" class="form-control" readonly value="@propertyLabel">
             </div>
+            @if (!string.IsNullOrEmpty(property.Description))
+            {
+                <span class="help-block m-b-none">@property.Description</span>
+            }
+
+
 
 
             @if (property.HasErrors)
@@ -190,6 +204,10 @@
                     <input id="@inputid" type="text" class="form-control" name="@propertyName" value="@propertyValue">
 
                 </div>
+                @if (!string.IsNullOrEmpty(property.Description))
+                {
+                    <span class="help-block m-b-none">@property.Description</span>
+                }
 
                 @if (property.HasErrors)
                 {
@@ -257,6 +275,11 @@
             <label class="control-label" for="@propertyName">@propertyLabel</label>
 
             <input id="@inputid" type="number" name="@propertyName" class="form-control" value="@propertyValue">
+            @if (!string.IsNullOrEmpty(property.Description))
+            {
+                <span class="help-block m-b-none">@property.Description</span>
+            }
+
 
             @if (property.HasErrors)
             {
@@ -309,6 +332,11 @@
                 <span class="input-group-addon"><i class="fa fa-fw fa-calendar"></i></span>
                 <input id="@inputid" type="text" class="form-control" name="@propertyName">
             </div>
+            @if (!string.IsNullOrEmpty(property.Description))
+            {
+                <span class="help-block m-b-none">@property.Description</span>
+            }
+
 
             @if (property.HasErrors)
             {
