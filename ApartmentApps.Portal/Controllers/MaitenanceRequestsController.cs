@@ -143,7 +143,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public override ActionResult GridResult(GridList<UserLeaseInfoBindingModel> grid)
         {
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return View("OverviewListPartial", grid);
             }
@@ -155,7 +155,8 @@ namespace ApartmentApps.Portal.Controllers
 
         public override ActionResult Entry(string id = null)
         {
-            UserLeaseInfo paymentRequest = Context.UserLeaseInfos.Find(id);
+            
+            UserLeaseInfo paymentRequest = Repository<UserLeaseInfo>().Find(id);
             EditUserLeaseInfoBindingModel editPaymentRequestModel = 
                 _editPaymentRequestMapper.ToViewModel(paymentRequest); //for null paymentRequest will return empty but prepared EditModel ready for Creation of Payment Request
             return AutoForm(editPaymentRequestModel, nameof(SaveEntry), paymentRequest == null ? "Create Payment Request" : "Edit Payment Request Information");
@@ -190,7 +191,7 @@ namespace ApartmentApps.Portal.Controllers
                     _leaseService.EditUserLeaseInfo(model);
                 }
 
-                if (Request.IsAjaxRequest())
+                if (Request  != null && Request.IsAjaxRequest())
                 {
                     return JsonUpdate();
                 }
@@ -223,7 +224,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public override ActionResult GridResult(GridList<MaintenanceRequestViewModel> grid)
         {
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return View("OverviewListPartial", grid);
             }
@@ -274,7 +275,7 @@ namespace ApartmentApps.Portal.Controllers
             if (ModelState.IsValid && model.Id != null)
             {
                 MaintenanceService.AssignRequest(Convert.ToInt32(model.Id), model.AssignedToId);
-                if (Request.IsAjaxRequest())
+                if (Request != null && Request.IsAjaxRequest())
                 {
                     return JsonUpdate();
                 }

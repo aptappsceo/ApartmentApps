@@ -13,7 +13,7 @@ namespace ApartmentApps.Tests
         {
             base.Init();
         }
-        //[TestMethod]
+        [TestMethod]
         public void Test()
         {
             var img =

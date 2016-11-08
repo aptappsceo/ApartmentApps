@@ -881,6 +881,12 @@ namespace ApartmentApps.Modules.Prospect.IDScan {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://dlpws.idware.net/IDriverLicenseParser/Echo", ReplyAction="http://dlpws.idware.net/IDriverLicenseParser/EchoResponse")]
         System.Threading.Tasks.Task<string> EchoAsync(string base64AsciiEncodedString);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://dlpws.idware.net/IDriverLicenseParser/ValidateLicenseNumber", ReplyAction="http://dlpws.idware.net/IDriverLicenseParser/ValidateLicenseNumberResponse")]
+        System.Nullable<bool> ValidateLicenseNumber(string authKey, string licenseNumber, string jurisdictionCode, string countryCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://dlpws.idware.net/IDriverLicenseParser/ValidateLicenseNumber", ReplyAction="http://dlpws.idware.net/IDriverLicenseParser/ValidateLicenseNumberResponse")]
+        System.Threading.Tasks.Task<System.Nullable<bool>> ValidateLicenseNumberAsync(string authKey, string licenseNumber, string jurisdictionCode, string countryCode);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -964,6 +970,14 @@ namespace ApartmentApps.Modules.Prospect.IDScan {
         
         public System.Threading.Tasks.Task<string> EchoAsync(string base64AsciiEncodedString) {
             return base.Channel.EchoAsync(base64AsciiEncodedString);
+        }
+        
+        public System.Nullable<bool> ValidateLicenseNumber(string authKey, string licenseNumber, string jurisdictionCode, string countryCode) {
+            return base.Channel.ValidateLicenseNumber(authKey, licenseNumber, jurisdictionCode, countryCode);
+        }
+        
+        public System.Threading.Tasks.Task<System.Nullable<bool>> ValidateLicenseNumberAsync(string authKey, string licenseNumber, string jurisdictionCode, string countryCode) {
+            return base.Channel.ValidateLicenseNumberAsync(authKey, licenseNumber, jurisdictionCode, countryCode);
         }
     }
 }

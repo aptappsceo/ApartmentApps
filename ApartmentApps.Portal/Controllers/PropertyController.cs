@@ -30,7 +30,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public override ActionResult GridResult(GridList<ProspectApplicationBindingModel> grid)
         {
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return View("OverviewListPartial", grid);
             }
