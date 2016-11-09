@@ -28,7 +28,6 @@ namespace ResidentAppCross.ViewModels.Screens
         public override void Start()
         {
             base.Start();
-            UpdateRentSummary.Execute(null);
         }
 
         public PaymentSummary PaymentSummary

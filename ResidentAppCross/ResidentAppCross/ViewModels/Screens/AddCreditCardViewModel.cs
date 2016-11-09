@@ -7,7 +7,9 @@ namespace ResidentAppCross.ViewModels.Screens
     public enum CreditCardType
     {
         Visa = 0,
-        MasterCard = 1
+        MasterCard = 1,
+        Discovery = 2,
+        AmericanExpress = 3,
     }
 
     public class AddCreditCardPaymentOptionViewModel : ViewModelBase
@@ -22,7 +24,7 @@ namespace ResidentAppCross.ViewModels.Screens
         private string _cardNumber;
         private int _cardType;
         private string _cvcCode;
-
+        private string[] _cardTypes;
 
         public string FriendlyName
         {
@@ -64,6 +66,22 @@ namespace ResidentAppCross.ViewModels.Screens
 
         }
 
+        public string[] CardTypes
+        {
+            get
+            {
+                if (_cardTypes == null)
+                {
+                    _cardTypes = new[]
+                    {
+                        "Visa", "MasterCard", "Discovery", "American Express"
+                    };
+                }
+                return _cardTypes;
+            }
+            set { _cardTypes = value; }
+        }
+
         public int CardType
         {
             get { return _cardType; }
@@ -88,7 +106,7 @@ namespace ResidentAppCross.ViewModels.Screens
                         CardType = CardType,
                         ExpirationMonth = Month,
                         ExpirationYear = Year,
-                        FriendlyName = FriendlyName
+                        FriendlyName = FriendlyName,
                     });
                 }).OnStart("Adding new payment option...").OnComplete("New credit card added!", ()=>this.Close(this));
             }

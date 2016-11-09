@@ -2,7 +2,10 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using ApartmentApps.Client.Models;
+using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
@@ -12,7 +15,7 @@ namespace ApartmentApps.Client.Models
         private string _accountHolderName;
         
         /// <summary>
-        /// Optional.
+        /// Required.
         /// </summary>
         public string AccountHolderName
         {
@@ -23,7 +26,7 @@ namespace ApartmentApps.Client.Models
         private string _cardNumber;
         
         /// <summary>
-        /// Optional.
+        /// Required.
         /// </summary>
         public string CardNumber
         {
@@ -31,12 +34,12 @@ namespace ApartmentApps.Client.Models
             set { this._cardNumber = value; }
         }
         
-        private int? _cardType;
+        private int _cardType;
         
         /// <summary>
-        /// Optional.
+        /// Required.
         /// </summary>
-        public int? CardType
+        public int CardType
         {
             get { return this._cardType; }
             set { this._cardType = value; }
@@ -56,7 +59,7 @@ namespace ApartmentApps.Client.Models
         private string _expirationMonth;
         
         /// <summary>
-        /// Optional.
+        /// Required.
         /// </summary>
         public string ExpirationMonth
         {
@@ -67,7 +70,7 @@ namespace ApartmentApps.Client.Models
         private string _expirationYear;
         
         /// <summary>
-        /// Optional.
+        /// Required.
         /// </summary>
         public string ExpirationYear
         {
@@ -78,7 +81,7 @@ namespace ApartmentApps.Client.Models
         private string _friendlyName;
         
         /// <summary>
-        /// Optional.
+        /// Required.
         /// </summary>
         public string FriendlyName
         {
@@ -97,11 +100,23 @@ namespace ApartmentApps.Client.Models
             set { this._userId = value; }
         }
         
+        private IList<UserLookupBindingModel> _users;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<UserLookupBindingModel> Users
+        {
+            get { return this._users; }
+            set { this._users = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the AddCreditCardBindingModel class.
         /// </summary>
         public AddCreditCardBindingModel()
         {
+            this.Users = new LazyList<UserLookupBindingModel>();
         }
         
         /// <summary>
@@ -116,6 +131,26 @@ namespace ApartmentApps.Client.Models
             {
                 outputObject = new JObject();
             }
+            if (this.AccountHolderName == null)
+            {
+                throw new ArgumentNullException("AccountHolderName");
+            }
+            if (this.CardNumber == null)
+            {
+                throw new ArgumentNullException("CardNumber");
+            }
+            if (this.ExpirationMonth == null)
+            {
+                throw new ArgumentNullException("ExpirationMonth");
+            }
+            if (this.ExpirationYear == null)
+            {
+                throw new ArgumentNullException("ExpirationYear");
+            }
+            if (this.FriendlyName == null)
+            {
+                throw new ArgumentNullException("FriendlyName");
+            }
             if (this.AccountHolderName != null)
             {
                 outputObject["AccountHolderName"] = this.AccountHolderName;
@@ -124,10 +159,7 @@ namespace ApartmentApps.Client.Models
             {
                 outputObject["CardNumber"] = this.CardNumber;
             }
-            if (this.CardType != null)
-            {
-                outputObject["CardType"] = this.CardType.Value;
-            }
+            outputObject["CardType"] = this.CardType;
             if (this.ExpirationDate != null)
             {
                 outputObject["ExpirationDate"] = this.ExpirationDate;
@@ -147,6 +179,22 @@ namespace ApartmentApps.Client.Models
             if (this.UserId != null)
             {
                 outputObject["UserId"] = this.UserId;
+            }
+            JArray usersSequence = null;
+            if (this.Users != null)
+            {
+                if (this.Users is ILazyCollection<UserLookupBindingModel> == false || ((ILazyCollection<UserLookupBindingModel>)this.Users).IsInitialized)
+                {
+                    usersSequence = new JArray();
+                    outputObject["Users"] = usersSequence;
+                    foreach (UserLookupBindingModel usersItem in this.Users)
+                    {
+                        if (usersItem != null)
+                        {
+                            usersSequence.Add(usersItem.SerializeJson(null));
+                        }
+                    }
+                }
             }
             return outputObject;
         }

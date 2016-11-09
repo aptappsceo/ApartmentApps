@@ -155,6 +155,17 @@ namespace ApartmentApps.Client.Models
             set { this._submittedBy = value; }
         }
         
+        private string _title;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Title
+        {
+            get { return this._title; }
+            set { this._title = value; }
+        }
+        
         private int? _zipCode;
         
         /// <summary>
@@ -173,6 +184,98 @@ namespace ApartmentApps.Client.Models
         public ProspectApplicationBindingModel()
         {
             this.ActionLinks = new LazyList<ActionLinkModel>();
+        }
+        
+        /// <summary>
+        /// Deserialize the object
+        /// </summary>
+        public virtual void DeserializeJson(JToken inputObject)
+        {
+            if (inputObject != null && inputObject.Type != JTokenType.Null)
+            {
+                JToken actionLinksSequence = ((JToken)inputObject["ActionLinks"]);
+                if (actionLinksSequence != null && actionLinksSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken actionLinksValue in ((JArray)actionLinksSequence))
+                    {
+                        ActionLinkModel actionLinkModel = new ActionLinkModel();
+                        actionLinkModel.DeserializeJson(actionLinksValue);
+                        this.ActionLinks.Add(actionLinkModel);
+                    }
+                }
+                JToken addressCityValue = inputObject["AddressCity"];
+                if (addressCityValue != null && addressCityValue.Type != JTokenType.Null)
+                {
+                    this.AddressCity = ((string)addressCityValue);
+                }
+                JToken addressLine1Value = inputObject["AddressLine1"];
+                if (addressLine1Value != null && addressLine1Value.Type != JTokenType.Null)
+                {
+                    this.AddressLine1 = ((string)addressLine1Value);
+                }
+                JToken addressLine2Value = inputObject["AddressLine2"];
+                if (addressLine2Value != null && addressLine2Value.Type != JTokenType.Null)
+                {
+                    this.AddressLine2 = ((string)addressLine2Value);
+                }
+                JToken addressStateValue = inputObject["AddressState"];
+                if (addressStateValue != null && addressStateValue.Type != JTokenType.Null)
+                {
+                    this.AddressState = ((string)addressStateValue);
+                }
+                JToken createdOnValue = inputObject["CreatedOn"];
+                if (createdOnValue != null && createdOnValue.Type != JTokenType.Null)
+                {
+                    this.CreatedOn = ((DateTimeOffset)createdOnValue);
+                }
+                JToken desiredMoveInDateValue = inputObject["DesiredMoveInDate"];
+                if (desiredMoveInDateValue != null && desiredMoveInDateValue.Type != JTokenType.Null)
+                {
+                    this.DesiredMoveInDate = ((DateTimeOffset)desiredMoveInDateValue);
+                }
+                JToken emailValue = inputObject["Email"];
+                if (emailValue != null && emailValue.Type != JTokenType.Null)
+                {
+                    this.Email = ((string)emailValue);
+                }
+                JToken firstNameValue = inputObject["FirstName"];
+                if (firstNameValue != null && firstNameValue.Type != JTokenType.Null)
+                {
+                    this.FirstName = ((string)firstNameValue);
+                }
+                JToken idValue = inputObject["Id"];
+                if (idValue != null && idValue.Type != JTokenType.Null)
+                {
+                    this.Id = ((string)idValue);
+                }
+                JToken lastNameValue = inputObject["LastName"];
+                if (lastNameValue != null && lastNameValue.Type != JTokenType.Null)
+                {
+                    this.LastName = ((string)lastNameValue);
+                }
+                JToken phoneNumberValue = inputObject["PhoneNumber"];
+                if (phoneNumberValue != null && phoneNumberValue.Type != JTokenType.Null)
+                {
+                    this.PhoneNumber = ((string)phoneNumberValue);
+                }
+                JToken submittedByValue = inputObject["SubmittedBy"];
+                if (submittedByValue != null && submittedByValue.Type != JTokenType.Null)
+                {
+                    UserBindingModel userBindingModel = new UserBindingModel();
+                    userBindingModel.DeserializeJson(submittedByValue);
+                    this.SubmittedBy = userBindingModel;
+                }
+                JToken titleValue = inputObject["Title"];
+                if (titleValue != null && titleValue.Type != JTokenType.Null)
+                {
+                    this.Title = ((string)titleValue);
+                }
+                JToken zipCodeValue = inputObject["ZipCode"];
+                if (zipCodeValue != null && zipCodeValue.Type != JTokenType.Null)
+                {
+                    this.ZipCode = ((int)zipCodeValue);
+                }
+            }
         }
         
         /// <summary>
@@ -250,6 +353,10 @@ namespace ApartmentApps.Client.Models
             if (this.SubmittedBy != null)
             {
                 outputObject["SubmittedBy"] = this.SubmittedBy.SerializeJson(null);
+            }
+            if (this.Title != null)
+            {
+                outputObject["Title"] = this.Title;
             }
             if (this.ZipCode != null)
             {

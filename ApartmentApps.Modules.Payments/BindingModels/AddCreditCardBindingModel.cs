@@ -12,8 +12,8 @@ namespace ApartmentApps.Api.Modules
     {
 
         [DisplayName("User to bind the credit card")]
+        [Description("Card will be bound to current user if noone is specified")]
         [SelectFrom(nameof(Users))]
-        [Required]
         public string UserId { get; set; }
         
         [DisplayName("Friendly Name"), Description("The name that you can use to identify this card.")]

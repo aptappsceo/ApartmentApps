@@ -34,31 +34,26 @@
     </android.support.design.widget.TextInputLayout>
 
 
-    <RadioGroup
-        android:id="@+id/CreditCardTypeSelection"
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/CreditCardHolderInputLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:layout_marginTop="16dp">
+        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/CreditCardTypeVisa"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/CreditCardHolderInput"
+            android:layout_width="match_parent"
+            android:hint="Name on card"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Visa" />
+            android:imeOptions="actionNext"
+            android:inputType="textPersonName"
+            android:minWidth="350dp"
+            android:textColor="@color/primary_text_body"
+            android:textColorHint="@color/secondary_text_body"
+            android:singleLine="true"
+            android:textCursorDrawable="@null"/>
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/CreditCardTypeMasterCard"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="MasterCard" />
-    </RadioGroup>
-
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/CreditCardNumberInputLayout"
@@ -169,25 +164,40 @@
     </LinearLayout>
 
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/CreditCardHolderInputLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="horizontal">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/CreditCardHolderInput"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:hint="Account Holder Name"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            android:minWidth="350dp"
-            android:textColor="@color/primary_text_body"
-            android:textColorHint="@color/secondary_text_body"
-            android:singleLine="true"
-            android:textCursorDrawable="@null"/>
+            android:layout_height="80dp"
+            android:orientation="vertical">
 
-    </android.support.design.widget.TextInputLayout>
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/CardTypeSelection"
+            app:ms_hint="Card Type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ms_multiline="false"
+            app:ms_enableFloatingLabel="true"
+            app:ms_enableErrorLabel="false"
+            app:ms_floatingLabelText="Card Type"
+            app:ms_baseColor="@color/secondary_text_body"
+            app:ms_highlightColor="@color/accent"
+            app:ms_errorColor="@color/secondary_text_body"
+            app:ms_hintColor="@color/secondary_text_body"
+            app:ms_arrowColor="@color/secondary_text_body"
+            app:ms_arrowSize="8dp"
+            app:ms_alignLabels="false"
+            app:ms_floatingLabelColor="@color/secondary_text_body"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
 
 
 

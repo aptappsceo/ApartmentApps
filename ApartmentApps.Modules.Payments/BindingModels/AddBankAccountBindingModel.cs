@@ -14,7 +14,7 @@ namespace ApartmentApps.Api.Modules
         
         [DisplayName("User to bind bank account")]
         [SelectFrom(nameof(Users))]
-        [Required]
+        [Description("Account will be bound to current user if noone is specified")]
         public string UserId { get; set; }
         
         [DisplayName("Friendly Name")]

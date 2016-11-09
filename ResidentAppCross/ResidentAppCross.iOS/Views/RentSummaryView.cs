@@ -91,6 +91,11 @@ namespace ResidentAppCross.iOS
             }
         }
 
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            ViewModel.UpdateRentSummary.Execute(null);
+        }
 
         public TableDataBinding<PaymentSummaryViewCell, PaymentSummaryEntry> TableItemsBinding
         {
@@ -156,8 +161,6 @@ namespace ResidentAppCross.iOS
             var set = this.CreateBindingSet<RentSummaryView, RentSummaryViewModel>();
             set.Bind(CallToActionSection.MainButton).To(vm => vm.CheckOutCommand);
             set.Apply();
-            
-
         }
 
         public override void GetContent(List<UIView> content)
@@ -350,7 +353,6 @@ namespace ResidentAppCross.iOS
             var set = this.CreateBindingSet<PaymentSummaryView, PaymentSummaryViewModel>();
             set.Bind(CallToActionSection.MainButton).To(vm => vm.CheckOutCommand);
             set.Apply();
-            
 
         }
 
