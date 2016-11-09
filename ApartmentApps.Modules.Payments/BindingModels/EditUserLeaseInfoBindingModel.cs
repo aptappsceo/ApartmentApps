@@ -28,6 +28,7 @@ namespace ApartmentApps.Api.Modules
 
         [DisplayName("Create invoice due")]
         [RequiredIf("UseInterval == true || Id == null")]
+        [DataType(DataType.Date)]
         public DateTime? NextInvoiceDate { get;set; }
 
         [DisplayName("Create subscription ?")]
@@ -48,6 +49,7 @@ namespace ApartmentApps.Api.Modules
         [DisplayName("Close subscription on")]
         [WithCategory("IntervalSettings ExpirationSettings")]
         [RequiredIf("UseInterval == true && UseCompleteDate == true")]
+        [DataType(DataType.Date)]
         public DateTime? CompleteDate { get; set; }
         
         public List<UserBindingModel> UserIdItems { get; set; }

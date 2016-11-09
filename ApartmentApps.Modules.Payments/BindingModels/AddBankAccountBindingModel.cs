@@ -11,26 +11,33 @@ namespace ApartmentApps.Api.Modules
 {
     public class AddBankAccountBindingModel
     {
-        [DisplayName("Is Savings?")]
-        [Description("If unchecked a checking account is used.")]
-        public bool IsSavings { get; set; }
-
+        
+        [DisplayName("User to bind bank account")]
+        [SelectFrom(nameof(Users))]
+        [Required]
+        public string UserId { get; set; }
+        
+        [DisplayName("Friendly Name")]
+        [Description("A friendly name such, that you can identify this account.")]
+        [Required]
+        public string FriendlyName { get; set; }
+    
         [DisplayName("Account Holder Name")]
+        [Required]
         public string AccountHolderName { get; set; }
 
         [DisplayName("Account Number")]
+        [Required]
         public string AccountNumber { get; set; }
 
         [DisplayName("Routing Number")]
+        [Required]
         public string RoutingNumber { get; set; }
 
-        [DisplayName("Friendly Name")]
-        [Description("A friendly name that you can use for this account.")]
-        public string FriendlyName { get; set; }
-
-        [DataType("Hidden")]
-        [SelectFrom(nameof(Users))]
-        public string UserId { get; set; }
+        [DisplayName("Is Savings?")]
+        [Description("If unchecked a checking account is used.")]
+        [Required]
+        public bool IsSavings { get; set; }
 
         public List<UserLookupBindingModel> Users { get; set; }
     }

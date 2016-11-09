@@ -19,11 +19,13 @@ namespace ResidentAppCross.ViewModels.Screens
         private readonly IQRService _qrService;
         private MvxSubscriptionToken _token;
         private LocationMessage _currentLocation;
+        private IDialogService _dialogService;
 
-        public CourtesyOfficerCheckinsViewModel(IApartmentAppsAPIService apiService, IMvxMessenger messenger, IQRService qrService)
+        public CourtesyOfficerCheckinsViewModel(IApartmentAppsAPIService apiService, IMvxMessenger messenger, IQRService qrService, IDialogService dialogService)
         {
             ApiService = apiService;
             _qrService = qrService;
+            _dialogService = dialogService;
             _token = messenger.Subscribe<LocationMessage>(DeliveryAction);
             Mvx.Resolve<ILocationService>().Start();
         }
@@ -67,6 +69,11 @@ namespace ResidentAppCross.ViewModels.Screens
                 return new MvxCommand(async () =>
                 {
                     ScanResult = await _qrService.ScanAsync();
+                    if (ScanResult == null)
+                    {
+                        return;
+                    }
+
 						var data = ScanResult.Data;
                     if (!string.IsNullOrEmpty(ScanResult.Data))
                     {

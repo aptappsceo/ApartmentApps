@@ -75,24 +75,24 @@
                 </div>
             </div>
             <div class="ibox-content" style="display: block;">
+                <div class="btn-group-justified">
+                    <a class="btn btn-primary modal-link" href="@Url.Action("Entry", "PaymentRequests")">
+                        <i class="fa fa-fw fa-plus-square"></i> Create Request
+                    </a>
 
-                        <a class="btn btn-primary modal-link" href="@Url.Action("Entry", "PaymentRequests")">
-                            <i class="fa fa-fw fa-plus-square"></i>Create Request
-                        </a>
+                    <a class="btn btn-primary modal-link" href="@Url.Action("AddCreditCard", "Payments")">
+                        <i class="fa fa-fw fa-cc-visa"></i> Add Credit Card
+                    </a>
 
-                        <a class="btn btn-primary" href="@Url.Action("AddCreditCard", "Payments")">
-                            <i class="fa fa-fw fa-cc-visa"></i>Add Credit Card
-                        </a>
-
-                        <a class="btn btn-primary" href="@Url.Action("AddBankAccount", "Payments")">
-                            <i class="fa fa-fw fa-bank"></i>Add Credit Card
-                        </a>
+                    <a class="btn btn-primary modal-link" href="@Url.Action("AddBankAccount", "Payments")">
+                        <i class="fa fa-fw fa-bank"></i> Add Bank Account
+                    </a>
 
 
-                        <a class="btn btn-info" href="@Url.Action("UpdateOpenForteTransactions", "Payments")">
-                            <i class="fa fa-fw fa-refresh"></i>Synchronize with Forte
-                        </a>
-
+                    <a class="btn btn-info" href="@Url.Action("UpdateOpenForteTransactions", "Payments")">
+                        <i class="fa fa-fw fa-refresh"></i> Sync via Forte
+                    </a>
+                </div>
             </div>
         </div>
 
