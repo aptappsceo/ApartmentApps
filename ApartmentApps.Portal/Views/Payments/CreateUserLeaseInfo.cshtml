@@ -51,7 +51,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.UserId, "User", new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EJ().DropDownListFor(s => s.UserId).Datasource(Model.UserIdItems).DropDownListFields(s => s.Value("Id").Text("FullName")).EnableFilterSearch()
+                                    @Html.EJ().DropDownListFor(s => s.UserId).Datasource(Model.Users).DropDownListFields(s => s.Value("Id").Text("Title")).EnableFilterSearch()
                                     @Html.ValidationMessageFor(model => model.UserId)
                                 </div>
                             </div>
