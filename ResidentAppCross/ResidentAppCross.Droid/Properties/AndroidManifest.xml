@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.apartmentapps" android:installLocation="auto" android:versionCode="13" android:versionName="1.58">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.apartmentapps" android:installLocation="auto" android:versionCode="16" android:versionName="1.61">
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="19" />
 	<uses-feature android:name="android.hardware.camera" />
 	<uses-permission android:name="android.permission.CAMERA" />

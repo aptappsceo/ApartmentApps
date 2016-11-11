@@ -74,9 +74,9 @@ namespace ApartmentApps.Modules.Payments
     public class PaymentsRequestsEditMapper : BaseMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel>
     {
         public PropertyContext Context { get; set; }
-        public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
+        public IMapper<ApplicationUser, UserLookupBindingModel> UserMapper { get; set; }
 
-        public PaymentsRequestsEditMapper(IUserContext userContext, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper ) : base(userContext)
+        public PaymentsRequestsEditMapper(IUserContext userContext, PropertyContext context, IMapper<ApplicationUser, UserLookupBindingModel> userMapper ) : base(userContext)
         {
             Context = context;
             UserMapper = userMapper;
@@ -104,7 +104,7 @@ namespace ApartmentApps.Modules.Payments
                     .Where(u => !u.Archived)
                     .ToList()
                     .Select(u => UserMapper.ToViewModel(u))
-                    .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
+                    .Where(u => !string.IsNullOrWhiteSpace(u.Title))
                     .ToList();
         }
     }

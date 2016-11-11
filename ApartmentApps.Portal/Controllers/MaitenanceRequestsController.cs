@@ -133,12 +133,13 @@ namespace ApartmentApps.Portal.Controllers
         public PaymentsRequestsService PaymentsRequestsService { get; set; }
         private IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> _editPaymentRequestMapper;
         private LeaseInfoManagementService _leaseService;
-
-        public PaymentRequestsController(IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper, LeaseInfoManagementService leaseService) : base(kernel, formService, indexService, context, userContext, service)
+        private IMapper<ApplicationUser, UserLookupBindingModel> _userMapper;
+        public PaymentRequestsController(IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper, LeaseInfoManagementService leaseService, IMapper<ApplicationUser, UserLookupBindingModel> userMapper) : base(kernel, formService, indexService, context, userContext, service)
         {
             PaymentsRequestsService = formService;
             _editPaymentRequestMapper = editPaymentRequestMapper;
             _leaseService = leaseService;
+            _userMapper = userMapper;
         }
 
         public override ActionResult GridResult(GridList<UserLeaseInfoBindingModel> grid)
@@ -200,6 +201,13 @@ namespace ApartmentApps.Portal.Controllers
                     return RedirectToAction("Index");
                 }
             }
+
+            model.UserIdItems = Context.Users.GetAll()
+                    .Where(u => !u.Archived)
+                    .ToList()
+                    .Select(u => _userMapper.ToViewModel(u))
+                    .Where(u => !string.IsNullOrWhiteSpace(u.Title))
+                    .ToList();
 
             return AutoForm(model, nameof(SaveEntry), "Create/Update Payment Request Information");
             

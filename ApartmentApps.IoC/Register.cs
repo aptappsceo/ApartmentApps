@@ -146,7 +146,12 @@ namespace ApartmentApps.IoC
             kernel.Bind<IUnitImporter>().To<UnitImporter>().InRequestScope();
             kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
 
-            kernel.Bind<Property>().ToMethod(_ => kernel.Get<IUserContext>().CurrentUser.Property).InRequestScope();
+            kernel.Bind<Property>().ToMethod(_ =>
+            {
+                var implementation = kernel.Get<IUserContext>().CurrentUser.Property;
+                CurrentUserDateTime.TimeZone = implementation.TimeZone;
+                return implementation;
+            }).InRequestScope();
             kernel.Bind<PropertyContext>().ToSelf().InRequestScope();
 
             kernel.Bind<IRepository<MaitenanceRequestType>>()
@@ -254,6 +259,7 @@ namespace ApartmentApps.IoC
     }
     //public sealed class GalleryDbMigrationConfiguration : DbMigrationsConfiguration
     //{
+
 
 
     //}
