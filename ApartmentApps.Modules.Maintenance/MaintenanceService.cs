@@ -58,10 +58,10 @@ namespace ApartmentApps.Api
             {
                 var items =
                     ModuleHelper.Kernel.Get<IRepository<Unit>>()
-                        .ToArray().OrderByAlphaNumeric(p => p.Name);
+                        .ToArray().OrderByAlphaNumeric(p => p.Building.Name + "-" +p.Name);
 
 
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
+                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Building.Name + " - " +p.Name, UnitId == p.Id));
 
 
             }

@@ -210,7 +210,7 @@ namespace ResidentAppCross.ViewModels.Screens
                                 context.FailTask("No QR Code scanned.");
                                 return;
                             }
-                            if (!Request.AcceptableCheckinCodes.Contains(data))
+                            if (!Request.AcceptableCheckinCodes.Contains(data) && !Request.AcceptableCheckinCodes.Contains("*"))
                             {
                                 this.FailTaskWithPrompt("QR Code invalid.");
                                 return;
@@ -265,7 +265,7 @@ namespace ResidentAppCross.ViewModels.Screens
                                 context.FailTask("No QR Code scanned.");
                                 return;
                             }
-                            if (!Request.AcceptableCheckinCodes.Contains(data))
+                            if (!Request.AcceptableCheckinCodes.Contains(data) && !Request.AcceptableCheckinCodes.Contains("*"))
                             {
                                 this.FailTaskWithPrompt("QR Code invalid.");
                                 return;
@@ -314,7 +314,7 @@ namespace ResidentAppCross.ViewModels.Screens
                             context.FailTask("No QR Code scanned.");
                             return;
                         }
-                        if (!Request.AcceptableCheckinCodes.Contains(data))
+                        if (!Request.AcceptableCheckinCodes.Contains(data) && !Request.AcceptableCheckinCodes.Contains("*"))
                         {
                             this.FailTaskWithPrompt("QR Code invalid.");
                             return;
