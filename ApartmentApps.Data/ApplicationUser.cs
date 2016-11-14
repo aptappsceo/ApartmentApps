@@ -10,6 +10,19 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ApartmentApps.Data
 {
+    
+    public static class CurrentUserDateTime
+    {
+        public static TimeZoneInfo TimeZone { get; set; }
+
+        public static DateTime Now()
+        {
+            if (TimeZone == null) return DateTime.UtcNow;
+            return TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZone);
+        }
+    }
+
+
     public enum PaymentOptionType
     {
         VisaCard,

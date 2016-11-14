@@ -63,6 +63,7 @@ namespace ApartmentApps.Api.Modules
         [Required]
         [DisplayName("Invoice Date")]
         [Description("Date, by which user has to pay the invoice")]
+        
         public DateTime InvoiceDate { get; set; }
         
         public int? IntervalDays { get; set; }

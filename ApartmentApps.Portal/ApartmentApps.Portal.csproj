@@ -485,6 +485,7 @@
     </Compile>
     <Compile Include="Controllers\Base\AAController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Base\ApiException.cs" />
     <Compile Include="Controllers\Base\AutoFormController.cs" />
     <Compile Include="Controllers\Base\AutoGridController.cs" />
     <Compile Include="Controllers\Base\GridState.cs" />
