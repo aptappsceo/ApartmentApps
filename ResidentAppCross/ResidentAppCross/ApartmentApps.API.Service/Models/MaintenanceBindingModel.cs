@@ -12,6 +12,17 @@ namespace ApartmentApps.Client.Models
 {
     public partial class MaintenanceBindingModel
     {
+        private IList<string> _acceptableCheckinCodes;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> AcceptableCheckinCodes
+        {
+            get { return this._acceptableCheckinCodes; }
+            set { this._acceptableCheckinCodes = value; }
+        }
+        
         private string _buildingName;
         
         /// <summary>
@@ -160,6 +171,7 @@ namespace ApartmentApps.Client.Models
         /// </summary>
         public MaintenanceBindingModel()
         {
+            this.AcceptableCheckinCodes = new LazyList<string>();
             this.Checkins = new LazyList<MaintenanceCheckinBindingModel>();
             this.Photos = new LazyList<string>();
         }
@@ -171,6 +183,14 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken acceptableCheckinCodesSequence = ((JToken)inputObject["AcceptableCheckinCodes"]);
+                if (acceptableCheckinCodesSequence != null && acceptableCheckinCodesSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken acceptableCheckinCodesValue in ((JArray)acceptableCheckinCodesSequence))
+                    {
+                        this.AcceptableCheckinCodes.Add(((string)acceptableCheckinCodesValue));
+                    }
+                }
                 JToken buildingNameValue = inputObject["BuildingName"];
                 if (buildingNameValue != null && buildingNameValue.Type != JTokenType.Null)
                 {

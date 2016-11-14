@@ -86,6 +86,11 @@ namespace ApartmentApps.API.Service.Controllers
                 Status = result.StatusId,
                 Name = result.MaitenanceRequestType.Name,
                 PetStatus = result.PetStatus,
+                AcceptableCheckinCodes = new List<string>()
+                    {
+                        $"http://www.apartmentapps.com?apt={result.Unit.BuildingId},{result.UnitId}",
+                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name},{result.Unit.Name}"
+                    },
                 BuildingName = result.Unit?.Building?.Name + " " + result.Unit?.Name,
                 PermissionToEnter = result.PermissionToEnter,
                 Checkins = result.Checkins.ToArray().Select(x => x.ToMaintenanceCheckinBindingModel(BlobStorageService)).ToArray(),
