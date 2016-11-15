@@ -63,7 +63,7 @@ namespace ApartmentApps.Jobs
                         kernel.Get<IEmailService>().SendAsync(new IdentityMessage()
                         {
                             Subject = $"Background Error with module: {module.GetType().Name}",
-                            Body = ex.Message + Environment.NewLine + ex.StackTrace,
+                            Body = item.Name + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace,
                             Destination = "mosborne@apartmentapps.com"
                         });
                     }
