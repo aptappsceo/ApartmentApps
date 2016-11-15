@@ -46,9 +46,18 @@ namespace ApartmentApps.Portal.Controllers
             {
                 var items =
                     ModuleHelper.Kernel.Get<IRepository<Unit>>()
-                        .ToArray().OrderByAlphaNumeric(p => p.Name);
+                        .ToArray();
 
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Building.Name + " - " + p.Name, UnitId == p.Id));
+                return items.Select(p =>
+                {
+                    var name = $"[{ p.Building.Name }] {p.Name}";
+                    if (p.Users.Any())
+                    {
+                        var user = p.Users.First();
+                        name += $" ({user.FirstName} {user.LastName})";
+                    }
+                    return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
+                }).OrderByAlphaNumeric(p => p.Value);
 
 
             }
