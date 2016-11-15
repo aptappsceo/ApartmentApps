@@ -91,6 +91,7 @@ namespace ApartmentApps.Portal.Controllers
         public string ConfirmPassword { get; set; }
     }
 
+    [Authorize]
     public class UserManagementController : AutoGridController<UserService, UserBindingModel>
     {
         public override string IndexTitle => "User Management";
@@ -115,6 +116,12 @@ namespace ApartmentApps.Portal.Controllers
             get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
             private set { _userManager = value; }
         }
+
+        public void Unarchive(string id)
+        {
+            Service.Unarchive(id);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult> SaveUser(UserFormModel model)

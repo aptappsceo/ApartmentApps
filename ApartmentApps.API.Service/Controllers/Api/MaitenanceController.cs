@@ -30,7 +30,6 @@ namespace ApartmentApps.API.Service.Controllers
         public IBlobStorageService BlobStorageService { get; set; }
 
 
-
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("List")]
         public IEnumerable<MaintenanceIndexBindingModel> ListRequests()

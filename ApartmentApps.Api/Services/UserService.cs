@@ -199,6 +199,13 @@ namespace ApartmentApps.Portal.Controllers
             Repository.Find(id).Archived = true;
             Repository.Save();
         }
+
+        public void Unarchive(string id)
+        {
+            //base.Remove(id);
+            Repository.Find(id).Archived = false;
+            Repository.Save();
+        }
     }
 
     public class PropertyBindingModel : BaseViewModel
@@ -218,7 +225,9 @@ namespace ApartmentApps.Portal.Controllers
 
             }
         }
-        public ActionLinkModel SwitchProperty => new ActionLinkModel("Switch Property", "ChangeProperty", "Account", new {id=Id});
+
+        public PropertyState State { get; set; }
+
     }
 
     public class PropertySearchModel
@@ -235,12 +244,14 @@ namespace ApartmentApps.Portal.Controllers
         {
             model.Name = viewModel.Name;
             model.CorporationId = viewModel.CorporationId;
+            model.State = viewModel.State;
         }
 
         public override void ToViewModel(Property model, PropertyBindingModel viewModel)
         {
             viewModel.Name = model.Name;
             viewModel.Id = model.Id.ToString();
+            viewModel.State = model.State;
         }
     }
     public class PropertyService : StandardCrudService<Property>
@@ -253,7 +264,16 @@ namespace ApartmentApps.Portal.Controllers
 
         public DbQuery All()
         {
-            return CreateQuery("All");
+            return CreateQuery("All", new ConditionItem("Property.State","Equal","0"));
+        }
+
+        public DbQuery Suspended()
+        {
+            return CreateQuery("Suspended", new ConditionItem("Property.State", "Equal", "1"));
+        }
+        public DbQuery Archived()
+        {
+            return CreateQuery("Archived", new ConditionItem("Property.State", "Equal", "2"));
         }
     }
 }

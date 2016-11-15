@@ -87,7 +87,7 @@ namespace ApartmentApps.Portal.Controllers
 
             var user = await UserManager.FindByEmailAsync(model.Email);
 
-            if (user == null || user.Archived)
+            if (user == null || user.Archived || user.Property.State != PropertyState.Active)
             {
                 ModelState.AddModelError("", "Invalid login attempt.");
                 return View(model);

@@ -14,6 +14,7 @@ using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
+    [Authorize]
     public class NotifiationsController : ApartmentAppsApiController
     {
         public NotifiationsController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)

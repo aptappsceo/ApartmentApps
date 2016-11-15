@@ -110,10 +110,6 @@ namespace ApartmentApps.Portal.Controllers
 
         }
 
-
-
-        // GET: /Properties/Create
-
     }
     public class ImportResidentCSVModel
     {

@@ -65,7 +65,7 @@ namespace ApartmentApps.Api.Modules
             var vm = viewModel as UserBindingModel;
             if (vm != null)
             {
-                actions.Add(new ActionLinkModel("Delete", "Delete", "UserManagement", new {id = vm.Id})
+                actions.Add(new ActionLinkModel("Archive", "Delete", "UserManagement", new {id = vm.Id})
                 {
                     Icon = "fa-remove"
                 });
@@ -74,6 +74,14 @@ namespace ApartmentApps.Api.Modules
                     Icon = "fa-edit",
                     IsDialog = true
                 });
+
+                if (vm.Archived)
+                {
+                    actions.Add(new ActionLinkModel("Unarchive", "Unarchive", "UserManagement", new { id = vm.Id })
+                    {
+                        
+                    });
+                }
             }
 
             if (!UserContext.IsInRole("Admin")) return;
