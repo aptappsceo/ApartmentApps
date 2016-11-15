@@ -139,6 +139,7 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.City = user?.City;
             viewModel.PostalCode = user?.PostalCode;
             viewModel.Roles = user.Roles.Select(p => p.RoleId).ToArray();
+            viewModel.Archived = user.Archived;
         }
     }
 
