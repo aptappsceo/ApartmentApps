@@ -1534,6 +1534,8 @@
     <Content Include="Views\PaymentRequests\OverviewListPartial.cshtml" />
     <Content Include="Views\PaymentRequests\Overview.cshtml" />
     <Content Include="Views\PaymentRequests\EditUserLeaseInfo.cshtml" />
+    <Content Include="Views\Dashboard\Index3.cshtml" />
+    <Content Include="Views\Shared\Dashboard\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -6,6 +6,7 @@ using System.Web.ClientServices;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -65,9 +66,13 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         public IBlobStorageService BlobStorageService { get; set; }
-
+        
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
+            //var listComponents = new List<DashboardComponentViewModel>();
+            //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(listComponents));
+            //return View("Index3", listComponents);
+
             if (CurrentUser == null)
             {
                 return RedirectToAction("Login","Account");
