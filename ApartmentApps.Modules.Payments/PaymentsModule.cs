@@ -467,6 +467,7 @@ namespace ApartmentApps.Api.Modules
             // get payments module
             var openedTransactions = _transactionHistory.Where(s => s.State == TransactionState.Open).Include(s => s.Invoices).ToArray();
             var cl = new TransactionServiceClient("BasicHttpBinding_ITransactionService");
+
             var auth = Authenticate.GetTransactionAuthTicket(ApiLoginId, Key);
             foreach (var tr in openedTransactions)
             {
@@ -577,6 +578,9 @@ namespace ApartmentApps.Api.Modules
 
         public void Execute(ILogger logger)
         {
+            if (string.IsNullOrEmpty(ApiLoginId)) return;
+            if (MerchantId < 1) return;
+            if (string.IsNullOrEmpty(Key)) return;
             UpdateOpenForteTransactions();
             logger.Info("Open transactions updated from forte.");
         }

@@ -16,6 +16,7 @@ using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
+   
     public class RegisterController : ApartmentAppsApiController
     {
         private NotificationHubClient hub;

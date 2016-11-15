@@ -20,6 +20,20 @@ namespace ApartmentApps.Tests
         {
             base.Init();
         }
+        //[TestMethod]
+        //public void TestAddBankAccountRequest()
+        //{
+        //    Context.Kernel.Bind<API.Service.Controllers.PaymentsController>().ToSelf();
+        //    ServiceController = Context.Kernel.Get<API.Service.Controllers.PaymentsController>();
+        //    var result = ServiceController.AddBankAccount(new AddBankAccountBindingModel()
+        //    {
+        //        AccountHolderName = "", AccountNumber = ""
+                 
+
+        //    }).Result;
+        //}
+
+        public API.Service.Controllers.PaymentsController ServiceController { get; set; }
 
         [TestMethod]
         public void TestOnetimePaymentRequest()

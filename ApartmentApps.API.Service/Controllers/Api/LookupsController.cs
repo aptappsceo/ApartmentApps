@@ -16,6 +16,7 @@ namespace ApartmentApps.API.Service.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Lookups")]
+    [Authorize]
     public class LookupsController : ApartmentAppsApiController
     {
         // GET api/values

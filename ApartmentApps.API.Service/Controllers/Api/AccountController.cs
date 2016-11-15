@@ -31,7 +31,7 @@ namespace ApartmentApps.API.Service.Controllers
 {
     public class ModuleInfo
     {
-  
+
         public PaymentsConfig PaymentsConfig { get; set; }
         public MessagingConfig MessagingConfig { get; set; }
         public CourtesyConfig CourtesyConfig { get; set; }
@@ -65,8 +65,8 @@ namespace ApartmentApps.API.Service.Controllers
         private ApplicationUserManager _userManager;
 
 
-        public AccountController(IKernel kernel, ApplicationDbContext dbcontext,ApplicationUserManager userManager, PropertyContext context, IBlobStorageService blobStorage, IUserContext userContext) 
-            : base(kernel, context,userContext)
+        public AccountController(IKernel kernel, ApplicationDbContext dbcontext, ApplicationUserManager userManager, PropertyContext context, IBlobStorageService blobStorage, IUserContext userContext)
+            : base(kernel, context, userContext)
         {
             _kernel = kernel;
             _dbcontext = dbcontext;
@@ -94,19 +94,25 @@ namespace ApartmentApps.API.Service.Controllers
         public async Task<UserInfoViewModel> GetUserInfo(string devicePlatform = null, string devicePushToken = null)
         {
             // Store the device information for push notifications.
-            if (devicePlatform != null && devicePushToken != null)
+
+            using (var context = new ApplicationDbContext())
             {
-                using (var context = new ApplicationDbContext())
+                var user = context.Users.FirstOrDefault(p => p.Email == User.Identity.GetUserName());
+
+
+                if (user != null)
                 {
-                    var user = context.Users.FirstOrDefault(p => p.Email == User.Identity.GetUserName());
-                    if (user == null)
+                    if (user.Property.State != PropertyState.Active || user.Archived == true)
+                    {
+                        return null;
+                    }
+                    if (devicePlatform != null && devicePushToken != null)
                     {
                         user.DevicePlatform = devicePlatform;
                         user.DeviceToken = devicePushToken;
                         await context.SaveChangesAsync();
                     }
                 }
-
             }
 
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
@@ -131,9 +137,9 @@ namespace ApartmentApps.API.Service.Controllers
                         CourtesyConfig = _kernel.Get<Module<CourtesyConfig>>().Config,
                         MaintenanceConfig = _kernel.Get<Module<MaintenanceConfig>>().Config,
                         ProspectConfig = _kernel.Get<Module<ProspectModuleConfig>>().Config
-                        
+
                     }
-                 
+
                 }
             };
         }
@@ -414,7 +420,9 @@ namespace ApartmentApps.API.Service.Controllers
                 if (result.Succeeded)
                 {
                     return Ok();
-                } else if (result.Errors.Any()) {
+                }
+                else if (result.Errors.Any())
+                {
                     return BadRequest(string.Join(Environment.NewLine, result.Errors));
                 }
                 // TODO user.Registered = true; _dbcontext.SaveChanges();
@@ -598,5 +606,5 @@ namespace ApartmentApps.API.Service.Controllers
         #endregion
     }
 
-   
+
 }

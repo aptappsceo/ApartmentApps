@@ -8,8 +8,38 @@ using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class AdminModule : Module<PortalConfig>, IMenuItemProvider, IFillActions
+    public interface IDashboardComponentProvider
     {
+        void PopulateComponents(List<DashboardComponentViewModel> dashboardComponents);
+    }
+
+    public enum DashboardComponentPosition
+    {
+        Left,
+        Center,
+        Right
+    }
+
+    public class DashboardStatViewModel : DashboardComponentViewModel
+    {
+        public string Subtitle { get; set; }
+        public string Value { get; set; }
+    }
+    public class DashboardComponentViewModel : BaseViewModel
+    {
+        public string Col { get; set; }
+        public string Stretch { get; set; }
+        public int Row { get; set; }
+    }
+
+    public class AdminModule : Module<PortalConfig>, IMenuItemProvider, IFillActions, IDashboardComponentProvider
+    {
+
+        public void PopulateComponents(List<DashboardComponentViewModel> dashboardComponents)
+        {
+            
+        }
+
         public override PortalConfig Config => new PortalConfig()
         {
             Enabled = true,
@@ -65,7 +95,7 @@ namespace ApartmentApps.Api.Modules
             var vm = viewModel as UserBindingModel;
             if (vm != null)
             {
-                actions.Add(new ActionLinkModel("Delete", "Delete", "UserManagement", new {id = vm.Id})
+                actions.Add(new ActionLinkModel("Archive", "Delete", "UserManagement", new {id = vm.Id})
                 {
                     Icon = "fa-remove"
                 });
@@ -74,6 +104,14 @@ namespace ApartmentApps.Api.Modules
                     Icon = "fa-edit",
                     IsDialog = true
                 });
+
+                if (vm.Archived)
+                {
+                    actions.Add(new ActionLinkModel("Unarchive", "Unarchive", "UserManagement", new { id = vm.Id })
+                    {
+                        
+                    });
+                }
             }
 
             if (!UserContext.IsInRole("Admin")) return;

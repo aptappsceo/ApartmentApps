@@ -434,7 +434,7 @@
                 {
                     if (property.DataType.DataType == DataType.MultilineText)
                     {
-                        @Html.TextArea(property.Name, property.GetValue()?.ToString(), new {@class = "form-control"})
+                        @Html.TextArea(property.Name, property.GetValue()?.ToString(), new {@class = "form-control", style="width: 400px !important; height: 300px !important;"})
                     }
                     else
                     {

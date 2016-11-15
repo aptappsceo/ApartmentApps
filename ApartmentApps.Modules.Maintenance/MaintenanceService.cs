@@ -57,8 +57,7 @@ namespace ApartmentApps.Api
             get
             {
                 var items =
-                    ModuleHelper.Kernel.Get<IRepository<Unit>>()
-                        .ToArray();
+                    ModuleHelper.Kernel.Get<IRepository<Unit>>().ToArray();
 
                 return items.Select(p =>
                 {
