@@ -184,8 +184,14 @@ namespace ApartmentApps.Portal.Controllers
             return GetAll<TViewModel>(Repository.Where(p=>!p.Archived), query, out count, orderBy, orderByDesc, page, resultsPerPage);
         }
 
-
-
+        public DbQuery All()
+        {
+            return this.CreateQuery("All");
+        }
+        public DbQuery Archived()
+        {
+            return this.CreateQuery("Archived",new ConditionItem("ApplicationUser.Archived","Equal","true"));
+        }
         public List<TViewModel> GetUsersInRole<TViewModel>(string roleName)
         {
             var transform = _kernel.Get<IMapper<ApplicationUser, TViewModel>>();
