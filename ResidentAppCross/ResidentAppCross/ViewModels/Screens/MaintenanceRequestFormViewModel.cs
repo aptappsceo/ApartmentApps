@@ -210,7 +210,24 @@ namespace ResidentAppCross.ViewModels
             {
                 return this.TaskCommand(async context =>
                 {
-                    if(SelectedRequestType == null) context.FailTask("Please, select request type.");
+                    if (SelectedRequestType == null)
+                    {
+                        context.FailTask("Please, select request type.");
+                        return;
+                    }
+                    if (string.IsNullOrEmpty(Comments))
+                    {
+                        context.FailTask("Please, fill the comments section.");
+                        return;
+                    }
+                    if (!EntrancePermission && _loginService.UserInfo.Roles.Contains("Resident") && _loginService.UserInfo.Roles.Count == 1)
+                    {
+                        context.FailTask("You have not given permission to enter. Please, call the office for special entry instructions.");
+                        return;
+                    }
+
+
+
                     var images = Photos.RawImages.Select(p =>
                     {
                         return Convert.ToBase64String(p.Data);
@@ -224,8 +241,6 @@ namespace ResidentAppCross.ViewModels
                         MaitenanceRequestTypeId = Convert.ToInt32(SelectedRequestType.Key),
                         Images = images,
 						UnitId = ShouldSelectUnit ? (int?)Convert.ToInt32(SelectedUnit.Key) : null,
-                            
-                        
                     };
 
                     await _service.Maitenance.SubmitRequestAsync(maitenanceRequestModel);
@@ -276,7 +291,6 @@ namespace ResidentAppCross.ViewModels
             set
             {
                 SetProperty(ref _entrancePermission,value); 
-                if(!value) _dialogService.OpenNotification("Attention!", "If you do not give permission to enter, please provide a date and preferred time range (i.e. 1 pm – 5 pm) for a technician to respond to your request in the Comments & Details section of this work order. Appointments are provided Monday – Friday between 9:00 a.m. and 5:00 p.m. only. If we cannot honor your request, we will attempt to contact you to make other arrangements.  Thank you.","Ok");
             }
         }
 
