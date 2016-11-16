@@ -65,6 +65,12 @@ namespace ApartmentApps.Api.Modules
                     Icon = "fa-credit-card",
                     Group = "Payments"
                 });
+                actions.Add(new ActionLinkModel("Quick Add Rent", "QuickAddRent", "PaymentRequests", new { userId = user.Id })
+                {
+                    Icon = "fa-credit-card",
+                    Group = "Payments",
+                    IsDialog = true
+                });
             } else if ( paymentRequest != null )
             {
               actions.Add(new ActionLinkModel("Edit Request","Entry","PaymentRequests",new {id = paymentRequest.Id})
