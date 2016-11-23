@@ -81,7 +81,10 @@ namespace ResidentAppCross.ViewModels
             _imageService = imageService;
             _dialogService = dialogService;
 			_loginService = loginService;
-        }  
+        }
+
+        public string CompanyPhone
+            => _loginService?.UserInfo?.PropertyConfig?.ModuleInfo?.CompanySettingsConfig?.PhoneNumber;
 
         public override void Start()
         {
@@ -222,7 +225,16 @@ namespace ResidentAppCross.ViewModels
                     }
                     if (!EntrancePermission && _loginService.UserInfo.Roles.Contains("Resident") && _loginService.UserInfo.Roles.Count == 1)
                     {
-                        context.FailTask("You have not given permission to enter. Please, call the office for special entry instructions.");
+                        if (string.IsNullOrEmpty(CompanyPhone))
+                        {
+                            context.FailTask(
+                                "You have not given permission to enter. Please, contact the office to submit your request.");
+                        }
+                        else
+                        {
+                            context.FailTask(
+                                $"You have not given permission to enter. Please, call {CompanyPhone} to submit your request.");
+                        }
                         return;
                     }
 

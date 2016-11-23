@@ -1,0 +1,63 @@
+﻿@using ApartmentApps.Api.Modules
+@using ApartmentApps.Data
+@using Korzh.EasyQuery.Mvc
+@using Korzh.EasyQuery.Services
+@model ApartmentApps.Forms.GridList<PaymentOptionBindingModel>
+
+@helper PaymentOptionViewModel(PaymentOptionBindingModel item)
+{
+    var property = ViewBag.Property as Property;
+    var userDashboardLink = Url.Action("UserFeed", "Dashboard", new {id = @item.User.Id});
+
+    <div class="social-feed-box">
+
+        @Html.Partial("_ActionLinks", item)
+        <div class="social-avatar">
+
+            <a href="@userDashboardLink" class="pull-left">
+                <img alt="image" class="img-circle" src="@item.User.ImageThumbnailUrl">
+            </a>
+
+            <div class="media-body">
+
+                    <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.User.Id})">
+                        <strong>@@@(item.User.FirstName) @item.User.LastName</strong>
+                    </a>
+            </div>
+        </div>
+
+        <div class="social-body">
+            
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <dl class="dl-horizontal">
+                        <dt>Friendly Name:</dt>
+                        <dd>@item.FriendlyName
+                        </dd>
+                        <dt>Title:</dt>
+                        <dd> @item.Type
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+        </div>
+        <div class="social-footer">
+
+        </div>
+
+    </div>
+}
+@{
+    var property = ViewBag.Property as Property;
+}
+@foreach (var item in Model)
+{
+    @PaymentOptionViewModel(item)
+}
+<div class="row">
+    <div class="col-md-12 text-center">
+        @Html.PageNavigator(Model as IPaging)
+    </div>
+</div>

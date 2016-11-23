@@ -21,6 +21,7 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Modules.Payments;
+using ApartmentApps.Modules.Payments.BindingModels;
 using ApartmentApps.Modules.Payments.Services;
 using ApartmentApps.Portal.App_Start;
 using Korzh.EasyQuery.Services;

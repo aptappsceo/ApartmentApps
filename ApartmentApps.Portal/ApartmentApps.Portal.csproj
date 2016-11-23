@@ -505,6 +505,7 @@
     <Compile Include="Controllers\InspectionsController.cs" />
     <Compile Include="Controllers\MaitenanceRequestsController.cs" />
     <Compile Include="Controllers\MessagingController.cs" />
+    <Compile Include="Controllers\PaymentOptionsController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\PropertyEntrataInfoController.cs" />
@@ -1536,6 +1537,8 @@
     <Content Include="Views\PaymentRequests\EditUserLeaseInfo.cshtml" />
     <Content Include="Views\Dashboard\Index3.cshtml" />
     <Content Include="Views\Shared\Dashboard\DashboardStatViewModel.cshtml" />
+    <Content Include="Views\PaymentOptions\Overview.cshtml" />
+    <Content Include="Views\PaymentOptions\OverviewListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

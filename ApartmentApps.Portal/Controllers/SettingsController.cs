@@ -101,4 +101,10 @@ namespace ApartmentApps.Portal.Controllers
         {
         }
     }
+    public class CompanySettingsConfigController : SettingsController<CompanySettingsConfig>
+    {
+        public CompanySettingsConfigController(IRepository<CompanySettingsConfig> configRepo, IKernel kernel, PropertyContext context, IUserContext userContext) : base(configRepo, kernel, context, userContext)
+        {
+        }
+    }
 }

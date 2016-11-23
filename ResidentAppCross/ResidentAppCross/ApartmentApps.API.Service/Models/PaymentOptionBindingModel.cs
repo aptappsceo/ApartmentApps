@@ -2,13 +2,27 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using ApartmentApps.Client.Models;
+using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 
 namespace ApartmentApps.Client.Models
 {
     public partial class PaymentOptionBindingModel
     {
+        private IList<ActionLinkModel> _actionLinks;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<ActionLinkModel> ActionLinks
+        {
+            get { return this._actionLinks; }
+            set { this._actionLinks = value; }
+        }
+        
         private string _friendlyName;
         
         /// <summary>
@@ -20,15 +34,26 @@ namespace ApartmentApps.Client.Models
             set { this._friendlyName = value; }
         }
         
-        private int? _id;
+        private string _id;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public int? Id
+        public string Id
         {
             get { return this._id; }
             set { this._id = value; }
+        }
+        
+        private string _title;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Title
+        {
+            get { return this._title; }
+            set { this._title = value; }
         }
         
         private int? _type;
@@ -42,11 +67,23 @@ namespace ApartmentApps.Client.Models
             set { this._type = value; }
         }
         
+        private UserBindingModel _user;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public UserBindingModel User
+        {
+            get { return this._user; }
+            set { this._user = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the PaymentOptionBindingModel class.
         /// </summary>
         public PaymentOptionBindingModel()
         {
+            this.ActionLinks = new LazyList<ActionLinkModel>();
         }
         
         /// <summary>
@@ -56,6 +93,16 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken actionLinksSequence = ((JToken)inputObject["ActionLinks"]);
+                if (actionLinksSequence != null && actionLinksSequence.Type != JTokenType.Null)
+                {
+                    foreach (JToken actionLinksValue in ((JArray)actionLinksSequence))
+                    {
+                        ActionLinkModel actionLinkModel = new ActionLinkModel();
+                        actionLinkModel.DeserializeJson(actionLinksValue);
+                        this.ActionLinks.Add(actionLinkModel);
+                    }
+                }
                 JToken friendlyNameValue = inputObject["FriendlyName"];
                 if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
                 {
@@ -64,12 +111,24 @@ namespace ApartmentApps.Client.Models
                 JToken idValue = inputObject["Id"];
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
-                    this.Id = ((int)idValue);
+                    this.Id = ((string)idValue);
+                }
+                JToken titleValue = inputObject["Title"];
+                if (titleValue != null && titleValue.Type != JTokenType.Null)
+                {
+                    this.Title = ((string)titleValue);
                 }
                 JToken typeValue = inputObject["Type"];
                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                 {
                     this.Type = ((int)typeValue);
+                }
+                JToken userValue = inputObject["User"];
+                if (userValue != null && userValue.Type != JTokenType.Null)
+                {
+                    UserBindingModel userBindingModel = new UserBindingModel();
+                    userBindingModel.DeserializeJson(userValue);
+                    this.User = userBindingModel;
                 }
             }
         }

@@ -101,7 +101,8 @@ namespace ApartmentApps.Api.Modules
                 if (UserContext.IsInRole("Admin") || UserContext.IsInRole("PropertyAdmin"))
                 {
                     paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus", "CreateUserLeaseInfoFor", "Payments"));
-                    paymentsHome.Children.Add(new MenuItemViewModel("Payments Requests", "fa-plus", "Index", "PaymentRequests"));
+                    paymentsHome.Children.Add(new MenuItemViewModel("Payment Requests", "fa-list-alt", "Index", "PaymentRequests"));
+                 //   paymentsHome.Children.Add(new MenuItemViewModel("Payment Options", "fa-list-alt", "Index", "PaymentOptions"));
                     //       paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
                 }
 
@@ -289,7 +290,7 @@ namespace ApartmentApps.Api.Modules
             {
                 FriendlyName = x.FriendlyName,
                 Type = x.Type,
-                Id = x.Id,
+                Id = x.Id.ToString(),
             });
         }
 
@@ -299,7 +300,7 @@ namespace ApartmentApps.Api.Modules
             {
                 FriendlyName = x.FriendlyName,
                 Type = x.Type,
-                Id = x.Id,
+                Id = x.Id.ToString(),
             });
         }
 
