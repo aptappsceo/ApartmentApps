@@ -11,6 +11,33 @@ using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
+    public class QuickAddRentBindingModel : BaseViewModel
+    {
+        [Required]
+        [DisplayName("User that will be charged")]
+        [SelectFrom(nameof(UserIdItems))]
+        public string UserId { get; set; }
+
+        [DisplayName("Date of the first charge")]
+        [DataType(DataType.Date)]
+        [AssertThat("NotBeforeToday(NextInvoiceDate)", ErrorMessage = "Invoice date must be future date")]
+        public DateTime? NextInvoiceDate { get;set; }
+
+        [Required]
+        [DataType(DataType.Currency)]
+        [DisplayName("Amount that will be charged in USD each month")]
+        public decimal Amount { get; set; }
+
+        public List<UserLookupBindingModel> UserIdItems { get; set; }
+
+        public bool NotBeforeToday(DateTime? time)
+        {
+            if (!time.HasValue) return true;
+            return CurrentUserDateTime.Now() < time.Value;
+
+        }
+    }
+
     public class EditUserLeaseInfoBindingModel : BaseViewModel
     {
 

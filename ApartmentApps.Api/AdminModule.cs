@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
 using Ninject;
@@ -37,6 +38,15 @@ namespace ApartmentApps.Api.Modules
         public string Col { get; set; }
         public string Stretch { get; set; }
         public decimal Row { get; set; }
+    }
+
+    public class CompanySettingsModule : Module<CompanySettingsConfig>, IAdminConfigurable
+    {
+        public CompanySettingsModule(IKernel kernel, IRepository<CompanySettingsConfig> configRepo, IUserContext userContext) : base(kernel, configRepo, userContext)
+        {
+        }
+
+        public string SettingsController => "CompanySettingsConfig";
     }
 
     public class AdminModule : Module<PortalConfig>, IMenuItemProvider, IFillActions, IDashboardComponentProvider
@@ -173,5 +183,6 @@ namespace ApartmentApps.Api.Modules
 
             }
         }
+
     }
 }

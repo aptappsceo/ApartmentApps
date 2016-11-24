@@ -78,17 +78,6 @@ namespace ApartmentApps.Client.Models
             set { this._name = value; }
         }
         
-        private string _paymentsUrl;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string PaymentsUrl
-        {
-            get { return this._paymentsUrl; }
-            set { this._paymentsUrl = value; }
-        }
-        
         private IList<PropertyAddon> _propertyAddons;
         
         /// <summary>
@@ -98,6 +87,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._propertyAddons; }
             set { this._propertyAddons = value; }
+        }
+        
+        private int? _state;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? State
+        {
+            get { return this._state; }
+            set { this._state = value; }
         }
         
         private string _timeZone;
@@ -193,11 +193,6 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Name = ((string)nameValue);
                 }
-                JToken paymentsUrlValue = inputObject["PaymentsUrl"];
-                if (paymentsUrlValue != null && paymentsUrlValue.Type != JTokenType.Null)
-                {
-                    this.PaymentsUrl = ((string)paymentsUrlValue);
-                }
                 JToken propertyAddonsSequence = ((JToken)inputObject["PropertyAddons"]);
                 if (propertyAddonsSequence != null && propertyAddonsSequence.Type != JTokenType.Null)
                 {
@@ -207,6 +202,11 @@ namespace ApartmentApps.Client.Models
                         propertyAddon.DeserializeJson(propertyAddonsValue);
                         this.PropertyAddons.Add(propertyAddon);
                     }
+                }
+                JToken stateValue = inputObject["State"];
+                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                {
+                    this.State = ((int)stateValue);
                 }
                 JToken timeZoneValue = inputObject["TimeZone"];
                 if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)

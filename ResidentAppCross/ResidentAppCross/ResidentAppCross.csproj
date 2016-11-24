@@ -88,6 +88,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\ApplicationUser.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Building.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ChangePasswordBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\CompanySettingsConfig.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Corporation.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\CourtesyCheckinBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\CourtesyCheckinBindingModelCollection.cs" />

@@ -55,7 +55,14 @@ namespace ResidentAppCross.ViewModels.Screens
             {
                 return this.TaskCommand(async context =>
                 {
-                    var items = await _service.Payments.GetPaymentSummaryAsync(SelectedPaymentOption.Id.Value);
+                    int paymentOptionsId = -1;
+
+                    if (!Int32.TryParse(SelectedPaymentOption.Id, out paymentOptionsId))
+                    {
+                        context.FailTask("Unable to recognize payment option id");
+                    }
+
+                    var items = await _service.Payments.GetPaymentSummaryAsync(paymentOptionsId);
                     SelectedPaymentSummary.Clear();
                     foreach (var item in items.Items)
                     {

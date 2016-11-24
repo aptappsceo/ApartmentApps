@@ -21,6 +21,7 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Modules.Payments;
+using ApartmentApps.Modules.Payments.BindingModels;
 using ApartmentApps.Modules.Payments.Services;
 using ApartmentApps.Portal.App_Start;
 using Korzh.EasyQuery.Services;
@@ -46,9 +47,18 @@ namespace ApartmentApps.Portal.Controllers
             {
                 var items =
                     ModuleHelper.Kernel.Get<IRepository<Unit>>()
-                        .ToArray().OrderByAlphaNumeric(p => p.Name);
+                        .ToArray();
 
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Building.Name + " - " + p.Name, UnitId == p.Id));
+                return items.Select(p =>
+                {
+                    var name = $"[{ p.Building.Name }] {p.Name}";
+                    if (p.Users.Any())
+                    {
+                        var user = p.Users.First();
+                        name += $" ({user.FirstName} {user.LastName})";
+                    }
+                    return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
+                }).OrderByAlphaNumeric(p => p.Value);
 
 
             }
@@ -131,12 +141,14 @@ namespace ApartmentApps.Portal.Controllers
     {
 
         public PaymentsRequestsService PaymentsRequestsService { get; set; }
+        private readonly IMapper<ApplicationUser, UserLookupBindingModel> _userLookupMapper;
         private IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> _editPaymentRequestMapper;
         private LeaseInfoManagementService _leaseService;
         private IMapper<ApplicationUser, UserLookupBindingModel> _userMapper;
-        public PaymentRequestsController(IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper, LeaseInfoManagementService leaseService, IMapper<ApplicationUser, UserLookupBindingModel> userMapper) : base(kernel, formService, indexService, context, userContext, service)
+        public PaymentRequestsController(IMapper<ApplicationUser,UserLookupBindingModel> userLookupMapper, IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper, LeaseInfoManagementService leaseService, IMapper<ApplicationUser, UserLookupBindingModel> userMapper) : base(kernel, formService, indexService, context, userContext, service)
         {
             PaymentsRequestsService = formService;
+            _userLookupMapper = userLookupMapper;
             _editPaymentRequestMapper = editPaymentRequestMapper;
             _leaseService = leaseService;
             _userMapper = userMapper;
@@ -164,6 +176,52 @@ namespace ApartmentApps.Portal.Controllers
             //return View("EditUserLeaseInfo", new EditUserLeaseInfoBindingModel());
         }
 
+        [HttpGet]
+        public ActionResult QuickAddRent(string userId = null)
+        {
+            return AutoForm(new QuickAddRentBindingModel()
+            {
+                Title = "Quick add rent",
+                Id = null,
+                UserIdItems = Repository<ApplicationUser>().ToArray().Select(s=>_userLookupMapper.ToViewModel(s)).ToList(),
+                UserId = userId,
+            }, nameof(QuickAddRent), "Quickly add rent subscription to user");
+        }
+
+        [HttpPost]
+        public ActionResult QuickAddRent(QuickAddRentBindingModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var invoiceDate = model.NextInvoiceDate.Value;
+                _leaseService.CreateUserLeaseInfo(new CreateUserLeaseInfoBindingModel()
+                     {
+                         Amount = model.Amount,
+                         IntervalMonths = 1,
+                         Title = $"Rent from {invoiceDate.ToString("d")}",
+                         RepetitionCompleteDate = null,
+                         UserId = model.UserId,
+                         UseCompleteDate = false,
+                         UseInterval = true,
+                         InvoiceDate = invoiceDate, //not null due to validation
+                     });
+
+                if (Request  != null && Request.IsAjaxRequest())
+                {
+                    return JsonUpdate();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                model.UserIdItems =
+                    Repository<ApplicationUser>().ToArray().Select(s => _userLookupMapper.ToViewModel(s)).ToList();
+                return AutoForm(model, nameof(QuickAddRent), "Quickly add rent subscription to user");
+            }
+        }
 
         public override ActionResult SaveEntry(EditUserLeaseInfoBindingModel model)
         {

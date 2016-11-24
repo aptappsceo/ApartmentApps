@@ -170,7 +170,6 @@ namespace ApartmentApps.Portal.Controllers
 
         public override void Add<TViewModel>(TViewModel viewModel)
         {
-
             base.Add(viewModel);
         }
        
@@ -188,7 +187,6 @@ namespace ApartmentApps.Portal.Controllers
         [IgnoreQuery]
         public DbQuery SentByUser(string id)
         {
-            
             var user = Repo<ApplicationUser>().Find(id);
             return CreateQuery("SentBy","Sent By " + user.Email, new ConditionItem("Message.From.Email", "Equal", user.Email));
         }

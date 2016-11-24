@@ -10,6 +10,17 @@ namespace ApartmentApps.Client.Models
 {
     public partial class ModuleInfo
     {
+        private CompanySettingsConfig _companySettingsConfig;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public CompanySettingsConfig CompanySettingsConfig
+        {
+            get { return this._companySettingsConfig; }
+            set { this._companySettingsConfig = value; }
+        }
+        
         private CourtesyConfig _courtesyConfig;
         
         /// <summary>
@@ -79,6 +90,13 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken companySettingsConfigValue = inputObject["CompanySettingsConfig"];
+                if (companySettingsConfigValue != null && companySettingsConfigValue.Type != JTokenType.Null)
+                {
+                    CompanySettingsConfig companySettingsConfig = new CompanySettingsConfig();
+                    companySettingsConfig.DeserializeJson(companySettingsConfigValue);
+                    this.CompanySettingsConfig = companySettingsConfig;
+                }
                 JToken courtesyConfigValue = inputObject["CourtesyConfig"];
                 if (courtesyConfigValue != null && courtesyConfigValue.Type != JTokenType.Null)
                 {

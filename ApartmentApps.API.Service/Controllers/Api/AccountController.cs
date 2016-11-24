@@ -37,6 +37,7 @@ namespace ApartmentApps.API.Service.Controllers
         public CourtesyConfig CourtesyConfig { get; set; }
         public MaintenanceConfig MaintenanceConfig { get; set; }
         public ProspectModuleConfig ProspectConfig { get; set; }
+        public CompanySettingsConfig CompanySettingsConfig { get; set; }
     }
     [Authorize]
     [RoutePrefix("api/Account")]
@@ -97,10 +98,8 @@ namespace ApartmentApps.API.Service.Controllers
 
             using (var context = new ApplicationDbContext())
             {
-               
-               // var username = User.Identity.GetUserName();
-                var user = CurrentUser;
-
+                var username = User.Identity.GetUserName();
+                var user = context.Users.FirstOrDefault(p => p.Email == username);
 
                 if (user != null)
                 {
@@ -138,10 +137,9 @@ namespace ApartmentApps.API.Service.Controllers
                         MessagingConfig = _kernel.Get<Module<MessagingConfig>>().Config,
                         CourtesyConfig = _kernel.Get<Module<CourtesyConfig>>().Config,
                         MaintenanceConfig = _kernel.Get<Module<MaintenanceConfig>>().Config,
-                        ProspectConfig = _kernel.Get<Module<ProspectModuleConfig>>().Config
-
+                        ProspectConfig = _kernel.Get<Module<ProspectModuleConfig>>().Config,
+                        CompanySettingsConfig = _kernel.Get<Module<CompanySettingsConfig>>().Config
                     }
-
                 }
             };
         }

@@ -48,6 +48,21 @@ namespace ApartmentApps.Modules.Payments
 
     }
 
+    public class PaymentOptionsService : StandardCrudService<UserPaymentOption>
+    {
+        public PaymentOptionsService(IKernel kernel, IRepository<UserPaymentOption> repository) : base(kernel, repository)
+        {
+        }
+
+        [IgnoreQuery]
+        public DbQuery OwnedByUser(string id)
+        {
+            var user = Repo<ApplicationUser>().Find(id);
+            return CreateQuery("OwnedBy",$"{user.FirstName} {user.LastName} payment options", 
+                new ConditionItem("UserPaymentOption.UserId", "Equal", user.Id));
+        }
+    }
+
     public class InvoicesService : StandardCrudService<Invoice>
     {
 
@@ -70,6 +85,31 @@ namespace ApartmentApps.Modules.Payments
 
     }
 
+    public class PaymentOptionMapper : BaseMapper<UserPaymentOption, PaymentOptionBindingModel>
+    {
+
+        private IMapper<ApplicationUser, UserBindingModel> _usersMapper; 
+
+        public PaymentOptionMapper(IUserContext userContext, IMapper<ApplicationUser, UserBindingModel> usersMapper) : base(userContext)
+        {
+            _usersMapper = usersMapper;
+        }
+
+        public override void ToModel(PaymentOptionBindingModel viewModel, UserPaymentOption model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ToViewModel(UserPaymentOption model, PaymentOptionBindingModel viewModel)
+        {
+            viewModel.FriendlyName = model.FriendlyName;
+            viewModel.Type = model.Type;
+            viewModel.User = _usersMapper.ToViewModel(model.User);
+            viewModel.Id = model.Id.ToString();
+            viewModel.Title = model.FriendlyName;
+
+        }
+    }
 
     public class PaymentsRequestsEditMapper : BaseMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel>
     {
