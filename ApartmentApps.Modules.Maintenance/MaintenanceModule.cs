@@ -59,7 +59,7 @@ namespace ApartmentApps.Api.Modules
             }
         }
 
-        public void PopulateComponents(List<DashboardComponentViewModel> dashboardComponents)
+        public void PopulateComponents(DashboardArea area, List<DashboardComponentViewModel> dashboardComponents)
         {
             if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin"))
                 return;
@@ -67,15 +67,19 @@ namespace ApartmentApps.Api.Modules
             var startDate = UserContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(30, 0, 0, 0));
             var endDate = UserContext.CurrentUser.TimeZone.Now().AddDays(1);
             var mr = Kernel.Get<IRepository<MaitenanceRequest>>();
+            if (area == DashboardArea.LeftTop)
+            {
+                dashboardComponents.Add(new DashboardStatViewModel()
+                {
+                    Row = 1,
+                    Stretch = "col-md-4",
+                    Title = "Submitted",
+                    Value = WorkOrdersByRange(mr, startDate, endDate).Count(p => p.StatusId == "Submitted").ToString(),
+                    Subtitle = "Last 30 Days"
+                });
 
-            //dashboardComponents.Add(new DashboardStatViewModel()
-            //{
-            //    Col = 0,
-            //    Stretch = "col-md-4",
-            //    Title = "Submitted",
-            //    Value = WorkOrdersByRange(mr, startDate, endDate).Count(p => p.StatusId == "Submitted").ToString(),
-            //    Subtitle = "Last 30 Days"
-            //});
+            }
+
         }
         private IQueryable<MaitenanceRequest> WorkOrdersByRange(IRepository<MaitenanceRequest> mr, DateTime? startDate, DateTime? endDate)
         {

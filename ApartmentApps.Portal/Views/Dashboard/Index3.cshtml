@@ -1,24 +1,27 @@
-﻿@model System.Collections.Generic.List<ApartmentApps.Api.Modules.DashboardComponentViewModel>
-
+﻿@using ApartmentApps.Api.Modules
+@using ApartmentApps.Data
+@model dynamic
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Dashboard</h2>
+        <ol class="breadcrumb">
+            <li class="active">
+                @*<strong>@Model.StartDate.Value.ToShortDateString() - @Model.EndDate.Value.ToShortDateString()</strong>*@
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
 <div class="row">
-    @foreach (var column in Model.GroupBy(p => p.Col).OrderBy(p => p.Key))
-    {
-        
-        <div class="col-md-6">
-            @foreach (var item in column)
-            {
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
+    <div class="col-md-6">
+        @Html.RenderDashboardArea(DashboardArea.LeftTop)
+        @Html.RenderDashboardArea(DashboardArea.Left)
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-6">
+        @Html.RenderDashboardArea(DashboardArea.RightTop)
+        @Html.RenderDashboardArea(DashboardArea.Right)
 
-                        <h5>@item.Title</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            @Html.Partial("~/Views/Shared/Components/" + item.GetType().Name + ".cshtml")
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    }
+        <div class="clear-fix"></div>
+    </div>
 </div>

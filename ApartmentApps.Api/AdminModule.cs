@@ -8,9 +8,16 @@ using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
+    public enum DashboardArea
+    {
+        LeftTop,
+        Left,
+        RightTop,
+        Right
+    }
     public interface IDashboardComponentProvider
     {
-        void PopulateComponents(List<DashboardComponentViewModel> dashboardComponents);
+        void PopulateComponents(DashboardArea areaName, List<DashboardComponentViewModel> dashboardComponents);
     }
 
     public enum DashboardComponentPosition
@@ -29,13 +36,13 @@ namespace ApartmentApps.Api.Modules
     {
         public string Col { get; set; }
         public string Stretch { get; set; }
-        public int Row { get; set; }
+        public decimal Row { get; set; }
     }
 
     public class AdminModule : Module<PortalConfig>, IMenuItemProvider, IFillActions, IDashboardComponentProvider
     {
 
-        public void PopulateComponents(List<DashboardComponentViewModel> dashboardComponents)
+        public void PopulateComponents(DashboardArea area, List<DashboardComponentViewModel> dashboardComponents)
         {
             
         }
@@ -95,10 +102,14 @@ namespace ApartmentApps.Api.Modules
             var vm = viewModel as UserBindingModel;
             if (vm != null)
             {
-                actions.Add(new ActionLinkModel("Archive", "Delete", "UserManagement", new {id = vm.Id})
+                if (!vm.Archived)
                 {
-                    Icon = "fa-remove"
-                });
+                    actions.Add(new ActionLinkModel("Archive", "Delete", "UserManagement", new { id = vm.Id })
+                    {
+                        Icon = "fa-remove"
+                    });
+                }
+              
                 actions.Add(new ActionLinkModel("Edit", "Entry", "UserManagement", new {id = vm.Id})
                 {
                     Icon = "fa-edit",

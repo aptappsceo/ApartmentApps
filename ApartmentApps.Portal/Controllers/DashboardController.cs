@@ -70,8 +70,9 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
             //var listComponents = new List<DashboardComponentViewModel>();
-            //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(listComponents));
-            //return View("Index3", listComponents);
+           // EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(listComponents));
+
+            return View("Index3");
 
             if (CurrentUser == null)
             {

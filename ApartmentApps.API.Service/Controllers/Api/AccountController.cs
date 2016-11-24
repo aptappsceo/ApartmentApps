@@ -97,7 +97,9 @@ namespace ApartmentApps.API.Service.Controllers
 
             using (var context = new ApplicationDbContext())
             {
-                var user = context.Users.FirstOrDefault(p => p.Email == User.Identity.GetUserName());
+               
+               // var username = User.Identity.GetUserName();
+                var user = CurrentUser;
 
 
                 if (user != null)
