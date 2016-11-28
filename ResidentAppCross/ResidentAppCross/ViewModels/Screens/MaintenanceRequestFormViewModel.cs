@@ -225,7 +225,7 @@ namespace ResidentAppCross.ViewModels
                     }
                     if (!EntrancePermission && _loginService.UserInfo.Roles.Contains("Resident") && _loginService.UserInfo.Roles.Count == 1)
                     {
-                        if (string.IsNullOrEmpty(CompanyPhone))
+                        if ( string.IsNullOrEmpty( CompanyPhone ) )
                         {
                             context.FailTask(
                                 "You have not given permission to enter. Please, contact the office to submit your request.");
@@ -233,7 +233,7 @@ namespace ResidentAppCross.ViewModels
                         else
                         {
                             context.FailTask(
-                                $"You have not given permission to enter. Please, call {CompanyPhone} to submit your request.");
+                                $"You have not given permission to enter. Please, call { CompanyPhone } to submit your request.");
                         }
                         return;
                     }

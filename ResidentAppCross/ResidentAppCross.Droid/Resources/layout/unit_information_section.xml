@@ -84,16 +84,31 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/primary_text_body"
                 android:layout_height="@dimen/ticket_status_line_height" />
-
-            <android.support.v7.widget.AppCompatTextView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:gravity="center"
-                android:layout_height="@dimen/ticket_status_line_height"
-                android:hint="@string/empty_string_placeholder"
-                android:id="@+id/PhoneLabel"
-                tools:text="+1 555 777-999"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/primary_text_body" />
+                android:orientation="horizontal"
+                android:layout_height="26dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="@dimen/ticket_status_line_height"
+                    android:hint="@string/empty_string_placeholder"
+                    android:id="@+id/PhoneLabel"
+                    tools:text="+1 555 777-999"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/primary_text_body" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/CallButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="CALL"
+                    android:padding="0px"
+                    />
+
+            </LinearLayout>
+
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"

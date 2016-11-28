@@ -30,15 +30,15 @@ using MvvmCross.Droid.Support.V4;
 using MvvmCross.Platform.Core;
 using ResidentAppCross.Droid.Views.Sections;
 using ActionBar = Android.Support.V7.App.ActionBar;
+using Uri = Android.Net.Uri;
 
 namespace ResidentAppCross.Droid.Views
 {
-
-
     public class UnitInformationSection : FragmentSection
     {
         private string _avatarUrl;
         private AsyncImageView _avatarView;
+        private string _currentPhone;
 
         [Outlet]
         public CircleImageView AvatarView { get; set; }
@@ -55,6 +55,33 @@ namespace ResidentAppCross.Droid.Views
         [Outlet]
         public TextView EmailLabel { get; set; }
 
+        [Outlet]
+        public AppCompatButton CallButton { get; set; }
+
+        public override void OnInflated()
+        {
+            base.OnInflated();
+            CallButton.StyleMaterial(Context);
+            CallButton.Click += (sender, args) =>
+            {
+                if (string.IsNullOrEmpty(_currentPhone)) return;
+                Intent intent = new Intent(Intent.ActionCall, Uri.Parse("tel:" + _currentPhone));
+                Context.StartActivity(intent);
+            };
+        }
+
+        public void SetCallablePhone(string phone)
+        {
+            this._currentPhone = phone;
+            if (string.IsNullOrEmpty(phone))
+            {
+                CallButton.Visibility = ViewStates.Gone;
+            }
+            else
+            {
+                CallButton.Visibility = ViewStates.Visible;
+            }
+        }
 
         public string AvatarUrl
         {
@@ -95,8 +122,8 @@ namespace ResidentAppCross.Droid.Views
     {
         public static void StyleMaterial(this AppCompatButton btn, Context ctx)
         {
-              btn.SupportBackgroundTintList = ColorStateList.ValueOf(ctx.Resources.GetColor(Resource.Color.accent));
-                btn.SetTextColor(Color.White);
+            btn.SupportBackgroundTintList = ColorStateList.ValueOf(ctx.Resources.GetColor(Resource.Color.accent));
+            btn.SetTextColor(Color.White);
         }
     }
 
@@ -149,12 +176,10 @@ namespace ResidentAppCross.Droid.Views
             public Func<bool> IsAvailable { get; set; }
             public Button Button { get; set; }
         }
-
     }
 
     public class RadioSection : FragmentSection
     {
-
         [Outlet]
         public TextView Label { get; set; }
 
@@ -178,10 +203,7 @@ namespace ResidentAppCross.Droid.Views
                     .AddTo(RadioContainer);
             }
 
-            RadioContainer.CheckedChange += (sender, args) =>
-            {
-                selectionChanged?.Invoke(items[args.CheckedId]);
-            };
+            RadioContainer.CheckedChange += (sender, args) => { selectionChanged?.Invoke(items[args.CheckedId]); };
         }
     }
 
@@ -196,8 +218,7 @@ namespace ResidentAppCross.Droid.Views
         public override void OnInflated()
         {
             base.OnInflated();
-               Button.StyleMaterial(Context);
-
+            Button.StyleMaterial(Context);
         }
     }
 
@@ -235,7 +256,6 @@ namespace ResidentAppCross.Droid.Views
 
         [Outlet]
         public TextView StatusLabel { get; set; }
-
     }
 
     public class TextSection : FragmentSection
@@ -267,7 +287,6 @@ namespace ResidentAppCross.Droid.Views
 
     public class FragmentSection
     {
-
         public ViewGroup ParentLayout { get; set; }
 
         public Context Context { get; set; }
@@ -278,7 +297,8 @@ namespace ResidentAppCross.Droid.Views
 
         public virtual void Inflate()
         {
-            View = LayoutInflater.From(Context).Inflate(GetType().Name.ToLowerUnderscored().AsLayoutId(), ParentLayout, false);
+            View = LayoutInflater.From(Context)
+                .Inflate(GetType().Name.ToLowerUnderscored().AsLayoutId(), ParentLayout, false);
             View.LocateOutlets(this);
         }
 
@@ -330,7 +350,9 @@ namespace ResidentAppCross.Droid.Views
         public override void OnDestroyView()
         {
             base.OnDestroyView();
-            foreach (var prop in GetType().GetProperties().Where(m => typeof(FragmentSection).IsAssignableFrom(m.PropertyType)))
+            foreach (
+                var prop in
+                    GetType().GetProperties().Where(m => typeof (FragmentSection).IsAssignableFrom(m.PropertyType)))
             {
                 prop.SetValue(this, null);
             }
@@ -340,11 +362,13 @@ namespace ResidentAppCross.Droid.Views
         public override void InitializeView(ViewGroup layout, Bundle savedInstanceState)
         {
             base.InitializeView(layout, savedInstanceState);
-            foreach (var prop in GetType().GetProperties().Where(m => typeof(FragmentSection).IsAssignableFrom(m.PropertyType)))
+            foreach (
+                var prop in
+                    GetType().GetProperties().Where(m => typeof (FragmentSection).IsAssignableFrom(m.PropertyType)))
             {
-                var instance = (FragmentSection)Activator.CreateInstance(prop.PropertyType);
+                var instance = (FragmentSection) Activator.CreateInstance(prop.PropertyType);
                 instance.Context = Context;
-                instance.ParentLayout = (ViewGroup)Layout.FindViewById(instance.ContainerId);
+                instance.ParentLayout = (ViewGroup) Layout.FindViewById(instance.ContainerId);
                 instance.Inflate();
                 instance.OnInflated();
                 prop.SetValue(this, instance);
@@ -369,7 +393,6 @@ namespace ResidentAppCross.Droid.Views
                 SectionContainer.AddView(new View(Context).WithHeight(2).WithWidthMatchParent());
             }
         }
-
     }
 
     public class ViewFragment<T> : ViewFragment where T : class, IMvxViewModel
@@ -393,10 +416,8 @@ namespace ResidentAppCross.Droid.Views
 
     public class ViewFragment : MvxFragment, IDisposableContainer, ILifecycleProvider
     {
-
         public ViewFragment()
         {
-           
         }
 
         private IMvxMessenger _eventAggregator;
@@ -414,7 +435,11 @@ namespace ResidentAppCross.Droid.Views
 
         public AppCompatActivity MainActivity
         {
-            get { return _mainActivity ?? (_mainActivity = Mvx.Resolve<IMvxAndroidCurrentTopActivity>().Activity as AppCompatActivity); }
+            get
+            {
+                return _mainActivity ??
+                       (_mainActivity = Mvx.Resolve<IMvxAndroidCurrentTopActivity>().Activity as AppCompatActivity);
+            }
             set { _mainActivity = value; }
         }
 
@@ -446,7 +471,6 @@ namespace ResidentAppCross.Droid.Views
             }
             this.DisposeContainer();
             */
-
         }
 
         public override void OnDestroyView()
@@ -513,7 +537,6 @@ namespace ResidentAppCross.Droid.Views
         }
 
 
-
         public void UpdateToolbar()
         {
             var act = MainActivity as ApplicationHostActivity;
@@ -547,7 +570,6 @@ namespace ResidentAppCross.Droid.Views
 
         public virtual void Bind()
         {
-            
         }
 
         public override void OnResume()
@@ -596,7 +618,6 @@ namespace ResidentAppCross.Droid.Views
 
     public class Generate : Attribute
     {
-        
     }
 
     public static class ViewFragmentExtensions
@@ -619,7 +640,6 @@ namespace ResidentAppCross.Droid.Views
 
         public static NotificationDialog GetOrCreateDialog(Activity targetActivity)
         {
-
             if (targetActivity == null) return null;
 
 
@@ -649,7 +669,6 @@ namespace ResidentAppCross.Droid.Views
 
         public static void SetTaskRunning(this ViewFragment view, string label, bool block = true)
         {
-
             if (block && !string.IsNullOrEmpty(label))
             {
                 var dialog = GetOrCreateDialog(view.MainActivity);
@@ -682,9 +701,9 @@ namespace ResidentAppCross.Droid.Views
             }
         }
 
-        public static void SetTaskComplete(this ViewFragment view, bool prompt, string label = null, Action onPrompted = null)
+        public static void SetTaskComplete(this ViewFragment view, bool prompt, string label = null,
+            Action onPrompted = null)
         {
-
             if (prompt && !string.IsNullOrEmpty(label))
             {
                 var dialog = GetOrCreateDialog(view.MainActivity);
@@ -693,16 +712,17 @@ namespace ResidentAppCross.Droid.Views
                 dialog.SubTitleText = null;
                 dialog.ShouldDismissWhenClickedOutside = true;
                 dialog.OnceOnDismiss(onPrompted);
-                dialog.SetActions(new[] { new NotificationDialogItem() { Action = () => { }, Title = "Ok", ShouldDismiss = true } });
+                dialog.SetActions(new[]
+                {new NotificationDialogItem() {Action = () => { }, Title = "Ok", ShouldDismiss = true}});
             }
             else
             {
                 DismissCurrentDialog();
             }
-
         }
 
-        public static void SetTaskFailed(this ViewFragment view, bool prompt, string label = null, Exception reason = null, Action<Exception> onPrompted = null)
+        public static void SetTaskFailed(this ViewFragment view, bool prompt, string label = null,
+            Exception reason = null, Action<Exception> onPrompted = null)
         {
             if (prompt && !string.IsNullOrEmpty(label))
             {
@@ -720,26 +740,22 @@ namespace ResidentAppCross.Droid.Views
         }
 
 
-        public static void OnViewModelEvent<TMessage>(this ViewFragment view, Action<TMessage> handler) where TMessage : MvxMessage
+        public static void OnViewModelEvent<TMessage>(this ViewFragment view, Action<TMessage> handler)
+            where TMessage : MvxMessage
         {
             view.OnEvent<TMessage>(evt =>
             {
                 if (evt.Sender == view.ViewModel)
                 {
-                    Dispatcher.RequestMainThreadAction(() =>
-                    {
-                        handler(evt);
-                    });
+                    Dispatcher.RequestMainThreadAction(() => { handler(evt); });
                 }
             });
         }
 
-        public static void OnEvent<TMessage>(this ViewFragment view, Action<TMessage> handler) where TMessage : MvxMessage
+        public static void OnEvent<TMessage>(this ViewFragment view, Action<TMessage> handler)
+            where TMessage : MvxMessage
         {
             view.EventAggregator.Subscribe(handler).DisposeWith(view);
         }
-
-
     }
-
 }

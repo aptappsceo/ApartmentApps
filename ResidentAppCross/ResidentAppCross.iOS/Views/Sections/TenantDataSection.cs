@@ -1,6 +1,7 @@
 using Foundation;
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using ResidentAppCross.iOS.Views;
 using ResidentAppCross.Resources;
 using UIKit;
@@ -9,7 +10,9 @@ namespace ResidentAppCross.iOS
 {
 	public partial class TenantDataSection : SectionViewBase
 	{
-		public TenantDataSection (IntPtr handle) : base (handle)
+	    private string _phoneNumber;
+
+	    public TenantDataSection (IntPtr handle) : base (handle)
 		{
 		}
 
@@ -27,6 +30,35 @@ namespace ResidentAppCross.iOS
 	        PhoneLabel.Font = AppFonts.Note;
             TenantAvatar.ContentMode = UIViewContentMode.ScaleAspectFill;
 	        PhoneIcon.Image = AppTheme.GetIcon(SharedResources.Icons.Call, SharedResources.Size.S);
+
+	        PhoneIcon.AddGestureRecognizer(new UITapGestureRecognizer(() =>
+	        {
+	            if (string.IsNullOrEmpty(_phoneNumber)) return;
+	            CallPhone(_phoneNumber);
+	        }));
+
+
+	    }
+
+	    public void SetPhone(string phone)
+	    {
+	        _phoneNumber = phone;
+	    }
+
+	    private void CallPhone(string phone )
+	    {
+	        var sharedApplication = UIApplication.SharedApplication;
+	        var promtTel = NSUrl.FromString(@"telprompt://"+phone);
+	        var tel = NSUrl.FromString(@"tel://"+phone);
+
+	        if (sharedApplication.CanOpenUrl(promtTel))
+	        {
+	            sharedApplication.OpenUrl(promtTel);
+	        }
+	        else
+	        {
+	            sharedApplication.OpenUrl(tel);
+	        }
 	    }
 
 	    public override void WillMoveToSuperview(UIView newsuper)

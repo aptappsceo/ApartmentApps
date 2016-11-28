@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Android.Content;
 using Android.Graphics;
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
@@ -12,6 +13,7 @@ using ResidentAppCross.Droid.Views.Sections;
 using ResidentAppCross.ViewModels;
 using ResidentAppCross.ViewModels.Screens;
 using MaintenanceRequestStatus = ResidentAppCross.ViewModels.Screens.MaintenanceRequestStatus;
+using Uri = Android.Net.Uri;
 
 namespace ResidentAppCross.Droid.Views
 {
@@ -67,6 +69,10 @@ namespace ResidentAppCross.Droid.Views
                     MaintenanceTicketStatusSection.EntranceStatusLabel.Text = "N/A";
 
                 ActionBarSection.Update();
+
+                UnitInformationSection.SetCallablePhone(ViewModel.Request.User.PhoneNumber);
+
+
             });
 
             GallerySection?.Bind(ViewModel.Photos);
@@ -118,7 +124,10 @@ namespace ResidentAppCross.Droid.Views
                 .WithFallback("-");
 
             set.Bind(UnitInformationSection).For(s => s.AvatarUrl).To(vm => vm.Request.User.ImageUrl);
+            
+
             set.Apply();
+
 
             CommentsSection.InputField.Focusable = false;
 
