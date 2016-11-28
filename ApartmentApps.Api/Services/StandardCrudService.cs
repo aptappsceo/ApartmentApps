@@ -86,6 +86,16 @@ namespace ApartmentApps.Portal.Controllers
     {
         
     }
+
+    public class UserQueryAttribute : Attribute
+    {
+        public UserQueryAttribute(string displayName)
+        {
+            DisplayName = displayName;
+        }
+
+        public string DisplayName { get; set; }
+    }
     public abstract class StandardCrudService<TModel> : IService where TModel : IBaseEntity, new()
     {
         protected readonly IKernel _kernel;
@@ -158,6 +168,29 @@ namespace ApartmentApps.Portal.Controllers
             return GetAll<TViewModel>(Repository.GetAll(), query, out count, orderBy, orderByDesc, page, resultsPerPage);
         }
 
+        public IEnumerable<TViewModel> GetAll<TViewModel>(string userQueryName, out int count, string orderBy, bool orderByDesc, int page = 1, int resultsPerPage = 20)
+        {
+            var method = this.GetType().GetMethod(userQueryName).Invoke(this,null) as IQueryable<TModel>;
+            return GetAll<TViewModel>(method, out count, orderBy, orderByDesc, page, resultsPerPage);
+        }
+
+        public IEnumerable<TViewModel> GetAll<TViewModel>(IQueryable<TModel> items, out int count, string orderBy, bool orderByDesc, int page = 1, int resultsPerPage = 20)
+        {
+   
+            
+            var result = items;
+
+            count = result.Count();
+
+            result = result.OrderBy(!string.IsNullOrEmpty(orderBy) ? orderBy : DefaultOrderBy, !string.IsNullOrEmpty(orderBy) ? orderByDesc : DefaultOrderByDesc);
+            result = result.Skip(resultsPerPage * (page - 1));
+            result = result.Take(resultsPerPage);
+
+            var res = result.ToArray();
+            var mapper = _kernel.Get<IMapper<TModel, TViewModel>>();
+            return res.Select(mapper.ToViewModel);
+
+        }
         public IEnumerable<TViewModel> GetAll<TViewModel>(IQueryable<TModel> items, DbQuery query, out int count, string orderBy, bool orderByDesc, int page = 1, int resultsPerPage = 20)
         {
             if (query == null)

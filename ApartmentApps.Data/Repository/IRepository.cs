@@ -161,5 +161,6 @@ namespace ApartmentApps.Data.Repository
         T Find(object id);
         int Count();
         void Save();
+        IQueryable<T> Include<TProperty>(Expression<Func<T,TProperty>>  path);
     }
 }

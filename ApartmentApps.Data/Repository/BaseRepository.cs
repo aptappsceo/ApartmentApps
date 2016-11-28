@@ -35,6 +35,10 @@ namespace ApartmentApps.Data.Repository
             return WithIncludes.Where(predicate);
         }
 
+        public IQueryable<TEntity> Include<TProperty>(Expression<Func<TEntity,TProperty>>  path)
+        {
+            return WithIncludes.Include(path);
+        }
         public IQueryable<TEntity> WithIncludes => this.Includes(_dbContext.Set<TEntity>());
         public virtual IQueryable<TEntity> Includes(IDbSet<TEntity> set)
         {
