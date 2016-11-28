@@ -61,6 +61,7 @@ namespace ApartmentApps.Api.Modules
 
         public void PopulateComponents(DashboardArea area, List<ComponentViewModel> dashboardComponents)
         {
+            /*
             if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin"))
                 return;
 
@@ -106,6 +107,7 @@ namespace ApartmentApps.Api.Modules
                     Subtitle = "Last 30 Days"
                 });
             }
+            */
 
         }
         private IQueryable<MaintenanceRequestCheckin> CheckinsByRange(DateTime? startDate, DateTime? endDate)
@@ -118,6 +120,7 @@ namespace ApartmentApps.Api.Modules
         {
             return mr.Where(p => p.SubmissionDate > startDate && p.SubmissionDate < endDate);
         }
+
     }
 
 }

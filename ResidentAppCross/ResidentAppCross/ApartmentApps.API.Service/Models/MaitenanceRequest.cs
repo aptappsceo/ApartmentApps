@@ -45,6 +45,17 @@ namespace ApartmentApps.Client.Models
             set { this._description = value; }
         }
         
+        private bool? _emergency;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? Emergency
+        {
+            get { return this._emergency; }
+            set { this._emergency = value; }
+        }
+        
         private string _groupId;
         
         /// <summary>
@@ -321,6 +332,11 @@ namespace ApartmentApps.Client.Models
                 if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                 {
                     this.Description = ((string)descriptionValue);
+                }
+                JToken emergencyValue = inputObject["Emergency"];
+                if (emergencyValue != null && emergencyValue.Type != JTokenType.Null)
+                {
+                    this.Emergency = ((bool)emergencyValue);
                 }
                 JToken groupIdValue = inputObject["GroupId"];
                 if (groupIdValue != null && groupIdValue.Type != JTokenType.Null)

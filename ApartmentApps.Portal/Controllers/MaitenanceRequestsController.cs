@@ -92,6 +92,9 @@ namespace ApartmentApps.Portal.Controllers
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
 
+        [DisplayName("Is Emergency?")]
+        public bool Emergency { get; set; }
+
     }
 
     [DisplayName("Maintenance Requests Report")]
@@ -557,6 +560,7 @@ namespace ApartmentApps.Portal.Controllers
                 request.Comments,
                 request.MaitenanceRequestTypeId,
                 (int)request.PetStatus,
+                request.Emergency,
                 request.PermissionToEnter,
                 null,
                 Convert.ToInt32(request.UnitId)

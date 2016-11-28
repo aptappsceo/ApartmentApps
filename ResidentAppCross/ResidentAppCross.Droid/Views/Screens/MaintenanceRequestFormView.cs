@@ -32,6 +32,7 @@ namespace ResidentAppCross.Droid.Views
         public LabelButtonSection TypeSelectionSection { get; set; } 
         public LabelButtonSection UnitSelectionSection { get; set; } 
         public SwitchSection EntrancePermissionSection { get; set; } 
+        public SwitchSection EmergencySection { get; set; } 
         public RadioSection PetTypeSelection { get; set; } 
         public TextSection CommentsSection { get; set; } 
         public ActionBarSection ActionBar { get; set; } 
@@ -47,6 +48,9 @@ namespace ResidentAppCross.Droid.Views
             EntrancePermissionSection.SubtitleLabel.Text =
                 "Do you give permission for maintenance staff to enter when you are not home?";
 
+            EmergencySection.Label.Text = "Is emergency?";
+            EmergencySection.SubtitleLabel.Text = "";
+
             var set = this.CreateBindingSet<MaintenanceRequestFormView, MaintenanceRequestFormViewModel>();
             set.Bind(TypeSelectionSection.Button)
                 .For(b => b.Text)
@@ -59,6 +63,7 @@ namespace ResidentAppCross.Droid.Views
                 .WithFallback("Select...");
 
             set.Bind(EntrancePermissionSection.Switch).For(s => s.Checked).TwoWay().To(vm => vm.EntrancePermission);
+            set.Bind(EmergencySection.Switch).For(s => s.Checked).TwoWay().To(vm => vm.IsEmergency);
             set.Bind(TypeSelectionSection.Button).To(vm => vm.SelectRequestTypeCommand);
             set.Bind(UnitSelectionSection.Button).To(vm => vm.SetUnitCommand);
             set.Bind(CommentsSection.InputField).TwoWay().To(vm => vm.Comments);
@@ -98,6 +103,7 @@ namespace ResidentAppCross.Droid.Views
             sections.Add(PhotoSection);
             sections.Add(EntrancePermissionSection);
             sections.Add(PetTypeSelection);
+            sections.Add(EmergencySection);
             sections.Add(ActionBar);
         }
     }

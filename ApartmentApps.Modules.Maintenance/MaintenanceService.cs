@@ -283,7 +283,7 @@ namespace ApartmentApps.Api
             }
         }
 
-        public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)
+        public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool emergrency, bool permissionToEnter, List<byte[]> images, int unitId = 0)
         {
 
             var maitenanceRequest = new MaitenanceRequest()
@@ -293,7 +293,7 @@ namespace ApartmentApps.Api
                 UserId = _userContext.UserId,
                 User =  _userContext.CurrentUser,
                 Message = comments,
-                
+                Emergency = emergrency,
                 UnitId = unitId,
                 MaitenanceRequestTypeId = requestTypeId,
                 StatusId = "Submitted",

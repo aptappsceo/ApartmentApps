@@ -276,6 +276,9 @@ namespace ResidentAppCross.iOS
             if (request == null) return;
             HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(MaintenanceRequestStyling.HeaderIconByStatus(ViewModel.Request.Status), SharedResources.Size.L);
             HeaderSection.LogoImage.TintColor = MaintenanceRequestStyling.ColorByStatus(ViewModel.Request.Status);
+            //Sets phone to be called when phone button is tapped.
+            //Nothing to do with label
+            TenantDataSection.SetPhone(ViewModel.Request.User.PhoneNumber);
             if(!string.IsNullOrEmpty(ViewModel.Request.User.ImageUrl))
             TenantDataSection.TenantAvatar.SetImageWithAsyncIndicator(ViewModel.Request.User.ImageUrl, UIImage.FromFile("avatar-placeholder.png"));
             else

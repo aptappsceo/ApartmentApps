@@ -31,6 +31,17 @@ namespace ApartmentApps.Client.Models
             set { this._id = value; }
         }
         
+        private string _maintenancePhoneNumber;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string MaintenancePhoneNumber
+        {
+            get { return this._maintenancePhoneNumber; }
+            set { this._maintenancePhoneNumber = value; }
+        }
+        
         private int? _propertyId;
         
         /// <summary>
@@ -40,6 +51,28 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._propertyId; }
             set { this._propertyId = value; }
+        }
+        
+        private string _residentEmergencyInstructions;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ResidentEmergencyInstructions
+        {
+            get { return this._residentEmergencyInstructions; }
+            set { this._residentEmergencyInstructions = value; }
+        }
+        
+        private string _residentNoPermissionToEnterInstructions;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ResidentNoPermissionToEnterInstructions
+        {
+            get { return this._residentNoPermissionToEnterInstructions; }
+            set { this._residentNoPermissionToEnterInstructions = value; }
         }
         
         private bool? _supervisorMode;
@@ -77,10 +110,25 @@ namespace ApartmentApps.Client.Models
                 {
                     this.Id = ((int)idValue);
                 }
+                JToken maintenancePhoneNumberValue = inputObject["MaintenancePhoneNumber"];
+                if (maintenancePhoneNumberValue != null && maintenancePhoneNumberValue.Type != JTokenType.Null)
+                {
+                    this.MaintenancePhoneNumber = ((string)maintenancePhoneNumberValue);
+                }
                 JToken propertyIdValue = inputObject["PropertyId"];
                 if (propertyIdValue != null && propertyIdValue.Type != JTokenType.Null)
                 {
                     this.PropertyId = ((int)propertyIdValue);
+                }
+                JToken residentEmergencyInstructionsValue = inputObject["ResidentEmergencyInstructions"];
+                if (residentEmergencyInstructionsValue != null && residentEmergencyInstructionsValue.Type != JTokenType.Null)
+                {
+                    this.ResidentEmergencyInstructions = ((string)residentEmergencyInstructionsValue);
+                }
+                JToken residentNoPermissionToEnterInstructionsValue = inputObject["ResidentNoPermissionToEnterInstructions"];
+                if (residentNoPermissionToEnterInstructionsValue != null && residentNoPermissionToEnterInstructionsValue.Type != JTokenType.Null)
+                {
+                    this.ResidentNoPermissionToEnterInstructions = ((string)residentNoPermissionToEnterInstructionsValue);
                 }
                 JToken supervisorModeValue = inputObject["SupervisorMode"];
                 if (supervisorModeValue != null && supervisorModeValue.Type != JTokenType.Null)

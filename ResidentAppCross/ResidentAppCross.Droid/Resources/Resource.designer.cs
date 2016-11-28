@@ -4542,8 +4542,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0081
 			public const int AddBankAccountButton = 2131361921;
 			
-			// aapt resource value: 0x7f0a0125
-			public const int AddButton = 2131362085;
+			// aapt resource value: 0x7f0a0126
+			public const int AddButton = 2131362086;
 			
 			// aapt resource value: 0x7f0a0089
 			public const int AddCreditCardButton = 2131361929;
@@ -4571,6 +4571,9 @@ namespace ResidentAppCross.Droid
 			
 			// aapt resource value: 0x7f0a0076
 			public const int ButtonContainer = 2131361910;
+			
+			// aapt resource value: 0x7f0a0122
+			public const int CallButton = 2131362082;
 			
 			// aapt resource value: 0x7f0a0088
 			public const int CardTypeSelection = 2131361928;
@@ -4632,8 +4635,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0087
 			public const int ExpirationYearSelection = 2131361927;
 			
-			// aapt resource value: 0x7f0a0124
-			public const int FilterButton = 2131362084;
+			// aapt resource value: 0x7f0a0125
+			public const int FilterButton = 2131362085;
 			
 			// aapt resource value: 0x7f0a0111
 			public const int FirstnameInput = 2131362065;
@@ -4830,8 +4833,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a00ab
 			public const int UsernameLabel = 2131361963;
 			
-			// aapt resource value: 0x7f0a0122
-			public const int WebView = 2131362082;
+			// aapt resource value: 0x7f0a0123
+			public const int WebView = 2131362083;
 			
 			// aapt resource value: 0x7f0a00f6
 			public const int action0 = 2131362038;
@@ -4959,8 +4962,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a002c
 			public const int collapseActionView = 2131361836;
 			
-			// aapt resource value: 0x7f0a0123
-			public const int contentFrame = 2131362083;
+			// aapt resource value: 0x7f0a0124
+			public const int contentFrame = 2131362084;
 			
 			// aapt resource value: 0x7f0a0057
 			public const int contentPanel = 2131361879;
@@ -5004,20 +5007,20 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a00f3
 			public const int drawerList = 2131362035;
 			
-			// aapt resource value: 0x7f0a012b
-			public const int drawer_downloaded = 2131362091;
-			
-			// aapt resource value: 0x7f0a0127
-			public const int drawer_favourite = 2131362087;
-			
-			// aapt resource value: 0x7f0a0126
-			public const int drawer_home = 2131362086;
-			
-			// aapt resource value: 0x7f0a012a
-			public const int drawer_oops = 2131362090;
+			// aapt resource value: 0x7f0a012c
+			public const int drawer_downloaded = 2131362092;
 			
 			// aapt resource value: 0x7f0a0128
-			public const int drawer_settings = 2131362088;
+			public const int drawer_favourite = 2131362088;
+			
+			// aapt resource value: 0x7f0a0127
+			public const int drawer_home = 2131362087;
+			
+			// aapt resource value: 0x7f0a012b
+			public const int drawer_oops = 2131362091;
+			
+			// aapt resource value: 0x7f0a0129
+			public const int drawer_settings = 2131362089;
 			
 			// aapt resource value: 0x7f0a0069
 			public const int edit_query = 2131361897;
@@ -5283,8 +5286,8 @@ namespace ResidentAppCross.Droid
 			// aapt resource value: 0x7f0a0074
 			public const int search_voice_btn = 2131361908;
 			
-			// aapt resource value: 0x7f0a0129
-			public const int section = 2131362089;
+			// aapt resource value: 0x7f0a012a
+			public const int section = 2131362090;
 			
 			// aapt resource value: 0x7f0a0075
 			public const int select_dialog_listview = 2131361909;

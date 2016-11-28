@@ -13,6 +13,7 @@ namespace ApartmentApps.API.Service.Models.VMS
         public int UnitId { get; set; }
         public int MaitenanceRequestTypeId { get; set; }
         public string Comments { get; set; }
+        public bool Emergency { get; set; }
         public List<string> Images { get; set; }
     }
 
