@@ -61,6 +61,7 @@ namespace ApartmentApps.Api.Modules
 
         public void PopulateComponents(DashboardArea area, List<DashboardComponentViewModel> dashboardComponents)
         {
+            /*
             if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin"))
                 return;
 
@@ -79,12 +80,14 @@ namespace ApartmentApps.Api.Modules
                 });
 
             }
+            */
 
         }
         private IQueryable<MaitenanceRequest> WorkOrdersByRange(IRepository<MaitenanceRequest> mr, DateTime? startDate, DateTime? endDate)
         {
             return mr.Where(p => p.SubmissionDate > startDate && p.SubmissionDate < endDate);
         }
+
     }
 
 }

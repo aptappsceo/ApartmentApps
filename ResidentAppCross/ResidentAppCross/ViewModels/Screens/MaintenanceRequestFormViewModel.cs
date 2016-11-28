@@ -83,8 +83,8 @@ namespace ResidentAppCross.ViewModels
 			_loginService = loginService;
         }
 
-        public string CompanyPhone
-            => _loginService?.UserInfo?.PropertyConfig?.ModuleInfo?.CompanySettingsConfig?.PhoneNumber;
+        public string MaintenancePhone
+            => _loginService?.UserInfo?.PropertyConfig?.ModuleInfo?.MaintenanceConfig?.MaintenancePhoneNumber;
 
         public override void Start()
         {
@@ -178,6 +178,7 @@ namespace ResidentAppCross.ViewModels
         IDialogService _dialogService;
 
         private ObservableCollection<PetStatus> _petStatuses;
+        private bool _isEmergency = false;
 
         public ICommand SelectRequestTypeCommand
         {
@@ -225,7 +226,14 @@ namespace ResidentAppCross.ViewModels
                     }
                     if (!EntrancePermission && _loginService.UserInfo.Roles.Contains("Resident") && _loginService.UserInfo.Roles.Count == 1)
                     {
-                        if ( string.IsNullOrEmpty( CompanyPhone ) )
+                        var customMessage =
+                        _loginService.UserInfo?.PropertyConfig?.ModuleInfo?.MaintenanceConfig?
+                            .ResidentEmergencyInstructions;
+
+                        if (!string.IsNullOrEmpty(customMessage))
+                        {
+                             context.FailTask(customMessage);
+                        } else if ( string.IsNullOrEmpty( MaintenancePhone ) )
                         {
                             context.FailTask(
                                 "You have not given permission to enter. Please, contact the office to submit your request.");
@@ -233,7 +241,7 @@ namespace ResidentAppCross.ViewModels
                         else
                         {
                             context.FailTask(
-                                $"You have not given permission to enter. Please, call { CompanyPhone } to submit your request.");
+                                $"You have not given permission to enter. Please, call { MaintenancePhone } to submit your request.");
                         }
                         return;
                     }
@@ -322,6 +330,26 @@ namespace ResidentAppCross.ViewModels
                 return _petStatuses;
             }
             set { _petStatuses = value; }
+        }
+
+        public bool IsEmergency
+        {
+            get { return _isEmergency; }
+            set
+            {
+                if (value)
+                {
+                    var customMessage =
+                        _loginService.UserInfo?.PropertyConfig?.ModuleInfo?.MaintenanceConfig?
+                            .ResidentEmergencyInstructions;
+                    if (string.IsNullOrEmpty(customMessage))
+                    {
+                        customMessage = "Your property manager gave not instructions in case of emergency.";
+                    }
+                    _dialogService.OpenNotification("Information",customMessage,"Ok");
+                }
+                SetProperty(ref _isEmergency, value); 
+            }
         }
     }
 }
