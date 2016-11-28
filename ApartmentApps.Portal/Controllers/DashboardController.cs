@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.ClientServices;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
@@ -54,6 +55,27 @@ namespace ApartmentApps.Portal.Controllers
         public IEnumerable<FeedItemBindingModel> FeedItems { get; set; }
     }
 
+
+    public class DashboardViewModel
+    {
+        public List<ComponentViewModel> Components { get; set; } = new List<ComponentViewModel>();
+
+        public bool Exists<TComponent>()
+        {
+            return Components.OfType<TComponent>().Any();
+        }
+        public MvcHtmlString RenderComponent<TComponent>(HtmlHelper helper)
+        {
+            var component = Components.OfType<TComponent>().FirstOrDefault();
+            if (component != null)
+            {
+                return helper.Partial("~/Views/Shared/Dashboard/" + component.GetType().Name + ".cshtml", component);
+            }
+            return MvcHtmlString.Empty;
+        }
+
+    }
+    [Authorize]
     public class DashboardController : AAController
     {
         private ApplicationUserManager _userManager;
@@ -70,8 +92,12 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
             //var listComponents = new List<DashboardComponentViewModel>();
-           // EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(listComponents));
-
+            //var dbvm = new DashboardViewModel();
+            //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(DashboardArea.Left, dbvm.Components));
+            //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(DashboardArea.LeftTop, dbvm.Components));
+            //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(DashboardArea.Right, dbvm.Components));
+            //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(DashboardArea.RightTop, dbvm.Components));
+           
             return View("Index3");
 
             if (CurrentUser == null)

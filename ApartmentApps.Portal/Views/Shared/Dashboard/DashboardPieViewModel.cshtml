@@ -1,0 +1,70 @@
+﻿@model ApartmentApps.Api.Modules.DashboardPieViewModel
+@{
+    var id = "chart_" + Model.GetHashCode().ToString();
+}
+
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+
+        <h5>@Model.Title</h5>
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+            
+                @if (Model.Data.Length > 0)
+                {
+                    <div id="@id" style="height: 200px;"></div>
+                }
+                else
+                {
+                    <h5 style="text-align: center; width: 100%;">No Data</h5>
+                }
+                
+
+            
+        </div>
+    </div>
+</div>
+@if (Model.Data.Length > 0)
+{
+    <script>
+        var options = {
+            series: {
+                pie: {
+                    innerRadius: 0.3,
+                    show: true,
+                    label: {
+                        show: true,
+                        //radius: 1/2,
+                        formatter: labelFormatter,
+                        background: {
+
+                            color: '#000'
+                        }
+                    }
+                }
+            },
+            legend: {
+                show: false
+            },
+            grid: {
+                hoverable: true,
+                clickable: true
+            }
+        };
+
+        var @(id) = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data)));
+
+        $(function () {
+            $.plot('#@(id)', @(id), options);
+        });
+
+        function labelFormatter(label, series) {
+            console.log(series);
+            return "<div style='font-size:8pt; text-align:center; padding:2px; color: black;'>" + label + "<br/>" + Math.round(series.data[0][1]) + "</div>";
+        }
+
+    </script>
+}
+
+

@@ -10,6 +10,7 @@ using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Forms;
 using Korzh.EasyQuery.Services;
+using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -17,9 +18,18 @@ namespace ApartmentApps.Portal.Controllers
     {
         public static MvcHtmlString RenderDashboardArea(this HtmlHelper helper, DashboardArea area)
         {
-            List<DashboardComponentViewModel> components = new List<DashboardComponentViewModel>();
+            List<ComponentViewModel> components = new List<ComponentViewModel>();
             ModuleHelper.EnabledModules.Signal<IDashboardComponentProvider>(_=>_.PopulateComponents(area, components));
             return helper.Partial("~/Views/Shared/Dashboard/Components.cshtml", components);
+        }
+
+        public static MvcHtmlString RenderComponent<TComponent>(this HtmlHelper helper, DashboardArea area, Action<TComponent> initComponent = null) where TComponent : IPortalComponent
+        {
+            var componentClass = ModuleHelper.Kernel.Get<TComponent>();
+            initComponent?.Invoke(componentClass);
+            var component = componentClass.Execute();
+
+            return helper.Partial("~/Views/Shared/Dashboard/" + component.GetType().Name + ".cshtml", component);
         }
         public static IEnumerable<ActionLinkModel> GetActionLinksFor(object viewModel)
         {

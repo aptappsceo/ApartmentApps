@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
@@ -9,6 +10,27 @@ using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
+
+    public interface IPortalComponent
+    {
+        ComponentViewModel Execute();
+    }
+
+    public interface IPortalComponentTyped<TResultViewModel> where TResultViewModel : ComponentViewModel
+    {
+        TResultViewModel ExecuteResult();
+    }
+
+    public abstract class PortalComponent<TResultViewModel> : IPortalComponent, IPortalComponentTyped<TResultViewModel> where TResultViewModel : ComponentViewModel
+    {
+        public abstract TResultViewModel ExecuteResult();
+
+        public ComponentViewModel Execute()
+        {
+            return ExecuteResult();
+        }
+    }
+
     public enum DashboardArea
     {
         LeftTop,
@@ -18,7 +40,7 @@ namespace ApartmentApps.Api.Modules
     }
     public interface IDashboardComponentProvider
     {
-        void PopulateComponents(DashboardArea areaName, List<DashboardComponentViewModel> dashboardComponents);
+        void PopulateComponents(DashboardArea areaName, List<ComponentViewModel> dashboardComponents);
     }
 
     public enum DashboardComponentPosition
@@ -28,18 +50,67 @@ namespace ApartmentApps.Api.Modules
         Right
     }
 
-    public class DashboardStatViewModel : DashboardComponentViewModel
+    public class DashboardStatViewModel : ComponentViewModel
     {
         public string Subtitle { get; set; }
         public string Value { get; set; }
+       
     }
-    public class DashboardComponentViewModel : BaseViewModel
+    public class ComponentViewModel : BaseViewModel
     {
-        public string Col { get; set; }
+        //public string Col { get; set; }
         public string Stretch { get; set; }
         public decimal Row { get; set; }
     }
 
+    public class DashboardTitleViewModel : ComponentViewModel
+    {
+        public string Subtitle { get; set; }
+        public DashboardTitleViewModel(string title, string subTitle, decimal row)
+        {
+            Stretch = "col-md-12";
+            Title = title;
+            Subtitle = subTitle;
+            Row = row;
+        }
+    }
+    public class DashboardPieViewModel : ComponentViewModel
+    {
+        private Type _dataType;
+        public ChartData[] Data { get; set; }
+
+        public class ChartData
+        {
+            public string label { get; set; }
+            public int data { get; set; }
+        }
+        public string Subtitle { get; set; }
+
+        public Type DataType
+        {
+            get
+            {
+                if (_dataType == null)
+                {
+                    var firstItem = ListData.FirstOrDefault();
+                    if (firstItem != null) return firstItem.GetType();
+                }
+                return _dataType;
+            }
+            set { _dataType = value; }
+        }
+
+        public IEnumerable<object> ListData { get; set; }
+
+        public DashboardPieViewModel(string title, string subTitle, decimal row, params ChartData[] chartData)
+        {
+            Data = chartData;
+            Stretch = "col-md-12";
+            Title = title;
+            Subtitle = subTitle;
+            Row = row;
+        }
+    }
     public class CompanySettingsModule : Module<CompanySettingsConfig>, IAdminConfigurable
     {
         public CompanySettingsModule(IKernel kernel, IRepository<CompanySettingsConfig> configRepo, IUserContext userContext) : base(kernel, configRepo, userContext)
@@ -52,9 +123,55 @@ namespace ApartmentApps.Api.Modules
     public class AdminModule : Module<PortalConfig>, IMenuItemProvider, IFillActions, IDashboardComponentProvider
     {
 
-        public void PopulateComponents(DashboardArea area, List<DashboardComponentViewModel> dashboardComponents)
+        public void PopulateComponents(DashboardArea area, List<ComponentViewModel> dashboardComponents)
         {
+            if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin"))
+                return;
+
+            var mrRepo = new BaseRepository<MaitenanceRequest>(Kernel.Get<ApplicationDbContext>());
+      
+            var totalRequestsAllProperties = mrRepo.Count(p => p.Property.State == PropertyState.Active);
             
+            var activeProperties = mrRepo
+               
+                .GroupBy(p => p.Property)
+                .Where(p=>p.Key.State == PropertyState.Active)
+                .Select(x=>new Tuple<Property,int>(x.Key,x.Count()))
+                .ToArray();
+
+            if (area == DashboardArea.LeftTop)
+            {
+                dashboardComponents.Add(new DashboardTitleViewModel("Admin Stats","Note: Only admins can see this.",0));
+                dashboardComponents.Add(new DashboardStatViewModel()
+                {
+                    Row = 1,
+                    Stretch = "col-md-6",
+                    Title = "Total Work Orders",
+                    Value = totalRequestsAllProperties.ToString(),
+                    Subtitle = "All Properties"
+                });
+                //dashboardComponents.Add(new DashboardStatViewModel()
+                //{
+                //    Row = 1,
+                //    Stretch = "col-md-6",
+                //    Title = "Engaging Properties",
+                //    //Subtitle = "Properties that are actively using the app.",
+                //    Value = activeProperties.Count(x=>x.Item2 > 0).ToString() ,
+                //    Subtitle = $"of {Kernel.Get<IRepository<Property>>().Count(p=>p.State == PropertyState.Active)} active total"
+                //});
+                var active = activeProperties.Count(x => x.Item2 > 0);
+                var inActive = Kernel.Get<IRepository<Property>>().Count(p => p.State == PropertyState.Active) - active;
+
+                dashboardComponents.Add(
+                    new DashboardPieViewModel("Engaging Properties","Properties actively using",1,
+                    new DashboardPieViewModel.ChartData() {label = "Active", data=active },
+                    new DashboardPieViewModel.ChartData() {label = "In-Active", data=inActive })
+                    {
+                        Stretch = "col-md-6",
+                       // ListData = 
+                    });
+
+            }
         }
 
         public override PortalConfig Config => new PortalConfig()

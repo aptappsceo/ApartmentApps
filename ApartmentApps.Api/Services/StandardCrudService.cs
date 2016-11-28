@@ -284,10 +284,11 @@ namespace ApartmentApps.Portal.Controllers
                 var parameters = item.GetParameters().Select(p => variableProvider.GetVariable(p.Name)).ToArray();
 
                 var result = item.Invoke(this, parameters) as DbQuery;
+                
                 if (result != null)
                 {
                     var methodNameAttribute =
-                        item.GetCustomAttributes(typeof (DisplayNameAttribute), true)
+                        item.GetCustomAttributes(typeof(DisplayNameAttribute), true)
                             .Cast<DisplayNameAttribute>()
                             .FirstOrDefault();
                     yield return new ServiceQuery()
@@ -297,6 +298,10 @@ namespace ApartmentApps.Portal.Controllers
                         QueryJson = QueryToXml(result),
                         Service = name,
                     };
+                }
+                else
+                {
+                    
                 }
             }
             int index = 0;
