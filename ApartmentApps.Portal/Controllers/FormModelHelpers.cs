@@ -15,6 +15,12 @@ namespace ApartmentApps.Portal.Controllers
 {
     public static class LinkHelpers
     {
+        public static MvcHtmlString RenderDashboardArea(this HtmlHelper helper, DashboardArea area)
+        {
+            List<DashboardComponentViewModel> components = new List<DashboardComponentViewModel>();
+            ModuleHelper.EnabledModules.Signal<IDashboardComponentProvider>(_=>_.PopulateComponents(area, components));
+            return helper.Partial("~/Views/Shared/Dashboard/Components.cshtml", components);
+        }
         public static IEnumerable<ActionLinkModel> GetActionLinksFor(object viewModel)
         {
             var list = new List<ActionLinkModel>();
