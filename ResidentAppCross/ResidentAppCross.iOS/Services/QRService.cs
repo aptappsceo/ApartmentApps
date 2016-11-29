@@ -19,15 +19,46 @@ namespace ResidentAppCross.iOS.Services
         {
             get { return _scanner ?? (_scanner = new MobileBarcodeScanner(UIApplication.SharedApplication.KeyWindow.RootViewController)
             {
-                BottomText = "Please, point to appartment QR Code"
+				BottomText = "Please, point to appartment QR Code"
             }); }
             set { _scanner = value; }
         }
-        
 
+		public async Task<QRData> ScanIDAsync()
+		{
+			if (ObjCRuntime.Runtime.Arch == Arch.SIMULATOR)
+			{
+				return new QRData()
+				{
+					Data = "http://www.apartmentapps.com?coloc=17",
+					ImageData = new byte[0],
+					Timestamp = DateTime.Now.Ticks
+				};
+			}
+
+			var scan = await Scanner.Scan(new MobileBarcodeScanningOptions()
+			{
+				//UseNativeScanning = true,
+				AutoRotate = true,
+
+				PossibleFormats = new System.Collections.Generic.List<BarcodeFormat>()
+				{
+
+					BarcodeFormat.PDF_417
+				}
+			});
+			if (scan == null) return null;
+			return new QRData()
+			{
+				Data = scan?.Text,
+				ImageData = scan?.RawBytes,
+				Timestamp = scan?.Timestamp ?? 0
+			};
+		}
 
         public async Task<QRData> ScanAsync()
         {
+			
             if (ObjCRuntime.Runtime.Arch == Arch.SIMULATOR)
             {
                 return new QRData()

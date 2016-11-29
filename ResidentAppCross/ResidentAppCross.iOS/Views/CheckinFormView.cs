@@ -205,6 +205,23 @@ namespace ResidentAppCross.iOS.Views
                 return _desiredMoveInDateSection;
             }
         }
+		public CallToActionSection CaptureIdSection
+		{
+			get
+			{
+				if (_captureIdSection == null)
+				{
+					_captureIdSection = Formals.Create<CallToActionSection>();
+					_captureIdSection.HeightConstraint.Constant = AppTheme.CallToActionSectionHeight;
+					_captureIdSection.MainButton.SetTitle("Capture");
+				}
+
+		
+				return _captureIdSection;
+			}
+		}
+		CallToActionSection _captureIdSection;
+
         public CallToActionSection ActionSection
         {
             get
@@ -228,6 +245,7 @@ namespace ResidentAppCross.iOS.Views
 
 			var set = this.CreateBindingSet<ProspectApplicationFormView, ProspectApplicationFormViewModel>();
 			set.Bind(ActionSection.MainButton).To(vm => vm.SubmitApplicationCommand);
+			set.Bind(ActionSection.MainButton).To(vm => vm.CaptureIdCommand);
 			set.Bind(FirstNameSection.TextView).For(t=>t.Text).TwoWay().To(vm => vm.FirstName);
 			set.Bind(LastNameSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
 			set.Bind(AddressLine1Section.TextView).For(t => t.Text).TwoWay().To(vm => vm.AddressLine1);
@@ -237,6 +255,7 @@ namespace ResidentAppCross.iOS.Views
 			set.Bind(ZipCodeSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.ZipCode);
 			set.Bind(EmailSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.Email);
 			set.Bind(PhoneNumberSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.PhoneNumber);
+			set.Bind(DesiredMoveInDateSection.Button).To(vm => vm.DesiredMoveInDateCommand);
 			//set.Bind(LastNameSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
 			//set.Bind(DesiredMoveInDateSection.TextView).For(t => t.Text).TwoWay().To(vm => vm.LastName);
             set.Apply();
@@ -249,6 +268,7 @@ namespace ResidentAppCross.iOS.Views
             base.GetContent(content);
 
             content.Add(HeaderSection);
+			content.Add(CaptureIdSection);
 			content.Add(FirstNameSection);
 			content.Add(LastNameSection);
 			content.Add(AddressLine1Section);

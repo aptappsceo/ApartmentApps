@@ -30,7 +30,7 @@ public class App : MvxApplication
     public static Uri SiniEndpoint = new Uri("http://5.189.103.91.nip.io:54685/");
     public static Uri DevEndpoint = new Uri("http://devservices.apartmentapps.com/");
 	public static Uri TestEndpoint = new Uri("http://testservices.apartmentapps.com/");
-    public static Uri ProductionEndpoint = new Uri("http://apartmentappsapiservice.azurewebsites.net");
+    public static Uri ProductionEndpoint = new Uri("https://api.apartmentapps.com/");
 
     public App()
     {
