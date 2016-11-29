@@ -113,7 +113,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We would like to use your location.</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.2</string>
+	<string>2.3</string>
 	<key>CFBundleName</key>
 	<string>Apartment Apps</string>
 	<key>UIBackgroundModes</key>
@@ -121,6 +121,6 @@
 		<string>remote-notification</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>39</string>
+	<string>40</string>
 </dict>
 </plist>
