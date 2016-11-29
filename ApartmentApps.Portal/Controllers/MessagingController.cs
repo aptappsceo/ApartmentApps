@@ -48,7 +48,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public override ActionResult GridResult(GridList<MessageViewModel> grid)
         {
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return View("OverviewListPartial", grid);
             }
@@ -117,7 +117,7 @@ namespace ApartmentApps.Portal.Controllers
                 }
 
                 var count = 0;
-                var items = _userService.GetAll<UserBindingModel>(query, out count, null, false, 1, Int32.MaxValue).ToArray().Select(p=>p.Id).Cast<object>().ToArray();
+                var items = _userService.GetActive<UserBindingModel>(query, out count, null, false, 1, Int32.MaxValue).ToArray().Select(p=>p.Id).Cast<object>().ToArray();
 
                 _module.SendMessage(items, q, string.Empty);
                 Service.MarkSent(messageId);

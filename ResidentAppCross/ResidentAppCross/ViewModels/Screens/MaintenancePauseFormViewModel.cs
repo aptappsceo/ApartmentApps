@@ -59,6 +59,7 @@ namespace ResidentAppCross.ViewModels
                         return;
                     }
 
+
                     await
                         _appService.Maitenance.PauseRequestWithOperationResponseAsync(MaintenanceRequestId,Comments, new List<string>());
                 }).OnStart("Please, wait...").OnComplete("Maintenance Paused!", () =>

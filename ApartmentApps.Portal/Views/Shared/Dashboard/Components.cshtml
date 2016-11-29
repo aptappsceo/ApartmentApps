@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ApartmentApps.Api.Modules.ComponentViewModel>
+
+
+@foreach (var column in Model.GroupBy(p => p.Row).OrderBy(p => p.Key))
+{
+    <div class="row">
+        @foreach (var item in column)
+        {
+            <div class="@item.Stretch">
+                @Html.Partial("~/Views/Shared/Dashboard/" + item.GetType().Name + ".cshtml", item)
+
+
+            </div>
+
+        }
+    </div>
+}

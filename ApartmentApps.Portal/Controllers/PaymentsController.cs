@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Payments.BindingModels;
 using ApartmentApps.Modules.Payments.Data;
@@ -26,6 +27,7 @@ namespace ApartmentApps.Portal.Controllers
         private readonly IRepository<Invoice> _invoices;
         private readonly IRepository<TransactionHistoryItem> _invoiceHistory;
         private readonly IRepository<InvoiceTransaction> _transactions;
+        private readonly UserService _users;
         private LeaseInfoManagementService _leaseService;
 
         // GET: Payments
@@ -38,7 +40,11 @@ namespace ApartmentApps.Portal.Controllers
             return View("RentSummary"); // TODO Redirect to other pages for property manager
         }
 
-        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule, IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices, IKernel kernel, PropertyContext context, IUserContext userContext, IRepository<InvoiceTransaction> transactions, LeaseInfoManagementService leaseService, IRepository<TransactionHistoryItem> invoiceHistory) : base(kernel, context, userContext)
+        public PaymentsController(IBlobStorageService blobStorageService, PaymentsModule paymentsModule,
+            IRepository<UserLeaseInfo> leaseInfos, IRepository<Invoice> invoices, IKernel kernel,
+            PropertyContext context, IUserContext userContext, IRepository<InvoiceTransaction> transactions,
+            LeaseInfoManagementService leaseService, IRepository<TransactionHistoryItem> invoiceHistory,
+            UserService users) : base(kernel, context, userContext)
         {
             _blobStorageService = blobStorageService;
             _paymentsModule = paymentsModule;
@@ -47,12 +53,13 @@ namespace ApartmentApps.Portal.Controllers
             _transactions = transactions;
             _leaseService = leaseService;
             _invoiceHistory = invoiceHistory;
+            _users = users;
         }
 
         public async Task<ActionResult> RentSummaryFor(string userId)
         {
             IsUserMakingPayment = true;
-            ViewBag.NextAction = Url.Action("PaymentOptionsFor",new {userId});
+            ViewBag.NextAction = Url.Action("PaymentOptionsFor", new {userId});
             var rent = await _paymentsModule.GetRentSummaryFor(userId);
             return View("RentSummary", rent);
         }
@@ -67,11 +74,11 @@ namespace ApartmentApps.Portal.Controllers
         {
             SelectedPaymentOption = paymentOptionId;
             ViewBag.UserId = userId;
-            ViewBag.NextAction = Url.Action("SubmitPayment",new MakePaymentBindingModel()
+            ViewBag.NextAction = Url.Action("SubmitPayment", new MakePaymentBindingModel()
             {
                 UserId = userId
             });
-            return View("RentSummary", _paymentsModule.GetPaymentSummaryFor(userId,paymentOptionId).Result);
+            return View("RentSummary", _paymentsModule.GetPaymentSummaryFor(userId, paymentOptionId).Result);
         }
 
         public ActionResult SubmitPayment(MakePaymentBindingModel model)
@@ -91,18 +98,34 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult AddCreditCardFor(string userId)
         {
-            return AutoForm(new AddCreditCardBindingModel() {UserId = userId}, "AddCreditCardForSubmit", "Add Credit Card");
+            return AutoForm(new AddCreditCardBindingModel()
+            {
+                Users = _users.GetAll<UserLookupBindingModel>().ToList(),
+                UserId = userId
+            }, "AddCreditCardForSubmit", "Add Credit Card");
+        }
+
+        public ActionResult AddCreditCard()
+        {
+            return AutoForm(new AddCreditCardBindingModel()
+            {
+                Users = _users.GetAll<UserLookupBindingModel>().ToList()
+            }, "AddCreditCardForSubmit", "Add Credit Card");
         }
 
         public bool IsUserMakingPayment
         {
-            get { return Session[nameof(IsUserMakingPayment)] != null && bool.Parse(Session[nameof(IsUserMakingPayment)].ToString()); }
+            get
+            {
+                return Session[nameof(IsUserMakingPayment)] != null &&
+                       bool.Parse(Session[nameof(IsUserMakingPayment)].ToString());
+            }
             set { Session[nameof(IsUserMakingPayment)] = value.ToString(); }
         }
 
         public string SelectedPaymentOption
         {
-            get { return (string)Session[nameof(SelectedPaymentOption)]; }
+            get { return (string) Session[nameof(SelectedPaymentOption)]; }
             set { Session[nameof(SelectedPaymentOption)] = value; }
         }
 
@@ -117,16 +140,44 @@ namespace ApartmentApps.Portal.Controllers
 
             if (IsUserMakingPayment)
             {
-                return RedirectToAction("PaymentSummaryFor", new {userId = cardModel.UserId, paymentOptionId = res.PaymentOptionId.ToString()});
+                if (Request.IsAjaxRequest())
+                {
+                    return
+                        JsonRedirect(Url.Action("PaymentSummaryFor", "Payments",
+                            new {userId = cardModel.UserId, paymentOptionId = res.PaymentOptionId.ToString()}));
+                }
+                else
+                {
+                    return RedirectToAction("PaymentSummaryFor",
+                        new {userId = cardModel.UserId, paymentOptionId = res.PaymentOptionId.ToString()});
+                }
             }
 
-            return RedirectToAction("UserPaymentsOverview", new {id = cardModel.UserId});
-
+            if (Request.IsAjaxRequest())
+            {
+                return JsonUpdate();
+            }
+            else
+            {
+                return RedirectToAction("UserPaymentsOverview", new {id = cardModel.UserId});
+            }
         }
 
         public ActionResult AddBankAccountFor(string userId)
         {
-            return AutoForm(new AddBankAccountBindingModel() { UserId = userId }, "AddBankAccountSubmit", "Add Bank Account");
+            return AutoForm(new AddBankAccountBindingModel()
+            {
+                Users = _users.GetAll<UserLookupBindingModel>().ToList(),
+                UserId = userId
+            }, "AddBankAccountSubmit", "Add Bank Account");
+        }
+
+        public ActionResult AddBankAccount(string userId)
+        {
+            return AutoForm(new AddBankAccountBindingModel()
+            {
+                Users = _users.GetAll<UserLookupBindingModel>().ToList(),
+            }, "AddBankAccountSubmit", "Add Bank Account");
         }
 
         public async Task<ActionResult> AddBankAccountSubmit(AddBankAccountBindingModel cardModel)
@@ -138,12 +189,31 @@ namespace ApartmentApps.Portal.Controllers
                 return AutoForm(cardModel, "AddBankAccountSubmit", "Add Bank Account");
             }
 
-            if (IsUserMakingPayment)
+
+                  if (IsUserMakingPayment)
             {
-                return RedirectToAction("PaymentSummaryFor", new {userId = cardModel.UserId, paymentOptionId = res.PaymentOptionId.ToString()});
+                if (Request.IsAjaxRequest())
+                {
+                    return
+                        JsonRedirect(Url.Action("PaymentSummaryFor", "Payments",
+                            new {userId = cardModel.UserId, paymentOptionId = res.PaymentOptionId.ToString()}));
+                }
+                else
+                {
+                    return RedirectToAction("PaymentSummaryFor",
+                        new {userId = cardModel.UserId, paymentOptionId = res.PaymentOptionId.ToString()});
+                }
             }
 
-            return RedirectToAction("UserPaymentsOverview", new {id = cardModel.UserId});
+            if (Request.IsAjaxRequest())
+            {
+                return JsonUpdate();
+            }
+            else
+            {
+                return RedirectToAction("UserPaymentsOverview", new {id = cardModel.UserId});
+            }
+
         }
 
         public ActionResult CreateUserLeaseInfoFor(string id = null)
@@ -151,13 +221,6 @@ namespace ApartmentApps.Portal.Controllers
             return View("CreateUserLeaseInfo", new CreateUserLeaseInfoBindingModel()
             {
                 UserId = id,
-                UserIdItems =
-                    Context.Users.GetAll()
-                        .Where(u => !u.Archived)
-                        .ToList()
-                        .Select(u => u.ToUserBindingModel(_blobStorageService))
-                        .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
-                        .ToList(),
             });
         }
 
@@ -166,13 +229,6 @@ namespace ApartmentApps.Portal.Controllers
         {
             if (!ModelState.IsValid)
             {
-                data.UserIdItems =
-                    Context.Users.GetAll()
-                        .Where(u => !u.Archived)
-                        .ToList()
-                        .Select(u => u.ToUserBindingModel(_blobStorageService))
-                        .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
-                        .ToList();
                 return View("CreateUserLeaseInfo", data);
             }
 
@@ -187,7 +243,7 @@ namespace ApartmentApps.Portal.Controllers
             if (user == null) return HttpNotFound();
 
             var userLeaseInfos = _leaseInfos.GetAll().Where(s => s.UserId == id).ToList();
-            var transactions = _invoiceHistory.GetAll().Include(s=>s.Invoices).Where(s => s.UserId == id).ToList();
+            var transactions = _invoiceHistory.GetAll().Include(s => s.Invoices).Where(s => s.UserId == id).ToList();
             var userLeaseInfosIds = userLeaseInfos.Select(s => s.Id).ToArray();
 
             return View("UserPaymentsOverview", new UserPaymentsOverviewBindingModel()
@@ -214,7 +270,7 @@ namespace ApartmentApps.Portal.Controllers
             _paymentsModule.MarkAsPaid(id, "Marked as paid by " + CurrentUser.Email);
 
             return RedirectToAction("UserPaymentsOverview", new {id = user.Id});
-        }  
+        }
 
         public ActionResult CancelInvoice(int id)
         {
@@ -249,7 +305,6 @@ namespace ApartmentApps.Portal.Controllers
 
         public async Task<ActionResult> ForceRejectTransaction(int id)
         {
-
             var transaction = _invoiceHistory.Find(id);
             if (transaction == null) return HttpNotFound();
             var user = transaction.User;
@@ -260,7 +315,6 @@ namespace ApartmentApps.Portal.Controllers
 
         public async Task<ActionResult> ForceCompleteTransaction(int id)
         {
-
             var transaction = _invoiceHistory.Find(id);
             if (transaction == null) return HttpNotFound();
             var user = transaction.User;
@@ -272,7 +326,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult EditInvoice(int id)
         {
-                  var invoice = _invoices.Find(id);
+            var invoice = _invoices.Find(id);
             if (invoice == null) return HttpNotFound();
 
             return View("EditInvoice", new EditInvoiceBindingModel()
@@ -308,7 +362,7 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult EditUserLeaseInfo(int id)
         {
             var lease = _leaseInfos.Find(id);
-            if (lease== null) return HttpNotFound();
+            if (lease == null) return HttpNotFound();
 
             var editUserLeaseInfoBindingModel = new EditUserLeaseInfoBindingModel()
             {
@@ -330,7 +384,7 @@ namespace ApartmentApps.Portal.Controllers
             if (ModelState.IsValid)
             {
                 var userLeaseInfo = _leaseInfos.Find(data.Id);
-                if (userLeaseInfo== null) return HttpNotFound();
+                if (userLeaseInfo == null) return HttpNotFound("Payment request not found");
 
                 var user = userLeaseInfo.User;
 
@@ -347,7 +401,7 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult CancelUserLeaseInfo(int id)
         {
             var userLeaseInfo = _leaseInfos.Find(id);
-            if (userLeaseInfo== null) return HttpNotFound();
+            if (userLeaseInfo == null) return HttpNotFound();
 
             return View("CancelUserLeaseInfo", new CancelUserLeaseInfoBindingModel()
             {
@@ -372,10 +426,10 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public ActionResult CancelUserLeaseInfo(CancelUserLeaseInfoBindingModel data)
         {
-              if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var userLeaseInfo = _leaseInfos.Find(data.Id);
-                if (userLeaseInfo== null) return HttpNotFound();
+                if (userLeaseInfo == null) return HttpNotFound();
 
                 var user = userLeaseInfo.User;
 
@@ -388,6 +442,5 @@ namespace ApartmentApps.Portal.Controllers
                 return View("CancelUserLeaseInfo", data);
             }
         }
-
     }
 }

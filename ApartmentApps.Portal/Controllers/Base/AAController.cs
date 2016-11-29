@@ -150,5 +150,16 @@ namespace ApartmentApps.Portal.Controllers
         {
             TempData["GlobalSuccess"] = message;
         }
+
+        
+        protected ActionResult JsonUpdate()
+        {
+            return Json(new { update = true });
+        }
+
+        protected ActionResult JsonRedirect(string url)
+        {
+            return Json(new { redirect = url });
+        }
     }
 }

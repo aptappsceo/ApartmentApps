@@ -88,18 +88,25 @@ See usage in AutoForm.cshtml
 
         this.sendForm = function(formId, postUrl) {
 
+            var form = $("#" + formId);
+            var serialize = form.serialize();
             that.setLoading();
-
             $.ajax({
                 type: "POST",
                 url: postUrl, //process to mail
-                data: $("#" + formId).serialize(),
+                data: serialize,
                 success: function (msg) {
-                    if (msg === "") {
+                    if (msg.update) {
+                        if (EQ && EQ.view && EQ.view.grid) EQ.view.grid.applyFilter();
                         that.close(); //be friendly and show message
-                    } else {
+                    } else if (msg.redirect) {
+                        window.location = msg.redirect;
+                    } else
+                    {
                         that.setContent(msg);
+                        //you can show other stuff
                     }
+
                 },
                 error: function (msg) {
                     that.setContent(msg.responseText);

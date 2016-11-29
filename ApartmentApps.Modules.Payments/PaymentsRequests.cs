@@ -48,6 +48,21 @@ namespace ApartmentApps.Modules.Payments
 
     }
 
+    public class PaymentOptionsService : StandardCrudService<UserPaymentOption>
+    {
+        public PaymentOptionsService(IKernel kernel, IRepository<UserPaymentOption> repository) : base(kernel, repository)
+        {
+        }
+
+        [IgnoreQuery]
+        public DbQuery OwnedByUser(string id)
+        {
+            var user = Repo<ApplicationUser>().Find(id);
+            return CreateQuery("OwnedBy",$"{user.FirstName} {user.LastName} payment options", 
+                new ConditionItem("UserPaymentOption.UserId", "Equal", user.Id));
+        }
+    }
+
     public class InvoicesService : StandardCrudService<Invoice>
     {
 
@@ -70,13 +85,38 @@ namespace ApartmentApps.Modules.Payments
 
     }
 
+    public class PaymentOptionMapper : BaseMapper<UserPaymentOption, PaymentOptionBindingModel>
+    {
+
+        private IMapper<ApplicationUser, UserBindingModel> _usersMapper; 
+
+        public PaymentOptionMapper(IUserContext userContext, IMapper<ApplicationUser, UserBindingModel> usersMapper) : base(userContext)
+        {
+            _usersMapper = usersMapper;
+        }
+
+        public override void ToModel(PaymentOptionBindingModel viewModel, UserPaymentOption model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ToViewModel(UserPaymentOption model, PaymentOptionBindingModel viewModel)
+        {
+            viewModel.FriendlyName = model.FriendlyName;
+            viewModel.Type = model.Type;
+            viewModel.User = _usersMapper.ToViewModel(model.User);
+            viewModel.Id = model.Id.ToString();
+            viewModel.Title = model.FriendlyName;
+
+        }
+    }
 
     public class PaymentsRequestsEditMapper : BaseMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel>
     {
         public PropertyContext Context { get; set; }
-        public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
+        public IMapper<ApplicationUser, UserLookupBindingModel> UserMapper { get; set; }
 
-        public PaymentsRequestsEditMapper(IUserContext userContext, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper ) : base(userContext)
+        public PaymentsRequestsEditMapper(IUserContext userContext, PropertyContext context, IMapper<ApplicationUser, UserLookupBindingModel> userMapper ) : base(userContext)
         {
             Context = context;
             UserMapper = userMapper;
@@ -104,7 +144,7 @@ namespace ApartmentApps.Modules.Payments
                     .Where(u => !u.Archived)
                     .ToList()
                     .Select(u => UserMapper.ToViewModel(u))
-                    .Where(u => !string.IsNullOrWhiteSpace(u.FullName))
+                    .Where(u => !string.IsNullOrWhiteSpace(u.Title))
                     .ToList();
         }
     }

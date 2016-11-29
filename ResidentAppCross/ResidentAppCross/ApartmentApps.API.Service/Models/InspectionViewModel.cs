@@ -133,6 +133,17 @@ namespace ApartmentApps.Client.Models
             set { this._submissionUser = value; }
         }
         
+        private string _title;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Title
+        {
+            get { return this._title; }
+            set { this._title = value; }
+        }
+        
         private string _unitName;
         
         /// <summary>
@@ -220,6 +231,11 @@ namespace ApartmentApps.Client.Models
                     UserBindingModel userBindingModel = new UserBindingModel();
                     userBindingModel.DeserializeJson(submissionUserValue);
                     this.SubmissionUser = userBindingModel;
+                }
+                JToken titleValue = inputObject["Title"];
+                if (titleValue != null && titleValue.Type != JTokenType.Null)
+                {
+                    this.Title = ((string)titleValue);
                 }
                 JToken unitNameValue = inputObject["UnitName"];
                 if (unitNameValue != null && unitNameValue.Type != JTokenType.Null)

@@ -30,7 +30,6 @@ namespace ApartmentApps.API.Service.Controllers
         public IBlobStorageService BlobStorageService { get; set; }
 
 
-
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("List")]
         public IEnumerable<MaintenanceIndexBindingModel> ListRequests()
@@ -86,6 +85,11 @@ namespace ApartmentApps.API.Service.Controllers
                 Status = result.StatusId,
                 Name = result.MaitenanceRequestType.Name,
                 PetStatus = result.PetStatus,
+                AcceptableCheckinCodes = new List<string>()
+                    {
+                        $"http://www.apartmentapps.com?apt={result.Unit.BuildingId},{result.UnitId}",
+                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name},{result.Unit.Name}"
+                    },
                 BuildingName = result.Unit?.Building?.Name + " " + result.Unit?.Name,
                 PermissionToEnter = result.PermissionToEnter,
                 Checkins = result.Checkins.ToArray().Select(x => x.ToMaintenanceCheckinBindingModel(BlobStorageService)).ToArray(),
@@ -111,7 +115,7 @@ namespace ApartmentApps.API.Service.Controllers
         public void SubmitRequest(MaitenanceRequestModel request)
         {
             var images = request.Images?.Select(Convert.FromBase64String).ToList();
-            MaintenanceService.SubmitRequest(request.Comments, request.MaitenanceRequestTypeId, request.PetStatus, request.PermissionToEnter, images, request.UnitId);
+            MaintenanceService.SubmitRequest(request.Comments, request.MaitenanceRequestTypeId, request.PetStatus, request.Emergency, request.PermissionToEnter, images, request.UnitId);
         }
 
         [System.Web.Http.HttpPost]

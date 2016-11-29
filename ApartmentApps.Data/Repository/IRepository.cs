@@ -4,8 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using ApartmentApps.Api.Modules;
-using ApartmentApps.Modules.Payments.Data;
 using Korzh.EasyQuery;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -59,9 +57,6 @@ namespace ApartmentApps.Data.Repository
             IRepository<IncidentReportStatus> incidentReportStatuses, 
             IRepository<Corporation> corporations, 
             IRepository<Property> properties, 
-            IRepository<UserLeaseInfo> userLeaseInfos, 
-            IRepository<Invoice> invoices, 
-            IRepository<TransactionHistoryItem> transactionHistoryItems, 
             IRepository<ImageReference> imageReferences, 
             IRepository<Building> buildings, 
             IRepository<Unit> units, 
@@ -85,9 +80,7 @@ namespace ApartmentApps.Data.Repository
             IncidentReportStatuses = incidentReportStatuses;
             Corporations = corporations;
             Properties = properties;
-            UserLeaseInfos = userLeaseInfos;
-            Invoices = invoices;
-            TransactionHistoryItems = transactionHistoryItems;
+
             ImageReferences = imageReferences;
             Buildings = buildings;
             Units = units;
@@ -127,9 +120,7 @@ namespace ApartmentApps.Data.Repository
         public virtual IRepository<IncidentReportStatus> IncidentReportStatuses { get; set; }
         public virtual IRepository<Corporation> Corporations { get; set; }
         public virtual IRepository<Property> Properties { get; set; }
-        public virtual IRepository<UserLeaseInfo> UserLeaseInfos { get; set; }
-        public virtual IRepository<Invoice> Invoices { get; set; }
-        public virtual IRepository<TransactionHistoryItem> TransactionHistoryItems { get; set; }
+
         public virtual IRepository<ImageReference> ImageReferences { get; set; }
         public virtual IRepository<Building> Buildings { get; set; }
         public virtual IRepository<Unit> Units { get; set; }
@@ -170,5 +161,6 @@ namespace ApartmentApps.Data.Repository
         T Find(object id);
         int Count();
         void Save();
+        IQueryable<T> Include<TProperty>(Expression<Func<T,TProperty>>  path);
     }
 }

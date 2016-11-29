@@ -22,6 +22,17 @@ namespace ApartmentApps.Client.Models
             set { this._comments = value; }
         }
         
+        private bool? _emergency;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public bool? Emergency
+        {
+            get { return this._emergency; }
+            set { this._emergency = value; }
+        }
+        
         private IList<string> _images;
         
         /// <summary>
@@ -100,6 +111,10 @@ namespace ApartmentApps.Client.Models
             if (this.Comments != null)
             {
                 outputObject["Comments"] = this.Comments;
+            }
+            if (this.Emergency != null)
+            {
+                outputObject["Emergency"] = this.Emergency.Value;
             }
             JArray imagesSequence = null;
             if (this.Images != null)

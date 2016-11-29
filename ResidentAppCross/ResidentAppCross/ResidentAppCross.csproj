@@ -88,6 +88,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\ApplicationUser.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Building.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ChangePasswordBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\CompanySettingsConfig.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\Corporation.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\CourtesyCheckinBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\CourtesyCheckinBindingModelCollection.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\PropertyAddonType.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\PropertyConfig.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ProspectApplicationBindingModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\ProspectApplicationBindingModelCollection.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\ProspectModuleConfig.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\RegisterExternalBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\RegisterFromPhoneBindingModel.cs" />
@@ -151,6 +153,7 @@
     <Compile Include="ApartmentApps.API.Service\Models\UserBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\UserInfoViewModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\UserLoginInfoViewModel.cs" />
+    <Compile Include="ApartmentApps.API.Service\Models\UserLookupBindingModel.cs" />
     <Compile Include="ApartmentApps.API.Service\Models\VersionInfo.cs" />
     <Compile Include="ApartmentApps.API.Service\Notifiations.cs" />
     <Compile Include="ApartmentApps.API.Service\NotifiationsExtensions.cs" />

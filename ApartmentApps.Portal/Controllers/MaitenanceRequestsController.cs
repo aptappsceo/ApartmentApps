@@ -21,6 +21,8 @@ using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Modules.Payments;
+using ApartmentApps.Modules.Payments.BindingModels;
+using ApartmentApps.Modules.Payments.Services;
 using ApartmentApps.Portal.App_Start;
 using Korzh.EasyQuery.Services;
 using Ninject;
@@ -45,10 +47,18 @@ namespace ApartmentApps.Portal.Controllers
             {
                 var items =
                     ModuleHelper.Kernel.Get<IRepository<Unit>>()
-                        .ToArray().OrderByAlphaNumeric(p => p.Name);
+                        .ToArray();
 
-
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(),p.Building.Name + " - " + p.Name, UnitId == p.Id));
+                return items.Select(p =>
+                {
+                    var name = $"[{ p.Building.Name }] {p.Name}";
+                    if (p.Users.Any())
+                    {
+                        var user = p.Users.First();
+                        name += $" ({user.FirstName} {user.LastName})";
+                    }
+                    return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
+                }).OrderByAlphaNumeric(p => p.Value);
 
 
             }
@@ -82,6 +92,9 @@ namespace ApartmentApps.Portal.Controllers
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
 
+        [DisplayName("Is Emergency?")]
+        public bool Emergency { get; set; }
+
     }
 
     [DisplayName("Maintenance Requests Report")]
@@ -112,29 +125,15 @@ namespace ApartmentApps.Portal.Controllers
 
     public class AssignMaintenanceEditModel
     {
-        private readonly IRepository<ApplicationUser> _userRepository;
-
-        public AssignMaintenanceEditModel()
-        {
-        }
-
-        public AssignMaintenanceEditModel(IRepository<ApplicationUser> userRepository)
-        {
-            _userRepository = userRepository;
-        }
 
         [DataType("Hidden")]
         public string Id { get; set; }
 
-
-        //[DataType()]
         [DisplayName("Assigned To")]
+        [SelectFrom(nameof(PossibleAssignees))]
         public string AssignedToId { get; set; }
 
-        public IEnumerable<FormPropertySelectItem> AssignedToId_Items => _userRepository.ToArray()
-                    .Where(p => p.Roles.Any(x => x.RoleId == "Maintenance"))
-                    .OrderBy(p => p.LastName)
-                    .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.FirstName, AssignedToId == p.Id));
+        public List<UserLookupBindingModel> PossibleAssignees { get; set; }
     }
 
 
@@ -145,16 +144,22 @@ namespace ApartmentApps.Portal.Controllers
     {
 
         public PaymentsRequestsService PaymentsRequestsService { get; set; }
+        private readonly IMapper<ApplicationUser, UserLookupBindingModel> _userLookupMapper;
         private IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> _editPaymentRequestMapper;
-        public PaymentRequestsController(IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper) : base(kernel, formService, indexService, context, userContext, service)
+        private LeaseInfoManagementService _leaseService;
+        private IMapper<ApplicationUser, UserLookupBindingModel> _userMapper;
+        public PaymentRequestsController(IMapper<ApplicationUser,UserLookupBindingModel> userLookupMapper, IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper, LeaseInfoManagementService leaseService, IMapper<ApplicationUser, UserLookupBindingModel> userMapper) : base(kernel, formService, indexService, context, userContext, service)
         {
             PaymentsRequestsService = formService;
+            _userLookupMapper = userLookupMapper;
             _editPaymentRequestMapper = editPaymentRequestMapper;
+            _leaseService = leaseService;
+            _userMapper = userMapper;
         }
 
         public override ActionResult GridResult(GridList<UserLeaseInfoBindingModel> grid)
         {
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return View("OverviewListPartial", grid);
             }
@@ -166,17 +171,108 @@ namespace ApartmentApps.Portal.Controllers
 
         public override ActionResult Entry(string id = null)
         {
-            UserLeaseInfo paymentRequest = Context.UserLeaseInfos.Find(id);
+            
+            UserLeaseInfo paymentRequest = Repository<UserLeaseInfo>().Find(id);
             EditUserLeaseInfoBindingModel editPaymentRequestModel = 
                 _editPaymentRequestMapper.ToViewModel(paymentRequest); //for null paymentRequest will return empty but prepared EditModel ready for Creation of Payment Request
             return AutoForm(editPaymentRequestModel, nameof(SaveEntry), paymentRequest == null ? "Create Payment Request" : "Edit Payment Request Information");
             //return View("EditUserLeaseInfo", new EditUserLeaseInfoBindingModel());
         }
 
+        [HttpGet]
+        public ActionResult QuickAddRent(string userId = null)
+        {
+            return AutoForm(new QuickAddRentBindingModel()
+            {
+                Title = "Quick add rent",
+                Id = null,
+                UserIdItems = Repository<ApplicationUser>().ToArray().Select(s=>_userLookupMapper.ToViewModel(s)).ToList(),
+                UserId = userId,
+            }, nameof(QuickAddRent), "Quickly add rent subscription to user");
+        }
+
+        [HttpPost]
+        public ActionResult QuickAddRent(QuickAddRentBindingModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var invoiceDate = model.NextInvoiceDate.Value;
+                _leaseService.CreateUserLeaseInfo(new CreateUserLeaseInfoBindingModel()
+                     {
+                         Amount = model.Amount,
+                         IntervalMonths = 1,
+                         Title = $"Rent from {invoiceDate.ToString("d")}",
+                         RepetitionCompleteDate = null,
+                         UserId = model.UserId,
+                         UseCompleteDate = false,
+                         UseInterval = true,
+                         InvoiceDate = invoiceDate, //not null due to validation
+                     });
+
+                if (Request  != null && Request.IsAjaxRequest())
+                {
+                    return JsonUpdate();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                model.UserIdItems =
+                    Repository<ApplicationUser>().ToArray().Select(s => _userLookupMapper.ToViewModel(s)).ToList();
+                return AutoForm(model, nameof(QuickAddRent), "Quickly add rent subscription to user");
+            }
+        }
 
         public override ActionResult SaveEntry(EditUserLeaseInfoBindingModel model)
         {
-            return base.SaveEntry(model);
+
+            if (ModelState.IsValid)
+            {
+
+                var newRequest = model.Id == null;
+                UserLeaseInfo paymentRequest = null;
+                if (newRequest)
+                {
+                     _leaseService.CreateUserLeaseInfo(new CreateUserLeaseInfoBindingModel()
+                     {
+                         Amount = model.Amount,
+                         IntervalMonths = model.IntervalMonths,
+                         Title = model.Title,
+                         RepetitionCompleteDate = model.CompleteDate,
+                         UserId = model.UserId,
+                         UseCompleteDate = model.UseCompleteDate,
+                         UseInterval = model.UseInterval,
+                         InvoiceDate = model.NextInvoiceDate.Value, //not null due to validation
+                     });
+                }
+                else
+                {
+                    _leaseService.EditUserLeaseInfo(model);
+                }
+
+                if (Request  != null && Request.IsAjaxRequest())
+                {
+                    return JsonUpdate();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            model.UserIdItems = Context.Users.GetAll()
+                    .Where(u => !u.Archived)
+                    .ToList()
+                    .Select(u => _userMapper.ToViewModel(u))
+                    .Where(u => !string.IsNullOrWhiteSpace(u.Title))
+                    .ToList();
+
+            return AutoForm(model, nameof(SaveEntry), "Create/Update Payment Request Information");
+            
+
         }
     }
 
@@ -185,6 +281,7 @@ namespace ApartmentApps.Portal.Controllers
     public class MaitenanceRequestsController : AutoGridController
             <MaintenanceService, MaintenanceService, MaintenanceRequestViewModel, MaintenanceRequestEditModel>
     {
+        private readonly UserService _usersService;
         private PdfDocument _document;
         public IMaintenanceService MaintenanceService { get; set; }
 
@@ -196,7 +293,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public override ActionResult GridResult(GridList<MaintenanceRequestViewModel> grid)
         {
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return View("OverviewListPartial", grid);
             }
@@ -218,7 +315,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public ActionResult NewRequest()
         {
-
+            ViewBag.Title = "Submit Maintenance Request";
             return View(new MaitenanceRequestModel()
             {
                 //MaitenanceRequestTypeId_choices =
@@ -231,12 +328,15 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult AssignRequest(string id)
         {
             var request = Service.Find<MaintenanceRequestViewModel>(id);
-            return AutoForm(new AssignMaintenanceEditModel(Kernel.Get<IRepository<ApplicationUser>>())
+            var assignMaintenanceEditModel = new AssignMaintenanceEditModel()
             {
                 Id = id,
-                AssignedToId = request.AssignedToId
-            },
-                "AssignRequestSubmit", "Assign Maintenance Request");
+                AssignedToId = request.AssignedToId,
+                PossibleAssignees = _usersService.GetUsersInRole<UserLookupBindingModel>("Maintenance")
+                    .OrderBy(p => p.Title).ToList()
+
+            };
+            return AutoForm(assignMaintenanceEditModel,"AssignRequestSubmit", "Assign Maintenance Request");
         }
 
         public ActionResult AssignRequestSubmit(AssignMaintenanceEditModel model)
@@ -244,7 +344,14 @@ namespace ApartmentApps.Portal.Controllers
             if (ModelState.IsValid && model.Id != null)
             {
                 MaintenanceService.AssignRequest(Convert.ToInt32(model.Id), model.AssignedToId);
-                return RedirectToAction("Index");
+                if (Request != null && Request.IsAjaxRequest())
+                {
+                    return JsonUpdate();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
         }
@@ -381,17 +488,54 @@ namespace ApartmentApps.Portal.Controllers
                 .GroupBy(p => p.Worker)
                 .ToArray();
 
+            var within24 = Context.MaitenanceRequests
+                .Count(p => p.CompletionDate != null &&
+                            p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
+                            (p.CompletionDate - p.SubmissionDate).Value.Hours <= 24
+                            );
+            var within48 = Context.MaitenanceRequests
+                                    .Count(p => p.CompletionDate != null &&
+                                                p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
+                                                (p.CompletionDate - p.SubmissionDate).Value.Hours > 24 && (p.CompletionDate - p.SubmissionDate).Value.Hours <= 48
+                                                );
+            var within72 = Context.MaitenanceRequests
+                                  .Count(p => p.CompletionDate != null &&
+                                              p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
+                                              (p.CompletionDate - p.SubmissionDate).Value.Hours > 48 && (p.CompletionDate - p.SubmissionDate).Value.Hours <= 72
+                                              );
+
+            var greaterThan72 = Context.MaitenanceRequests
+                    .Count(p => p.CompletionDate != null &&
+                          p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
+                          (p.CompletionDate - p.SubmissionDate).Value.Hours > 72
+                  );
+            var paused = Context.MaitenanceRequests
+                 .Count(p => p.CompletionDate != null &&
+               p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate && p.StatusId == "Paused"
+               
+               );
             HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
             string htmlText = $"<html><body style='padding: 40px;font-family: Arial, Helvetica, sans-serif;'>" +
                               $"<div style='text-align: center; font-size: 32px; font-weight: bold'>{UserContext.CurrentUser.Property.Name} Monthly Maintenance Report</div>" +
                               $"<div style='text-align: center; font-size: 20px;'>For {model.StartDate} {model.EndDate}</div>" +
                               $"<br/><br/><table style='width: 100%'>";
 
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Work Orders</td><td>{CheckinsByRange(startDate, endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Completed</td><td>{CheckinsByRange(startDate, endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Paused</td><td>{paused} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24 hours</td><td>{within24} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24-48 hours</td><td>{within48} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 48-72 hours</td><td>{within72} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 72+ hours</td><td>{greaterThan72} Work Orders</td></tr> ";
+        
+
+
+
             foreach (var item in WorkOrdersPerEmployee)
             {
                 htmlText += $"<tr><td>{item.Key.FirstName} {item.Key.LastName} Completed</td><td>{item.Count()} Work Orders</td></tr> ";
             }
+
+
             htmlText += $"" +
                               $"</table>" +
                               $"</body></html>";
@@ -416,6 +560,7 @@ namespace ApartmentApps.Portal.Controllers
                 request.Comments,
                 request.MaitenanceRequestTypeId,
                 (int)request.PetStatus,
+                request.Emergency,
                 request.PermissionToEnter,
                 null,
                 Convert.ToInt32(request.UnitId)
@@ -480,8 +625,9 @@ namespace ApartmentApps.Portal.Controllers
             return View(item);
         }
 
-        public MaitenanceRequestsController(IKernel kernel, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service) : base(kernel, formService, indexService, context, userContext, service)
+        public MaitenanceRequestsController(IKernel kernel, UserService usersService, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service) : base(kernel, formService, indexService, context, userContext, service)
         {
+            _usersService = usersService;
             MaintenanceService = formService;
         }
     }

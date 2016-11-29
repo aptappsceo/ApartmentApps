@@ -11,6 +11,7 @@ using MvvmCross.Core.ViewModels;
 using MvvmCross.Plugins.Messenger;
 using ResidentAppCross.Commands;
 using ResidentAppCross.Extensions;
+using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels.Screens
 {
@@ -18,17 +19,17 @@ namespace ResidentAppCross.ViewModels.Screens
     {
         private string _totalFormatted;
         private PaymentSummary _paymentSummary;
-        private IApartmentAppsAPIService _service;
-
-        public RentSummaryViewModel(IApartmentAppsAPIService service)
+        private readonly IApartmentAppsAPIService _service;
+        private IDialogService _dialog;
+        public RentSummaryViewModel(IApartmentAppsAPIService service, IDialogService dialog)
         {
             _service = service;
+            _dialog = dialog;
         }
 
         public override void Start()
         {
             base.Start();
-            UpdateRentSummary.Execute(null);
         }
 
         public PaymentSummary PaymentSummary
@@ -101,10 +102,11 @@ namespace ResidentAppCross.ViewModels.Screens
         private ObservableCollection<PaymentOptionBindingModel> _paymentOptions;
         private IApartmentAppsAPIService _service;
         private PaymentSummary _paymentSummary;
-
-        public PaymentOptionsViewModel(IApartmentAppsAPIService service)
+        private IDialogService _dialog;
+        public PaymentOptionsViewModel(IApartmentAppsAPIService service, IDialogService dialog)
         {
             _service = service;
+            _dialog = dialog;
         }
 
         public ObservableCollection<PaymentOptionBindingModel> PaymentOptions
@@ -123,9 +125,17 @@ namespace ResidentAppCross.ViewModels.Screens
 
         public ICommand PayWithSelectedPaymentOption => new MvxCommand(() =>
         {
+            int paymentOptionsId = -1;
+
+            if (!Int32.TryParse(SelectedOption.Id, out paymentOptionsId))
+            {
+                _dialog.OpenNotification("Sorry","Unable to recognize payment option id","Ok");
+                return;
+            }
+
             ShowViewModel<PaymentSummaryViewModel>(vm =>
             {
-                vm.PaymentOptionId = SelectedOption.Id.Value;
+                vm.PaymentOptionId = paymentOptionsId;
             });
         });
 

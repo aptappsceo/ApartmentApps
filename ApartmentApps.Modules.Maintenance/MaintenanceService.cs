@@ -57,15 +57,22 @@ namespace ApartmentApps.Api
             get
             {
                 var items =
-                    ModuleHelper.Kernel.Get<IRepository<Unit>>()
-                        .ToArray().OrderByAlphaNumeric(p => p.Name);
+                    ModuleHelper.Kernel.Get<IRepository<Unit>>().ToArray();
 
-
-                return items.Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
-
+                return items.Select(p =>
+                {
+                    var name = $"[{ p.Building.Name }] {p.Name}";
+                    if (p.Users.Any())
+                    {
+                        var user = p.Users.First();
+                        name += $" ({user.FirstName} {user.LastName})";
+                    }
+                    return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
+                }).OrderByAlphaNumeric(p => p.Value);
 
             }
         }
+
         public IEnumerable<FormPropertySelectItem> MaitenanceRequestTypeId_Items
         {
             get
@@ -80,6 +87,7 @@ namespace ApartmentApps.Api
         }
 
         [DisplayName("Type")]
+        [Required]
         public int MaitenanceRequestTypeId { get; set; }
 
         [DisplayName("Permission To Enter")]
@@ -275,7 +283,7 @@ namespace ApartmentApps.Api
             }
         }
 
-        public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool permissionToEnter, List<byte[]> images, int unitId = 0)
+        public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool emergrency, bool permissionToEnter, List<byte[]> images, int unitId = 0)
         {
 
             var maitenanceRequest = new MaitenanceRequest()
@@ -285,7 +293,7 @@ namespace ApartmentApps.Api
                 UserId = _userContext.UserId,
                 User =  _userContext.CurrentUser,
                 Message = comments,
-                
+                Emergency = emergrency,
                 UnitId = unitId,
                 MaitenanceRequestTypeId = requestTypeId,
                 StatusId = "Submitted",

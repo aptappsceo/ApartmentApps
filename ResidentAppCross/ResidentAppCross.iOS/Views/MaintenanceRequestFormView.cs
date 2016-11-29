@@ -26,6 +26,7 @@ namespace ResidentAppCross.iOS.Views
         private HeaderSection _headerSection;
         private LabelWithButtonSection _requestTypeSection;
         private ToggleSection _entrancePermissionSection;
+        private ToggleSection _emergencySection;
         private SegmentSelectionSection _petStatusSection;
         private TextViewSection _commentsSection;
         private PhotoGallerySection _photoSection;
@@ -133,6 +134,21 @@ namespace ResidentAppCross.iOS.Views
                 }
                 return _entrancePermissionSection;
             }
+
+        }
+        public ToggleSection EmergencySection
+        {
+            get
+            {
+                if (_emergencySection == null)
+                {
+                    _emergencySection = Formals.Create<ToggleSection>();
+                    _emergencySection.HeaderLabel.Text = "Is Emergency?";
+                    _emergencySection.SubHeaderLabel.Text = "";
+                    _emergencySection.Editable = true;
+                }
+                return _emergencySection;
+            }
         }
 
         public override void BindForm()
@@ -173,6 +189,7 @@ namespace ResidentAppCross.iOS.Views
 
             //Entrance permission switch
             b.Bind(EntrancePermissionSection.Switch).For(s=> s.On).TwoWay().To(vm => vm.EntrancePermission);
+            b.Bind(EmergencySection.Switch).For(s=> s.On).TwoWay().To(vm => vm.IsEmergency);
 
             // Pet Status section
 
@@ -228,6 +245,7 @@ namespace ResidentAppCross.iOS.Views
             content.Add(PhotoSection);
             content.Add(PetStatusSection);
             content.Add(EntrancePermissionSection);
+            content.Add(EmergencySection);
         }
 
 

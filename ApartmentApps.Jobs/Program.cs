@@ -54,7 +54,19 @@ namespace ApartmentApps.Jobs
 
                 foreach (var module in modules)
                 {
-                    module.Execute(new ConsoleLogger());
+                    try
+                    {
+                        module.Execute(new ConsoleLogger());
+                    }
+                    catch (Exception ex)
+                    {
+                        kernel.Get<IEmailService>().SendAsync(new IdentityMessage()
+                        {
+                            Subject = $"Background Error with module: {module.GetType().Name}",
+                            Body = item.Name + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace,
+                            Destination = "mosborne@apartmentapps.com"
+                        });
+                    }
                 }
 
             }

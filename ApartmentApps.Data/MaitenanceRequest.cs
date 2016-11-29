@@ -35,6 +35,7 @@ namespace ApartmentApps.Data
         public object RelatedId => Id;
         public FeedItemType Type => FeedItemType.MaintenanceRequest;
 
+        public bool Emergency { get; set; }
 
         // 0 = false, 1= yes, 2 = yes contained
         public int PetStatus { get; set; }

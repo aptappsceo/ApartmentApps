@@ -3,12 +3,41 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ApartmentApps.Api.ViewModels;
+using ApartmentApps.Data;
 using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
 using ExpressiveAnnotations.Attributes;
+using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
+    public class QuickAddRentBindingModel : BaseViewModel
+    {
+        [Required]
+        [DisplayName("User that will be charged")]
+        [SelectFrom(nameof(UserIdItems))]
+        public string UserId { get; set; }
+
+        [DisplayName("Date of the first charge")]
+        [DataType(DataType.Date)]
+        [AssertThat("NotBeforeToday(NextInvoiceDate)", ErrorMessage = "Invoice date must be future date")]
+        public DateTime? NextInvoiceDate { get;set; }
+
+        [Required]
+        [DataType(DataType.Currency)]
+        [DisplayName("Amount that will be charged in USD each month")]
+        public decimal Amount { get; set; }
+
+        public List<UserLookupBindingModel> UserIdItems { get; set; }
+
+        public bool NotBeforeToday(DateTime? time)
+        {
+            if (!time.HasValue) return true;
+            return CurrentUserDateTime.Now() < time.Value;
+
+        }
+    }
+
     public class EditUserLeaseInfoBindingModel : BaseViewModel
     {
 
@@ -27,7 +56,9 @@ namespace ApartmentApps.Api.Modules
         public decimal Amount { get; set; }
 
         [DisplayName("Create invoice due")]
-        [RequiredIf("UseInterval == true")]
+        [RequiredIf("UseInterval == true || Id == null",ErrorMessage = "This field is required")]
+        [DataType(DataType.Date)]
+        [AssertThat("NotBeforeToday(NextInvoiceDate)",ErrorMessage = "Invoice date must be future date")]
         public DateTime? NextInvoiceDate { get;set; }
 
         [DisplayName("Create subscription ?")]
@@ -48,9 +79,29 @@ namespace ApartmentApps.Api.Modules
         [DisplayName("Close subscription on")]
         [WithCategory("IntervalSettings ExpirationSettings")]
         [RequiredIf("UseInterval == true && UseCompleteDate == true")]
+        [AssertThat("NotBefore(NextInvoiceDate,CompleteDate)",ErrorMessage = "Complete date must be after invoice date")]
+        [DataType(DataType.Date)]
         public DateTime? CompleteDate { get; set; }
         
-        public List<UserBindingModel> UserIdItems { get; set; }
+        public List<UserLookupBindingModel> UserIdItems { get; set; }
+
+        public bool NotBeforeToday(DateTime? time)
+        {
+            if (!time.HasValue) return true;
+            return CurrentUserDateTime.Now() < time.Value;
+
+        }
+
+        public bool NotBefore(DateTime? past, DateTime? future)
+        {
+            if (!past.HasValue || !future.HasValue)
+            {
+                return true;
+            }
+
+            return past.Value < future.Value;
+
+        }
 
     }
 }

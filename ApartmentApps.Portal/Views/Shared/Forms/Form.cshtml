@@ -46,7 +46,10 @@
                 }
             </select>
 
-            <span class="help-block m-b-none">@property.Description</span>
+            @if (!string.IsNullOrEmpty(property.Description))
+            {
+                <span class="help-block m-b-none">@property.Description</span>
+            }
 
             @if (property.HasErrors)
             {
@@ -78,14 +81,19 @@
 
             @if (property.DataType.DataType == DataType.MultilineText)
             {
-                <textarea class="form-control" name="" type="text" value="@propertyValue">@propertyValue</textarea>
+                <textarea class="form-control" name="@propertyName" type="text" value="@propertyValue">@propertyValue</textarea>
             }
             else
             {
-                <input type="text" class="form-control" value="@propertyValue">
+                <input type="text" class="form-control" name="@propertyName" value="@propertyValue">
             }
 
-            <span class="help-block m-b-none">@property.Description</span>
+            @if (!string.IsNullOrEmpty(property.Description))
+            {
+                <span class="help-block m-b-none">@property.Description</span>
+            }
+
+
                     
             @if (property.HasErrors)
             {
@@ -121,6 +129,12 @@
                         </span>
                 <input type="text" class="form-control" readonly value="@propertyLabel">
             </div>
+            @if (!string.IsNullOrEmpty(property.Description))
+            {
+                <span class="help-block m-b-none">@property.Description</span>
+            }
+
+
 
 
             @if (property.HasErrors)
@@ -151,14 +165,21 @@
                     var categoryId = "@property.ToggleCategory";
                     var targets = checkbox.closest('form').find("[data-category*='"+categoryId+"']");
 
-                    checkbox.on('ifChecked', function(evt) {
+                    var currentValue = checkbox.prop('checked');
+                    if (!currentValue) {
+                        targets.hide(100);
+                    } else {
                         targets.show(100);
+                    }
+
+                    checkbox.on('ifChecked', function(evt) {
+                        targets.show();
                     });
                     checkbox.on('ifUnchecked', function(evt) {
-                        targets.hide(100);
+                        targets.hide();
                     });
-                    
 
+               
                 }
 
             });
@@ -183,6 +204,10 @@
                     <input id="@inputid" type="text" class="form-control" name="@propertyName" value="@propertyValue">
 
                 </div>
+                @if (!string.IsNullOrEmpty(property.Description))
+                {
+                    <span class="help-block m-b-none">@property.Description</span>
+                }
 
                 @if (property.HasErrors)
                 {
@@ -203,16 +228,58 @@
 
             </script>
         }
+        else if (property.DataType.CustomDataType == "Percentage")
+        {
+            <div class="form-group @(property.HasErrors ? "has-error" : "" )" data-category="@(property.Category)">
+                <label class="control-label" for="@propertyName">@propertyLabel</label>
+                <input id="@inputid" class="form-control" name="@propertyName" value="@propertyValue">
+
+                @if (property.HasErrors)
+                {
+                    foreach (var error in property.Errors)
+                    {
+                        <span class="help-block m-b-none">@error</span>
+                    }
+                }
+
+                @if (!string.IsNullOrEmpty(property.Description))
+                {
+                    <span class="help-block m-b-none">@property.Description</span>
+                }
+
+            </div>
+
+            <script>
+
+                $(document).ready(function() {
+                    var input = $('#@inputid');
+                    input.TouchSpin({
+                        min: 0,
+                        max: 100,
+                        step: 0.01,
+                        decimals: 2,
+                        boostat: 5,
+                        maxboostedstep: 10 
+                    });
+                });
+
+            </script>
+        }
 
 
         continue;
     }
-    else if (property.SystemType == typeof (int) || property.SystemType == typeof (int?))
+    else if (property.SystemType == typeof(int) || property.SystemType == typeof(int?))
     {
         <div class="form-group @(property.HasErrors ? "has-error" : "" )" data-category="@(property.Category)">
             <label class="control-label" for="@propertyName">@propertyLabel</label>
 
             <input id="@inputid" type="number" name="@propertyName" class="form-control" value="@propertyValue">
+            @if (!string.IsNullOrEmpty(property.Description))
+            {
+                <span class="help-block m-b-none">@property.Description</span>
+            }
+
 
             @if (property.HasErrors)
             {
@@ -235,7 +302,8 @@
         }
         else if (property.SystemType == typeof (DateTime?))
         {
-            sValue = (((DateTime?) @propertyValue)?.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz", System.Globalization.CultureInfo.InvariantCulture)) + "Z" ?? "";
+            //"Z" val - concatenation with null.
+             sValue = (((DateTime?) @propertyValue)?.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz", System.Globalization.CultureInfo.InvariantCulture)) + "Z" ?? "";
         }
 
         string format = null;
@@ -264,6 +332,11 @@
                 <span class="input-group-addon"><i class="fa fa-fw fa-calendar"></i></span>
                 <input id="@inputid" type="text" class="form-control" name="@propertyName">
             </div>
+            @if (!string.IsNullOrEmpty(property.Description))
+            {
+                <span class="help-block m-b-none">@property.Description</span>
+            }
+
 
             @if (property.HasErrors)
             {
@@ -275,6 +348,11 @@
         </div>
 
         <script>
+            
+            @if (sValue == "Z")
+            {
+                sValue = "";
+            } 
 
             $(document).ready(function() {
                 $('#@inputid').datetimepicker({
@@ -356,7 +434,7 @@
                 {
                     if (property.DataType.DataType == DataType.MultilineText)
                     {
-                        @Html.TextArea(property.Name, property.GetValue()?.ToString(), new {@class = "form-control"})
+                        @Html.TextArea(property.Name, property.GetValue()?.ToString(), new {@class = "form-control", style="width: 400px !important; height: 300px !important;"})
                     }
                     else
                     {

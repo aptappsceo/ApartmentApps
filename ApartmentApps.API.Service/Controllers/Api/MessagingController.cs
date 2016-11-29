@@ -1,4 +1,5 @@
 using System;
+using System.Web.Http;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
@@ -6,6 +7,7 @@ using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
+    [Authorize]
     public class MessagingController : ApartmentAppsApiController
     {
         private readonly IRepository<Message> _messages;

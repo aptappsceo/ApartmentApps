@@ -21,7 +21,6 @@ namespace ApartmentApps.Portal.Controllers
             UserContext = userContext;
         }
 
-
         public abstract void ToModel(TViewModel viewModel, TModel model);
         public TModel ToModel(TViewModel viewModel)
         {

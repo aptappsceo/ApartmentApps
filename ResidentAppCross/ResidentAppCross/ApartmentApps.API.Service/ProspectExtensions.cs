@@ -2,6 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,138 @@ namespace ApartmentApps.Client
 {
     public static partial class ProspectExtensions
     {
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        public static object Delete(this IProspect operations, string id)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProspect)s).DeleteAsync(id);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<object> DeleteAsync(this IProspect operations, string id, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<object> result = await operations.DeleteWithOperationResponseAsync(id, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        public static IList<LookupPairModel> GetDesiredPropertyTypes(this IProspect operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProspect)s).GetDesiredPropertyTypesAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<IList<LookupPairModel>> GetDesiredPropertyTypesAsync(this IProspect operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.LookupPairModel>> result = await operations.GetDesiredPropertyTypesWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        public static IList<LookupPairModel> GetHowdYouHereAboutUsItems(this IProspect operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProspect)s).GetHowdYouHereAboutUsItemsAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<IList<LookupPairModel>> GetHowdYouHereAboutUsItemsAsync(this IProspect operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.LookupPairModel>> result = await operations.GetHowdYouHereAboutUsItemsWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        public static ProspectApplicationBindingModel GetProspectApplication(this IProspect operations, string id)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProspect)s).GetProspectApplicationAsync(id);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<ProspectApplicationBindingModel> GetProspectApplicationAsync(this IProspect operations, string id, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.ProspectApplicationBindingModel> result = await operations.GetProspectApplicationWithOperationResponseAsync(id, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        public static IList<ProspectApplicationBindingModel> GetProspectApplications(this IProspect operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProspect)s).GetProspectApplicationsAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<IList<ProspectApplicationBindingModel>> GetProspectApplicationsAsync(this IProspect operations, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<System.Collections.Generic.IList<ApartmentApps.Client.Models.ProspectApplicationBindingModel>> result = await operations.GetProspectApplicationsWithOperationResponseAsync(cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
         /// <param name='operations'>
         /// Reference to the ApartmentApps.Client.IProspect.
         /// </param>
@@ -40,6 +173,36 @@ namespace ApartmentApps.Client
         public static async Task<ScanIdResult> ScanIdAsync(this IProspect operations, string base64Image, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.ScanIdResult> result = await operations.ScanIdWithOperationResponseAsync(base64Image, cancellationToken).ConfigureAwait(false);
+            return result.Body;
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        /// <param name='text'>
+        /// Required.
+        /// </param>
+        public static ScanIdResult ScanIdByText(this IProspect operations, string text)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProspect)s).ScanIdByTextAsync(text);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the ApartmentApps.Client.IProspect.
+        /// </param>
+        /// <param name='text'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        public static async Task<ScanIdResult> ScanIdByTextAsync(this IProspect operations, string text, CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Microsoft.Rest.HttpOperationResponse<ApartmentApps.Client.Models.ScanIdResult> result = await operations.ScanIdByTextWithOperationResponseAsync(text, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
         

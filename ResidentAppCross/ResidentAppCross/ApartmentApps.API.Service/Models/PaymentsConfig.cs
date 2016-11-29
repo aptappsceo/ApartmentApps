@@ -9,6 +9,28 @@ namespace ApartmentApps.Client.Models
 {
     public partial class PaymentsConfig
     {
+        private double? _americanExpressConvenienceFee;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public double? AmericanExpressConvenienceFee
+        {
+            get { return this._americanExpressConvenienceFee; }
+            set { this._americanExpressConvenienceFee = value; }
+        }
+        
+        private string _apiLoginId;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string ApiLoginId
+        {
+            get { return this._apiLoginId; }
+            set { this._apiLoginId = value; }
+        }
+        
         private double? _bankAccountCheckingConvenienceFee;
         
         /// <summary>
@@ -31,15 +53,15 @@ namespace ApartmentApps.Client.Models
             set { this._bankAccountSavingsConvenienceFee = value; }
         }
         
-        private double? _creditCardConvenienceFee;
+        private double? _discoverConvenienceFee;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public double? CreditCardConvenienceFee
+        public double? DiscoverConvenienceFee
         {
-            get { return this._creditCardConvenienceFee; }
-            set { this._creditCardConvenienceFee = value; }
+            get { return this._discoverConvenienceFee; }
+            set { this._discoverConvenienceFee = value; }
         }
         
         private bool? _enabled;
@@ -62,6 +84,17 @@ namespace ApartmentApps.Client.Models
         {
             get { return this._id; }
             set { this._id = value; }
+        }
+        
+        private double? _mastercardConvenienceFee;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public double? MastercardConvenienceFee
+        {
+            get { return this._mastercardConvenienceFee; }
+            set { this._mastercardConvenienceFee = value; }
         }
         
         private string _merchantId;
@@ -97,6 +130,17 @@ namespace ApartmentApps.Client.Models
             set { this._propertyId = value; }
         }
         
+        private string _secureTransactionKey;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string SecureTransactionKey
+        {
+            get { return this._secureTransactionKey; }
+            set { this._secureTransactionKey = value; }
+        }
+        
         private string _url;
         
         /// <summary>
@@ -119,6 +163,17 @@ namespace ApartmentApps.Client.Models
             set { this._useUrl = value; }
         }
         
+        private double? _visaConvenienceFee;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public double? VisaConvenienceFee
+        {
+            get { return this._visaConvenienceFee; }
+            set { this._visaConvenienceFee = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the PaymentsConfig class.
         /// </summary>
@@ -133,6 +188,16 @@ namespace ApartmentApps.Client.Models
         {
             if (inputObject != null && inputObject.Type != JTokenType.Null)
             {
+                JToken americanExpressConvenienceFeeValue = inputObject["AmericanExpressConvenienceFee"];
+                if (americanExpressConvenienceFeeValue != null && americanExpressConvenienceFeeValue.Type != JTokenType.Null)
+                {
+                    this.AmericanExpressConvenienceFee = ((double)americanExpressConvenienceFeeValue);
+                }
+                JToken apiLoginIdValue = inputObject["ApiLoginId"];
+                if (apiLoginIdValue != null && apiLoginIdValue.Type != JTokenType.Null)
+                {
+                    this.ApiLoginId = ((string)apiLoginIdValue);
+                }
                 JToken bankAccountCheckingConvenienceFeeValue = inputObject["BankAccountCheckingConvenienceFee"];
                 if (bankAccountCheckingConvenienceFeeValue != null && bankAccountCheckingConvenienceFeeValue.Type != JTokenType.Null)
                 {
@@ -143,10 +208,10 @@ namespace ApartmentApps.Client.Models
                 {
                     this.BankAccountSavingsConvenienceFee = ((double)bankAccountSavingsConvenienceFeeValue);
                 }
-                JToken creditCardConvenienceFeeValue = inputObject["CreditCardConvenienceFee"];
-                if (creditCardConvenienceFeeValue != null && creditCardConvenienceFeeValue.Type != JTokenType.Null)
+                JToken discoverConvenienceFeeValue = inputObject["DiscoverConvenienceFee"];
+                if (discoverConvenienceFeeValue != null && discoverConvenienceFeeValue.Type != JTokenType.Null)
                 {
-                    this.CreditCardConvenienceFee = ((double)creditCardConvenienceFeeValue);
+                    this.DiscoverConvenienceFee = ((double)discoverConvenienceFeeValue);
                 }
                 JToken enabledValue = inputObject["Enabled"];
                 if (enabledValue != null && enabledValue.Type != JTokenType.Null)
@@ -157,6 +222,11 @@ namespace ApartmentApps.Client.Models
                 if (idValue != null && idValue.Type != JTokenType.Null)
                 {
                     this.Id = ((int)idValue);
+                }
+                JToken mastercardConvenienceFeeValue = inputObject["MastercardConvenienceFee"];
+                if (mastercardConvenienceFeeValue != null && mastercardConvenienceFeeValue.Type != JTokenType.Null)
+                {
+                    this.MastercardConvenienceFee = ((double)mastercardConvenienceFeeValue);
                 }
                 JToken merchantIdValue = inputObject["MerchantId"];
                 if (merchantIdValue != null && merchantIdValue.Type != JTokenType.Null)
@@ -173,6 +243,11 @@ namespace ApartmentApps.Client.Models
                 {
                     this.PropertyId = ((int)propertyIdValue);
                 }
+                JToken secureTransactionKeyValue = inputObject["SecureTransactionKey"];
+                if (secureTransactionKeyValue != null && secureTransactionKeyValue.Type != JTokenType.Null)
+                {
+                    this.SecureTransactionKey = ((string)secureTransactionKeyValue);
+                }
                 JToken urlValue = inputObject["Url"];
                 if (urlValue != null && urlValue.Type != JTokenType.Null)
                 {
@@ -182,6 +257,11 @@ namespace ApartmentApps.Client.Models
                 if (useUrlValue != null && useUrlValue.Type != JTokenType.Null)
                 {
                     this.UseUrl = ((bool)useUrlValue);
+                }
+                JToken visaConvenienceFeeValue = inputObject["VisaConvenienceFee"];
+                if (visaConvenienceFeeValue != null && visaConvenienceFeeValue.Type != JTokenType.Null)
+                {
+                    this.VisaConvenienceFee = ((double)visaConvenienceFeeValue);
                 }
             }
         }

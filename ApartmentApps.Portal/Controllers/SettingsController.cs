@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Prospect;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
@@ -82,6 +83,12 @@ namespace ApartmentApps.Portal.Controllers
         {
         }
     }
+    public class ProspectConfigController : SettingsController<ProspectModuleConfig>
+    {
+        public ProspectConfigController(IRepository<ProspectModuleConfig> configRepo, IKernel kernel, PropertyContext context, IUserContext userContext) : base(configRepo, kernel, context, userContext)
+        {
+        }
+    }
     public class MaintenanceConfigController : SettingsController<MaintenanceConfig>
     {
         public MaintenanceConfigController(IRepository<MaintenanceConfig> configRepo, IKernel kernel, PropertyContext context, IUserContext userContext) : base(configRepo, kernel, context, userContext)
@@ -91,6 +98,12 @@ namespace ApartmentApps.Portal.Controllers
     public class MessagingConfigController : SettingsController<MessagingConfig>
     {
         public MessagingConfigController(IRepository<MessagingConfig> configRepo, IKernel kernel, PropertyContext context, IUserContext userContext) : base(configRepo, kernel, context, userContext)
+        {
+        }
+    }
+    public class CompanySettingsConfigController : SettingsController<CompanySettingsConfig>
+    {
+        public CompanySettingsConfigController(IRepository<CompanySettingsConfig> configRepo, IKernel kernel, PropertyContext context, IUserContext userContext) : base(configRepo, kernel, context, userContext)
         {
         }
     }

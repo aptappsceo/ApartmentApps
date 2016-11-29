@@ -210,7 +210,11 @@ namespace ResidentAppCross.ViewModels.Screens
                                 context.FailTask("No QR Code scanned.");
                                 return;
                             }
-
+                            if (!Request.AcceptableCheckinCodes.Contains(data) && !Request.AcceptableCheckinCodes.Contains("*"))
+                            {
+                                this.FailTaskWithPrompt("QR Code invalid.");
+                                return;
+                            }
                             if (CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started)
                             {
                                 await
@@ -261,7 +265,11 @@ namespace ResidentAppCross.ViewModels.Screens
                                 context.FailTask("No QR Code scanned.");
                                 return;
                             }
-
+                            if (!Request.AcceptableCheckinCodes.Contains(data) && !Request.AcceptableCheckinCodes.Contains("*"))
+                            {
+                                this.FailTaskWithPrompt("QR Code invalid.");
+                                return;
+                            }
                             if (CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Started)
                             {
                                 await
@@ -306,7 +314,11 @@ namespace ResidentAppCross.ViewModels.Screens
                             context.FailTask("No QR Code scanned.");
                             return;
                         }
-
+                        if (!Request.AcceptableCheckinCodes.Contains(data) && !Request.AcceptableCheckinCodes.Contains("*"))
+                        {
+                            this.FailTaskWithPrompt("QR Code invalid.");
+                            return;
+                        }
                         if (CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Submitted || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Scheduled || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Paused)
                         {
                             await _appService.Maitenance.StartRequestWithOperationResponseAsync(MaintenanceRequestId, string.Format("Request Started with Data: {0}", data), new List<string>());

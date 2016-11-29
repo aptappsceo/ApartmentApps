@@ -131,6 +131,7 @@ namespace ApartmentApps.IoC
             //kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<EntrataModule, EntrataConfig>();
             kernel.RegisterModule<ProspectModule,ProspectModuleConfig>();
+            kernel.RegisterModule<CompanySettingsModule, CompanySettingsConfig>();
 
             //kernel.RegisterModule<InspectionsModule, InspectionsModuleConfig>();
 
@@ -146,7 +147,12 @@ namespace ApartmentApps.IoC
             kernel.Bind<IUnitImporter>().To<UnitImporter>().InRequestScope();
             kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
 
-            kernel.Bind<Property>().ToMethod(_ => kernel.Get<IUserContext>().CurrentUser.Property).InRequestScope();
+            kernel.Bind<Property>().ToMethod(_ =>
+            {
+                var implementation = kernel.Get<IUserContext>().CurrentUser.Property;
+                CurrentUserDateTime.TimeZone = implementation.TimeZone;
+                return implementation;
+            }).InRequestScope();
             kernel.Bind<PropertyContext>().ToSelf().InRequestScope();
 
             kernel.Bind<IRepository<MaitenanceRequestType>>()
@@ -215,7 +221,9 @@ namespace ApartmentApps.IoC
             kernel.RegisterMapper<IncidentReport, IncidentReportFormModel, IncidentReportFormMapper>();
             kernel.RegisterMapper<Message, MessageTargetsViewModel, MessageTargetMapper>();
             kernel.RegisterMapper<ApplicationUser, UserListModel, UserListMapper>();
+            kernel.RegisterMapper<ApplicationUser, UserLookupBindingModel, UserLookupMapper>();
             kernel.RegisterMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel, PaymentsRequestsEditMapper>();
+            kernel.RegisterMapper<UserPaymentOption, PaymentOptionBindingModel, PaymentOptionMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
 
             //kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
@@ -253,6 +261,7 @@ namespace ApartmentApps.IoC
     }
     //public sealed class GalleryDbMigrationConfiguration : DbMigrationsConfiguration
     //{
+
 
 
     //}

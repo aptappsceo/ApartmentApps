@@ -83,6 +83,7 @@ namespace ResidentAppCross.Services
         {
             if (!await _loginManager.LoginAsync(null, null))
             {
+                _loginManager.Logout();
                 context.FailTask("Your authentication has expired. Please, log in again.");
             }
         }

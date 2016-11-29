@@ -50,7 +50,6 @@ namespace ApartmentApps.Portal.Controllers
         [DisplayName("Is Tenant ?")]
         public bool IsTenant { get; set; }
 
-        [Required]
         [SelectFrom(nameof(UnitItems))]
         [DisplayName("Assigned Unit")]
         public int? UnitId { get; set; }
@@ -92,6 +91,7 @@ namespace ApartmentApps.Portal.Controllers
         public string ConfirmPassword { get; set; }
     }
 
+    [Authorize]
     public class UserManagementController : AutoGridController<UserService, UserBindingModel>
     {
         public override string IndexTitle => "User Management";
@@ -104,7 +104,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public override ActionResult GridResult(GridList<UserBindingModel> grid)
         {
-            if (Request.IsAjaxRequest())
+            if (Request != null && Request.IsAjaxRequest())
             {
                 return View("OverviewListPartial", grid);
             }
@@ -116,6 +116,12 @@ namespace ApartmentApps.Portal.Controllers
             get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
             private set { _userManager = value; }
         }
+
+        public void Unarchive(string id)
+        {
+            Service.Unarchive(id);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult> SaveUser(UserFormModel model)
@@ -177,23 +183,24 @@ namespace ApartmentApps.Portal.Controllers
                     Context.SaveChanges();
                 }
 
+                if (Request != null && Request.IsAjaxRequest())
+                {
+                    return JsonUpdate();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+
+
                 //AddErrors(result);
             }
             else
             {
-                return AutoForm(model, nameof(SaveUser), "Find a way to pass header");
+                return AutoForm(model, nameof(SaveUser), "Create/Update User Information");
             }
 
-            if (Request.IsAjaxRequest())
-            {
-                //got no furhter deals
-                return Content("");
-            }
-            else
-            {
-               return RedirectToAction("Index");
-            }
-
+        
         }
 
         public override ActionResult Entry(string id = null)

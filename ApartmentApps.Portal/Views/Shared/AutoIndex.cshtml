@@ -5,7 +5,7 @@
 @model AutoGridModel
 @{
     ViewBag.Title = Model.Title;
-    var queries = ((IEnumerable<ServiceQuery>)ViewBag.Queries).ToArray();
+    var queries = ((IEnumerable<ServiceQuery>) ViewBag.Queries).ToArray();
 }
 
 <script type="text/javascript">
@@ -15,10 +15,12 @@
 
     //// Set a callback to run when the Google Visualization API is loaded.
     //google.setOnLoadCallback(GoogleVisualizationLoaded);
-    window.initialQuery = @Html.Raw(ViewBag.CurrentQuery == null ? "null" : "'" + ViewBag.CurrentQuery + "'" );
+    window.initialQuery = @Html.Raw(ViewBag.CurrentQuery == null ? "null" : "'" + ViewBag.CurrentQuery + "'");
+
     function GoogleVisualizationLoaded() {
         //alert("Visualization loaded!!!";)
     }
+
     //Settings for EasyQuery pages
     window.easyQueryViewSettings = {
         showChart: false,
@@ -27,11 +29,12 @@
     window.easyQuerySettings = {
         serviceUrl: getPrefix(),
         loadDefaultModel: true,
-        useBootstrap:true
+        useBootstrap: true
 
     };
+
     function getPrefix() {
-        return '@(Url.Action("Index")?.Replace("Index",""))';
+        return '@(Url.Action("Index")?.Replace("Index", ""))';
         //var res = window.location.pathname;
         //if (res.charAt(res.length - 1) !== '/')
         //    res = res + '/';
@@ -45,7 +48,7 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-12 ">
         <h2>@Model.Title</h2>
-        
+
 
     </div>
 </div>
@@ -93,23 +96,22 @@
                 </div>
             </div>
             <div class="ibox-content" style="padding: 0px;">
-     
+
                 <div id="QueryPanel"></div>
                 @*@Html.FilterBar()*@
                 <div class="eqjs-fb-buttonsblock">
                     <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="EQ.view.grid.applyFilter()">Apply Filter</a>
                     <a href="javascript:void(0)" class="btn btn-default">Clear</a>
                 </div>
-          
-                    @Html.RenderQueryActions()
-           
+
+                @Html.RenderQueryActions()
+
 
             </div>
         </div>
 
 
     </div>
-
 
 
 </div>

@@ -20,7 +20,11 @@ namespace ApartmentApps.Portal.Controllers
         public BuildingsController(IKernel kernel, BuildingService formService, PropertyContext context, IUserContext userContext) : base(kernel, formService, context, userContext)
         {
         }
-        
+
+        public override ActionResult SaveEntry(BuildingViewModel model)
+        {
+            return base.SaveEntry(model);
+        }
     }
     //public class Buildings3Controller : CrudController<BuildingViewModel,Building>
     //{

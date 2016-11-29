@@ -33,6 +33,10 @@ namespace ResidentAppCross.Droid.Views
         [Outlet]
         public MaterialSpinner ExpirationYearSelection { get; set; } //Year
         [Outlet]
+        public MaterialSpinner CardTypeSelection { get; set; } //Card number
+
+
+        [Outlet]
         public TextView TitleLabel { get; set; }
         [Outlet]
         public TextView SubtitleLabel { get; set; }
@@ -44,12 +48,6 @@ namespace ResidentAppCross.Droid.Views
 
         [Outlet]
         public EditText CreditCardNumberInput { get; set; } //Card number
-
-        [Outlet]
-        public AppCompatRadioButton CreditCardTypeVisa { get; set; } //Card number
-
-        [Outlet]
-        public AppCompatRadioButton CreditCardTypeMasterCard { get; set; } //Card number
 
      //   [Outlet]
      //   public EditText CvcInput { get; set; } //Cvc
@@ -79,10 +77,13 @@ namespace ResidentAppCross.Droid.Views
             var years = Enumerable.Range(0, 60).Select(i => (nowYear+i).ToString()).Select(s => new Java.Lang.String(s)).ToList();
             ArrayAdapter<String> monthAdapter = new ArrayAdapter<String>(Context, Resource.Layout.spinner_item_text_light, months);
             ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(Context, Resource.Layout.spinner_item_text_light, years);
+            ArrayAdapter<String> cardTypesAdapter = new ArrayAdapter<String>(Context, Resource.Layout.spinner_item_text_light, ViewModel.CardTypes.Select(s=>new Java.Lang.String(s)).ToList());
             monthAdapter.SetDropDownViewResource(Resource.Layout.spinner_item_text_light);
             yearAdapter.SetDropDownViewResource(Resource.Layout.spinner_item_text_light);
+            cardTypesAdapter.SetDropDownViewResource(Resource.Layout.spinner_item_text_light);
             ExpirationMonthSelection.Adapter = monthAdapter;
             ExpirationYearSelection.Adapter = yearAdapter;
+            CardTypeSelection.Adapter = cardTypesAdapter;
 
 
 
@@ -99,6 +100,25 @@ namespace ResidentAppCross.Droid.Views
                 ViewModel.Year = years[args.Position].ToString();
             };
 
+            CardTypeSelection.ItemSelected += (sender, args) =>
+            {
+                if (args.Position < 0 || args.Position > years.Count) return;
+                var card = years[args.Position].ToString();
+                if (card == "Visa")
+                {
+                    ViewModel.CardType = 0;
+                } else if (card == "MasterCard")
+                {
+                    ViewModel.CardType = 1;
+                } else if (card == "Discovery")
+                {
+                    ViewModel.CardType = 2;
+                }else if (card == "American Express")
+                {
+                    ViewModel.CardType = 3;
+                }
+            };
+
             /*
             VISA = 0,
             MAST = 1,
@@ -107,15 +127,6 @@ namespace ResidentAppCross.Droid.Views
             DINE = 4,
             JCB = 5,
             */
-            CreditCardTypeVisa.Click += (sender, args) =>
-            {
-                ViewModel.CardType = 0;
-            };
-
-            CreditCardTypeMasterCard.Click += (sender, args) =>
-            {
-                ViewModel.CardType = 1;
-            };
 
             var set = this.CreateBindingSet<AddCreditCardPaymentOptionView, AddCreditCardPaymentOptionViewModel>();
             set.Bind(PaymentOptionTitleInput).For(s => s.Text).TwoWay().To(vm => vm.FriendlyName);
@@ -214,7 +225,7 @@ namespace ResidentAppCross.Droid.Views
             this.OnViewModelEvent<RentSummaryUpdated>(evt =>
             {
 
-                var anyPayments = ViewModel.PaymentSummary.IsEmpty();
+                var anyPayments = !ViewModel.PaymentSummary.IsEmpty();
                 if (anyPayments)
                 {
                     SubtitleLabel.Text = "Pending payments are listed below.";
@@ -246,12 +257,12 @@ namespace ResidentAppCross.Droid.Views
             RentDetailsList.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
             RentDetailsList.SetItemAnimator(new SlideInLeftAnimator());
             RentDetailsList.SetAdapter(adapter);
-
+            ViewModel.UpdateRentSummary.Execute(null);
         }
     }
 
     [MvxFragment(typeof(ApplicationViewModel), Resource.Id.application_host_container_primary, true)]
-    public class CommitPaymentView : ViewFragment<CommitPaymentViewModel>
+    public class CommitPaymentView : ViewFragment<PaymentSummaryViewModel>
     {
 
         [Outlet]
@@ -272,9 +283,9 @@ namespace ResidentAppCross.Droid.Views
         {
             base.Bind();
 
-            var set = this.CreateBindingSet<CommitPaymentView, CommitPaymentViewModel>();
+            var set = this.CreateBindingSet<CommitPaymentView, PaymentSummaryViewModel>();
 
-            set.Bind(PayButton).To(vm => vm.CommitCommand);
+            set.Bind(PayButton).To(vm => vm.CheckOutCommand);
             set.Apply();
 
 
@@ -287,7 +298,7 @@ namespace ResidentAppCross.Droid.Views
             this.OnViewModelEvent<RentSummaryUpdated>(evt =>
             {
 
-                var anyPayments = ViewModel.SelectedPaymentSummary.IsEmpty();
+                var anyPayments = !ViewModel.PaymentSummary.IsEmpty();
                 if (anyPayments)
                 {
                     SubtitleLabel.Text = "Check the following information and commit payment.";
@@ -314,12 +325,12 @@ namespace ResidentAppCross.Droid.Views
 
             var adapter = new PaymentSummaryAdapter()
             {
-                Summary = ViewModel.SelectedPaymentSummary
+                Summary = ViewModel.PaymentSummary
             };
             PaymentDetailsList.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
             PaymentDetailsList.SetItemAnimator(new SlideInLeftAnimator());
             PaymentDetailsList.SetAdapter(adapter);
-
+            ViewModel.UpdateRentSummary.Execute(null);
         }
     }
 

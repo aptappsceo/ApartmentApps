@@ -275,8 +275,10 @@
     <Compile Include="Controllers\Api\MessagingController.cs" />
     <Compile Include="Controllers\Api\NotifiationsController.cs" />
     <Compile Include="Controllers\Api\PaymentsController.cs" />
+    <Compile Include="Controllers\Api\ProspectController.cs" />
     <Compile Include="Controllers\Api\RegisterController.cs" />
     <Compile Include="Controllers\Api\LookupsController.cs" />
+    <Compile Include="Controllers\Api\ServiceResponseBase.cs" />
     <Compile Include="Controllers\Api\VersionController.cs" />
     <Compile Include="Controllers\MobileClientViewApi\GeneralViewsController.cs" />
     <Compile Include="DateUtil.cs" />
@@ -504,7 +506,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54683</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:54630/</IISUrl>
+          <IISUrl>http://localhost:54685/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

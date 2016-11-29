@@ -2,6 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,37 @@ namespace ApartmentApps.Client
 {
     public partial interface IProspect
     {
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> DeleteWithOperationResponseAsync(string id, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<LookupPairModel>>> GetDesiredPropertyTypesWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<LookupPairModel>>> GetHowdYouHereAboutUsItemsWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='id'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ProspectApplicationBindingModel>> GetProspectApplicationWithOperationResponseAsync(string id, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<ProspectApplicationBindingModel>>> GetProspectApplicationsWithOperationResponseAsync(CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
         /// <param name='base64Image'>
         /// Required.
         /// </param>
@@ -19,6 +51,14 @@ namespace ApartmentApps.Client
         /// Cancellation token.
         /// </param>
         Task<HttpOperationResponse<ScanIdResult>> ScanIdWithOperationResponseAsync(string base64Image, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        
+        /// <param name='text'>
+        /// Required.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ScanIdResult>> ScanIdByTextWithOperationResponseAsync(string text, CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         
         /// <param name='vm'>
         /// Required.

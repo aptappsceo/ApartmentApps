@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
@@ -54,6 +55,27 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Email = user.Email;
         }
     }
+
+    public class UserLookupMapper : BaseMapper<ApplicationUser, UserLookupBindingModel>
+    {
+        public UserLookupMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
+        public override void ToModel(UserLookupBindingModel viewModel, ApplicationUser model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ToViewModel(ApplicationUser model, UserLookupBindingModel viewModel)
+        {
+               if (model == null) return;
+            viewModel.Id = model.Id;
+            viewModel.Title = $"{model.FirstName} {model.LastName}";
+            if (model.Unit != null) viewModel.Title+=$" [ {model.Unit?.Building.Name} {model.Unit?.Name} ]";
+        }
+    }
+
     public class UserMapper : BaseMapper<ApplicationUser, UserBindingModel>
     {
         private readonly IBlobStorageService _blobService;
@@ -117,6 +139,7 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.City = user?.City;
             viewModel.PostalCode = user?.PostalCode;
             viewModel.Roles = user.Roles.Select(p => p.RoleId).ToArray();
+            viewModel.Archived = user.Archived;
         }
     }
 
@@ -132,19 +155,62 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class UserService : StandardCrudService<ApplicationUser>
     {
-      
-        public override string DefaultOrderBy => "LastName";
+        private readonly ApplicationDbContext _ctx;
 
         
 
-        public UserService(IKernel kernel, IRepository<ApplicationUser> repository) : base(kernel, repository)
+        public override string DefaultOrderBy => "LastName";
+        
+        public UserService(IKernel kernel, IRepository<ApplicationUser> repository, ApplicationDbContext ctx) : base(kernel, repository)
         {
+            _ctx = ctx;
+        }
+
+        public IQueryable<ApplicationUser> GetUsersInRole(string roleName)
+        {
+          if (_ctx != null && roleName != null)
+          {
+            var roles = _ctx.Roles.Where(r => r.Name == roleName);
+            if (roles.Any())
+            {
+              var roleId = roles.First().Id;
+              return Repository.Where(user => user.Roles.Any(r => r.RoleId == roleId));
+            }
+          }
+          return null;
+        }
+
+        public IEnumerable<TViewModel> GetActive<TViewModel>(DbQuery query, out int count, string orderBy, bool orderByDesc, int page = 1, int resultsPerPage = 20)
+        {
+            return GetAll<TViewModel>(Repository.Where(p=>!p.Archived), query, out count, orderBy, orderByDesc, page, resultsPerPage);
+        }
+
+        public DbQuery All()
+        {
+            return this.CreateQuery("All");
+        }
+        public DbQuery Archived()
+        {
+            return this.CreateQuery("Archived",new ConditionItem("ApplicationUser.Archived","Equal","true"));
+        }
+        public List<TViewModel> GetUsersInRole<TViewModel>(string roleName)
+        {
+            var transform = _kernel.Get<IMapper<ApplicationUser, TViewModel>>();
+            var users = GetUsersInRole(roleName);
+            return users?.ToArray().Select(s => transform.ToViewModel(s)).ToList();
         }
 
         public override void Remove(string id)
         {
             //base.Remove(id);
             Repository.Find(id).Archived = true;
+            Repository.Save();
+        }
+
+        public void Unarchive(string id)
+        {
+            //base.Remove(id);
+            Repository.Find(id).Archived = false;
             Repository.Save();
         }
     }
@@ -166,7 +232,9 @@ namespace ApartmentApps.Portal.Controllers
 
             }
         }
-        public ActionLinkModel SwitchProperty => new ActionLinkModel("Switch Property", "ChangeProperty", "Account", new {id=Id});
+
+        public PropertyState State { get; set; }
+
     }
 
     public class PropertySearchModel
@@ -183,12 +251,14 @@ namespace ApartmentApps.Portal.Controllers
         {
             model.Name = viewModel.Name;
             model.CorporationId = viewModel.CorporationId;
+            model.State = viewModel.State;
         }
 
         public override void ToViewModel(Property model, PropertyBindingModel viewModel)
         {
             viewModel.Name = model.Name;
             viewModel.Id = model.Id.ToString();
+            viewModel.State = model.State;
         }
     }
     public class PropertyService : StandardCrudService<Property>
@@ -199,9 +269,28 @@ namespace ApartmentApps.Portal.Controllers
 
         public override string DefaultOrderBy =>"Name";
 
+        [UserQuery("Engaging")]
+        public IQueryable<Property> EngagingProperties()
+        {
+            var month = DateTime.Now.Month;
+            var year = DateTime.Now.Year;
+            return Repository.Include(x=>x.MaitenanceRequests).Where(
+                p => p.MaitenanceRequests.Any(x => x.SubmissionDate.Month == month && x.SubmissionDate.Year == year));
+        }
+
+
         public DbQuery All()
         {
-            return CreateQuery("All");
+            return CreateQuery("All", new ConditionItem("Property.State","Equal","0"));
+        }
+
+        public DbQuery Suspended()
+        {
+            return CreateQuery("Suspended", new ConditionItem("Property.State", "Equal", "1"));
+        }
+        public DbQuery Archived()
+        {
+            return CreateQuery("Archived", new ConditionItem("Property.State", "Equal", "2"));
         }
     }
 }

@@ -62,7 +62,7 @@
 
 
             </div>
-   
+
         </div>
 
         <div class="ibox">
@@ -75,29 +75,28 @@
                 </div>
             </div>
             <div class="ibox-content" style="display: block;">
+                <div class="btn-group-justified">
+                    <a class="btn btn-primary modal-link" href="@Url.Action("Entry", "PaymentRequests")">
+                        <i class="fa fa-fw fa-plus-square"></i> Create Request
+                    </a>
 
-                <a class="btn btn-primary modal-link" href="@Url.Action("CreateUserLeaseInfoFor", "Payments")">
-                    <h4><i class="fa fa-fw fa-plus-square"></i>Create Request</h4>
-                    <hr style="margin: 0 0 0 0"/>
-                    <span class="small">
-                        Create new payment request <br/> and assign it to a resident
-                    </span>
-                </a>
+                    <a class="btn btn-primary modal-link" href="@Url.Action("AddCreditCard", "Payments")">
+                        <i class="fa fa-fw fa-cc-visa"></i> Add Credit Card
+                    </a>
 
-                <a class="btn btn-info" href="@Url.Action("UpdateOpenForteTransactions", "Payments")">
-                    <h4><i class="fa fa-fw fa-refresh"></i>Synchronize with Forte</h4>
-                    <hr style="margin: 0 0 0 0"/>
-                    <span class="small">
-                        Perform synchronization of all <br/> transactions with Forte Service
-                    </span>
-                </a>
+                    <a class="btn btn-primary modal-link" href="@Url.Action("AddBankAccount", "Payments")">
+                        <i class="fa fa-fw fa-bank"></i> Add Bank Account
+                    </a>
 
 
+                    <a class="btn btn-info" href="@Url.Action("UpdateOpenForteTransactions", "Payments")">
+                        <i class="fa fa-fw fa-refresh"></i> Sync via Forte
+                    </a>
+                </div>
             </div>
         </div>
 
     </div>
-
 
 
 </div>

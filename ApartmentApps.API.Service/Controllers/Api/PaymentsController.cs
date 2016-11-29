@@ -81,9 +81,11 @@ namespace ApartmentApps.API.Service.Controllers
         {
             var now = this.CurrentUser.Property.TimeZone.Now();
             var items = _invoices.GetAvailableBy(now,UserContext.UserId).ToList();
+            var subtotal = items.Sum(s => s.Amount);
+            var confFeeFunction = PaymentsService.GetConvenienceFeeForPaymentOption(paymentOptionId,UserContext.UserId);
             var lines = items.Concat(new [] {new Invoice()
             {
-                Amount = PaymentsService.GetConvenienceFeeForPaymentOption(paymentOptionId,UserContext.UserId),
+                Amount = confFeeFunction(subtotal),
                 Title = "Convenience Fee",
             } }).ToLines();
 

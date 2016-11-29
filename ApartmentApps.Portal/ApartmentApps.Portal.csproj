@@ -485,6 +485,7 @@
     </Compile>
     <Compile Include="Controllers\Base\AAController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Base\ApiException.cs" />
     <Compile Include="Controllers\Base\AutoFormController.cs" />
     <Compile Include="Controllers\Base\AutoGridController.cs" />
     <Compile Include="Controllers\Base\GridState.cs" />
@@ -504,6 +505,7 @@
     <Compile Include="Controllers\InspectionsController.cs" />
     <Compile Include="Controllers\MaitenanceRequestsController.cs" />
     <Compile Include="Controllers\MessagingController.cs" />
+    <Compile Include="Controllers\PaymentOptionsController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\PropertyEntrataInfoController.cs" />
@@ -989,6 +991,7 @@
     <Content Include="Content\eqview.css" />
     <Content Include="Content\FormFactory\FormFactory.css" />
     <Content Include="Content\Gridmvc.css" />
+    <Content Include="Content\parcland-1.jpg" />
     <Content Include="Content\plugins\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\plugins\blueimp\css\blueimp-gallery-indicator.css" />
     <Content Include="Content\plugins\blueimp\css\blueimp-gallery-video.css" />
@@ -1532,6 +1535,13 @@
     <Content Include="Views\PaymentRequests\OverviewListPartial.cshtml" />
     <Content Include="Views\PaymentRequests\Overview.cshtml" />
     <Content Include="Views\PaymentRequests\EditUserLeaseInfo.cshtml" />
+    <Content Include="Views\Dashboard\Index3.cshtml" />
+    <Content Include="Views\Shared\Dashboard\DashboardStatViewModel.cshtml" />
+    <Content Include="Views\PaymentOptions\Overview.cshtml" />
+    <Content Include="Views\PaymentOptions\OverviewListPartial.cshtml" />
+    <Content Include="Views\Shared\Dashboard\Components.cshtml" />
+    <Content Include="Views\Shared\Dashboard\DashboardTitleViewModel.cshtml" />
+    <Content Include="Views\Shared\Dashboard\DashboardPieViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

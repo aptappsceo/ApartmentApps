@@ -20,5 +20,6 @@ namespace ApartmentApps.Api.BindingModels
         public UserBindingModel User { get; set; }
         public string BuildingName { get; set; }
         public bool PermissionToEnter { get; set; }
+        public List<string> AcceptableCheckinCodes { get; set; }
     }
 }

@@ -12,32 +12,84 @@
 }
 
 
+@if (Request.IsAjaxRequest()) //If ajax, render as modal
+{
+    <script>
 
-<script>
+        $(document).ready(function() {
+            AAControls.ModalForm.onContentLoaded("@formId", "@postUrl", "@submitButtonId");
+        });
 
-    $(document).ready(function() {
-
-        AAControls.ModalForm.onContentLoaded("@formId", "@postUrl", "@submitButtonId");
-
-    });
+    </script>
 
 
+    <div class="modal-body" id="autoform-modal-body">
+        
+        @if (TempData["GlobalError"] != null)
+        {
+            <div class="row">
 
-</script>
-
-<div class="modal-body" id="autoform-modal-body">
-    <div class="row">
-        <div class="col-sm-12">
-            <h3 class="m-t-none m-b">@ViewBag.Title</h3>
-            <p>Please, fill the information below.</p>
-            @using (var form = Html.BeginForm(Model.PostAction, Model.PostController, FormMethod.Post, new { id = formId }))
+                <div class="alert alert-danger">
+                    <strong>Error: </strong> @TempData["GlobalError"]
+                </div>
+            </div>
             {
-                @Html.RenderForm(Model.Model)
+                TempData["GlobalError"] = null;
             }
+        }
+        @if (TempData["GlobalSuccess"] != null)
+        {
+
+            <div class="row">
+
+                <div class="alert alert-success">
+                    <strong>Done! </strong> @TempData["GlobalSuccess"]
+                </div>
+            </div>
+            {
+                TempData["GlobalSuccess"] = null;
+            }
+        }
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="m-t-none m-b">@ViewBag.Title</h3>
+                <p>Please, fill the information below.</p>
+
+
+                @using (var form = Html.BeginForm(Model.PostAction, Model.PostController, FormMethod.Post, new {id = formId}))
+                {
+                    @Html.RenderForm(Model.Model)
+                }
+            </div>
         </div>
     </div>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-white close-link" data-dismiss="modal">Close</button>
-    <input type="submit" value="Apply" class="btn btn-primary" id="@submitButtonId" />
-</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white close-link" data-dismiss="modal">Close</button>
+        <input type="submit" value="Apply" class="btn btn-primary" id="@submitButtonId"/>
+    </div>
+}
+else
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>@ViewBag.Title</h5>
+                    </div>
+                    <div class="ibox-content">
+                        @using (var form = Html.BeginForm(Model.PostAction, Model.PostController, FormMethod.Post, new {id = formId}))
+                        {
+                            @Html.RenderForm(Model.Model)
+                            <div>
+                                <input class="btn btn-primary pull-right btn-sm" type="submit" value="Save">
+                                <div class="clearfix"></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

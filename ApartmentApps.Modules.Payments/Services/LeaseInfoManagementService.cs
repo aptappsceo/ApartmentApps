@@ -230,6 +230,7 @@ namespace ApartmentApps.Modules.Payments.Services
 
             var transaction = new TransactionHistoryItem()
             {
+                
                 Trace= trace,
                 State = TransactionState.Open,
                 Invoices = invoices,
