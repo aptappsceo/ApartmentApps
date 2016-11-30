@@ -21,8 +21,8 @@ public static class Constants
 {
     public const string ConnectionString = "Endpoint=sb://aptappspush.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=b8UIg+ith9oTvd+/4bhvCkc81e6nSnombxgsTqTB8ak=";
     public const string NotificationHubPath = "apartmentapps";
-    public const int IOS_BUILD_NUMBER = 5;
-    public const int ANDROID_BUILD_NUMBER = 7;
+    public const int IOS_BUILD_NUMBER = 6;
+    public const int ANDROID_BUILD_NUMBER = 8;
 }
 public class App : MvxApplication
 {

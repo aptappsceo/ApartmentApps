@@ -316,7 +316,7 @@ namespace ResidentAppCross.ViewModels.Screens
                         }
                         if (!Request.AcceptableCheckinCodes.Contains(data) && !Request.AcceptableCheckinCodes.Contains("*"))
                         {
-                            this.FailTaskWithPrompt("QR Code invalid.");
+                            context.FailTask("QR Code invalid.");
                             return;
                         }
                         if (CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Submitted || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Scheduled || CurrentMaintenanceRequestStatus == MaintenanceRequestStatus.Paused)
