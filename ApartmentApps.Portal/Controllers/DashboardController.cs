@@ -98,7 +98,7 @@ namespace ApartmentApps.Portal.Controllers
             //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(DashboardArea.Right, dbvm.Components));
             //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(DashboardArea.RightTop, dbvm.Components));
            
-            return View("Index3");
+           // return View("Index3");
 
             if (CurrentUser == null)
             {

@@ -52,7 +52,7 @@ namespace ApartmentApps.Api
                     var users = _userRepository.GetAll().Where(p => p.UnitId == unitId).ToArray();
                     foreach (var item in users)
                     {
-                        SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id);
+                        SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id, true);
                     }
                 }
               
