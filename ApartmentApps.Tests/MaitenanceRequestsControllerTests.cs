@@ -65,7 +65,7 @@ namespace ApartmentApps.Tests
             Controller.CompleteRequest(new MaintenanceStatusRequestModel()
             {
                 Id = Convert.ToInt32(result.Id),
-                Comments = "Restarting"
+                Comments = "Complete"
             });
             result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
             Assert.IsTrue(result != null && result.StatusId == "Complete");

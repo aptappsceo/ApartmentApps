@@ -52,14 +52,14 @@ namespace ApartmentApps.Api
                     var users = _userRepository.GetAll().Where(p => p.UnitId == unitId).ToArray();
                     foreach (var item in users)
                     {
-                        SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id);
+                        SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id, true);
                     }
                 }
               
             }
         }
 
-        public void SendAlert(ApplicationUser user, string title, string message, string type, int relatedId = 0, bool email = false)
+        public void SendAlert(ApplicationUser user, string title, string message, string type, int relatedId = 0, bool email = false, string pushMessage = null)
         {
             var alert = new UserAlert()
             {
@@ -82,7 +82,7 @@ namespace ApartmentApps.Api
                 Action = "View",
                 DataId = relatedId,
                 DataType = type,
-                Message = message,
+                Message = pushMessage ?? message,
                 Title = title
             });
 

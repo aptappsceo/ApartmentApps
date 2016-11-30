@@ -1539,6 +1539,9 @@
     <Content Include="Views\Shared\Dashboard\DashboardStatViewModel.cshtml" />
     <Content Include="Views\PaymentOptions\Overview.cshtml" />
     <Content Include="Views\PaymentOptions\OverviewListPartial.cshtml" />
+    <Content Include="Views\Shared\Dashboard\Components.cshtml" />
+    <Content Include="Views\Shared\Dashboard\DashboardTitleViewModel.cshtml" />
+    <Content Include="Views\Shared\Dashboard\DashboardPieViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

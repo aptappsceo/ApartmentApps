@@ -67,7 +67,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
-	<string>9.3</string>
+	<string>10.1</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -96,6 +96,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>XSLaunchImageAssets</key>
+	<string>Resources/Images.xcassets/LaunchImage.launchimage</string>
 	<key>UIStatusBarTintParameters</key>
 	<dict>
 		<key>UINavigationBar</key>
@@ -111,7 +113,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We would like to use your location.</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.2</string>
+	<string>2.3</string>
 	<key>CFBundleName</key>
 	<string>Apartment Apps</string>
 	<key>UIBackgroundModes</key>
@@ -119,8 +121,6 @@
 		<string>remote-notification</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>38</string>
-	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleBlackOpaque</string>
+	<string>42</string>
 </dict>
 </plist>

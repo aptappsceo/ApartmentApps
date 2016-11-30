@@ -53,7 +53,7 @@ namespace ApartmentApps.Api.Modules
                 var user = _context.Users.Find(item);
                 if (user.Archived) continue;
                 // Send the push notification
-                _alertsService.SendAlert(user, message.Title, message.Body, "Message", Convert.ToInt32(message.Id));
+                _alertsService.SendAlert(user, message.Title, message.Body, "Message", Convert.ToInt32(message.Id), false, "Open to read the full message.");
                 // Send the email
                 //$"<img src='{host}/{message.Id}/{item}.png' />", Destination = user.Email, Subject = message. }
                 SendEmailAsync(message, user, new IdentityMessage() { Subject = message.Title, Body = message.Body, Destination = user.Email}).Wait();

@@ -52,7 +52,7 @@ namespace ApartmentApps.Portal.Controllers
                 return items.Select(p =>
                 {
                     var name = $"[{ p.Building.Name }] {p.Name}";
-                    if (p.Users.Any())
+                    if (p.Users != null && p.Users.Any())
                     {
                         var user = p.Users.First();
                         name += $" ({user.FirstName} {user.LastName})";

@@ -155,7 +155,7 @@ namespace ResidentAppCross.iOS.Views
         {
             base.BindForm();
 
-
+			EmergencySection.Switch.On = false;
             HeaderSection.LogoImage.Image = AppTheme.GetTemplateIcon(SharedResources.Icons.MaintenancePlus, SharedResources.Size.L);
             HeaderSection.LogoImage.TintColor = AppTheme.CreateColor;
             HeaderSection.MainLabel.Text = "Request";

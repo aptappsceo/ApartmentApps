@@ -1,0 +1,6 @@
+﻿@model ApartmentApps.Api.Modules.DashboardTitleViewModel
+<h3>@Model.Title</h3>
+@if (!string.IsNullOrEmpty(Model.Subtitle))
+{
+    <p>@Model.Subtitle</p>
+}

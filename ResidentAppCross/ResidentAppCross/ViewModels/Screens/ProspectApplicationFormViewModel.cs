@@ -2,6 +2,8 @@
 using System.Windows.Input;
 using ApartmentApps.Client;
 using ApartmentApps.Client.Models;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 using ResidentAppCross.Services;
 
 namespace ResidentAppCross.ViewModels.Screens
@@ -15,7 +17,7 @@ namespace ResidentAppCross.ViewModels.Screens
 	
 
         public bool ShouldScanQr { get; set; } = true;
-        public IApartmentAppsAPIService _service;
+		public IApartmentAppsAPIService _service;
         public IDialogService _dialogService;
         public ProspectApplicationFormViewModel( IApartmentAppsAPIService service, IDialogService dialogService)
         {
@@ -50,9 +52,27 @@ namespace ResidentAppCross.ViewModels.Screens
             }
         }
 
+		public ICommand CaptureIdCommand => new MvxCommand(async () =>
+		   {
+			   Image = await Mvx.Resolve<IDialogService>().OpenImageDialog();
+			   LoadProspectInfo.Execute(null);
+		   });
 	
 		public byte[] Image { get; set; }
 
+		//public object DesiredMoveInDateCommand { get; set; }
+		public ICommand DesiredMoveInDateCommand
+		{
+			get
+			{
+				return new MvxCommand(async () =>
+				{
+
+					DesiredMoveInDate = await _dialogService.OpenDateTimeDialog("hello");
+
+				});
+			}
+		}
 		public ICommand LoadProspectInfo => this.TaskCommand( async (context) => {
 			if (Image != null)
 			{
@@ -162,9 +182,9 @@ namespace ResidentAppCross.ViewModels.Screens
 
 
 
-        string _desiredMoveInDate;
+		DateTime? _desiredMoveInDate;
 
-        public string DesiredMoveInDate
+		public DateTime? DesiredMoveInDate
         {
             get { return _desiredMoveInDate; }
             set { SetProperty(ref _desiredMoveInDate, value); }

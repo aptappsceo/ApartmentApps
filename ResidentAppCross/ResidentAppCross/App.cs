@@ -21,7 +21,7 @@ public static class Constants
 {
     public const string ConnectionString = "Endpoint=sb://aptappspush.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=b8UIg+ith9oTvd+/4bhvCkc81e6nSnombxgsTqTB8ak=";
     public const string NotificationHubPath = "apartmentapps";
-    public const int IOS_BUILD_NUMBER = 5;
+    public const int IOS_BUILD_NUMBER = 6;
     public const int ANDROID_BUILD_NUMBER = 8;
 }
 public class App : MvxApplication
@@ -30,7 +30,7 @@ public class App : MvxApplication
     public static Uri SiniEndpoint = new Uri("http://5.189.103.91.nip.io:54685/");
     public static Uri DevEndpoint = new Uri("http://devservices.apartmentapps.com/");
 	public static Uri TestEndpoint = new Uri("http://testservices.apartmentapps.com/");
-    public static Uri ProductionEndpoint = new Uri("http://apartmentappsapiservice.azurewebsites.net");
+    public static Uri ProductionEndpoint = new Uri("https://api.apartmentapps.com/");
 
     public App()
     {

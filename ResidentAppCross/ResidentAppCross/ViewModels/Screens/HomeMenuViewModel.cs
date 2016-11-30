@@ -41,7 +41,7 @@ namespace ResidentAppCross
             var courtesyEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.CourtesyConfig?.Enabled ?? false;
             var maintenanceEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.MaintenanceConfig?.Enabled ?? false;
             var messagingEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.MessagingConfig?.Enabled ?? false;
-			var prospectEnabled = true;
+			var prospectEnabled = _loginManager.UserInfo?.PropertyConfig?.ModuleInfo?.ProspectConfig?.Enabled ?? false;
 
             if (_loginManager?.UserInfo?.Roles == null)
             {
@@ -233,15 +233,14 @@ namespace ResidentAppCross
                 //vm.Url = Mvx.Resolve<IApartmentAppsAPIService>().BaseUri + "/generalviews/index";
             });
         });
-
-		public ICommand ScanIdCommand => new MvxCommand(async () =>
+		public ICommand ScanIdCommand => new MvxCommand( () =>
 	   {
-
-		   var image = await Mvx.Resolve<IDialogService>().OpenImageDialog();
+			//var image = await Mvx.Resolve<IDialogService>().OpenImageDialog();
+		   //var image = await Mvx.Resolve<IQRService>().ScanIDAsync();
 
 			ShowViewModel<ProspectApplicationFormViewModel>(vm =>
 		    {
-				vm.Image = image;
+				//vm.Image = image;
 				//vm.Url = Mvx.Resolve<IApartmentAppsAPIService>().BaseUri + "/generalviews/index";
 			});
 	   });

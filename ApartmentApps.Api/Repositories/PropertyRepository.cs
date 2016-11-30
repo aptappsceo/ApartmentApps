@@ -100,6 +100,9 @@ namespace ApartmentApps.Api
             IncludesFunc = includes;
         }
 
+        
+        
+
         public Func<IQueryable<TEntity>, IDbSet<TEntity>> IncludesFunc { get; set; }
 
         public PropertyRepository(DbContext context, IUserContext userContext)
@@ -128,6 +131,12 @@ namespace ApartmentApps.Api
         {
             Context.SaveChanges();
         }
+
+        public IQueryable<TEntity> Include<TProperty>(Expression<Func<TEntity, TProperty>> path)
+        {
+            return WithIncludes.Include(path);
+        }
+
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
         {
             if (predicate == null) return GetAll();

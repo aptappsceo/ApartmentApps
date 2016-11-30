@@ -1,24 +1,22 @@
 ﻿<Properties RefactoringSettings.EnableRefactorings="True" StartupConfiguration="{D8277430-A582-4E04-B474-A48C4A90A313}|Default">
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceRequestStatusViewModel.cs">
     <Files>
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="98" Column="51" />
-      <File FileName="ApartmentApps.Api/EntrataModule.cs" Line="38" Column="94" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/ViewBase.cs" Line="79" Column="34" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/ProspectApplicationFormViewModel.cs" Line="33" Column="6" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/HomeMenuViewModel.cs" Line="244" Column="22" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/CheckinFormView.cs" Line="230" Column="60" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/ProspectExtensions.cs" Line="28" Column="48" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/IProspect.cs" Line="21" Column="51" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/ApartmentAppsAPIService.cs" Line="178" Column="38" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ApartmentApps.API.Service/Prospect.cs" Line="87" Column="14" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ServiceClient/ILoginManager.cs" Line="11" Column="35" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Services/IOSDialogService.cs" Line="291" Column="1" />
-      <File FileName="ResidentAppCross/SCLAlertViewLib/obj/Debug/ios/ObjCRuntime/Trampolines.g.cs" Line="1" Column="1" />
-      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="76" Column="14" />
-      <File FileName="ResidentAppCross/ResidentAppCross/Services/ISharedServices.cs" Line="28" Column="29" />
-      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceRequestStatusViewModel.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/LoginFormView.cs" Line="99" Column="12" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/AppDelegate.cs" Line="37" Column="17" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Setup.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/LoginFormViewModel.cs" Line="68" Column="4" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/ApplicationViewModel.cs" Line="17" Column="18" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/CommitPaymentViewModel.cs" Line="26" Column="18" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/IncidentReportFormViewModel.cs" Line="35" Column="18" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/IncidentReportIndexViewModel.cs" Line="37" Column="18" />
       <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceStartFormViewModel.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceCheckinDetailsViewModel.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenancePauseFormViewModel.cs" Line="61" Column="6" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceRequestFormViewModel.cs" Line="238" Column="46" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceRequestIndexViewModel.cs" Line="1" Column="1" />
+      <File FileName="ResidentAppCross/ResidentAppCross/ViewModels/Screens/MaintenanceRequestStatusViewModel.cs" Line="319" Column="34" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Views/MaintenanceRequestFormView.cs" Line="168" Column="29" />
+      <File FileName="ResidentAppCross/ResidentAppCross.iOS/Info.plist" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" />

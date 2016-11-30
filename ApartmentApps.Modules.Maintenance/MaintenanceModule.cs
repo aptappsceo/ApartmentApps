@@ -59,7 +59,7 @@ namespace ApartmentApps.Api.Modules
             }
         }
 
-        public void PopulateComponents(DashboardArea area, List<DashboardComponentViewModel> dashboardComponents)
+        public void PopulateComponents(DashboardArea area, List<ComponentViewModel> dashboardComponents)
         {
             /*
             if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin"))
@@ -70,19 +70,52 @@ namespace ApartmentApps.Api.Modules
             var mr = Kernel.Get<IRepository<MaitenanceRequest>>();
             if (area == DashboardArea.LeftTop)
             {
+                dashboardComponents.Add(new DashboardTitleViewModel($"Maintenance - {UserContext.CurrentUser.Property.Name}", null, 1));
                 dashboardComponents.Add(new DashboardStatViewModel()
                 {
                     Row = 1,
                     Stretch = "col-md-4",
-                    Title = "Submitted",
+                    Title = "New",
                     Value = WorkOrdersByRange(mr, startDate, endDate).Count(p => p.StatusId == "Submitted").ToString(),
                     Subtitle = "Last 30 Days"
                 });
+                dashboardComponents.Add(new DashboardStatViewModel()
+                {
+                    Row = 1,
+                    Stretch = "col-md-4",
+                    Title = "Open",
+                    Value = WorkOrdersByRange(mr, startDate, endDate).Count(p => p.StatusId != "Complete").ToString(),
+                    Subtitle = "Last 30 Days"
+                });
+                dashboardComponents.Add(new DashboardStatViewModel()
+                {
+                    Row = 1,
+                    Stretch = "col-md-4",
+                    Title = "Complete",
+                    Value = WorkOrdersByRange(mr, startDate, endDate).Count(p => p.StatusId != "Complete").ToString(),
+                    Subtitle = "Last 30 Days"
+                });
+                dashboardComponents.Add(new DashboardPieViewModel("Maintenance By User", "This Month", 3, CheckinsByRange(startDate, endDate).Where(p => p.StatusId == "Complete")
+                    .GroupBy(p => p.Worker)
+                    .Select(p => new DashboardPieViewModel.ChartData() { label = p.Key.FirstName + " " + p.Key.LastName, data = p.Count() })
+                    .ToArray())
+                {
+                    Row = 1,
+                    Stretch = "col-md-12",
+                    Title = "Complete",
 
+                    Subtitle = "Last 30 Days"
+                });
             }
             */
 
         }
+        private IQueryable<MaintenanceRequestCheckin> CheckinsByRange(DateTime? startDate, DateTime? endDate)
+        {
+            var mrc = Kernel.Get<IRepository<MaintenanceRequestCheckin>>();
+            return mrc.Where(p => p.Date > startDate && p.Date < endDate);
+        }
+
         private IQueryable<MaitenanceRequest> WorkOrdersByRange(IRepository<MaitenanceRequest> mr, DateTime? startDate, DateTime? endDate)
         {
             return mr.Where(p => p.SubmissionDate > startDate && p.SubmissionDate < endDate);
