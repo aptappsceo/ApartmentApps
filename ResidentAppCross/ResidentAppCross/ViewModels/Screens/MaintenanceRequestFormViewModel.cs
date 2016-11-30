@@ -344,7 +344,7 @@ namespace ResidentAppCross.ViewModels
                             .ResidentEmergencyInstructions;
                     if (string.IsNullOrEmpty(customMessage))
                     {
-                        customMessage = "Your property manager gave not instructions in case of emergency.";
+                        customMessage = "Your property manager hasn't given any instructions in case of emergency.";
                     }
                     _dialogService.OpenNotification("Information",customMessage,"Ok");
                 }

@@ -65,6 +65,7 @@ namespace ResidentAppCross
                 IsAutologin = true;
                 LoginCommand.Execute(null);
             }
+
         }
 
         public ICommand LoginCommand
