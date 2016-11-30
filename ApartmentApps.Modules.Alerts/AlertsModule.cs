@@ -59,7 +59,7 @@ namespace ApartmentApps.Api
             }
         }
 
-        public void SendAlert(ApplicationUser user, string title, string message, string type, int relatedId = 0, bool email = false)
+        public void SendAlert(ApplicationUser user, string title, string message, string type, int relatedId = 0, bool email = false, string pushMessage = null)
         {
             var alert = new UserAlert()
             {
@@ -82,7 +82,7 @@ namespace ApartmentApps.Api
                 Action = "View",
                 DataId = relatedId,
                 DataType = type,
-                Message = message,
+                Message = pushMessage ?? message,
                 Title = title
             });
 
