@@ -38,6 +38,13 @@ namespace ResidentAppCross
             set { SetProperty(ref _password, value); }
         }
 
+        public bool RememberMe
+        {
+            get { return _rememberMe; }
+            set { SetProperty(ref _rememberMe, value); }
+        }
+
+
         public bool IsOperating
         {
             get { return _isOperating; }
@@ -47,8 +54,9 @@ namespace ResidentAppCross
         public bool IsAutologin = false;
 
 		IDialogService dialogService;
+        private bool _rememberMe;
 
-		public LoginFormViewModel(IDialogService dialogService, ILoginManager loginManager, IVersionChecker versionChecker, IApartmentAppsAPIService data, ISharedCommands sharedCommands)
+        public LoginFormViewModel(IDialogService dialogService, ILoginManager loginManager, IVersionChecker versionChecker, IApartmentAppsAPIService data, ISharedCommands sharedCommands)
         {
 			this.dialogService = dialogService;
             LoginManager = loginManager;
@@ -65,14 +73,23 @@ namespace ResidentAppCross
                 IsAutologin = true;
                 LoginCommand.Execute(null);
             }
+            else
+            {
+                Username = App.ApartmentAppsClient.GetSavedUsername();
+                Password = App.ApartmentAppsClient.GetSavedPassword();
 
+                if (!string.IsNullOrEmpty(Username))
+                {
+                    RememberMe = true;
+                }
+            }
         }
 
         public ICommand LoginCommand
         {
             get
             {
-                return _sharedCommands.CheckVersionAndLogInIfNeededCommand(this, () => Username, () => Password)
+                return _sharedCommands.CheckVersionAndLogInIfNeededCommand(this, () => Username, () => Password,()=> RememberMe)
                     .OnStart("Logging In...");
             }
         }
@@ -98,6 +115,7 @@ namespace ResidentAppCross
                 });
             }
         }
+
     }
 
     public class UserLoggedInEvent : MvxMessage

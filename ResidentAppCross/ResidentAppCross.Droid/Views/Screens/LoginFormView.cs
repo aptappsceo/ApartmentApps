@@ -37,6 +37,9 @@ namespace ResidentAppCross.Droid.Views
         public EditText EmailInput { get; set; }
 
         [Outlet]
+        public SwitchCompat RememberMeSwitch { get; set; }
+
+        [Outlet]
         public EditText PasswordInput { get; set; }
 
         [Outlet]
@@ -69,6 +72,7 @@ namespace ResidentAppCross.Droid.Views
             set.Bind(EmailInput).TwoWay().For(v => v.Text).To(vm => vm.Username);
             set.Bind(PasswordInput).TwoWay().For(v => v.Text).To(vm => vm.Password);
             set.Bind(SignUpButton).To(vm => vm.SignUpCommand);
+            set.Bind(RememberMeSwitch).For(s=>s.Checked).To(vm => vm.RememberMe);
             set.Bind(RecoverPasswordButton).To(vm => vm.RemindPasswordCommand);
             set.Apply();
 
