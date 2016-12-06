@@ -28,12 +28,15 @@ namespace ApartmentApps.API.Service.Controllers
         //}
         public override Task<HttpResponseMessage> ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
         {
-
-            if (UserContext.CurrentUser.LastMobileLoginTime == null || UserContext.CurrentUser.LastMobileLoginTime.Value.Add(new TimeSpan(1, 0, 0)) < DateTime.UtcNow)
+            if (UserContext.CurrentUser != null)
             {
-                UserContext.CurrentUser.LastMobileLoginTime = DateTime.UtcNow;
-                Kernel.Get<ApplicationDbContext>().SaveChanges();
+                if (UserContext.CurrentUser.LastMobileLoginTime == null || UserContext.CurrentUser.LastMobileLoginTime.Value.Add(new TimeSpan(1, 0, 0)) < DateTime.UtcNow)
+                {
+                    UserContext.CurrentUser.LastMobileLoginTime = DateTime.UtcNow;
+                    Kernel.Get<ApplicationDbContext>().SaveChanges();
+                }
             }
+            
             return base.ExecuteAsync(controllerContext, cancellationToken);
         }
 
