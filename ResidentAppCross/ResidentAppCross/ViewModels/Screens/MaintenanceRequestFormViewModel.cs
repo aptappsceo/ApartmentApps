@@ -228,7 +228,7 @@ namespace ResidentAppCross.ViewModels
                     {
                         var customMessage =
                         _loginService.UserInfo?.PropertyConfig?.ModuleInfo?.MaintenanceConfig?
-                            .ResidentEmergencyInstructions;
+                            .ResidentNoPermissionToEnterInstructions;
 
                         if (!string.IsNullOrEmpty(customMessage))
                         {
