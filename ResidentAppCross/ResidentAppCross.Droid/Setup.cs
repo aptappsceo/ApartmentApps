@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Bluetooth;
@@ -290,13 +291,20 @@ namespace ResidentAppCross.Droid
 
         public static void RegisterForHandle(string deviceToken)
         {
-            var client = Mvx.Resolve<IApartmentAppsAPIService>();
-            if (HandleId == null)
+            try
             {
-                HandleId = client.Register.Post(HandleId);
+                var client = Mvx.Resolve<IApartmentAppsAPIService>();
+                if (HandleId == null)
+                {
+                    HandleId = client.Register.Post(HandleId);
+                }
+                DeviceToken = deviceToken.ToString();
+                LoginService.DeviceHandle = DeviceToken;
             }
-            DeviceToken = deviceToken.ToString();
-            LoginService.DeviceHandle = DeviceToken;
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Unable to register for push notifications");
+            }
         }
 
     }

@@ -29,7 +29,8 @@ namespace ResidentAppCross.Services
             Func<string> passwordGetter = null, Func<bool> rememberGetter = null );
     }
 
-    public class SharedCommands : MvxNavigatingObject, ISharedCommands, IEventAware
+    public class 
+        SharedCommands : MvxNavigatingObject, ISharedCommands, IEventAware
     {
 
         private IVersionChecker _versionChecker;
