@@ -1542,6 +1542,10 @@
     <Content Include="Views\Shared\Dashboard\Components.cshtml" />
     <Content Include="Views\Shared\Dashboard\DashboardTitleViewModel.cshtml" />
     <Content Include="Views\Shared\Dashboard\DashboardPieViewModel.cshtml" />
+    <Content Include="Views\Dashboard\Admin.cshtml" />
+    <Content Include="Views\Shared\Dashboard\DashboardGridViewModel.cshtml" />
+    <Content Include="Views\Dashboard\PropertyAdmin.cshtml" />
+    <Content Include="Views\Shared\Dashboard\FeedItemsListModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

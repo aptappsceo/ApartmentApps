@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,8 +8,11 @@ namespace ApartmentApps.Data
     public interface IBaseEntity
     {
         int Id { get; }
+
+        DateTime? CreateDate { get; set; }
+        //DateTime? UpdateDate { get; set; }
     }
-    public partial class Unit : PropertyEntity, IBaseEntity
+    public partial class Unit : PropertyEntity
     {
 
         public int BuildingId { get; set; }

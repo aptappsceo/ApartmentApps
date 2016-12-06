@@ -19,7 +19,7 @@ using Ninject;
 namespace ApartmentApps.Modules.Prospect
 {
     [Persistant]
-    public class ProspectModuleConfig : ModuleConfig
+    public class ProspectModuleConfig : PropertyModuleConfig
     {
         
     }

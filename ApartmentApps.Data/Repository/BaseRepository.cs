@@ -18,8 +18,13 @@ namespace ApartmentApps.Data.Repository
 
         public void Add(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Add(entity);
+            var baseEntity = entity as IBaseEntity;
+            if (baseEntity != null)
+            {
+                baseEntity.CreateDate = DateTime.UtcNow;
+            }
             
+            _dbContext.Set<TEntity>().Add(entity);
             //_dbContext.SaveChanges();
         }
 

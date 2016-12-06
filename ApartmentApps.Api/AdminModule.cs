@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
 
 namespace ApartmentApps.Api.Modules
@@ -30,6 +33,42 @@ namespace ApartmentApps.Api.Modules
             return ExecuteResult();
         }
     }
+   
+
+    public enum DashboardContext
+    {
+        All,
+        Coorperation,
+        Property
+    }
+
+    public abstract class DashboardComponent<TResultViewModel> : PortalComponent<TResultViewModel>
+        where TResultViewModel : ComponentViewModel
+    {
+        //public IKernel Kernel { get; }
+        public AnalyticsModule Analytics { get; set; }
+        public ApplicationDbContext Context { get; }
+        public IUserContext UserContext { get; }
+        public DashboardContext DashboardContext { get; set; }
+
+
+        public IRepository<TItem> Repo<TItem>() where TItem : class, IBaseEntity
+        {
+            return Analytics.Repo<TItem>(DashboardContext);
+        }
+
+        protected DashboardComponent(AnalyticsModule analytics,ApplicationDbContext dbContext, IUserContext userContext)
+        {
+            //Kernel = kernel;
+            Analytics = analytics;
+            Context = dbContext;
+            UserContext = userContext;
+        }
+
+
+    }
+
+
 
     public enum DashboardArea
     {
@@ -74,6 +113,18 @@ namespace ApartmentApps.Api.Modules
             Row = row;
         }
     }
+
+    public class DashboardGridViewModel : ComponentViewModel
+    {
+        public DashboardGridViewModel(Type type, IEnumerable<object> items)
+        {
+            GridModel = new DefaultFormProvider().CreateGridFor(type);
+            
+            GridModel.ObjectItems = items.Cast<object>();
+        }
+        public GridModel GridModel { get; set; }
+    }
+
     public class DashboardPieViewModel : ComponentViewModel
     {
         private Type _dataType;
@@ -215,9 +266,26 @@ namespace ApartmentApps.Api.Modules
                     "PropertyEntrataInfo"));
                 menuItems.Add(checkins);
             }
-            if (UserContext.IsInRole("PropertyAdmin") || UserContext.IsInRole("Admin"))
+            List<MenuItemViewModel> list = new List<MenuItemViewModel>();
+            if (UserContext.IsInRole("Admin"))
             {
-                menuItems.Add(new MenuItemViewModel("Dashboard", "fa-group", "Index", "Dashboard"));
+                list.Add(new MenuItemViewModel("Marketing", "fa-chart", "ShowDashboard",
+                    "Dashboard", new { name = "Admin" }));
+            }
+            if (UserContext.IsInRole("PropertyAdmin"))
+            {
+                list.Add(new MenuItemViewModel("Property", "fa-chart", "ShowDashboard",
+                    "Dashboard", new { name = "PropertyAdmin" }));
+            }
+            ModuleHelper.EnabledModules.Signal<IPopulateDashboardItems>(x => x.PopulateDashboardItems(list));
+            if (list.Any())
+            {
+                var dashboards = new MenuItemViewModel("Dashboard", "fa-chart") { Index = Int32.MinValue };
+                foreach (var item in list)
+                {
+                    dashboards.Children.Add(item);
+                }
+                menuItems.Add(dashboards);
             }
         }
 
@@ -301,5 +369,37 @@ namespace ApartmentApps.Api.Modules
             }
         }
 
+    }
+
+    public class FeedComponent : PortalComponent<FeedItemsListModel>
+    {
+        private readonly IFeedSerivce _feedService;
+        public Func<FeedItemBindingModel, string> ItemUrlSelector { get; }
+
+        public FeedComponent(IFeedSerivce feedService)
+        {
+            _feedService = feedService;
+        }
+
+        public override FeedItemsListModel ExecuteResult()
+        {
+            return new FeedItemsListModel()
+            {
+                FeedItems = _feedService.GetAll(),
+                ItemUrlSelector = ItemUrlSelector
+            };
+        }
+        
+   
+    }
+
+    public class FeedItemsListModel : ComponentViewModel
+    {
+        public IEnumerable<FeedItemBindingModel> FeedItems { get; set; }
+        public Func<FeedItemBindingModel, string> ItemUrlSelector { get; set; }
+    }
+    public interface IPopulateDashboardItems
+    {
+        void PopulateDashboardItems(List<MenuItemViewModel> menuItems);
     }
 }

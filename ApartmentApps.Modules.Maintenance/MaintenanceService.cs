@@ -283,7 +283,7 @@ namespace ApartmentApps.Api
             }
         }
 
-        public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool emergrency, bool permissionToEnter, List<byte[]> images, int unitId = 0)
+        public int SubmitRequest(string comments, int requestTypeId, int petStatus, bool emergrency, bool permissionToEnter, List<byte[]> images, int unitId = 0, SubmittedVia mobile = SubmittedVia.Other)
         {
 
             var maitenanceRequest = new MaitenanceRequest()

@@ -83,7 +83,7 @@ namespace ApartmentApps.IoC
                 //.InRequestScope();
         }
 
-        public static void RegisterModule<TModule, TModuleConfig>( this IKernel kernel ) where TModule : Module<TModuleConfig> where TModuleConfig : ModuleConfig, new()
+        public static void RegisterModule<TModule, TModuleConfig>( this IKernel kernel ) where TModule : Module<TModuleConfig> where TModuleConfig : class,IModuleConfig, new()
         {
             kernel.Bind<TModule, IModule, Module<TModuleConfig>>().To<TModule>().InRequestScope();
 
@@ -103,7 +103,7 @@ namespace ApartmentApps.IoC
 
                 foreach (var entityType in entityTypes)
                 {
-                    if (typeof (ModuleConfig).IsAssignableFrom(entityType))
+                    if (typeof (PropertyModuleConfig).IsAssignableFrom(entityType))
                     {
                         kernel.Bind(typeof(IRepository<>).MakeGenericType(entityType))
                            .To(typeof(PropertyRepository<>).MakeGenericType(entityType));
@@ -112,6 +112,11 @@ namespace ApartmentApps.IoC
                     {
                         kernel.Bind(typeof (IRepository<>).MakeGenericType(entityType))
                             .To(typeof (PropertyRepository<>).MakeGenericType(entityType));
+                    }
+                    else if (typeof(UserEntity).IsAssignableFrom(entityType))
+                    {
+                        kernel.Bind(typeof(IRepository<>).MakeGenericType(entityType))
+                            .To(typeof(UserRepository<>).MakeGenericType(entityType));
                     }
                     else
                     {
@@ -122,6 +127,7 @@ namespace ApartmentApps.IoC
                 }
 
             }
+            kernel.RegisterModule<AnalyticsModule, AnalyticsConfig>();
             kernel.RegisterModule<AlertsModule, AlertsModuleConfig>();
             kernel.RegisterModule<AdminModule, PortalConfig>();
             kernel.RegisterModule<PaymentsModule, PaymentsConfig>();

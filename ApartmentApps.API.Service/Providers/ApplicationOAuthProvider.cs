@@ -34,7 +34,7 @@ namespace ApartmentApps.API.Service.Providers
 
             ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
 
-            if (user == null || user.Archived || user.Property.State != PropertyState.Active)
+            if (user == null || user.Archived || (user.Property.State != PropertyState.Active && user.Property.State != PropertyState.TestAccount))
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;

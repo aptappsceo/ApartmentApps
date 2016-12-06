@@ -103,7 +103,9 @@ namespace ApartmentApps.API.Service.Controllers
 
                 if (user != null)
                 {
-                    if (user.Property.State != PropertyState.Active || user.Archived == true)
+                    user.LastMobileLoginTime = DateTime.UtcNow;
+                    
+                    if ((user.Property.State != PropertyState.Active && user.Property.State != PropertyState.TestAccount ) || user.Archived == true)
                     {
                         return null;
                     }
@@ -111,9 +113,11 @@ namespace ApartmentApps.API.Service.Controllers
                     {
                         user.DevicePlatform = devicePlatform;
                         user.DeviceToken = devicePushToken;
-                        await context.SaveChangesAsync();
+                    
                     }
+                    await context.SaveChangesAsync();
                 }
+                
             }
 
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
@@ -143,8 +147,6 @@ namespace ApartmentApps.API.Service.Controllers
                 }
             };
         }
-
-
 
         // POST api/Account/Logout
         [Route("Logout")]

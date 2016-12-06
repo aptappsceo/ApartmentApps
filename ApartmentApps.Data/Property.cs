@@ -22,6 +22,10 @@ namespace ApartmentApps.Data
         [Key]
         [EqEntityAttr(UseInConditions = false)]
         public int Id { get; set; }
+
+        public DateTime? CreateDate { get; set; }
+       // public DateTime? UpdateDate { get; set; }
+
         [Searchable]
         public string Name { get; set; }
         [EqEntityAttr(UseInConditions = false)]
@@ -51,7 +55,8 @@ namespace ApartmentApps.Data
     {
         Active,
         Suspended,
-        Archived
+        Archived,
+        TestAccount
     }
 
 }

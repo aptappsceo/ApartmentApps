@@ -13,7 +13,7 @@ using SendGrid.Helpers.Mail;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class MessagingModule : Module<MessagingConfig>, IMenuItemProvider, IAdminConfigurable
+    public class MessagingModule : Module<MessagingConfig>, IMenuItemProvider, IAdminConfigurable, IApplyAnalytics
     {
         public IRepository<Message> Messages { get; set; }
         private readonly PropertyContext _context;
@@ -103,6 +103,13 @@ namespace ApartmentApps.Api.Modules
                 message.Opened = true;
                 _messageReceipts.Save();
             }
+        }
+
+        public void ApplyAnalytics(AnalyticsModule module, AnalyticsItem analyticsItem, DateTime startDate)
+        {
+            analyticsItem.NumberMessagesSent =
+                module.Repo<Message>().Count(p => p.Sent && p.SentOn > startDate);
+
         }
     }
 }

@@ -76,7 +76,8 @@ namespace ApartmentApps.Data
         [Key]
         public override string Id { get; set; }
 
-        
+        public DateTime? CreateDate { get; set; }
+
 
         public string ImageUrl { get; set; }
 
@@ -124,6 +125,23 @@ namespace ApartmentApps.Data
 
         public string DeviceToken { get; set; }
 
+        public DateTime? LastMobileLoginTime { get; set; }
+        public DateTime? LastPortalLoginTime { get; set; }
+        [NotMapped]
+        public bool ActiveOnMobile
+        {
+            get
+            {
+                if (LastMobileLoginTime != null && LastPortalLoginTime != null)
+                {
+                    return LastMobileLoginTime > LastPortalLoginTime;
+                } else if (LastMobileLoginTime != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
         public int? ForteClientId { get; set; }
 
         public string SyncId { get; set; }

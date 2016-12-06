@@ -1,0 +1,55 @@
+﻿@using ApartmentApps.Api.Modules
+@using ApartmentApps.Data
+@model DashboardViewModel
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Dashboard</h2>
+        <ol class="breadcrumb">
+            <li class="active">
+                @Model.Title
+            </li>
+        </ol>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        @(Html.RenderComponent<DashboardUsersEngaging>(x => x.DashboardContext = DashboardContext.Property))
+
+        <div class="clear-fix"></div>
+    </div>
+
+    <div class="col-md-4">
+        @(Html.RenderComponent<DashboardAppVsPortal>(x => x.DashboardContext = DashboardContext.Property))
+        <div class="clear-fix"></div>
+    </div>
+
+    <div class="col-md-4">
+        @(Html.RenderComponent<DashboardMaitenanceByUser>(x => x.DashboardContext = DashboardContext.Property))
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-6">
+        <div class="clear-fix"></div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-md-4">
+        @(Html.RenderComponent<DashboardNumberWorkOrders>(x => x.DashboardContext = DashboardContext.Property))
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-4">
+        @(Html.RenderComponent<DashboardNumberIncidentReports>(x => x.DashboardContext = DashboardContext.Property))
+        <div class="clear-fix"></div>
+    </div>
+    <div class="col-md-4">
+        @(Html.RenderComponent<DashboardNumberMessages>(x => x.DashboardContext = DashboardContext.Property))
+        <div class="clear-fix"></div>
+    </div>
+    <div class="clear-fix"></div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @(Html.RenderComponent<FeedComponent>())
+    </div>
+</div>
