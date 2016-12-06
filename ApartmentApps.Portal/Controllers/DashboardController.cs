@@ -85,7 +85,13 @@ namespace ApartmentApps.Portal.Controllers
             //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(DashboardArea.LeftTop, dbvm.Components));
             //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(DashboardArea.Right, dbvm.Components));
             //EnabledModules.Signal<IDashboardComponentProvider>(c=>c.PopulateComponents(DashboardArea.RightTop, dbvm.Components));
-           
+            if (User.IsInRole("Admin"))
+                return RedirectToAction("ShowDashboard", new {name="Admin"});
+            else if (User.IsInRole("PropertyAdmin"))
+            {
+                return RedirectToAction("ShowDashboard", new {name = "PropertyAdmin"});
+            }
+
            // return View("Index3");
 
             if (CurrentUser == null)

@@ -149,11 +149,15 @@ namespace ApartmentApps.Api.Modules
 
             if (context == DashboardContext.All)
             {
-                return AllPropertiesAnalytics(context).Sum(selector);
+                var items = AllPropertiesAnalytics(context).ToArray();
+                return items.Sum(selector);
             }
             else
             {
-                return selector(AnalyticsForProperty(UserContext.PropertyId));
+                var analyticsForProperty = AnalyticsForProperty(UserContext.PropertyId);
+                if (analyticsForProperty != null)
+                return selector(analyticsForProperty);
+                return 0;
             }
         }
 
