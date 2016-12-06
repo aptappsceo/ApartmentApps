@@ -50,6 +50,7 @@ namespace ApartmentApps.Jobs
                 kernel.Bind<IUserContext>().ToMethod(p=>userContext);
                 kernel.Bind<ILogger>().To<ConsoleLogger>();
 
+                //var modules = kernel.GetAll<IModule>().Where(p=>p.Enabled).OfType<AnalyticsModule>().ToArray();
                 var modules = kernel.GetAll<IModule>().Where(p=>p.Enabled).OfType<IWebJob>().ToArray();
 
                 foreach (var module in modules)

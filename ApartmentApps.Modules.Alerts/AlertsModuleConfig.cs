@@ -4,7 +4,7 @@ using ApartmentApps.Data;
 namespace ApartmentApps.Api
 {
     [Persistant]
-    public class AlertsModuleConfig : ModuleConfig
+    public class AlertsModuleConfig : PropertyModuleConfig
     {
         
     }

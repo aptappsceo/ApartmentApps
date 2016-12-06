@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DashboardNumberWorkOrders.cs" />
     <Compile Include="IMaintenanceRequestCheckinEvent.cs" />
     <Compile Include="IMaintenanceRequestCompletedEvent.cs" />
     <Compile Include="IMaintenanceRequestStartedEvent.cs" />

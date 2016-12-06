@@ -33,7 +33,7 @@ namespace ApartmentApps.Portal.Controllers
 //        }
 //    }
 
-    public class SettingsController<T> : AAController where T : ModuleConfig
+    public class SettingsController<T> : AAController where T : PropertyModuleConfig
     {
         private readonly IRepository<T> _configRepo;
 

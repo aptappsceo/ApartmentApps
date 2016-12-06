@@ -22,8 +22,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
             {
                 AndroidStoreUrl = "http://play.google.com/store/apps/details?id=" + appPackageName,
                 IPhoneStoreUrl = "https://itunes.apple.com/tj/app/apartment-apps-v2/id1088688855?mt=8",
-                IPhoneBuildNumber = 4,
-                AndroidBuildNumber = 6,
+                IPhoneBuildNumber = 6,
+                AndroidBuildNumber = 8,
                 Version = 2.3
             };
         }

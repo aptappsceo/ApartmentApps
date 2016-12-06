@@ -563,8 +563,7 @@ namespace ApartmentApps.Portal.Controllers
                 request.Emergency,
                 request.PermissionToEnter,
                 null,
-                Convert.ToInt32(request.UnitId)
-                );
+                Convert.ToInt32(request.UnitId), SubmittedVia.Portal);
             return RedirectToAction("Details", new { id = id });
 
         }

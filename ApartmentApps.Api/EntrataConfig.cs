@@ -4,7 +4,7 @@ using ApartmentApps.Data;
 namespace ApartmentApps.Api
 {
     [Persistant]
-    public class EntrataConfig : ModuleConfig
+    public class EntrataConfig : PropertyModuleConfig
     {
         
     }

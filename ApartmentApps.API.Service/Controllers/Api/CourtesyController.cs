@@ -26,7 +26,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         {
             _inspectionsService = inspectionsService;
         }
-
+        
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("List")]
         public IEnumerable<InspectionViewModel> Get()
@@ -180,4 +180,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
 
     }
+
+
+
+
 }

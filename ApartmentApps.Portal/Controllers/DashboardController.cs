@@ -58,31 +58,19 @@ namespace ApartmentApps.Portal.Controllers
 
     public class DashboardViewModel
     {
-        public List<ComponentViewModel> Components { get; set; } = new List<ComponentViewModel>();
-
-        public bool Exists<TComponent>()
-        {
-            return Components.OfType<TComponent>().Any();
-        }
-        public MvcHtmlString RenderComponent<TComponent>(HtmlHelper helper)
-        {
-            var component = Components.OfType<TComponent>().FirstOrDefault();
-            if (component != null)
-            {
-                return helper.Partial("~/Views/Shared/Dashboard/" + component.GetType().Name + ".cshtml", component);
-            }
-            return MvcHtmlString.Empty;
-        }
-
+        public string Title { get; set; }
+        public DashboardContext Context { get; set; }
     }
     [Authorize]
     public class DashboardController : AAController
     {
         private ApplicationUserManager _userManager;
+        public AnalyticsModule AnalyticsModule { get; set; }
         public IFeedSerivce FeedService { get; set; }
         // GET: Dashboard
-        public DashboardController(IKernel kernel, PropertyContext context, IUserContext userContext, IFeedSerivce feedService, IBlobStorageService blobStorageService) : base(kernel, context, userContext)
+        public DashboardController(AnalyticsModule analyticsModule, IKernel kernel, PropertyContext context, IUserContext userContext, IFeedSerivce feedService, IBlobStorageService blobStorageService) : base(kernel, context, userContext)
         {
+            AnalyticsModule = analyticsModule;
             FeedService = feedService;
             BlobStorageService = blobStorageService;
         }
@@ -136,6 +124,18 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
+        public ActionResult ShowDashboard(string name, DashboardContext context = DashboardContext.All)
+        {
+            // Temporary until background process runs
+#if DEBUG
+            AnalyticsModule.Execute(null);
+#endif
+            return View(name, new DashboardViewModel()
+            {
+                Title = context.ToString(),
+                Context = context
+            });
+        }
 
         public ApplicationUserManager UserManager
         {

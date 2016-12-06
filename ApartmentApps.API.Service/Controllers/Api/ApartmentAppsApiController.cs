@@ -1,6 +1,11 @@
+using System;
 using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Controllers;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
@@ -21,9 +26,19 @@ namespace ApartmentApps.API.Service.Controllers
         //{
         //    get { return HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
         //}
+        public override Task<HttpResponseMessage> ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
+        {
+
+            if (UserContext.CurrentUser.LastMobileLoginTime == null || UserContext.CurrentUser.LastMobileLoginTime.Value.Add(new TimeSpan(1, 0, 0)) < DateTime.UtcNow)
+            {
+                UserContext.CurrentUser.LastMobileLoginTime = DateTime.UtcNow;
+                Kernel.Get<ApplicationDbContext>().SaveChanges();
+            }
+            return base.ExecuteAsync(controllerContext, cancellationToken);
+        }
 
         [NonAction]
-        public TConfig GetConfig<TConfig>() where TConfig : ModuleConfig, new()
+        public TConfig GetConfig<TConfig>() where TConfig : PropertyModuleConfig, new()
         {
             var config = Kernel.Get<Module<TConfig>>().Config;
             return config;
@@ -37,5 +52,6 @@ namespace ApartmentApps.API.Service.Controllers
             Context = context;
             UserContext = userContext;
         }
+        
     }
 }

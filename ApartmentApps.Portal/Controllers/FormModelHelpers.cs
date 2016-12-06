@@ -23,7 +23,7 @@ namespace ApartmentApps.Portal.Controllers
             return helper.Partial("~/Views/Shared/Dashboard/Components.cshtml", components);
         }
 
-        public static MvcHtmlString RenderComponent<TComponent>(this HtmlHelper helper, DashboardArea area, Action<TComponent> initComponent = null) where TComponent : IPortalComponent
+        public static MvcHtmlString RenderComponent<TComponent>(this HtmlHelper helper, Action<TComponent> initComponent = null) where TComponent : IPortalComponent
         {
             var componentClass = ModuleHelper.Kernel.Get<TComponent>();
             initComponent?.Invoke(componentClass);

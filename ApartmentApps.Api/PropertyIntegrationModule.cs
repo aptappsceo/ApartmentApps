@@ -10,7 +10,7 @@ using Ninject;
 
 namespace ApartmentApps.Api
 {
-    public class PropertyIntegrationModule<TConfig> : Module<TConfig>, IWebJob, ICreateUser where TConfig : ModuleConfig, new()
+    public class PropertyIntegrationModule<TConfig> : Module<TConfig>, IWebJob, ICreateUser where TConfig : PropertyModuleConfig, new()
     {
         public ApplicationDbContext DbContext { get; set; }
         protected readonly PropertyContext _context;

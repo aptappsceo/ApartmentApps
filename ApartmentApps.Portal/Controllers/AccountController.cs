@@ -87,7 +87,7 @@ namespace ApartmentApps.Portal.Controllers
 
             var user = await UserManager.FindByEmailAsync(model.Email);
 
-            if (user == null || user.Archived || user.Property.State != PropertyState.Active)
+            if (user == null || user.Archived || (user.Property.State != PropertyState.Active && user.Property.State != PropertyState.TestAccount))
             {
                 ModelState.AddModelError("", "Invalid login attempt.");
                 return View(model);
@@ -99,6 +99,18 @@ namespace ApartmentApps.Portal.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    using (var context = new ApplicationDbContext())
+                    {
+                        var username = User.Identity.GetUserName();
+                        var usr = context.Users.FirstOrDefault(p => p.Email == username);
+
+                        if (usr != null)
+                        {
+                            usr.LastPortalLoginTime = DateTime.UtcNow;
+                            await context.SaveChangesAsync();
+                        }
+
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

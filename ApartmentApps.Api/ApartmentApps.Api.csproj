@@ -195,6 +195,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyticsModule.cs" />
     <Compile Include="DefaultUserManager.cs" />
     <Compile Include="AzurePushNotificationHandler.cs" />
     <Compile Include="FeedItemBindingModel.cs" />
@@ -215,7 +216,7 @@
     <Compile Include="IUnitImporter.cs" />
     <Compile Include="IUserContext.cs" />
     <Compile Include="AdminModule.cs" />
-    <Compile Include="ModuleConfig.cs" />
+    <Compile Include="PropertyModuleConfig.cs" />
     <Compile Include="IAdminConfigurable.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IMenuItemProvider.cs" />

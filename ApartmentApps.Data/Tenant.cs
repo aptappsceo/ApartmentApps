@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -34,6 +35,9 @@ namespace ApartmentApps.Data
         [DataType("Hidden")]
         [EqEntityAttr(UseInConditions = false)]
         public int Id { get; set; }
+
+        public DateTime? CreateDate { get; set; }
+      //  public DateTime? UpdateDate { get; set; }
     }
 
     //public partial class Tenant : PropertyEntity

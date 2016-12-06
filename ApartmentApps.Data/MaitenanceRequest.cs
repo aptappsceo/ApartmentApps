@@ -80,5 +80,15 @@ namespace ApartmentApps.Data
         [NotMapped, EqEntityAttr(UseInConditions = false)]
         public TimeSpan? TimeToComplete => CompletionDate?.Subtract(SubmissionDate);
 
+        public SubmittedVia SubmittedVia { get; set; }
+    }
+
+    public enum SubmittedVia
+    {
+        Portal,
+        Other,
+        Mobile,
+        MobileIPhone,
+        MobileAndroid
     }
 }

@@ -31,7 +31,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public class AAController : Controller
     {
-        public TConfig GetConfig<TConfig>() where TConfig : ModuleConfig, new()
+        public TConfig GetConfig<TConfig>() where TConfig : PropertyModuleConfig, new()
         {
             var config = Kernel.Get<Module<TConfig>>().Config;
             return config;
@@ -109,7 +109,11 @@ namespace ApartmentApps.Portal.Controllers
                 ViewBag.MenuItems = menuItems;
                 ViewBag.Tabs = Tabs;
 
-                
+                if (UserContext.CurrentUser.LastPortalLoginTime == null || UserContext.CurrentUser.LastPortalLoginTime.Value.Add(new TimeSpan(1,0,0)) < DateTime.UtcNow)
+                {
+                    UserContext.CurrentUser.LastPortalLoginTime = DateTime.UtcNow;
+                    Kernel.Get<ApplicationDbContext>().SaveChanges();
+                }
             }
 
         }

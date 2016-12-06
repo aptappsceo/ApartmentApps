@@ -7,6 +7,6 @@ namespace ApartmentApps.Api.Modules
         Type ConfigType { get; }
         bool Enabled { get; }
         string Name { get; }
-        ModuleConfig ModuleConfig { get; }
+        IModuleConfig ModuleConfig { get; }
     }
 }

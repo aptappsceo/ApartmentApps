@@ -6,7 +6,7 @@ using ApartmentApps.Forms;
 namespace ApartmentApps.Api.Modules
 {
     [Persistant]
-    public class PaymentsConfig : ModuleConfig
+    public class PaymentsConfig : PropertyModuleConfig
     {
         public PaymentsConfig()
         {

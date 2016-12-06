@@ -8,18 +8,18 @@ using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class Module<TConfig> : IModule where TConfig : ModuleConfig, new()
+    public class Module<TConfig> : IModule where TConfig : class, IModuleConfig, new()
     {
-        public class ConfigRepository : PropertyRepository<TConfig>
-        {
-            //public ConfigRepository(Func<IQueryable<TConfig>, IDbSet<TConfig>> includes, DbContext context, IUserContext userContext) : base(includes, context, userContext)
-            //{
-            //}
+        //public class ConfigRepository : PropertyRepository<TConfig>
+        //{
+        //    //public ConfigRepository(Func<IQueryable<TConfig>, IDbSet<TConfig>> includes, DbContext context, IUserContext userContext) : base(includes, context, userContext)
+        //    //{
+        //    //}
 
-            public ConfigRepository(DbContext context, IUserContext userContext) : base(context, userContext)
-            {
-            }
-        }
+        //    public ConfigRepository(DbContext context, IUserContext userContext) : base(context, userContext)
+        //    {
+        //    }
+        //}
 
         protected IKernel Kernel { get; }
         private readonly IRepository<TConfig> _configRepo;
@@ -45,7 +45,7 @@ namespace ApartmentApps.Api.Modules
         {
             get { return typeof(TConfig); }
         }
-        public virtual ModuleConfig ModuleConfig => Config;
+        public virtual IModuleConfig ModuleConfig => Config;
 
         private TConfig _config;
 
