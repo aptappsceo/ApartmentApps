@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
@@ -65,7 +66,7 @@ namespace ResidentAppCross.Droid.Views
             CallButton.Click += (sender, args) =>
             {
                 if (string.IsNullOrEmpty(_currentPhone)) return;
-                Intent intent = new Intent(Intent.ActionCall, Uri.Parse("tel:" + _currentPhone));
+                Intent intent = new Intent(Intent.ActionDial, Uri.Parse("tel:" + _currentPhone));
                 Context.StartActivity(intent);
             };
         }
@@ -73,14 +74,15 @@ namespace ResidentAppCross.Droid.Views
         public void SetCallablePhone(string phone)
         {
             this._currentPhone = phone;
-            if (string.IsNullOrEmpty(phone))
-            {
+
+            PackageManager pm = Context.PackageManager;
+
+            if (string.IsNullOrEmpty(phone) || pm == null || !pm.HasSystemFeature(PackageManager.FeatureTelephony)){
                 CallButton.Visibility = ViewStates.Gone;
+                return;
             }
-            else
-            {
-                CallButton.Visibility = ViewStates.Visible;
-            }
+
+            CallButton.Visibility = ViewStates.Visible;
         }
 
         public string AvatarUrl

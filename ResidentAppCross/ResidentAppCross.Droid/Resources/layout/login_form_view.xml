@@ -15,8 +15,8 @@
         android:paddingRight="32dp">
 
         <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/imageView"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/AppartmentAppsIcon"/>
@@ -96,9 +96,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:padding="8dp"
+            android:paddingStart="8dp"
             android:orientation="horizontal"
-            android:layout_height="56dp">
+            android:layout_height="36dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -118,11 +118,9 @@
 
         </LinearLayout>
 
-
-
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/LoginButton"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="0dp"
             android:text="LOG IN"
             android:backgroundTint="@color/accent"
             android:padding="12dp"
