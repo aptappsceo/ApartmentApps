@@ -60,7 +60,7 @@ namespace ApartmentApps.Api.Modules
         {
             return new DashboardStatViewModel()
             {
-                Title = "Number of Work Orders",
+                Title = "Work Orders",
                 Subtitle = $"In the past {Analytics.Config.EngagementNumberOfDays} days.",
                 Value = Analytics.AnalyticForContext(DashboardContext, x => x.NumberMaintenanceRequests).ToString()
             };
@@ -78,7 +78,7 @@ namespace ApartmentApps.Api.Modules
         {
             return new DashboardStatViewModel()
             {
-                Title = "Number of Messages",
+                Title = "Messages Sent",
                 Subtitle = $"In the past {Analytics.Config.EngagementNumberOfDays} days.",
                 Value = Analytics.AnalyticForContext(DashboardContext, x => x.NumberMessagesSent).ToString()
             };
@@ -268,7 +268,7 @@ namespace ApartmentApps.Api.Modules
         {
             var start = DateTime.UtcNow.Subtract(new TimeSpan(Analytics.Config.EngagementNumberOfDays, 0, 0, 0));
 
-            return new DashboardPieViewModel("Maintenance By User", "This Month", 3,
+            return new DashboardPieViewModel("Maintenance By User", $"Last {Analytics.Frequency.Days} Days", 3,
                 CheckinsByRange(start, DateTime.UtcNow).Where(p => p.StatusId == "Complete")
                     .GroupBy(p => p.Worker)
                     .Select(
@@ -323,8 +323,8 @@ namespace ApartmentApps.Api.Modules
             //var activeBefore = DateTime.UtcNow.Subtract(new TimeSpan(7, 0, 0, 0));
 
 
-            return new DashboardPieViewModel(
-                "Users Engaging", "Users Engaging", 1,
+            var model =  new DashboardPieViewModel(
+                "Users Engaging", $"Last {Analytics.Frequency.Days} Days", 1,
                     new DashboardPieViewModel.ChartData()
                     { label = "Not Engaging", data = Analytics.AnalyticForContext(DashboardContext, x => x.UserCount -x.UserEngagingCount) },
                     new DashboardPieViewModel.ChartData()
@@ -333,6 +333,7 @@ namespace ApartmentApps.Api.Modules
                 Stretch = "col-md-6",
                 //ListData = activeProperties.Select(p=> new EngagementScore() { Name = p.Item1.Name, Score = p.Item2})
             };
+            return model;
         }
 
 
@@ -352,7 +353,7 @@ namespace ApartmentApps.Api.Modules
 
 
             return new DashboardPieViewModel(
-                "Users Engaging", "Units Engaging", 1,
+                "Users Engaging", $"Last {Analytics.Frequency.Days} Days", 1,
                     new DashboardPieViewModel.ChartData()
                     { label = "Active", data = Analytics.AnalyticForContext(DashboardContext, x => x.NumberOfUnits) },
                     new DashboardPieViewModel.ChartData()
@@ -380,7 +381,7 @@ namespace ApartmentApps.Api.Modules
 
 
             return new DashboardPieViewModel(
-                "Work Orders App Vs Portal", "Units Engaging", 1,
+                "Work Orders App Vs Portal", $"Last {Analytics.Frequency.Days} Days", 1,
                     new DashboardPieViewModel.ChartData()
                     { label = "Mobile", data = Analytics.AnalyticForContext(DashboardContext, x => x.NumberMobileMaintenanceRequests) },
                     new DashboardPieViewModel.ChartData()

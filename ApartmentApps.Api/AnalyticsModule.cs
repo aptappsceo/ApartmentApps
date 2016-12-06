@@ -186,6 +186,7 @@ namespace ApartmentApps.Api.Modules
         {
             foreach (var item in Repo<Property>(context).ToArray())
             {
+                if (item.State != PropertyState.Active) continue;
                 var a = AnalyticsForProperty(item.Id);
                 if (a != null)
                     yield return a;
