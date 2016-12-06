@@ -268,7 +268,7 @@ namespace ApartmentApps.Api.Modules
         {
             var start = DateTime.UtcNow.Subtract(new TimeSpan(Analytics.Config.EngagementNumberOfDays, 0, 0, 0));
 
-            return new DashboardPieViewModel("Maintenance By User", $"Last {Analytics.Frequency.Days} Days", 3,
+            return new DashboardPieViewModel("Maintenance By User", $"Last {Analytics.Config.EngagementNumberOfDays} Days", 3,
                 CheckinsByRange(start, DateTime.UtcNow).Where(p => p.StatusId == "Complete")
                     .GroupBy(p => p.Worker)
                     .Select(
@@ -324,7 +324,7 @@ namespace ApartmentApps.Api.Modules
 
 
             var model =  new DashboardPieViewModel(
-                "Users Engaging", $"Last {Analytics.Frequency.Days} Days", 1,
+                "Users Engaging", $"All Time", 1,
                     new DashboardPieViewModel.ChartData()
                     { label = "Not Engaging", data = Analytics.AnalyticForContext(DashboardContext, x => x.UserCount -x.UserEngagingCount) },
                     new DashboardPieViewModel.ChartData()
@@ -353,7 +353,7 @@ namespace ApartmentApps.Api.Modules
 
 
             return new DashboardPieViewModel(
-                "Users Engaging", $"Last {Analytics.Frequency.Days} Days", 1,
+                "Users Engaging", $"Last {Analytics.Config.EngagementNumberOfDays} Days", 1,
                     new DashboardPieViewModel.ChartData()
                     { label = "Active", data = Analytics.AnalyticForContext(DashboardContext, x => x.NumberOfUnits) },
                     new DashboardPieViewModel.ChartData()
@@ -381,7 +381,7 @@ namespace ApartmentApps.Api.Modules
 
 
             return new DashboardPieViewModel(
-                "Work Orders App Vs Portal", $"Last {Analytics.Frequency.Days} Days", 1,
+                "Work Orders App Vs Portal", $"Last {Analytics.Config.EngagementNumberOfDays} Days", 1,
                     new DashboardPieViewModel.ChartData()
                     { label = "Mobile", data = Analytics.AnalyticForContext(DashboardContext, x => x.NumberMobileMaintenanceRequests) },
                     new DashboardPieViewModel.ChartData()

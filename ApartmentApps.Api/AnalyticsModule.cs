@@ -69,7 +69,7 @@ namespace ApartmentApps.Api.Modules
 
         public IRepository<TItem> Repo<TItem>(DashboardContext context = DashboardContext.Property) where TItem : class, IBaseEntity
         {
-            if (context == DashboardContext.All || !typeof(PropertyEntity).IsAssignableFrom(typeof(TItem)))
+            if (context == DashboardContext.All || !typeof(IPropertyEntity).IsAssignableFrom(typeof(TItem)))
             {
                 return new BaseRepository<TItem>(_dbContext);
             }

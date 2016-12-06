@@ -88,7 +88,7 @@ namespace ApartmentApps.API.Service.Controllers
                 AcceptableCheckinCodes = new List<string>()
                     {
                         $"http://www.apartmentapps.com?apt={result.Unit.BuildingId},{result.UnitId}",
-                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name},{result.Unit.Name}"
+                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name},{result.Unit.Name}","*"
                     },
                 BuildingName = result.Unit?.Building?.Name + " " + result.Unit?.Name,
                 PermissionToEnter = result.PermissionToEnter,
