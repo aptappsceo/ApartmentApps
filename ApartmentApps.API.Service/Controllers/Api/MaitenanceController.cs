@@ -90,7 +90,7 @@ namespace ApartmentApps.API.Service.Controllers
                         $"http://www.apartmentapps.com?apt={result.Unit.Building.Name},{result.Unit.Name}",
                         $"http://www.apartmentapps.com?apt={result.Unit.Building.Name.TrimStart('0')},{result.Unit.Name}",
                         $"http://www.apartmentapps.com?apt={result.Unit.Building.Name.TrimStart('0')},{result.Unit.Name},,"
-                        //"*"
+                        "*"
                     },
                 BuildingName = result.Unit?.Building?.Name + " " + result.Unit?.Name,
                 PermissionToEnter = result.PermissionToEnter,
