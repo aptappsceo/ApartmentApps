@@ -36,7 +36,7 @@ namespace ApartmentApps.Api
         {
             if (maitenanceRequest.User.PropertyId != null)
             {
-                SendAlert(maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id);
+                SendAlert(maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id, true);
             }
                 
             
@@ -49,7 +49,7 @@ namespace ApartmentApps.Api
                 var unitId = request.UnitId;
                 if (unitId != null)
                 {
-                    var users = _userRepository.GetAll().Where(p => p.UnitId == unitId).ToArray();
+                    var users = _userRepository.GetAll().Where(p => p.UnitId == unitId && p.Archived == false).ToArray();
                     foreach (var item in users)
                     {
                         SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id, true);
