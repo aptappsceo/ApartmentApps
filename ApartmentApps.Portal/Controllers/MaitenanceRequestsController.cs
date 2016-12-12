@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -491,23 +492,23 @@ namespace ApartmentApps.Portal.Controllers
             var within24 = Context.MaitenanceRequests
                 .Count(p => p.CompletionDate != null &&
                             p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
-                            (p.CompletionDate - p.SubmissionDate).Value.Hours <= 24
+                            DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 24
                             );
             var within48 = Context.MaitenanceRequests
-                                    .Count(p => p.CompletionDate != null &&
+                                    .Count(p => p.CompletionDate != null && 
                                                 p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
-                                                (p.CompletionDate - p.SubmissionDate).Value.Hours > 24 && (p.CompletionDate - p.SubmissionDate).Value.Hours <= 48
+                                                DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 24 && DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 48
                                                 );
             var within72 = Context.MaitenanceRequests
                                   .Count(p => p.CompletionDate != null &&
                                               p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
-                                              (p.CompletionDate - p.SubmissionDate).Value.Hours > 48 && (p.CompletionDate - p.SubmissionDate).Value.Hours <= 72
+                                              DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 48 && DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 72
                                               );
 
             var greaterThan72 = Context.MaitenanceRequests
                     .Count(p => p.CompletionDate != null &&
                           p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
-                          (p.CompletionDate - p.SubmissionDate).Value.Hours > 72
+                          DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 72
                   );
             var paused = Context.MaitenanceRequests
                  .Count(p => p.CompletionDate != null &&
