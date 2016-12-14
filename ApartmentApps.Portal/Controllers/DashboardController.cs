@@ -91,6 +91,10 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return RedirectToAction("ShowDashboard", new {name = "PropertyAdmin"});
             }
+            else
+            {
+                return RedirectToAction("NewRequest", "MaitenanceRequests");
+            }
 
            // return View("Index3");
 
@@ -130,6 +134,7 @@ namespace ApartmentApps.Portal.Controllers
             });
         }
 
+        [Authorize(Roles = "PropertyAdmin,Admin")]
         public ActionResult ShowDashboard(string name, DashboardContext context = DashboardContext.All)
         {
             // Temporary until background process runs

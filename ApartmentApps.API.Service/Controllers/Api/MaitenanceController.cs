@@ -87,8 +87,10 @@ namespace ApartmentApps.API.Service.Controllers
                 PetStatus = result.PetStatus,
                 AcceptableCheckinCodes = new List<string>()
                     {
-                        $"http://www.apartmentapps.com?apt={result.Unit.BuildingId},{result.UnitId}",
-                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name},{result.Unit.Name}"
+                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name},{result.Unit.Name}",
+                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name.TrimStart('0')},{result.Unit.Name}",
+                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name.TrimStart('0')},{result.Unit.Name},,",
+                        "*"
                     },
                 BuildingName = result.Unit?.Building?.Name + " " + result.Unit?.Name,
                 PermissionToEnter = result.PermissionToEnter,

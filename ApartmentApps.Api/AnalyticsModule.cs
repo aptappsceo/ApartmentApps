@@ -69,7 +69,7 @@ namespace ApartmentApps.Api.Modules
 
         public IRepository<TItem> Repo<TItem>(DashboardContext context = DashboardContext.Property) where TItem : class, IBaseEntity
         {
-            if (context == DashboardContext.All || !typeof(PropertyEntity).IsAssignableFrom(typeof(TItem)))
+            if (context == DashboardContext.All || !typeof(IPropertyEntity).IsAssignableFrom(typeof(TItem)))
             {
                 return new BaseRepository<TItem>(_dbContext);
             }
@@ -93,6 +93,27 @@ namespace ApartmentApps.Api.Modules
         public int JobStartMinute { get; }
         public void Execute(ILogger logger)
         {
+            var userRepo = Repo<ApplicationUser>();
+            foreach (var user in userRepo.ToArray())
+            {
+                if (user.LastMobileLoginTime == null)
+                {
+                    var mr = Repo<MaitenanceRequest>().FirstOrDefault(p => p.UserId == user.Id);
+                    if (mr != null)
+                    {
+                        user.LastMobileLoginTime = mr.SubmissionDate;
+                        userRepo.Save();
+                    }
+                    var ir = Repo<IncidentReport>().FirstOrDefault(p => p.UserId == user.Id);
+                    if (ir != null)
+                    {
+                        user.LastMobileLoginTime = ir.CreatedOn;
+                        userRepo.Save();
+                    }
+
+                }
+            }
+
             var startDate = DateTime.UtcNow.Subtract(new TimeSpan(Config.EngagementNumberOfDays, 0, 0, 0));
             var year = DateTime.UtcNow.Year;
             var day = DateTime.UtcNow.DayOfYear;
@@ -107,7 +128,7 @@ namespace ApartmentApps.Api.Modules
             var mrRepo = Kernel.Get<IRepository<MaitenanceRequest>>();
             analyticsItem.NumberOfUnits = Repo<Unit>().Count();
             analyticsItem.UserCount = Repo<ApplicationUser>().Count(x=>!x.Archived);
-            analyticsItem.UserEngagingCount = Repo<ApplicationUser>().Count(x =>!x.Archived && x.LastMobileLoginTime != null);
+            analyticsItem.UserEngagingCount = Repo<ApplicationUser>().Count(x =>!x.Archived && (x.LastMobileLoginTime != null || x.LastPortalLoginTime != null));
 
             analyticsItem.NumberMaintenanceRequestsCompleted = mrRepo.Count(p => p.SubmissionDate > startDate && p.CompletionDate != null);
             analyticsItem.NumberMaintenanceRequestsPaused = mrRepo.Count(p => p.SubmissionDate > startDate && p.StatusId == "Paused");
@@ -168,7 +189,7 @@ namespace ApartmentApps.Api.Modules
                 .Include(p=>p.Property)
                 .Include(p=>p.Property.Corporation)
                 .Where(p=>p.PropertyId == propertyId && p.Year == year)
-                .OrderBy(x=>x.DayOfYear)
+                .OrderByDescending(x=>x.DayOfYear)
                 .FirstOrDefault()
                 ;
             return repo;
