@@ -93,26 +93,26 @@ namespace ApartmentApps.Api.Modules
         public int JobStartMinute { get; }
         public void Execute(ILogger logger)
         {
-            var userRepo = Repo<ApplicationUser>();
-            foreach (var user in userRepo.ToArray())
-            {
-                if (user.LastMobileLoginTime == null)
-                {
-                    var mr = Repo<MaitenanceRequest>().FirstOrDefault(p => p.UserId == user.Id);
-                    if (mr != null)
-                    {
-                        user.LastMobileLoginTime = mr.SubmissionDate;
-                        userRepo.Save();
-                    }
-                    var ir = Repo<IncidentReport>().FirstOrDefault(p => p.UserId == user.Id);
-                    if (ir != null)
-                    {
-                        user.LastMobileLoginTime = ir.CreatedOn;
-                        userRepo.Save();
-                    }
+            //var userRepo = Repo<ApplicationUser>();
+            //foreach (var user in userRepo.ToArray())
+            //{
+            //    if (user.LastMobileLoginTime == null)
+            //    {
+            //        var mr = Repo<MaitenanceRequest>().FirstOrDefault(p => p.UserId == user.Id);
+            //        if (mr != null)
+            //        {
+            //            user.LastMobileLoginTime = mr.SubmissionDate;
+            //            userRepo.Save();
+            //        }
+            //        var ir = Repo<IncidentReport>().FirstOrDefault(p => p.UserId == user.Id);
+            //        if (ir != null)
+            //        {
+            //            user.LastMobileLoginTime = ir.CreatedOn;
+            //            userRepo.Save();
+            //        }
 
-                }
-            }
+            //    }
+            //}
 
             var startDate = DateTime.UtcNow.Subtract(new TimeSpan(Config.EngagementNumberOfDays, 0, 0, 0));
             var year = DateTime.UtcNow.Year;

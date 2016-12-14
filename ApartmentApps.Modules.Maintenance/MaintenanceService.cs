@@ -62,11 +62,10 @@ namespace ApartmentApps.Api
                 return items.Select(p =>
                 {
                     var name = $"[{ p.Building.Name }] {p.Name}";
-                    if (p.Users.Any())
-                    {
-                        var user = p.Users.First();
+                    var user = p.Users.FirstOrDefault(x=>!x.Archived);
+                    if (user != null)
                         name += $" ({user.FirstName} {user.LastName})";
-                    }
+                    
                     return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
                 }).OrderByAlphaNumeric(p => p.Value);
 
