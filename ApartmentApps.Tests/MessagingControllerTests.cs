@@ -119,6 +119,7 @@ namespace ApartmentApps.Tests
             {
                 Comments = "Here is my new maintenance request",
             };
+
             editModel.MaitenanceRequestTypeId = Convert.ToInt32(editModel.MaitenanceRequestTypeId_Items.First().Id);
             editModel.UnitId = Convert.ToInt32(editModel.UnitId_Items.First().Id);
             editModel.PermissionToEnter = true;

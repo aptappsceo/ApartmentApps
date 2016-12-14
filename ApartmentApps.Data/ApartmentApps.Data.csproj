@@ -114,6 +114,7 @@
     <Compile Include="IncidentReportStatus.cs" />
     <Compile Include="IncidentType.cs" />
     <Compile Include="IPropertyEntity.cs" />
+    <Compile Include="LookupBindingModel.cs" />
     <Compile Include="MaintenanceRequestCheckin.cs" />
     <Compile Include="MaintenanceRequestStatus.cs" />
     <Compile Include="MaitenanceAction.cs" />

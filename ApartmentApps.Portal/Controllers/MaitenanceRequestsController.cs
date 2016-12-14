@@ -37,10 +37,7 @@ namespace ApartmentApps.Portal.Controllers
     public class MaitenanceRequestModel
     {
 
-        //[DataType()]
-        [DisplayName("Unit")]
-        public int UnitId { get; set; }
-
+#region OBSOLETE_REMOVE_CODE_REFERENCES
         public IEnumerable<FormPropertySelectItem> UnitId_Items
         {
             get
@@ -76,23 +73,41 @@ namespace ApartmentApps.Portal.Controllers
             }
         }
 
-        [DisplayName("Type")]
-        public int MaitenanceRequestTypeId { get; set; }
-
         public IEnumerable<SelectListItem> MaitenanceRequestTypeId_choices()
         {
             return Enumerable.Empty<SelectListItem>();
         }
+
+#endregion
+
+        public List<LookupBindingModel> RequestTypes { get; set; }
+        public List<LookupBindingModel> Units { get; set; }
+
+        [DisplayName("Unit")]
+        [SelectFrom(nameof(Units))]
+        [Required]
+        public int UnitId { get; set; }
+
+        [DisplayName("Type")]
+        [SelectFrom(nameof(RequestTypes))]
+        [Required]
+        public int MaitenanceRequestTypeId { get; set; }
+
+
         [DisplayName("Permission To Enter")]
+        [Required]
         public bool PermissionToEnter { get; set; }
 
         [DisplayName("Pet Status")]
+        [Required]
         public PetStatus PetStatus { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [Required]
         public string Comments { get; set; }
 
         [DisplayName("Is Emergency?")]
+        [Required]
         public bool Emergency { get; set; }
 
     }
@@ -285,6 +300,8 @@ namespace ApartmentApps.Portal.Controllers
         private PdfDocument _document;
         public IMaintenanceService MaintenanceService { get; set; }
 
+        private IMapper<MaitenanceRequestType, LookupBindingModel> _repairRequestLookupMapper;
+        private IMapper<Unit, LookupBindingModel> _unitMapper;
 
         //public override ActionResult Index()
         //{
@@ -316,13 +333,23 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult NewRequest()
         {
             ViewBag.Title = "Submit Maintenance Request";
-            return View(new MaitenanceRequestModel()
-            {
-                //MaitenanceRequestTypeId_choices =
-                //    Context.MaitenanceRequestTypes.ToArray()
-                //        .Select(p => new SelectListItem() {Value = p.Id.ToString(), Text = p.Name}),
-                //UnitId_items = Context.Units.ToArray().Select(p=>new SelectListItem() {Value = p.Id.ToString(),Text = p.Name})
-            });
+
+            var model = new MaitenanceRequestModel();
+
+            model.Units = Context.Units.GetAll()
+                 .ToList()
+                 .Select(u => _unitMapper.ToViewModel(u))
+                 .Where(u => !string.IsNullOrWhiteSpace(u.Title))
+                 .ToList();
+
+            model.RequestTypes = Context.MaitenanceRequestTypes.GetAll()
+                 .ToList()
+                 .Select(u => _repairRequestLookupMapper.ToViewModel(u))
+                 .Where(u => !string.IsNullOrWhiteSpace(u.Title))
+                 .ToList();
+
+
+            return AutoForm(model,nameof(SubmitRequest),"Submit maintenance request");
         }
 
         public ActionResult AssignRequest(string id)
@@ -338,6 +365,49 @@ namespace ApartmentApps.Portal.Controllers
             };
             return AutoForm(assignMaintenanceEditModel,"AssignRequestSubmit", "Assign Maintenance Request");
         }
+
+
+        [HttpPost]
+        public ActionResult SubmitRequest(MaitenanceRequestModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                var id = MaintenanceService.SubmitRequest(
+                model.Comments,
+                model.MaitenanceRequestTypeId,
+                (int)model.PetStatus,
+                model.Emergency,
+                model.PermissionToEnter,
+                null,
+                Convert.ToInt32(model.UnitId), SubmittedVia.Portal);
+
+                if (Request != null && Request.IsAjaxRequest())
+                {
+                    return JsonUpdate();
+                }
+                else
+                {
+                    return RedirectToAction("Details", new { id = id });
+                }
+            }
+
+            model.Units = Context.Units.GetAll()
+              .ToList()
+              .Select(u => _unitMapper.ToViewModel(u))
+              .Where(u => !string.IsNullOrWhiteSpace(u.Title))
+              .ToList();
+
+            model.RequestTypes = Context.MaitenanceRequestTypes.GetAll()
+                 .ToList()
+                 .Select(u => _repairRequestLookupMapper.ToViewModel(u))
+                 .Where(u => !string.IsNullOrWhiteSpace(u.Title))
+                 .ToList();
+
+            return AutoForm(model, nameof(SubmitRequest), "Submit maintenance request");
+        }
+
 
         public ActionResult AssignRequestSubmit(AssignMaintenanceEditModel model)
         {
@@ -553,22 +623,6 @@ namespace ApartmentApps.Portal.Controllers
         //}
 
         [HttpPost]
-        public ActionResult SubmitRequest(MaitenanceRequestModel request)
-        {
-
-            var id = MaintenanceService.SubmitRequest(
-                request.Comments,
-                request.MaitenanceRequestTypeId,
-                (int)request.PetStatus,
-                request.Emergency,
-                request.PermissionToEnter,
-                null,
-                Convert.ToInt32(request.UnitId), SubmittedVia.Portal);
-            return RedirectToAction("Details", new { id = id });
-
-        }
-
-        [HttpPost]
         public ActionResult StartRequest(MaintenanceStatusRequestModel request)
         {
 
@@ -624,10 +678,12 @@ namespace ApartmentApps.Portal.Controllers
             return View(item);
         }
 
-        public MaitenanceRequestsController(IKernel kernel, UserService usersService, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service) : base(kernel, formService, indexService, context, userContext, service)
+        public MaitenanceRequestsController(IKernel kernel, UserService usersService, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service, IMapper<MaitenanceRequestType, LookupBindingModel> repairRequestLookupMapper, IMapper<Unit, LookupBindingModel> unitMapper) : base(kernel, formService, indexService, context, userContext, service)
         {
             _usersService = usersService;
             MaintenanceService = formService;
+            _repairRequestLookupMapper = repairRequestLookupMapper;
+            _unitMapper = unitMapper;
         }
     }
 

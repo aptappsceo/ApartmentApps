@@ -230,6 +230,8 @@ namespace ApartmentApps.IoC
             kernel.RegisterMapper<ApplicationUser, UserLookupBindingModel, UserLookupMapper>();
             kernel.RegisterMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel, PaymentsRequestsEditMapper>();
             kernel.RegisterMapper<UserPaymentOption, PaymentOptionBindingModel, PaymentOptionMapper>();
+            kernel.RegisterMapper<MaitenanceRequestType, LookupBindingModel, MaintenanceRequestTypeLookupMapper>();
+            kernel.RegisterMapper<Unit, LookupBindingModel, UnitLookupMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
 
             //kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();

@@ -90,6 +90,25 @@ namespace ApartmentApps.Portal.Controllers
 
     }
 
+    public class UnitLookupMapper : BaseMapper<Unit, LookupBindingModel>
+    {
+        public UnitLookupMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
+        public override void ToModel(LookupBindingModel viewModel, Unit model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ToViewModel(Unit model, LookupBindingModel viewModel)
+        {
+            viewModel.Id = model.Id.ToString();
+            viewModel.Title = $"[{model.Building?.Name}] {model.Name}";
+        }
+
+    }
+
     public class UnitSearchViewModel
     {
         public FilterViewModel Name { get; set; }
