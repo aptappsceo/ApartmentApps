@@ -101,6 +101,7 @@
     <Compile Include="MaintenanceConfig.cs" />
     <Compile Include="MaintenanceIndexBindingModel.cs" />
     <Compile Include="MaintenanceModule.cs" />
+    <Compile Include="MaintenanceNotificationUserConfig.cs" />
     <Compile Include="MaintenanceRepository.cs" />
     <Compile Include="MaintenanceRequestViewModel.cs" />
     <Compile Include="MaintenanceService.cs" />

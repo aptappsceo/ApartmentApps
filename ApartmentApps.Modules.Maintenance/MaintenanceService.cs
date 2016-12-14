@@ -153,6 +153,25 @@ namespace ApartmentApps.Api
             viewModel.RequestType = model.MaitenanceRequestType.Name;
         }
     }
+
+    public class MaintenanceRequestTypeLookupMapper : BaseMapper<MaitenanceRequestType, LookupBindingModel>
+    {
+        public MaintenanceRequestTypeLookupMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
+        public override void ToModel(LookupBindingModel viewModel, MaitenanceRequestType model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ToViewModel(MaitenanceRequestType model, LookupBindingModel viewModel)
+        {
+            viewModel.Id = model.Id.ToString();
+            viewModel.Title = model.Name;
+        }
+    }
+
     public class MaintenanceRequestMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestViewModel>
     {
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
