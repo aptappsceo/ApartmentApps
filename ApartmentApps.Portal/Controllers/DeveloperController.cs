@@ -7,6 +7,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
@@ -81,6 +82,8 @@ namespace ApartmentApps.Portal.Controllers
                 UserId = user.Id
             });
             _userManager.Save();
+            SignInManager.SignIn(user,false,false);
+
         }
 
       

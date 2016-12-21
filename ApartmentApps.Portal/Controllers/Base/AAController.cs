@@ -31,6 +31,8 @@ namespace ApartmentApps.Portal.Controllers
 
     public class AAController : Controller
     {
+        protected ApplicationSignInManager _signInManager;
+
         public TConfig GetConfig<TConfig>() where TConfig : PropertyModuleConfig, new()
         {
             var config = Kernel.Get<Module<TConfig>>().Config;
@@ -75,6 +77,18 @@ namespace ApartmentApps.Portal.Controllers
         public int PropertyId => UserContext.PropertyId;
 
         public Data.Property Property => CurrentUser?.Property;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set 
+            { 
+                _signInManager = value; 
+            }
+        }
 
         [NonAction]
         public ViewResult ViewByModel(BaseViewModel viewModel)

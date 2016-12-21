@@ -44,17 +44,15 @@ namespace ApartmentApps.Portal.Controllers
             get
             {
                 var items =
-                    ModuleHelper.Kernel.Get<IRepository<Unit>>()
-                        .ToArray();
-
+                    ModuleHelper.Kernel.Get<IRepository<Unit>>().ToArray();
+                var users = ModuleHelper.Kernel.Get<IRepository<ApplicationUser>>();
                 return items.Select(p =>
                 {
                     var name = $"[{ p.Building.Name }] {p.Name}";
-                    if (p.Users != null && p.Users.Any())
-                    {
-                        var user = p.Users.First();
+                    var user = users.FirstOrDefault(x => !x.Archived && x.UnitId == p.Id);
+                    if (user != null)
                         name += $" ({user.FirstName} {user.LastName})";
-                    }
+
                     return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
                 }).OrderByAlphaNumeric(p => p.Value);
 
@@ -84,7 +82,7 @@ namespace ApartmentApps.Portal.Controllers
         public List<LookupBindingModel> RequestTypes { get; set; }
         public List<LookupBindingModel> Units { get; set; }
 
-        [DisplayName("Unit")]
+        [DisplayName("Unit"), DisplayForRoles(Roles = "Admin,Maintenance,PropertyAdmin,MaintenanceSupervisor")]
         [SelectFrom(nameof(Units))]
         [Required]
         public int UnitId { get; set; }

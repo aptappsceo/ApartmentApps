@@ -26,7 +26,6 @@ namespace ApartmentApps.Portal.Controllers
         private readonly ApplicationDbContext _dbcontext;
         private readonly IIdentityMessageService _email;
         private readonly IBlobStorageService _blobStorage;
-        private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
   
@@ -36,20 +35,8 @@ namespace ApartmentApps.Portal.Controllers
             _email = email;
             _blobStorage = blobStorage;
             UserManager = userManager;
-            SignInManager = signInManager;
+            //SignInManager = signInManager;
 
-        }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
         }
 
         public ApplicationUserManager UserManager

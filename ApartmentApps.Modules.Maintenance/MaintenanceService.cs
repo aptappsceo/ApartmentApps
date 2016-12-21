@@ -49,7 +49,7 @@ namespace ApartmentApps.Api
 
 
         //[DataType()]
-        [DisplayName("Unit"), DisplayForRoles(Roles="Admin, PropertyAdmin, Maintenance")]
+        [DisplayName("Unit"), DisplayForRoles(Roles="Admin,PropertyAdmin,Maintenance")]
         public int UnitId { get; set; }
 
         public IEnumerable<FormPropertySelectItem> UnitId_Items
