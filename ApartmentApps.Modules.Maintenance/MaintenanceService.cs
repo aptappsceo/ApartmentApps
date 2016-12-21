@@ -49,7 +49,7 @@ namespace ApartmentApps.Api
 
 
         //[DataType()]
-        [DisplayName("Unit"), DisplayForRoles]
+        [DisplayName("Unit"), DisplayForRoles(Roles="Admin, PropertyAdmin, Maintenance")]
         public int UnitId { get; set; }
 
         public IEnumerable<FormPropertySelectItem> UnitId_Items
@@ -58,11 +58,11 @@ namespace ApartmentApps.Api
             {
                 var items =
                     ModuleHelper.Kernel.Get<IRepository<Unit>>().ToArray();
-
+                var users = ModuleHelper.Kernel.Get<IRepository<ApplicationUser>>();
                 return items.Select(p =>
                 {
                     var name = $"[{ p.Building.Name }] {p.Name}";
-                    var user = p.Users.FirstOrDefault(x=>!x.Archived);
+                    var user = users.FirstOrDefault(x=>!x.Archived && x.UnitId == p.Id);
                     if (user != null)
                         name += $" ({user.FirstName} {user.LastName})";
                     
