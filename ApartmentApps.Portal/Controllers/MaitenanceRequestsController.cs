@@ -557,28 +557,28 @@ namespace ApartmentApps.Portal.Controllers
                 .GroupBy(p => p.Worker)
                 .ToArray();
 
-            var within24 = Context.MaitenanceRequests
+            var within24 = Context.MaitenanceRequests.GetAll()
                 .Count(p => p.CompletionDate != null &&
                             p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
                             DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 24
                             );
-            var within48 = Context.MaitenanceRequests
+            var within48 = Context.MaitenanceRequests.GetAll()
                                     .Count(p => p.CompletionDate != null && 
                                                 p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
                                                 DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 24 && DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 48
                                                 );
-            var within72 = Context.MaitenanceRequests
+            var within72 = Context.MaitenanceRequests.GetAll()
                                   .Count(p => p.CompletionDate != null &&
                                               p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
                                               DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 48 && DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 72
                                               );
 
-            var greaterThan72 = Context.MaitenanceRequests
+            var greaterThan72 = Context.MaitenanceRequests.GetAll()
                     .Count(p => p.CompletionDate != null &&
                           p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
                           DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 72
                   );
-            var paused = Context.MaitenanceRequests
+            var paused = Context.MaitenanceRequests.GetAll()
                  .Count(p => p.CompletionDate != null &&
                p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate && p.StatusId == "Paused"
                
