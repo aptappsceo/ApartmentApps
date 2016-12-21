@@ -14,6 +14,22 @@ using Ninject;
 namespace ApartmentApps.Api.Modules
 {
 
+    //public class DeveloperComponent : PortalComponent<DeveloperComponentViewModel>
+    //{
+    //    public DeveloperComponent()
+    //    {
+    //    }
+
+    //    public override DeveloperComponentViewModel ExecuteResult()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
+
+    //public class DeveloperComponentViewModel : ComponentViewModel
+    //{
+        
+    //}
     public interface IPortalComponent
     {
         ComponentViewModel Execute();
@@ -238,6 +254,19 @@ namespace ApartmentApps.Api.Modules
 
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
         {
+            if (UserContext.IsInRole("Tester"))
+            {
+                var viewAsItems = new MenuItemViewModel("View As", "fa-cog", 30);
+
+                viewAsItems.Children.Add(new MenuItemViewModel("Admin", "fa-user", "ViewAsAdmin", "Tester"));
+                viewAsItems.Children.Add(new MenuItemViewModel("Property Admin", "fa-user", "ViewAsPropertyAdmin", "Tester"));
+                viewAsItems.Children.Add(new MenuItemViewModel("Tech Supervisor", "fa-user", "ViewAsTechSupervisor", "Tester"));
+                viewAsItems.Children.Add(new MenuItemViewModel("Tech", "fa-user", "ViewAsTech", "Tester"));
+                viewAsItems.Children.Add(new MenuItemViewModel("Resident", "fa-user", "ViewAsResident", "Tester"));
+
+               
+                menuItems.Add(viewAsItems);
+            }
             if (UserContext.IsInRole("PropertyAdmin"))
             {
                 var checkins = new MenuItemViewModel("Settings", "fa-cog", 30);

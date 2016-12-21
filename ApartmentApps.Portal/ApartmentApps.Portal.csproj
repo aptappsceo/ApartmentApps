@@ -496,6 +496,7 @@
     <Compile Include="Controllers\CourtesyOfficerLocationsController.cs" />
     <Compile Include="Controllers\CrudController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\EasyReportController.cs" />
     <Compile Include="Controllers\FormModelHelpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1551,6 +1552,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
     <Folder Include="Views\AutoGrid\" />
+    <Folder Include="Views\Developer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -7,6 +7,8 @@
     var properties = ViewBag.Properties as Property[];
     var menuItems = ViewBag.MenuItems as List<MenuItemViewModel>;
 }
+
+
 @helper item(MenuItemViewModel vm, bool isRoot)
 {
 var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ?? vm.Children.FirstOrDefault()?.Controller) : Html.IsSelectedBool(controller: vm.Controller, action: vm.Action);
@@ -146,6 +148,7 @@ var expanded = vm.HasChildren ? Html.IsSelectedBool(controller: vm.Controller ??
                             </span>
                         </a>
                     }
+                   
                 </div>
                 <div class="logo-element">
                     AA+
