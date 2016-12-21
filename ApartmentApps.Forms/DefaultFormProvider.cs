@@ -172,6 +172,12 @@ namespace ApartmentApps.Forms
         }
     }
 
+    public class DisplayForRoles : Attribute
+    {
+        public string Roles { get; set; }
+
+        public string[] RolesArray => Roles.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+    }
     public class DefaultFormProvider : IFormProvider
     {
 
@@ -247,6 +253,7 @@ namespace ApartmentApps.Forms
                 propertyModel.SetValue = (v) => property.SetValue(model, v);
                 propertyModel.Description = property.Get<DescriptionAttribute>()?.Description;
                 propertyModel.Label = property.Get<DisplayNameAttribute>()?.DisplayName ?? property.Name;
+                propertyModel.Roles = property.Get<DisplayForRoles>()?.RolesArray;
 
                 propertyModel.PropertyInfo = property;
 

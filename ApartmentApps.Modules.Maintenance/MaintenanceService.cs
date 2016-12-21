@@ -49,7 +49,7 @@ namespace ApartmentApps.Api
 
 
         //[DataType()]
-        [DisplayName("Unit")]
+        [DisplayName("Unit"), DisplayForRoles]
         public int UnitId { get; set; }
 
         public IEnumerable<FormPropertySelectItem> UnitId_Items
