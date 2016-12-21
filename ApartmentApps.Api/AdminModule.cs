@@ -262,6 +262,7 @@ namespace ApartmentApps.Api.Modules
                 viewAsItems.Children.Add(new MenuItemViewModel("Property Admin", "fa-user", "ViewAsPropertyAdmin", "Tester"));
                 viewAsItems.Children.Add(new MenuItemViewModel("Tech Supervisor", "fa-user", "ViewAsTechSupervisor", "Tester"));
                 viewAsItems.Children.Add(new MenuItemViewModel("Tech", "fa-user", "ViewAsTech", "Tester"));
+                viewAsItems.Children.Add(new MenuItemViewModel("Officer", "fa-user", "ViewAsOfficer", "Tester"));
                 viewAsItems.Children.Add(new MenuItemViewModel("Resident", "fa-user", "ViewAsResident", "Tester"));
 
                

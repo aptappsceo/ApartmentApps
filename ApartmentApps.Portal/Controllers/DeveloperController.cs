@@ -25,6 +25,11 @@ namespace ApartmentApps.Portal.Controllers
             AssignToRoles("Admin", "Maintenance", "PropertyAdmin");
             return RedirectToAction("Index", "Dashboard");
         }
+        public ActionResult ViewAsOfficer()
+        {
+            AssignToRoles("Officer");
+            return RedirectToAction("Index", "Dashboard");
+        }
         public ActionResult ViewAsPropertyAdmin()
         {
             AssignToRoles("PropertyAdmin");
