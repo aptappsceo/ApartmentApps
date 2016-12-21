@@ -55,9 +55,9 @@ namespace ApartmentApps.Portal.Controllers
         {
             viewModel.Id = model.Id.ToString();
             viewModel.Name = model.Name;
-          
+
             viewModel.BuildingId = model.BuildingId;
-    
+
         }
     }
     public class UnitMapper : BaseMapper<Unit, UnitViewModel>
@@ -92,8 +92,11 @@ namespace ApartmentApps.Portal.Controllers
 
     public class UnitLookupMapper : BaseMapper<Unit, LookupBindingModel>
     {
-        public UnitLookupMapper(IUserContext userContext) : base(userContext)
+        private readonly IRepository<ApplicationUser> _userRepository;
+
+        public UnitLookupMapper(IUserContext userContext, IRepository<ApplicationUser> userRepository) : base(userContext)
         {
+            _userRepository = userRepository;
         }
 
         public override void ToModel(LookupBindingModel viewModel, Unit model)
@@ -104,7 +107,15 @@ namespace ApartmentApps.Portal.Controllers
         public override void ToViewModel(Unit model, LookupBindingModel viewModel)
         {
             viewModel.Id = model.Id.ToString();
-            viewModel.Title = $"[{model.Building?.Name}] {model.Name}";
+            var users = _userRepository;
+            var name = $"[{ model.Building.Name }] {model.Name}";
+            var id = model.Id;
+            var user = users.FirstOrDefault(x => !x.Archived && x.UnitId == id);
+            if (user != null)
+                name += $" ({user.FirstName} {user.LastName})";
+
+            viewModel.Title = name;
+
         }
 
     }
@@ -127,7 +138,7 @@ namespace ApartmentApps.Portal.Controllers
         public override string DefaultOrderBy => "Name";
         public override TViewModel CreateNew<TViewModel>()
         {
-            return new TViewModel() {};
+            return new TViewModel() { };
         }
         public DbQuery All()
         {

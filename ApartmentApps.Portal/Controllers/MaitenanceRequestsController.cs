@@ -334,7 +334,7 @@ namespace ApartmentApps.Portal.Controllers
             ViewBag.Title = "Submit Maintenance Request";
 
             var model = new MaitenanceRequestModel();
-
+            
             model.Units = Context.Units.GetAll()
                  .ToList()
                  .Select(u => _unitMapper.ToViewModel(u))
