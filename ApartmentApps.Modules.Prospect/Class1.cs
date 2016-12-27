@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;

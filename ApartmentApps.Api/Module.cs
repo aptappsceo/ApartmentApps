@@ -8,44 +8,90 @@ using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class Module<TConfig> : IModule where TConfig : class, IModuleConfig, new()
+    public class Module<TConfig, TUserConfig> : Module<TConfig>, IUserConfigurable<TUserConfig> where TConfig : class, IModuleConfig, new() where TUserConfig : class, IUserEntity, new()
     {
-        //public class ConfigRepository : PropertyRepository<TConfig>
-        //{
-        //    //public ConfigRepository(Func<IQueryable<TConfig>, IDbSet<TConfig>> includes, DbContext context, IUserContext userContext) : base(includes, context, userContext)
-        //    //{
-        //    //}
+        public IRepository<TUserConfig> UserConfigRepo { get; set; }
 
-        //    public ConfigRepository(DbContext context, IUserContext userContext) : base(context, userContext)
-        //    {
-        //    }
-        //}
+        private TUserConfig _userConfig;
 
-        protected IKernel Kernel { get; }
-        private readonly IRepository<TConfig> _configRepo;
-        public IUserContext UserContext { get; }
+        public Type UserConfigType => typeof(TUserConfig);
 
-        public Module(IKernel kernel, IRepository<TConfig> configRepo, IUserContext userContext)
+        public TUserConfig UserConfig
         {
-            Kernel = kernel;
+            get
+            {
+                if (_userConfig == null)
+                {
+                    _userConfig = UserConfigRepo.GetAll().AsNoTracking().FirstOrDefault();//GetAll().AsNoTracking().FirstOrDefault();
+                    if (_userConfig == null)
+                    {
+                        _userConfig = CreateDefaultUserConfig();
+                        UserConfigRepo.Add(_userConfig);
+                        UserConfigRepo.Save();
+                    }
+                }
+
+                return _userConfig;
+
+            }
+        }
+
+        protected virtual TUserConfig CreateDefaultUserConfig()
+        {
+            return new TUserConfig()
+            {
+                UserId = UserContext.UserId
+            };
+        }
+
+        public Module(IKernel kernel, IRepository<TConfig> configRepo, IRepository<TUserConfig> userConfigRepo, IUserContext userContext) : base(kernel, configRepo, userContext)
+        {
+            UserConfigRepo = userConfigRepo;
+        }
+    }
+    public interface IConfigProvider
+    {
+        string Title { get; }
+        object ConfigObject { get; }
+        Type ConfigType { get; }
+    }
+
+    public class UserConfigProvider<TConfig> : ConfigProvider<TConfig> where TConfig : class, IUserEntity,  new()
+    {
+        private readonly IKernel _kernel;
+
+        public UserConfigProvider(IRepository<TConfig> configRepo, IKernel kernel) : base(configRepo)
+        {
+            _kernel = kernel;
+        }
+
+        public void ConfigForUser(string userId)
+        {
+            var config = _kernel.Get<PropertyRepository<TConfig>>();
+            var userConfig = config.FirstOrDefault(x => x.UserId == userId);
+            if (userConfig == null)
+            {
+                var defaultConfig = CreateDefaultConfig();
+                defaultConfig.UserId = userId;
+                _configRepo.Add(defaultConfig);
+                _configRepo.Save();
+            }
+
+        }
+
+    }
+    public class ConfigProvider<TConfig> : IConfigProvider where TConfig : class,  new()
+    {
+        protected readonly IRepository<TConfig> _configRepo;
+        private readonly DbContext _context;
+        private readonly IUserContext _userContext;
+        public Type ConfigType => typeof(TConfig);
+        public ConfigProvider(IRepository<TConfig> configRepo)
+        {
             _configRepo = configRepo;
-            UserContext = userContext;
-        }
-        public IEnumerable<IModule> Modules
-        {
-            get { return Kernel.GetAll<IModule>(); }
         }
 
-        public IEnumerable<IModule> EnabledModules
-        {
-            get { return Modules.Where(p => p.Enabled); }
-        }
 
-        public Type ConfigType
-        {
-            get { return typeof(TConfig); }
-        }
-        public virtual IModuleConfig ModuleConfig => Config;
 
         private TConfig _config;
 
@@ -64,12 +110,39 @@ namespace ApartmentApps.Api.Modules
                         _configRepo.Save();
                     }
                 }
-                
+
                 return _config;
             }
         }
 
         protected virtual TConfig CreateDefaultConfig()
+        {
+            return new TConfig() {  };
+        }
+
+        public virtual string Title => ConfigType.Name;
+        public object ConfigObject => Config;
+    }
+    public class Module<TConfig> : ConfigProvider<TConfig>, IModule where TConfig : class, IModuleConfig, new()
+    {
+        protected IKernel Kernel { get; }
+        private readonly IRepository<TConfig> _configRepo;
+        public IUserContext UserContext { get; }
+
+        public Module(IKernel kernel, IRepository<TConfig> configRepo, IUserContext userContext) : base(configRepo)
+        {
+            Kernel = kernel;
+            _configRepo = configRepo;
+            UserContext = userContext;
+        }
+        public IEnumerable<IModule> Modules => Kernel.GetAll<IModule>();
+
+        public IEnumerable<IModule> EnabledModules => Modules.Where(p => p.Enabled);
+
+  
+        public virtual IModuleConfig ModuleConfig => Config;
+
+        protected override TConfig CreateDefaultConfig()
         {
             return new TConfig() {Enabled = true};
         }

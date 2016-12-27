@@ -11,6 +11,7 @@ using ApartmentApps.Forms;
 using ApartmentApps.Portal.Controllers;
 using Ninject.Infrastructure.Language;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using Ninject;
 
 namespace ApartmentApps.Modules.Inspections

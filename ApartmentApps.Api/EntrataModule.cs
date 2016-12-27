@@ -46,9 +46,10 @@ namespace ApartmentApps.Api
                 var customers =
                     entrataClient.GetCustomers(item.EntrataPropertyId).Result.Response.Result.Customers.Customer;
                 var customersOld =
-                    entrataClient.GetCustomers(item.EntrataPropertyId, "6").Result.Response.Result.Customers.Customer;
+                    entrataClient.GetCustomers(item.EntrataPropertyId, "6")?.Result?.Response?.Result?.Customers?.Customer;
 
                 // Archive all the old customers
+                if (customersOld != null)
                 foreach (var oldCustomer in customersOld)
                 {
                     if (!string.IsNullOrEmpty(oldCustomer.Email?.Trim()))

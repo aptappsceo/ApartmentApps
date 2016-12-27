@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;

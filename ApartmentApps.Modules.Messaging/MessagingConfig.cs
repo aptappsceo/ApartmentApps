@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using ApartmentApps.Data;
 
@@ -11,5 +12,13 @@ namespace ApartmentApps.Api.Modules
         public string SendFromEmail { get; set; } = "noreply@apartmentapps.com";
 
         public bool FullLogging { get; set; }
+        
+        public string Template { get; set; }
+
+        public string LogoImageUrl { get; set; }
+
+
     }
+
+
 }

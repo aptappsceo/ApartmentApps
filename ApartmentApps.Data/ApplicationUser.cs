@@ -124,7 +124,7 @@ namespace ApartmentApps.Data
         public string DevicePlatform { get; set; }
 
         public string DeviceToken { get; set; }
-
+        
         public DateTime? LastMobileLoginTime { get; set; }
         public DateTime? LastPortalLoginTime { get; set; }
         [NotMapped]
@@ -147,6 +147,8 @@ namespace ApartmentApps.Data
         public string SyncId { get; set; }
 
         int IBaseEntity.Id => 0;
+
+        public DateTime? EngagementLetterSentOn { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

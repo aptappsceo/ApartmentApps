@@ -1,4 +1,5 @@
 using ApartmentApps.Api;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Ninject;

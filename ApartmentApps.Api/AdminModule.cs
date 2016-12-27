@@ -268,21 +268,39 @@ namespace ApartmentApps.Api.Modules
                
                 menuItems.Add(viewAsItems);
             }
+
+            var settings = new MenuItemViewModel("Settings", "fa-cog", 30);
+            //var settings = new MenuItemViewModel("My Settings", "fa-gear") { Index = Int32.MaxValue };
+            foreach (var item in Kernel.GetAll<IConfigProvider>())
+            {
+                var config = item.ConfigObject as UserEntity;
+                if (config != null)
+                {
+                    settings.Children.Add(new MenuItemViewModel(item.Title, "fa-gear", "Index", item.ConfigType.Name));
+                }
+            }
+
             if (UserContext.IsInRole("PropertyAdmin"))
             {
-                var checkins = new MenuItemViewModel("Settings", "fa-cog", 30);
 
-                checkins.Children.Add(new MenuItemViewModel("Users", "fa-user", "Index", "UserManagement"));
-                checkins.Children.Add(new MenuItemViewModel("Courtesy Locations", "fa-location-arrow", "Index",
+
+                settings.Children.Add(new MenuItemViewModel("Users", "fa-user", "Index", "UserManagement"));
+                settings.Children.Add(new MenuItemViewModel("Courtesy Locations", "fa-location-arrow", "Index",
                     "CourtesyOfficerLocations"));
-                checkins.Children.Add(new MenuItemViewModel("Buildings", "fa-building", "Index", "Buildings"));
-                checkins.Children.Add(new MenuItemViewModel("Units", "fa-bed", "Index", "Units"));
-                menuItems.Add(checkins);
+                settings.Children.Add(new MenuItemViewModel("Buildings", "fa-building", "Index", "Buildings"));
+                settings.Children.Add(new MenuItemViewModel("Units", "fa-bed", "Index", "Units"));
+
+
+                
             }
+            menuItems.Add(settings);
+            
+
+            menuItems.Add(settings);
+
             if (UserContext.IsInRole("Admin"))
             {
-
-
+                
                 var checkins = new MenuItemViewModel("AA Admin", "fa-heartbeat") {Index = Int32.MaxValue};
                 foreach (var module in Kernel.GetAll<IModule>().OfType<IAdminConfigurable>())
                 {

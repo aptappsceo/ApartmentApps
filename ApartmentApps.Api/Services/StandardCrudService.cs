@@ -11,6 +11,7 @@ using System.Text;
 using System.Xml;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Korzh.EasyQuery;

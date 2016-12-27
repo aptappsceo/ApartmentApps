@@ -10,27 +10,12 @@ namespace ApartmentApps.Api.Modules
         string SettingsController { get; }
     }
 
-    public interface IUserConfigurable<T> where T : IUserConfig
+    public interface IUserConfigurable<T>
     {
-        T CreateDefault();
-        T GetForUser(string id);
+
     }
 
-    public interface IUserConfig
-    {
-        string Title { get; }
-    }
 
-    public abstract class UserConfig : IUserConfig
-    {
-        public abstract string Title { get; }
-
-        [Key]
-        [ForeignKey(nameof(User))]
-        public string Id { get; set; }
-        public ApplicationUser User { get; set; }
-
-    }
 
     public class RelevantRolesAttribute : Attribute
     {

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -85,10 +86,17 @@ namespace ApartmentApps.IoC
 
         public static void RegisterModule<TModule, TModuleConfig>( this IKernel kernel ) where TModule : Module<TModuleConfig> where TModuleConfig : class,IModuleConfig, new()
         {
-            kernel.Bind<TModule, IModule, Module<TModuleConfig>>().To<TModule>().InRequestScope();
+            kernel.Bind<TModule, IModule, ConfigProvider<TModuleConfig>,  Module<TModuleConfig>>().To<TModule>().InRequestScope();
+            kernel.Bind<IConfigProvider>().To<TModule>().InRequestScope();
+            //kernel.Bind<IRepository<TModuleConfig>>().To<Module<TModuleConfig>.ConfigRepository>().InRequestScope();
+        }
+        public static void RegisterConfig<TModule, TModuleConfig>(this IKernel kernel) where TModule : Module<TModuleConfig> where TModuleConfig : class, IModuleConfig, new()
+        {
 
             //kernel.Bind<IRepository<TModuleConfig>>().To<Module<TModuleConfig>.ConfigRepository>().InRequestScope();
         }
+
+
         public static void RegisterServices(IKernel kernel)
         {
             ApartmentApps.Api.Modules.ModuleHelper.Kernel = kernel;
@@ -127,6 +135,7 @@ namespace ApartmentApps.IoC
                 }
 
             }
+            kernel.Bind<IConfigProvider, ConfigProvider<UserAlertsConfig>>().To<UserAlertsConfigProvider>().InRequestScope();
             kernel.RegisterModule<AnalyticsModule, AnalyticsConfig>();
             kernel.RegisterModule<AlertsModule, AlertsModuleConfig>();
             kernel.RegisterModule<AdminModule, PortalConfig>();

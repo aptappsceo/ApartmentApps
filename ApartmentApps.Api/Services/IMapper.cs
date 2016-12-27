@@ -1,7 +1,7 @@
-using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Portal.Controllers;
 
-namespace ApartmentApps.Portal.Controllers
+namespace ApartmentApps.Api.Services
 {
     public interface IMapper<TModel, TViewModel>
     {
