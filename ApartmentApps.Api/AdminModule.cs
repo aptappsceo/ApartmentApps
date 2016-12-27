@@ -293,7 +293,7 @@ namespace ApartmentApps.Api.Modules
 
                 
             }
-            menuItems.Add(settings);
+           // menuItems.Add(settings);
             
 
             menuItems.Add(settings);
