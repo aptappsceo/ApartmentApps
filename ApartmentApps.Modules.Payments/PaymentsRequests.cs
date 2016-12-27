@@ -208,7 +208,7 @@ namespace ApartmentApps.Modules.Payments
             viewModel.Amount = lease.Amount;
             viewModel.Title = lease.Title;
             viewModel.User = UserMapper.ToViewModel(lease.User);
-            viewModel.CreateDate = lease.CreateDate;
+            viewModel.CreateDate = lease.CreateDate.Value;
             viewModel.NextInvoiceDate = lease.NextInvoiceDate;
             viewModel.Id = lease.Id.ToString();
             viewModel.RepetitionCompleteDate = lease.RepetitionCompleteDate;
