@@ -31,10 +31,7 @@ namespace ApartmentApps.Api.Modules
         //Date, after which (if user commited last payment) LeaseInfo will be Suspended and Archived and not updated any more
         public DateTime? RepetitionCompleteDate { get; set; }
 
-        //The moment when leaseinfo is created
-        public DateTime CreateDate { get; set; }
-
-           [Searchable(Caption = "State")]
+        [Searchable(Caption = "State")]
         public LeaseState State { get; set; }
         
         public string Title { get; set; }
