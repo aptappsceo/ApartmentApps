@@ -99,7 +99,7 @@ namespace ApartmentApps.IoC
 
         public static void RegisterServices(IKernel kernel)
         {
-            
+            Kernel = kernel;
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
@@ -276,6 +276,8 @@ namespace ApartmentApps.IoC
 
 
         }
+
+        public static IKernel Kernel { get; set; }
     }
     //public sealed class GalleryDbMigrationConfiguration : DbMigrationsConfiguration
     //{

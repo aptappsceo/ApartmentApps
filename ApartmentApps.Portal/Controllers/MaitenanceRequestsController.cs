@@ -22,6 +22,7 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
+using ApartmentApps.IoC;
 using ApartmentApps.Modules.Payments.BindingModels;
 using ApartmentApps.Portal.App_Start;
 using Korzh.EasyQuery.Services;
@@ -33,7 +34,25 @@ using Syncfusion.Pdf;
 
 namespace ApartmentApps.Portal.Controllers
 {
+    public class BaseViewModelBinderProvider : IModelBinderProvider
+    {
+        public IModelBinder GetBinder(Type modelType)
+        {
+            if (typeof(BaseViewModel).IsAssignableFrom(modelType))
+            {
+                return new BaseViewModelBinder();
+            }
+            return null;
+        }
 
+    }
+    public class BaseViewModelBinder : DefaultModelBinder
+    {
+        protected override object CreateModel(ControllerContext controllerContext, ModelBindingContext bindingContext, Type modelType)
+        {
+            return Register.Kernel.Get(modelType);
+        }
+    }
     public class MaitenanceRequestModel
     {
         private readonly IRepository<Unit> _unitRepo;
@@ -51,7 +70,7 @@ namespace ApartmentApps.Portal.Controllers
             _requestTypeRepo = requestTypeRepo;
         }
 
-        #region OBSOLETE_REMOVE_CODE_REFERENCES
+
         public IEnumerable<FormPropertySelectItem> UnitId_Items
         {
             get
@@ -90,18 +109,17 @@ namespace ApartmentApps.Portal.Controllers
             return Enumerable.Empty<SelectListItem>();
         }
 
-#endregion
+        //#endregion
 
-        public List<LookupBindingModel> RequestTypes { get; set; }
-        public List<LookupBindingModel> Units { get; set; }
+
 
         [DisplayName("Unit"), DisplayForRoles(Roles = "Admin,Maintenance,PropertyAdmin,MaintenanceSupervisor")]
-        [SelectFrom(nameof(Units))]
+        [SelectFrom(nameof(UnitId_Items))]
         [Required]
         public int UnitId { get; set; }
 
         [DisplayName("Type")]
-        [SelectFrom(nameof(RequestTypes))]
+        [SelectFrom(nameof(MaitenanceRequestTypeId_Items))]
         [Required]
         public int MaitenanceRequestTypeId { get; set; }
 
@@ -206,19 +224,9 @@ namespace ApartmentApps.Portal.Controllers
         {
             ViewBag.Title = "Submit Maintenance Request";
 
-            var model = new MaitenanceRequestModel();
+            var model = Kernel.Get<MaitenanceRequestModel>();
             
-            model.Units = Context.Units.GetAll()
-                 .ToList()
-                 .Select(u => _unitMapper.ToViewModel(u))
-                 .Where(u => !string.IsNullOrWhiteSpace(u.Title))
-                 .ToList();
-
-            model.RequestTypes = Context.MaitenanceRequestTypes.GetAll()
-                 .ToList()
-                 .Select(u => _repairRequestLookupMapper.ToViewModel(u))
-                 .Where(u => !string.IsNullOrWhiteSpace(u.Title))
-                 .ToList();
+          
 
 
             return AutoForm(model,nameof(SubmitRequest),"Submit maintenance request");
@@ -265,17 +273,6 @@ namespace ApartmentApps.Portal.Controllers
                 }
             }
 
-            model.Units = Context.Units.GetAll()
-              .ToList()
-              .Select(u => _unitMapper.ToViewModel(u))
-              .Where(u => !string.IsNullOrWhiteSpace(u.Title))
-              .ToList();
-
-            model.RequestTypes = Context.MaitenanceRequestTypes.GetAll()
-                 .ToList()
-                 .Select(u => _repairRequestLookupMapper.ToViewModel(u))
-                 .Where(u => !string.IsNullOrWhiteSpace(u.Title))
-                 .ToList();
 
             return AutoForm(model, nameof(SubmitRequest), "Submit maintenance request");
         }
@@ -297,63 +294,6 @@ namespace ApartmentApps.Portal.Controllers
             }
             return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
         }
-
-        // GET: /MaitenanceRequests/Edit/5
-        //public ActionResult EditRequest(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
-        //    if (maitenanceRequest == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(new MaintenanceRequestEditModel()
-        //    {
-        //        Id = id.Value.ToString(),
-        //        MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId,
-        //        PermissionToEnter = maitenanceRequest.PermissionToEnter,
-        //        UnitId = maitenanceRequest.UnitId ?? 0,
-        //        PetStatus = (PetStatus)maitenanceRequest.PetStatus,
-        //        Comments = maitenanceRequest.Message
-        //    });
-        //}
-
-        //// POST: /MaitenanceRequests/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult EditRequest(MaintenanceRequestEditModel editModel)
-        //{
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        var id = editModel.Id;
-        //        if (id == null)
-        //        {
-        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //        }
-        //        MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
-        //        if (maitenanceRequest == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-
-        //        maitenanceRequest.PetStatus = (int)editModel.PetStatus;
-        //        maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
-        //        maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
-        //        maitenanceRequest.UnitId = editModel.UnitId;
-        //        maitenanceRequest.Message = editModel.Comments;
-        //        Context.SaveChanges();
-
-        //        return RedirectToAction("Details", new { id = id });
-        //    }
-
-        //    return View(editModel);
-        //}
 
 
         public ActionResult Pause(int id)
@@ -619,92 +559,4 @@ namespace ApartmentApps.Portal.Controllers
         }
     }
 
-    public class MaitenanceRequests2Controller : AAController
-    {
-        // GET: /MaitenanceRequests/
-        public MaitenanceRequests2Controller(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
-        {
-        }
-
-        public ActionResult Index()
-        {
-            var maitenancerequests = Context.MaitenanceRequests.GetAll();
-            return View(maitenancerequests.ToList());
-        }
-
-        // GET: /MaitenanceRequests/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
-            if (maitenanceRequest == null)
-            {
-                return HttpNotFound();
-            }
-            return View(maitenanceRequest);
-        }
-
-        // GET: /MaitenanceRequests/Create
-        public ActionResult Create()
-        {
-            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name");
-            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name");
-            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name");
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "FirstName");
-            return View();
-        }
-
-        // POST: /MaitenanceRequests/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
-        {
-            if (ModelState.IsValid)
-            {
-                Context.MaitenanceRequests.Add(maitenanceRequest);
-                Context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "FirstName", maitenanceRequest.UserId);
-            return View(maitenanceRequest);
-        }
-
-
-
-        // GET: /MaitenanceRequests/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
-            if (maitenanceRequest == null)
-            {
-                return HttpNotFound();
-            }
-            return View(maitenanceRequest);
-        }
-
-        // POST: /MaitenanceRequests/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
-            Context.MaitenanceRequests.Remove(maitenanceRequest);
-            Context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-    }
 }
