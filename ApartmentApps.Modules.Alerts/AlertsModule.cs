@@ -171,7 +171,13 @@ namespace ApartmentApps.Api
         {
             if (maitenanceRequest.User.PropertyId != null)
             {
-                SendAlert(maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id, true);
+                var mapper = Kernel.Get<FeedSerivce>();
+                SendAlert(maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id, 
+                    new UpdateEmailData()
+                    {
+                        FeedItem = mapper.ToFeedItemBindingModel(maitenanceRequest),
+                        Links = new Dictionary<string, string>() { { "View", $"http://portal.apartmentapps.com/MaitenanceRequests/Details/{maitenanceRequest.Id}" } },
+                    });
             }
 
 
@@ -238,7 +244,7 @@ namespace ApartmentApps.Api
             });
 
         }
-        public void SendAlert(int propertyId, string role, string title, string message, string type, int relatedId = 0, bool email = false)
+        public void SendAlert(int propertyId, string role, string title, string message, string type, int relatedId = 0, EmailData email = null)
         {
             foreach (var item in Context.Users.Where(x => x.Roles.Any(p => p.RoleId == role)))
             {
@@ -252,22 +258,34 @@ namespace ApartmentApps.Api
                     Type = type,
                     UserId = item.Id
                 });
-                if (email == true)
-                    _emailService.SendAsync(new IdentityMessage() { Body = message, Destination = item.Email, Subject = title });
-            }
+                if (email != null)
+                {
+                    email.Subject = title;
+                    email.ToEmail = item.Email;
+                    email.User = _userMapper.ToViewModel(item);
+                    var userConfig = _alertsConfigRepo.GetAll().FirstOrDefault(p => p.UserId == item.Id);
+                    if (userConfig == null || userConfig.EmailNotifications)
+                    {
+                        SendEmail(email);
+                    }
 
+                    _pushHandler.SendToUser(item.Id, new NotificationPayload()
+                    {
+                        Action = "View",
+                        DataId = relatedId,
+                        DataType = type,
+                        Message = message,
+                        Title = title
+                    });
+                    // _emailService.SendAsync(new IdentityMessage() { Body = message, Destination = item.Email, Subject = title });
+                }
+                    
+            }
             Context.SaveChanges();
+
 
             //_pushHandler.SendToRole(propertyId, role, title);
 
-            _pushHandler.SendToRole(propertyId, role, new NotificationPayload()
-            {
-                Action = "View",
-                DataId = relatedId,
-                DataType = type,
-                Message = message,
-                Title = title
-            });
 
         }
 

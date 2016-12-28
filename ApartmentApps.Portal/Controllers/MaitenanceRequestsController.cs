@@ -190,8 +190,7 @@ namespace ApartmentApps.Portal.Controllers
         private PdfDocument _document;
         public IMaintenanceService MaintenanceService { get; set; }
 
-        private IMapper<MaitenanceRequestType, LookupBindingModel> _repairRequestLookupMapper;
-        private IMapper<Unit, LookupBindingModel> _unitMapper;
+
 
         //public override ActionResult Index()
         //{
@@ -490,12 +489,11 @@ namespace ApartmentApps.Portal.Controllers
             return View(item);
         }
 
-        public MaitenanceRequestsController(IKernel kernel, UserService usersService, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service, IMapper<MaitenanceRequestType, LookupBindingModel> repairRequestLookupMapper, IMapper<Unit, LookupBindingModel> unitMapper) : base(kernel, formService, indexService, context, userContext, service)
+        public MaitenanceRequestsController(IKernel kernel, UserService usersService, MaintenanceService formService, MaintenanceService indexService, PropertyContext context, IUserContext userContext, MaintenanceService service) : base(kernel, formService, indexService, context, userContext, service)
         {
             _usersService = usersService;
             MaintenanceService = formService;
-            _repairRequestLookupMapper = repairRequestLookupMapper;
-            _unitMapper = unitMapper;
+    
         }
     }
 

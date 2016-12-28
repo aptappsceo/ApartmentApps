@@ -199,8 +199,8 @@ namespace ApartmentApps.Forms
             bool many = selected is IList;
             var computeSelected = selected != null;
             var asList = selected as IList;
-            var idProperty = list[0].GetType().GetProperty(mapId);
-            var titleRetriever = list[0].GetType().GetProperty(mapTitle);
+            var idProperty = list[0].GetType().GetProperty(mapId) ;
+            var titleRetriever = list[0].GetType().GetProperty(mapTitle) ?? list[0].GetType().GetProperty("Value");
             var selectedId = many ? null : selected;
             var selectedIdString = selected?.ToString();
 
