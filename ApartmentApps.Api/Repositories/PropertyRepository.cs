@@ -1,3 +1,6 @@
+using ApartmentApps.Api.Modules;
+using ApartmentApps.Data;
+using ApartmentApps.Data.Repository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,37 +9,56 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using ApartmentApps.Api.Modules;
-using ApartmentApps.Data;
-using ApartmentApps.Data.Repository;
-using Korzh.EasyQuery.Db;
 
 namespace ApartmentApps.Api
 {
-    [Persistant]
-    public class ServiceQuery : PropertyEntity
+    public interface IEntityAdded<TEntityType>
     {
-        public string Name { get; set; }
-        public int Index { get; set; }
-        public string QueryJson { get; set; }
-
-        public string Service { get; set; }
-        public string QueryId { get; set; }
+        void EntityAdded(TEntityType entity);
     }
- 
-    public class UserRepository<TEntity> : PropertyRepository<TEntity> where TEntity : class, IUserEntity
-    {
-        //public UserRepository(Func<IQueryable<TEntity>, IDbSet<TEntity>> includes, DbContext context, IUserContext userContext) : base(includes, context, userContext)
-        //{
-        //}
 
-        public override void Add(TEntity entity)
+    public interface IEntityRemoved<TEntityType>
+    {
+        void EntityRemoved(TEntityType entity);
+    }
+
+    public class PropertyRepository<TEntity> : IRepository<TEntity> where TEntity : class, IPropertyEntity
+    {
+        private readonly IModuleHelper _moduleHelper;
+
+        public PropertyRepository(IModuleHelper moduleHelper, Func<IQueryable<TEntity>, IDbSet<TEntity>> includes, DbContext context, IUserContext userContext)
         {
-            entity.UserId = UserContext.UserId;
-            base.Add(entity);
+            _moduleHelper = moduleHelper;
+            Context = context;
+            UserContext = userContext;
+            IncludesFunc = includes;
         }
 
-        public override TEntity Find(object id)
+        public PropertyRepository(IModuleHelper moduleHelper, DbContext context, IUserContext userContext)
+        {
+            Context = context;
+            UserContext = userContext;
+            _moduleHelper = moduleHelper;
+        }
+
+        public DbContext Context { get; set; }
+        public Func<IQueryable<TEntity>, IDbSet<TEntity>> IncludesFunc { get; set; }
+        public IUserContext UserContext { get; set; }
+        public IQueryable<TEntity> WithIncludes => this.Includes(Context.Set<TEntity>());
+
+        public virtual void Add(TEntity entity)
+        {
+            entity.PropertyId = UserContext.PropertyId;
+            Context.Set<TEntity>().Add(entity);
+            _moduleHelper.SignalToAll<IEntityAdded<TEntity>>(_ => _.EntityAdded(entity));
+        }
+
+        public int Count()
+        {
+            return GetAll().Count();
+        }
+
+        public virtual TEntity Find(object id)
         {
             var propertyId = UserContext.PropertyId;
             if (id != null)
@@ -46,78 +68,48 @@ namespace ApartmentApps.Api
                 {
                     var result = Context.Set<TEntity>().Find(v);
 
-                    if (propertyId != result.PropertyId || UserContext.UserId != result.UserId) return null;
+                    if (propertyId != result.PropertyId) return null;
                     return result;
-
                 }
                 else
                 {
                     var result = Context.Set<TEntity>().Find(id);
 
-                    if (propertyId != result.PropertyId || UserContext.UserId != result.UserId) return null;
+                    if (propertyId != result.PropertyId) return null;
                     return result;
                 }
             }
             return null;
-            //return base.Find(id);
         }
 
-        public UserRepository(DbContext context, IUserContext userContext) : base(context, userContext)
-        {
-        }
-
-        public override IQueryable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
         {
             var propertyId = UserContext.PropertyId;
-            var userId = UserContext.UserId;
-            return WithIncludes.Where(p => p.PropertyId == propertyId && p.UserId == userId);
+            return WithIncludes.Where(p => p.PropertyId == null || p.PropertyId == propertyId);
         }
 
-        public override void Remove(TEntity entity)
+        public IEnumerator<TEntity> GetEnumerator()
         {
-          
-            if (entity.UserId == UserContext.UserId)
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IQueryable<TEntity> Include<TProperty>(Expression<Func<TEntity, TProperty>> path)
+        {
+            return WithIncludes.Include(path);
+        }
+
+        public virtual IQueryable<TEntity> Includes(IDbSet<TEntity> set)
+        {
+            if (IncludesFunc != null)
             {
-                base.Remove(entity);
+                return Includes(set);
             }
-        }
-    }
-    public interface IEntityAdded<TEntityType>
-    {
-        void EntityAdded(TEntityType entity);
-    }
-    public interface IEntityRemoved<TEntityType>
-    {
-        void EntityRemoved(TEntityType entity);
-    }
-
-    public class PropertyRepository<TEntity> : IRepository<TEntity> where TEntity : class,IPropertyEntity
-    {
-        public DbContext Context { get; set; }
-        public IUserContext UserContext { get; set; }
-        public PropertyRepository(Func<IQueryable<TEntity>, IDbSet<TEntity>> includes, DbContext context, IUserContext userContext)
-        {
-            Context = context;
-            UserContext = userContext;
-            IncludesFunc = includes;
-        }
-
-        
-        
-
-        public Func<IQueryable<TEntity>, IDbSet<TEntity>> IncludesFunc { get; set; }
-
-        public PropertyRepository(DbContext context, IUserContext userContext)
-        {
-            Context = context;
-            UserContext = userContext;
-        }
-
-        public virtual void Add(TEntity entity)
-        {
-            entity.PropertyId = UserContext.PropertyId;
-            Context.Set<TEntity>().Add(entity);
-            Modules.ModuleHelper.AllModules.Signal<IEntityAdded<TEntity>>(_ => _.EntityAdded(entity));
+            return set;
         }
 
         public virtual void Remove(TEntity entity)
@@ -125,7 +117,7 @@ namespace ApartmentApps.Api
             if (entity.PropertyId == UserContext.PropertyId)
             {
                 Context.Set<TEntity>().Remove(entity);
-                Modules.ModuleHelper.AllModules.Signal<IEntityRemoved<TEntity>>(_ => _.EntityRemoved(entity));
+               _moduleHelper.SignalToAll<IEntityRemoved<TEntity>>(_ => _.EntityRemoved(entity));
             }
         }
 
@@ -146,14 +138,8 @@ namespace ApartmentApps.Api
                         sb.AppendLine();
                     }
                 }
-                throw new Exception(sb.ToString(),ex);
+                throw new Exception(sb.ToString(), ex);
             }
-            
-        }
-
-        public IQueryable<TEntity> Include<TProperty>(Expression<Func<TEntity, TProperty>> path)
-        {
-            return WithIncludes.Include(path);
         }
 
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
@@ -161,24 +147,35 @@ namespace ApartmentApps.Api
             if (predicate == null) return GetAll();
             return GetAll().Where(predicate);
         }
+    }
 
-        public virtual IQueryable<TEntity> GetAll()
+    [Persistant]
+    public class ServiceQuery : PropertyEntity
+    {
+        public int Index { get; set; }
+        public string Name { get; set; }
+        public string QueryId { get; set; }
+        public string QueryJson { get; set; }
+        public string Service { get; set; }
+    }
+
+    public class UserRepository<TEntity> : PropertyRepository<TEntity> where TEntity : class, IUserEntity
+    {
+        //public UserRepository(Func<IQueryable<TEntity>, IDbSet<TEntity>> includes, DbContext context, IUserContext userContext) : base(includes, context, userContext)
+        //{
+        //}
+
+        public UserRepository(IModuleHelper moduleHelper, DbContext context, IUserContext userContext) : base(moduleHelper,context, userContext)
         {
-            var propertyId = UserContext.PropertyId;
-            return WithIncludes.Where(p => p.PropertyId == null || p.PropertyId == propertyId);
         }
-        public IQueryable<TEntity> WithIncludes => this.Includes(Context.Set<TEntity>());
 
-        public virtual IQueryable<TEntity> Includes(IDbSet<TEntity> set)
+        public override void Add(TEntity entity)
         {
-            if (IncludesFunc != null)
-            {
-                return Includes(set);
-            }
-            return set;
+            entity.UserId = UserContext.UserId;
+            base.Add(entity);
         }
 
-        public virtual TEntity Find(object id)
+        public override TEntity Find(object id)
         {
             var propertyId = UserContext.PropertyId;
             if (id != null)
@@ -188,34 +185,34 @@ namespace ApartmentApps.Api
                 {
                     var result = Context.Set<TEntity>().Find(v);
 
-                    if (propertyId != result.PropertyId) return null;
+                    if (propertyId != result.PropertyId || UserContext.UserId != result.UserId) return null;
                     return result;
-
                 }
                 else
                 {
                     var result = Context.Set<TEntity>().Find(id);
 
-                    if (propertyId != result.PropertyId) return null;
+                    if (propertyId != result.PropertyId || UserContext.UserId != result.UserId) return null;
                     return result;
                 }
             }
             return null;
+            //return base.Find(id);
         }
 
-        public int Count()
+        public override IQueryable<TEntity> GetAll()
         {
-            return GetAll().Count();
+            var propertyId = UserContext.PropertyId;
+            var userId = UserContext.UserId;
+            return WithIncludes.Where(p => p.PropertyId == propertyId && p.UserId == userId);
         }
 
-        public IEnumerator<TEntity> GetEnumerator()
+        public override void Remove(TEntity entity)
         {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            if (entity.UserId == UserContext.UserId)
+            {
+                base.Remove(entity);
+            }
         }
     }
 }

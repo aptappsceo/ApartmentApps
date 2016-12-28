@@ -156,7 +156,7 @@ namespace ApartmentApps.Api.Modules
             analyticsItem.EngagementScore = analyticsItem.NumberMaintenanceRequests + analyticsItem.NumberIncidentReports;
             
 
-            ModuleHelper.EnabledModules.Signal<IApplyAnalytics>(x=>x.ApplyAnalytics(this,analyticsItem,startDate));
+            ModuleHelper.SignalToEnabled<IApplyAnalytics>(x=>x.ApplyAnalytics(this,analyticsItem,startDate));
             if (analyticsItem.Id < 1)
             _analyticsItemRepo.Add(analyticsItem);
             _analyticsItemRepo.Save();

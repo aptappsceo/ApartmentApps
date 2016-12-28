@@ -38,7 +38,7 @@ namespace ApartmentApps.Modules.Inspections
     {
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
 
-        public InspectionViewModelMapper(IMapper<ApplicationUser,UserBindingModel>  userMapper , IUserContext userContext) : base(userContext)
+        public InspectionViewModelMapper(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> userMapper) : base(userContext, moduleHelper)
         {
             UserMapper = userMapper;
         }
@@ -139,6 +139,7 @@ namespace ApartmentApps.Modules.Inspections
 
     public class InspectionsService : StandardCrudService<Inspection>
     {
+        private readonly IModuleHelper _moduleHelper;
         private readonly PropertyContext _propertyContext;
         private readonly IRepository<InspectionCheckin> _inspectionCheckins;
         private readonly IRepository<InspectionCategoryResult> _categoryAnswers;
@@ -146,9 +147,10 @@ namespace ApartmentApps.Modules.Inspections
         private readonly IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
-        public InspectionsService(PropertyContext propertyContext, IRepository<InspectionCheckin> inspectionCheckins,
+        public InspectionsService(IModuleHelper moduleHelper, PropertyContext propertyContext, IRepository<InspectionCheckin> inspectionCheckins,
             IRepository<InspectionCategoryResult> categoryAnswers, IRepository<InspectionResult> answers, IBlobStorageService blobStorageService, IUserContext userContext, IRepository<Inspection> repository, IKernel kernel) : base(kernel, repository)
         {
+            _moduleHelper = moduleHelper;
             _propertyContext = propertyContext;
             _inspectionCheckins = inspectionCheckins;
             _categoryAnswers = categoryAnswers;
@@ -284,8 +286,8 @@ namespace ApartmentApps.Modules.Inspections
                 request.CompleteDate = worker.TimeZone.Now();
             }
             _propertyContext.SaveChanges();
-
-            ModuleHelper.EnabledModules.Signal<IInspectionCheckin>(_ => _.InspectionCheckin(checkin, request));
+            
+            _moduleHelper.SignalToEnabled<IInspectionCheckin>(_ => _.InspectionCheckin(checkin, request));
             return true;
 
         }

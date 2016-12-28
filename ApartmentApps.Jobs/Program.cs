@@ -29,9 +29,9 @@ namespace ApartmentApps.Jobs
 //            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
 //#endif   
             var context = new ApplicationDbContext();
-            var ids = new int[] {33};
-            foreach (var item in context.Properties.Where(x=>ids.Contains(x.Id)).ToArray())
-            //foreach (var item in context.Properties.ToArray())
+            //var ids = new int[] {33};
+            //foreach (var item in context.Properties.Where(x=>ids.Contains(x.Id)).ToArray())
+            foreach (var item in context.Properties.ToArray())
             {
                 IKernel kernel = new StandardKernel();
                 Register.RegisterServices(kernel);

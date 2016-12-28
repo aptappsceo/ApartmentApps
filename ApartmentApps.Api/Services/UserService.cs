@@ -31,7 +31,7 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class UserListMapper : BaseMapper<ApplicationUser, UserListModel>
     {
-        public UserListMapper(IUserContext userContext) : base(userContext)
+        public UserListMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -59,7 +59,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public class UserLookupMapper : BaseMapper<ApplicationUser, UserLookupBindingModel>
     {
-        public UserLookupMapper(IUserContext userContext) : base(userContext)
+        public UserLookupMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -81,7 +81,7 @@ namespace ApartmentApps.Portal.Controllers
     {
         private readonly IBlobStorageService _blobService;
 
-        public UserMapper(IBlobStorageService blobService, IUserContext userContext) : base(userContext)
+        public UserMapper(IBlobStorageService blobService, IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
             _blobService = blobService;
         }
@@ -218,15 +218,26 @@ namespace ApartmentApps.Portal.Controllers
 
     public class PropertyBindingModel : BaseViewModel
     {
+        private readonly IRepository<Corporation> _corporationRepository;
         public string Name { get; set; }
         [DisplayName("Corporation")]
         public int CorporationId { get; set; }
+
+        public PropertyBindingModel()
+        {
+        }
+
+        public PropertyBindingModel(IRepository<Corporation> corporationRepository)
+        {
+            _corporationRepository = corporationRepository;
+        }
+
         public IEnumerable<FormPropertySelectItem> CorporationId_Items
         {
             get
             {
                 return
-                    ModuleHelper.Kernel.Get<IRepository<Corporation>>()
+                    _corporationRepository
                         .ToArray()
                         .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, CorporationId == p.Id));
 
@@ -244,7 +255,7 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class PropertyMapper : BaseMapper<Property, PropertyBindingModel>
     {
-        public PropertyMapper(IUserContext userContext) : base(userContext)
+        public PropertyMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 

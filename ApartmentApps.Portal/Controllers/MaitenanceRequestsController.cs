@@ -22,9 +22,7 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
-using ApartmentApps.Modules.Payments;
 using ApartmentApps.Modules.Payments.BindingModels;
-using ApartmentApps.Modules.Payments.Services;
 using ApartmentApps.Portal.App_Start;
 using Korzh.EasyQuery.Services;
 using Ninject;
@@ -38,19 +36,33 @@ namespace ApartmentApps.Portal.Controllers
 
     public class MaitenanceRequestModel
     {
+        private readonly IRepository<Unit> _unitRepo;
+        private readonly IRepository<ApplicationUser> _userRepo;
+        private readonly IRepository<MaitenanceRequestType> _requestTypeRepo;
 
-#region OBSOLETE_REMOVE_CODE_REFERENCES
+        public MaitenanceRequestModel()
+        {
+        }
+
+        public MaitenanceRequestModel(IRepository<Unit> unitRepo, IRepository<ApplicationUser> userRepo ,IRepository<MaitenanceRequestType> requestTypeRepo )
+        {
+            _unitRepo = unitRepo;
+            _userRepo = userRepo;
+            _requestTypeRepo = requestTypeRepo;
+        }
+
+        #region OBSOLETE_REMOVE_CODE_REFERENCES
         public IEnumerable<FormPropertySelectItem> UnitId_Items
         {
             get
             {
                 var items =
-                    ModuleHelper.Kernel.Get<IRepository<Unit>>().ToArray();
-                var users = ModuleHelper.Kernel.Get<IRepository<ApplicationUser>>();
+                    _unitRepo.ToArray();
+                var users = _userRepo;
                 return items.Select(p =>
                 {
                     var name = $"[{ p.Building.Name }] {p.Name}";
-                    var user = users.FirstOrDefault(x => !x.Archived && x.UnitId == p.Id);
+                    var user = users.GetAll().FirstOrDefault(x => !x.Archived && x.UnitId == p.Id);
                     if (user != null)
                         name += $" ({user.FirstName} {user.LastName})";
 
@@ -65,7 +77,7 @@ namespace ApartmentApps.Portal.Controllers
             get
             {
                 return
-                    ModuleHelper.Kernel.Get<IRepository<MaitenanceRequestType>>()
+                    _requestTypeRepo
                         .ToArray()
                         .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, MaitenanceRequestTypeId == p.Id));
 
@@ -149,146 +161,6 @@ namespace ApartmentApps.Portal.Controllers
         public string AssignedToId { get; set; }
 
         public List<UserLookupBindingModel> PossibleAssignees { get; set; }
-    }
-
-
-    [Authorize]
-    public class PaymentRequestsController :
-        AutoGridController
-            <PaymentsRequestsService, PaymentsRequestsService, UserLeaseInfoBindingModel, EditUserLeaseInfoBindingModel>
-    {
-
-        public PaymentsRequestsService PaymentsRequestsService { get; set; }
-        private readonly IMapper<ApplicationUser, UserLookupBindingModel> _userLookupMapper;
-        private IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> _editPaymentRequestMapper;
-        private LeaseInfoManagementService _leaseService;
-        private IMapper<ApplicationUser, UserLookupBindingModel> _userMapper;
-        public PaymentRequestsController(IMapper<ApplicationUser,UserLookupBindingModel> userLookupMapper, IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper, LeaseInfoManagementService leaseService, IMapper<ApplicationUser, UserLookupBindingModel> userMapper) : base(kernel, formService, indexService, context, userContext, service)
-        {
-            PaymentsRequestsService = formService;
-            _userLookupMapper = userLookupMapper;
-            _editPaymentRequestMapper = editPaymentRequestMapper;
-            _leaseService = leaseService;
-            _userMapper = userMapper;
-        }
-
-        public override ActionResult GridResult(GridList<UserLeaseInfoBindingModel> grid)
-        {
-            if (Request != null && Request.IsAjaxRequest())
-            {
-                return View("OverviewListPartial", grid);
-            }
-            return View("Overview", new PaymentsRequestOverviewViewModel()
-            {
-                FeedItems = grid
-            });
-        }
-
-        public override ActionResult Entry(string id = null)
-        {
-            
-            UserLeaseInfo paymentRequest = Repository<UserLeaseInfo>().Find(id);
-            EditUserLeaseInfoBindingModel editPaymentRequestModel = 
-                _editPaymentRequestMapper.ToViewModel(paymentRequest); //for null paymentRequest will return empty but prepared EditModel ready for Creation of Payment Request
-            return AutoForm(editPaymentRequestModel, nameof(SaveEntry), paymentRequest == null ? "Create Payment Request" : "Edit Payment Request Information");
-            //return View("EditUserLeaseInfo", new EditUserLeaseInfoBindingModel());
-        }
-
-        [HttpGet]
-        public ActionResult QuickAddRent(string userId = null)
-        {
-            return AutoForm(new QuickAddRentBindingModel()
-            {
-                Title = "Quick add rent",
-                Id = null,
-                UserIdItems = Repository<ApplicationUser>().ToArray().Select(s=>_userLookupMapper.ToViewModel(s)).ToList(),
-                UserId = userId,
-            }, nameof(QuickAddRent), "Quickly add rent subscription to user");
-        }
-
-        [HttpPost]
-        public ActionResult QuickAddRent(QuickAddRentBindingModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var invoiceDate = model.NextInvoiceDate.Value;
-                _leaseService.CreateUserLeaseInfo(new CreateUserLeaseInfoBindingModel()
-                     {
-                         Amount = model.Amount,
-                         IntervalMonths = 1,
-                         Title = $"Rent from {invoiceDate.ToString("d")}",
-                         RepetitionCompleteDate = null,
-                         UserId = model.UserId,
-                         UseCompleteDate = false,
-                         UseInterval = true,
-                         InvoiceDate = invoiceDate, //not null due to validation
-                     });
-
-                if (Request  != null && Request.IsAjaxRequest())
-                {
-                    return JsonUpdate();
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-            else
-            {
-                model.UserIdItems =
-                    Repository<ApplicationUser>().ToArray().Select(s => _userLookupMapper.ToViewModel(s)).ToList();
-                return AutoForm(model, nameof(QuickAddRent), "Quickly add rent subscription to user");
-            }
-        }
-
-        public override ActionResult SaveEntry(EditUserLeaseInfoBindingModel model)
-        {
-
-            if (ModelState.IsValid)
-            {
-
-                var newRequest = model.Id == null;
-                UserLeaseInfo paymentRequest = null;
-                if (newRequest)
-                {
-                     _leaseService.CreateUserLeaseInfo(new CreateUserLeaseInfoBindingModel()
-                     {
-                         Amount = model.Amount,
-                         IntervalMonths = model.IntervalMonths,
-                         Title = model.Title,
-                         RepetitionCompleteDate = model.CompleteDate,
-                         UserId = model.UserId,
-                         UseCompleteDate = model.UseCompleteDate,
-                         UseInterval = model.UseInterval,
-                         InvoiceDate = model.NextInvoiceDate.Value, //not null due to validation
-                     });
-                }
-                else
-                {
-                    _leaseService.EditUserLeaseInfo(model);
-                }
-
-                if (Request  != null && Request.IsAjaxRequest())
-                {
-                    return JsonUpdate();
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-
-            model.UserIdItems = Context.Users.GetAll()
-                    .Where(u => !u.Archived)
-                    .ToList()
-                    .Select(u => _userMapper.ToViewModel(u))
-                    .Where(u => !string.IsNullOrWhiteSpace(u.Title))
-                    .ToList();
-
-            return AutoForm(model, nameof(SaveEntry), "Create/Update Payment Request Information");
-            
-
-        }
     }
 
 

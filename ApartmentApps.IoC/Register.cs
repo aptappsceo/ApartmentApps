@@ -99,7 +99,7 @@ namespace ApartmentApps.IoC
 
         public static void RegisterServices(IKernel kernel)
         {
-            ApartmentApps.Api.Modules.ModuleHelper.Kernel = kernel;
+            
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
@@ -135,6 +135,7 @@ namespace ApartmentApps.IoC
                 }
 
             }
+            kernel.Bind<IModuleHelper, ModuleHelper>().To<ModuleHelper>().InRequestScope();
             kernel.Bind<IConfigProvider, ConfigProvider<UserAlertsConfig>>().To<UserAlertsConfigProvider>().InRequestScope();
             kernel.RegisterModule<AnalyticsModule, AnalyticsConfig>();
             kernel.RegisterModule<AlertsModule, AlertsModuleConfig>();

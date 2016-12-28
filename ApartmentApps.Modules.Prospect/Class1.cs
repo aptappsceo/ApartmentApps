@@ -170,7 +170,7 @@ namespace ApartmentApps.Modules.Prospect
     {
         private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
 
-        public ProspectApplicationMapper(IMapper<ApplicationUser, UserBindingModel> userMapper, IUserContext userContext) : base(userContext)
+        public ProspectApplicationMapper(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> userMapper) : base(userContext, moduleHelper)
         {
             _userMapper = userMapper;
         }

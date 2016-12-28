@@ -46,20 +46,33 @@ namespace ApartmentApps.Api
  public class MaintenanceRequestEditModel : BaseViewModel
    
     {
-
+        private readonly IRepository<Unit> _unitRepo;
+        private readonly IRepository<ApplicationUser> _userRepo;
+        private readonly IRepository<MaitenanceRequestType> _requestTypeRepo;
 
 
         //[DataType()]
         [DisplayName("Unit"), DisplayForRoles(Roles="Admin,PropertyAdmin,Maintenance")]
         public int UnitId { get; set; }
 
+        public MaintenanceRequestEditModel()
+        {
+        }
+
+        public MaintenanceRequestEditModel(IRepository<Unit> unitRepo, IRepository<ApplicationUser> userRepo, IRepository<MaitenanceRequestType> requestTypeRepo)
+        {
+            _unitRepo = unitRepo;
+            _userRepo = userRepo;
+            _requestTypeRepo = requestTypeRepo;
+        }
+
         public IEnumerable<FormPropertySelectItem> UnitId_Items
         {
             get
             {
                 var items =
-                    ModuleHelper.Kernel.Get<IRepository<Unit>>().ToArray();
-                var users = ModuleHelper.Kernel.Get<IRepository<ApplicationUser>>();
+                    _unitRepo.ToArray();
+                var users = _userRepo;
                 return items.Select(p =>
                 {
                     var name = $"[{ p.Building.Name }] {p.Name}";
@@ -78,7 +91,7 @@ namespace ApartmentApps.Api
             get
             {
                 return
-                    ModuleHelper.Kernel.Get<IRepository<MaitenanceRequestType>>()
+                    _requestTypeRepo
                         .ToArray()
                         .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, MaitenanceRequestTypeId == p.Id));
 
@@ -112,7 +125,7 @@ namespace ApartmentApps.Api
 
     public class MaintenanceRequestEditMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestEditModel> 
     {
-        public MaintenanceRequestEditMapper(IUserContext userContext) : base(userContext)
+        public MaintenanceRequestEditMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -140,7 +153,7 @@ namespace ApartmentApps.Api
     }
     public class MaintenanceRequestIndexMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestIndexBindingModel>
     {
-        public MaintenanceRequestIndexMapper(IUserContext userContext) : base(userContext)
+        public MaintenanceRequestIndexMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -157,7 +170,7 @@ namespace ApartmentApps.Api
 
     public class MaintenanceRequestTypeLookupMapper : BaseMapper<MaitenanceRequestType, LookupBindingModel>
     {
-        public MaintenanceRequestTypeLookupMapper(IUserContext userContext) : base(userContext)
+        public MaintenanceRequestTypeLookupMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -178,8 +191,7 @@ namespace ApartmentApps.Api
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
         public IBlobStorageService BlobStorageService { get; set; }
 
-        public MaintenanceRequestMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
-            IBlobStorageService blobStorageService, IUserContext userContext) : base(userContext)
+        public MaintenanceRequestMapper(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> userMapper, IBlobStorageService blobStorageService) : base(userContext, moduleHelper)
         {
             UserMapper = userMapper;
             BlobStorageService = blobStorageService;
@@ -253,11 +265,13 @@ namespace ApartmentApps.Api
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
         public PropertyContext Context { get; set; }
 
+        private readonly IModuleHelper _moduleHelper;
         private IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
-        public MaintenanceService(PropertyContext propertyContext, IRepository<MaitenanceRequest> repository, IBlobStorageService blobStorageService, IUserContext userContext, IKernel kernel) : base(kernel, repository)
+        public MaintenanceService(IModuleHelper moduleHelper, PropertyContext propertyContext, IRepository<MaitenanceRequest> repository, IBlobStorageService blobStorageService, IUserContext userContext, IKernel kernel) : base(kernel, repository)
         {
+            _moduleHelper = moduleHelper;
             _blobStorageService = blobStorageService;
             _userContext = userContext;
             Context = propertyContext;
@@ -350,7 +364,7 @@ namespace ApartmentApps.Api
             Checkin(_userContext.CurrentUser, maitenanceRequest.Id, maitenanceRequest.Message,
                 maitenanceRequest.StatusId, null, maitenanceRequest.GroupId);
 
-            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
+            _moduleHelper.SignalToEnabled<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
 
             return maitenanceRequest.Id;
 
@@ -366,7 +380,7 @@ namespace ApartmentApps.Api
             var request = Repository.Find(requestId);
             request.WorkerAssignedId = userId;
             Repository.Save();
-            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceRequestAssignedEvent>(_ => _.MaintenanceRequestAssigned(request));
+            _moduleHelper.SignalToEnabled<IMaintenanceRequestAssignedEvent>(_ => _.MaintenanceRequestAssigned(request));
              
         }
         public bool PauseRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images)
@@ -409,7 +423,7 @@ namespace ApartmentApps.Api
                 request.CompletionDate = worker.TimeZone.Now();
             }
             Context.SaveChanges();
-            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceRequestCheckinEvent>( _ => _.MaintenanceRequestCheckin(checkin, request));
+            _moduleHelper.SignalToEnabled<IMaintenanceRequestCheckinEvent>( _ => _.MaintenanceRequestCheckin(checkin, request));
 
             return true;
 

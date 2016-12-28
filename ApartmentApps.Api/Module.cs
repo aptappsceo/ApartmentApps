@@ -126,6 +126,8 @@ namespace ApartmentApps.Api.Modules
     public class Module<TConfig> : ConfigProvider<TConfig>, IModule where TConfig : class, IModuleConfig, new()
     {
         protected IKernel Kernel { get; }
+        protected IModuleHelper ModuleHelper { get; set; }
+
         private readonly IRepository<TConfig> _configRepo;
         public IUserContext UserContext { get; }
 
@@ -134,6 +136,7 @@ namespace ApartmentApps.Api.Modules
             Kernel = kernel;
             _configRepo = configRepo;
             UserContext = userContext;
+            ModuleHelper = kernel.Get<IModuleHelper>();
         }
         public IEnumerable<IModule> Modules => Kernel.GetAll<IModule>();
 

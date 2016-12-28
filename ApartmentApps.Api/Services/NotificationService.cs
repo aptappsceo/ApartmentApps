@@ -1,4 +1,5 @@
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.Services;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -8,7 +9,7 @@ namespace ApartmentApps.Portal.Controllers
 {
     public class NotificationMapper : BaseMapper<UserAlert, NotificationViewModel>
     {
-        public NotificationMapper(IUserContext userContext) : base(userContext)
+        public NotificationMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 

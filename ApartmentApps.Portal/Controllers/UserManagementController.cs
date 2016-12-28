@@ -24,6 +24,17 @@ namespace ApartmentApps.Portal.Controllers
 
     public class UserFormModel
     {
+        private readonly UnitService _unitService;
+
+        public UserFormModel()
+        {
+        }
+
+        public UserFormModel(UnitService unitService)
+        {
+            _unitService = unitService;
+        }
+
         [AutoformHidden]
         public string Id { get; set; }
 
@@ -55,7 +66,7 @@ namespace ApartmentApps.Portal.Controllers
         public int? UnitId { get; set; }
 
         [AutoformIgnore]
-        public List<UnitViewModel> UnitItems => ModuleHelper.Kernel.Get<UnitService>().GetAll<UnitViewModel>().ToList();
+        public List<UnitViewModel> UnitItems => _unitService.GetAll<UnitViewModel>().ToList();
 
         [AutoformIgnore]
         public List<RoleBindingModel> RolesList { get; set; }

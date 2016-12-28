@@ -15,7 +15,7 @@ namespace ApartmentApps.Portal.Controllers
 {
     public class MessageMapperFullDetails : MessageMapper
     {
-        public MessageMapperFullDetails(IMapper<ApplicationUser, UserBindingModel> userMapper, IUserContext userContext) : base(userMapper, userContext)
+        public MessageMapperFullDetails(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> userMapper) : base(userContext, moduleHelper, userMapper)
         {
         }
 
@@ -47,7 +47,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public class MessageTargetMapper : BaseMapper<Message, MessageTargetsViewModel>
     {
-        public MessageTargetMapper(IUserContext userContext) : base(userContext)
+        public MessageTargetMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -71,7 +71,7 @@ namespace ApartmentApps.Portal.Controllers
     {
         private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
 
-        public MessageMapper(IMapper<ApplicationUser,UserBindingModel> userMapper, IUserContext userContext) : base(userContext)
+        public MessageMapper(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> userMapper) : base(userContext, moduleHelper)
         {
             _userMapper = userMapper;
         }
@@ -109,7 +109,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public class MessageFormMapper : BaseMapper<Message,MessageFormViewModel>
     {
-        public MessageFormMapper(IUserContext userContext) : base(userContext)
+        public MessageFormMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -135,13 +135,15 @@ namespace ApartmentApps.Portal.Controllers
 
     public class MessagingService : StandardCrudService<Message>
     {
+        private readonly IModuleHelper _moduleHelper;
         private readonly IUserContext _userContext;
         private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
 
         public override bool DefaultOrderByDesc => true;
 
-        public MessagingService( IUserContext userContext,IMapper<ApplicationUser, UserBindingModel> userMapper,IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
+        public MessagingService(IModuleHelper moduleHelper, IUserContext userContext,IMapper<ApplicationUser, UserBindingModel> userMapper,IKernel kernel, IRepository<Message> repository) : base(kernel, repository)
         {
+            _moduleHelper = moduleHelper;
             _userContext = userContext;
             _userMapper = userMapper;
         }
@@ -166,7 +168,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public MessageViewModel GetMessageWithDetails(string messageId)
         {
-            return Find(messageId, new MessageMapperFullDetails(_userMapper, _userContext));
+            return Find(messageId, new MessageMapperFullDetails(_userContext, _moduleHelper, _userMapper));
         }
 
         public override void Add<TViewModel>(TViewModel viewModel)

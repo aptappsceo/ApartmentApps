@@ -1,12 +1,18 @@
+using System;
 using System.Data.Entity;
 using System.Linq;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 
 namespace ApartmentApps.Api
 {
     public class MaintenanceRepository : PropertyRepository<MaitenanceRequest>
     {
-        public MaintenanceRepository(DbContext context, IUserContext userContext) : base(context, userContext)
+        public MaintenanceRepository(IModuleHelper moduleHelper, Func<IQueryable<MaitenanceRequest>, IDbSet<MaitenanceRequest>> includes, DbContext context, IUserContext userContext) : base(moduleHelper, includes, context, userContext)
+        {
+        }
+
+        public MaintenanceRepository(IModuleHelper moduleHelper, DbContext context, IUserContext userContext) : base(moduleHelper, context, userContext)
         {
         }
 

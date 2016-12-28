@@ -16,6 +16,7 @@ namespace ApartmentApps.Portal.Controllers
 {
     public class UnitFormModel : BaseViewModel
     {
+        private readonly IRepository<Building> _buildingRepo;
 
         public string Name { get; set; }
 
@@ -25,13 +26,20 @@ namespace ApartmentApps.Portal.Controllers
         {
         }
 
+        public UnitFormModel(IRepository<Building> buildingRepo)
+        {
+            _buildingRepo = buildingRepo;
+        }
+
 
         public IEnumerable<FormPropertySelectItem> BuildingId_Items
         {
             get
             {
+                
+
                 return
-                    ModuleHelper.Kernel.Get<IRepository<Building>>()
+                    _buildingRepo
                         .ToArray()
                         .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, BuildingId == p.Id));
 
@@ -42,7 +50,7 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class UnitFormMapper : BaseMapper<Unit, UnitFormModel>
     {
-        public UnitFormMapper(IUserContext userContext) : base(userContext)
+        public UnitFormMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -63,7 +71,7 @@ namespace ApartmentApps.Portal.Controllers
     }
     public class UnitMapper : BaseMapper<Unit, UnitViewModel>
     {
-        public UnitMapper(IUserContext userContext) : base(userContext)
+        public UnitMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -95,7 +103,7 @@ namespace ApartmentApps.Portal.Controllers
     {
         private readonly IRepository<ApplicationUser> _userRepository;
 
-        public UnitLookupMapper(IUserContext userContext, IRepository<ApplicationUser> userRepository) : base(userContext)
+        public UnitLookupMapper(IUserContext userContext, IRepository<ApplicationUser> userRepository, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
             _userRepository = userRepository;
         }
@@ -108,10 +116,10 @@ namespace ApartmentApps.Portal.Controllers
         public override void ToViewModel(Unit model, LookupBindingModel viewModel)
         {
             viewModel.Id = model.Id.ToString();
-            var users = _userRepository;
+          
             var name = $"[{ model.Building.Name }] {model.Name}";
             var id = model.Id;
-            var user = users.FirstOrDefault(x => !x.Archived && x.UnitId == id);
+            var user = model.Users.FirstOrDefault(x => !x.Archived && x.UnitId == id);
             if (user != null)
                 name += $" ({user.FirstName} {user.LastName})";
 
@@ -137,10 +145,11 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         public override string DefaultOrderBy => "Name";
-        public override TViewModel CreateNew<TViewModel>()
-        {
-            return new TViewModel() { };
-        }
+       
+        //public override TViewModel CreateNew<TViewModel>()
+        //{
+        //    return new TViewModel() { };
+        //}
         public DbQuery All()
         {
             return CreateQuery("All");

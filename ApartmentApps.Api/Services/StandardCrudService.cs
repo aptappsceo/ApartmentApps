@@ -283,7 +283,8 @@ namespace ApartmentApps.Portal.Controllers
 
         public virtual TViewModel CreateNew<TViewModel>() where TViewModel : new()
         {
-            return new TViewModel();
+            return _kernel.Get<TViewModel>();
+            //return new TViewModel();
         }
 
         public virtual void Save<TViewModel>(TViewModel unit) where TViewModel : BaseViewModel

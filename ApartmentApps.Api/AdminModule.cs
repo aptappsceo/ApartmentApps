@@ -325,7 +325,7 @@ namespace ApartmentApps.Api.Modules
                 list.Add(new MenuItemViewModel("Property", "fa-chart", "ShowDashboard",
                     "Dashboard", new { name = "PropertyAdmin" }));
             }
-            ModuleHelper.EnabledModules.Signal<IPopulateDashboardItems>(x => x.PopulateDashboardItems(list));
+            ModuleHelper.SignalToEnabled<IPopulateDashboardItems>(x => x.PopulateDashboardItems(list));
             if (list.Any())
             {
                 var dashboards = new MenuItemViewModel("Dashboard", "fa-chart") { Index = Int32.MinValue };

@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
@@ -14,7 +15,7 @@ namespace ApartmentApps.Portal.Controllers
 
     public class BuildingMapper : BaseMapper<Building, BuildingViewModel>
     {
-        public BuildingMapper(IUserContext userContext) : base(userContext)
+        public BuildingMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 

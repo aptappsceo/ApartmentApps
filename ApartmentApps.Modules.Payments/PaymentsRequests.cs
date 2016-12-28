@@ -89,9 +89,9 @@ namespace ApartmentApps.Modules.Payments
     public class PaymentOptionMapper : BaseMapper<UserPaymentOption, PaymentOptionBindingModel>
     {
 
-        private IMapper<ApplicationUser, UserBindingModel> _usersMapper; 
+        private IMapper<ApplicationUser, UserBindingModel> _usersMapper;
 
-        public PaymentOptionMapper(IUserContext userContext, IMapper<ApplicationUser, UserBindingModel> usersMapper) : base(userContext)
+        public PaymentOptionMapper(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> usersMapper) : base(userContext, moduleHelper)
         {
             _usersMapper = usersMapper;
         }
@@ -117,7 +117,7 @@ namespace ApartmentApps.Modules.Payments
         public PropertyContext Context { get; set; }
         public IMapper<ApplicationUser, UserLookupBindingModel> UserMapper { get; set; }
 
-        public PaymentsRequestsEditMapper(IUserContext userContext, PropertyContext context, IMapper<ApplicationUser, UserLookupBindingModel> userMapper ) : base(userContext)
+        public PaymentsRequestsEditMapper(IUserContext userContext, IModuleHelper moduleHelper, PropertyContext context, IMapper<ApplicationUser, UserLookupBindingModel> userMapper) : base(userContext, moduleHelper)
         {
             Context = context;
             UserMapper = userMapper;
@@ -152,7 +152,7 @@ namespace ApartmentApps.Modules.Payments
 
     public class PaymentsRequestsInvoiceMapper : BaseMapper<Invoice, PaymentRequestInvoiceViewModel>
     {
-        public PaymentsRequestsInvoiceMapper(IUserContext userContext) : base(userContext)
+        public PaymentsRequestsInvoiceMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -186,13 +186,12 @@ namespace ApartmentApps.Modules.Payments
         public IMapper<Invoice, PaymentRequestInvoiceViewModel> InvoiceMapper { get; set; }
         public IBlobStorageService BlobStorageService { get; set; }
 
-        public PaymentsRequestsMapper(IMapper<ApplicationUser, UserBindingModel> userMapper, IMapper<Invoice, PaymentRequestInvoiceViewModel> invoiceMapper,
-            IBlobStorageService blobStorageService, IRepository<Invoice> invoices, IUserContext userContext) : base(userContext)
+        public PaymentsRequestsMapper(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> userMapper, IMapper<Invoice, PaymentRequestInvoiceViewModel> invoiceMapper, IBlobStorageService blobStorageService, IRepository<Invoice> invoices) : base(userContext, moduleHelper)
         {
             UserMapper = userMapper;
+            InvoiceMapper = invoiceMapper;
             BlobStorageService = blobStorageService;
             Invoices = invoices;
-            InvoiceMapper = invoiceMapper;
         }
 
         public IRepository<Invoice> Invoices { get; set; }

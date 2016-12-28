@@ -19,6 +19,16 @@ namespace ApartmentApps.Api
 {
     public class IncidentReportFormModel : BaseViewModel
     {
+        private readonly IRepository<Unit> _unitRepo;
+
+        public IncidentReportFormModel()
+        {
+        }
+
+        public IncidentReportFormModel(IRepository<Unit> unitRepo)
+        {
+            _unitRepo = unitRepo;
+        }
 
         //[DataType()]
         [DisplayName("Unit")]
@@ -29,7 +39,7 @@ namespace ApartmentApps.Api
             get
             {
                 return
-                    ModuleHelper.Kernel.Get<IRepository<Unit>>()
+                    _unitRepo
                         .ToArray()
                         .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
 
@@ -52,7 +62,7 @@ namespace ApartmentApps.Api
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
 
         public IncidentReportFormMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
-            IBlobStorageService blobStorageService, IUserContext userContext) : base(userContext)
+            IBlobStorageService blobStorageService, IUserContext userContext, IModuleHelper helper) : base(userContext, helper)
         {
             _blobStorageService = blobStorageService;
             UserMapper = userMapper;
@@ -80,7 +90,7 @@ namespace ApartmentApps.Api
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
 
         public IncidentReportMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
-            IBlobStorageService blobStorageService, IUserContext userContext) : base(userContext)
+            IBlobStorageService blobStorageService, IUserContext userContext, IModuleHelper helper) : base(userContext, helper)
         {
             _blobStorageService = blobStorageService;
             UserMapper = userMapper;
@@ -119,8 +129,9 @@ namespace ApartmentApps.Api
     }
     public class IncidentsService : StandardCrudService<IncidentReport> ,IIncidentsService
     {
-        public IncidentsService(IRepository<IncidentReport> repository, IBlobStorageService blobStorageService, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper, IKernel kernel) : base(kernel, repository)
+        public IncidentsService(IModuleHelper moduleHelper,IRepository<IncidentReport> repository, IBlobStorageService blobStorageService, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper, IKernel kernel) : base(kernel, repository)
         {
+            _moduleHelper = moduleHelper;
             _blobStorageService = blobStorageService;
             Context = context;
             UserMapper = userMapper;
@@ -128,6 +139,7 @@ namespace ApartmentApps.Api
 
         public PropertyContext Context { get; set; }
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; }
+        private readonly IModuleHelper _moduleHelper;
         private IBlobStorageService _blobStorageService;
 
         public DbQuery Reported()
@@ -179,7 +191,7 @@ namespace ApartmentApps.Api
 
             Checkin(user, incidentReport.Id, incidentReport.Comments, incidentReport.StatusId, null,
               incidentReport.GroupId);
-            Modules.ModuleHelper.EnabledModules.Signal<IIncidentReportSubmissionEvent>(_ => _.IncidentReportSubmited(incidentReport));
+            _moduleHelper.SignalToEnabled<IIncidentReportSubmissionEvent>(_ => _.IncidentReportSubmited(incidentReport));
             
 
             return incidentReport.Id;
@@ -222,7 +234,7 @@ namespace ApartmentApps.Api
                 incidentReport.CompletionDate = officer.TimeZone.Now();
             }
             Context.SaveChanges();
-            Modules.ModuleHelper.EnabledModules.Signal<IIncidentReportCheckinEvent>( _ => _.IncidentReportCheckin(checkin, incidentReport));
+            _moduleHelper.SignalToEnabled<IIncidentReportCheckinEvent>( _ => _.IncidentReportCheckin(checkin, incidentReport));
             return true;
 
         }
