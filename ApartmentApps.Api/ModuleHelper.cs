@@ -21,7 +21,7 @@ namespace ApartmentApps.Api.Modules
         private IEnumerable<IModule> _allModules;
         private IEnumerable<IModule> _enabledModules;
 
-        ModuleHelper(IKernel kernel)
+        public ModuleHelper(IKernel kernel)
         {
             Kernel = kernel;
         }
