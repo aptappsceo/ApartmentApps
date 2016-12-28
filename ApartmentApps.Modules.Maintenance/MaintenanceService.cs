@@ -58,7 +58,7 @@ namespace ApartmentApps.Api
         public MaintenanceRequestEditModel()
         {
         }
-
+        [Inject]
         public MaintenanceRequestEditModel(IRepository<Unit> unitRepo, IRepository<ApplicationUser> userRepo, IRepository<MaitenanceRequestType> requestTypeRepo)
         {
             _unitRepo = unitRepo;

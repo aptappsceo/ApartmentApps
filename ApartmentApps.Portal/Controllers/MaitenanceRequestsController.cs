@@ -62,7 +62,7 @@ namespace ApartmentApps.Portal.Controllers
         public MaitenanceRequestModel()
         {
         }
-
+        [Inject]
         public MaitenanceRequestModel(IRepository<Unit> unitRepo, IRepository<ApplicationUser> userRepo ,IRepository<MaitenanceRequestType> requestTypeRepo )
         {
             _unitRepo = unitRepo;
