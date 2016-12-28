@@ -77,7 +77,7 @@ namespace ApartmentApps.Api.Modules
             {
                 var corpId = UserContext.CurrentUser.Property.Corporation.Id;
                 var newType = typeof(PropertyRepository<>).MakeGenericType(typeof(TItem));
-                return ((IRepository<TItem>)Activator.CreateInstance(newType, _dbContext, UserContext));
+                return ((IRepository<TItem>)Activator.CreateInstance(newType, Kernel.Get<IModuleHelper>(), _dbContext, UserContext));
                 //return new PropertyRepository<TItem>(_dbContext, UserContext);
                 //var corpId = UserContext.CurrentUser.Property.Corporation.Id;
                 //return new PropertyRepository<TItem>(Context, UserContext).Include(p=>p.Property).Include(p=>p.Property.Corporation).Where(p=>p.Property.CorporationId == corpId);
@@ -85,7 +85,7 @@ namespace ApartmentApps.Api.Modules
             else
             {
                 var newType = typeof(PropertyRepository<>).MakeGenericType(typeof(TItem));
-                return (IRepository<TItem>)Activator.CreateInstance(newType, _dbContext, UserContext);
+                return (IRepository<TItem>)Activator.CreateInstance(newType, Kernel.Get<IModuleHelper>(), _dbContext, UserContext);
             }
         }
         public TimeSpan Frequency { get; }
