@@ -115,16 +115,16 @@ namespace ApartmentApps.Tests
 
         private void CreateCampaign()
         {
-            var editModel = new MaitenanceRequestModel()
-            {
-                Comments = "Here is my new maintenance request",
-            };
+            //var editModel = Context.Kernel.Get<MaitenanceRequestModel>();
+            //{
+            //    editModel.Comments = "Here is my new maintenance request";
+            //};
 
-            editModel.MaitenanceRequestTypeId = Convert.ToInt32(editModel.MaitenanceRequestTypeId_Items.First().Id);
-            editModel.UnitId = Convert.ToInt32(editModel.UnitId_Items.First().Id);
-            editModel.PermissionToEnter = true;
+            //editModel.MaitenanceRequestTypeId = Convert.ToInt32(editModel.MaitenanceRequestTypeId_Items.First().Id);
+            //editModel.UnitId = Convert.ToInt32(editModel.UnitId_Items.First().Id);
+            //editModel.PermissionToEnter = true;
 
-            editModel.PetStatus = PetStatus.YesContained;
+            //editModel.PetStatus = PetStatus.YesContained;
             Controller.SaveEntry(new MessageFormViewModel()
             {
                 Body = "Unit Test Email Message Please Disregaurd",

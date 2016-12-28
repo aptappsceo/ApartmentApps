@@ -102,9 +102,9 @@ namespace ApartmentApps.Tests
 
         private void SubmitMaintenanceRequest()
         {
-            var editModel = new MaitenanceRequestModel()
+            var editModel = Context.Kernel.Get<MaitenanceRequestModel>();// new MaitenanceRequestModel()
             {
-                Comments = "Here is my new maintenance request",
+                editModel.Comments = "Here is my new maintenance request";
             };
             editModel.MaitenanceRequestTypeId = Convert.ToInt32(editModel.MaitenanceRequestTypeId_Items.First().Id);
             editModel.UnitId = Convert.ToInt32(editModel.UnitId_Items.First().Id);
