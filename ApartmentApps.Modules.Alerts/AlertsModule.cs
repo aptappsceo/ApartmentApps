@@ -246,7 +246,7 @@ namespace ApartmentApps.Api
         }
         public void SendAlert(int propertyId, string role, string title, string message, string type, int relatedId = 0, EmailData email = null)
         {
-            foreach (var item in Context.Users.Where(x => x.Roles.Any(p => p.RoleId == role)))
+            foreach (var item in Context.Users.Where(x => x.Roles.Any(p => p.RoleId == role)).ToArray())
             {
 
                 Context.UserAlerts.Add(new UserAlert()
