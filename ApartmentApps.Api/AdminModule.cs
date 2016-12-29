@@ -28,7 +28,7 @@ namespace ApartmentApps.Api.Modules
 
     //public class DeveloperComponentViewModel : ComponentViewModel
     //{
-        
+
     //}
     public interface IPortalComponent
     {
@@ -49,7 +49,7 @@ namespace ApartmentApps.Api.Modules
             return ExecuteResult();
         }
     }
-   
+
 
     public enum DashboardContext
     {
@@ -73,7 +73,7 @@ namespace ApartmentApps.Api.Modules
             return Analytics.Repo<TItem>(DashboardContext);
         }
 
-        protected DashboardComponent(AnalyticsModule analytics,ApplicationDbContext dbContext, IUserContext userContext)
+        protected DashboardComponent(AnalyticsModule analytics, ApplicationDbContext dbContext, IUserContext userContext)
         {
             //Kernel = kernel;
             Analytics = analytics;
@@ -109,7 +109,7 @@ namespace ApartmentApps.Api.Modules
     {
         public string Subtitle { get; set; }
         public string Value { get; set; }
-       
+
     }
     public class ComponentViewModel : BaseViewModel
     {
@@ -135,7 +135,7 @@ namespace ApartmentApps.Api.Modules
         public DashboardGridViewModel(Type type, IEnumerable<object> items)
         {
             GridModel = new DefaultFormProvider().CreateGridFor(type);
-            
+
             GridModel.ObjectItems = items.Cast<object>();
         }
         public GridModel GridModel { get; set; }
@@ -196,19 +196,19 @@ namespace ApartmentApps.Api.Modules
                 return;
 
             var mrRepo = new BaseRepository<MaitenanceRequest>(Kernel.Get<ApplicationDbContext>());
-      
+
             var totalRequestsAllProperties = mrRepo.Count(p => p.Property.State == PropertyState.Active);
-            
+
             var activeProperties = mrRepo
-               
+
                 .GroupBy(p => p.Property)
-                .Where(p=>p.Key.State == PropertyState.Active)
-                .Select(x=>new Tuple<Property,int>(x.Key,x.Count()))
+                .Where(p => p.Key.State == PropertyState.Active)
+                .Select(x => new Tuple<Property, int>(x.Key, x.Count()))
                 .ToArray();
 
             if (area == DashboardArea.LeftTop)
             {
-                dashboardComponents.Add(new DashboardTitleViewModel("Admin Stats","Note: Only admins can see this.",0));
+                dashboardComponents.Add(new DashboardTitleViewModel("Admin Stats", "Note: Only admins can see this.", 0));
                 dashboardComponents.Add(new DashboardStatViewModel()
                 {
                     Row = 1,
@@ -230,12 +230,12 @@ namespace ApartmentApps.Api.Modules
                 var inActive = Kernel.Get<IRepository<Property>>().Count(p => p.State == PropertyState.Active) - active;
 
                 dashboardComponents.Add(
-                    new DashboardPieViewModel("Engaging Properties","Properties actively using",1,
-                    new DashboardPieViewModel.ChartData() {label = "Active", data=active },
-                    new DashboardPieViewModel.ChartData() {label = "In-Active", data=inActive })
+                    new DashboardPieViewModel("Engaging Properties", "Properties actively using", 1,
+                    new DashboardPieViewModel.ChartData() { label = "Active", data = active },
+                    new DashboardPieViewModel.ChartData() { label = "In-Active", data = inActive })
                     {
                         Stretch = "col-md-6",
-                       // ListData = 
+                        // ListData = 
                     });
 
             }
@@ -265,7 +265,7 @@ namespace ApartmentApps.Api.Modules
                 viewAsItems.Children.Add(new MenuItemViewModel("Officer", "fa-user", "ViewAsOfficer", "Tester"));
                 viewAsItems.Children.Add(new MenuItemViewModel("Resident", "fa-user", "ViewAsResident", "Tester"));
 
-               
+
                 menuItems.Add(viewAsItems);
             }
 
@@ -291,17 +291,17 @@ namespace ApartmentApps.Api.Modules
                 settings.Children.Add(new MenuItemViewModel("Units", "fa-bed", "Index", "Units"));
 
 
-                
+
             }
-           // menuItems.Add(settings);
-            
+            // menuItems.Add(settings);
+
 
             menuItems.Add(settings);
 
             if (UserContext.IsInRole("Admin"))
             {
-                
-                var checkins = new MenuItemViewModel("AA Admin", "fa-heartbeat") {Index = Int32.MaxValue};
+
+                var checkins = new MenuItemViewModel("AA Admin", "fa-heartbeat") { Index = Int32.MaxValue };
                 foreach (var module in Kernel.GetAll<IModule>().OfType<IAdminConfigurable>())
                 {
                     checkins.Children.Add(new MenuItemViewModel(module.Name, "fa-gear", "Index",
@@ -352,8 +352,8 @@ namespace ApartmentApps.Api.Modules
                         Icon = "fa-remove"
                     });
                 }
-              
-                actions.Add(new ActionLinkModel("Edit", "Entry", "UserManagement", new {id = vm.Id})
+
+                actions.Add(new ActionLinkModel("Edit", "Entry", "UserManagement", new { id = vm.Id })
                 {
                     Icon = "fa-edit",
                     IsDialog = true
@@ -363,7 +363,7 @@ namespace ApartmentApps.Api.Modules
                 {
                     actions.Add(new ActionLinkModel("Unarchive", "Unarchive", "UserManagement", new { id = vm.Id })
                     {
-                        
+
                     });
                 }
             }
@@ -373,11 +373,11 @@ namespace ApartmentApps.Api.Modules
             var unitViewModel = viewModel as UnitViewModel;
             if (unitViewModel != null)
             {
-                actions.Add(new ActionLinkModel("Delete", "Delete", "Units", new {id = unitViewModel.Id})
+                actions.Add(new ActionLinkModel("Delete", "Delete", "Units", new { id = unitViewModel.Id })
                 {
                     Icon = "fa-remove",
                 });
-                actions.Add(new ActionLinkModel("Edit", "Entry", "Units", new {id = unitViewModel.Id})
+                actions.Add(new ActionLinkModel("Edit", "Entry", "Units", new { id = unitViewModel.Id })
                 {
                     Icon = "fa-edit",
                     IsDialog = true
@@ -386,11 +386,11 @@ namespace ApartmentApps.Api.Modules
             var buildingViewModel = viewModel as BuildingViewModel;
             if (buildingViewModel != null)
             {
-                actions.Add(new ActionLinkModel("Delete", "Delete", "Buildings", new {id = buildingViewModel.Id})
+                actions.Add(new ActionLinkModel("Delete", "Delete", "Buildings", new { id = buildingViewModel.Id })
                 {
                     Icon = "fa-remove",
                 });
-                actions.Add(new ActionLinkModel("Edit", "Entry", "Buildings", new {id = buildingViewModel.Id})
+                actions.Add(new ActionLinkModel("Edit", "Entry", "Buildings", new { id = buildingViewModel.Id })
                 {
                     Icon = "fa-edit",
                     IsDialog = true
@@ -401,18 +401,20 @@ namespace ApartmentApps.Api.Modules
             {
 
                 //actions.Add(new ActionLinkModel("Delete", "Delete", "Property", new { id = vm.Id }));
-                actions.Add(new ActionLinkModel("Edit", "Entry", "Property", new {id = propertyViewModel.Id})
+                actions.Add(new ActionLinkModel("Edit", "Entry", "Property", new { id = propertyViewModel.Id })
                 {
                     Icon = "fa-edit",
                     IsDialog = true
                 });
 
                 actions.Add(new ActionLinkModel("Switch To Property", "ChangeProperty", "Account",
-                    new {id = propertyViewModel.Id})
+                    new { id = propertyViewModel.Id })
                 {
                     Icon = "fa-sign-in",
                 });
-              actions.Add(new ActionLinkModel("Import Residents/Units", "ImportResidentCSV", "Property", new { propertyId = propertyViewModel.Id }));
+
+                actions.Add(new ActionLinkModel("Import Residents/Units", "ImportResidentCSV", "Property", new { propertyId = propertyViewModel.Id }));
+                actions.Add(new ActionLinkModel("Create Labels CSV", "CreateLabelCSV", "Property", new { propertyId = propertyViewModel.Id }));
 
             }
         }
@@ -437,8 +439,8 @@ namespace ApartmentApps.Api.Modules
                 ItemUrlSelector = ItemUrlSelector
             };
         }
-        
-   
+
+
     }
 
     public class FeedItemsListModel : ComponentViewModel
