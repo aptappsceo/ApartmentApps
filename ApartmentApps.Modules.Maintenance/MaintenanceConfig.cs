@@ -17,5 +17,7 @@ namespace ApartmentApps.Api.Modules
 
         [DisplayName("Maintenance Service Phone Number")]
         public string MaintenancePhoneNumber { get; set; }
+        [DisplayName("Should we verify bard codes on the doors for this property?")]
+        public bool VerifyBarCodes { get; set; }
     }
 }
