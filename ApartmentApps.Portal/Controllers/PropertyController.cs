@@ -88,7 +88,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             var sb = new StringBuilder();
             var property = Service.Find<PropertyBindingModel>(propertyId.ToString());
-            var units = Kernel.Get<BaseRepository<Unit>>().GetAll().Where(x => x.PropertyId == propertyId);
+            var units = Kernel.Get<BaseRepository<Unit>>().GetAll().Where(x => x.PropertyId == propertyId).ToArray();
             foreach (var unit in units)
             {
                 sb.AppendLine($"{unit.Name},{unit.Building.Name}");
