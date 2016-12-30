@@ -215,7 +215,7 @@
     <Compile Include="ISendAlert.cs" />
     <Compile Include="IUnitImporter.cs" />
     <Compile Include="IUserContext.cs" />
-    <Compile Include="AdminModule.cs" />
+    <Compile Include="ApartmentAppsModule.cs" />
     <Compile Include="PropertyModuleConfig.cs" />
     <Compile Include="IAdminConfigurable.cs" />
     <Compile Include="ILogger.cs" />

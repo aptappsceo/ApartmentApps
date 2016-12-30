@@ -187,7 +187,7 @@ namespace ApartmentApps.Api.Modules
         public string SettingsController => "CompanySettingsConfig";
     }
 
-    public class AdminModule : Module<PortalConfig>, IMenuItemProvider, IFillActions, IDashboardComponentProvider
+    public class ApartmentAppsModule : Module<PortalConfig>, IMenuItemProvider, IFillActions, IDashboardComponentProvider
     {
 
         public void PopulateComponents(DashboardArea area, List<ComponentViewModel> dashboardComponents)
@@ -248,7 +248,7 @@ namespace ApartmentApps.Api.Modules
             Id = 0
         };
 
-        public AdminModule(IKernel kernel, IUserContext userContext) : base(kernel, null, userContext)
+        public ApartmentAppsModule(IKernel kernel, IUserContext userContext) : base(kernel, null, userContext)
         {
         }
 
