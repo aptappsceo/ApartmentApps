@@ -30,5 +30,10 @@ namespace ApartmentApps.Data
         
         public double Longitude { get; set; }
 
+        /// <summary>
+        /// This property should not be modified it is calculated on the nightly run
+        /// </summary>
+        public string CalculatedTitle { get; set; }
+
     }
 }

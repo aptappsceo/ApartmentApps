@@ -139,7 +139,7 @@ namespace ApartmentApps.IoC
             kernel.Bind<IConfigProvider, ConfigProvider<UserAlertsConfig>>().To<UserAlertsConfigProvider>().InRequestScope();
             kernel.RegisterModule<AnalyticsModule, AnalyticsConfig>();
             kernel.RegisterModule<AlertsModule, AlertsModuleConfig>();
-            kernel.RegisterModule<AdminModule, PortalConfig>();
+            kernel.RegisterModule<ApartmentAppsModule, PortalConfig>();
             kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<MaintenanceModule, MaintenanceConfig>();
             kernel.RegisterModule<CourtesyModule, CourtesyConfig>();
