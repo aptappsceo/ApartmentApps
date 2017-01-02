@@ -220,7 +220,7 @@ namespace ApartmentApps.Portal.Controllers
     {
         private readonly IRepository<Corporation> _corporationRepository;
         public string Name { get; set; }
-        [DisplayName("Corporation")]
+        [DisplayName("Corporation"), SelectFrom("CorporationId_Items")]
         public int CorporationId { get; set; }
 
         public PropertyBindingModel()
@@ -271,6 +271,7 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Name = model.Name;
             viewModel.Id = model.Id.ToString();
             viewModel.State = model.State;
+            viewModel.CorporationId = model.CorporationId;
         }
     }
     public class PropertyService : StandardCrudService<Property>
