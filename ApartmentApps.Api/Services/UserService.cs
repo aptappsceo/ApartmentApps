@@ -226,7 +226,7 @@ namespace ApartmentApps.Portal.Controllers
         public PropertyBindingModel()
         {
         }
-
+        [Inject]
         public PropertyBindingModel(IRepository<Corporation> corporationRepository)
         {
             _corporationRepository = corporationRepository;

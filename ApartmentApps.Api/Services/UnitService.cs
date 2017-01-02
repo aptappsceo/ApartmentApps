@@ -25,7 +25,7 @@ namespace ApartmentApps.Portal.Controllers
         public UnitFormModel()
         {
         }
-
+        [Inject]
         public UnitFormModel(IRepository<Building> buildingRepo)
         {
             _buildingRepo = buildingRepo;

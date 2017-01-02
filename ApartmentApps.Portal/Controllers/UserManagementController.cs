@@ -102,7 +102,7 @@ namespace ApartmentApps.Portal.Controllers
         public string ConfirmPassword { get; set; }
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin,PropertyAdmin")]
     public class UserManagementController : AutoGridController<UserService, UserBindingModel>
     {
         public override string IndexTitle => "User Management";
@@ -112,7 +112,7 @@ namespace ApartmentApps.Portal.Controllers
             IUserContext userContext) : base(kernel, formService, context, userContext)
         {
         }
-
+        
         public override ActionResult GridResult(GridList<UserBindingModel> grid)
         {
             if (Request != null && Request.IsAjaxRequest())
@@ -132,7 +132,11 @@ namespace ApartmentApps.Portal.Controllers
         {
             Service.Unarchive(id);
         }
-
+        public void SendEngagementLetter(string id)
+        {
+            var alertsModule = Modules.OfType<AlertsModule>().FirstOrDefault();
+            alertsModule?.SendUserEngagementLetter(Repository<ApplicationUser>().Find(id));
+        }
 
         [HttpPost]
         public async Task<ActionResult> SaveUser(UserFormModel model)

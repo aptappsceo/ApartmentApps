@@ -68,7 +68,7 @@ namespace ApartmentApps.Portal.Controllers
         }
         public IEnumerable<IModule> Modules
         {
-            get { return Kernel.GetAll<IModule>(); }
+            get { return ModuleHelper.AllModules; }
         }
 
         public IEnumerable<IModule> EnabledModules

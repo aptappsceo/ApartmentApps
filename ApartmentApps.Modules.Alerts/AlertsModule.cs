@@ -17,6 +17,7 @@ using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Forms;
 using Microsoft.AspNet.Identity;
 using Ninject;
 using RazorEngine.Templating;
@@ -166,6 +167,22 @@ namespace ApartmentApps.Api
             Context = context;
         }
 
+
+        public void FillActions(List<ActionLinkModel> actions, object viewModel)
+        {
+            if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin")) return;
+
+            var user = viewModel as UserBindingModel;
+            if (user != null )
+            {
+                //paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments",new {id = UserContext.CurrentUser.Id}));
+                actions.Add(new ActionLinkModel("Send Engagement Letter", "SendEngagementLetter", "UserManagement", new { id = user.Id })
+                {
+                    Icon = "fa-address-card",
+                    Group = "Alerts"
+                });
+            }
+        }
 
         public void MaintenanceRequestSubmited(MaitenanceRequest maitenanceRequest)
         {
@@ -401,7 +418,7 @@ namespace ApartmentApps.Api
        
         public void Execute(ILogger logger)
         {
-            var users = _userRepository.GetAll().ToArray();
+            var users = _userRepository.GetAll().Where(x=>x.LastMobileLoginTime == null && x.LastPortalLoginTime == null).ToArray();
             foreach (var user in users)
             {
                 if (user.EngagementLetterSentOn == null ||

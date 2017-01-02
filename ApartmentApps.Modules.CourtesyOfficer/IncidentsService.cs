@@ -25,6 +25,7 @@ namespace ApartmentApps.Api
         {
         }
 
+        [Inject]
         public IncidentReportFormModel(IRepository<Unit> unitRepo)
         {
             _unitRepo = unitRepo;
