@@ -92,6 +92,10 @@
       <Project>{69A819D5-3037-4E56-90E4-A9EDFF41B88A}</Project>
       <Name>ApartmentApps.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Forms\ApartmentApps.Forms.csproj">
+      <Project>{e3722b2c-0ee1-4359-89d2-cd78bddd59c7}</Project>
+      <Name>ApartmentApps.Forms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Modules.CourtesyOfficer\ApartmentApps.Modules.CourtesyOfficer.csproj">
       <Project>{62C439C3-12AF-48C9-B7B2-84BC16893027}</Project>
       <Name>ApartmentApps.Modules.CourtesyOfficer</Name>
