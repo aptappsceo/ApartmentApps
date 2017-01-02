@@ -35,7 +35,7 @@ namespace ApartmentApps.Data
         [DataType("Hidden")]
         [EqEntityAttr(UseInConditions = false)]
         public int Id { get; set; }
-
+        [DataType("Hidden")]
         public DateTime? CreateDate { get; set; }
       //  public DateTime? UpdateDate { get; set; }
     }
