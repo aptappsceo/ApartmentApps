@@ -418,7 +418,7 @@ namespace ApartmentApps.Api
        
         public void Execute(ILogger logger)
         {
-            var users = _userRepository.GetAll().Where(x=>x.LastMobileLoginTime == null && x.LastPortalLoginTime == null).ToArray();
+            var users = _userRepository.GetAll().Where(x=>!x.Archived && x.LastMobileLoginTime == null && x.LastPortalLoginTime == null).ToArray();
             foreach (var user in users)
             {
                 if (user.EngagementLetterSentOn == null ||

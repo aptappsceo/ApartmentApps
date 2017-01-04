@@ -16,12 +16,10 @@ namespace ApartmentApps.Portal
         protected void Application_Start()
         {
 #if DEBUG
-           Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,ApartmentApps.Data.Migrations.Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,ApartmentApps.Data.Migrations.Configuration>());
 #endif   
-          ModelBinderProviders.BinderProviders.Insert(0, new BaseViewModelBinderProvider());
-            //ModelBinders.Binders.RegisterUploadedFileModelBinder((file, controllerContext, modelBindingContext) => MyFileStore.StoreFile(file))
+            ModelBinderProviders.BinderProviders.Insert(0, new BaseViewModelBinderProvider());
             AreaRegistration.RegisterAllAreas();
-            //UnityConfig.RegisterComponents();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

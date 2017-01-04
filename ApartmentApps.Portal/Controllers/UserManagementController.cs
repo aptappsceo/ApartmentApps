@@ -22,7 +22,7 @@ namespace ApartmentApps.Portal.Controllers
 {
 
 
-    public class UserFormModel
+    public class UserFormModel : BaseViewModel
     {
         private readonly UnitService _unitService;
 
@@ -35,8 +35,6 @@ namespace ApartmentApps.Portal.Controllers
             _unitService = unitService;
         }
 
-        [AutoformHidden]
-        public string Id { get; set; }
 
         [Required]
         [DisplayName("First Name")]
