@@ -80,6 +80,9 @@ namespace ApartmentApps.Portal.Controllers
                 var users = _userRepo;
                 return items.Select(p =>
                 {
+                    if (!string.IsNullOrEmpty(p.CalculatedTitle))
+                        return new FormPropertySelectItem(p.Id.ToString(), p.CalculatedTitle, UnitId == p.Id);
+
                     var name = $"[{ p.Building.Name }] {p.Name}";
                     var user = users.GetAll().FirstOrDefault(x => !x.Archived && x.UnitId == p.Id);
                     if (user != null)

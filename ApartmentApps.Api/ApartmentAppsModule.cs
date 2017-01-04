@@ -13,23 +13,6 @@ using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
-
-    //public class DeveloperComponent : PortalComponent<DeveloperComponentViewModel>
-    //{
-    //    public DeveloperComponent()
-    //    {
-    //    }
-
-    //    public override DeveloperComponentViewModel ExecuteResult()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
-
-    //public class DeveloperComponentViewModel : ComponentViewModel
-    //{
-
-    //}
     public interface IPortalComponent
     {
         ComponentViewModel Execute();
@@ -187,7 +170,7 @@ namespace ApartmentApps.Api.Modules
         public string SettingsController => "CompanySettingsConfig";
     }
 
-    public class ApartmentAppsModule : Module<PortalConfig>, IMenuItemProvider, IFillActions, IDashboardComponentProvider
+    public class ApartmentAppsModule : Module<PortalConfig>, IMenuItemProvider, IFillActions, IDashboardComponentProvider, IWebJob
     {
 
         public void PopulateComponents(DashboardArea area, List<ComponentViewModel> dashboardComponents)
@@ -419,6 +402,21 @@ namespace ApartmentApps.Api.Modules
             }
         }
 
+        public void Execute(ILogger logger)
+        {
+            var unitRepo = this.Kernel.Get<IRepository<Unit>>();
+            var userRepo = this.Kernel.Get<IRepository<ApplicationUser>>();
+            foreach (var p in unitRepo.GetAll().ToArray())
+            {
+                var name = $"[{ p.Building.Name }] {p.Name}";
+                var user = userRepo.GetAll().FirstOrDefault(x => !x.Archived && x.UnitId == p.Id);
+                if (user != null)
+                    name += $" ({user.FirstName} {user.LastName})";
+
+                p.CalculatedTitle = name;
+                userRepo.Save();
+            }
+        }
     }
 
     public class FeedComponent : PortalComponent<FeedItemsListModel>
