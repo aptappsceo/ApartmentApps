@@ -13,6 +13,12 @@ namespace ApartmentApps.Api.Modules
             set { _children = value; }
         }
 
+        public MenuItemViewModel(string url)
+        {
+            Action = url;
+            IsUrl = true;
+        }
+
         public bool HasChildren { get { return _children != null && _children.Count > 0; } }
 
         public string Label { get; set; }
@@ -20,6 +26,9 @@ namespace ApartmentApps.Api.Modules
         public string Action { get; set; }
         public string Controller { get; set; }
         public object RouteParams { get; set; }
+
+        public bool IsUrl { get; set; }
+
         public MenuItemViewModel(string label, string icon,  decimal index = 0)
         {
             Label = label;
