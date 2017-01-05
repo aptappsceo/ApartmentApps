@@ -151,14 +151,16 @@ namespace ApartmentApps.Api
     public class AlertsModule : Module<AlertsModuleConfig>, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent, IWebJob
     {
         public PropertyContext Context { get; set; }
+        private readonly IRazorEngineService _razorService;
         private readonly IRepository<UserAlertsConfig> _alertsConfigRepo;
         private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
         private readonly IRepository<ApplicationUser> _userRepository;
         private readonly IEmailService _emailService;
         private IPushNotifiationHandler _pushHandler;
 
-        public AlertsModule(IRepository<UserAlertsConfig> alertsConfigRepo, IMapper<ApplicationUser, UserBindingModel> userMapper, IKernel kernel, IRepository<ApplicationUser> userRepository, IRepository<AlertsModuleConfig> configRepo, IUserContext userContext, IEmailService emailService, IPushNotifiationHandler pushHandler, PropertyContext context) : base(kernel, configRepo, userContext)
+        public AlertsModule(IRazorEngineService razorService, IRepository<UserAlertsConfig> alertsConfigRepo, IMapper<ApplicationUser, UserBindingModel> userMapper, IKernel kernel, IRepository<ApplicationUser> userRepository, IRepository<AlertsModuleConfig> configRepo, IUserContext userContext, IEmailService emailService, IPushNotifiationHandler pushHandler, PropertyContext context) : base(kernel, configRepo, userContext)
         {
+            _razorService = razorService;
             _alertsConfigRepo = alertsConfigRepo;
             _userMapper = userMapper;
             _userRepository = userRepository;
@@ -342,7 +344,7 @@ namespace ApartmentApps.Api
 
         }
 
-        private IRazorEngineService CreateRazorService()
+        public static IRazorEngineService CreateRazorService()
         {
             var razorEngineService = RazorEngineService.Create();
             razorEngineService.AddTemplate("_Layout", LoadHtmlFile($"ApartmentApps.Modules.Alerts.EmailTemplates._Layout.cshtml"));
@@ -356,13 +358,18 @@ namespace ApartmentApps.Api
             data.UserContext = UserContext;
             data.Config = Config;
 
-            var razorEngineService = CreateRazorService();
-            if (!razorEngineService.IsTemplateCached(templateName, templateType))
+            
+            if (!_razorService.IsTemplateCached(templateName, templateType))
             {
-                razorEngineService.AddTemplate(templateName, LoadHtmlFile($"ApartmentApps.Modules.Alerts.EmailTemplates.{templateName}.cshtml"));
+                _razorService.AddTemplate(templateName,
+                    LoadHtmlFile($"ApartmentApps.Modules.Alerts.EmailTemplates.{templateName}.cshtml"));
             }
-
-            return razorEngineService.RunCompile(templateName, templateType, data);
+            //else
+            //{
+            //    return _razorService.Run(templateName, templateType, data);
+            //}
+            
+            return _razorService.RunCompile(templateName, templateType, data);
         }
 
         public void SendUserEngagementLetter(ApplicationUser user)
@@ -406,7 +413,7 @@ namespace ApartmentApps.Api
                 }).Wait();
         }
 
-        private string LoadHtmlFile(string resourceName)
+        private static string LoadHtmlFile(string resourceName)
         {
             using (Stream stream = typeof(AlertsModule).Assembly.GetManifestResourceStream(resourceName))
             using (StreamReader reader = new StreamReader(stream))

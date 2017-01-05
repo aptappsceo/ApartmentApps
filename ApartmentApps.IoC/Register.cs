@@ -22,6 +22,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
 using Ninject.Syntax;
+using RazorEngine.Templating;
 #if !JOBS
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler;
@@ -135,6 +136,7 @@ namespace ApartmentApps.IoC
                 }
 
             }
+            kernel.Bind<IRazorEngineService>().ToMethod(x => AlertsModule.CreateRazorService());
             kernel.Bind<IModuleHelper, ModuleHelper>().To<ModuleHelper>().InRequestScope();
             kernel.Bind<IConfigProvider, ConfigProvider<UserAlertsConfig>>().To<UserAlertsConfigProvider>().InRequestScope();
             kernel.RegisterModule<AnalyticsModule, AnalyticsConfig>();
