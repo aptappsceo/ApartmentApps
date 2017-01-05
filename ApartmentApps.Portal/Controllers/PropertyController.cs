@@ -91,7 +91,7 @@ namespace ApartmentApps.Portal.Controllers
             var units = Kernel.Get<BaseRepository<Unit>>().GetAll().Where(x => x.PropertyId == propertyId).ToArray();
             foreach (var unit in units)
             {
-                sb.AppendLine($"{unit.Name},{unit.Building.Name}");
+                sb.AppendLine($"{unit.Building.Name},{unit.Name}");
             }
             return File(new System.Text.UTF8Encoding().GetBytes(sb.ToString()), "text/csv", $"{property.Name}.csv");
         }
