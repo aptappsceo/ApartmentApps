@@ -38,6 +38,8 @@ namespace ApartmentApps.Api
 
         protected void ImportUnit(ILogger logger, string buildingName, string unitName, out Unit unit, out Building building)
         {
+            buildingName = string.IsNullOrEmpty(buildingName) ? "1" : buildingName;
+
             building = _context.Buildings.FirstOrDefault(p => p.Name == buildingName);
 
             if (building == null)
