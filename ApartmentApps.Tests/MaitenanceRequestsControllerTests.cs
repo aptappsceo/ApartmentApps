@@ -30,6 +30,16 @@ namespace ApartmentApps.Tests
         public MaitenanceController ApiController { get; set; }
 
         [TestMethod]
+        public void TestApi()
+        {
+
+            SubmitMaintenanceRequest();
+            var result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
+            var apiResult = ApiController.Get(Convert.ToInt32(result.Id));
+            
+        }
+
+        [TestMethod]
         public void TestProcess()
         {
 
@@ -70,7 +80,7 @@ namespace ApartmentApps.Tests
             result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
             Assert.IsTrue(result != null && result.StatusId == "Complete");
 
-        
+            
         }
 
         [TestMethod]

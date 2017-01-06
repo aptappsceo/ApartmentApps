@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http.Filters;
@@ -370,6 +371,23 @@ namespace ApartmentApps.Api
 
         }
 
+        public override void Remove(string id)
+        {
+            var intId = Convert.ToInt32(id);
+            RemoveAllWith<MaintenanceRequestCheckin>(x=>x.MaitenanceRequestId == intId);
+            base.Remove(id);
+        }
+
+        public void RemoveAllWith<TSet>(Expression<Func<TSet, bool>> filter)
+        {
+            var set = Repo<TSet>();
+            var items = set.Where(filter).ToArray();
+            foreach (var item in items)
+            {
+                set.Remove(item);
+                set.Save();
+            }
+        }
         public IEnumerable<TViewModel> GetAllUnassigned<TViewModel>()
         {
             return Repository.Where(p => p.WorkerAssignedId == null).ToArray().Select(Map<TViewModel>().ToViewModel);

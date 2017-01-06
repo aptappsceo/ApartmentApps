@@ -39,6 +39,8 @@ namespace ApartmentApps.Api
                         {
                             foreach (var ilsUnit in property.ILS_Unit.Select(p => p.Units.Unit))
                             {
+                                if (string.IsNullOrEmpty(ilsUnit.BuildingName)) continue;
+
                                 ImportUnit(logger, ilsUnit.BuildingName, ilsUnit.MarketingName);
                             }
                         }
@@ -79,7 +81,7 @@ namespace ApartmentApps.Api
 
                 foreach (var customer in customers)
                 {
-
+                    if (string.IsNullOrEmpty(customer.BuildingName)) continue;
                     Building building;
                     Unit unit;
                     ImportUnit(logger, customer.BuildingName, customer.UnitNumber, out unit, out building);

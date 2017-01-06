@@ -52,6 +52,10 @@ namespace ApartmentApps.Api.Modules
                     {
                         IsDialog = true
                     });
+                    actions.Add(new ActionLinkModel("Delete", "Remove", "MaitenanceRequests", new { key = mr.Id })
+                    {
+                        IsDialog = true
+                    });
                 }
             }
             // If its actions for a maintenance request
