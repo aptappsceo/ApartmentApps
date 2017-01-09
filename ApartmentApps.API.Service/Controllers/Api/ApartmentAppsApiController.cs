@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using System.Web.Http.Cors;
+//using System.Web.Http.Cors;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
@@ -17,7 +17,7 @@ using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ApartmentAppsApiController : ApiController
     {
         public IKernel Kernel { get; set; }
