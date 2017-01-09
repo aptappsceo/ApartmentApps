@@ -10,10 +10,12 @@ using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Ninject;
@@ -135,7 +137,35 @@ namespace ApartmentApps.Portal.Controllers
             var alertsModule = Modules.OfType<AlertsModule>().FirstOrDefault();
             alertsModule?.SendUserEngagementLetter(Repository<ApplicationUser>().Find(id));
         }
+        [Authorize(Roles = "PropertyAdmin, Admin")]
+        public ActionResult HardResetPassword(string userId)
+        {
+            //        UserManager<IdentityUser> userManager =
+            //new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+            var newPassword = Guid.NewGuid().ToString().Split("-".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
 
+            UserManager.RemovePassword(userId);
+            UserManager.AddPassword(userId, newPassword);
+
+            var userRepo = Kernel.Get<IRepository<ApplicationUser>>();
+            var user = userRepo.Find(userId);
+            var userMapper = Kernel.Get<IMapper<ApplicationUser, UserBindingModel>>();
+            var alertsModule = Kernel.Get<AlertsModule>();
+
+            alertsModule.SendEmail(new ActionEmailData()
+            {
+                FromEmail = "auto@apartmentapps.com",
+                ToEmail = user.Email,
+                Message = $"Username: {user.UserName} <br/>Password: {user.Email}<br/><b>It is highly recommended that you change your password once you log-in.</b>",
+                User = userMapper.ToViewModel(user),
+                Subject = "Here is your account information.",
+                Links = new Dictionary<string, string>()
+                {
+                    { "Login Now", "http://portal.apartmentapps.com/Account/Login" }
+                }
+            });
+            return RedirectToAction("Index");
+        }
         [HttpPost]
         public async Task<ActionResult> SaveUser(UserFormModel model)
         {

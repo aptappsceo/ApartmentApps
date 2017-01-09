@@ -110,6 +110,13 @@ namespace ApartmentApps.Api
 
         public string Message { get; set; }
     }
+
+    public class PasswordEmailData : EmailData
+    {
+        public string NewPassword { get; set; }
+        public string Username { get; set; }
+    }
+
     public class UpdateEmailData : EmailData
     {
         public FeedItemBindingModel FeedItem { get; set; }

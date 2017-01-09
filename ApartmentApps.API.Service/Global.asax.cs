@@ -18,6 +18,7 @@ namespace ApartmentApps.API.Service
 //#if DEBUG
           //  Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
 //#endif
+            
             AreaRegistration.RegisterAllAreas();
             UnityConfig.RegisterComponents();
             // UnityConfig.RegisterComponents();

@@ -324,6 +324,7 @@ namespace ApartmentApps.Api.Modules
         {
             //   <a class="btn btn-white btn-xs modal-link" href="@Url.Action("Entry", "UserManagement", new {id = item.Id})"><i class="fa fa-edit"></i> Edit</a>
             //< a class="btn btn-white btn-xs" href="@Url.Action("Delete", "UserManagement", new {id = item.Id})"><i class="fa fa-remove"></i> Delete</a>
+            if (!UserContext.IsInRole("PropertyAdmin")) return;
 
             var vm = viewModel as UserBindingModel;
             if (vm != null)
@@ -331,6 +332,10 @@ namespace ApartmentApps.Api.Modules
                 if (!vm.Archived)
                 {
                     actions.Add(new ActionLinkModel("Archive", "Delete", "UserManagement", new { id = vm.Id })
+                    {
+                        Icon = "fa-remove"
+                    });
+                    actions.Add(new ActionLinkModel("Hard Reset Password", "HardResetPassword", "UserManagement", new { userId = vm.Id })
                     {
                         Icon = "fa-remove"
                     });
