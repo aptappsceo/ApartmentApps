@@ -156,7 +156,7 @@ namespace ApartmentApps.Portal.Controllers
             {
                 FromEmail = "auto@apartmentapps.com",
                 ToEmail = user.Email,
-                Message = $"Username: {user.UserName} <br/>Password: {user.Email}<br/><b>It is highly recommended that you change your password once you log-in.</b>",
+                Message = $"Username: {user.UserName} Password: {newPassword}<br/><b>It is highly recommended that you change your password once you log-in.</b>",
                 User = userMapper.ToViewModel(user),
                 Subject = "Here is your account information.",
                 Links = new Dictionary<string, string>()
