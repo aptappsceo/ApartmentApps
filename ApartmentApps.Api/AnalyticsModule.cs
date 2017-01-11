@@ -181,7 +181,18 @@ namespace ApartmentApps.Api.Modules
                 return 0;
             }
         }
-
+        public IEnumerable<AnalyticsItem> AnalyticsForProperty(int propertyId, int numberOfDays)
+        {
+            var year = DateTime.UtcNow.Year;
+            var day = DateTime.UtcNow.DayOfYear - numberOfDays;
+            var repo = Repo<AnalyticsItem>(DashboardContext.All)
+                .Include(p => p.Property)
+                .Include(p => p.Property.Corporation)
+                .Where(p => p.PropertyId == propertyId && p.Year == year && p.DayOfYear >= day)
+                .OrderByDescending(x => x.DayOfYear)
+                ;
+            return repo;
+        }
         public AnalyticsItem AnalyticsForProperty(int propertyId)
         {
             var year = DateTime.UtcNow.Year;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
@@ -393,6 +394,34 @@ namespace ApartmentApps.Api.Modules
         }
 
 
+    }
+
+    public class DashboardEngagementOverTime : DashboardComponent<LineChartViewModel>
+    {
+        public DashboardEngagementOverTime(AnalyticsModule analytics, ApplicationDbContext dbContext, IUserContext userContext) : base(analytics, dbContext, userContext)
+        {
+        }
+
+        public override LineChartViewModel ExecuteResult()
+        {
+            return new LineChartViewModel()
+            {
+
+                datasets = new List<LineChartViewModel.LineChartDataSet>()
+                {
+
+                    new LineChartViewModel.LineChartDataSet()
+                    {
+                        label="User Engage Count",
+                        data = Analytics.AnalyticsForProperty(UserContext.PropertyId,7).Select(x=>x.UserEngagingCount).ToArray()
+                    },   new LineChartViewModel.LineChartDataSet()
+                    {
+                        label="User Engage Count",
+                        data = Analytics.AnalyticsForProperty(UserContext.PropertyId,7).Select(x=>x.UserCount).ToArray()
+                    }
+                }
+            };
+        }
     }
     public class DashboardTotalIncome : DashboardComponent<DashboardStatViewModel>
     {

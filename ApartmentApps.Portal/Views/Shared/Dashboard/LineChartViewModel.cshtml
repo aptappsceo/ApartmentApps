@@ -1,0 +1,57 @@
+﻿@model ApartmentApps.Api.Modules.LineChartViewModel
+@{
+    var id = "chart_" + Model.GetHashCode().ToString();
+}
+
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div>
+            <span class="pull-right text-right">
+                <small>Average value of sales in the past month in: <strong>United states</strong></small>
+                <br />
+                All sales: 162,862
+            </span>
+            <h1 class="m-b-xs">$ 50,992</h1>
+            <h3 class="font-bold no-margins">
+                Half-year revenue margin
+            </h3>
+            <small>Sales marketing.</small>
+        </div>
+
+        <div>
+            <canvas id="@(id)" height="70"></canvas>
+        </div>
+
+        <div class="m-t-md">
+            <small class="pull-right">
+                <i class="fa fa-clock-o"> </i>
+                Update on 16.07.2015
+            </small>
+            <small>
+                <strong>Analysis of sales:</strong> The value has been changed over time, and last month reached a level over $50,000.
+            </small>
+        </div>
+
+    </div>
+</div>
+
+@*@if (Model.Data.Length > 0)
+{*@
+    <script>
+        $(document).ready(function() {
+
+            var lineData = {
+                labels: @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.labels))),
+                datasets: @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.datasets)))
+            };
+            var ctx = document.getElementById("#@(id)").getContext("2d");
+            new Chart(ctx, {
+                type: 'line', data: lineData, options: {
+                    responsive: true
+                }
+            });
+        });
+    </script>
+@*}*@
+
+
