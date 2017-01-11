@@ -21,6 +21,7 @@ using Ninject;
 namespace ApartmentApps.Api
 {
 
+
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 {
     public override void OnException(HttpActionExecutedContext context)
@@ -172,9 +173,26 @@ namespace ApartmentApps.Api
             viewModel.Title = model.Name;
         }
     }
+    public class MaintenanceRequestStatusLookupMapper : BaseMapper<MaintenanceRequestStatus, LookupBindingModel>
+    {
+        public MaintenanceRequestStatusLookupMapper(IUserContext userContext) : base(userContext)
+        {
+        }
+
+        public override void ToModel(LookupBindingModel viewModel, MaintenanceRequestStatus model)
+        {
+
+        }
+
+        public override void ToViewModel(MaintenanceRequestStatus model, LookupBindingModel viewModel)
+        {
+            viewModel.Id = viewModel.Title = model.Name;
+        }
+    }
 
     public class MaintenanceRequestMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestViewModel>
     {
+
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
         public IBlobStorageService BlobStorageService { get; set; }
 
@@ -243,6 +261,8 @@ namespace ApartmentApps.Api
                 Label = "Assign Maintenance Request",
                 Parameters = new  { id= model.Id }
             };
+
+ 
         }
 
     }
@@ -439,4 +459,55 @@ namespace ApartmentApps.Api
         
         public override bool DefaultOrderByDesc => true;
     }
+
+
+
+    public static class MaitenanceRequestProtocol
+    {
+        public static bool CanBeStarted(this MaitenanceRequest request)
+        {
+            return request.StatusId == MaintenanceRequestStatuses.Scheduled ||
+                   request.StatusId == MaintenanceRequestStatuses.Submitted ||
+                   request.StatusId == MaintenanceRequestStatuses.Paused;
+        }
+        public static bool CanBePaused(this MaitenanceRequest request)
+        {
+            return request.StatusId == MaintenanceRequestStatuses.Started;
+        }
+        public static bool CanBeComplete(this MaitenanceRequest request)
+        {
+            return request.StatusId == MaintenanceRequestStatuses.Started;
+        }
+        public static bool CanBeScheduled(this MaitenanceRequest request)
+        {
+            return request.StatusId == MaintenanceRequestStatuses.Submitted || request.StatusId == MaintenanceRequestStatuses.Paused;
+        }
+
+        public static bool CanControl(ApplicationUser user, MaitenanceRequest request)
+        {
+            return user.Roles.Any(
+                    role =>
+                        role.RoleId == UserRoles.Maintenance || role.RoleId == UserRoles.MaintenanceSupervisor ||
+                        role.RoleId == UserRoles.PropertyAdmin || role.RoleId == UserRoles.Admin);
+        }
+
+        public static bool CanStart(this ApplicationUser user, MaitenanceRequest request)
+        {
+            return CanControl(user, request);
+        }
+        public static bool CanPause(this ApplicationUser user, MaitenanceRequest request)
+        {
+            return CanControl(user, request);
+        }
+        public static bool CanComplete(this ApplicationUser user, MaitenanceRequest request)
+        {
+            return CanControl(user, request);
+        }
+        public static bool CanSchedule(this ApplicationUser user, MaitenanceRequest request)
+        {
+            return CanControl(user, request);
+        }
+    }
+
+
 }

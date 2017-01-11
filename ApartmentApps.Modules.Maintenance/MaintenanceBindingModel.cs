@@ -21,5 +21,9 @@ namespace ApartmentApps.Api.BindingModels
         public string BuildingName { get; set; }
         public bool PermissionToEnter { get; set; }
         public List<string> AcceptableCheckinCodes { get; set; }
+        public bool CanComplete { get; set; }
+        public bool CanPause { get; set; }
+        public bool CanSchedule { get; set; }
+        public bool CanStart { get; set; }
     }
 }

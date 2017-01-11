@@ -21,6 +21,7 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 				<key>NSIncludesSubdomains</key>
+				
 				<true/>
 			</dict>
 			<key>apartmentappsapiservice.azurewebsites.net</key>

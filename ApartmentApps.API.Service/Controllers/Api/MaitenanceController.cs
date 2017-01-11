@@ -6,14 +6,18 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.Data;
+using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Maintenance;
 using Ninject;
@@ -97,13 +101,26 @@ namespace ApartmentApps.API.Service.Controllers
                 Checkins = result.Checkins.ToArray().Select(x => x.ToMaintenanceCheckinBindingModel(BlobStorageService)).ToArray(),
                 ScheduleDate = result.ScheduleDate,
                 Message = result.Message,
-                Photos = photos.Select(key => BlobStorageService.GetPhotoUrl(key.Url))
-            };
+                Photos = photos.Select(key => BlobStorageService.GetPhotoUrl(key.Url)),
+                CanComplete = result.CanBeComplete() && UserContext.CurrentUser.CanComplete(result),
+                CanPause = result.CanBePaused() && UserContext.CurrentUser.CanPause(result),
+                CanSchedule = result.CanBeScheduled() && UserContext.CurrentUser.CanSchedule(result),
+                CanStart = result.CanBeStarted() && UserContext.CurrentUser.CanStart(result)
+
+        };
             return response;
         }
 
+        private IDataSheet<MaitenanceRequest> _requests;
 
-
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("fetch")]
+        [ResponseType(typeof(QueryResult<MaintenanceRequestViewModel>))]
+        public async Task<IHttpActionResult> Fetch(Query query)
+        {
+            var result = _requests.Query(query).Get<MaintenanceRequestViewModel>();
+            return Ok(result);
+        }
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("ScheduleRequest")]
@@ -163,10 +180,11 @@ namespace ApartmentApps.API.Service.Controllers
             return null;
         }
 
-        public MaitenanceController(IKernel kernel, IMaintenanceService maintenanceService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        public MaitenanceController(IKernel kernel, IMaintenanceService maintenanceService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext, IDataSheet<MaitenanceRequest> requests) : base(kernel, context, userContext)
         {
             MaintenanceService = maintenanceService;
             BlobStorageService = blobStorageService;
+            _requests = requests;
         }
     }
 

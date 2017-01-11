@@ -4,15 +4,19 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
+using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Inspections;
+using ApartmentApps.Modules.Maintenance;
 using ApartmentApps.Modules.Payments;
 using ApartmentApps.Modules.Prospect;
 //using ApartmentApps.Modules.Inspections;
@@ -21,6 +25,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
 using Ninject.Syntax;
+using Ploeh.Hyprlinkr;
+
 #if !JOBS
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler;
@@ -228,9 +234,11 @@ namespace ApartmentApps.IoC
             kernel.RegisterMapper<Message, MessageTargetsViewModel, MessageTargetMapper>();
             kernel.RegisterMapper<ApplicationUser, UserListModel, UserListMapper>();
             kernel.RegisterMapper<ApplicationUser, UserLookupBindingModel, UserLookupMapper>();
+            kernel.RegisterMapper<ApplicationUser, LookupBindingModel, ApplicationUserLookupMapper>();
             kernel.RegisterMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel, PaymentsRequestsEditMapper>();
             kernel.RegisterMapper<UserPaymentOption, PaymentOptionBindingModel, PaymentOptionMapper>();
             kernel.RegisterMapper<MaitenanceRequestType, LookupBindingModel, MaintenanceRequestTypeLookupMapper>();
+            kernel.RegisterMapper<MaintenanceRequestStatus, LookupBindingModel, MaintenanceRequestStatusLookupMapper>();
             kernel.RegisterMapper<Unit, LookupBindingModel, UnitLookupMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
 
@@ -239,6 +247,20 @@ namespace ApartmentApps.IoC
             kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InRequestScope();
 
             kernel.Bind<IEmailService>().To<EmailService>().InRequestScope();
+
+            kernel.Bind<HttpRequestMessage>()
+               .ToMethod(_ => HttpContext.Current.Items["MS_HttpRequestMessage"] as HttpRequestMessage)
+               .InRequestScope();
+
+            kernel.Bind<IDataSheet<MaitenanceRequest>>().To<MaintenanceRequestDataSheet>().InRequestScope();
+            kernel.Bind<IDataSheet<MaintenanceRequestStatus>>().To<MaintenanceRequestStatusDataSheet>().InRequestScope();
+            kernel.Bind<IDataSheet<Unit>>().To<UnitDataSheet>().InRequestScope();
+            kernel.Bind<IDataSheet<MaitenanceRequestType>>().To<MaintenanceRequestTypeDataSheet>().InRequestScope();
+            kernel.Bind<IDataSheet<ApplicationUser>>().To<UserDataSheet>().InRequestScope();
+
+            kernel.Bind<ISearchCompiler>().To<SearchCompiler>().InSingletonScope();
+            kernel.Bind<RouteLinker>().ToSelf().InRequestScope();
+
 
 #if !JOBS
             kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();

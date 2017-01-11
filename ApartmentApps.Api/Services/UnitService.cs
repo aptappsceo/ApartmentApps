@@ -104,7 +104,18 @@ namespace ApartmentApps.Portal.Controllers
         public override void ToViewModel(Unit model, LookupBindingModel viewModel)
         {
             viewModel.Id = model.Id.ToString();
+
             viewModel.Title = $"[{model.Building?.Name}] {model.Name}";
+
+            if (model.Users.Any())
+            {
+                var user = model.Users.FirstOrDefault();
+                if (user != null)
+                {
+                    viewModel.TextPrimary = user.FirstName + " " + user.LastName;
+                }
+            }
+
         }
 
     }

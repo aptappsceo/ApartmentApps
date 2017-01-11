@@ -34,5 +34,7 @@ namespace ApartmentApps.API.Service.Models.VMS
     {
         public string Key { get; set; }
         public string Value { get; set; }
+
     }
+
 }
