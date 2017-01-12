@@ -164,6 +164,8 @@ namespace ApartmentApps.Portal.Controllers
                     { "Login Now", "http://portal.apartmentapps.com/Account/Login" }
                 }
             });
+
+            Success("Success! This user has been sent an email with a new password!");
             return RedirectToAction("Index");
         }
         [HttpPost]
@@ -225,7 +227,7 @@ namespace ApartmentApps.Portal.Controllers
                 {
                     Context.SaveChanges();
                 }
-
+                Success("User operation successfull!");
                 if (Request != null && Request.IsAjaxRequest())
                 {
                     return JsonUpdate();
@@ -235,7 +237,7 @@ namespace ApartmentApps.Portal.Controllers
                     return RedirectToAction("Index");
                 }
 
-
+             
                 //AddErrors(result);
             }
             else

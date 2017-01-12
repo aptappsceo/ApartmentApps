@@ -245,6 +245,7 @@ namespace ApartmentApps.Portal.Controllers
                     .OrderBy(p => p.Title).ToList()
 
             };
+            Success("Work order has been assigned.");
             return AutoForm(assignMaintenanceEditModel,"AssignRequestSubmit", "Assign Maintenance Request");
         }
 
@@ -264,7 +265,7 @@ namespace ApartmentApps.Portal.Controllers
                 model.PermissionToEnter,
                 null,
                 Convert.ToInt32(model.UnitId), SubmittedVia.Portal);
-
+                
                 if (Request != null && Request.IsAjaxRequest())
                 {
                     return JsonUpdate();
@@ -285,6 +286,7 @@ namespace ApartmentApps.Portal.Controllers
             if (ModelState.IsValid && model.Id != null)
             {
                 MaintenanceService.AssignRequest(Convert.ToInt32(model.Id), model.AssignedToId);
+                Success("Your request has been submitted!");
                 if (Request != null && Request.IsAjaxRequest())
                 {
                     return JsonUpdate();
@@ -294,12 +296,14 @@ namespace ApartmentApps.Portal.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            Error("Oops! Request not submitted.  Please fix the errors and try again.");
             return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
         }
 
 
         public ActionResult Pause(int id)
         {
+            
             return AutoForm(new MaintenanceStatusRequestModel() { Id = id }, "PauseRequest");
         }
 
@@ -458,19 +462,28 @@ namespace ApartmentApps.Portal.Controllers
                 request.Comments, null
 
                 );
+            Success("Work Order Paused.");
             return RedirectToAction("Details", new { id = request.Id });
         }
 
         [System.Web.Http.HttpPost]
         public ActionResult ScheduleRequest(MaintenanceScheduleRequestModel request)
         {
-            if (!request.Date.HasValue) throw new Exception("No date was selected.");
+            if (!request.Date.HasValue)
+            {
+                Error("No Date was seleceted");
+                return AutoForm(request, "ScheduleRequest");
+                //throw new Exception("No date was selected.");
+            }
+           
             MaintenanceService.ScheduleRequest(
                 CurrentUser,
                 request.Id,
                 request.Date.Value
 
                 );
+
+            Success("Work Order Scheduled");
             return RedirectToAction("Details", new { id = request.Id });
 
         }
@@ -484,6 +497,8 @@ namespace ApartmentApps.Portal.Controllers
                 request.Id,
                 request.Comments, null
                 );
+
+            Success("Work Order Completed!");
             return RedirectToAction("Details", new { id = request.Id });
         }
         public ActionResult Print(string id)
