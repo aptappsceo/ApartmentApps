@@ -413,11 +413,11 @@ namespace ApartmentApps.Api.Modules
                     new LineChartViewModel.LineChartDataSet()
                     {
                         label="User Engage Count",
-                        data = Analytics.AnalyticsForProperty(UserContext.PropertyId,7).Select(x=>x.UserEngagingCount).ToArray()
+                        data = Analytics.AllAnalytics(this.DashboardContext,7).Select(x=>new int[] { x.DayOfYear, x.UserEngagingCount}).ToList()
                     },   new LineChartViewModel.LineChartDataSet()
                     {
                         label="User Engage Count",
-                        data = Analytics.AnalyticsForProperty(UserContext.PropertyId,7).Select(x=>x.UserCount).ToArray()
+                        data = Analytics.AllAnalytics(this.DashboardContext,7).Select(x=>new int[] { x.DayOfYear, x.UserCount}).ToList()
                     }
                 }
             };

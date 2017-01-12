@@ -225,6 +225,18 @@ namespace ApartmentApps.Api.Modules
 
             }
         }
+        public IEnumerable<AnalyticsItem> AllAnalytics(DashboardContext context, int numberOfDays)
+        {
+            var year = DateTime.UtcNow.Year;
+            var day = DateTime.UtcNow.DayOfYear - numberOfDays;
+            var repo = Repo<AnalyticsItem>(context)
+                .Include(p => p.Property)
+                .Include(p => p.Property.Corporation)
+                .Where(p =>p.Property.State == PropertyState.Active && p.Year == year && p.DayOfYear >= day)
+                .OrderByDescending(x => x.DayOfYear)
+                ;
+            return repo;
+        }
     }
 
     public interface IApplyAnalytics

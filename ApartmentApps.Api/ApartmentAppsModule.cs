@@ -134,11 +134,8 @@ namespace ApartmentApps.Api.Modules
         public class LineChartDataSet
         {
             public string label { get; set; }
-            public string backgroundColor { get; set; } = "rgba(26,179,148,0.5)";
-            public string borderColor { get; set; } = "rgba(26,179,148,0.7)";
-            public string pointBackgroundColor { get; set; } = "rgba(26,179,148,1)";
-            public string pointBorderColor { get; set; } = "#fff";
-            public int[] data { get; set; } = new int[] { 28, 48, 40, 19, 86, 27, 90 };
+            
+            public List<int[]> data { get; set; } = new List<int[]>() { new int[] {1,28 }};
         }
 
     }
