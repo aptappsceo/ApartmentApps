@@ -135,7 +135,7 @@ namespace ApartmentApps.Api.Modules
         {
             public string label { get; set; }
             
-            public List<int[]> data { get; set; } = new List<int[]>() { new int[] {1,28 }};
+            public List<int[]> data { get; set; } = new List<int[]>() { };
         }
 
     }

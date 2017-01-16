@@ -404,23 +404,28 @@ namespace ApartmentApps.Api.Modules
 
         public override LineChartViewModel ExecuteResult()
         {
-            return new LineChartViewModel()
+            var result = new LineChartViewModel()
             {
-
-                datasets = new List<LineChartViewModel.LineChartDataSet>()
-                {
-
-                    new LineChartViewModel.LineChartDataSet()
-                    {
-                        label="User Engage Count",
-                        data = Analytics.AllAnalytics(this.DashboardContext,7).Select(x=>new int[] { x.DayOfYear, x.UserEngagingCount}).ToList()
-                    },   new LineChartViewModel.LineChartDataSet()
-                    {
-                        label="User Engage Count",
-                        data = Analytics.AllAnalytics(this.DashboardContext,7).Select(x=>new int[] { x.DayOfYear, x.UserCount}).ToList()
-                    }
-                }
+                Title = "User Engagment Over Time",
+                Subtitle = "Last 7 Days"
             };
+            var dataset = new LineChartViewModel.LineChartDataSet();
+            int analytic = 0;
+            for (var i = 30; i >= 1; i--)
+            {
+                var day = UserContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(i,0,0,0));
+                var dayOfYear = day.DayOfYear;
+                analytic = Analytics.AnalyticForContext(DashboardContext,
+                    _=>_.DayOfYear == dayOfYear,
+                    _ => _.UserEngagingCount, 
+                    dayOfYear, 
+                    analytic);
+              
+                dataset.data.Add(new int[] {dayOfYear,analytic});
+            }
+            result.datasets.Add(dataset);
+            dataset.label = "User Engagement";
+            return result;
         }
     }
     public class DashboardTotalIncome : DashboardComponent<DashboardStatViewModel>

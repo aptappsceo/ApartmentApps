@@ -95,7 +95,7 @@ namespace ApartmentApps.Api
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         public IQueryable<TEntity> Include<TProperty>(Expression<Func<TEntity, TProperty>> path)

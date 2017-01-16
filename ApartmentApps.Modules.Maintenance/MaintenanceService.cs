@@ -264,17 +264,19 @@ namespace ApartmentApps.Api
     {
  
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
+        public ConfigProvider<MaintenanceConfig> Config { get; }
         public PropertyContext Context { get; set; }
 
         private readonly IModuleHelper _moduleHelper;
         private IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
-        public MaintenanceService(IModuleHelper moduleHelper, PropertyContext propertyContext, IRepository<MaitenanceRequest> repository, IBlobStorageService blobStorageService, IUserContext userContext, IKernel kernel) : base(kernel, repository)
+        public MaintenanceService(ConfigProvider<MaintenanceConfig> config, IModuleHelper moduleHelper, PropertyContext propertyContext, IRepository<MaitenanceRequest> repository, IBlobStorageService blobStorageService, IUserContext userContext, IKernel kernel) : base(kernel, repository)
         {
             _moduleHelper = moduleHelper;
             _blobStorageService = blobStorageService;
             _userContext = userContext;
+            Config = config;
             Context = propertyContext;
         }
 
@@ -388,6 +390,7 @@ namespace ApartmentApps.Api
                 set.Save();
             }
         }
+        
         public IEnumerable<TViewModel> GetAllUnassigned<TViewModel>()
         {
             return Repository.Where(p => p.WorkerAssignedId == null).ToArray().Select(Map<TViewModel>().ToViewModel);

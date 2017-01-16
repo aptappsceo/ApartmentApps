@@ -10,5 +10,6 @@ namespace ApartmentApps.Api
         string Name { get;  }
         int PropertyId { get; }
         ApplicationUser CurrentUser { get; }
+        T GetConfig<T>() where T : class, new();
     }
 }
