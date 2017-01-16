@@ -93,10 +93,21 @@ namespace ApartmentApps.API.Service.App_Start
     {
         private readonly ApplicationDbContext _db;
         private ApplicationUser _user;
-
-        public WebUserContext(ApplicationDbContext context)
+        private IKernel _kernel;
+        public WebUserContext(ApplicationDbContext context, IKernel kernel)
         {
+            _kernel = kernel;
             _db = context;
+        }
+        public ConfigProvider<T> GetConfigProvider<T>() where T : class, new()
+        {
+
+            return _kernel.Get<ConfigProvider<T>>();
+        }
+
+        public T GetConfig<T>() where T : class, new()
+        {
+            return GetConfigProvider<T>().Config;
         }
 
         public ApplicationUser CurrentUser
