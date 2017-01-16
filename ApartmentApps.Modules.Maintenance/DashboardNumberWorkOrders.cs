@@ -411,7 +411,7 @@ namespace ApartmentApps.Api.Modules
             };
             var dataset = new LineChartViewModel.LineChartDataSet();
             int analytic = 0;
-            for (var i = 30; i >= 1; i--)
+            for (var i = 7; i >= 1; i--)
             {
                 var day = UserContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(i,0,0,0));
                 var dayOfYear = day.DayOfYear;
