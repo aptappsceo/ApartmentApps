@@ -101,13 +101,13 @@ namespace ApartmentApps.Tests
             // Submit another request to test the list
             SubmitMaintenanceRequest();
 
-            var config = Context.Kernel.Get<MaintenanceModule>().Config;
+            var config = Context.Kernel.Get<ConfigProvider<MaintenanceConfig>>().Config;
             config.SupervisorMode = true;
             var controllerRequestList = ApiController.ListRequests();
             Assert.AreEqual(controllerRequestList.Count(),1);
             config.SupervisorMode = false;
             controllerRequestList = ApiController.ListRequests();
-            Assert.AreEqual(controllerRequestList.Count(), 2);
+            Assert.AreEqual(controllerRequestList.Count(),1);
         }
 
         private void SubmitMaintenanceRequest()
