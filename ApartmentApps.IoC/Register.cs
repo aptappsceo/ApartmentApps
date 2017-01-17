@@ -27,10 +27,11 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
 using Ninject.Syntax;
 
-using Ploeh.Hyprlinkr;
+
 using RazorEngine.Templating;
 
 #if !JOBS
+using Ploeh.Hyprlinkr;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler;
 using Ninject.Web.Common;
@@ -261,9 +262,7 @@ namespace ApartmentApps.IoC
 
             kernel.Bind<IEmailService>().To<EmailService>().InRequestScope();
 
-            kernel.Bind<HttpRequestMessage>()
-               .ToMethod(_ => HttpContext.Current.Items["MS_HttpRequestMessage"] as HttpRequestMessage)
-               .InRequestScope();
+         
 
             kernel.Bind<IDataSheet<MaitenanceRequest>>().To<MaintenanceRequestDataSheet>().InRequestScope();
             kernel.Bind<IDataSheet<MaintenanceRequestStatus>>().To<MaintenanceRequestStatusDataSheet>().InRequestScope();
@@ -272,10 +271,15 @@ namespace ApartmentApps.IoC
             kernel.Bind<IDataSheet<ApplicationUser>>().To<UserDataSheet>().InRequestScope();
 
             kernel.Bind<ISearchCompiler>().To<SearchCompiler>().InSingletonScope();
-            kernel.Bind<RouteLinker>().ToSelf().InRequestScope();
+
 
 
 #if !JOBS
+            kernel.Bind<RouteLinker>().ToSelf().InRequestScope();
+            kernel.Bind<HttpRequestMessage>()
+               .ToMethod(_ => HttpContext.Current.Items["MS_HttpRequestMessage"] as HttpRequestMessage)
+               .InRequestScope();
+
             kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();
             kernel.Bind<ISecureDataFormat<AuthenticationTicket>>().To<SecureDataFormat<AuthenticationTicket>>().InRequestScope();
 #endif
