@@ -45,7 +45,7 @@ namespace ApartmentApps.API.Service.Controllers
         [NonAction]
         public TConfig GetConfig<TConfig>() where TConfig : PropertyModuleConfig, new()
         {
-            var config = Kernel.Get<Module<TConfig>>().Config;
+            var config = UserContext.GetConfig<TConfig>();
             return config;
         }
 

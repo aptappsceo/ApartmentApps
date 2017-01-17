@@ -39,7 +39,7 @@ namespace ApartmentApps.Jobs
                 kernel.Bind<DefaultUserManager>().ToSelf().InSingletonScope();
                 kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InSingletonScope();
                 kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InSingletonScope();
-                var userContext = new FakeUserContext(context)
+                var userContext = new FakeUserContext(context,kernel)
                 {
                     PropertyId = item.Id,
                     UserId = context.Users.First(p=>p.UserName == "micahosborne@gmail.com").Id,

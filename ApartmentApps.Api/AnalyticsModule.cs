@@ -118,7 +118,7 @@ namespace ApartmentApps.Api.Modules
             var year = DateTime.UtcNow.Year;
             var day = DateTime.UtcNow.DayOfYear;
 
-            var analyticsItem = _analyticsItemRepo.FirstOrDefault(p=>p.Year == year && p.DayOfYear == day) ?? new AnalyticsItem()
+            var analyticsItem = _analyticsItemRepo.FirstOrDefault(p => p.Year == year && p.DayOfYear == day) ?? new AnalyticsItem()
             {
                 CreateDate = DateTime.UtcNow,
                 Year = DateTime.UtcNow.Year,
@@ -127,8 +127,8 @@ namespace ApartmentApps.Api.Modules
 
             var mrRepo = Kernel.Get<IRepository<MaitenanceRequest>>();
             analyticsItem.NumberOfUnits = Repo<Unit>().Count();
-            analyticsItem.UserCount = Repo<ApplicationUser>().Count(x=>!x.Archived);
-            analyticsItem.UserEngagingCount = Repo<ApplicationUser>().Count(x =>!x.Archived && (x.LastMobileLoginTime != null || x.LastPortalLoginTime != null));
+            analyticsItem.UserCount = Repo<ApplicationUser>().Count(x => !x.Archived);
+            analyticsItem.UserEngagingCount = Repo<ApplicationUser>().Count(x => !x.Archived && (x.LastMobileLoginTime != null || x.LastPortalLoginTime != null));
 
             analyticsItem.NumberMaintenanceRequestsCompleted = mrRepo.Count(p => p.SubmissionDate > startDate && p.CompletionDate != null);
             analyticsItem.NumberMaintenanceRequestsPaused = mrRepo.Count(p => p.SubmissionDate > startDate && p.StatusId == "Paused");
@@ -136,7 +136,7 @@ namespace ApartmentApps.Api.Modules
             analyticsItem.NumberMaintenanceRequestsStarted = mrRepo.Count(p => p.SubmissionDate > startDate && p.StatusId == "Started");
 
 
-            analyticsItem.NumberOfUnitsEngaging = mrRepo.Where(p=>p.SubmissionDate > startDate && p.User.Roles.Any(x=>x.RoleId == "Resident")).GroupBy(x => x.UnitId).Count();
+            analyticsItem.NumberOfUnitsEngaging = mrRepo.Where(p => p.SubmissionDate > startDate && p.User.Roles.Any(x => x.RoleId == "Resident")).GroupBy(x => x.UnitId).Count();
             analyticsItem.NumberMaintenanceRequests = mrRepo.Count(p => p.SubmissionDate > startDate);
             analyticsItem.NumberIncidentReports = Repo<IncidentReport>().Count(x => x.CreatedOn > startDate);
             analyticsItem.NumberMobileMaintenanceRequests =
@@ -154,11 +154,11 @@ namespace ApartmentApps.Api.Modules
 
             // The engagement score calculation
             analyticsItem.EngagementScore = analyticsItem.NumberMaintenanceRequests + analyticsItem.NumberIncidentReports;
-            
 
-            ModuleHelper.SignalToEnabled<IApplyAnalytics>(x=>x.ApplyAnalytics(this,analyticsItem,startDate));
+
+            ModuleHelper.SignalToEnabled<IApplyAnalytics>(x => x.ApplyAnalytics(this, analyticsItem, startDate));
             if (analyticsItem.Id < 1)
-            _analyticsItemRepo.Add(analyticsItem);
+                _analyticsItemRepo.Add(analyticsItem);
             _analyticsItemRepo.Save();
         }
 
@@ -177,10 +177,29 @@ namespace ApartmentApps.Api.Modules
             {
                 var analyticsForProperty = AnalyticsForProperty(UserContext.PropertyId);
                 if (analyticsForProperty != null)
-                return selector(analyticsForProperty);
+                    return selector(analyticsForProperty);
                 return 0;
             }
         }
+
+        public int AnalyticForContext(DashboardContext context, Expression<Func<AnalyticsItem, bool>> filter, Func<AnalyticsItem, int> selector, int dayOfYear, int dflt = 0)
+        {
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
+
+            if (context == DashboardContext.All)
+            {
+                var items = AllPropertiesAnalytics(context, filter).ToArray();
+                return items.Sum(selector);
+            }
+            else
+            {
+                var analyticsForProperty = AnalyticsForProperty(UserContext.PropertyId, filter);
+                if (analyticsForProperty != null)
+                    return selector(analyticsForProperty);
+                return dflt;
+            }
+        }
+      
         public IEnumerable<AnalyticsItem> AnalyticsForProperty(int propertyId, int numberOfDays)
         {
             var year = DateTime.UtcNow.Year;
@@ -193,14 +212,32 @@ namespace ApartmentApps.Api.Modules
                 ;
             return repo;
         }
+        public AnalyticsItem AnalyticsForProperty(int propertyId, Expression<Func<AnalyticsItem, bool>> filter)
+        {
+            var year = DateTime.UtcNow.Year;
+            var repo = Repo<AnalyticsItem>(DashboardContext.All)
+                .Include(p => p.Property)
+                .Include(p => p.Property.Corporation)
+                .Where(p => p.PropertyId == propertyId && p.Year == year);
+            if (filter != null)
+            {
+                repo = repo.Where(filter);
+            }
+
+
+
+            return repo.OrderByDescending(x => x.DayOfYear)
+                .FirstOrDefault()
+                ; ;
+        }
         public AnalyticsItem AnalyticsForProperty(int propertyId)
         {
             var year = DateTime.UtcNow.Year;
             var repo = Repo<AnalyticsItem>(DashboardContext.All)
-                .Include(p=>p.Property)
-                .Include(p=>p.Property.Corporation)
-                .Where(p=>p.PropertyId == propertyId && p.Year == year)
-                .OrderByDescending(x=>x.DayOfYear)
+                .Include(p => p.Property)
+                .Include(p => p.Property.Corporation)
+                .Where(p => p.PropertyId == propertyId && p.Year == year)
+                .OrderByDescending(x => x.DayOfYear)
                 .FirstOrDefault()
                 ;
             return repo;
@@ -214,17 +251,31 @@ namespace ApartmentApps.Api.Modules
                 Enabled = true
             };
         }
-        public IEnumerable<AnalyticsItem> AllPropertiesAnalytics(DashboardContext context)
+
+        public IEnumerable<AnalyticsItem> AllPropertiesAnalytics(DashboardContext context, Expression<Func<AnalyticsItem, bool>> filter = null)
         {
             foreach (var item in Repo<Property>(context).ToArray())
             {
                 if (item.State != PropertyState.Active) continue;
-                var a = AnalyticsForProperty(item.Id);
+                var a = AnalyticsForProperty(item.Id, filter);
                 if (a != null)
                     yield return a;
 
             }
         }
+
+        //public IEnumerable<AnalyticsItem> AllAnalytics(DashboardContext context, int numberOfDays)
+        //{
+        //    var year = DateTime.UtcNow.Year;
+        //    var day = DateTime.UtcNow.DayOfYear - numberOfDays;
+        //    var repo = Repo<AnalyticsItem>(context)
+        //        .Include(p => p.Property)
+        //        .Include(p => p.Property.Corporation)
+        //        .Where(p => p.Property.State == PropertyState.Active && p.Year == year && p.DayOfYear >= day)
+        //        .OrderByDescending(x => x.DayOfYear)
+        //        ;
+        //    return repo;
+        //}
     }
 
     public interface IApplyAnalytics

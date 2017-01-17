@@ -13,6 +13,11 @@
 </div>
 <br />
 <div class="row">
+    <div class="col-md-12">
+        @(Html.RenderComponent<DashboardEngagementOverTime>(x => x.DashboardContext = DashboardContext.All))
+    </div>
+</div>
+<div class="row">
     <div class="col-md-4">
         @(Html.RenderComponent<DashboardUsersEngaging>(x => x.DashboardContext = DashboardContext.All))
       

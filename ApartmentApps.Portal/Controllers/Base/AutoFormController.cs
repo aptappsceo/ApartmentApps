@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using ApartmentApps.Api;
@@ -64,7 +65,8 @@ namespace ApartmentApps.Portal.Controllers
                     model.Id = null;
                 }
                 _formService.Save(model);
-                ViewBag.SuccessMessage = "Success!";
+                Success("Success!");
+                //ViewBag.SuccessMessage = "Success!";
 
 
                 if (Request != null && Request.IsAjaxRequest())
@@ -73,8 +75,12 @@ namespace ApartmentApps.Portal.Controllers
                 }
                 else
                 {
-                   return RedirectToAction("Index");
+                    return RedirectToAction("Index");
                 }
+            }
+            else
+            {
+                Success("Whoopsie! Fix the errors and try again.");
             }
             return AutoForm(model, "SaveEntry");
         }
@@ -84,8 +90,16 @@ namespace ApartmentApps.Portal.Controllers
 
         public virtual ActionResult Delete(string id)
         {
-            _formService.Remove(id);
-            ViewBag.SuccessMessage = "Item Deleted!";
+            try
+            {
+                _formService.Remove(id);
+                Success("Item Deleted!");
+
+            }
+            catch (Exception ex)
+            {
+                Error("Couldn't delete item. There is most likely other things that are dependent on this item.");
+            }
             return RedirectToAction("Index");
         }
     }

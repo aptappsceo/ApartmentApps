@@ -31,6 +31,18 @@ namespace ApartmentApps.Portal.Controllers
 
     public class AAController : Controller
     {
+        public void Success(string message)
+        {
+            ViewBag.SuccessMessage = message;
+        }
+        public void Error(string message)
+        {
+            ViewBag.ErrorMessage = message;
+        }
+        public void Info(string message)
+        {
+            ViewBag.InfoMessage = message;
+        }
         protected ApplicationSignInManager _signInManager;
         private IModuleHelper _moduleHelper;
 

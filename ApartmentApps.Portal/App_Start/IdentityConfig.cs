@@ -74,7 +74,7 @@ namespace ApartmentApps.Portal
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true,
-
+                
             };
 
         }
@@ -89,7 +89,7 @@ namespace ApartmentApps.Portal
                 RequireUniqueEmail = true,
                 
             };
-
+            
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {

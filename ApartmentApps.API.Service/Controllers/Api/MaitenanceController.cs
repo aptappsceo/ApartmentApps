@@ -39,25 +39,25 @@ namespace ApartmentApps.API.Service.Controllers
         [System.Web.Http.Route("List")]
         public IEnumerable<MaintenanceIndexBindingModel> ListRequests()
         {
-            // TODO Move this into mappers
-            if (GetConfig<MaintenanceConfig>().SupervisorMode)
-            {
-                var userId = CurrentUser.Id;
-                return
-                 Context.MaitenanceRequests.GetAll().Where(p=>p.WorkerAssignedId == userId).OrderByDescending(p => p.SubmissionDate).ToArray().Select(
-                     x => new MaintenanceIndexBindingModel()
-                     {
-                         Title = x.MaitenanceRequestType.Name,
-                         RequestDate = x.SubmissionDate,
-                         Comments = x.Message,
-                         SubmissionBy = x.User.ToUserBindingModel(BlobStorageService),
-                         StatusId = x.StatusId,
-                         Id = x.Id.ToString(),
-                         UnitName = x.Unit?.Name,
-                         BuildingName = x.Unit?.Building?.Name,
-                         LatestCheckin = x.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService)
-                     }).ToArray();
-            }
+            //// TODO Move this into mappers
+            //if (_maintenanceConfig.Config.SupervisorMode)
+            //{
+            //    var userId = CurrentUser.Id;
+            //    return
+            //     Context.MaitenanceRequests.GetAll().Where(p=>p.WorkerAssignedId == userId).OrderByDescending(p => p.SubmissionDate).ToArray().Select(
+            //         x => new MaintenanceIndexBindingModel()
+            //         {
+            //             Title = x.MaitenanceRequestType.Name,
+            //             RequestDate = x.SubmissionDate,
+            //             Comments = x.Message,
+            //             SubmissionBy = x.User.ToUserBindingModel(BlobStorageService),
+            //             StatusId = x.StatusId,
+            //             Id = x.Id.ToString(),
+            //             UnitName = x.Unit?.Name,
+            //             BuildingName = x.Unit?.Building?.Name,
+            //             LatestCheckin = x.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService)
+            //         }).ToArray();
+            //}
 
             return
                 Context.MaitenanceRequests.GetAll().OrderByDescending(p => p.SubmissionDate).ToArray().Select(

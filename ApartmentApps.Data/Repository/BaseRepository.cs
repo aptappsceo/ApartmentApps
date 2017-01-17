@@ -84,7 +84,7 @@ namespace ApartmentApps.Data.Repository
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return GetAll().GetEnumerator();
         }
     }
 
