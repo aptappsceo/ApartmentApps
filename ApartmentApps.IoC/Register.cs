@@ -11,6 +11,7 @@ using System.Web;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.DataSheet;
@@ -25,7 +26,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject;
 using Ninject.Syntax;
+
 using Ploeh.Hyprlinkr;
+using RazorEngine.Templating;
 
 #if !JOBS
 using Microsoft.Owin.Security;
@@ -91,13 +94,20 @@ namespace ApartmentApps.IoC
 
         public static void RegisterModule<TModule, TModuleConfig>( this IKernel kernel ) where TModule : Module<TModuleConfig> where TModuleConfig : class,IModuleConfig, new()
         {
-            kernel.Bind<TModule, IModule, Module<TModuleConfig>>().To<TModule>().InRequestScope();
+            kernel.Bind<TModule, IModule, ConfigProvider<TModuleConfig>,  Module<TModuleConfig>>().To<TModule>().InRequestScope();
+            kernel.Bind<IConfigProvider>().To<TModule>().InRequestScope();
+            //kernel.Bind<IRepository<TModuleConfig>>().To<Module<TModuleConfig>.ConfigRepository>().InRequestScope();
+        }
+        public static void RegisterConfig<TModule, TModuleConfig>(this IKernel kernel) where TModule : Module<TModuleConfig> where TModuleConfig : class, IModuleConfig, new()
+        {
 
             //kernel.Bind<IRepository<TModuleConfig>>().To<Module<TModuleConfig>.ConfigRepository>().InRequestScope();
         }
+
+
         public static void RegisterServices(IKernel kernel)
         {
-            ApartmentApps.Api.Modules.ModuleHelper.Kernel = kernel;
+            Kernel = kernel;
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (!assembly.FullName.StartsWith("ApartmentApps")) continue;
@@ -133,9 +143,12 @@ namespace ApartmentApps.IoC
                 }
 
             }
+            kernel.Bind<IRazorEngineService>().ToMethod(x => AlertsModule.CreateRazorService());
+            kernel.Bind<IModuleHelper, ModuleHelper>().To<ModuleHelper>().InRequestScope();
+            kernel.Bind<IConfigProvider, ConfigProvider<UserAlertsConfig>>().To<UserAlertsConfigProvider>().InRequestScope();
             kernel.RegisterModule<AnalyticsModule, AnalyticsConfig>();
             kernel.RegisterModule<AlertsModule, AlertsModuleConfig>();
-            kernel.RegisterModule<AdminModule, PortalConfig>();
+            kernel.RegisterModule<ApartmentAppsModule, PortalConfig>();
             kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<MaintenanceModule, MaintenanceConfig>();
             kernel.RegisterModule<CourtesyModule, CourtesyConfig>();
@@ -288,6 +301,8 @@ namespace ApartmentApps.IoC
 
 
         }
+
+        public static IKernel Kernel { get; set; }
     }
     //public sealed class GalleryDbMigrationConfiguration : DbMigrationsConfiguration
     //{

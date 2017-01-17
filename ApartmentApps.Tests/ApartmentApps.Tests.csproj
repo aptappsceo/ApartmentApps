@@ -104,6 +104,10 @@
       <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RazorEngine, Version=3.9.3.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.9.3\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -192,6 +196,7 @@
       <Link>Base\PropertyExecutionContext.cs</Link>
     </Compile>
     <Compile Include="DbQueryTest.cs" />
+    <Compile Include="EmailTemplateTests.cs" />
     <Compile Include="IncidentReportWebServiceTests.cs" />
     <Compile Include="MaitenanceRequestsControllerTests.cs" />
     <Compile Include="MessagingControllerTests.cs" />

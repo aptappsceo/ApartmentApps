@@ -28,6 +28,7 @@ namespace ApartmentApps.API.Service.Controllers
     [System.Web.Http.Authorize]
     public class MaitenanceController : ApartmentAppsApiController
     {
+        private readonly ConfigProvider<MaintenanceConfig> _maintenanceConfig;
 
 
         public IMaintenanceService MaintenanceService { get; set; }
@@ -94,7 +95,7 @@ namespace ApartmentApps.API.Service.Controllers
                         $"http://www.apartmentapps.com?apt={result.Unit.Building.Name},{result.Unit.Name}",
                         $"http://www.apartmentapps.com?apt={result.Unit.Building.Name.TrimStart('0')},{result.Unit.Name}",
                         $"http://www.apartmentapps.com?apt={result.Unit.Building.Name.TrimStart('0')},{result.Unit.Name},,",
-                        "*"
+                       
                     },
                 BuildingName = result.Unit?.Building?.Name + " " + result.Unit?.Name,
                 PermissionToEnter = result.PermissionToEnter,
@@ -106,8 +107,12 @@ namespace ApartmentApps.API.Service.Controllers
                 CanPause = result.CanBePaused() && UserContext.CurrentUser.CanPause(result),
                 CanSchedule = result.CanBeScheduled() && UserContext.CurrentUser.CanSchedule(result),
                 CanStart = result.CanBeStarted() && UserContext.CurrentUser.CanStart(result)
+            };
 
-        };
+            if (!_maintenanceConfig.Config.VerifyBarCodes)
+            {
+                response.AcceptableCheckinCodes.Add("*");
+            }
             return response;
         }
 
@@ -180,8 +185,9 @@ namespace ApartmentApps.API.Service.Controllers
             return null;
         }
 
-        public MaitenanceController(IKernel kernel, IMaintenanceService maintenanceService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext, IDataSheet<MaitenanceRequest> requests) : base(kernel, context, userContext)
+        public MaitenanceController(ConfigProvider<MaintenanceConfig> maintenanceConfig, IKernel kernel, IMaintenanceService maintenanceService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext, IDataSheet<MaitenanceRequest> requests) : base(kernel, context, userContext)
         {
+            _maintenanceConfig = maintenanceConfig;
             MaintenanceService = maintenanceService;
             BlobStorageService = blobStorageService;
             _requests = requests;

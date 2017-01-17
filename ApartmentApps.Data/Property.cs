@@ -56,7 +56,8 @@ namespace ApartmentApps.Data
         Active,
         Suspended,
         Archived,
-        TestAccount
+        TestAccount,
+        Pending
     }
 
 }

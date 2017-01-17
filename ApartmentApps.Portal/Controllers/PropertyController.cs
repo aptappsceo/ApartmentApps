@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -54,12 +55,14 @@ namespace ApartmentApps.Portal.Controllers
         public EntrataModule Entrata { get; set; }
         public IUnitImporter Importer { get; set; }
 
+        private readonly IRepository<Unit> _unitsRepo;
         private ApplicationUserManager _userManager;
 
-        public PropertyController(IKernel kernel, EntrataModule entrata, IUnitImporter importer, PropertyContext context, IUserContext userContext, ApplicationUserManager userManager, PropertyService propertyService) : base(kernel, propertyService, context, userContext)
+        public PropertyController(IRepository<Unit> unitsRepo, IKernel kernel, EntrataModule entrata, IUnitImporter importer, PropertyContext context, IUserContext userContext, ApplicationUserManager userManager, PropertyService propertyService) : base(kernel, propertyService, context, userContext)
         {
             Entrata = entrata;
             Importer = importer;
+            _unitsRepo = unitsRepo;
             _userManager = userManager;
         }
 
@@ -79,6 +82,18 @@ namespace ApartmentApps.Portal.Controllers
         {
 
             return AutoForm(new ImportResidentCSVModel() { PropertyId = propertyId }, "ImportResidentCSV", "Import CSV");
+        }
+
+        public ActionResult CreateLabelCSV(int propertyId)
+        {
+            var sb = new StringBuilder();
+            var property = Service.Find<PropertyBindingModel>(propertyId.ToString());
+            var units = Kernel.Get<BaseRepository<Unit>>().GetAll().Where(x => x.PropertyId == propertyId).ToArray();
+            foreach (var unit in units)
+            {
+                sb.AppendLine($"{unit.Building.Name},{unit.Name}");
+            }
+            return File(new System.Text.UTF8Encoding().GetBytes(sb.ToString()), "text/csv", $"{property.Name}.csv");
         }
 
         [HttpPost]

@@ -1,29 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ApartmentApps.Api;
+﻿using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.Payments.BindingModels;
 using ApartmentApps.Modules.Payments.Data;
-using ApartmentApps.Payments.Forte;
-using ApartmentApps.Payments.Forte.Forte.Transaction;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TransactionState = ApartmentApps.Api.Modules.TransactionState;
 
 namespace ApartmentApps.Modules.Payments.Services
 {
+    public static class TransactionHistoryItemExtensions
+    {
+        public static TransactionHistoryItemBindingModel ToBindingModel(this TransactionHistoryItem item)
+        {
+            return new TransactionHistoryItemBindingModel()
+            {
+                Id = item.Id,
+                UserEmail = item.User.Email,
+                UserId = item.User.Id,
+                UserFullName = $"{item.User.FirstName} {item.User.LastName}",
+                CommiterEmail = item.Commiter.Email,
+                CommiterId = item.Commiter.Id,
+                CommiterFullName = $"{item.Commiter.FirstName} {item.Commiter.LastName}",
+                StateMessage = item.StateMessage,
+                ConvenienceFee = item.ConvenienceFee,
+                CloseDate = item.CloseDate,
+                OpenDate = item.OpenDate,
+                Service = item.Service,
+                Amount = item.Amount,
+                State = item.State,
+                Trace = item.Trace,
+                ForteState = item.ForteState,
+                Invoices = item.Invoices.Select(s => new TransactionHistoryItemInvoiceBindingModel()
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                    Total = s.Amount
+                }).ToList()
+            };
+        }
+    }
+
     public class LeaseInfoManagementService
     {
-        private readonly IRepository<ApplicationUser> _users;
         private readonly IRepository<Invoice> _invoices;
+        private readonly IRepository<ApplicationUser> _users;
         private PropertyContext _context;
-        private IUserContext _userContext;
         private IRepository<UserLeaseInfo> _leases;
         private IRepository<TransactionHistoryItem> _transactionHistory;
         private IRepository<InvoiceTransaction> _transactions;
+        private IUserContext _userContext;
 
         public LeaseInfoManagementService(IRepository<ApplicationUser> users, IRepository<Invoice> invoices,
             PropertyContext context, IUserContext userContext, IRepository<UserLeaseInfo> leases,
@@ -38,14 +66,161 @@ namespace ApartmentApps.Modules.Payments.Services
             _transactionHistory = transactionHistory;
         }
 
-        public void ResumeUserLeaseInfo(ResumeUserLeaseInfoBindingModel model)
+        public void CancelInvoice(CancelInvoiceBindingModel model)
         {
-            throw new NotImplementedException();
+            var invoice = _invoices.Find(model.Id);
+            if (invoice == null) throw new KeyNotFoundException();
+
+            CancelInvoice(invoice);
+
+            var lease = invoice.UserLeaseInfo;
+
+            if (model.UserLeaseInfoAction == UserLeaseInfoAction.Cancel)
+            {
+                CancelUserLeaseInfo(new CancelUserLeaseInfoBindingModel()
+                {
+                    Id = lease.Id
+                });
+            }
+            else
+            {
+                GenerateNextInvoiceOrArchive(lease);
+            }
+
+            //Some actions for user lease info
         }
 
-        public void SuspendUserLeaseInfo(SuspendUserLeaseInfoBindingModel model)
+        public void CancelInvoice(Invoice invoice)
         {
-            throw new NotImplementedException();
+            if (invoice.IsArchived) throw new Exception("Cannot cancel archived invoice");
+            if (invoice.State != InvoiceState.NotPaid)
+                throw new Exception(
+                    "Cannot cancel invoice, because it has already been processed or is being processed at the moment.");
+
+            invoice.State = InvoiceState.Canceled;
+            invoice.IsArchived = true;
+
+            _invoices.Save();
+        }
+
+        public void CancelUserLeaseInfo(UserLeaseInfo lease)
+        {
+            if (lease.State == LeaseState.Archived) throw new Exception("Cannot cancel archived Payment Request");
+
+            var activeInvoices = _invoices.Where(s => s.UserLeaseInfoId == lease.Id && !s.IsArchived);
+
+            foreach (var invoice in activeInvoices)
+            {
+                if (invoice.State != InvoiceState.NotPaid) throw new Exception("Cannot cancel Payment Request, since one of the related invoices is being processed");
+            }
+
+            foreach (var invoice in activeInvoices)
+            {
+                CancelInvoice(invoice);
+            }
+
+            lease.State = LeaseState.Archived;
+            _leases.Save();
+        }
+
+        public void CancelUserLeaseInfo(CancelUserLeaseInfoBindingModel data)
+        {
+            var lease = _leases.Find(data.Id);
+            CancelUserLeaseInfo(lease);
+            _leases.Save();
+        }
+
+        public DateTime ComputeNextDateForInvoice(UserLeaseInfo lease, DateTime latestInvoiceDate)
+        {
+            return latestInvoiceDate.Offset(lease.IntervalDays ?? 0, lease.IntervalMonths ?? 0, lease.IntervalYears ?? 0);
+        }
+
+        public void CreateInvoice(UserLeaseInfo lease)
+        {
+            if (!lease.NextInvoiceDate.HasValue) throw new Exception("No Next Invoice Date is set for the Lease Info");
+
+            var anyActiveInvoices =
+                    _invoices.GetAll()
+                        .Any(v => v.UserLeaseInfoId == lease.Id && //invoice for same lease
+                                  !v.IsArchived && //invoice is not archived
+                                  (v.State == InvoiceState.NotPaid || v.State == InvoiceState.Pending));
+            //invoice is notpaid or pending
+
+            if (anyActiveInvoices) throw new Exception($"Another Invoice is active for lease id:{lease.Id}");
+
+            if (lease.NextInvoiceDate < lease.User.Property.TimeZone.Now())
+            {
+                throw new Exception("Invoice cannot be created before Today");
+            }
+
+            if (lease.RepetitionCompleteDate.HasValue)
+            {
+                var canContinue = lease.RepetitionCompleteDate > lease.NextInvoiceDate;
+                if (!canContinue)
+                {
+                    throw new Exception("Invoice cannot be created past Repetition Complete Date");
+                }
+            }
+
+            var invoice = new Invoice()
+            {
+                UserLeaseInfo = lease,
+                Amount = lease.Amount,
+                AvailableDate = lease.NextInvoiceDate.Value - TimeSpan.FromDays(14),
+                DueDate = lease.NextInvoiceDate.Value,
+                State = InvoiceState.NotPaid,
+                Title = lease.Title
+            };
+
+            _invoices.Add(invoice);
+            _invoices.Save();
+
+            UpdateNextInvoiceDate(lease);
+            _leases.Save();
+        }
+
+        public int CreateTransaction(string trace, string userId, string commiterId, decimal totalIncludingConvenienceFee, decimal convenienceFee, Invoice[] invoices, string comments, DateTime estimatedCompleteDate)
+        {
+            foreach (var invoice in invoices)
+            {
+                if (invoice.State != InvoiceState.NotPaid || invoice.IsArchived)
+                {
+                    throw new Exception(
+                        $"One of invoices has illegal state: {invoice.Id} is {invoice.State} (Must be Not Paid)");
+                }
+            }
+
+            var user = _users.Find(userId);
+            if (user == null) throw new Exception("Not Found User With Id: " + userId);
+
+            var commiter = _users.Find(commiterId);
+            if (commiter == null) throw new Exception("Not Found Commiter (User)  With Id: " + userId);
+
+            var transaction = new TransactionHistoryItem()
+            {
+                Trace = trace,
+                State = TransactionState.Open,
+                Invoices = invoices,
+                OpenDate = user.Property.TimeZone.Now(),
+                Amount = totalIncludingConvenienceFee,
+                ConvenienceFee = convenienceFee,
+                CommiterId = commiterId,
+                UserId = userId,
+                StateMessage = comments,
+                Service = PaymentVendor.Forte,
+            };
+
+            _transactionHistory.Add(transaction);
+
+            foreach (var invoice in invoices)
+            {
+                invoice.State = InvoiceState.Pending;
+            }
+
+            _transactionHistory.Save();
+            _invoices.Save();
+
+            return transaction.Id;
         }
 
         public void CreateUserLeaseInfo(CreateUserLeaseInfoBindingModel model)
@@ -87,266 +262,6 @@ namespace ApartmentApps.Modules.Payments.Services
 
             CreateInvoice(leaseInfo);
         }
-
-        private bool UpdateNextInvoiceDate(UserLeaseInfo info)
-        {
-
-            if (info.NextInvoiceDate != null && IsContinuable(info))
-            {
-                info.NextInvoiceDate = ComputeNextDateForInvoice(info, info.NextInvoiceDate.Value);
-                return true;
-            }
-            else
-            {
-                info.NextInvoiceDate = null;
-                return false; // Cannot set next invoice date, since 
-            }
-        }
-
-        public void CreateInvoice(UserLeaseInfo lease)
-        {
-
-            if (!lease.NextInvoiceDate.HasValue) throw new Exception("No Next Invoice Date is set for the Lease Info");
-
-            var anyActiveInvoices =
-                    _invoices.GetAll()
-                        .Any(v => v.UserLeaseInfoId == lease.Id && //invoice for same lease
-                                  !v.IsArchived && //invoice is not archived
-                                  (v.State == InvoiceState.NotPaid || v.State == InvoiceState.Pending));
-                //invoice is notpaid or pending
-
-            if (anyActiveInvoices) throw new Exception($"Another Invoice is active for lease id:{lease.Id}");
-
-            if (lease.NextInvoiceDate < lease.User.Property.TimeZone.Now())
-            {
-                throw new Exception("Invoice cannot be created before Today");
-            }
-
-            if (lease.RepetitionCompleteDate.HasValue)
-            {
-                var canContinue = lease.RepetitionCompleteDate > lease.NextInvoiceDate;
-                if (!canContinue)
-                {
-                    throw new Exception("Invoice cannot be created past Repetition Complete Date");
-                }
-            }
-
-            var invoice = new Invoice()
-            {
-                UserLeaseInfo = lease,
-                Amount = lease.Amount,
-                AvailableDate = lease.NextInvoiceDate.Value - TimeSpan.FromDays(14),
-                DueDate = lease.NextInvoiceDate.Value,
-                State = InvoiceState.NotPaid,
-                Title = lease.Title
-            };
-
-
-
-
-            _invoices.Add(invoice);
-            _invoices.Save();
-
-            UpdateNextInvoiceDate(lease);
-            _leases.Save();
-
-        }
-
-        public void CancelInvoice(CancelInvoiceBindingModel model)
-        {
-            var invoice = _invoices.Find(model.Id);
-            if (invoice == null) throw new KeyNotFoundException();
-
-            CancelInvoice(invoice);
-
-            var lease = invoice.UserLeaseInfo;
-
-            if (model.UserLeaseInfoAction == UserLeaseInfoAction.Cancel)
-            {
-                CancelUserLeaseInfo(new CancelUserLeaseInfoBindingModel()
-                {
-                    Id = lease.Id
-                });
-            }
-            else
-            {
-                GenerateNextInvoiceOrArchive(lease);
-            }
-
-            //Some actions for user lease info
-        }
-
-        public void CancelInvoice(Invoice invoice)
-        {
-             if (invoice.IsArchived) throw new Exception("Cannot cancel archived invoice");
-            if (invoice.State != InvoiceState.NotPaid)
-                throw new Exception(
-                    "Cannot cancel invoice, because it has already been processed or is being processed at the moment.");
-
-
-             invoice.State = InvoiceState.Canceled;
-            invoice.IsArchived = true;
-
-            _invoices.Save();
-
-        }
-
-        public void CancelUserLeaseInfo(UserLeaseInfo lease)
-        {
-            if(lease.State == LeaseState.Archived) throw new Exception("Cannot cancel archived Payment Request");
-
-            var activeInvoices = _invoices.Where(s=>s.UserLeaseInfoId == lease.Id && !s.IsArchived);
-
-            foreach (var invoice in activeInvoices)
-            {
-                if(invoice.State != InvoiceState.NotPaid)  throw new Exception("Cannot cancel Payment Request, since one of the related invoices is being processed");
-            }
-
-            foreach (var invoice in activeInvoices)
-            {
-                CancelInvoice(invoice);
-            }
-
-            lease.State = LeaseState.Archived;
-            _leases.Save();
-        }
-
-        public int CreateTransaction(string trace, string userId, string commiterId, decimal totalIncludingConvenienceFee, decimal convenienceFee, Invoice[] invoices, string comments, DateTime estimatedCompleteDate)
-        {
-            foreach (var invoice in invoices) 
-            {
-                if (invoice.State != InvoiceState.NotPaid || invoice.IsArchived)
-                {
-                    throw new Exception(
-                        $"One of invoices has illegal state: {invoice.Id} is {invoice.State} (Must be Not Paid)");
-                }
-            }
-
-            var user = _users.Find(userId);
-            if (user == null) throw new Exception("Not Found User With Id: " + userId);
-            
-            var commiter = _users.Find(commiterId);
-            if (commiter == null) throw new Exception("Not Found Commiter (User)  With Id: " + userId);
-
-            var transaction = new TransactionHistoryItem()
-            {
-                
-                Trace= trace,
-                State = TransactionState.Open,
-                Invoices = invoices,
-                OpenDate = user.Property.TimeZone.Now(),
-                Amount= totalIncludingConvenienceFee ,
-                ConvenienceFee = convenienceFee,
-                CommiterId = commiterId,
-                UserId = userId,
-                StateMessage = comments,
-                Service = PaymentVendor.Forte, 
-            };
-
-            _transactionHistory.Add(transaction);
-
-
-            foreach (var invoice in invoices)
-            {
-                invoice.State = InvoiceState.Pending;
-            }
-
-            _transactionHistory.Save();
-            _invoices.Save();
-
-            return transaction.Id;
-        }
-
-
-       
-
-        public void OnTransactionComplete(TransactionHistoryItem transaction, string comment, DateTime completeDate)
-        {
-            transaction.State = TransactionState.Approved;
-            transaction.StateMessage = comment;
-            transaction.CloseDate = completeDate;
-
-            var invoices = transaction.Invoices;
-
-            foreach (var invoice in invoices)
-            {
-                invoice.State = InvoiceState.Paid;
-                invoice.IsArchived = true;
-            }
-
-            _transactionHistory.Save();
-            _invoices.Save();
-
-            foreach (var invoice in invoices)
-            {
-                var lease = invoice.UserLeaseInfo;
-                if (lease.State != LeaseState.Active)
-                    throw new Exception("Fatal Error: Transaction complete for invoice of NonActive lease. This should not happen.");
-
-                GenerateNextInvoiceOrArchive(lease);
-            }
-
-            _leases.Save();
-            _invoices.Save();
-        }
-
-        public void GenerateNextInvoiceOrArchive(UserLeaseInfo lease)
-        {
-            if (lease.NextInvoiceDate.HasValue)
-            {
-                CreateInvoice(lease);
-            }
-            else
-            {
-                lease.State = LeaseState.Archived;
-            }
-            _leases.Save();
-        }
-
-
-        public bool IsContinuable(UserLeaseInfo lease)
-        {
-            if (lease.State != LeaseState.Active) return false; //because lease is suspended 
-
-            if (!lease.IsIntervalSet()) return false; //because lease is not repetative
-
-            if (!lease.NextInvoiceDate.HasValue) return false;
-
-            var newDate = ComputeNextDateForInvoice(lease, lease.NextInvoiceDate.Value);
-
-            if (lease.RepetitionCompleteDate.HasValue && newDate > lease.RepetitionCompleteDate.Value)
-                return false; //because lease is complete
-
-            return true;
-        }
-
-        public void OnTransactionError(TransactionHistoryItem transaction, string comment, DateTime completeDate)
-        {
-            transaction.State = TransactionState.Failed;
-            transaction.StateMessage = comment;
-            transaction.CloseDate = completeDate;
-
-            var invoices = transaction.Invoices;
-
-            foreach (var invoice in invoices)
-            {
-                invoice.State = InvoiceState.NotPaid;
-            }
-
-            _transactionHistory.Save();
-            _invoices.Save();
-        }
-
-        public UserPaymentsOverviewBindingModel GetUserPaymentsOverview(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DateTime ComputeNextDateForInvoice(UserLeaseInfo lease, DateTime latestInvoiceDate)
-        {
-            return latestInvoiceDate.Offset(lease.IntervalDays ?? 0, lease.IntervalMonths ?? 0, lease.IntervalYears ?? 0);
-        }
-
 
         public void EditInvoice(EditInvoiceBindingModel data)
         {
@@ -390,34 +305,131 @@ namespace ApartmentApps.Modules.Payments.Services
             _leases.Save();
         }
 
-
-        public void CancelUserLeaseInfo(CancelUserLeaseInfoBindingModel data)
+        public void GenerateNextInvoiceOrArchive(UserLeaseInfo lease)
         {
-            var lease = _leases.Find(data.Id);
-            CancelUserLeaseInfo(lease);
+            if (lease.NextInvoiceDate.HasValue)
+            {
+                CreateInvoice(lease);
+            }
+            else
+            {
+                lease.State = LeaseState.Archived;
+            }
             _leases.Save();
+        }
+
+        public UserPaymentsOverviewBindingModel GetUserPaymentsOverview(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsContinuable(UserLeaseInfo lease)
+        {
+            if (lease.State != LeaseState.Active) return false; //because lease is suspended
+
+            if (!lease.IsIntervalSet()) return false; //because lease is not repetative
+
+            if (!lease.NextInvoiceDate.HasValue) return false;
+
+            var newDate = ComputeNextDateForInvoice(lease, lease.NextInvoiceDate.Value);
+
+            if (lease.RepetitionCompleteDate.HasValue && newDate > lease.RepetitionCompleteDate.Value)
+                return false; //because lease is complete
+
+            return true;
+        }
+
+        public void OnTransactionComplete(TransactionHistoryItem transaction, string comment, DateTime completeDate)
+        {
+            transaction.State = TransactionState.Approved;
+            transaction.StateMessage = comment;
+            transaction.CloseDate = completeDate;
+
+            var invoices = transaction.Invoices;
+
+            foreach (var invoice in invoices)
+            {
+                invoice.State = InvoiceState.Paid;
+                invoice.IsArchived = true;
+            }
+
+            _transactionHistory.Save();
+            _invoices.Save();
+
+            foreach (var invoice in invoices)
+            {
+                var lease = invoice.UserLeaseInfo;
+                if (lease.State != LeaseState.Active)
+                    throw new Exception("Fatal Error: Transaction complete for invoice of NonActive lease. This should not happen.");
+
+                GenerateNextInvoiceOrArchive(lease);
+            }
+
+            _leases.Save();
+            _invoices.Save();
+        }
+
+        public void OnTransactionError(TransactionHistoryItem transaction, string comment, DateTime completeDate)
+        {
+            transaction.State = TransactionState.Failed;
+            transaction.StateMessage = comment;
+            transaction.CloseDate = completeDate;
+
+            var invoices = transaction.Invoices;
+
+            foreach (var invoice in invoices)
+            {
+                invoice.State = InvoiceState.NotPaid;
+            }
+
+            _transactionHistory.Save();
+            _invoices.Save();
+        }
+
+        public void ResumeUserLeaseInfo(ResumeUserLeaseInfoBindingModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SuspendUserLeaseInfo(SuspendUserLeaseInfoBindingModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool UpdateNextInvoiceDate(UserLeaseInfo info)
+        {
+            if (info.NextInvoiceDate != null && IsContinuable(info))
+            {
+                info.NextInvoiceDate = ComputeNextDateForInvoice(info, info.NextInvoiceDate.Value);
+                return true;
+            }
+            else
+            {
+                info.NextInvoiceDate = null;
+                return false; // Cannot set next invoice date, since
+            }
         }
     }
 
     public class TransactionHistoryItemBindingModel
     {
-        public int Id { get; set; }
-        public string UserEmail { get; set; }
-        public string UserId { get; set; }
-        public string UserFullName { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime? CloseDate { get; set; }
         public string CommiterEmail { get; set; }
         public string CommiterFullName { get; set; }
         public string CommiterId { get; set; }
-        public ForteTransactionStateCode ForteState { get; set; }
-        public PaymentVendor Service { get; set; }
-        public decimal Amount { get; set; }
         public decimal ConvenienceFee { get; set; }
-        public DateTime? OpenDate { get; set; }
-        public DateTime? CloseDate { get; set; }
-        public TransactionState State { get; set; }
-        public string Trace { get; set; }
-        public string StateMessage { get; set; }
+        public ForteTransactionStateCode ForteState { get; set; }
+        public int Id { get; set; }
         public IList<TransactionHistoryItemInvoiceBindingModel> Invoices { get; set; }
+        public DateTime? OpenDate { get; set; }
+        public PaymentVendor Service { get; set; }
+        public TransactionState State { get; set; }
+        public string StateMessage { get; set; }
+        public string Trace { get; set; }
+        public string UserEmail { get; set; }
+        public string UserFullName { get; set; }
+        public string UserId { get; set; }
     }
 
     public class TransactionHistoryItemInvoiceBindingModel
@@ -425,37 +437,5 @@ namespace ApartmentApps.Modules.Payments.Services
         public int Id { get; set; }
         public string Title { get; set; }
         public decimal Total { get; set; }
-    }
-
-    public static class TransactionHistoryItemExtensions
-    {
-        public static TransactionHistoryItemBindingModel ToBindingModel(this TransactionHistoryItem item)
-        {
-            return new TransactionHistoryItemBindingModel()
-            {
-                Id = item.Id,
-                UserEmail = item.User.Email,
-                UserId = item.User.Id,
-                UserFullName = $"{item.User.FirstName} {item.User.LastName}",
-                CommiterEmail = item.Commiter.Email,
-                CommiterId= item.Commiter.Id,
-                CommiterFullName = $"{item.Commiter.FirstName} {item.Commiter.LastName}",
-                StateMessage = item.StateMessage,
-                ConvenienceFee = item.ConvenienceFee,
-                CloseDate = item.CloseDate,
-                OpenDate = item.OpenDate,
-                Service = item.Service,
-                Amount = item.Amount,
-                State = item.State,
-                Trace = item.Trace,
-                ForteState = item.ForteState,
-                Invoices = item.Invoices.Select(s=>new TransactionHistoryItemInvoiceBindingModel()
-                {
-                    Id = s.Id,
-                    Title = s.Title,
-                    Total = s.Amount
-                }).ToList()
-            };
-        }
     }
 }

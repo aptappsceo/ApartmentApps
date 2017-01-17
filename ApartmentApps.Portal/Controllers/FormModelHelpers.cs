@@ -19,24 +19,27 @@ namespace ApartmentApps.Portal.Controllers
         public static MvcHtmlString RenderDashboardArea(this HtmlHelper helper, DashboardArea area)
         {
             List<ComponentViewModel> components = new List<ComponentViewModel>();
-            ModuleHelper.EnabledModules.Signal<IDashboardComponentProvider>(_=>_.PopulateComponents(area, components));
+            var moduleHelper = helper.ViewBag.ModuleHelper as IModuleHelper;
+            moduleHelper.SignalToEnabled<IDashboardComponentProvider>(_=>_.PopulateComponents(area, components));
             return helper.Partial("~/Views/Shared/Dashboard/Components.cshtml", components);
         }
 
         public static MvcHtmlString RenderComponent<TComponent>(this HtmlHelper helper, Action<TComponent> initComponent = null) where TComponent : IPortalComponent
         {
-            var componentClass = ModuleHelper.Kernel.Get<TComponent>();
+            var moduleHelper = helper.ViewBag.ModuleHelper as IModuleHelper;
+            var componentClass = moduleHelper.Kernel.Get<TComponent>();
             initComponent?.Invoke(componentClass);
             var component = componentClass.Execute();
 
             return helper.Partial("~/Views/Shared/Dashboard/" + component.GetType().Name + ".cshtml", component);
         }
-        public static IEnumerable<ActionLinkModel> GetActionLinksFor(object viewModel)
-        {
-            var list = new List<ActionLinkModel>();
-            ModuleHelper.EnabledModules.Signal<IFillActions>(_=> _.FillActions(list,viewModel));
-            return list.OrderBy(p => p.Index);
-        }
+        //public static IEnumerable<ActionLinkModel> GetActionLinksFor(object viewModel)
+        //{
+        //    var list = new List<ActionLinkModel>();
+
+        //    ModuleHelper.EnabledModules.Signal<IFillActions>(_=> _.FillActions(list,viewModel));
+        //    return list.OrderBy(p => p.Index);
+        //}
         public static MvcHtmlString ActionLink(this HtmlHelper helper, ActionLinkModel model, object htmlAttributes = null)
         {
             if (model.Allowed)

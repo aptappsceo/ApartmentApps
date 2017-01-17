@@ -77,7 +77,7 @@ namespace ApartmentApps.Api.Modules
             {
                 var corpId = UserContext.CurrentUser.Property.Corporation.Id;
                 var newType = typeof(PropertyRepository<>).MakeGenericType(typeof(TItem));
-                return ((IRepository<TItem>)Activator.CreateInstance(newType, _dbContext, UserContext));
+                return ((IRepository<TItem>)Activator.CreateInstance(newType, Kernel.Get<IModuleHelper>(), _dbContext, UserContext));
                 //return new PropertyRepository<TItem>(_dbContext, UserContext);
                 //var corpId = UserContext.CurrentUser.Property.Corporation.Id;
                 //return new PropertyRepository<TItem>(Context, UserContext).Include(p=>p.Property).Include(p=>p.Property.Corporation).Where(p=>p.Property.CorporationId == corpId);
@@ -85,7 +85,7 @@ namespace ApartmentApps.Api.Modules
             else
             {
                 var newType = typeof(PropertyRepository<>).MakeGenericType(typeof(TItem));
-                return (IRepository<TItem>)Activator.CreateInstance(newType, _dbContext, UserContext);
+                return (IRepository<TItem>)Activator.CreateInstance(newType, Kernel.Get<IModuleHelper>(), _dbContext, UserContext);
             }
         }
         public TimeSpan Frequency { get; }
@@ -93,26 +93,26 @@ namespace ApartmentApps.Api.Modules
         public int JobStartMinute { get; }
         public void Execute(ILogger logger)
         {
-            var userRepo = Repo<ApplicationUser>();
-            foreach (var user in userRepo.ToArray())
-            {
-                if (user.LastMobileLoginTime == null)
-                {
-                    var mr = Repo<MaitenanceRequest>().FirstOrDefault(p => p.UserId == user.Id);
-                    if (mr != null)
-                    {
-                        user.LastMobileLoginTime = mr.SubmissionDate;
-                        userRepo.Save();
-                    }
-                    var ir = Repo<IncidentReport>().FirstOrDefault(p => p.UserId == user.Id);
-                    if (ir != null)
-                    {
-                        user.LastMobileLoginTime = ir.CreatedOn;
-                        userRepo.Save();
-                    }
+            //var userRepo = Repo<ApplicationUser>();
+            //foreach (var user in userRepo.ToArray())
+            //{
+            //    if (user.LastMobileLoginTime == null)
+            //    {
+            //        var mr = Repo<MaitenanceRequest>().FirstOrDefault(p => p.UserId == user.Id);
+            //        if (mr != null)
+            //        {
+            //            user.LastMobileLoginTime = mr.SubmissionDate;
+            //            userRepo.Save();
+            //        }
+            //        var ir = Repo<IncidentReport>().FirstOrDefault(p => p.UserId == user.Id);
+            //        if (ir != null)
+            //        {
+            //            user.LastMobileLoginTime = ir.CreatedOn;
+            //            userRepo.Save();
+            //        }
 
-                }
-            }
+            //    }
+            //}
 
             var startDate = DateTime.UtcNow.Subtract(new TimeSpan(Config.EngagementNumberOfDays, 0, 0, 0));
             var year = DateTime.UtcNow.Year;
@@ -156,7 +156,7 @@ namespace ApartmentApps.Api.Modules
             analyticsItem.EngagementScore = analyticsItem.NumberMaintenanceRequests + analyticsItem.NumberIncidentReports;
             
 
-            ModuleHelper.EnabledModules.Signal<IApplyAnalytics>(x=>x.ApplyAnalytics(this,analyticsItem,startDate));
+            ModuleHelper.SignalToEnabled<IApplyAnalytics>(x=>x.ApplyAnalytics(this,analyticsItem,startDate));
             if (analyticsItem.Id < 1)
             _analyticsItemRepo.Add(analyticsItem);
             _analyticsItemRepo.Save();
@@ -181,7 +181,18 @@ namespace ApartmentApps.Api.Modules
                 return 0;
             }
         }
-
+        public IEnumerable<AnalyticsItem> AnalyticsForProperty(int propertyId, int numberOfDays)
+        {
+            var year = DateTime.UtcNow.Year;
+            var day = DateTime.UtcNow.DayOfYear - numberOfDays;
+            var repo = Repo<AnalyticsItem>(DashboardContext.All)
+                .Include(p => p.Property)
+                .Include(p => p.Property.Corporation)
+                .Where(p => p.PropertyId == propertyId && p.Year == year && p.DayOfYear >= day)
+                .OrderByDescending(x => x.DayOfYear)
+                ;
+            return repo;
+        }
         public AnalyticsItem AnalyticsForProperty(int propertyId)
         {
             var year = DateTime.UtcNow.Year;

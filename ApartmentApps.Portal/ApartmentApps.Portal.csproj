@@ -152,8 +152,8 @@
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RazorEngine, Version=3.4.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
-      <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
+    <Reference Include="RazorEngine, Version=3.9.3.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.9.3\lib\net45\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Syncfusion.Chart.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
@@ -496,6 +496,7 @@
     <Compile Include="Controllers\CourtesyOfficerLocationsController.cs" />
     <Compile Include="Controllers\CrudController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\EasyReportController.cs" />
     <Compile Include="Controllers\FormModelHelpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -506,6 +507,7 @@
     <Compile Include="Controllers\MaitenanceRequestsController.cs" />
     <Compile Include="Controllers\MessagingController.cs" />
     <Compile Include="Controllers\PaymentOptionsController.cs" />
+    <Compile Include="Controllers\PaymentRequestsController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\PropertyEntrataInfoController.cs" />
@@ -991,6 +993,8 @@
     <Content Include="Content\eqview.css" />
     <Content Include="Content\FormFactory\FormFactory.css" />
     <Content Include="Content\Gridmvc.css" />
+    <Content Include="Content\Images\app-store-android-download.png" />
+    <Content Include="Content\Images\appstore_black.png" />
     <Content Include="Content\parcland-1.jpg" />
     <Content Include="Content\plugins\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\plugins\blueimp\css\blueimp-gallery-indicator.css" />
@@ -1546,11 +1550,12 @@
     <Content Include="Views\Shared\Dashboard\DashboardGridViewModel.cshtml" />
     <Content Include="Views\Dashboard\PropertyAdmin.cshtml" />
     <Content Include="Views\Shared\Dashboard\FeedItemsListModel.cshtml" />
+    <Content Include="Views\Shared\Dashboard\LineChartViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\" />
     <Folder Include="Views\AutoGrid\" />
+    <Folder Include="Views\Developer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

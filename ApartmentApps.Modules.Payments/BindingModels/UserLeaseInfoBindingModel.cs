@@ -47,7 +47,7 @@ namespace ApartmentApps.Api.Modules
                 Amount = lease.Amount,
                 Title = lease.Title,
                 User = lease.User.ToUserBindingModel(blobStorageService),
-                CreateDate = lease.CreateDate,
+                CreateDate = lease.CreateDate.Value,
                 NextInvoiceDate = lease.NextInvoiceDate ,
                 Id = lease.Id.ToString(),
                 RepetitionCompleteDate = lease.RepetitionCompleteDate,

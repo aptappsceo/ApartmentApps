@@ -29,9 +29,9 @@ namespace ApartmentApps.Jobs
 //            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApartmentApps.Data.Migrations.Configuration>());
 //#endif   
             var context = new ApplicationDbContext();
-           // var ids = new int[] {11};
+            //var ids = new int[] {33};
             //foreach (var item in context.Properties.Where(x=>ids.Contains(x.Id)).ToArray())
-            foreach (var item in context.Properties.ToArray())
+            foreach (var item in context.Properties.Where(p=>p.State == PropertyState.Active).ToArray())
             {
                 IKernel kernel = new StandardKernel();
                 Register.RegisterServices(kernel);
@@ -50,7 +50,7 @@ namespace ApartmentApps.Jobs
                 kernel.Bind<IUserContext>().ToMethod(p=>userContext);
                 kernel.Bind<ILogger>().To<ConsoleLogger>();
 #if DEBUG
-                var modules = kernel.GetAll<IModule>().Where(p=>p.Enabled).OfType<AnalyticsModule>().ToArray();
+                var modules = kernel.GetAll<IModule>().Where(p=>p.Enabled).OfType<EntrataModule>().ToArray();
 #else
                 var modules = kernel.GetAll<IModule>().Where(p=>p.Enabled).OfType<IWebJob>().ToArray();
 #endif

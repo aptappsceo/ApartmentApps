@@ -31,6 +31,9 @@ namespace ApartmentApps.Portal.Controllers
 
     public class AAController : Controller
     {
+        protected ApplicationSignInManager _signInManager;
+        private IModuleHelper _moduleHelper;
+
         public TConfig GetConfig<TConfig>() where TConfig : PropertyModuleConfig, new()
         {
             var config = Kernel.Get<Module<TConfig>>().Config;
@@ -54,13 +57,18 @@ namespace ApartmentApps.Portal.Controllers
             get
             {
                 var list = new List<ActionLinkModel>();
-                ModuleHelper.EnabledModules.Signal<IPageTabsProvider>(_ => _.PopulateMenuItems(list));
+                Kernel.Get<IModuleHelper>().SignalToEnabled<IPageTabsProvider>(_ => _.PopulateMenuItems(list));
                 return list;
             }
         }
+
+        public IModuleHelper ModuleHelper
+        {
+            get { return _moduleHelper ?? (_moduleHelper = Kernel.Get<IModuleHelper>()); }
+        }
         public IEnumerable<IModule> Modules
         {
-            get { return Kernel.GetAll<IModule>(); }
+            get { return ModuleHelper.AllModules; }
         }
 
         public IEnumerable<IModule> EnabledModules
@@ -76,6 +84,18 @@ namespace ApartmentApps.Portal.Controllers
 
         public Data.Property Property => CurrentUser?.Property;
 
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set 
+            { 
+                _signInManager = value; 
+            }
+        }
+
         [NonAction]
         public ViewResult ViewByModel(BaseViewModel viewModel)
         {
@@ -88,7 +108,7 @@ namespace ApartmentApps.Portal.Controllers
             pageVM.Title = title;
             pageVM.Description = description;
             
-            ModuleHelper.EnabledModules.Signal<IFillActions>(_=>_.FillActions(pageVM.ActionLinks,pageVM));
+            ModuleHelper.SignalToEnabled<IFillActions>(_=>_.FillActions(pageVM.ActionLinks,pageVM));
 
             return View(pageVM.View ?? "Page", pageVM);
 
@@ -96,8 +116,11 @@ namespace ApartmentApps.Portal.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
+            ViewBag.Kernel = Kernel;
+            ViewBag.ModuleHelper = ModuleHelper;
             if (Property != null)
             {
+
                 ViewBag.Property = Property;
                 if (User.IsInRole("Admin"))
                 {
@@ -105,7 +128,8 @@ namespace ApartmentApps.Portal.Controllers
 
                 }
                 var menuItems = new List<MenuItemViewModel>();
-                EnabledModules.Signal<IMenuItemProvider>(p => p.PopulateMenuItems(menuItems));
+                
+                ModuleHelper.SignalToEnabled<IMenuItemProvider>(p => p.PopulateMenuItems(menuItems));
                 ViewBag.MenuItems = menuItems;
                 ViewBag.Tabs = Tabs;
 

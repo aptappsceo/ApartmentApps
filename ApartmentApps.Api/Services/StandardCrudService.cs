@@ -11,6 +11,7 @@ using System.Text;
 using System.Xml;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using Korzh.EasyQuery;
@@ -282,7 +283,8 @@ namespace ApartmentApps.Portal.Controllers
 
         public virtual TViewModel CreateNew<TViewModel>() where TViewModel : new()
         {
-            return new TViewModel();
+            return _kernel.Get<TViewModel>();
+            //return new TViewModel();
         }
 
         public virtual void Save<TViewModel>(TViewModel unit) where TViewModel : BaseViewModel
