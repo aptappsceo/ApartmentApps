@@ -57,7 +57,7 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult NewRequest()
         {
 
-            return AutoForm(new IncidentReportFormModel(), "SubmitRequest", "New Incident Report");
+            return AutoForm(CreateFormModel(), "SubmitRequest", "New Incident Report");
         }
         public ActionResult Pause(int id)
         {

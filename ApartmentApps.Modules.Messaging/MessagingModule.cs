@@ -73,6 +73,14 @@ namespace ApartmentApps.Api.Modules
         public async Task SendEmailAsync(MessageViewModel messageRecord,ApplicationUser user, IdentityMessage message)
         {
             await Kernel.Get<IEmailService>().SendAsync(message);
+            _messageReceipts.Add(new MessageReceipt()
+            {
+                UserId = user.Id,
+                Error = false,
+                ErrorMessage = null,
+                MessageId = Convert.ToInt32(messageRecord.Id),
+            });
+            _messageReceipts.Save();
             //string apiKey = "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";
             //var fromEmail = "noreply@apartmentapps.com";
 
@@ -91,12 +99,12 @@ namespace ApartmentApps.Api.Modules
 
             //dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
             //var status = (HttpStatusCode)response.StatusCode;
-           
-            
+
+
             //_messageReceipts.Add(new MessageReceipt()
             //{
             //    UserId = user.Id,
-            //    Error =  status != HttpStatusCode.Accepted,
+            //    Error = status != HttpStatusCode.Accepted,
             //    ErrorMessage = Config.FullLogging ? response.StatusCode.ToString() + response.Body.ReadAsStringAsync().Result : response.StatusCode.ToString(),
             //    MessageId = Convert.ToInt32(messageRecord.Id),
             //});
