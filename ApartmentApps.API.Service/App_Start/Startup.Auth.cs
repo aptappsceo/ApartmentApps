@@ -11,7 +11,7 @@ using Owin;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.Data;
-using Microsoft.Owin.Cors;
+//using Microsoft.Owin.Cors;
 
 namespace ApartmentApps.API.Service
 {
@@ -25,7 +25,7 @@ namespace ApartmentApps.API.Service
         public void ConfigureAuth(IAppBuilder app)
         {
 
-            app.UseCors(CorsOptions.AllowAll);
+           // app.UseCors(CorsOptions.AllowAll);
 
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
