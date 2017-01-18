@@ -128,10 +128,14 @@ namespace ApartmentApps.Portal.App_Start
         }
 
 
-        public IIdentity User => System.Web.HttpContext.Current.User.Identity;
+        public IIdentity User => HttpContext != null ? HttpContext.User.Identity : System.Web.HttpContext.Current.User.Identity;
 
         public bool IsInRole(string roleName)
         {
+            if (HttpContext != null)
+            {
+                HttpContext.User.IsInRole(roleName);
+            }
             return HttpContext.Current.User.IsInRole(roleName);
         }
 
@@ -146,5 +150,7 @@ namespace ApartmentApps.Portal.App_Start
                 return 1;
             }
         }
+
+        public HttpContext HttpContext { get; set; }
     }
 }

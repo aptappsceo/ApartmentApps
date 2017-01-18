@@ -13,6 +13,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
@@ -329,8 +330,13 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public ActionResult CreateMonthlyReport(MaintenanceReportModel model)
         {
-
-            Thread thread = new Thread(() => { CreateDocument(model); });
+            if (UserContext.CurrentUser == null) // hack for caching the current user httpcontext.current is not available in thread
+            {
+                return RedirectToAction("MonthlyReport");
+            }
+            var httpContext = System.Web.HttpContext.Current;
+            var result = GetReport(model);
+            Thread thread = new Thread(() => { CreateDocument(result, httpContext); });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();
@@ -348,8 +354,10 @@ namespace ApartmentApps.Portal.Controllers
         {
             return Context.MaintenanceRequestCheckins.Where(p => p.Date > startDate && p.Date < endDate);
         }
-        private void CreateDocument(MaintenanceReportModel model)
+
+        public MaintenanceReportViewModel GetReport(MaintenanceReportModel model)
         {
+            var result = new MaintenanceReportViewModel();
             var startDate = model.StartDate;
             var endDate = model.EndDate;
             if (startDate == null)
@@ -358,67 +366,78 @@ namespace ApartmentApps.Portal.Controllers
             if (endDate == null)
                 endDate = CurrentUser.TimeZone.Now().AddDays(1);
 
+            result.StartDate = startDate.Value;
+            result.EndDate = endDate.Value;
+
             var todayEnd = CurrentUser.TimeZone.Now().AddDays(1);
             var todayStart = CurrentUser.TimeZone.Now();
 
 
             var StartDate = startDate;
             var EndDate = endDate;
-            var NumberEntered = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId == "Submitted");
-            var NumberOutstanding = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId != "Complete");
-            var NumberCompleted = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId == "Complete");
+            //var NumberEntered = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId == "Submitted");
+            //var NumberOutstanding = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId != "Complete");
+            //var NumberCompleted = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId == "Complete");
 
-            var MaintenanceTotalOutstanding = Context.MaitenanceRequests.Count(p => p.StatusId != "Complete");
-            var MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p => p.ScheduleDate > todayStart && p.ScheduleDate < todayEnd && p.StatusId == "Scheduled");
-            var IncidentReportsTotalOutstanding = Context.IncidentReports.Count(x => x.StatusId != "Complete");
+            //var MaintenanceTotalOutstanding = Context.MaitenanceRequests.Count(p => p.StatusId != "Complete");
+            //var MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p => p.ScheduleDate > todayStart && p.ScheduleDate < todayEnd && p.StatusId == "Scheduled");
+            //var IncidentReportsTotalOutstanding = Context.IncidentReports.Count(x => x.StatusId != "Complete");
 
-            var WorkOrdersPerEmployee = CheckinsByRange(startDate, endDate).Where(p => p.StatusId == "Complete")
+            result.WorkOrdersPerEmployee = CheckinsByRange(startDate, endDate).Where(p => p.StatusId == "Complete")
                 .GroupBy(p => p.Worker)
                 .ToArray();
-
-            var within24 = Context.MaitenanceRequests.GetAll()
+  
+            result.within24 = Context.MaitenanceRequests.GetAll()
                 .Count(p => p.CompletionDate != null &&
                             p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
                             DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 24
                             );
-            var within48 = Context.MaitenanceRequests.GetAll()
-                                    .Count(p => p.CompletionDate != null && 
+            result.within48 = Context.MaitenanceRequests.GetAll()
+                                    .Count(p => p.CompletionDate != null &&
                                                 p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
                                                 DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 24 && DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 48
                                                 );
-            var within72 = Context.MaitenanceRequests.GetAll()
+            result.within72 = Context.MaitenanceRequests.GetAll()
                                   .Count(p => p.CompletionDate != null &&
                                               p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
                                               DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 48 && DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 72
                                               );
 
-            var greaterThan72 = Context.MaitenanceRequests.GetAll()
+            result.greaterThan72 = Context.MaitenanceRequests.GetAll()
                     .Count(p => p.CompletionDate != null &&
                           p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
                           DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 72
                   );
-            var paused = Context.MaitenanceRequests.GetAll()
+            result.paused = Context.MaitenanceRequests.GetAll()
                  .Count(p => p.CompletionDate != null &&
                p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate && p.StatusId == "Paused"
-               
+
                );
+            result.completed = CheckinsByRange(startDate, endDate).Count(p => p.StatusId == "Complete");
+            result.PropertyName = UserContext.CurrentUser.Property.Name;
+            return result;
+        }
+        private void CreateDocument(MaintenanceReportViewModel model, HttpContext httpContext)
+        {
+            //Kernel.Get<WebUserContext>().HttpContext = httpContext;
+           
             HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
             string htmlText = $"<html><body style='padding: 40px;font-family: Arial, Helvetica, sans-serif;'>" +
-                              $"<div style='text-align: center; font-size: 32px; font-weight: bold'>{UserContext.CurrentUser.Property.Name} Monthly Maintenance Report</div>" +
+                              $"<div style='text-align: center; font-size: 32px; font-weight: bold'>{model.PropertyName} Monthly Maintenance Report</div>" +
                               $"<div style='text-align: center; font-size: 20px;'>For {model.StartDate} {model.EndDate}</div>" +
                               $"<br/><br/><table style='width: 100%'>";
 
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Completed</td><td>{CheckinsByRange(startDate, endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Paused</td><td>{paused} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24 hours</td><td>{within24} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24-48 hours</td><td>{within48} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 48-72 hours</td><td>{within72} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 72+ hours</td><td>{greaterThan72} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Completed</td><td>{model.completed} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Paused</td><td>{model.paused} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24 hours</td><td>{model.within24} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24-48 hours</td><td>{model.within48} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 48-72 hours</td><td>{model.within72} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 72+ hours</td><td>{model.greaterThan72} Work Orders</td></tr> ";
         
 
 
 
-            foreach (var item in WorkOrdersPerEmployee)
+            foreach (var item in model.WorkOrdersPerEmployee)
             {
                 htmlText += $"<tr><td>{item.Key.FirstName} {item.Key.LastName} Completed</td><td>{item.Count()} Work Orders</td></tr> ";
             }
@@ -513,6 +532,20 @@ namespace ApartmentApps.Portal.Controllers
             MaintenanceService = formService;
     
         }
+    }
+
+    public class MaintenanceReportViewModel
+    {
+        public IGrouping<ApplicationUser, MaintenanceRequestCheckin>[] WorkOrdersPerEmployee { get; set; }
+        public int within24 { get; set; }
+        public int within48 { get; set; }
+        public int within72 { get; set; }
+        public int greaterThan72 { get; set; }
+        public int paused { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int completed { get; set; }
+        public string PropertyName { get; set; }
     }
 
     public class MaintenanceRequestOverviewViewModel
