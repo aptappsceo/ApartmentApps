@@ -115,7 +115,7 @@ namespace ApartmentApps.Portal.Controllers
             Repository = repository;
 
         }
-
+        
         public Type ModelType => typeof(TModel);
         protected DbQuery CreateQuery(string queryId, string queryName, params ConditionItem[] conditions)
         {

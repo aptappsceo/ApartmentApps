@@ -415,10 +415,18 @@ namespace ApartmentApps.Api.Modules
                 {
                     Icon = "fa-sign-in",
                 });
-
+             
                 actions.Add(new ActionLinkModel("Import Residents/Units", "ImportResidentCSV", "Property", new { propertyId = propertyViewModel.Id }));
                 actions.Add(new ActionLinkModel("Create Labels CSV", "CreateLabelCSV", "Property", new { propertyId = propertyViewModel.Id }));
-
+                //if (UserContext.IsInRole("Admin"))
+                //{
+                //    actions.Add(new ActionLinkModel("Clear Property", "ClearProperty", "Account",
+                //    new { id = propertyViewModel.Id })
+                //    {
+                //        Icon = "fa-sign-in",
+                //    });
+                //}
+                
             }
         }
 

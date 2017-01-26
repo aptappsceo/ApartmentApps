@@ -58,6 +58,30 @@ namespace ApartmentApps.Portal.Controllers
         private readonly IRepository<Unit> _unitsRepo;
         private ApplicationUserManager _userManager;
 
+        public void ClearProperty()
+        {
+            RemoveAll<MaintenanceRequestCheckin>();
+            RemoveAll<MaitenanceRequest>();
+            RemoveAll<IncidentReportCheckin>();
+            RemoveAll<IncidentReport>();
+            RemoveAll<MessageReceipt>();
+            RemoveAll<Message>();
+            RemoveAll<UserAlert>();
+            RemoveAll<AnalyticsItem>();
+
+            //RemoveAll<UserPaymentOption>();
+            //RemoveAll<UserPaymentOption>();
+
+        }
+        public void RemoveAll<TType>() where TType : class
+        {
+            var set = Kernel.Get<IRepository<TType>>();
+            foreach (var item in set.ToArray())
+            {
+                set.Remove(item);
+                set.Save();
+            }
+        }
         public PropertyController(IRepository<Unit> unitsRepo, IKernel kernel, EntrataModule entrata, IUnitImporter importer, PropertyContext context, IUserContext userContext, ApplicationUserManager userManager, PropertyService propertyService) : base(kernel, propertyService, context, userContext)
         {
             Entrata = entrata;
