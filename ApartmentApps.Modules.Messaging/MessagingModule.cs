@@ -53,6 +53,7 @@ namespace ApartmentApps.Api.Modules
             foreach (var item in ids)
             {
                 var user = _context.Users.Find(item);
+                if (user == null) continue;
                 if (user.Archived) continue;
                 // Send the push notification
                 _alertsService.SendAlert(user, message.Title, message.Body, "Message", Convert.ToInt32(message.Id), null, "Open to read the full message.");
