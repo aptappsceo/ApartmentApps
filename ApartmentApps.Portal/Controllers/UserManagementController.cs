@@ -124,8 +124,12 @@ namespace ApartmentApps.Portal.Controllers
 
         public ApplicationUserManager UserManager
         {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-            private set { _userManager = value; }
+            get
+            {
+               
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            set { _userManager = value; }
         }
 
         public void Unarchive(string id)
@@ -191,7 +195,7 @@ namespace ApartmentApps.Portal.Controllers
                 {
 
                 }
-                if (!User.IsInRole("Admin"))
+                if (User != null && !User.IsInRole("Admin"))
                 {
                     model.SelectedRoles.Remove("Admin"); // Just to make sure
                 }
@@ -209,19 +213,22 @@ namespace ApartmentApps.Portal.Controllers
                 }
                 if (newUser)
                 {
-
-                    var result = await UserManager.CreateAsync(user, "Temp1234!");
-                    if (result.Succeeded)
+                    if (UserManager != null)
                     {
+                        var result = await UserManager.CreateAsync(user, "Temp1234!");
+                        if (result.Succeeded)
+                        {
 
 
-                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                        // Send an email with this link
-                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                            // Send an email with this link
+                            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                        }
                     }
+                   
                 }
                 else
                 {
@@ -282,6 +289,11 @@ namespace ApartmentApps.Portal.Controllers
             //return base.Entry(id);
         }
 
+        public override ActionResult SaveEntry(UserBindingModel model)
+        {
+
+            return base.SaveEntry(model);
+        }
     }
 
     public class RoleBindingModel

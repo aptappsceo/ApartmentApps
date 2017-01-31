@@ -7,7 +7,9 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.API.Service.Controllers;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Portal;
 using ApartmentApps.Portal.Controllers;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using MaitenanceRequestModel = ApartmentApps.Portal.Controllers.MaitenanceRequestModel;
@@ -129,6 +131,56 @@ namespace ApartmentApps.Tests
         {
             RemoveAll<MaintenanceRequestCheckin>();
             RemoveAll<MaitenanceRequest>();
+            base.DeInit();
+        }
+    }
+
+
+    [TestClass]
+    public class UserManagementTests : PropertyControllerTest<UserManagementController>
+    {
+        [TestInitialize]
+        public override void Init()
+        {
+            base.Init();
+            //Context.Kernel.Bind<UserManagementController>().ToSelf();
+     
+        }
+
+
+
+
+        [TestMethod]
+        public void TestCreateUser()
+        {
+            var data = new UserFormModel(Context.Kernel.Get<UnitService>())
+            {
+                Email = $"{Guid.NewGuid()}@aol-aol.com",
+                FirstName = "Bla",
+                LastName = "Bla",
+                Password = "bla",
+                PhoneNumber = "555-555-5555",
+                
+            };
+
+            data.SelectedRoles = new[] {"Resident"}.ToList();
+            var unit = data.UnitItems.FirstOrDefault();
+            if (unit != null)
+            data.UnitId = Convert.ToInt32(unit.Id);
+            Controller.UserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(DbContext));
+            var result = Controller.SaveUser(data).Result;
+            
+            var userRepo = Context.Kernel.Get<IRepository<ApplicationUser>>();
+            var user = userRepo.GetAll().FirstOrDefault(p => p.Email == data.Email);
+            Assert.IsNotNull(user,"User is null");
+
+        }
+
+
+        [TestCleanup]
+        public override void DeInit()
+        {
+            
             base.DeInit();
         }
     }

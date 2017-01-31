@@ -72,43 +72,43 @@ namespace ApartmentApps.Api.Modules
         }
         public async Task SendEmailAsync(MessageViewModel messageRecord,ApplicationUser user, IdentityMessage message)
         {
-            await Kernel.Get<IEmailService>().SendAsync(message);
-            _messageReceipts.Add(new MessageReceipt()
-            {
-                UserId = user.Id,
-                Error = false,
-                ErrorMessage = null,
-                MessageId = Convert.ToInt32(messageRecord.Id),
-            });
-            _messageReceipts.Save();
-            //string apiKey = "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";
-            //var fromEmail = "noreply@apartmentapps.com";
-
-            //if (!string.IsNullOrEmpty(Config.SendGridApiToken))
-            //{
-            //    apiKey = Config.SendGridApiToken;
-            //    fromEmail = Config.SendFromEmail;
-            //}
-            //dynamic sg = new SendGridAPIClient(apiKey);
-
-            //Email from = new Email(fromEmail);
-            //string subject = message.Subject;
-            //Email to = new Email(message.Destination);
-            //Content content = new Content("text/html", message.Body);
-            //Mail mail = new Mail(from, subject, to, content);
-
-            //dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
-            //var status = (HttpStatusCode)response.StatusCode;
-
-
+            //await Kernel.Get<IEmailService>().SendAsync(message);
             //_messageReceipts.Add(new MessageReceipt()
             //{
             //    UserId = user.Id,
-            //    Error = status != HttpStatusCode.Accepted,
-            //    ErrorMessage = Config.FullLogging ? response.StatusCode.ToString() + response.Body.ReadAsStringAsync().Result : response.StatusCode.ToString(),
+            //    Error = false,
+            //    ErrorMessage = null,
             //    MessageId = Convert.ToInt32(messageRecord.Id),
             //});
             //_messageReceipts.Save();
+            string apiKey = "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";
+            var fromEmail = "noreply@apartmentapps.com";
+
+            if (!string.IsNullOrEmpty(Config.SendGridApiToken))
+            {
+                apiKey = Config.SendGridApiToken;
+                fromEmail = Config.SendFromEmail;
+            }
+            dynamic sg = new SendGridAPIClient(apiKey);
+
+            Email from = new Email(fromEmail);
+            string subject = message.Subject;
+            Email to = new Email(message.Destination);
+            Content content = new Content("text/html", message.Body);
+            Mail mail = new Mail(from, subject, to, content);
+
+            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            var status = (HttpStatusCode)response.StatusCode;
+
+
+            _messageReceipts.Add(new MessageReceipt()
+            {
+                UserId = user.Id,
+                Error = status != HttpStatusCode.Accepted,
+                ErrorMessage = Config.FullLogging ? response.StatusCode.ToString() + response.Body.ReadAsStringAsync().Result : response.StatusCode.ToString(),
+                MessageId = Convert.ToInt32(messageRecord.Id),
+            });
+            _messageReceipts.Save();
 
         }
         public string SettingsController => "MessagingConfig";
