@@ -35,6 +35,14 @@ using Syncfusion.Pdf;
 
 namespace ApartmentApps.Portal.Controllers
 {
+    public class ReportController : AAController
+    {
+        public ReportController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        {
+        }
+
+        
+    }
     public class BaseViewModelBinderProvider : IModelBinderProvider
     {
         public IModelBinder GetBinder(Type modelType)
@@ -354,6 +362,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             return Context.MaintenanceRequestCheckins.Where(p => p.Date > startDate && p.Date < endDate);
         }
+
 
         public MaintenanceReportViewModel GetReport(MaintenanceReportModel model)
         {

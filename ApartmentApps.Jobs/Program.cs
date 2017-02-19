@@ -54,11 +54,12 @@ namespace ApartmentApps.Jobs
 #else
                 var modules = kernel.GetAll<IModule>().Where(p=>p.Enabled).OfType<IWebJob>().ToArray();
 #endif
-
+                //var strLogger = new StringLogger();
                 foreach (var module in modules)
                 {
                     try
                     {
+                        
                         module.Execute(new ConsoleLogger());
                     }
                     catch (Exception ex)
@@ -78,6 +79,29 @@ namespace ApartmentApps.Jobs
         }
     }
 
+    public class StringLogger : ILogger
+    {
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+        StringBuilder sb = new StringBuilder();
+
+        public void Error(string str, params object[] args)
+        {
+            sb.AppendLine("Error: " + string.Format(str, args));
+        }
+
+        public void Warning(string str, params object[] args)
+        {
+            sb.AppendLine("Warning: " + string.Format(str,args));
+        }
+
+        public void Info(string str, params object[] args)
+        {
+            sb.AppendLine("Info: " + string.Format(str, args));
+        }
+    }
     //public class ConsoleLogger : ILogger
     //{
     //    public void Error(string str, params object[] args)

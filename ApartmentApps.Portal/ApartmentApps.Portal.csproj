@@ -473,6 +473,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="Base\Class1.cs" />
     <Compile Include="CodeGen\MultiOutput.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

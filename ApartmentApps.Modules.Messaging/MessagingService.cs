@@ -132,7 +132,7 @@ namespace ApartmentApps.Portal.Controllers
         public string Body { get; set; }
     }
 
-
+    
     public class MessagingService : StandardCrudService<Message>
     {
         private readonly IModuleHelper _moduleHelper;
