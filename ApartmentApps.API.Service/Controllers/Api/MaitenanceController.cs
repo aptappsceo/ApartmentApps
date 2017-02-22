@@ -58,9 +58,10 @@ namespace ApartmentApps.API.Service.Controllers
             //             LatestCheckin = x.LatestCheckin?.ToMaintenanceCheckinBindingModel(BlobStorageService)
             //         }).ToArray();
             //}
+            var prev = DateTime.Now.Subtract(new TimeSpan(30, 0, 0, 0));
 
             return
-                Context.MaitenanceRequests.GetAll().OrderByDescending(p => p.SubmissionDate).ToArray().Select(
+                Context.MaitenanceRequests.GetAll().Where(x=>x.CompletionDate == null || x.CompletionDate > prev).OrderByDescending(p => p.SubmissionDate).ToArray().Select(
                     x => new MaintenanceIndexBindingModel()
                     {
                         Title = x.MaitenanceRequestType.Name,
