@@ -24,6 +24,8 @@ namespace ApartmentApps.Portal.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using System.Threading;
+    using System.Web.Hosting;
 
     public static class NinjectWebCommon 
     {
@@ -91,6 +93,18 @@ namespace ApartmentApps.Portal.App_Start
             kernel.Bind<IAuthenticationManager>()
                 .ToMethod(o => HttpContext.Current.GetOwinContext().Authentication)
                 .InRequestScope();
+        }
+    }
+    public class BackgroundScheduler : IBackgroundScheduler
+    {
+        public void QueueBackgroundItem(Action<CancellationToken> backgroundAction)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(backgroundAction);
+        }
+
+        public void QueueBackgroundItem(Func<CancellationToken, System.Threading.Tasks.Task> backgroundAction)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(backgroundAction);
         }
     }
 

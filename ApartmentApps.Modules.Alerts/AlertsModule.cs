@@ -433,7 +433,7 @@ namespace ApartmentApps.Api
                         Body = CreateEmail(data),
                         Destination = data.ToEmail,
                         Subject = data.Subject
-                    }).Wait(x);
+                    }).Wait();
             }
            
 
