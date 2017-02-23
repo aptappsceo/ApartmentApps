@@ -147,7 +147,7 @@ namespace ApartmentApps.Api
 
         protected override UserAlertsConfig CreateDefaultConfig()
         {
-            var defaultConfig =  base.CreateDefaultConfig();
+            var defaultConfig = base.CreateDefaultConfig();
             defaultConfig.EmailNotifications = true;
             return defaultConfig;
         }
@@ -182,7 +182,7 @@ namespace ApartmentApps.Api
             if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin")) return;
 
             var user = viewModel as UserBindingModel;
-            if (user != null )
+            if (user != null)
             {
                 //paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments",new {id = UserContext.CurrentUser.Id}));
                 actions.Add(new ActionLinkModel("Send Engagement Letter", "SendEngagementLetter", "UserManagement", new { id = user.Id })
@@ -198,7 +198,7 @@ namespace ApartmentApps.Api
             if (maitenanceRequest.User.PropertyId != null)
             {
                 var mapper = Kernel.Get<FeedSerivce>();
-                SendAlert(maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id, 
+                SendAlert(maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id,
                     new UpdateEmailData()
                     {
                         FeedItem = mapper.ToFeedItemBindingModel(maitenanceRequest),
@@ -305,7 +305,7 @@ namespace ApartmentApps.Api
                     });
                     // _emailService.SendAsync(new IdentityMessage() { Body = message, Destination = item.Email, Subject = title });
                 }
-                    
+
             }
             Context.SaveChanges();
 
@@ -365,7 +365,7 @@ namespace ApartmentApps.Api
             data.UserContext = UserContext;
             data.Config = Config;
 
-            
+
             if (!_razorService.IsTemplateCached(templateName, templateType))
             {
                 _razorService.AddTemplate(templateName,
@@ -375,14 +375,14 @@ namespace ApartmentApps.Api
             //{
             //    return _razorService.Run(templateName, templateType, data);
             //}
-            
+
             return _razorService.RunCompile(templateName, templateType, data);
         }
 
         public void SendUserEngagementLetter(ApplicationUser user)
         {
             var mapper = Kernel.Get<IMapper<ApplicationUser, UserBindingModel>>();
-            
+
             SendEmail(new ActionEmailData()
             {
 
@@ -409,15 +409,34 @@ namespace ApartmentApps.Api
             };
         }
 
-        public void SendEmail<TData>(TData data) where TData : EmailData
+        public void SendEmail<TData>(TData data, bool inBackground = true) where TData : EmailData
         {
-            if (data.ToEmail != null)
-                _emailService.SendAsync(new IdentityMessage()
+            if (inBackground)
+            {
+                var backgroundScheduler = Kernel.Get<IBackgroundScheduler>();
+                backgroundScheduler.QueueBackgroundItem(x =>
                 {
-                    Body = CreateEmail(data),
-                    Destination = data.ToEmail,
-                    Subject = data.Subject
-                }).Wait();
+                    if (data.ToEmail != null)
+                        _emailService.SendAsync(new IdentityMessage()
+                        {
+                            Body = CreateEmail(data),
+                            Destination = data.ToEmail,
+                            Subject = data.Subject
+                        }).Wait(x);
+                });
+            }
+            else
+            {
+                if (data.ToEmail != null)
+                    _emailService.SendAsync(new IdentityMessage()
+                    {
+                        Body = CreateEmail(data),
+                        Destination = data.ToEmail,
+                        Subject = data.Subject
+                    }).Wait(x);
+            }
+           
+
         }
 
         private static string LoadHtmlFile(string resourceName)
@@ -429,10 +448,10 @@ namespace ApartmentApps.Api
                 return result;
             }
         }
-       
+
         public void Execute(ILogger logger)
         {
-            var users = _userRepository.GetAll().Where(x=>!x.Archived && x.LastMobileLoginTime == null && x.LastPortalLoginTime == null).ToArray();
+            var users = _userRepository.GetAll().Where(x => !x.Archived && x.LastMobileLoginTime == null && x.LastPortalLoginTime == null).ToArray();
             foreach (var user in users)
             {
                 if (user.EngagementLetterSentOn == null ||

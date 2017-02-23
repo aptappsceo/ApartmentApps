@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
@@ -141,6 +142,7 @@ namespace ApartmentApps.API.Service.Controllers
         {
             var images = request.Images?.Select(Convert.FromBase64String).ToList();
             MaintenanceService.SubmitRequest(request.Comments, request.MaitenanceRequestTypeId, request.PetStatus, request.Emergency, request.PermissionToEnter, images, request.UnitId, SubmittedVia.Mobile);
+         
         }
 
         [System.Web.Http.HttpPost]

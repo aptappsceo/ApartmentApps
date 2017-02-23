@@ -81,8 +81,8 @@ namespace ApartmentApps.Portal.App_Start
         {
             Register.RegisterServices(kernel);
             //kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
+            kernel.Bind<IBackgroundScheduler>().To<BackgroundScheduler>().InRequestScope();
 
-            
             kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
             kernel.Bind<ILogger>().To<LoggerModule>().InRequestScope();
             //kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();

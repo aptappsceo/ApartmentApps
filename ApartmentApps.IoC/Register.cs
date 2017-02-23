@@ -271,9 +271,9 @@ namespace ApartmentApps.IoC
             kernel.Bind<IDataSheet<ApplicationUser>>().To<UserDataSheet>().InRequestScope();
 
             kernel.Bind<ISearchCompiler>().To<SearchCompiler>().InSingletonScope();
-
-
-
+#if JOBS
+            kernel.Bind<IBackgroundScheduler>().To<DefaultBackgroundScheduler>().InRequestScope();
+#endif
 #if !JOBS
             kernel.Bind<RouteLinker>().ToSelf().InRequestScope();
             kernel.Bind<HttpRequestMessage>()

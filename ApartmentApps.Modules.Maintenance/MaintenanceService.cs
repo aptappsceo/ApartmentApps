@@ -389,7 +389,7 @@ namespace ApartmentApps.Api
                 maitenanceRequest.StatusId, null, maitenanceRequest.GroupId);
 
             _moduleHelper.SignalToEnabled<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
-
+            
             return maitenanceRequest.Id;
 
         }
