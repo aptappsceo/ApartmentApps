@@ -83,7 +83,7 @@ namespace ApartmentApps.API.Service.App_Start
         {
 
             Register.RegisterServices(kernel);
-            kernel.Bind<IBackgroundScheduler>().To<BackgroundScheduler>().InRequestScope();
+            kernel.Bind<IBackgroundScheduler>().To<DefaultBackgroundScheduler>().InRequestScope();
             kernel.Bind<ILogger>().To<LoggerModule>().InRequestScope();
             kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
             kernel.Bind<IAuthenticationManager>().ToMethod(p => HttpContext.Current.GetOwinContext().Authentication).InRequestScope();

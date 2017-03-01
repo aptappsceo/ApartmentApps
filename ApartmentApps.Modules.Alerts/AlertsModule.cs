@@ -254,7 +254,7 @@ namespace ApartmentApps.Api
                 email.ToEmail = user.Email;
                 email.User = _userMapper.ToViewModel(user);
                 var userConfig = _alertsConfigRepo.GetAll().FirstOrDefault(p => p.UserId == user.Id);
-                if (userConfig == null || userConfig.EmailNotifications)
+                if (userConfig != null && userConfig.EmailNotifications)
                 {
                     SendEmail(email);
                 }
@@ -290,7 +290,7 @@ namespace ApartmentApps.Api
                     email.ToEmail = item.Email;
                     email.User = _userMapper.ToViewModel(item);
                     var userConfig = _alertsConfigRepo.GetAll().FirstOrDefault(p => p.UserId == item.Id);
-                    if (userConfig == null || userConfig.EmailNotifications)
+                    if (userConfig != null && userConfig.EmailNotifications)
                     {
                         SendEmail(email);
                     }
