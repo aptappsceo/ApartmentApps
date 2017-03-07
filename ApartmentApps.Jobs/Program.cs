@@ -58,7 +58,15 @@ namespace ApartmentApps.Jobs
                 kernel.Bind<ILogger>().To<ConsoleLogger>();
                 if (args.Any(p => p.Contains("email")))
                 {
-                    ExecuteEmailQueue(kernel, item);
+                    try
+                    {
+                        ExecuteEmailQueue(kernel, item);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine(ex.StackTrace);
+                    }
                 }
                 else
                 {

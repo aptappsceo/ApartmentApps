@@ -23,6 +23,7 @@ namespace ApartmentApps.Api.NewFolder1
         public string Subject { get; set; }
 
     }
+    [Persistant]
     public class EmailQueueItem : PropertyEntity
     {
         public string To { get; set; }
