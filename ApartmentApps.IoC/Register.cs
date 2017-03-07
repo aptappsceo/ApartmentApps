@@ -144,7 +144,7 @@ namespace ApartmentApps.IoC
                 }
 
             }
-            kernel.Bind<IRazorEngineService>().ToMethod(x => AlertsModule.CreateRazorService());
+            kernel.Bind<IRazorEngineService>().ToMethod(x => AlertsModule.CreateRazorService()).InSingletonScope();
             kernel.Bind<IModuleHelper, ModuleHelper>().To<ModuleHelper>().InRequestScope();
             kernel.Bind<IConfigProvider, ConfigProvider<UserAlertsConfig>>().To<UserAlertsConfigProvider>().InRequestScope();
             kernel.RegisterModule<AnalyticsModule, AnalyticsConfig>();

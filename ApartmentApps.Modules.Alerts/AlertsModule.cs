@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.NewFolder1;
 using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
@@ -91,20 +92,7 @@ namespace ApartmentApps.Api
         }
     }
 
-    public class EmailData
-    {
-        public AlertsModuleConfig Config { get; set; }
-        public IUserContext UserContext { get; set; }
 
-        public Dictionary<string, string> Links { get; set; } = new Dictionary<string, string>();
-        public UserBindingModel User { get; set; }
-
-        public string ToEmail { get; set; }
-        public string FromEmail { get; set; }
-
-        public string Subject { get; set; }
-
-    }
     public class ActionEmailData : EmailData
     {
 
@@ -158,6 +146,7 @@ namespace ApartmentApps.Api
     public class AlertsModule : Module<AlertsModuleConfig>, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent, IWebJob
     {
         public PropertyContext Context { get; set; }
+        private readonly EmailQueuer _emailQueuer;
         private readonly IRazorEngineService _razorService;
         private readonly IRepository<UserAlertsConfig> _alertsConfigRepo;
         private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
@@ -165,8 +154,9 @@ namespace ApartmentApps.Api
         private readonly IEmailService _emailService;
         private IPushNotifiationHandler _pushHandler;
 
-        public AlertsModule(IRazorEngineService razorService, IRepository<UserAlertsConfig> alertsConfigRepo, IMapper<ApplicationUser, UserBindingModel> userMapper, IKernel kernel, IRepository<ApplicationUser> userRepository, IRepository<AlertsModuleConfig> configRepo, IUserContext userContext, IEmailService emailService, IPushNotifiationHandler pushHandler, PropertyContext context) : base(kernel, configRepo, userContext)
+        public AlertsModule(EmailQueuer emailQueuer, IRazorEngineService razorService, IRepository<UserAlertsConfig> alertsConfigRepo, IMapper<ApplicationUser, UserBindingModel> userMapper, IKernel kernel, IRepository<ApplicationUser> userRepository, IRepository<AlertsModuleConfig> configRepo, IUserContext userContext, IEmailService emailService, IPushNotifiationHandler pushHandler, PropertyContext context) : base(kernel, configRepo, userContext)
         {
+            _emailQueuer = emailQueuer;
             _razorService = razorService;
             _alertsConfigRepo = alertsConfigRepo;
             _userMapper = userMapper;
@@ -348,7 +338,6 @@ namespace ApartmentApps.Api
                 var user = Context.Users.Find(id);
                 SendAlert(user, title, message, type, relatedId, email);
             }
-
         }
 
         public static IRazorEngineService CreateRazorService()
@@ -358,26 +347,26 @@ namespace ApartmentApps.Api
             return razorEngineService;
         }
 
-        public string CreateEmail<TData>(TData data) where TData : EmailData
-        {
-            var templateType = data.GetType();
-            var templateName = data.GetType().Name;
-            data.UserContext = UserContext;
-            data.Config = Config;
+        //public string CreateEmail<TData>(TData data) where TData : EmailData
+        //{
+        //    var templateType = data.GetType();
+        //    var templateName = data.GetType().Name;
+        //    data.UserContext = UserContext;
+        //    data.Config = Config;
 
 
-            if (!_razorService.IsTemplateCached(templateName, templateType))
-            {
-                _razorService.AddTemplate(templateName,
-                    LoadHtmlFile($"ApartmentApps.Modules.Alerts.EmailTemplates.{templateName}.cshtml"));
-            }
-            //else
-            //{
-            //    return _razorService.Run(templateName, templateType, data);
-            //}
+        //    if (!_razorService.IsTemplateCached(templateName, templateType))
+        //    {
+        //        _razorService.AddTemplate(templateName,
+        //            LoadHtmlFile($"ApartmentApps.Modules.Alerts.EmailTemplates.{templateName}.cshtml"));
+        //    }
+        //    //else
+        //    //{
+        //    //    return _razorService.Run(templateName, templateType, data);
+        //    //}
 
-            return _razorService.RunCompile(templateName, templateType, data);
-        }
+        //    return _razorService.RunCompile(templateName, templateType, data);
+        //}
 
         public void SendUserEngagementLetter(ApplicationUser user)
         {
@@ -411,30 +400,34 @@ namespace ApartmentApps.Api
 
         public void SendEmail<TData>(TData data, bool inBackground = true) where TData : EmailData
         {
-            if (inBackground)
-            {
-                var backgroundScheduler = Kernel.Get<IBackgroundScheduler>();
-                backgroundScheduler.QueueBackgroundItem(x =>
-                {
-                    if (data.ToEmail != null)
-                        _emailService.SendAsync(new IdentityMessage()
-                        {
-                            Body = CreateEmail(data),
-                            Destination = data.ToEmail,
-                            Subject = data.Subject
-                        }).Wait(x);
-                });
-            }
-            else
-            {
-                if (data.ToEmail != null)
-                    _emailService.SendAsync(new IdentityMessage()
-                    {
-                        Body = CreateEmail(data),
-                        Destination = data.ToEmail,
-                        Subject = data.Subject
-                    }).Wait();
-            }
+            var queueItems = Kernel.Get<EmailQueuer>();
+
+            queueItems.QueueEmail(data);
+          
+            //if (inBackground)
+            //{
+            //    var backgroundScheduler = Kernel.Get<IBackgroundScheduler>();
+            //    backgroundScheduler.QueueBackgroundItem(x =>
+            //    {
+            //        if (data.ToEmail != null)
+            //            _emailService.SendAsync(new IdentityMessage()
+            //            {
+            //                Body = CreateEmail(data),
+            //                Destination = data.ToEmail,
+            //                Subject = data.Subject
+            //            }).Wait(x);
+            //    });
+            //}
+            //else
+            //{
+            //    if (data.ToEmail != null)
+            //        _emailService.SendAsync(new IdentityMessage()
+            //        {
+            //            Body = CreateEmail(data),
+            //            Destination = data.ToEmail,
+            //            Subject = data.Subject
+            //        }).Wait();
+            //}
            
 
         }
