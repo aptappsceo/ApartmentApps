@@ -97,7 +97,7 @@ namespace ApartmentApps.Jobs
             var emailQueue = kernel.Get<IRepository<EmailQueueItem>>();
             var razorService = kernel.Get<IRazorEngineService>();
             var emailService = kernel.Get<IEmailService>();
-            var emailItems = emailQueue.GetAll().Where(x=>!x.Error).ToArray();
+            var emailItems = emailQueue.GetAll().Where(x=>!x.Error && x.PropertyId == item.Id).ToArray();
             foreach (var emailItem in emailItems)
             {
                 var templateType = Type.GetType(emailItem.BodyType);
@@ -122,8 +122,8 @@ namespace ApartmentApps.Jobs
                             Subject = emailItem.Subject,
                         }).Wait();
                         // Only remove if successfull
-                        emailQueue.Remove(emailItem);
-                        emailQueue.Save();
+                        //emailQueue.Remove(emailItem);
+                        //emailQueue.Save();
                     }
                     catch (Exception ex)
                     {
@@ -138,6 +138,8 @@ namespace ApartmentApps.Jobs
                     }
                     
                 }
+                emailQueue.Remove(emailItem);
+                emailQueue.Save();
             }
         }
         private static string LoadHtmlFile(string resourceName)
