@@ -35,45 +35,58 @@ namespace ApartmentApps.Jobs
             //#endif   
             var context = new ApplicationDbContext();
 
+            var email = true;
+            while (email)
+            {
+                // Should it run continously
+                email = args.Any(p => p.Contains("email"));
 
+                foreach (var item in context.Properties.Where(p => p.State == PropertyState.Active).ToArray())
+                {
+                    IKernel kernel = new StandardKernel();
+                    Register.RegisterServices(kernel);
+
+                    kernel.Bind<DefaultUserManager>().ToSelf().InSingletonScope();
+                    kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InSingletonScope();
+                    kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InSingletonScope();
+                    var userContext = new FakeUserContext(context, kernel)
+                    {
+                        PropertyId = item.Id,
+                        UserId = context.Users.First(p => p.UserName == "micahosborne@gmail.com").Id,
+                        Email = "micahosborne@gmail.com",
+                        Name = "Jobs"
+                    };
+
+                    kernel.Bind<IUserContext>().ToMethod(p => userContext);
+                    kernel.Bind<ILogger>().To<ConsoleLogger>();
+#if DEBUG
+                    if (true)
+#else
+                    if (email)
+#endif
+
+
+                    {
+                        try
+                        {
+                            ExecuteEmailQueue(kernel, item);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine(ex.StackTrace);
+                        }
+                    }
+                    else
+                    {
+                        ExecuteNightly(kernel, item);
+                    }
+
+                }
+            }
             //var ids = new int[] {33};
             //foreach (var item in context.Properties.Where(x=>ids.Contains(x.Id)).ToArray())
-            foreach (var item in context.Properties.Where(p => p.State == PropertyState.Active).ToArray())
-            {
-                IKernel kernel = new StandardKernel();
-                Register.RegisterServices(kernel);
-
-                kernel.Bind<DefaultUserManager>().ToSelf().InSingletonScope();
-                kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InSingletonScope();
-                kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InSingletonScope();
-                var userContext = new FakeUserContext(context, kernel)
-                {
-                    PropertyId = item.Id,
-                    UserId = context.Users.First(p => p.UserName == "micahosborne@gmail.com").Id,
-                    Email = "micahosborne@gmail.com",
-                    Name = "Jobs"
-                };
-
-                kernel.Bind<IUserContext>().ToMethod(p => userContext);
-                kernel.Bind<ILogger>().To<ConsoleLogger>();
-                if (args.Any(p => p.Contains("email")))
-                {
-                    try
-                    {
-                        ExecuteEmailQueue(kernel, item);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        Console.WriteLine(ex.StackTrace);
-                    }
-                }
-                else
-                {
-                    ExecuteNightly(kernel, item);
-                }
-
-            }
+          
 
 
         }

@@ -1,5 +1,5 @@
 ﻿@using RazorEngine
-@inherits RazorEngine.Templating.TemplateBase<ApartmentApps.Api.EmailData>
+@inherits RazorEngine.Templating.TemplateBase<ApartmentApps.Api.NewFolder1.EmailData>
 <center></center>
 <table class="container-for-gmail-android" width="100%" cellspacing="0" cellpadding="0" align="center">
     <tbody>
@@ -20,7 +20,7 @@
                                         <table class="w320" width="600" cellspacing="0" cellpadding="0">
                                             <tbody>
                                                 <tr>
-                                                    <td class="pull-left mobile-header-padding-left" style="vertical-align: middle;"><a><img src="@(Model.Config.HeaderLogoImageUrl ?? "http://apartmentapps.com/wp-content/uploads/2016/02/ApartmentAppsLogo_Web.png")" alt="logo" /></a></td>
+                                                    <td class="pull-left mobile-header-padding-left" style="vertical-align: middle;"><a><img src="@(Model.HeaderLogoImageUrl ?? "http://apartmentapps.com/wp-content/uploads/2016/02/ApartmentAppsLogo_Web.png")" alt="logo" /></a></td>
                                                     <td class="pull-right mobile-header-padding-right" style="color: #4d4d4d;">&nbsp;&nbsp;</td>
                                                 </tr>
                                             </tbody>

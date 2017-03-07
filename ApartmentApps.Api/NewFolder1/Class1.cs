@@ -21,7 +21,7 @@ namespace ApartmentApps.Api.NewFolder1
         public string ToEmail { get; set; }
         public string FromEmail { get; set; }
         public string Subject { get; set; }
-
+        public string HeaderLogoImageUrl { get; set; }
     }
     [Persistant]
     public class EmailQueueItem : PropertyEntity
