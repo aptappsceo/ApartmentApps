@@ -130,6 +130,7 @@ namespace ApartmentApps.Jobs
                         emailItem.Error = true;
                         emailItem.ErrorMessage = ex.Message;
                         emailItem.ErorrStackTrace = ex.StackTrace;
+                        emailQueue.Save();
                     }
                     finally
                     {
