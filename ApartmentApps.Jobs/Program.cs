@@ -123,7 +123,7 @@ namespace ApartmentApps.Jobs
                         }).Wait();
                         // Only remove if successfull
                         emailQueue.Remove(emailItem);
-
+                        emailQueue.Save();
                     }
                     catch (Exception ex)
                     {
