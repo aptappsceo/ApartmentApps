@@ -35,11 +35,11 @@ namespace ApartmentApps.Jobs
             //#endif   
             var context = new ApplicationDbContext();
 
-            var email = true;
-            while (email)
-            {
+            //var email = true;
+            //while (email)
+            //{
                 // Should it run continously
-                email = args.Any(p => p.Contains("email"));
+                var email = args.Any(p => p.Contains("email"));
 
                 foreach (var item in context.Properties.Where(p => p.State == PropertyState.Active).ToArray())
                 {
@@ -83,7 +83,7 @@ namespace ApartmentApps.Jobs
                     }
 
                 }
-            }
+            //}
             //var ids = new int[] {33};
             //foreach (var item in context.Properties.Where(x=>ids.Contains(x.Id)).ToArray())
           
