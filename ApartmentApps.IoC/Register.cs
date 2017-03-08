@@ -11,6 +11,7 @@ using System.Web;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.NewFolder1;
 using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
@@ -167,6 +168,7 @@ namespace ApartmentApps.IoC
 
             kernel.Bind<IRepository<UserPaymentOption>>().To<PropertyRepository<UserPaymentOption>>().InRequestScope();
             kernel.Bind<IRepository<UserTransaction>>().To<PropertyRepository<UserTransaction>>().InRequestScope();
+            kernel.Bind<IRepository<EmailQueueItem>>().To<PropertyRepository<EmailQueueItem>>().InRequestScope();
 
 
             //kernel.Bind<EntrataIntegration>().ToSelf().InRequestScope();
