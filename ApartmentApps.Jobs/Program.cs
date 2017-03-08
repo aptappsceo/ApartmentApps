@@ -97,12 +97,22 @@ namespace ApartmentApps.Jobs
             var emailQueue = kernel.Get<IRepository<EmailQueueItem>>();
             var razorService = kernel.Get<IRazorEngineService>();
             var emailService = kernel.Get<IEmailService>();
+            var alertsConfigItems = kernel.Get<UserAlertsConfigProvider>();
+           
             var emailItems = emailQueue.GetAll().Where(x=>!x.Error && x.PropertyId == item.Id).ToArray();
             foreach (var emailItem in emailItems)
             {
+                var config = alertsConfigItems.ConfigForUser(emailItem.UserId);
+                if (!config.EmailNotifications)
+                {
+                    emailQueue.Remove(emailItem);
+                    emailQueue.Save();
+                    continue;
+                }
                 var templateType = Type.GetType(emailItem.BodyType);
                 var templateName = templateType.Name;
-                var templateData = JsonConvert.DeserializeObject(emailItem.BodyData, templateType);
+                var templateData = JsonConvert.DeserializeObject(emailItem.BodyData, templateType) as EmailData;
+               
 
                 if (!razorService.IsTemplateCached(templateName, templateType))
                 {
@@ -115,6 +125,7 @@ namespace ApartmentApps.Jobs
                 {
                     try
                     {
+
                         emailService.SendAsync(new IdentityMessage()
                         {
                             Body = emailBody,

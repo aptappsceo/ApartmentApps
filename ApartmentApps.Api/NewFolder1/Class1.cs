@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +37,14 @@ namespace ApartmentApps.Api.NewFolder1
         public bool Error { get; set; }
         public string ErrorMessage { get; set; }
         public string ErorrStackTrace { get; set; }
+       // [DefaultValue(1)]
+        [DataType("Hidden")]
+        public string UserId { get; set; }  
+
+        [ForeignKey("UserId")]
+        [DataType("Ignore")]
+        [JsonIgnore]
+        public virtual ApplicationUser User { get; set; }
     }
 
     public class EmailQueuer 
@@ -51,6 +62,7 @@ namespace ApartmentApps.Api.NewFolder1
             {
                 To = data.ToEmail,
                 From = data.FromEmail,
+                UserId = data.User.Id,
                 Subject = data.Subject,
                 BodyData = JsonConvert.SerializeObject(data),
                 BodyType = typeof(TData).AssemblyQualifiedName

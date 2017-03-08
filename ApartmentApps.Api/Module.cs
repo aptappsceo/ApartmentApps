@@ -65,7 +65,7 @@ namespace ApartmentApps.Api.Modules
             _kernel = kernel;
         }
 
-        public void ConfigForUser(string userId)
+        public TConfig ConfigForUser(string userId)
         {
             var config = _kernel.Get<PropertyRepository<TConfig>>();
             var userConfig = config.FirstOrDefault(x => x.UserId == userId);
@@ -76,6 +76,7 @@ namespace ApartmentApps.Api.Modules
                 _configRepo.Add(defaultConfig);
                 _configRepo.Save();
             }
+            return userConfig;
 
         }
 
