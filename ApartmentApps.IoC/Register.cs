@@ -168,7 +168,7 @@ namespace ApartmentApps.IoC
 
             kernel.Bind<IRepository<UserPaymentOption>>().To<PropertyRepository<UserPaymentOption>>().InRequestScope();
             kernel.Bind<IRepository<UserTransaction>>().To<PropertyRepository<UserTransaction>>().InRequestScope();
-            kernel.Bind<IRepository<EmailQueueItem>>().To<PropertyRepository<EmailQueueItem>>().InRequestScope();
+            //kernel.Bind<IRepository<EmailQueueItem>>().To<PropertyRepository<EmailQueueItem>>().InRequestScope();
 
 
             //kernel.Bind<EntrataIntegration>().ToSelf().InRequestScope();
