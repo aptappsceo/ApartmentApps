@@ -58,6 +58,7 @@ namespace ApartmentApps.Api.NewFolder1
 
         public void QueueEmail<TData>(TData data) where TData : EmailData
         {
+            if (data == null) throw new ArgumentNullException(nameof(data),"data can't be null");
             _emailQueueItems.Add(new EmailQueueItem()
             {
                 To = data.ToEmail,
@@ -65,7 +66,7 @@ namespace ApartmentApps.Api.NewFolder1
                 UserId = data.User.Id,
                 Subject = data.Subject,
                 BodyData = JsonConvert.SerializeObject(data),
-                BodyType = typeof(TData).AssemblyQualifiedName
+                BodyType = data.GetType().AssemblyQualifiedName
             });
         }
     }

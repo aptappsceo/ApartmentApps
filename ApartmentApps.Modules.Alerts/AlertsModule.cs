@@ -280,12 +280,8 @@ namespace ApartmentApps.Api
                     email.Subject = title;
                     email.ToEmail = item.Email;
                     email.User = _userMapper.ToViewModel(item);
-             
-                    var userConfig = _alertsConfigRepo.GetAll().FirstOrDefault(p => p.UserId == item.Id);
-                    if (userConfig != null && userConfig.EmailNotifications)
-                    {
-                        SendEmail(email);
-                    }
+                    SendEmail(email);
+                  
 
                     _pushHandler.SendToUser(item.Id, new NotificationPayload()
                     {
@@ -404,33 +400,6 @@ namespace ApartmentApps.Api
         {
             //var queueItems = Kernel.Get<EmailQueuer>();
             _emailQueuer.QueueEmail(data);
-            //queueItems.QueueEmail(data);
-          
-            //if (inBackground)
-            //{
-            //    var backgroundScheduler = Kernel.Get<IBackgroundScheduler>();
-            //    backgroundScheduler.QueueBackgroundItem(x =>
-            //    {
-            //        if (data.ToEmail != null)
-            //            _emailService.SendAsync(new IdentityMessage()
-            //            {
-            //                Body = CreateEmail(data),
-            //                Destination = data.ToEmail,
-            //                Subject = data.Subject
-            //            }).Wait(x);
-            //    });
-            //}
-            //else
-            //{
-            //    if (data.ToEmail != null)
-            //        _emailService.SendAsync(new IdentityMessage()
-            //        {
-            //            Body = CreateEmail(data),
-            //            Destination = data.ToEmail,
-            //            Subject = data.Subject
-            //        }).Wait();
-            //}
-           
 
         }
 
