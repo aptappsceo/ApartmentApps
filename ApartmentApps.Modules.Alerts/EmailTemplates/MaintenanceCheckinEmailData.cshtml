@@ -1,0 +1,11 @@
+﻿@inherits RazorEngine.Templating.TemplateBase<ApartmentApps.Api.MaintenanceCheckinEmailData>
+@{
+    Layout = "_Layout";
+}
+<h4>Your request is currently @Model.BindingModel.StatusId </h4>
+<p>By: @Model.BindingModel.Worker.FirstName @Model.BindingModel.Worker.LastName</p>
+<p>@Model.BindingModel.Comments</p>
+@foreach (var photo in Model.BindingModel.Photos)
+{
+    <img src="@photo.Url"/>
+}

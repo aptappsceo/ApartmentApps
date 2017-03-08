@@ -92,7 +92,6 @@ namespace ApartmentApps.Api
         }
     }
 
-
     public class ActionEmailData : EmailData
     {
 
@@ -105,6 +104,10 @@ namespace ApartmentApps.Api
         public string Username { get; set; }
     }
 
+    public class MaintenanceCheckinEmailData : ActionEmailData
+    {
+        public MaintenanceCheckinBindingModel BindingModel { get; set; }
+    }
     public class UpdateEmailData : EmailData
     {
         public FeedItemBindingModel FeedItem { get; set; }
@@ -206,19 +209,22 @@ namespace ApartmentApps.Api
                 var unitId = request.UnitId;
                 if (unitId != null)
                 {
-                    var mapper = Kernel.Get<FeedSerivce>();
+                    //var mapper = Kernel.Get<FeedSerivce>();
+                    var mrcm = Kernel.Get<IMapper<MaintenanceRequestCheckin, MaintenanceCheckinBindingModel>>();
+                    var vm = mrcm.ToViewModel(maitenanceRequest);
+
                     var users = _userRepository.GetAll().Where(p => p.UnitId == unitId && p.Archived == false).ToArray();
                     foreach (var item in users)
                     {
-                        SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id, new UpdateEmailData()
+                        SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id, new MaintenanceCheckinEmailData()
                         {
-                            FeedItem = mapper.ToFeedItemBindingModel(maitenanceRequest),
-
+                            BindingModel = vm,
                             Links = new Dictionary<string, string>() { { "View", $"http://portal.apartmentapps.com/MaitenanceRequests/Details/{request.Id}" } },
 
                         });
                     }
                 }
+          
 
             }
         }

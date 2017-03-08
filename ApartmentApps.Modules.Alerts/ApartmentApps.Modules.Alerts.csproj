@@ -108,9 +108,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <EmbeddedResource Include="EmailTemplates\_Layout.cshtml" />
-    <EmbeddedResource Include="EmailTemplates\MaintenanceUpdateEmailData.cshtml" />
+    <EmbeddedResource Include="EmailTemplates\MaintenanceCheckinEmailData.cshtml" />
     <EmbeddedResource Include="EmailTemplates\EngagementLetterEmailData.cshtml" />
     <EmbeddedResource Include="EmailTemplates\UpdateEmailData.cshtml" />
+    <EmbeddedResource Include="EmailTemplates\UpdateEmailData - Copy.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
