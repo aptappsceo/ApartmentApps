@@ -19,6 +19,7 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
+using ApartmentApps.Modules.Maintenance;
 using Microsoft.AspNet.Identity;
 using Ninject;
 using RazorEngine.Templating;
@@ -210,9 +211,9 @@ namespace ApartmentApps.Api
                 if (unitId != null)
                 {
                     //var mapper = Kernel.Get<FeedSerivce>();
-                    var mrcm = Kernel.Get<IMapper<MaintenanceRequestCheckin, MaintenanceCheckinBindingModel>>();
-                    var vm = mrcm.ToViewModel(maitenanceRequest);
-
+                    //var mrcm = Kernel.Get<IMapper<MaintenanceRequestCheckin, MaintenanceCheckinBindingModel>>();
+                    //var vm = mrcm.ToViewModel(maitenanceRequest);
+                    var vm = maitenanceRequest.ToMaintenanceCheckinBindingModel(Kernel.Get<IBlobStorageService>());
                     var users = _userRepository.GetAll().Where(p => p.UnitId == unitId && p.Archived == false).ToArray();
                     foreach (var item in users)
                     {
