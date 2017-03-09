@@ -75,6 +75,7 @@ namespace ApartmentApps.Api.Modules
                 defaultConfig.UserId = userId;
                 _configRepo.Add(defaultConfig);
                 _configRepo.Save();
+                return defaultConfig;
             }
             return userConfig;
 
