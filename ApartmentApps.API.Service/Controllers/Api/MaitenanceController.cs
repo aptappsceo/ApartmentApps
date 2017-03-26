@@ -92,13 +92,6 @@ namespace ApartmentApps.API.Service.Controllers
                 Status = result.StatusId,
                 Name = result.MaitenanceRequestType.Name,
                 PetStatus = result.PetStatus,
-                AcceptableCheckinCodes = new List<string>()
-                    {
-                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name},{result.Unit.Name}",
-                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name.TrimStart('0')},{result.Unit.Name}",
-                        $"http://www.apartmentapps.com?apt={result.Unit.Building.Name.TrimStart('0')},{result.Unit.Name},,",
-                       
-                    },
                 BuildingName = result.Unit?.Building?.Name + " " + result.Unit?.Name,
                 PermissionToEnter = result.PermissionToEnter,
                 Checkins = result.Checkins.ToArray().Select(x => x.ToMaintenanceCheckinBindingModel(BlobStorageService)).ToArray(),
@@ -109,6 +102,16 @@ namespace ApartmentApps.API.Service.Controllers
                 CanPause = result.CanBePaused() && UserContext.CurrentUser.CanPause(result),
                 CanSchedule = result.CanBeScheduled() && UserContext.CurrentUser.CanSchedule(result),
                 CanStart = result.CanBeStarted() && UserContext.CurrentUser.CanStart(result)
+            };
+
+            var bn = result.Unit?.Building?.Name ?? string.Empty;
+
+            response.AcceptableCheckinCodes = new List<string>()
+            {
+                $"http://www.apartmentapps.com?apt={bn},{result.Unit.Name}",
+                $"http://www.apartmentapps.com?apt={bn.TrimStart('0')},{result.Unit.Name}",
+                $"http://www.apartmentapps.com?apt={bn.TrimStart('0')},{result.Unit.Name},,",
+                       
             };
 
             if (!_maintenanceConfig.Config.VerifyBarCodes)

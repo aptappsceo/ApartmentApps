@@ -41,7 +41,7 @@ namespace ApartmentApps.Jobs
                 // Should it run continously
                 var email = args.Any(p => p.Contains("email"));
 
-                foreach (var item in context.Properties.Where(p => p.State == PropertyState.Active).ToArray())
+                foreach (var item in context.Properties.Where(p => p.Id == 33 && p.State == PropertyState.Active).ToArray())
                 {
                     IKernel kernel = new StandardKernel();
                     Register.RegisterServices(kernel);
@@ -60,7 +60,7 @@ namespace ApartmentApps.Jobs
                     kernel.Bind<IUserContext>().ToMethod(p => userContext);
                     kernel.Bind<ILogger>().To<ConsoleLogger>();
 #if DEBUG
-                    if (true)
+                    if (false)
 #else
                     if (email)
 #endif

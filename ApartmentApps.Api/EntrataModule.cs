@@ -81,7 +81,11 @@ namespace ApartmentApps.Api
 
                 foreach (var customer in customers)
                 {
-                    if (string.IsNullOrEmpty(customer.BuildingName)) continue;
+                    if (string.IsNullOrEmpty(customer.BuildingName))
+                    {
+                        customer.BuildingName = " ";
+                    }
+                    //if (string.IsNullOrEmpty(customer.BuildingName)) continue;
                     Building building;
                     Unit unit;
                     ImportUnit(logger, customer.BuildingName, customer.UnitNumber, out unit, out building);

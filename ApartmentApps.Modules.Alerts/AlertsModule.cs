@@ -270,7 +270,8 @@ namespace ApartmentApps.Api
         }
         public void SendAlert(int propertyId, string role, string title, string message, string type, int relatedId = 0, EmailData email = null)
         {
-            foreach (var item in Context.Users.Where(x => x.Roles.Any(p => p.RoleId == role)).ToArray())
+            
+            foreach (var item in Context.Users.Where(x => x.Roles.Any(p => p.RoleId == role) && x.Archived == false).ToArray())
             {
 
                 Context.UserAlerts.Add(new UserAlert()
@@ -324,7 +325,7 @@ namespace ApartmentApps.Api
                 var unitId = incidentReport.UnitId;
                 if (unitId != null)
                 {
-                    var users = _userRepository.GetAll().Where(p => p.UnitId == unitId).ToArray();
+                    var users = _userRepository.GetAll().Where(p => p.UnitId == unitId && !p.Archived).ToArray();
                     foreach (var item in users)
                     {
 
