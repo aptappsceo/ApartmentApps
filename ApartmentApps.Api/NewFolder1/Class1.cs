@@ -68,6 +68,7 @@ namespace ApartmentApps.Api.NewFolder1
                 BodyData = JsonConvert.SerializeObject(data),
                 BodyType = data.GetType().AssemblyQualifiedName
             });
+            _emailQueueItems.Save();
         }
     }
     //[Persistant]

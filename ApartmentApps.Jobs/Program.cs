@@ -60,7 +60,7 @@ namespace ApartmentApps.Jobs
                     kernel.Bind<IUserContext>().ToMethod(p => userContext);
                     kernel.Bind<ILogger>().To<ConsoleLogger>();
 #if DEBUG
-                    if (false)
+                    if (true)
 #else
                     if (email)
 #endif
