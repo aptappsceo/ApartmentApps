@@ -153,6 +153,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterModule<ApartmentAppsModule, PortalConfig>();
             kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
             kernel.RegisterModule<MaintenanceModule, MaintenanceConfig>();
+            kernel.RegisterModule<MarketingModule, MarketingModuleConfig>();
             kernel.RegisterModule<CourtesyModule, CourtesyConfig>();
             kernel.RegisterModule<MessagingModule, MessagingConfig>();
             //kernel.RegisterModule<PaymentsModule, PaymentsConfig>();
