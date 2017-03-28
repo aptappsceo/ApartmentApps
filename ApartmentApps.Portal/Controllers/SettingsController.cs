@@ -101,6 +101,13 @@ namespace ApartmentApps.Portal.Controllers
         }
     }
     [Authorize(Roles = "Admin")]
+    public class MarketingConfigController : SettingsController<MarketingModuleConfig>
+    {
+        public MarketingConfigController(IRepository<MarketingModuleConfig> configRepo, ConfigProvider<MarketingModuleConfig> configProvider, IKernel kernel, PropertyContext context, IUserContext userContext) : base(configProvider, kernel, context, userContext)
+        {
+        }
+    }
+    [Authorize(Roles = "Admin")]
     public class MaintenanceConfigController : SettingsController<MaintenanceConfig>
     {
         public MaintenanceConfigController(IRepository<MaintenanceConfig> configRepo, ConfigProvider<MaintenanceConfig> configProvider, IKernel kernel, PropertyContext context, IUserContext userContext) : base( configProvider, kernel, context, userContext)

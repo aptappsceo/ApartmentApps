@@ -81,6 +81,7 @@
     <Compile Include="AlertsModule.cs" />
     <Compile Include="AlertsModuleConfig.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="MarketingModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

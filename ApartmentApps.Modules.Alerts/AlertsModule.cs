@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -40,58 +39,6 @@ namespace ApartmentApps.Api
         string GetVariable(string name);
     }
 
-
-    public class MarketingModule : Module<MarketingModuleConfig>
-    {
-        public MarketingModule(IKernel kernel, IRepository<MarketingModuleConfig> configRepo, IUserContext userContext) : base(kernel, configRepo, userContext)
-        {
-            Razor = RazorEngineService.Create();
-        }
-
-        public IRazorEngineService Razor { get; set; }
-
-        //public string CreateActionEmail(Dictionary<string, string> actions)
-        //{
-        //    var actionLinks = new StringBuilder();
-        //    foreach (var item in actionLinks.)
-        //    {
-
-        //    }
-        //}
-
-        //public string CreateEmailFromTemplate(string template, Dictionary<string,string> variables)
-        //{
-        //    return Regex.Replace(template, @"\{\{([a-zA-Z]+?)\}\}",match =>
-        //    {
-        //        var name = match.Groups[0].Value;
-        //        if (variables.ContainsKey(name))
-        //        {
-        //            return variables[name];
-        //        }
-        //        var result = EnabledModules.OfType<IEmailVariableProvider>()
-        //            .Select(x => x.GetVariable(name))
-        //            .FirstOrDefault(x => x != null);
-        //        if (result != null)
-        //        {
-        //            return result;
-        //        }
-        //        return string.Empty;
-        //    });
-        //}
-
-
-
-        protected override MarketingModuleConfig CreateDefaultConfig()
-        {
-
-            //http://www.freeformatter.com/java-dotnet-escape.html
-            return new MarketingModuleConfig()
-            {
-                EngagementEmailTemplate = "<h1>{{Subject}}</h1><p>{{Body}}</p>",
-                Enabled = true
-            };
-        }
-    }
 
     public class ActionEmailData : EmailData
     {
@@ -147,7 +94,7 @@ namespace ApartmentApps.Api
     /// <summary>
     /// This service is used to handle when push notifications should be sent out.
     /// </summary>
-    public class AlertsModule : Module<AlertsModuleConfig>, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent, IWebJob
+    public class AlertsModule : Module<AlertsModuleConfig>, IMaintenanceSubmissionEvent, IMaintenanceRequestCheckinEvent, IIncidentReportSubmissionEvent, IIncidentReportCheckinEvent
     {
         public PropertyContext Context { get; set; }
         private readonly EmailQueuer _emailQueuer;
@@ -421,19 +368,6 @@ namespace ApartmentApps.Api
             }
         }
 
-        public void Execute(ILogger logger)
-        {
-            var users = _userRepository.GetAll().Where(x => !x.Archived && x.LastMobileLoginTime == null && x.LastPortalLoginTime == null).ToArray();
-            foreach (var user in users)
-            {
-                if (user.EngagementLetterSentOn == null ||
-                    DateTime.UtcNow.Subtract(user.EngagementLetterSentOn.Value).Days >= Config.DaysBetweenEngagementLetters)
-                {
-                    SendUserEngagementLetter(user);
-                    user.EngagementLetterSentOn = DateTime.UtcNow;
-                    _userRepository.Save();
-                }
-            }
-        }
+   
     }
 }
