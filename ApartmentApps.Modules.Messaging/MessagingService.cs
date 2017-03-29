@@ -212,7 +212,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             var message = Repository.Find(messageId);
             message.Sent = true;
-            message.Status == MessageStatus.Sent;
+            message.Status = MessageStatus.Sent;
             Repository.Save();
         }
         public void QueueSend(int messageId)
