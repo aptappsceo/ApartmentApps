@@ -25,5 +25,6 @@ namespace ApartmentApps.Api.ViewModels
         public bool Sent { get; set; }
 
         public MessageStatus Status { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

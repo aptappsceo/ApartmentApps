@@ -93,6 +93,8 @@ namespace ApartmentApps.Portal.Controllers
             viewModel.Body = model.Body;
             viewModel.SentOn = model.SentOn;
             viewModel.Id = model.Id.ToString();
+            viewModel.Status = model.Status;
+            viewModel.ErrorMessage = model.ErrorMessage;
             if (model.MessageReceipts != null)
             {
                 viewModel.SentToCount = model.MessageReceipts.Count();
