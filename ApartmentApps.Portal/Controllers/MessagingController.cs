@@ -98,7 +98,7 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult SendMessage(int messageId)
         {
             Service.QueueSend(messageId);
-            return RedirectToAction("Index");
+            return RedirectToAction("MessageDetails", new {id=messageId.ToString()});
         }
         [ValidateInput(false)]
         public override ActionResult SaveEntry(MessageFormViewModel model)
