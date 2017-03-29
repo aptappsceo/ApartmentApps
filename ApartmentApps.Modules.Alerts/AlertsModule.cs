@@ -39,7 +39,10 @@ namespace ApartmentApps.Api
         string GetVariable(string name);
     }
 
-
+    public class MessageData : EmailData
+    {
+        public string Body { get; set; }
+    }
     public class ActionEmailData : EmailData
     {
 

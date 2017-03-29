@@ -31,80 +31,104 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Delivered To</h5>
+    @if (Model.Status == MessageStatus.Sending)
+    {
+        <div class="col-lg-4">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Delivered To</h5>
+                    </div>
+                    <div class="ibox-content">
+                        @Model.DeliverCount
+
+                    </div>
                 </div>
-                <div class="ibox-content">
-                    @Model.DeliverCount
+            </div>
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Sent To</h5>
+                    </div>
+                    <div class="ibox-content">
+                        @Model.SentToCount
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Campaign Targets</h5>
+                    </div>
+                    <div class="ibox-content">
+                        @Model.TargetsCount Users
+                        @Model.TargetsDescription
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Sent To</h5>
-                </div>
-                <div class="ibox-content">
-                    @Model.SentToCount
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Campaign Targets</h5>
-                </div>
-                <div class="ibox-content">
-                    @Model.TargetsCount Users
-                    @Model.TargetsDescription
+    }
+    else
+    {
+        <div class="col-lg-4">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Please Wait</h5>
+                    </div>
+                    <div class="ibox-content">
+                        Your message is currently sending.  Please allow up to 5 minutes for it to process.  More details will be available once it has complete.
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
+
 </div>
 <div class="row">
 
     
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Receipts</h5>
-            </div>
-            <div class="ibox-content">
-                <table class="table table-hover table-mail">
-                    <thead>
-                        <tr>
-                            <th>
-                                Email
-                            </th>
-                            <th>Building</th>
-                            <th>Unit</th>
-                            <th>Error</th>
-                            <th>Error Message</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Receipts)
-                        {
+@if (Model.Status == MessageStatus.Sent)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Receipts</h5>
+                </div>
+                <div class="ibox-content">
+                    <table class="table table-hover table-mail">
+                        <thead>
                             <tr>
-                                <td>@item.UserEmail</td>
-                                <td>@item.BuildingNumber</td>
-                                <td>@item.UnitNumber</td>
-                                <td>@item.Error</td>
-                                <td>@item.ErrorMessage</td>
+                                <th>
+                                    Email
+                                </th>
+                                <th>Building</th>
+                                <th>Unit</th>
+                                <th>Error</th>
+                                <th>Error Message</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Receipts)
+                            {
+                                <tr>
+                                    <td>@item.UserEmail</td>
+                                    <td>@item.BuildingNumber</td>
+                                    <td>@item.UnitNumber</td>
+                                    <td>@item.Error</td>
+                                    <td>@item.ErrorMessage</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+
 
 
 <div class="clear-fix"></div>

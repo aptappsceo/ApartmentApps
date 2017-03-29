@@ -9,10 +9,12 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.Auth;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.NewFolder1;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.IoC;
 using ApartmentApps.Modules.Inspections;
+using ApartmentApps.Portal.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
@@ -38,55 +40,56 @@ namespace ApartmentApps.Jobs
             //var email = true;
             //while (email)
             //{
-                // Should it run continously
-                var email = args.Any(p => p.Contains("email"));
+            // Should it run continously
+            var email = args.Any(p => p.Contains("email"));
 
-                foreach (var item in context.Properties.Where(p =>p.State == PropertyState.Active).ToArray())
+            foreach (var item in context.Properties.Where(p => p.State == PropertyState.Active).ToArray())
+            {
+                IKernel kernel = new StandardKernel();
+                Register.RegisterServices(kernel);
+
+                kernel.Bind<DefaultUserManager>().ToSelf().InSingletonScope();
+                kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InSingletonScope();
+                kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InSingletonScope();
+                var userContext = new FakeUserContext(context, kernel)
                 {
-                    IKernel kernel = new StandardKernel();
-                    Register.RegisterServices(kernel);
+                    PropertyId = item.Id,
+                    UserId = context.Users.First(p => p.UserName == "micahosborne@gmail.com").Id,
+                    Email = "micahosborne@gmail.com",
+                    Name = "Jobs"
+                };
 
-                    kernel.Bind<DefaultUserManager>().ToSelf().InSingletonScope();
-                    kernel.Bind<UserManager<ApplicationUser>>().ToSelf().InSingletonScope();
-                    kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InSingletonScope();
-                    var userContext = new FakeUserContext(context, kernel)
-                    {
-                        PropertyId = item.Id,
-                        UserId = context.Users.First(p => p.UserName == "micahosborne@gmail.com").Id,
-                        Email = "micahosborne@gmail.com",
-                        Name = "Jobs"
-                    };
-
-                    kernel.Bind<IUserContext>().ToMethod(p => userContext);
-                    kernel.Bind<ILogger>().To<ConsoleLogger>();
+                kernel.Bind<IUserContext>().ToMethod(p => userContext);
+                kernel.Bind<ILogger>().To<ConsoleLogger>();
 #if DEBUG
-                    if (true)
+                if (true)
 #else
                     if (email)
 #endif
 
 
+                {
+                    try
                     {
-                        try
-                        {
-                            ExecuteEmailQueue(kernel, item);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                            Console.WriteLine(ex.StackTrace);
-                        }
+                        ExecuteEmailQueue(kernel, item);
+                        ExecuteMessagingQueue(kernel, item);
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        ExecuteNightly(kernel, item);
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine(ex.StackTrace);
                     }
-
                 }
+                else
+                {
+                    ExecuteNightly(kernel, item);
+                }
+
+            }
             //}
             //var ids = new int[] {33};
             //foreach (var item in context.Properties.Where(x=>ids.Contains(x.Id)).ToArray())
-          
+
 
 
         }
@@ -98,8 +101,8 @@ namespace ApartmentApps.Jobs
             var razorService = kernel.Get<IRazorEngineService>();
             var emailService = kernel.Get<IEmailService>();
             var alertsConfigItems = kernel.Get<UserAlertsConfigProvider>();
-           
-            var emailItems = emailQueue.GetAll().Where(x=>!x.Error && x.PropertyId == item.Id).ToArray();
+
+            var emailItems = emailQueue.GetAll().Where(x => !x.Error && x.PropertyId == item.Id).ToArray();
             foreach (var emailItem in emailItems)
             {
                 var config = alertsConfigItems.ConfigForUser(emailItem.UserId);
@@ -112,7 +115,7 @@ namespace ApartmentApps.Jobs
                 var templateType = Type.GetType(emailItem.BodyType);
                 var templateName = templateType.Name;
                 var templateData = JsonConvert.DeserializeObject(emailItem.BodyData, templateType) as EmailData;
-               
+
 
                 if (!razorService.IsTemplateCached(templateName, templateType))
                 {
@@ -145,14 +148,55 @@ namespace ApartmentApps.Jobs
                     }
                     finally
                     {
-                        
+
                     }
-                    
+
                 }
                 emailQueue.Remove(emailItem);
                 emailQueue.Save();
             }
         }
+
+        private static void ExecuteMessagingQueue(IKernel kernel, Property property)
+        {
+            var messagingService = kernel.Get<MessagingService>();
+            var userService = kernel.Get<UserService>();
+            var sending = messagingService.GetSending<MessageViewModel>();
+            var messagingModule = kernel.Get<MessagingModule>();
+            foreach (var q in sending)
+            {
+                try
+                {
+                    if (q != null)
+                    {
+                        string queryXml = q.TargetsXml;
+                        var query = userService.CreateQuery();
+                        if (!string.IsNullOrEmpty(queryXml))
+                        {
+                            query.LoadFromString(queryXml);
+                        }
+                        else
+                        {
+
+                        }
+
+                        var count = 0;
+                        var items = userService.GetActive<UserBindingModel>(query, out count, null, false, 1, Int32.MaxValue).ToArray().Select(p => p.Id).Cast<object>().ToArray();
+                        messagingModule.SendMessage(items, q, string.Empty);
+                        messagingService.MarkSent(Convert.ToInt32(q.Id));
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    messagingService.MarkError(Convert.ToInt32(q.Id), ex.Message + Environment.NewLine + ex.StackTrace);
+                }
+               
+            }
+
+            
+        }
+
         private static string LoadHtmlFile(string resourceName)
         {
             using (Stream stream = typeof(AlertsModule).Assembly.GetManifestResourceStream(resourceName))

@@ -113,6 +113,7 @@
     <EmbeddedResource Include="EmailTemplates\EngagementLetterEmailData.cshtml" />
     <EmbeddedResource Include="EmailTemplates\UpdateEmailData.cshtml" />
     <EmbeddedResource Include="EmailTemplates\UpdateEmailData - Copy.cshtml" />
+    <EmbeddedResource Include="EmailTemplates\MessageData.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

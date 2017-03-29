@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 
 namespace ApartmentApps.Api.NewFolder1
 {
+    
     public class EmailData
     {
         //public AlertsModuleConfig Config { get; set; }

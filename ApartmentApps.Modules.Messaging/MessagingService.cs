@@ -154,11 +154,37 @@ namespace ApartmentApps.Portal.Controllers
             return CreateQuery("All");
         }
 
+        [DisplayName("Drafts")]
+        public DbQuery Drafts()
+        {
+            return CreateQuery("Drafts", new ConditionItem("Message.Status", "Equal", "0"));
+        }
+
+        [DisplayName("Sending")]
+        public DbQuery Sending()
+        {
+            return CreateQuery("Drafts", new ConditionItem("Message.Status", "Equal", "1"));
+        }
+
         [DisplayName("Sent By Me")]
         public DbQuery SentByMe()
         {
             return CreateQuery("SentByMe", new ConditionItem("Message.From.Email", "Equal", _userContext.CurrentUser.Email));
-        } 
+        }
+        public IEnumerable<TViewModel> GetDrafts<TViewModel>()
+        {
+
+            return Repository.GetAll().Where(p => p.Status == MessageStatus.Draft).Select(Map<TViewModel>().ToViewModel);
+        }
+        public IEnumerable<TViewModel> GetSending<TViewModel>()
+        {
+            return Repository.GetAll().Where(p=>p.Status == MessageStatus.Sending).Select(Map<TViewModel>().ToViewModel);
+        }
+        public IEnumerable<TViewModel> GetSent<TViewModel>()
+        {
+
+            return Repository.GetAll().Where(p => p.Status == MessageStatus.Sent).Select(Map<TViewModel>().ToViewModel);
+        }
 
         public IEnumerable<TViewModel> GetHistory<TViewModel>()
         {
@@ -186,12 +212,27 @@ namespace ApartmentApps.Portal.Controllers
             message.Sent = true;
             Repository.Save();
         }
-
+        public void QueueSend(int messageId)
+        {
+            
+            var message = Repository.Find(messageId);
+            message.Status = MessageStatus.Sending;
+            Repository.Save();
+        }
         [IgnoreQuery]
         public DbQuery SentByUser(string id)
         {
             var user = Repo<ApplicationUser>().Find(id);
             return CreateQuery("SentBy","Sent By " + user.Email, new ConditionItem("Message.From.Email", "Equal", user.Email));
+        }
+
+        public void MarkError(int id, string errorMessage)
+        {
+            var message = Repository.Find(id);
+            message.Status = MessageStatus.Error;
+            message.ErrorMessage = errorMessage;
+            
+            Repository.Save();
         }
     }
 }

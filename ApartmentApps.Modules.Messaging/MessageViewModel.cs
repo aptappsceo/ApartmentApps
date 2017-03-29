@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using ApartmentApps.Api.Modules;
 using ApartmentApps.Portal.Controllers;
 
 namespace ApartmentApps.Api.ViewModels
@@ -9,7 +10,7 @@ namespace ApartmentApps.Api.ViewModels
     public class MessageViewModel : BaseViewModel
     {
         public string Body { get; set; }
-        public string Title { get; set; }
+ 
         public int SentToCount { get; set; }
         public DateTime? SentOn { get; set; }
         public int OpenCount { get; set; }
@@ -22,5 +23,7 @@ namespace ApartmentApps.Api.ViewModels
         public int TargetsCount { get; set; }
         public string TargetsDescription { get; set; }
         public bool Sent { get; set; }
+
+        public MessageStatus Status { get; set; }
     }
 }
