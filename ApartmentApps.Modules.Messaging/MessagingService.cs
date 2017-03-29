@@ -176,22 +176,22 @@ namespace ApartmentApps.Portal.Controllers
         public IEnumerable<TViewModel> GetDrafts<TViewModel>()
         {
 
-            return Repository.GetAll().Where(p => p.Status == MessageStatus.Draft).Select(Map<TViewModel>().ToViewModel);
+            return Repository.GetAll().Where(p => p.Status == MessageStatus.Draft).ToArray().Select(Map<TViewModel>().ToViewModel);
         }
         public IEnumerable<TViewModel> GetSending<TViewModel>()
         {
-            return Repository.GetAll().Where(p=>p.Status == MessageStatus.Sending).Select(Map<TViewModel>().ToViewModel);
+            return Repository.GetAll().Where(p=>p.Status == MessageStatus.Sending).ToArray().Select(Map<TViewModel>().ToViewModel);
         }
         public IEnumerable<TViewModel> GetSent<TViewModel>()
         {
 
-            return Repository.GetAll().Where(p => p.Status == MessageStatus.Sent).Select(Map<TViewModel>().ToViewModel);
+            return Repository.GetAll().Where(p => p.Status == MessageStatus.Sent).ToArray().Select(Map<TViewModel>().ToViewModel);
         }
 
         public IEnumerable<TViewModel> GetHistory<TViewModel>()
         {
            
-            return Repository.GetAll().OrderByDescending(p=>p.SentOn).Take(15).ToArray().Select(Map<TViewModel>().ToViewModel);
+            return Repository.GetAll().OrderByDescending(p=>p.SentOn).Take(15).ToArray().ToArray().Select(Map<TViewModel>().ToViewModel);
         }
 
         public MessageViewModel GetMessageWithDetails(string messageId)
@@ -212,6 +212,7 @@ namespace ApartmentApps.Portal.Controllers
         {
             var message = Repository.Find(messageId);
             message.Sent = true;
+            message.Status == MessageStatus.Sent;
             Repository.Save();
         }
         public void QueueSend(int messageId)

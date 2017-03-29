@@ -161,7 +161,7 @@ namespace ApartmentApps.Jobs
         {
             var messagingService = kernel.Get<MessagingService>();
             var userService = kernel.Get<UserService>();
-            var sending = messagingService.GetSending<MessageViewModel>();
+            var sending = messagingService.GetSending<MessageViewModel>().ToArray();
             var messagingModule = kernel.Get<MessagingModule>();
             foreach (var q in sending)
             {
