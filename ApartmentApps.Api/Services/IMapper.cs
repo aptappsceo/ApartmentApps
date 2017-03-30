@@ -37,10 +37,10 @@ namespace ApartmentApps.Api.Services
         {
             var vm = new TViewModel();
             ToViewModel(model, vm);
-           // var bvm = vm as BaseViewModel;
+            var bvm = vm as BaseViewModel;
 
-            //if (bvm != null)
-            //    _moduleHelper.SignalToEnabled<IFillActions>(_=>_.FillActions(bvm.ActionLinks,bvm));
+            if (bvm != null)
+                _moduleHelper.SignalToEnabled<IFillActions>(_=>_.FillActions(bvm.ActionLinks,bvm));
 
             return vm;
         }
