@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,17 +13,18 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web;
 using System.Web.Mvc;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
-using ApartmentApps.Modules.Payments;
+using ApartmentApps.IoC;
 using ApartmentApps.Modules.Payments.BindingModels;
-using ApartmentApps.Modules.Payments.Services;
 using ApartmentApps.Portal.App_Start;
 using Korzh.EasyQuery.Services;
 using Ninject;
@@ -33,30 +35,68 @@ using Syncfusion.Pdf;
 
 namespace ApartmentApps.Portal.Controllers
 {
+    public class ReportController : AAController
+    {
+        public ReportController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        {
+        }
 
+        
+    }
+    public class BaseViewModelBinderProvider : IModelBinderProvider
+    {
+        public IModelBinder GetBinder(Type modelType)
+        {
+            if (typeof(BaseViewModel).IsAssignableFrom(modelType))
+            {
+                return new BaseViewModelBinder();
+            }
+            return null;
+        }
+
+    }
+    public class BaseViewModelBinder : DefaultModelBinder
+    {
+        protected override object CreateModel(ControllerContext controllerContext, ModelBindingContext bindingContext, Type modelType)
+        {
+            return Register.Kernel.Get(modelType);
+        }
+    }
     public class MaitenanceRequestModel
     {
+        private readonly IRepository<Unit> _unitRepo;
+        private readonly IRepository<ApplicationUser> _userRepo;
+        private readonly IRepository<MaitenanceRequestType> _requestTypeRepo;
 
-        //[DataType()]
-        [DisplayName("Unit")]
-        public int UnitId { get; set; }
+        public MaitenanceRequestModel()
+        {
+        }
+        [Inject]
+        public MaitenanceRequestModel(IRepository<Unit> unitRepo, IRepository<ApplicationUser> userRepo ,IRepository<MaitenanceRequestType> requestTypeRepo )
+        {
+            _unitRepo = unitRepo;
+            _userRepo = userRepo;
+            _requestTypeRepo = requestTypeRepo;
+        }
+
 
         public IEnumerable<FormPropertySelectItem> UnitId_Items
         {
             get
             {
                 var items =
-                    ModuleHelper.Kernel.Get<IRepository<Unit>>()
-                        .ToArray();
-
+                    _unitRepo.ToArray();
+                var users = _userRepo;
                 return items.Select(p =>
                 {
+                    if (!string.IsNullOrEmpty(p.CalculatedTitle))
+                        return new FormPropertySelectItem(p.Id.ToString(), p.CalculatedTitle, UnitId == p.Id);
+
                     var name = $"[{ p.Building.Name }] {p.Name}";
-                    if (p.Users.Any())
-                    {
-                        var user = p.Users.First();
+                    var user = users.GetAll().FirstOrDefault(x => !x.Archived && x.UnitId == p.Id);
+                    if (user != null)
                         name += $" ({user.FirstName} {user.LastName})";
-                    }
+
                     return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
                 }).OrderByAlphaNumeric(p => p.Value);
 
@@ -68,7 +108,7 @@ namespace ApartmentApps.Portal.Controllers
             get
             {
                 return
-                    ModuleHelper.Kernel.Get<IRepository<MaitenanceRequestType>>()
+                    _requestTypeRepo
                         .ToArray()
                         .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, MaitenanceRequestTypeId == p.Id));
 
@@ -76,23 +116,40 @@ namespace ApartmentApps.Portal.Controllers
             }
         }
 
-        [DisplayName("Type")]
-        public int MaitenanceRequestTypeId { get; set; }
-
         public IEnumerable<SelectListItem> MaitenanceRequestTypeId_choices()
         {
             return Enumerable.Empty<SelectListItem>();
         }
+
+        //#endregion
+
+
+
+        [DisplayName("Unit"), DisplayForRoles(Roles = "Admin,Maintenance,PropertyAdmin,MaintenanceSupervisor")]
+        [SelectFrom(nameof(UnitId_Items))]
+        [Required]
+        public int UnitId { get; set; }
+
+        [DisplayName("Type")]
+        [SelectFrom(nameof(MaitenanceRequestTypeId_Items))]
+        [Required]
+        public int MaitenanceRequestTypeId { get; set; }
+
+
         [DisplayName("Permission To Enter")]
+        [Required]
         public bool PermissionToEnter { get; set; }
 
         [DisplayName("Pet Status")]
+        [Required]
         public PetStatus PetStatus { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [Required]
         public string Comments { get; set; }
 
         [DisplayName("Is Emergency?")]
+        [Required]
         public bool Emergency { get; set; }
 
     }
@@ -138,152 +195,13 @@ namespace ApartmentApps.Portal.Controllers
 
 
     [Authorize]
-    public class PaymentRequestsController :
-        AutoGridController
-            <PaymentsRequestsService, PaymentsRequestsService, UserLeaseInfoBindingModel, EditUserLeaseInfoBindingModel>
-    {
-
-        public PaymentsRequestsService PaymentsRequestsService { get; set; }
-        private readonly IMapper<ApplicationUser, UserLookupBindingModel> _userLookupMapper;
-        private IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> _editPaymentRequestMapper;
-        private LeaseInfoManagementService _leaseService;
-        private IMapper<ApplicationUser, UserLookupBindingModel> _userMapper;
-        public PaymentRequestsController(IMapper<ApplicationUser,UserLookupBindingModel> userLookupMapper, IKernel kernel, PaymentsRequestsService formService, PaymentsRequestsService indexService, PropertyContext context, IUserContext userContext, PaymentsRequestsService service, IMapper<UserLeaseInfo, EditUserLeaseInfoBindingModel> editPaymentRequestMapper, LeaseInfoManagementService leaseService, IMapper<ApplicationUser, UserLookupBindingModel> userMapper) : base(kernel, formService, indexService, context, userContext, service)
-        {
-            PaymentsRequestsService = formService;
-            _userLookupMapper = userLookupMapper;
-            _editPaymentRequestMapper = editPaymentRequestMapper;
-            _leaseService = leaseService;
-            _userMapper = userMapper;
-        }
-
-        public override ActionResult GridResult(GridList<UserLeaseInfoBindingModel> grid)
-        {
-            if (Request != null && Request.IsAjaxRequest())
-            {
-                return View("OverviewListPartial", grid);
-            }
-            return View("Overview", new PaymentsRequestOverviewViewModel()
-            {
-                FeedItems = grid
-            });
-        }
-
-        public override ActionResult Entry(string id = null)
-        {
-            
-            UserLeaseInfo paymentRequest = Repository<UserLeaseInfo>().Find(id);
-            EditUserLeaseInfoBindingModel editPaymentRequestModel = 
-                _editPaymentRequestMapper.ToViewModel(paymentRequest); //for null paymentRequest will return empty but prepared EditModel ready for Creation of Payment Request
-            return AutoForm(editPaymentRequestModel, nameof(SaveEntry), paymentRequest == null ? "Create Payment Request" : "Edit Payment Request Information");
-            //return View("EditUserLeaseInfo", new EditUserLeaseInfoBindingModel());
-        }
-
-        [HttpGet]
-        public ActionResult QuickAddRent(string userId = null)
-        {
-            return AutoForm(new QuickAddRentBindingModel()
-            {
-                Title = "Quick add rent",
-                Id = null,
-                UserIdItems = Repository<ApplicationUser>().ToArray().Select(s=>_userLookupMapper.ToViewModel(s)).ToList(),
-                UserId = userId,
-            }, nameof(QuickAddRent), "Quickly add rent subscription to user");
-        }
-
-        [HttpPost]
-        public ActionResult QuickAddRent(QuickAddRentBindingModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var invoiceDate = model.NextInvoiceDate.Value;
-                _leaseService.CreateUserLeaseInfo(new CreateUserLeaseInfoBindingModel()
-                     {
-                         Amount = model.Amount,
-                         IntervalMonths = 1,
-                         Title = $"Rent from {invoiceDate.ToString("d")}",
-                         RepetitionCompleteDate = null,
-                         UserId = model.UserId,
-                         UseCompleteDate = false,
-                         UseInterval = true,
-                         InvoiceDate = invoiceDate, //not null due to validation
-                     });
-
-                if (Request  != null && Request.IsAjaxRequest())
-                {
-                    return JsonUpdate();
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-            else
-            {
-                model.UserIdItems =
-                    Repository<ApplicationUser>().ToArray().Select(s => _userLookupMapper.ToViewModel(s)).ToList();
-                return AutoForm(model, nameof(QuickAddRent), "Quickly add rent subscription to user");
-            }
-        }
-
-        public override ActionResult SaveEntry(EditUserLeaseInfoBindingModel model)
-        {
-
-            if (ModelState.IsValid)
-            {
-
-                var newRequest = model.Id == null;
-                UserLeaseInfo paymentRequest = null;
-                if (newRequest)
-                {
-                     _leaseService.CreateUserLeaseInfo(new CreateUserLeaseInfoBindingModel()
-                     {
-                         Amount = model.Amount,
-                         IntervalMonths = model.IntervalMonths,
-                         Title = model.Title,
-                         RepetitionCompleteDate = model.CompleteDate,
-                         UserId = model.UserId,
-                         UseCompleteDate = model.UseCompleteDate,
-                         UseInterval = model.UseInterval,
-                         InvoiceDate = model.NextInvoiceDate.Value, //not null due to validation
-                     });
-                }
-                else
-                {
-                    _leaseService.EditUserLeaseInfo(model);
-                }
-
-                if (Request  != null && Request.IsAjaxRequest())
-                {
-                    return JsonUpdate();
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-
-            model.UserIdItems = Context.Users.GetAll()
-                    .Where(u => !u.Archived)
-                    .ToList()
-                    .Select(u => _userMapper.ToViewModel(u))
-                    .Where(u => !string.IsNullOrWhiteSpace(u.Title))
-                    .ToList();
-
-            return AutoForm(model, nameof(SaveEntry), "Create/Update Payment Request Information");
-            
-
-        }
-    }
-
-
-    [Authorize]
     public class MaitenanceRequestsController : AutoGridController
             <MaintenanceService, MaintenanceService, MaintenanceRequestViewModel, MaintenanceRequestEditModel>
     {
         private readonly UserService _usersService;
         private PdfDocument _document;
         public IMaintenanceService MaintenanceService { get; set; }
+
 
 
         //public override ActionResult Index()
@@ -316,13 +234,13 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult NewRequest()
         {
             ViewBag.Title = "Submit Maintenance Request";
-            return View(new MaitenanceRequestModel()
-            {
-                //MaitenanceRequestTypeId_choices =
-                //    Context.MaitenanceRequestTypes.ToArray()
-                //        .Select(p => new SelectListItem() {Value = p.Id.ToString(), Text = p.Name}),
-                //UnitId_items = Context.Units.ToArray().Select(p=>new SelectListItem() {Value = p.Id.ToString(),Text = p.Name})
-            });
+
+            var model = Kernel.Get<MaitenanceRequestModel>();
+            
+          
+
+
+            return AutoForm(model,nameof(SubmitRequest),"Submit maintenance request");
         }
 
         public ActionResult AssignRequest(string id)
@@ -336,14 +254,48 @@ namespace ApartmentApps.Portal.Controllers
                     .OrderBy(p => p.Title).ToList()
 
             };
+            Success("Work order has been assigned.");
             return AutoForm(assignMaintenanceEditModel,"AssignRequestSubmit", "Assign Maintenance Request");
         }
+
+
+        [HttpPost]
+        public ActionResult SubmitRequest(MaitenanceRequestModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                var id = MaintenanceService.SubmitRequest(
+                model.Comments,
+                model.MaitenanceRequestTypeId,
+                (int)model.PetStatus,
+                model.Emergency,
+                model.PermissionToEnter,
+                null,
+                Convert.ToInt32(model.UnitId), SubmittedVia.Portal);
+                
+                if (Request != null && Request.IsAjaxRequest())
+                {
+                    return JsonUpdate();
+                }
+                else
+                {
+                    return RedirectToAction("Details", new { id = id });
+                }
+            }
+
+
+            return AutoForm(model, nameof(SubmitRequest), "Submit maintenance request");
+        }
+
 
         public ActionResult AssignRequestSubmit(AssignMaintenanceEditModel model)
         {
             if (ModelState.IsValid && model.Id != null)
             {
                 MaintenanceService.AssignRequest(Convert.ToInt32(model.Id), model.AssignedToId);
+                Success("Your request has been submitted!");
                 if (Request != null && Request.IsAjaxRequest())
                 {
                     return JsonUpdate();
@@ -353,69 +305,14 @@ namespace ApartmentApps.Portal.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            Error("Oops! Request not submitted.  Please fix the errors and try again.");
             return AutoForm(model, "AssignRequestSubmit", "Assign Maintenance Request");
         }
-
-        // GET: /MaitenanceRequests/Edit/5
-        //public ActionResult EditRequest(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
-        //    if (maitenanceRequest == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(new MaintenanceRequestEditModel()
-        //    {
-        //        Id = id.Value.ToString(),
-        //        MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId,
-        //        PermissionToEnter = maitenanceRequest.PermissionToEnter,
-        //        UnitId = maitenanceRequest.UnitId ?? 0,
-        //        PetStatus = (PetStatus)maitenanceRequest.PetStatus,
-        //        Comments = maitenanceRequest.Message
-        //    });
-        //}
-
-        //// POST: /MaitenanceRequests/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult EditRequest(MaintenanceRequestEditModel editModel)
-        //{
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        var id = editModel.Id;
-        //        if (id == null)
-        //        {
-        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //        }
-        //        MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
-        //        if (maitenanceRequest == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-
-        //        maitenanceRequest.PetStatus = (int)editModel.PetStatus;
-        //        maitenanceRequest.MaitenanceRequestTypeId = editModel.MaitenanceRequestTypeId;
-        //        maitenanceRequest.PermissionToEnter = editModel.PermissionToEnter;
-        //        maitenanceRequest.UnitId = editModel.UnitId;
-        //        maitenanceRequest.Message = editModel.Comments;
-        //        Context.SaveChanges();
-
-        //        return RedirectToAction("Details", new { id = id });
-        //    }
-
-        //    return View(editModel);
-        //}
 
 
         public ActionResult Pause(int id)
         {
+            
             return AutoForm(new MaintenanceStatusRequestModel() { Id = id }, "PauseRequest");
         }
 
@@ -441,8 +338,13 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public ActionResult CreateMonthlyReport(MaintenanceReportModel model)
         {
-
-            Thread thread = new Thread(() => { CreateDocument(model); });
+            if (UserContext.CurrentUser == null) // hack for caching the current user httpcontext.current is not available in thread
+            {
+                return RedirectToAction("MonthlyReport");
+            }
+            var httpContext = System.Web.HttpContext.Current;
+            var result = GetReport(model);
+            Thread thread = new Thread(() => { CreateDocument(result, httpContext); });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();
@@ -460,8 +362,11 @@ namespace ApartmentApps.Portal.Controllers
         {
             return Context.MaintenanceRequestCheckins.Where(p => p.Date > startDate && p.Date < endDate);
         }
-        private void CreateDocument(MaintenanceReportModel model)
+
+
+        public MaintenanceReportViewModel GetReport(MaintenanceReportModel model)
         {
+            var result = new MaintenanceReportViewModel();
             var startDate = model.StartDate;
             var endDate = model.EndDate;
             if (startDate == null)
@@ -470,67 +375,78 @@ namespace ApartmentApps.Portal.Controllers
             if (endDate == null)
                 endDate = CurrentUser.TimeZone.Now().AddDays(1);
 
+            result.StartDate = startDate.Value;
+            result.EndDate = endDate.Value;
+
             var todayEnd = CurrentUser.TimeZone.Now().AddDays(1);
             var todayStart = CurrentUser.TimeZone.Now();
 
 
             var StartDate = startDate;
             var EndDate = endDate;
-            var NumberEntered = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId == "Submitted");
-            var NumberOutstanding = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId != "Complete");
-            var NumberCompleted = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId == "Complete");
+            //var NumberEntered = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId == "Submitted");
+            //var NumberOutstanding = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId != "Complete");
+            //var NumberCompleted = WorkOrdersByRange(startDate, endDate).Count(p => p.StatusId == "Complete");
 
-            var MaintenanceTotalOutstanding = Context.MaitenanceRequests.Count(p => p.StatusId != "Complete");
-            var MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p => p.ScheduleDate > todayStart && p.ScheduleDate < todayEnd && p.StatusId == "Scheduled");
-            var IncidentReportsTotalOutstanding = Context.IncidentReports.Count(x => x.StatusId != "Complete");
+            //var MaintenanceTotalOutstanding = Context.MaitenanceRequests.Count(p => p.StatusId != "Complete");
+            //var MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p => p.ScheduleDate > todayStart && p.ScheduleDate < todayEnd && p.StatusId == "Scheduled");
+            //var IncidentReportsTotalOutstanding = Context.IncidentReports.Count(x => x.StatusId != "Complete");
 
-            var WorkOrdersPerEmployee = CheckinsByRange(startDate, endDate).Where(p => p.StatusId == "Complete")
+            result.WorkOrdersPerEmployee = CheckinsByRange(startDate, endDate).Where(p => p.StatusId == "Complete")
                 .GroupBy(p => p.Worker)
                 .ToArray();
-
-            var within24 = Context.MaitenanceRequests
+  
+            result.within24 = Context.MaitenanceRequests.GetAll()
                 .Count(p => p.CompletionDate != null &&
                             p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
-                            (p.CompletionDate - p.SubmissionDate).Value.Hours <= 24
+                            DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 24
                             );
-            var within48 = Context.MaitenanceRequests
+            result.within48 = Context.MaitenanceRequests.GetAll()
                                     .Count(p => p.CompletionDate != null &&
                                                 p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
-                                                (p.CompletionDate - p.SubmissionDate).Value.Hours > 24 && (p.CompletionDate - p.SubmissionDate).Value.Hours <= 48
+                                                DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 24 && DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 48
                                                 );
-            var within72 = Context.MaitenanceRequests
+            result.within72 = Context.MaitenanceRequests.GetAll()
                                   .Count(p => p.CompletionDate != null &&
                                               p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
-                                              (p.CompletionDate - p.SubmissionDate).Value.Hours > 48 && (p.CompletionDate - p.SubmissionDate).Value.Hours <= 72
+                                              DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 48 && DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) <= 72
                                               );
 
-            var greaterThan72 = Context.MaitenanceRequests
+            result.greaterThan72 = Context.MaitenanceRequests.GetAll()
                     .Count(p => p.CompletionDate != null &&
                           p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
-                          (p.CompletionDate - p.SubmissionDate).Value.Hours > 72
+                          DbFunctions.DiffHours(p.SubmissionDate, p.CompletionDate) > 72
                   );
-            var paused = Context.MaitenanceRequests
+            result.paused = Context.MaitenanceRequests.GetAll()
                  .Count(p => p.CompletionDate != null &&
                p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate && p.StatusId == "Paused"
-               
+
                );
+            result.completed = CheckinsByRange(startDate, endDate).Count(p => p.StatusId == "Complete");
+            result.PropertyName = UserContext.CurrentUser.Property.Name;
+            return result;
+        }
+        private void CreateDocument(MaintenanceReportViewModel model, HttpContext httpContext)
+        {
+            //Kernel.Get<WebUserContext>().HttpContext = httpContext;
+           
             HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
             string htmlText = $"<html><body style='padding: 40px;font-family: Arial, Helvetica, sans-serif;'>" +
-                              $"<div style='text-align: center; font-size: 32px; font-weight: bold'>{UserContext.CurrentUser.Property.Name} Monthly Maintenance Report</div>" +
+                              $"<div style='text-align: center; font-size: 32px; font-weight: bold'>{model.PropertyName} Monthly Maintenance Report</div>" +
                               $"<div style='text-align: center; font-size: 20px;'>For {model.StartDate} {model.EndDate}</div>" +
                               $"<br/><br/><table style='width: 100%'>";
 
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Completed</td><td>{CheckinsByRange(startDate, endDate).Count(p => p.StatusId == "Complete")} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Paused</td><td>{paused} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24 hours</td><td>{within24} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24-48 hours</td><td>{within48} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 48-72 hours</td><td>{within72} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 72+ hours</td><td>{greaterThan72} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Completed</td><td>{model.completed} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Paused</td><td>{model.paused} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24 hours</td><td>{model.within24} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24-48 hours</td><td>{model.within48} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 48-72 hours</td><td>{model.within72} Work Orders</td></tr> ";
+            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 72+ hours</td><td>{model.greaterThan72} Work Orders</td></tr> ";
         
 
 
 
-            foreach (var item in WorkOrdersPerEmployee)
+            foreach (var item in model.WorkOrdersPerEmployee)
             {
                 htmlText += $"<tr><td>{item.Key.FirstName} {item.Key.LastName} Completed</td><td>{item.Count()} Work Orders</td></tr> ";
             }
@@ -551,23 +467,6 @@ namespace ApartmentApps.Portal.Controllers
         //{
         //    get { return "MaintenanceRequests"; }
         //}
-
-        [HttpPost]
-        public ActionResult SubmitRequest(MaitenanceRequestModel request)
-        {
-
-            var id = MaintenanceService.SubmitRequest(
-                request.Comments,
-                request.MaitenanceRequestTypeId,
-                (int)request.PetStatus,
-                request.Emergency,
-                request.PermissionToEnter,
-                null,
-                Convert.ToInt32(request.UnitId)
-                );
-            return RedirectToAction("Details", new { id = id });
-
-        }
 
         [HttpPost]
         public ActionResult StartRequest(MaintenanceStatusRequestModel request)
@@ -591,19 +490,28 @@ namespace ApartmentApps.Portal.Controllers
                 request.Comments, null
 
                 );
+            Success("Work Order Paused.");
             return RedirectToAction("Details", new { id = request.Id });
         }
 
         [System.Web.Http.HttpPost]
         public ActionResult ScheduleRequest(MaintenanceScheduleRequestModel request)
         {
-            if (!request.Date.HasValue) throw new Exception("No date was selected.");
+            if (!request.Date.HasValue)
+            {
+                Error("No Date was seleceted");
+                return AutoForm(request, "ScheduleRequest");
+                //throw new Exception("No date was selected.");
+            }
+           
             MaintenanceService.ScheduleRequest(
                 CurrentUser,
                 request.Id,
                 request.Date.Value
 
                 );
+
+            Success("Work Order Scheduled");
             return RedirectToAction("Details", new { id = request.Id });
 
         }
@@ -617,6 +525,8 @@ namespace ApartmentApps.Portal.Controllers
                 request.Id,
                 request.Comments, null
                 );
+
+            Success("Work Order Completed!");
             return RedirectToAction("Details", new { id = request.Id });
         }
         public ActionResult Print(string id)
@@ -629,7 +539,22 @@ namespace ApartmentApps.Portal.Controllers
         {
             _usersService = usersService;
             MaintenanceService = formService;
+    
         }
+    }
+
+    public class MaintenanceReportViewModel
+    {
+        public IGrouping<ApplicationUser, MaintenanceRequestCheckin>[] WorkOrdersPerEmployee { get; set; }
+        public int within24 { get; set; }
+        public int within48 { get; set; }
+        public int within72 { get; set; }
+        public int greaterThan72 { get; set; }
+        public int paused { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int completed { get; set; }
+        public string PropertyName { get; set; }
     }
 
     public class MaintenanceRequestOverviewViewModel
@@ -692,92 +617,4 @@ namespace ApartmentApps.Portal.Controllers
         }
     }
 
-    public class MaitenanceRequests2Controller : AAController
-    {
-        // GET: /MaitenanceRequests/
-        public MaitenanceRequests2Controller(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
-        {
-        }
-
-        public ActionResult Index()
-        {
-            var maitenancerequests = Context.MaitenanceRequests.GetAll();
-            return View(maitenancerequests.ToList());
-        }
-
-        // GET: /MaitenanceRequests/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id.Value);
-            if (maitenanceRequest == null)
-            {
-                return HttpNotFound();
-            }
-            return View(maitenanceRequest);
-        }
-
-        // GET: /MaitenanceRequests/Create
-        public ActionResult Create()
-        {
-            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name");
-            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name");
-            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name");
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "FirstName");
-            return View();
-        }
-
-        // POST: /MaitenanceRequests/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,MaitenanceRequestTypeId,PermissionToEnter,PetStatus,UnitId,ScheduleDate,Message,StatusId,ImageDirectoryId,SubmissionDate,CompletionDate")] MaitenanceRequest maitenanceRequest)
-        {
-            if (ModelState.IsValid)
-            {
-                Context.MaitenanceRequests.Add(maitenanceRequest);
-                Context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.MaitenanceRequestTypeId = new SelectList(Context.MaitenanceRequestTypes.GetAll(), "Id", "Name", maitenanceRequest.MaitenanceRequestTypeId);
-            ViewBag.StatusId = new SelectList(Context.MaintenanceRequestStatuses.GetAll(), "Name", "Name", maitenanceRequest.StatusId);
-            ViewBag.UnitId = new SelectList(Context.Units.GetAll(), "Id", "Name", maitenanceRequest.UnitId);
-            ViewBag.UserId = new SelectList(Context.Users.GetAll(), "Id", "FirstName", maitenanceRequest.UserId);
-            return View(maitenanceRequest);
-        }
-
-
-
-        // GET: /MaitenanceRequests/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
-            if (maitenanceRequest == null)
-            {
-                return HttpNotFound();
-            }
-            return View(maitenanceRequest);
-        }
-
-        // POST: /MaitenanceRequests/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            MaitenanceRequest maitenanceRequest = Context.MaitenanceRequests.Find(id);
-            Context.MaitenanceRequests.Remove(maitenanceRequest);
-            Context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-    }
 }

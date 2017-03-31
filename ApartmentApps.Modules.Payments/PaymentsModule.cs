@@ -93,27 +93,35 @@ namespace ApartmentApps.Api.Modules
         {
             if (!UserContext.IsInRole("Admin") && !UserContext.IsInRole("PropertyAdmin") &&
                 !UserContext.IsInRole("Resident")) return;
-
+            var paymentsHome = new MenuItemViewModel("Payments", "fa-money", "Index", "Payments");
             if (!Config.UseUrl)
             {
-                var paymentsHome = new MenuItemViewModel("Payments", "fa-money", "Index", "Payments");
+               
 
                 if (UserContext.IsInRole("Admin") || UserContext.IsInRole("PropertyAdmin"))
                 {
-                    paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus", "CreateUserLeaseInfoFor", "Payments"));
-                    paymentsHome.Children.Add(new MenuItemViewModel("Payment Requests", "fa-list-alt", "Index", "PaymentRequests"));
-                 //   paymentsHome.Children.Add(new MenuItemViewModel("Payment Options", "fa-list-alt", "Index", "PaymentOptions"));
+                    paymentsHome.Children.Add(new MenuItemViewModel("Create Payment Request", "fa-plus",
+                        "CreateUserLeaseInfoFor", "Payments"));
+                    paymentsHome.Children.Add(new MenuItemViewModel("Payment Requests", "fa-list-alt", "Index",
+                        "PaymentRequests"));
+                    //   paymentsHome.Children.Add(new MenuItemViewModel("Payment Options", "fa-list-alt", "Index", "PaymentOptions"));
                     //       paymentsHome.Children.Add(new MenuItemViewModel("Users", "fa-shopping-cart", "PaymentsUsers", "Payments"));
                 }
 
                 if (Config.Enabled && UserContext.IsInRole("Resident"))
                 {
-                    paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart", "UserPaymentsOverview", "Payments", new { id = UserContext.CurrentUser.Id }));
+                    paymentsHome.Children.Add(new MenuItemViewModel("Overview", "fa-shopping-cart",
+                        "UserPaymentsOverview", "Payments", new {id = UserContext.CurrentUser.Id}));
                 }
 
                 menuItems.Add(paymentsHome);
             }
-
+            else if (!string.IsNullOrEmpty(Config.Url))
+            {
+                paymentsHome.Children.Add(new MenuItemViewModel(Config.Url) {Label = "Pay Rent", Icon = "fa-credit-card" });
+                menuItems.Add(paymentsHome);
+            }
+        
 
         }
 

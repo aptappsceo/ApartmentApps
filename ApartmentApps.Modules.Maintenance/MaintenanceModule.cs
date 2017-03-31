@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
@@ -49,6 +51,10 @@ namespace ApartmentApps.Api.Modules
                     actions.Add(new ActionLinkModel("Edit", "Entry", "MaitenanceRequests", new { id = mr.Id })
                     {
                         IsDialog = true
+                    });
+                    actions.Add(new ActionLinkModel("Delete", "Delete", "MaitenanceRequests", new { key = mr.Id })
+                    {
+                        
                     });
                 }
             }
@@ -122,5 +128,4 @@ namespace ApartmentApps.Api.Modules
         }
 
     }
-
 }

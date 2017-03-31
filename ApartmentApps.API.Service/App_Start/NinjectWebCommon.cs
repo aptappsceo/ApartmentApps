@@ -1,6 +1,9 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Http;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
@@ -80,6 +83,7 @@ namespace ApartmentApps.API.Service.App_Start
         {
 
             Register.RegisterServices(kernel);
+            kernel.Bind<IBackgroundScheduler>().To<DefaultBackgroundScheduler>().InRequestScope();
             kernel.Bind<ILogger>().To<LoggerModule>().InRequestScope();
             kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
             kernel.Bind<IAuthenticationManager>().ToMethod(p => HttpContext.Current.GetOwinContext().Authentication).InRequestScope();
@@ -89,14 +93,27 @@ namespace ApartmentApps.API.Service.App_Start
             GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
         }        
     }
+
+
     public class WebUserContext : IUserContext
     {
         private readonly ApplicationDbContext _db;
         private ApplicationUser _user;
-
-        public WebUserContext(ApplicationDbContext context)
+        private IKernel _kernel;
+        public WebUserContext(ApplicationDbContext context, IKernel kernel)
         {
+            _kernel = kernel;
             _db = context;
+        }
+        public ConfigProvider<T> GetConfigProvider<T>() where T : class, new()
+        {
+
+            return _kernel.Get<ConfigProvider<T>>();
+        }
+
+        public T GetConfig<T>() where T : class, new()
+        {
+            return GetConfigProvider<T>().Config;
         }
 
         public ApplicationUser CurrentUser
@@ -125,6 +142,19 @@ namespace ApartmentApps.API.Service.App_Start
                 if (CurrentUser.PropertyId != null) return CurrentUser.PropertyId.Value;
                 return 1;
             }
+        }
+    }
+
+    public class BackgroundScheduler : IBackgroundScheduler
+    {
+        public void QueueBackgroundItem(Action<CancellationToken> backgroundAction)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(backgroundAction);
+        }
+
+        public void QueueBackgroundItem(Func<CancellationToken, Task> backgroundAction)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(backgroundAction);
         }
     }
 }

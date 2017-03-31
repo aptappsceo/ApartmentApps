@@ -13,6 +13,13 @@
 
 @foreach (var property in Model.Properties)
 {
+    if (property.Roles != null)
+    {
+        if (!property.Roles.Any(x => User.IsInRole(x)))
+        {
+            continue;
+        }
+    }
     if (!property.Visible)
     {
         continue;

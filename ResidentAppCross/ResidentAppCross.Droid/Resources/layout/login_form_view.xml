@@ -15,8 +15,8 @@
         android:paddingRight="32dp">
 
         <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/imageView"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/AppartmentAppsIcon"/>
@@ -94,12 +94,33 @@
         </android.support.design.widget.TextInputLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingStart="8dp"
+            android:orientation="horizontal"
+            android:layout_height="36dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/primary_text"
+                android:background="@android:color/transparent"
+
+                android:text="Remember Me"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/RememberMeSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20sp"/>
 
 
+        </LinearLayout>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/LoginButton"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="0dp"
             android:text="LOG IN"
             android:backgroundTint="@color/accent"
             android:padding="12dp"

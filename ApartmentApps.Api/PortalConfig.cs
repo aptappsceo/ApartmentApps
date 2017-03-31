@@ -2,12 +2,12 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class PortalConfig : ModuleConfig
+    public class PortalConfig : PropertyModuleConfig
     {
     }
 
     [Persistant]
-    public class CompanySettingsConfig : ModuleConfig
+    public class CompanySettingsConfig : PropertyModuleConfig
     {
         public string PhoneNumber { get; set; }
     }

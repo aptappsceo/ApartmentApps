@@ -155,6 +155,7 @@ namespace ApartmentApps.Forms
         public string Placeholder { get; set; }
         public string Category { get; set; }
         public string ToggleCategory { get; set; }
+        public string[] Roles { get; set; }
     }
 
     public class FormPropertySelectItem

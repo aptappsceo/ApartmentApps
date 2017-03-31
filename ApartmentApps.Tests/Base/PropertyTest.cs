@@ -54,12 +54,17 @@ namespace ApartmentApps.Tests
             });
 
             var unitService = Context.Kernel.Get<UnitService>();
-            unitService.Add(new UnitViewModel()
+            var unitViewModel = new UnitViewModel()
             {
                 BuildingId = Convert.ToInt32(buildingService.GetAll<BuildingViewModel>().First().Id),
                 Name = "Unit 01"
-            });
+            };
+            unitService.Add(unitViewModel);
 
+            var id = Context.UserContext.UserId;
+            var user = DbContext.Users.Find(id);
+            user.UnitId = Context.Kernel.Get<IRepository<Unit>>().First().Id;
+            DbContext.SaveChanges();
         }
 
         public Corporation Corporation { get; set; }

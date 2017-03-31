@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,8 +8,11 @@ namespace ApartmentApps.Data
     public interface IBaseEntity
     {
         int Id { get; }
+
+        DateTime? CreateDate { get; set; }
+        //DateTime? UpdateDate { get; set; }
     }
-    public partial class Unit : PropertyEntity, IBaseEntity
+    public partial class Unit : PropertyEntity
     {
 
         public int BuildingId { get; set; }
@@ -25,6 +29,11 @@ namespace ApartmentApps.Data
         public double Latitude { get; set; }
         
         public double Longitude { get; set; }
+
+        /// <summary>
+        /// This property should not be modified it is calculated on the nightly run
+        /// </summary>
+        public string CalculatedTitle { get; set; }
 
     }
 }

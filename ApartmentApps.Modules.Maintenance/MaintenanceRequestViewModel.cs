@@ -60,9 +60,13 @@ namespace ApartmentApps.Api.ViewModels
 
         public UserBindingModel[] Tenants
         {
-            get { return _tenants ?? (_tenants = new UserBindingModel[0]); }
+            get
+            {
+                return _tenants ?? (_tenants = new UserBindingModel[0]);
+            }
             set { _tenants = value; }
         }
+
     }
 
 

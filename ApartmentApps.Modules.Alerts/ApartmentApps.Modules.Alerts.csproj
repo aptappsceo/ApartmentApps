@@ -59,9 +59,17 @@
       <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RazorEngine, Version=3.9.3.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.9.3\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +81,7 @@
     <Compile Include="AlertsModule.cs" />
     <Compile Include="AlertsModuleConfig.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="MarketingModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +92,10 @@
     <ProjectReference Include="..\ApartmentApps.Data\ApartmentApps.Data.csproj">
       <Project>{69A819D5-3037-4E56-90E4-A9EDFF41B88A}</Project>
       <Name>ApartmentApps.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ApartmentApps.Forms\ApartmentApps.Forms.csproj">
+      <Project>{e3722b2c-0ee1-4359-89d2-cd78bddd59c7}</Project>
+      <Name>ApartmentApps.Forms</Name>
     </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Modules.CourtesyOfficer\ApartmentApps.Modules.CourtesyOfficer.csproj">
       <Project>{62C439C3-12AF-48C9-B7B2-84BC16893027}</Project>
@@ -95,7 +108,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <EmbeddedResource Include="EmailTemplates\_Layout.cshtml" />
+    <EmbeddedResource Include="EmailTemplates\MaintenanceCheckinEmailData.cshtml" />
+    <EmbeddedResource Include="EmailTemplates\EngagementLetterEmailData.cshtml" />
+    <EmbeddedResource Include="EmailTemplates\UpdateEmailData.cshtml" />
+    <EmbeddedResource Include="EmailTemplates\UpdateEmailData - Copy.cshtml" />
+    <EmbeddedResource Include="EmailTemplates\MessageData.cshtml" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="EmailTemplates\ActionEmailData.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

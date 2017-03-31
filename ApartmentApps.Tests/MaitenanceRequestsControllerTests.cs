@@ -7,13 +7,17 @@ using ApartmentApps.Api.ViewModels;
 using ApartmentApps.API.Service.Controllers;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Portal;
 using ApartmentApps.Portal.Controllers;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using MaitenanceRequestModel = ApartmentApps.Portal.Controllers.MaitenanceRequestModel;
 
 namespace ApartmentApps.Tests
 {
+
+
 
 
     [TestClass]
@@ -28,6 +32,16 @@ namespace ApartmentApps.Tests
         }
 
         public MaitenanceController ApiController { get; set; }
+
+        [TestMethod]
+        public void TestApi()
+        {
+
+            SubmitMaintenanceRequest();
+            var result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
+            var apiResult = ApiController.Get(Convert.ToInt32(result.Id));
+            
+        }
 
         [TestMethod]
         public void TestProcess()
@@ -65,12 +79,12 @@ namespace ApartmentApps.Tests
             Controller.CompleteRequest(new MaintenanceStatusRequestModel()
             {
                 Id = Convert.ToInt32(result.Id),
-                Comments = "Restarting"
+                Comments = "Complete"
             });
             result = Context.Kernel.Get<MaintenanceService>().GetAll<MaintenanceRequestViewModel>().FirstOrDefault();
             Assert.IsTrue(result != null && result.StatusId == "Complete");
 
-        
+            
         }
 
         [TestMethod]
@@ -91,20 +105,20 @@ namespace ApartmentApps.Tests
             // Submit another request to test the list
             SubmitMaintenanceRequest();
 
-            var config = Context.Kernel.Get<MaintenanceModule>().Config;
+            var config = Context.Kernel.Get<ConfigProvider<MaintenanceConfig>>().Config;
             config.SupervisorMode = true;
             var controllerRequestList = ApiController.ListRequests();
-            Assert.AreEqual(controllerRequestList.Count(),1);
+            Assert.AreEqual(2,controllerRequestList.Count());
             config.SupervisorMode = false;
             controllerRequestList = ApiController.ListRequests();
-            Assert.AreEqual(controllerRequestList.Count(), 2);
+           // Assert.AreEqual(2,controllerRequestList.Count());
         }
 
         private void SubmitMaintenanceRequest()
         {
-            var editModel = new MaitenanceRequestModel()
+            var editModel = Context.Kernel.Get<MaitenanceRequestModel>();// new MaitenanceRequestModel()
             {
-                Comments = "Here is my new maintenance request",
+                editModel.Comments = "Here is my new maintenance request";
             };
             editModel.MaitenanceRequestTypeId = Convert.ToInt32(editModel.MaitenanceRequestTypeId_Items.First().Id);
             editModel.UnitId = Convert.ToInt32(editModel.UnitId_Items.First().Id);
@@ -119,6 +133,56 @@ namespace ApartmentApps.Tests
         {
             RemoveAll<MaintenanceRequestCheckin>();
             RemoveAll<MaitenanceRequest>();
+            base.DeInit();
+        }
+    }
+
+
+    [TestClass]
+    public class UserManagementTests : PropertyControllerTest<UserManagementController>
+    {
+        [TestInitialize]
+        public override void Init()
+        {
+            base.Init();
+            //Context.Kernel.Bind<UserManagementController>().ToSelf();
+     
+        }
+
+
+
+
+        [TestMethod]
+        public void TestCreateUser()
+        {
+            var data = new UserFormModel(Context.Kernel.Get<UnitService>())
+            {
+                Email = $"{Guid.NewGuid()}@aol-aol.com",
+                FirstName = "Bla",
+                LastName = "Bla",
+                Password = "bla",
+                PhoneNumber = "555-555-5555",
+                
+            };
+
+            data.SelectedRoles = new[] {"Resident"}.ToList();
+            var unit = data.UnitItems.FirstOrDefault();
+            if (unit != null)
+            data.UnitId = Convert.ToInt32(unit.Id);
+            Controller.UserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(DbContext));
+            var result = Controller.SaveUser(data).Result;
+            
+            var userRepo = Context.Kernel.Get<IRepository<ApplicationUser>>();
+            var user = userRepo.GetAll().FirstOrDefault(p => p.Email == data.Email);
+            Assert.IsNotNull(user,"User is null");
+
+        }
+
+
+        [TestCleanup]
+        public override void DeInit()
+        {
+            
             base.DeInit();
         }
     }

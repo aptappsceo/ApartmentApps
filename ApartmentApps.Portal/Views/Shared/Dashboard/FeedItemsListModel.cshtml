@@ -1,0 +1,59 @@
+﻿@using ApartmentApps.Data
+@model ApartmentApps.Api.Modules.FeedItemsListModel
+@{
+    Model.ItemUrlSelector = i =>
+    {
+        switch (i.Type)
+        {
+            case FeedItemType.MaintenanceRequest:
+                return Url.Action("Details", "MaitenanceRequests", new { id = i.RelatedId });
+            case FeedItemType.IncidentReport:
+                return Url.Action("Details", "IncidentReports", new { id = i.RelatedId });
+            case FeedItemType.CourtesyCheckin:
+                return null;
+        }
+        return null;
+    };
+
+    var property = ViewBag.Property as Property;
+    string urlC;
+}
+<div class="feed-activity-list">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Feed Items</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-md-12">
+                    @foreach (var item in Model.FeedItems)
+                    {
+                        <div class="feed-element">
+                            <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.User.Id})" class="pull-left">
+                                <img alt="image" class="img-circle" src="@item.User.ImageThumbnailUrl">
+                            </a>
+                            <div class="media-body ">
+                                <a href="@Url.Action("UserFeed", "Dashboard", new {id = @item.User.Id})"><strong>@@@item.User.FirstName @item.User.LastName</strong></a> @item.Description <br>
+                                <small class="text-muted">@Html.Timeago(item.CreatedOn, property?.TimeZone)</small>
+                                @if (!string.IsNullOrEmpty(item.Message))
+                                {
+                                    <div class="well">
+                                        @item.Message
+                                    </div>
+                                }
+                                @if (Model.ItemUrlSelector != null && !string.IsNullOrEmpty((urlC = Model.ItemUrlSelector(item))))
+                                {
+                                    <small><a class="info" href="@urlC">Details</a></small>
+                                }
+                                <small class="pull-right">@item.CreatedOn.ToShortDateString()</small>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

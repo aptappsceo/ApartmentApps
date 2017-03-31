@@ -1,3 +1,7 @@
+using System;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api.Modules;
 using Microsoft.AspNet.Identity;
@@ -23,7 +27,7 @@ namespace ApartmentApps.Api
         public async Task SendAsync(IdentityMessage message)
         {
 
-            string apiKey = "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";
+            string apiKey = "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";
             var fromEmail = "noreply@apartmentapps.com";
             //var config = _config.Get<MessagingModule>().Config;
 
@@ -33,7 +37,7 @@ namespace ApartmentApps.Api
             //    fromEmail = config.SendFromEmail;
             //}
             dynamic sg = new SendGridAPIClient(apiKey);
-     
+
             Email from = new Email(fromEmail);
             string subject = message.Subject;
             Email to = new Email(message.Destination);
@@ -41,7 +45,7 @@ namespace ApartmentApps.Api
             Mail mail = new Mail(from, subject, to, content);
 
             dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
-            
+
 
             //try
             //{
@@ -68,8 +72,8 @@ namespace ApartmentApps.Api
             //    _logger?.Error($"Error sending to email {message.Destination}\r\n {ex.Message}\r\n{ex.StackTrace}");
             //}
 
-            // Plug in your email service here to send an email.
-            //return Task.FromResult(0);
+            
+           // return Task.FromResult(0);
         }
     }
 }

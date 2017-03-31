@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http.Filters;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -20,6 +22,7 @@ using Ninject;
 
 namespace ApartmentApps.Api
 {
+
 
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 {
@@ -45,28 +48,40 @@ namespace ApartmentApps.Api
  public class MaintenanceRequestEditModel : BaseViewModel
    
     {
-
+        private readonly IRepository<Unit> _unitRepo;
+        private readonly IRepository<ApplicationUser> _userRepo;
+        private readonly IRepository<MaitenanceRequestType> _requestTypeRepo;
 
 
         //[DataType()]
-        [DisplayName("Unit")]
+        [DisplayName("Unit"), DisplayForRoles(Roles="Admin,PropertyAdmin,Maintenance")]
         public int UnitId { get; set; }
+
+        public MaintenanceRequestEditModel()
+        {
+        }
+        [Inject]
+        public MaintenanceRequestEditModel(IRepository<Unit> unitRepo, IRepository<ApplicationUser> userRepo, IRepository<MaitenanceRequestType> requestTypeRepo)
+        {
+            _unitRepo = unitRepo;
+            _userRepo = userRepo;
+            _requestTypeRepo = requestTypeRepo;
+        }
 
         public IEnumerable<FormPropertySelectItem> UnitId_Items
         {
             get
             {
                 var items =
-                    ModuleHelper.Kernel.Get<IRepository<Unit>>().ToArray();
-
+                    _unitRepo.ToArray();
+                var users = _userRepo;
                 return items.Select(p =>
                 {
                     var name = $"[{ p.Building.Name }] {p.Name}";
-                    if (p.Users.Any())
-                    {
-                        var user = p.Users.First();
+                    var user = users.FirstOrDefault(x=>!x.Archived && x.UnitId == p.Id);
+                    if (user != null)
                         name += $" ({user.FirstName} {user.LastName})";
-                    }
+                    
                     return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
                 }).OrderByAlphaNumeric(p => p.Value);
 
@@ -78,7 +93,7 @@ namespace ApartmentApps.Api
             get
             {
                 return
-                    ModuleHelper.Kernel.Get<IRepository<MaitenanceRequestType>>()
+                    _requestTypeRepo
                         .ToArray()
                         .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, MaitenanceRequestTypeId == p.Id));
 
@@ -112,7 +127,7 @@ namespace ApartmentApps.Api
 
     public class MaintenanceRequestEditMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestEditModel> 
     {
-        public MaintenanceRequestEditMapper(IUserContext userContext) : base(userContext)
+        public MaintenanceRequestEditMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -140,7 +155,7 @@ namespace ApartmentApps.Api
     }
     public class MaintenanceRequestIndexMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestIndexBindingModel>
     {
-        public MaintenanceRequestIndexMapper(IUserContext userContext) : base(userContext)
+        public MaintenanceRequestIndexMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -154,13 +169,49 @@ namespace ApartmentApps.Api
             viewModel.RequestType = model.MaitenanceRequestType.Name;
         }
     }
+
+    public class MaintenanceRequestTypeLookupMapper : BaseMapper<MaitenanceRequestType, LookupBindingModel>
+    {
+        public MaintenanceRequestTypeLookupMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
+        {
+        }
+
+        public override void ToModel(LookupBindingModel viewModel, MaitenanceRequestType model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ToViewModel(MaitenanceRequestType model, LookupBindingModel viewModel)
+        {
+            viewModel.Id = model.Id.ToString();
+            viewModel.Title = model.Name;
+        }
+    }
+    public class MaintenanceRequestStatusLookupMapper : BaseMapper<MaintenanceRequestStatus, LookupBindingModel>
+    {
+
+        public override void ToModel(LookupBindingModel viewModel, MaintenanceRequestStatus model)
+        {
+
+        }
+
+        public override void ToViewModel(MaintenanceRequestStatus model, LookupBindingModel viewModel)
+        {
+            viewModel.Id = viewModel.Title = model.Name;
+        }
+
+        public MaintenanceRequestStatusLookupMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
+        {
+        }
+    }
+
     public class MaintenanceRequestMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestViewModel>
     {
+
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
         public IBlobStorageService BlobStorageService { get; set; }
 
-        public MaintenanceRequestMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
-            IBlobStorageService blobStorageService, IUserContext userContext) : base(userContext)
+        public MaintenanceRequestMapper(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> userMapper, IBlobStorageService blobStorageService) : base(userContext, moduleHelper)
         {
             UserMapper = userMapper;
             BlobStorageService = blobStorageService;
@@ -224,6 +275,8 @@ namespace ApartmentApps.Api
                 Label = "Assign Maintenance Request",
                 Parameters = new  { id= model.Id }
             };
+
+ 
         }
 
     }
@@ -232,15 +285,19 @@ namespace ApartmentApps.Api
     {
  
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
+        public ConfigProvider<MaintenanceConfig> Config { get; }
         public PropertyContext Context { get; set; }
 
+        private readonly IModuleHelper _moduleHelper;
         private IBlobStorageService _blobStorageService;
         private readonly IUserContext _userContext;
 
-        public MaintenanceService(PropertyContext propertyContext, IRepository<MaitenanceRequest> repository, IBlobStorageService blobStorageService, IUserContext userContext, IKernel kernel) : base(kernel, repository)
+        public MaintenanceService(ConfigProvider<MaintenanceConfig> config, IModuleHelper moduleHelper, PropertyContext propertyContext, IRepository<MaitenanceRequest> repository, IBlobStorageService blobStorageService, IUserContext userContext, IKernel kernel) : base(kernel, repository)
         {
+            _moduleHelper = moduleHelper;
             _blobStorageService = blobStorageService;
             _userContext = userContext;
+            Config = config;
             Context = propertyContext;
         }
 
@@ -283,7 +340,7 @@ namespace ApartmentApps.Api
             }
         }
 
-        public int SubmitRequest( string comments, int requestTypeId, int petStatus, bool emergrency, bool permissionToEnter, List<byte[]> images, int unitId = 0)
+        public int SubmitRequest(string comments, int requestTypeId, int petStatus, bool emergrency, bool permissionToEnter, List<byte[]> images, int unitId = 0, SubmittedVia mobile = SubmittedVia.Other)
         {
 
             var maitenanceRequest = new MaitenanceRequest()
@@ -331,12 +388,30 @@ namespace ApartmentApps.Api
             Checkin(_userContext.CurrentUser, maitenanceRequest.Id, maitenanceRequest.Message,
                 maitenanceRequest.StatusId, null, maitenanceRequest.GroupId);
 
-            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
-
+            _moduleHelper.SignalToEnabled<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
+            
             return maitenanceRequest.Id;
 
         }
 
+        public override void Remove(string id)
+        {
+            var intId = Convert.ToInt32(id);
+            RemoveAllWith<MaintenanceRequestCheckin>(x=>x.MaitenanceRequestId == intId);
+            base.Remove(id);
+        }
+
+        public void RemoveAllWith<TSet>(Expression<Func<TSet, bool>> filter)
+        {
+            var set = Repo<TSet>();
+            var items = set.Where(filter).ToArray();
+            foreach (var item in items)
+            {
+                set.Remove(item);
+                set.Save();
+            }
+        }
+        
         public IEnumerable<TViewModel> GetAllUnassigned<TViewModel>()
         {
             return Repository.Where(p => p.WorkerAssignedId == null).ToArray().Select(Map<TViewModel>().ToViewModel);
@@ -347,7 +422,7 @@ namespace ApartmentApps.Api
             var request = Repository.Find(requestId);
             request.WorkerAssignedId = userId;
             Repository.Save();
-            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceRequestAssignedEvent>(_ => _.MaintenanceRequestAssigned(request));
+            _moduleHelper.SignalToEnabled<IMaintenanceRequestAssignedEvent>(_ => _.MaintenanceRequestAssigned(request));
              
         }
         public bool PauseRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images)
@@ -390,7 +465,7 @@ namespace ApartmentApps.Api
                 request.CompletionDate = worker.TimeZone.Now();
             }
             Context.SaveChanges();
-            Modules.ModuleHelper.EnabledModules.Signal<IMaintenanceRequestCheckinEvent>( _ => _.MaintenanceRequestCheckin(checkin, request));
+            _moduleHelper.SignalToEnabled<IMaintenanceRequestCheckinEvent>( _ => _.MaintenanceRequestCheckin(checkin, request));
 
             return true;
 
@@ -420,4 +495,55 @@ namespace ApartmentApps.Api
         
         public override bool DefaultOrderByDesc => true;
     }
+
+
+
+    public static class MaitenanceRequestProtocol
+    {
+        public static bool CanBeStarted(this MaitenanceRequest request)
+        {
+            return request.StatusId == MaintenanceRequestStatuses.Scheduled ||
+                   request.StatusId == MaintenanceRequestStatuses.Submitted ||
+                   request.StatusId == MaintenanceRequestStatuses.Paused;
+        }
+        public static bool CanBePaused(this MaitenanceRequest request)
+        {
+            return request.StatusId == MaintenanceRequestStatuses.Started;
+        }
+        public static bool CanBeComplete(this MaitenanceRequest request)
+        {
+            return request.StatusId == MaintenanceRequestStatuses.Started;
+        }
+        public static bool CanBeScheduled(this MaitenanceRequest request)
+        {
+            return request.StatusId == MaintenanceRequestStatuses.Submitted || request.StatusId == MaintenanceRequestStatuses.Paused;
+        }
+
+        public static bool CanControl(ApplicationUser user, MaitenanceRequest request)
+        {
+            return user.Roles.Any(
+                    role =>
+                        role.RoleId == UserRoles.Maintenance || role.RoleId == UserRoles.MaintenanceSupervisor ||
+                        role.RoleId == UserRoles.PropertyAdmin || role.RoleId == UserRoles.Admin);
+        }
+
+        public static bool CanStart(this ApplicationUser user, MaitenanceRequest request)
+        {
+            return CanControl(user, request);
+        }
+        public static bool CanPause(this ApplicationUser user, MaitenanceRequest request)
+        {
+            return CanControl(user, request);
+        }
+        public static bool CanComplete(this ApplicationUser user, MaitenanceRequest request)
+        {
+            return CanControl(user, request);
+        }
+        public static bool CanSchedule(this ApplicationUser user, MaitenanceRequest request)
+        {
+            return CanControl(user, request);
+        }
+    }
+
+
 }

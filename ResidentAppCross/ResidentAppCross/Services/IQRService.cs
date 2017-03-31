@@ -9,7 +9,7 @@ namespace ResidentAppCross.Services
     public interface IQRService
     {
         Task<QRData> ScanAsync();
-		Task<QRData> ScanIDAsync();
+		//Task<QRData> ScanIDAsync();
     }
 
     public class QRData

@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace ApartmentApps.Data
 {
-    public abstract class UserEntity : PropertyEntity
+    public abstract class UserEntity : PropertyEntity, IUserEntity
     {
         [DefaultValue(1)]
         [DataType("Hidden")]
@@ -34,6 +35,9 @@ namespace ApartmentApps.Data
         [DataType("Hidden")]
         [EqEntityAttr(UseInConditions = false)]
         public int Id { get; set; }
+        [DataType("Hidden")]
+        public DateTime? CreateDate { get; set; }
+      //  public DateTime? UpdateDate { get; set; }
     }
 
     //public partial class Tenant : PropertyEntity

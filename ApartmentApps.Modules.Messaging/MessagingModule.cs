@@ -13,7 +13,9 @@ using SendGrid.Helpers.Mail;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class MessagingModule : Module<MessagingConfig>, IMenuItemProvider, IAdminConfigurable
+
+
+    public class MessagingModule : Module<MessagingConfig>, IMenuItemProvider, IAdminConfigurable, IApplyAnalytics
     {
         public IRepository<Message> Messages { get; set; }
         private readonly PropertyContext _context;
@@ -51,20 +53,36 @@ namespace ApartmentApps.Api.Modules
             foreach (var item in ids)
             {
                 var user = _context.Users.Find(item);
+                if (user == null) continue;
                 if (user.Archived) continue;
                 // Send the push notification
-                _alertsService.SendAlert(user, message.Title, message.Body, "Message", Convert.ToInt32(message.Id));
+                _alertsService.SendAlert(user, message.Title, message.Body, "Message", Convert.ToInt32(message.Id), null, "Open to read the full message.");
                 // Send the email
                 //$"<img src='{host}/{message.Id}/{item}.png' />", Destination = user.Email, Subject = message. }
                 SendEmailAsync(message, user, new IdentityMessage() { Subject = message.Title, Body = message.Body, Destination = user.Email}).Wait();
             }
-            
+            var messages = this.Kernel.Get<IRepository<Message>>();
+            var messageRecord = messages.Find(message.Id);
+            if (messageRecord != null)
+            {
+                messageRecord.SentOn = UserContext.CurrentUser.TimeZone.Now();
+                messageRecord.Sent = true;
+                messages.Save();
+            }
 
         }
         public async Task SendEmailAsync(MessageViewModel messageRecord,ApplicationUser user, IdentityMessage message)
         {
-
-            string apiKey = "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";
+            //await Kernel.Get<IEmailService>().SendAsync(message);
+            //_messageReceipts.Add(new MessageReceipt()
+            //{
+            //    UserId = user.Id,
+            //    Error = false,
+            //    ErrorMessage = null,
+            //    MessageId = Convert.ToInt32(messageRecord.Id),
+            //});
+            //_messageReceipts.Save();
+            string apiKey = "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";
             var fromEmail = "noreply@apartmentapps.com";
 
             if (!string.IsNullOrEmpty(Config.SendGridApiToken))
@@ -83,10 +101,11 @@ namespace ApartmentApps.Api.Modules
             dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
             var status = (HttpStatusCode)response.StatusCode;
 
+
             _messageReceipts.Add(new MessageReceipt()
             {
                 UserId = user.Id,
-                Error =  status != HttpStatusCode.Accepted,
+                Error = status != HttpStatusCode.Accepted,
                 ErrorMessage = Config.FullLogging ? response.StatusCode.ToString() + response.Body.ReadAsStringAsync().Result : response.StatusCode.ToString(),
                 MessageId = Convert.ToInt32(messageRecord.Id),
             });
@@ -103,6 +122,13 @@ namespace ApartmentApps.Api.Modules
                 message.Opened = true;
                 _messageReceipts.Save();
             }
+        }
+
+        public void ApplyAnalytics(AnalyticsModule module, AnalyticsItem analyticsItem, DateTime startDate)
+        {
+            analyticsItem.NumberMessagesSent =
+                module.Repo<Message>().Count(p => p.Sent && p.SentOn > startDate);
+
         }
     }
 }

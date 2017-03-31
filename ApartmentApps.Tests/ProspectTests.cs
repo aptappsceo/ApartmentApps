@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using ApartmentApps.Modules.Prospect;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;

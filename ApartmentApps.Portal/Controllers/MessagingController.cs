@@ -18,14 +18,14 @@ using Syncfusion.JavaScript;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class MessagingController : AutoGridController<MessagingService,MessagingService,MessageViewModel, MessageFormViewModel>
+    public class MessagingController : AutoGridController<MessagingService, MessagingService, MessageViewModel, MessageFormViewModel>
     {
         private readonly UserService _userService;
         private readonly MessagingService _messageService;
         private readonly MessagingModule _module;
         private ApplicationDbContext _context;
         private IBlobStorageService _blobStorageService;
-    
+
         public MessagingController(UserService userService, IKernel kernel, MessagingService formService, MessagingService indexService, PropertyContext context, IUserContext userContext, MessagingService service, MessagingService messageService, MessagingModule module, ApplicationDbContext context2, IBlobStorageService blobStorageService, AlertsModule messagingService) : base(kernel, formService, indexService, context, userContext, service)
         {
             _userService = userService;
@@ -37,7 +37,7 @@ namespace ApartmentApps.Portal.Controllers
         }
 
         public AlertsModule MessagingService { get; set; }
-        
+
         public override ActionResult Entry(string id = null)
         {
             if (id != null && id != "0")
@@ -52,12 +52,12 @@ namespace ApartmentApps.Portal.Controllers
             {
                 return View("OverviewListPartial", grid);
             }
-            return View("Overview",grid);
+            return View("Overview", grid);
         }
 
         public ActionResult SelectTargets(int messageId)
         {
-            return RedirectToAction("SelectTargets", "CampaignTargets", new {messageId = messageId});
+            return RedirectToAction("SelectTargets", "CampaignTargets", new { messageId = messageId });
         }
         public ActionResult History()
         {
@@ -97,34 +97,8 @@ namespace ApartmentApps.Portal.Controllers
 
         public ActionResult SendMessage(int messageId)
         {
-            var q = Service.Find<MessageViewModel>(messageId.ToString());
-            if (q != null)
-            {
-                var userService = Kernel.Get<UserService>();
-                string queryXml = q.TargetsXml;
-                var query = userService.CreateQuery();
-                if (!string.IsNullOrEmpty(queryXml))
-                {
-                  
-                        query.LoadFromString(queryXml);
-                
-                    
-                }
-                else
-                {
-                    ViewBag.ErrorMessage = "Cannot send message. Targets not set.";
-                    return RedirectToAction("MessageDetails", new { id = messageId });
-                }
-
-                var count = 0;
-                var items = _userService.GetActive<UserBindingModel>(query, out count, null, false, 1, Int32.MaxValue).ToArray().Select(p=>p.Id).Cast<object>().ToArray();
-
-                _module.SendMessage(items, q, string.Empty);
-                Service.MarkSent(messageId);
-                return RedirectToAction("MessageDetails",new {id = messageId.ToString()});
-
-            }
-            return RedirectToAction("Index");
+            Service.QueueSend(messageId);
+            return RedirectToAction("MessageDetails", new {id=messageId.ToString()});
         }
         [ValidateInput(false)]
         public override ActionResult SaveEntry(MessageFormViewModel model)
@@ -133,7 +107,7 @@ namespace ApartmentApps.Portal.Controllers
             base.SaveEntry(model);
             if (isNew)
             {
-                return RedirectToAction("SelectTargets", "CampaignTargets", new {messageId = model.Id});
+                return RedirectToAction("SelectTargets", "CampaignTargets", new { messageId = model.Id });
             }
             else
             {

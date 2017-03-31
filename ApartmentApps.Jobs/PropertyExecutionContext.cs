@@ -35,7 +35,7 @@ namespace ApartmentApps.Jobs
             OldPropertyId = user.PropertyId;
             user.PropertyId = propertyId;
             Context.SaveChanges();
-            UserContext = new FakeUserContext(Context)
+            UserContext = new FakeUserContext(Context, Kernel)
             {
                 PropertyId = propertyId,
                 UserId = user.Id,

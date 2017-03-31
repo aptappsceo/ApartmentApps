@@ -24,6 +24,8 @@ namespace ApartmentApps.Portal.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using System.Threading;
+    using System.Web.Hosting;
 
     public static class NinjectWebCommon 
     {
@@ -81,8 +83,8 @@ namespace ApartmentApps.Portal.App_Start
         {
             Register.RegisterServices(kernel);
             //kernel.Bind<IIdentityMessageService>().To<EmailService>().InRequestScope();
+            kernel.Bind<IBackgroundScheduler>().To<DefaultBackgroundScheduler>().InRequestScope();
 
-            
             kernel.Bind<IUserContext>().To<WebUserContext>().InRequestScope();
             kernel.Bind<ILogger>().To<LoggerModule>().InRequestScope();
             //kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();
@@ -93,14 +95,40 @@ namespace ApartmentApps.Portal.App_Start
                 .InRequestScope();
         }
     }
+    public class BackgroundScheduler : IBackgroundScheduler
+    {
+        public void QueueBackgroundItem(Action<CancellationToken> backgroundAction)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(backgroundAction);
+        }
+
+        public void QueueBackgroundItem(Func<CancellationToken, System.Threading.Tasks.Task> backgroundAction)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(backgroundAction);
+        }
+    }
+
     public class WebUserContext : IUserContext
     {
         private readonly ApplicationDbContext _db;
         private ApplicationUser _user;
+        private IKernel _kernel;
 
-        public WebUserContext(ApplicationDbContext context)
+        public WebUserContext(ApplicationDbContext context, IKernel kernel)
         {
+            _kernel = kernel;
             _db = context;
+        }
+        
+        public ConfigProvider<T> GetConfigProvider<T>() where T : class, new()
+        {
+        
+            return _kernel.Get<ConfigProvider<T>>();
+        }
+
+        public T GetConfig<T>() where T : class, new()
+        {
+            return GetConfigProvider<T>().Config;
         }
 
         public ApplicationUser CurrentUser
@@ -114,10 +142,14 @@ namespace ApartmentApps.Portal.App_Start
         }
 
 
-        public IIdentity User => System.Web.HttpContext.Current.User.Identity;
+        public IIdentity User => HttpContext != null ? HttpContext.User.Identity : System.Web.HttpContext.Current.User.Identity;
 
         public bool IsInRole(string roleName)
         {
+            if (HttpContext != null)
+            {
+                HttpContext.User.IsInRole(roleName);
+            }
             return HttpContext.Current.User.IsInRole(roleName);
         }
 
@@ -132,5 +164,7 @@ namespace ApartmentApps.Portal.App_Start
                 return 1;
             }
         }
+
+        public HttpContext HttpContext { get; set; }
     }
 }

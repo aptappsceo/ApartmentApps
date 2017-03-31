@@ -36,6 +36,10 @@ namespace ResidentAppCross.iOS
         {
             App.ApartmentAppsClient.GetAuthToken = () => AuthToken;
             App.ApartmentAppsClient.SetAuthToken = (v) => AuthToken = v;
+            App.ApartmentAppsClient.GetSavedUsername = () => SavedUsername;
+            App.ApartmentAppsClient.SetSavedUsername = (v) => SavedUsername = v;
+            App.ApartmentAppsClient.GetSavedPassword = () => SavedPassword;
+            App.ApartmentAppsClient.SetSavedPassword = (v) => SavedPassword = v;
         }
 
 
@@ -234,6 +238,7 @@ namespace ResidentAppCross.iOS
                 NSUserDefaults.StandardUserDefaults.SetString(value,"AA_DEVICE_TOKEN");
             }
         }
+
         public static string AuthToken
         {
             get { return NSUserDefaults.StandardUserDefaults.StringForKey("AA_TOKEN"); }
@@ -251,6 +256,43 @@ namespace ResidentAppCross.iOS
                
             }
         }
+
+        public static string SavedUsername
+        {
+            get { return NSUserDefaults.StandardUserDefaults.StringForKey("AA_UU"); }
+            set
+            {
+                if (value == null)
+                {
+                    NSUserDefaults.StandardUserDefaults.RemoveObject("AA_UU");
+                }
+                else
+                {
+                    NSUserDefaults.StandardUserDefaults.SetString(value, "AA_UU");
+
+                }
+               
+            }
+        }
+
+        public static string SavedPassword
+        {
+            get { return NSUserDefaults.StandardUserDefaults.StringForKey("AA_UP"); }
+            set
+            {
+                if (value == null)
+                {
+                    NSUserDefaults.StandardUserDefaults.RemoveObject("AA_UP");
+                }
+                else
+                {
+                    NSUserDefaults.StandardUserDefaults.SetString(value, "AA_UP");
+
+                }
+               
+            }
+        }
+
         public static string HandleId
         {
             get { return NSUserDefaults.StandardUserDefaults.StringForKey("AA_HANDLE"); }

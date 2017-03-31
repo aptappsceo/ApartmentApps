@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -15,7 +17,7 @@ namespace ApartmentApps.Api
 {
     public class CourtesyCheckinMapper : BaseMapper<CourtesyOfficerCheckin, CourtesyCheckinViewModel>
     {
-        public CourtesyCheckinMapper(IUserContext userContext) : base(userContext)
+        public CourtesyCheckinMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 

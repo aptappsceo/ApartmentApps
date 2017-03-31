@@ -17,7 +17,7 @@ namespace ApartmentApps.Modules.Inspections
 
 
     [Persistant]
-    public class InspectionsModuleConfig : ModuleConfig
+    public class InspectionsModuleConfig : PropertyModuleConfig
     {
         
     }

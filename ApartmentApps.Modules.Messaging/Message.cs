@@ -30,5 +30,17 @@ namespace ApartmentApps.Api.Modules
 
         [Searchable]
         public bool Sent { get; set; }
+
+        [Searchable]
+        public MessageStatus Status {get; set; }
+        public string ErrorMessage { get; set; }
+    }
+
+    public enum MessageStatus
+    {
+        Draft,
+        Sending,
+        Sent,
+        Error
     }
 }

@@ -16,6 +16,16 @@ namespace ApartmentApps.Data
         }
     }
 
+
+    public static class MaintenanceRequestStatuses
+    {
+        public const string Complete = nameof(Complete);
+        public const string Paused = nameof(Paused);
+        public const string Scheduled = nameof(Scheduled);
+        public const string Started = nameof(Started);
+        public const string Submitted = nameof(Submitted);
+    }
+
     public partial class MaitenanceRequest : PropertyEntity, IImageContainer, IFeedItem
     {
         [ForeignKey("WorkerAssigned")]
@@ -80,5 +90,15 @@ namespace ApartmentApps.Data
         [NotMapped, EqEntityAttr(UseInConditions = false)]
         public TimeSpan? TimeToComplete => CompletionDate?.Subtract(SubmissionDate);
 
+        public SubmittedVia SubmittedVia { get; set; }
+    }
+
+    public enum SubmittedVia
+    {
+        Portal,
+        Other,
+        Mobile,
+        MobileIPhone,
+        MobileAndroid
     }
 }

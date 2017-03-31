@@ -113,10 +113,13 @@ public class App : MvxApplication
         }
 
         public static Func<string> GetAuthToken { get; set; }
-
         public static Action<string> SetAuthToken { get; set; }
 
+        public static Func<string> GetSavedUsername { get; set; }
+        public static Action<string> SetSavedUsername { get; set; }
 
+        public static Func<string> GetSavedPassword { get; set; }
+        public static Action<string> SetSavedPassword { get; set; }
     }
 
 

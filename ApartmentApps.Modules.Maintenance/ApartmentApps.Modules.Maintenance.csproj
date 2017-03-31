@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DashboardNumberWorkOrders.cs" />
     <Compile Include="IMaintenanceRequestCheckinEvent.cs" />
     <Compile Include="IMaintenanceRequestCompletedEvent.cs" />
     <Compile Include="IMaintenanceRequestStartedEvent.cs" />
@@ -100,7 +101,9 @@
     <Compile Include="MaintenanceConfig.cs" />
     <Compile Include="MaintenanceIndexBindingModel.cs" />
     <Compile Include="MaintenanceModule.cs" />
+    <Compile Include="MaintenanceNotificationUserConfig.cs" />
     <Compile Include="MaintenanceRepository.cs" />
+    <Compile Include="MaintenanceRequestSearchEngine.cs" />
     <Compile Include="MaintenanceRequestViewModel.cs" />
     <Compile Include="MaintenanceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

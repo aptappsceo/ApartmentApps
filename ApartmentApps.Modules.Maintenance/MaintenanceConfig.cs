@@ -4,7 +4,7 @@ using ApartmentApps.Data;
 namespace ApartmentApps.Api.Modules
 {
     [Persistant]
-    public class MaintenanceConfig : ModuleConfig
+    public class MaintenanceConfig : PropertyModuleConfig
     {
         public bool SupervisorMode { get; set; }
 
@@ -17,5 +17,7 @@ namespace ApartmentApps.Api.Modules
 
         [DisplayName("Maintenance Service Phone Number")]
         public string MaintenancePhoneNumber { get; set; }
+        [DisplayName("Should we verify bard codes on the doors for this property?")]
+        public bool VerifyBarCodes { get; set; }
     }
 }

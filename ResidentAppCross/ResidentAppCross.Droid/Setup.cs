@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Bluetooth;
@@ -165,6 +166,12 @@ namespace ResidentAppCross.Droid
             App.ApartmentAppsClient.GetAuthToken = () => AuthToken;
             App.ApartmentAppsClient.SetAuthToken = (v) => AuthToken = v;
 
+            App.ApartmentAppsClient.GetSavedUsername = () => SavedUsername;
+            App.ApartmentAppsClient.SetSavedUsername = (v) => SavedUsername = v;
+
+            App.ApartmentAppsClient.GetSavedPassword = () => SavedPassword;
+            App.ApartmentAppsClient.SetSavedPassword = (v) => SavedPassword = v;
+
             LoginService.DevicePlatform = "gcm";
             LoginService.DeviceHandle = DeviceToken;
 
@@ -228,6 +235,40 @@ namespace ResidentAppCross.Droid
             }
         }
 
+        public static string SavedUsername
+        {
+            get { return Preferences.GetString("AA_UN",null); }
+            set
+            {
+                if (value == null)
+                {
+                    PreferencesEditor.Remove("AA_UN");
+                }
+                else
+                {
+                    PreferencesEditor.PutString("AA_UN", value);
+                }
+                PreferencesEditor.Commit();
+            }
+        }
+
+        public static string SavedPassword
+        {
+            get { return Preferences.GetString("AA_UP",null); }
+            set
+            {
+                if (value == null)
+                {
+                    PreferencesEditor.Remove("AA_UP");
+                }
+                else
+                {
+                    PreferencesEditor.PutString("AA_UP", value);
+                }
+                PreferencesEditor.Commit();
+            }
+        }
+
         public static string HandleId
         {
             get { return Preferences.GetString("AA_HANDLE",null); }
@@ -250,13 +291,20 @@ namespace ResidentAppCross.Droid
 
         public static void RegisterForHandle(string deviceToken)
         {
-            var client = Mvx.Resolve<IApartmentAppsAPIService>();
-            if (HandleId == null)
+            try
             {
-                HandleId = client.Register.Post(HandleId);
+                var client = Mvx.Resolve<IApartmentAppsAPIService>();
+                if (HandleId == null)
+                {
+                    HandleId = client.Register.Post(HandleId);
+                }
+                DeviceToken = deviceToken.ToString();
+                LoginService.DeviceHandle = DeviceToken;
             }
-            DeviceToken = deviceToken.ToString();
-            LoginService.DeviceHandle = DeviceToken;
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Unable to register for push notifications");
+            }
         }
 
     }

@@ -26,7 +26,6 @@ namespace ApartmentApps.Portal.Controllers
         private readonly ApplicationDbContext _dbcontext;
         private readonly IIdentityMessageService _email;
         private readonly IBlobStorageService _blobStorage;
-        private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
   
@@ -36,20 +35,8 @@ namespace ApartmentApps.Portal.Controllers
             _email = email;
             _blobStorage = blobStorage;
             UserManager = userManager;
-            SignInManager = signInManager;
+            //SignInManager = signInManager;
 
-        }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
         }
 
         public ApplicationUserManager UserManager
@@ -87,7 +74,7 @@ namespace ApartmentApps.Portal.Controllers
 
             var user = await UserManager.FindByEmailAsync(model.Email);
 
-            if (user == null || user.Archived || user.Property.State != PropertyState.Active)
+            if (user == null || user.Archived || (user.Property.State != PropertyState.Active && user.Property.State != PropertyState.TestAccount))
             {
                 ModelState.AddModelError("", "Invalid login attempt.");
                 return View(model);
@@ -99,6 +86,18 @@ namespace ApartmentApps.Portal.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    using (var context = new ApplicationDbContext())
+                    {
+                        var username = User.Identity.GetUserName();
+                        var usr = context.Users.FirstOrDefault(p => p.Email == username);
+
+                        if (usr != null)
+                        {
+                            usr.LastPortalLoginTime = DateTime.UtcNow;
+                            await context.SaveChangesAsync();
+                        }
+
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

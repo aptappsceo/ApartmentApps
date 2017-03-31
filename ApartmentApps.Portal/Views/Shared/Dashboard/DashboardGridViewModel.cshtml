@@ -1,0 +1,11 @@
+﻿@model ApartmentApps.Api.Modules.DashboardGridViewModel
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>@Model.Title</h5>
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+           @Html.Partial("~/Views/Shared/Forms/GridPartial.cshtml", Model.GridModel)
+        </div>
+    </div>
+</div>

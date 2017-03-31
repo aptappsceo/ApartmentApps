@@ -58,7 +58,7 @@ namespace ResidentAppCross.ViewModels
         		SetProperty(ref _selectedUnitTitle, value, "SelectedUnitTitle");
         	}
         }
-        public bool ShouldSelectUnit => !_loginService.UserInfo.Roles.Contains("Resident");
+        public bool ShouldSelectUnit => _loginService.UserInfo.Roles.Contains("Maintenance") || _loginService.UserInfo.Roles.Contains("PropertyAdmin") || _loginService.UserInfo.Roles.Contains("MaintenanceSupervisor");
 	public ICommand SetUnitCommand
         {
             get
@@ -228,7 +228,7 @@ namespace ResidentAppCross.ViewModels
                     {
                         var customMessage =
                         _loginService.UserInfo?.PropertyConfig?.ModuleInfo?.MaintenanceConfig?
-                            .ResidentEmergencyInstructions;
+                            .ResidentNoPermissionToEnterInstructions;
 
                         if (!string.IsNullOrEmpty(customMessage))
                         {

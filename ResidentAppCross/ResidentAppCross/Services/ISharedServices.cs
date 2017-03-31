@@ -26,10 +26,11 @@ namespace ResidentAppCross.Services
         ITaskCommandContext GetAutoLoginCommand(ViewModelBase owner);
 
         ITaskCommandContext CheckVersionAndLogInIfNeededCommand(ViewModelBase owner, Func<string> usernameGetter = null,
-            Func<string> passwordGetter = null);
+            Func<string> passwordGetter = null, Func<bool> rememberGetter = null );
     }
 
-    public class SharedCommands : MvxNavigatingObject, ISharedCommands, IEventAware
+    public class 
+        SharedCommands : MvxNavigatingObject, ISharedCommands, IEventAware
     {
 
         private IVersionChecker _versionChecker;
@@ -62,7 +63,7 @@ namespace ResidentAppCross.Services
 
 
 
-        public async Task LoginProcedure(ITaskCommandContext context, string username, string password)
+        public async Task LoginProcedure(ITaskCommandContext context, string username, string password, bool remember = false)
         {
 
             _loginManager.Logout();
@@ -75,6 +76,19 @@ namespace ResidentAppCross.Services
             if (!await _loginManager.LoginAsync(username, password))
             {
                 context.FailTask("Invalid login or password!");
+            }
+            else
+            {
+                if (remember)
+                {
+                    App.ApartmentAppsClient.SetSavedUsername(username);
+                    App.ApartmentAppsClient.SetSavedPassword(password);
+                }
+                else
+                {
+                    App.ApartmentAppsClient.SetSavedUsername(null);
+                    App.ApartmentAppsClient.SetSavedPassword(null);
+                }
             }
 
         }
@@ -116,7 +130,8 @@ namespace ResidentAppCross.Services
         //Context-agnostic command to log in
         public ITaskCommandContext CheckVersionAndLogInIfNeededCommand(ViewModelBase owner,
             Func<string> usernameGetter = null,
-            Func<string> passwordGetter = null)
+            Func<string> passwordGetter = null,
+            Func<bool> rememberGetter = null)
         {
             return owner.TaskCommand(async ctx =>
             {
@@ -125,6 +140,7 @@ namespace ResidentAppCross.Services
 
                 var username = usernameGetter?.Invoke();
                 var password = passwordGetter?.Invoke();
+                var remember = rememberGetter?.Invoke();
 
 
                 if (_loginManager.IsLoggedIn)
@@ -133,7 +149,7 @@ namespace ResidentAppCross.Services
                 }
                 else
                 {
-                    await LoginProcedure(ctx, username, password);
+                    await LoginProcedure(ctx, username, password, remember ?? false);
                 }
 
                 ShowHomeScreen();

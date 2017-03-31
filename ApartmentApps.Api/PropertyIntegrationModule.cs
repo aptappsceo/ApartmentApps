@@ -10,7 +10,7 @@ using Ninject;
 
 namespace ApartmentApps.Api
 {
-    public class PropertyIntegrationModule<TConfig> : Module<TConfig>, IWebJob, ICreateUser where TConfig : ModuleConfig, new()
+    public class PropertyIntegrationModule<TConfig> : Module<TConfig>, IWebJob, ICreateUser where TConfig : PropertyModuleConfig, new()
     {
         public ApplicationDbContext DbContext { get; set; }
         protected readonly PropertyContext _context;
@@ -38,6 +38,8 @@ namespace ApartmentApps.Api
 
         protected void ImportUnit(ILogger logger, string buildingName, string unitName, out Unit unit, out Building building)
         {
+            buildingName = string.IsNullOrEmpty(buildingName) ? "1" : buildingName;
+
             building = _context.Buildings.FirstOrDefault(p => p.Name == buildingName);
 
             if (building == null)

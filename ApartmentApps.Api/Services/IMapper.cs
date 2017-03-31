@@ -1,7 +1,7 @@
-using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Portal.Controllers;
 
-namespace ApartmentApps.Portal.Controllers
+namespace ApartmentApps.Api.Services
 {
     public interface IMapper<TModel, TViewModel>
     {
@@ -14,10 +14,12 @@ namespace ApartmentApps.Portal.Controllers
 
     public abstract class BaseMapper<TModel, TViewModel> : IMapper<TModel, TViewModel> where TModel : new() where TViewModel : new()
     {
+        private readonly IModuleHelper _moduleHelper;
         public IUserContext UserContext { get; set; }
 
-        protected BaseMapper(IUserContext userContext)
+        protected BaseMapper(IUserContext userContext, IModuleHelper moduleHelper)
         {
+            _moduleHelper = moduleHelper;
             UserContext = userContext;
         }
 
@@ -38,7 +40,7 @@ namespace ApartmentApps.Portal.Controllers
             var bvm = vm as BaseViewModel;
 
             if (bvm != null)
-                ModuleHelper.EnabledModules.Signal<IFillActions>(_=>_.FillActions(bvm.ActionLinks,bvm));
+                _moduleHelper.SignalToEnabled<IFillActions>(_=>_.FillActions(bvm.ActionLinks,bvm));
 
             return vm;
         }

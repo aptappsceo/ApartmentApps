@@ -1,0 +1,122 @@
+﻿@using RazorEngine
+@inherits RazorEngine.Templating.TemplateBase<ApartmentApps.Api.NewFolder1.EmailData>
+<center></center>
+<table class="container-for-gmail-android" width="100%" cellspacing="0" cellpadding="0" align="center">
+    <tbody>
+        <tr>
+            <td style="background: repeat-x url('http://s3.amazonaws.com/swu-filepicker/4E687TRe69Ld95IDWyEg_bg_top_02.jpg') #ffffff;" align="left" valign="top" width="100%">
+                <center>
+                    <img class="force-width-gmail" src="http://s3.amazonaws.com/swu-filepicker/SBb2fQPrQ5ezxmqUTgCr_transparent.png" alt="" />
+                    <table style="background-color: #2b2b2b;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center; vertical-align: middle;" valign="top" width="100%" height="60">
+                                    <!-- [if gte mso 9]>
+                                    <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="mso-width-percent:1000;height:80px; v-text-anchor:middle;">
+                                    <v:fill type="tile" src="http://s3.amazonaws.com/swu-filepicker/4E687TRe69Ld95IDWyEg_bg_top_02.jpg" color="#ffffff" />
+                                    <v:textbox inset="0,0,0,0">
+                                    <![endif]-->
+                                    <center>
+                                        <table class="w320" width="600" cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="pull-left mobile-header-padding-left" style="vertical-align: middle;"><a><img src="@(Model.HeaderLogoImageUrl ?? "http://apartmentapps.com/wp-content/uploads/2016/02/ApartmentAppsLogo_Web.png")" alt="logo" /></a></td>
+                                                    <td class="pull-right mobile-header-padding-right" style="color: #4d4d4d;">&nbsp;&nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </center>
+                                    <!-- [if gte mso 9]>
+                                    </v:textbox>
+                                    </v:rect>
+                                    <![endif]-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </center>
+            </td>
+        </tr>
+        <tr>
+            <td class="content-padding" style="background-color: #f7f7f7;" align="center" valign="top" width="100%">
+                <center>
+                    <table class="w320" style="height: 115px;" width="596" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td class="header-lg">
+                                    <h4>Hello @Model.User.FullName</h4>
+                                    <h2>@Model.Subject</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="free-text">@RenderBody()</td>
+                            </tr>
+                            <tr style="padding-bottom: 10px;">
+                                @if (Model.Links != null)
+                                {
+                                    foreach (var link in Model.Links)
+                                    {
+                                        <div>
+                                            <!--[if mso]>
+                                                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://" style="height:45px;v-text-anchor:middle;width:155px;" arcsize="15%" strokecolor="#ffffff" fillcolor="#ff6f6f">
+                                                    <w:anchorlock/>
+                                                    <center style="color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;">My Account</center>
+                                                </v:roundrect>
+                                            <![endif]-->
+                                            <a class="button-mobile" href="@link.Value"
+                                               style="background-color: #ff6f6f; border-radius: 5px; color: #ffffff; display: inline-block; font-family: 'Cabin', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: regular; line-height: 45px; text-align: center; text-decoration: none; width: 155px; -webkit-text-size-adjust: none; mso-hide: all;">
+                                                @link.Key
+                                            </a>
+                                        </div>
+                                    }
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </center>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<center>
+    <table class="w320" width="600" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td style="padding: 25px 0 25px;">
+                    <strong>Download The App Today!</strong><br /><footer id="footer" class="site-footer">
+                        <section id="footer-address" class="light">
+                            <div class="container">
+                                <div class="row">
+
+                                    <a href="http://play.google.com/store/apps/details?id=com.apartmentapps"><img src="http://portal.apartmentapps.com/Content/Images/app-store-android-download.png" /></a>
+                                    <a href="https://itunes.apple.com/tj/app/apartment-apps-v2/id1088688855?mt=8"><img src="http://portal.apartmentapps.com/Content/Images/appstore_black.png" /></a>
+                                </div>
+                            </div>
+                        </section>
+                    </footer>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</center>
+<center>
+    <table class="w320" width="600" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td style="padding: 25px 0 25px;">
+                    <strong>Apartment Apps LLC</strong><br /><footer id="footer" class="site-footer">
+                        <section id="footer-address" class="light">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="icon-address col-sm-4 col-md-3">
+                                        <h4><small>3555 Keith Street<br />Ste 101<br />Cleveland, TN</small></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </footer>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</center>

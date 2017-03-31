@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -19,7 +20,7 @@ using Ninject;
 namespace ApartmentApps.Modules.Prospect
 {
     [Persistant]
-    public class ProspectModuleConfig : ModuleConfig
+    public class ProspectModuleConfig : PropertyModuleConfig
     {
         
     }
@@ -169,7 +170,7 @@ namespace ApartmentApps.Modules.Prospect
     {
         private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
 
-        public ProspectApplicationMapper(IMapper<ApplicationUser, UserBindingModel> userMapper, IUserContext userContext) : base(userContext)
+        public ProspectApplicationMapper(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> userMapper) : base(userContext, moduleHelper)
         {
             _userMapper = userMapper;
         }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
@@ -88,9 +89,9 @@ namespace ApartmentApps.Modules.Payments
     public class PaymentOptionMapper : BaseMapper<UserPaymentOption, PaymentOptionBindingModel>
     {
 
-        private IMapper<ApplicationUser, UserBindingModel> _usersMapper; 
+        private IMapper<ApplicationUser, UserBindingModel> _usersMapper;
 
-        public PaymentOptionMapper(IUserContext userContext, IMapper<ApplicationUser, UserBindingModel> usersMapper) : base(userContext)
+        public PaymentOptionMapper(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> usersMapper) : base(userContext, moduleHelper)
         {
             _usersMapper = usersMapper;
         }
@@ -116,7 +117,7 @@ namespace ApartmentApps.Modules.Payments
         public PropertyContext Context { get; set; }
         public IMapper<ApplicationUser, UserLookupBindingModel> UserMapper { get; set; }
 
-        public PaymentsRequestsEditMapper(IUserContext userContext, PropertyContext context, IMapper<ApplicationUser, UserLookupBindingModel> userMapper ) : base(userContext)
+        public PaymentsRequestsEditMapper(IUserContext userContext, IModuleHelper moduleHelper, PropertyContext context, IMapper<ApplicationUser, UserLookupBindingModel> userMapper) : base(userContext, moduleHelper)
         {
             Context = context;
             UserMapper = userMapper;
@@ -151,7 +152,7 @@ namespace ApartmentApps.Modules.Payments
 
     public class PaymentsRequestsInvoiceMapper : BaseMapper<Invoice, PaymentRequestInvoiceViewModel>
     {
-        public PaymentsRequestsInvoiceMapper(IUserContext userContext) : base(userContext)
+        public PaymentsRequestsInvoiceMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
@@ -185,13 +186,12 @@ namespace ApartmentApps.Modules.Payments
         public IMapper<Invoice, PaymentRequestInvoiceViewModel> InvoiceMapper { get; set; }
         public IBlobStorageService BlobStorageService { get; set; }
 
-        public PaymentsRequestsMapper(IMapper<ApplicationUser, UserBindingModel> userMapper, IMapper<Invoice, PaymentRequestInvoiceViewModel> invoiceMapper,
-            IBlobStorageService blobStorageService, IRepository<Invoice> invoices, IUserContext userContext) : base(userContext)
+        public PaymentsRequestsMapper(IUserContext userContext, IModuleHelper moduleHelper, IMapper<ApplicationUser, UserBindingModel> userMapper, IMapper<Invoice, PaymentRequestInvoiceViewModel> invoiceMapper, IBlobStorageService blobStorageService, IRepository<Invoice> invoices) : base(userContext, moduleHelper)
         {
             UserMapper = userMapper;
+            InvoiceMapper = invoiceMapper;
             BlobStorageService = blobStorageService;
             Invoices = invoices;
-            InvoiceMapper = invoiceMapper;
         }
 
         public IRepository<Invoice> Invoices { get; set; }
@@ -207,7 +207,7 @@ namespace ApartmentApps.Modules.Payments
             viewModel.Amount = lease.Amount;
             viewModel.Title = lease.Title;
             viewModel.User = UserMapper.ToViewModel(lease.User);
-            viewModel.CreateDate = lease.CreateDate;
+            viewModel.CreateDate = lease.CreateDate.Value;
             viewModel.NextInvoiceDate = lease.NextInvoiceDate;
             viewModel.Id = lease.Id.ToString();
             viewModel.RepetitionCompleteDate = lease.RepetitionCompleteDate;
