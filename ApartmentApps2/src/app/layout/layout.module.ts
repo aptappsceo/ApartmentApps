@@ -15,13 +15,17 @@ import { ChatMessage } from './chat-sidebar/chat-message/chat-message.component'
 import { SearchPipe } from './pipes/search.pipe';
 import { NotificationLoad } from './notifications/notifications-load.directive';
 import { Notifications } from './notifications/notifications.component';
+import { MaintenanceModule } from '../maintenance/maintenance.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TooltipModule.forRoot(),
     ROUTES,
-    FormsModule],
+    FormsModule,
+    MaintenanceModule
+    
+    ],
   declarations: [
     Layout,
     Sidebar,

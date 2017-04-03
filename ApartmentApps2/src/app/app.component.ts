@@ -2,8 +2,8 @@
  * Angular 2 decorators and services
  */
 import { Component, ViewEncapsulation } from '@angular/core';
-
 import { AppState } from './app.service';
+import { MaintenanceModule } from './maintenance/maintenance.module';
 
 /*
  * App Component
@@ -25,7 +25,7 @@ export class App {
   }
 
   ngOnInit() {
-    console.log('Initial App State', this.appState.state);
+    console.log('Initial App Statessss', this.appState.state);
   }
 
 }
