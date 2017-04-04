@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MaintenanceModule } from './maintenance/maintenance.module';
+import { AAServiceModule } from './aaservice-module/aaservice.module';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
 /*
@@ -47,6 +48,7 @@ type StoreType = {
     FormsModule,
     HttpModule,
     MaintenanceModule,
+    AAServiceModule,
     RouterModule.forRoot(ROUTES, { useHash: true })
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection

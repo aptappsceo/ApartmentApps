@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Inject } from '@angular/core';
+import {AccountClient } from './../aaservice-module/aaclient';
 
 @Component({
   selector: 'login',
@@ -10,7 +11,10 @@ import { Component, ViewEncapsulation } from '@angular/core';
   }
 })
 export class Login {
-  constructor() {
+  constructor(@Inject(AccountClient) accountClient:AccountClient) {
+
+  }
+  public login() {
 
   }
 }
