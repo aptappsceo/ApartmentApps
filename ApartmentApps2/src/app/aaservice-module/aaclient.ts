@@ -8,17 +8,18 @@
 import 'rxjs/Rx'; 
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject, Optional, OpaqueToken } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptionsArgs } from '@angular/http';
 
 export const API_BASE_URL = new OpaqueToken('API_BASE_URL');
 
 @Injectable()
-export class AccountClient {
+export class AccountClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -41,7 +42,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processSetProfilePicture(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -70,7 +73,7 @@ export class AccountClient {
     /**
      * @return OK
      */
-    getUserInfo(devicePlatform: string, devicePushToken: string): Observable<UserInfoViewModel> {
+    getUserInfo(devicePlatform?: string, devicePushToken?: string): Observable<UserInfoViewModel> {
         let url_ = this.baseUrl + "/api/Account/UserInfo?";
         if (devicePlatform !== undefined)
             url_ += "devicePlatform=" + encodeURIComponent("" + devicePlatform) + "&"; 
@@ -89,7 +92,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetUserInfo(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -136,7 +141,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processLogout(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -174,7 +181,7 @@ export class AccountClient {
     /**
      * @return OK
      */
-    getManageInfo(returnUrl: string, generateState: boolean): Observable<ManageInfoViewModel> {
+    getManageInfo(returnUrl: string, generateState?: boolean): Observable<ManageInfoViewModel> {
         let url_ = this.baseUrl + "/api/Account/ManageInfo?";
         if (returnUrl === undefined || returnUrl === null)
             throw new Error("The parameter 'returnUrl' must be defined and cannot be null.");
@@ -195,7 +202,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetManageInfo(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -242,7 +251,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processChangePassword(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -295,7 +306,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processSetPassword(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -348,7 +361,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processAddExternalLogin(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -401,7 +416,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processRemoveLogin(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -439,7 +456,7 @@ export class AccountClient {
     /**
      * @return OK
      */
-    getExternalLogin(provider: string, error: string): Observable<any> {
+    getExternalLogin(provider: string, error?: string): Observable<any> {
         let url_ = this.baseUrl + "/api/Account/ExternalLogin?";
         if (provider === undefined || provider === null)
             throw new Error("The parameter 'provider' must be defined and cannot be null.");
@@ -460,7 +477,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetExternalLogin(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -498,7 +517,7 @@ export class AccountClient {
     /**
      * @return OK
      */
-    getExternalLogins(returnUrl: string, generateState: boolean): Observable<ExternalLoginViewModel[]> {
+    getExternalLogins(returnUrl: string, generateState?: boolean): Observable<ExternalLoginViewModel[]> {
         let url_ = this.baseUrl + "/api/Account/ExternalLogins?";
         if (returnUrl === undefined || returnUrl === null)
             throw new Error("The parameter 'returnUrl' must be defined and cannot be null.");
@@ -519,7 +538,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetExternalLogins(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -570,7 +591,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processRegisterFromPhone(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -623,7 +646,9 @@ export class AccountClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processRegisterExternal(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -667,12 +692,13 @@ export class AccountClient {
 }
 
 @Injectable()
-export class AlertsClient {
+export class AlertsClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -695,7 +721,9 @@ export class AlertsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGet(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -750,7 +778,9 @@ export class AlertsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processPost(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -794,7 +824,9 @@ export class AlertsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetCount(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -832,12 +864,13 @@ export class AlertsClient {
 }
 
 @Injectable()
-export class CheckinsClient {
+export class CheckinsClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -860,7 +893,9 @@ export class CheckinsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGet(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -896,7 +931,7 @@ export class CheckinsClient {
     /**
      * @return OK
      */
-    post(locationId: number, latitude: number, longitude: number): Observable<any> {
+    post(locationId: number, latitude?: number, longitude?: number): Observable<any> {
         let url_ = this.baseUrl + "/api/Checkins?";
         if (locationId === undefined || locationId === null)
             throw new Error("The parameter 'locationId' must be defined and cannot be null.");
@@ -919,7 +954,9 @@ export class CheckinsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processPost(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -963,12 +1000,13 @@ export class CheckinsClient {
 }
 
 @Injectable()
-export class ConfigureClient {
+export class ConfigureClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -976,7 +1014,7 @@ export class ConfigureClient {
     /**
      * @return No Content
      */
-    addLocation(qrCode: string, latitude: number, longitude: number, label: string): Observable<void> {
+    addLocation(qrCode: string, latitude: number, longitude: number, label?: string): Observable<void> {
         let url_ = this.baseUrl + "/AddLocation?";
         if (qrCode === undefined || qrCode === null)
             throw new Error("The parameter 'qrCode' must be defined and cannot be null.");
@@ -1005,7 +1043,9 @@ export class ConfigureClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processAddLocation(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1049,7 +1089,9 @@ export class ConfigureClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetLocations(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1108,7 +1150,9 @@ export class ConfigureClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processDeleteLocation(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1143,12 +1187,13 @@ export class ConfigureClient {
 }
 
 @Injectable()
-export class CourtesyClient {
+export class CourtesyClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -1171,7 +1216,9 @@ export class CourtesyClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processListRequests(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1226,7 +1273,9 @@ export class CourtesyClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGet(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1281,7 +1330,9 @@ export class CourtesyClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processAssignUnitToIncidentReport(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1325,7 +1376,9 @@ export class CourtesyClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processSubmitIncidentReport(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1377,7 +1430,9 @@ export class CourtesyClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processOpenIncidentReport(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1429,7 +1484,9 @@ export class CourtesyClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processPauseIncidentReport(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1481,7 +1538,9 @@ export class CourtesyClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processCloseIncidentReport(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1516,12 +1575,13 @@ export class CourtesyClient {
 }
 
 @Injectable()
-export class InspectionsClient {
+export class InspectionsClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -1544,7 +1604,9 @@ export class InspectionsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGet(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1599,7 +1661,9 @@ export class InspectionsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processStartInspection(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1647,7 +1711,9 @@ export class InspectionsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processPauseInspection(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1691,7 +1757,9 @@ export class InspectionsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processFinishInspection(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1726,12 +1794,13 @@ export class InspectionsClient {
 }
 
 @Injectable()
-export class LookupsClient {
+export class LookupsClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -1739,7 +1808,7 @@ export class LookupsClient {
     /**
      * @return OK
      */
-    maintenanceRequestType(query: string): Observable<QueryResultOfLookupBindingModel> {
+    maintenanceRequestType(query?: string): Observable<QueryResultOfLookupBindingModel> {
         let url_ = this.baseUrl + "/api/Lookups/MaintenanceRequestType?";
         if (query !== undefined)
             url_ += "query=" + encodeURIComponent("" + query) + "&"; 
@@ -1756,7 +1825,9 @@ export class LookupsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processMaintenanceRequestType(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1788,7 +1859,7 @@ export class LookupsClient {
     /**
      * @return OK
      */
-    maintenanceRequestStatus(query: string): Observable<QueryResultOfLookupBindingModel> {
+    maintenanceRequestStatus(query?: string): Observable<QueryResultOfLookupBindingModel> {
         let url_ = this.baseUrl + "/api/Lookups/MaintenanceRequestStatus?";
         if (query !== undefined)
             url_ += "query=" + encodeURIComponent("" + query) + "&"; 
@@ -1805,7 +1876,9 @@ export class LookupsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processMaintenanceRequestStatus(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1837,7 +1910,7 @@ export class LookupsClient {
     /**
      * @return OK
      */
-    lookupUnits(query: string): Observable<QueryResultOfLookupBindingModel> {
+    lookupUnits(query?: string): Observable<QueryResultOfLookupBindingModel> {
         let url_ = this.baseUrl + "/api/Lookups/LookupUnits?";
         if (query !== undefined)
             url_ += "query=" + encodeURIComponent("" + query) + "&"; 
@@ -1854,7 +1927,9 @@ export class LookupsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processLookupUnits(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1886,7 +1961,7 @@ export class LookupsClient {
     /**
      * @return OK
      */
-    users(query: string): Observable<QueryResultOfLookupBindingModel> {
+    users(query?: string): Observable<QueryResultOfLookupBindingModel> {
         let url_ = this.baseUrl + "/api/Lookups/Users?";
         if (query !== undefined)
             url_ += "query=" + encodeURIComponent("" + query) + "&"; 
@@ -1903,7 +1978,9 @@ export class LookupsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processUsers(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1950,7 +2027,9 @@ export class LookupsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetUnits(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -1992,12 +2071,13 @@ export class LookupsClient {
 }
 
 @Injectable()
-export class MaitenanceClient {
+export class MaitenanceClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -2020,7 +2100,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processListRequests(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2075,7 +2157,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGet(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2122,7 +2206,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processFetch(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2177,7 +2263,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processScheduleRequest(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2221,7 +2309,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processSubmitRequest(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2273,7 +2363,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processCompleteRequest(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2325,7 +2417,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processPauseRequest(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2377,7 +2471,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processStartRequest(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2421,7 +2517,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetMaitenanceRequestTypes(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2476,7 +2574,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetWorkOrders(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2531,7 +2631,9 @@ export class MaitenanceClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetByResident(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2573,12 +2675,13 @@ export class MaitenanceClient {
 }
 
 @Injectable()
-export class MessagingClient {
+export class MessagingClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -2604,7 +2707,9 @@ export class MessagingClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetMessage(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2642,12 +2747,13 @@ export class MessagingClient {
 }
 
 @Injectable()
-export class NotifiationsClient {
+export class NotifiationsClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -2678,7 +2784,9 @@ export class NotifiationsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processPost(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2722,12 +2830,13 @@ export class NotifiationsClient {
 }
 
 @Injectable()
-export class PaymentsClient {
+export class PaymentsClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -2750,7 +2859,9 @@ export class PaymentsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processAddCreditCard(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2797,7 +2908,9 @@ export class PaymentsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processAddBankAccount(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2844,7 +2957,9 @@ export class PaymentsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetPaymentOptions(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2895,7 +3010,9 @@ export class PaymentsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetPaymentHistory(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2946,7 +3063,9 @@ export class PaymentsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetRentSummary(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -2997,7 +3116,9 @@ export class PaymentsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetPaymentSummary(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3044,7 +3165,9 @@ export class PaymentsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processMakePayment(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3091,7 +3214,9 @@ export class PaymentsClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processUpdateForteState(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3135,12 +3260,13 @@ export class PaymentsClient {
 }
 
 @Injectable()
-export class ProspectClient {
+export class ProspectClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -3163,7 +3289,9 @@ export class ProspectClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processSubmitApplicant(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3216,7 +3344,9 @@ export class ProspectClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processScanId(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3263,7 +3393,9 @@ export class ProspectClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processScanIdByText(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3310,7 +3442,9 @@ export class ProspectClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetDesiredPropertyTypes(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3361,7 +3495,9 @@ export class ProspectClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetHowdYouHereAboutUsItems(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3412,7 +3548,9 @@ export class ProspectClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetProspectApplications(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3467,7 +3605,9 @@ export class ProspectClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetProspectApplication(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3518,7 +3658,9 @@ export class ProspectClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processDelete(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3553,12 +3695,13 @@ export class ProspectClient {
 }
 
 @Injectable()
-export class RegisterClient {
+export class RegisterClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -3566,7 +3709,7 @@ export class RegisterClient {
     /**
      * @return OK
      */
-    post(handle: string): Observable<string> {
+    post(handle?: string): Observable<string> {
         let url_ = this.baseUrl + "/api/Register?";
         if (handle !== undefined)
             url_ += "handle=" + encodeURIComponent("" + handle) + "&"; 
@@ -3583,7 +3726,9 @@ export class RegisterClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processPost(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3633,7 +3778,9 @@ export class RegisterClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processPut(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3689,7 +3836,9 @@ export class RegisterClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processDelete(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3733,12 +3882,13 @@ export class RegisterClient {
 }
 
 @Injectable()
-export class SearchEnginesClient {
+export class SearchEnginesClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -3765,7 +3915,9 @@ export class SearchEnginesClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGetSearchModel(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
@@ -3803,12 +3955,13 @@ export class SearchEnginesClient {
 }
 
 @Injectable()
-export class VersionClient {
+export class VersionClient extends BaseClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super();
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -3831,7 +3984,9 @@ export class VersionClient {
             })
         };
 
-        return this.http.request(url_, options_).map((response) => {
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
             return this.processGet(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
