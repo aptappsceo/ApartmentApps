@@ -12,14 +12,65 @@ import { Http, Headers, Response, RequestOptionsArgs } from '@angular/http';
 
 export const API_BASE_URL = new OpaqueToken('API_BASE_URL');
 
+export interface IAccountClient {
+    /**
+     * @return No Content
+     */
+    setProfilePicture(image: string): Observable<void>;
+    /**
+     * @return OK
+     */
+    getUserInfo(devicePlatform?: string, devicePushToken?: string): Observable<UserInfoViewModel>;
+    /**
+     * @return OK
+     */
+    logout(): Observable<any>;
+    /**
+     * @return OK
+     */
+    getManageInfo(returnUrl: string, generateState?: boolean): Observable<ManageInfoViewModel>;
+    /**
+     * @return OK
+     */
+    changePassword(model: ChangePasswordBindingModel): Observable<any>;
+    /**
+     * @return OK
+     */
+    setPassword(model: SetPasswordBindingModel): Observable<any>;
+    /**
+     * @return OK
+     */
+    addExternalLogin(model: AddExternalLoginBindingModel): Observable<any>;
+    /**
+     * @return OK
+     */
+    removeLogin(model: RemoveLoginBindingModel): Observable<any>;
+    /**
+     * @return OK
+     */
+    getExternalLogin(provider: string, error?: string): Observable<any>;
+    /**
+     * @return OK
+     */
+    getExternalLogins(returnUrl: string, generateState?: boolean): Observable<ExternalLoginViewModel[]>;
+    /**
+     * @return OK
+     */
+    registerFromPhone(model: RegisterFromPhoneBindingModel): Observable<any>;
+    /**
+     * @return OK
+     */
+    registerExternal(model: RegisterExternalBindingModel): Observable<any>;
+}
+
 @Injectable()
-export class AccountClient extends BaseClient {
+export class AccountClient extends BaseClient implements IAccountClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -691,14 +742,29 @@ export class AccountClient extends BaseClient {
     }
 }
 
+export interface IAlertsClient {
+    /**
+     * @return OK
+     */
+    get(): Observable<AlertBindingModel[]>;
+    /**
+     * @return No Content
+     */
+    post(alertId: number): Observable<void>;
+    /**
+     * @return OK
+     */
+    getCount(): Observable<AlertsCountBindingModel>;
+}
+
 @Injectable()
-export class AlertsClient extends BaseClient {
+export class AlertsClient extends BaseClient implements IAlertsClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -863,14 +929,25 @@ export class AlertsClient extends BaseClient {
     }
 }
 
+export interface ICheckinsClient {
+    /**
+     * @return OK
+     */
+    get(): Observable<CourtesyCheckinBindingModel[]>;
+    /**
+     * @return OK
+     */
+    post(locationId: number, latitude?: number, longitude?: number): Observable<any>;
+}
+
 @Injectable()
-export class CheckinsClient extends BaseClient {
+export class CheckinsClient extends BaseClient implements ICheckinsClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -999,14 +1076,29 @@ export class CheckinsClient extends BaseClient {
     }
 }
 
+export interface IConfigureClient {
+    /**
+     * @return No Content
+     */
+    addLocation(qrCode: string, latitude: number, longitude: number, label?: string): Observable<void>;
+    /**
+     * @return OK
+     */
+    getLocations(): Observable<LocationBindingModel[]>;
+    /**
+     * @return No Content
+     */
+    deleteLocation(id: number, type: string): Observable<void>;
+}
+
 @Injectable()
-export class ConfigureClient extends BaseClient {
+export class ConfigureClient extends BaseClient implements IConfigureClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -1186,14 +1278,45 @@ export class ConfigureClient extends BaseClient {
     }
 }
 
+export interface ICourtesyClient {
+    /**
+     * @return OK
+     */
+    listRequests(): Observable<IncidentIndexBindingModel[]>;
+    /**
+     * @return OK
+     */
+    get(id: number): Observable<IncidentReportBindingModel>;
+    /**
+     * @return No Content
+     */
+    assignUnitToIncidentReport(id: number, unitId: number): Observable<void>;
+    /**
+     * @return No Content
+     */
+    submitIncidentReport(request: IncidentReportModel): Observable<void>;
+    /**
+     * @return No Content
+     */
+    openIncidentReport(id: number, comments: string, images: string[]): Observable<void>;
+    /**
+     * @return No Content
+     */
+    pauseIncidentReport(id: number, comments: string, images: string[]): Observable<void>;
+    /**
+     * @return No Content
+     */
+    closeIncidentReport(id: number, comments: string, images: string[]): Observable<void>;
+}
+
 @Injectable()
-export class CourtesyClient extends BaseClient {
+export class CourtesyClient extends BaseClient implements ICourtesyClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -1574,14 +1697,33 @@ export class CourtesyClient extends BaseClient {
     }
 }
 
+export interface IInspectionsClient {
+    /**
+     * @return OK
+     */
+    get(): Observable<InspectionViewModel[]>;
+    /**
+     * @return No Content
+     */
+    startInspection(id: number): Observable<void>;
+    /**
+     * @return No Content
+     */
+    pauseInspection(id: number): Observable<void>;
+    /**
+     * @return No Content
+     */
+    finishInspection(finishInspectionViewModel: FinishInspectionViewModel): Observable<void>;
+}
+
 @Injectable()
-export class InspectionsClient extends BaseClient {
+export class InspectionsClient extends BaseClient implements IInspectionsClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -1793,14 +1935,37 @@ export class InspectionsClient extends BaseClient {
     }
 }
 
+export interface ILookupsClient {
+    /**
+     * @return OK
+     */
+    maintenanceRequestType(query?: string): Observable<QueryResultOfLookupBindingModel>;
+    /**
+     * @return OK
+     */
+    maintenanceRequestStatus(query?: string): Observable<QueryResultOfLookupBindingModel>;
+    /**
+     * @return OK
+     */
+    lookupUnits(query?: string): Observable<QueryResultOfLookupBindingModel>;
+    /**
+     * @return OK
+     */
+    users(query?: string): Observable<QueryResultOfLookupBindingModel>;
+    /**
+     * @return OK
+     */
+    getUnits(): Observable<LookupPairModel[]>;
+}
+
 @Injectable()
-export class LookupsClient extends BaseClient {
+export class LookupsClient extends BaseClient implements ILookupsClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -2070,14 +2235,61 @@ export class LookupsClient extends BaseClient {
     }
 }
 
+export interface IMaitenanceClient {
+    /**
+     * @return OK
+     */
+    listRequests(): Observable<MaintenanceIndexBindingModel[]>;
+    /**
+     * @return OK
+     */
+    get(id: number): Observable<MaintenanceBindingModel>;
+    /**
+     * @return OK
+     */
+    fetch(query: Query): Observable<QueryResultOfMaintenanceRequestViewModel>;
+    /**
+     * @return No Content
+     */
+    scheduleRequest(id: number, scheduleDate: Date): Observable<void>;
+    /**
+     * @return No Content
+     */
+    submitRequest(request: MaitenanceRequestModel): Observable<void>;
+    /**
+     * @return No Content
+     */
+    completeRequest(id: number, comments: string, images: string[]): Observable<void>;
+    /**
+     * @return No Content
+     */
+    pauseRequest(id: number, comments: string, images: string[]): Observable<void>;
+    /**
+     * @return No Content
+     */
+    startRequest(id: number, comments: string, images: string[]): Observable<void>;
+    /**
+     * @return OK
+     */
+    getMaitenanceRequestTypes(): Observable<LookupPairModel[]>;
+    /**
+     * @return OK
+     */
+    getWorkOrders(workerId: string): Observable<MaitenanceRequest[]>;
+    /**
+     * @return OK
+     */
+    getByResident(workerId: string): Observable<MaitenanceRequest[]>;
+}
+
 @Injectable()
-export class MaitenanceClient extends BaseClient {
+export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -2674,14 +2886,21 @@ export class MaitenanceClient extends BaseClient {
     }
 }
 
+export interface IMessagingClient {
+    /**
+     * @return OK
+     */
+    getMessage(id: number): Observable<AlertBindingModel>;
+}
+
 @Injectable()
-export class MessagingClient extends BaseClient {
+export class MessagingClient extends BaseClient implements IMessagingClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -2746,14 +2965,21 @@ export class MessagingClient extends BaseClient {
     }
 }
 
+export interface INotifiationsClient {
+    /**
+     * @return OK
+     */
+    post(pns: string, message: string, to_tag: string): Observable<any>;
+}
+
 @Injectable()
-export class NotifiationsClient extends BaseClient {
+export class NotifiationsClient extends BaseClient implements INotifiationsClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -2829,14 +3055,49 @@ export class NotifiationsClient extends BaseClient {
     }
 }
 
+export interface IPaymentsClient {
+    /**
+     * @return OK
+     */
+    addCreditCard(addCreditCard: AddCreditCardBindingModel): Observable<AddCreditCardResult>;
+    /**
+     * @return OK
+     */
+    addBankAccount(addBankAccount: AddBankAccountBindingModel): Observable<AddBankAccountResult>;
+    /**
+     * @return OK
+     */
+    getPaymentOptions(): Observable<PaymentOptionBindingModel[]>;
+    /**
+     * @return OK
+     */
+    getPaymentHistory(): Observable<any[]>;
+    /**
+     * @return OK
+     */
+    getRentSummary(): Observable<PaymentListBindingModel>;
+    /**
+     * @return OK
+     */
+    getPaymentSummary(paymentOptionId: number): Observable<PaymentListBindingModel>;
+    /**
+     * @return OK
+     */
+    makePayment(makePaymentBindingModel: MakePaymentBindingModel): Observable<MakePaymentResult>;
+    /**
+     * @return OK
+     */
+    updateForteState(): Observable<any>;
+}
+
 @Injectable()
-export class PaymentsClient extends BaseClient {
+export class PaymentsClient extends BaseClient implements IPaymentsClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -3259,14 +3520,49 @@ export class PaymentsClient extends BaseClient {
     }
 }
 
+export interface IProspectClient {
+    /**
+     * @return OK
+     */
+    submitApplicant(vm: ProspectApplicationBindingModel): Observable<any>;
+    /**
+     * @return OK
+     */
+    scanId(base64Image: string): Observable<ScanIdResult>;
+    /**
+     * @return OK
+     */
+    scanIdByText(text: string): Observable<ScanIdResult>;
+    /**
+     * @return OK
+     */
+    getDesiredPropertyTypes(): Observable<LookupPairModel[]>;
+    /**
+     * @return OK
+     */
+    getHowdYouHereAboutUsItems(): Observable<LookupPairModel[]>;
+    /**
+     * @return OK
+     */
+    getProspectApplications(): Observable<ProspectApplicationBindingModel[]>;
+    /**
+     * @return OK
+     */
+    getProspectApplication(id: string): Observable<ProspectApplicationBindingModel>;
+    /**
+     * @return No Content
+     */
+    delete(id: string): Observable<void>;
+}
+
 @Injectable()
-export class ProspectClient extends BaseClient {
+export class ProspectClient extends BaseClient implements IProspectClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -3694,14 +3990,29 @@ export class ProspectClient extends BaseClient {
     }
 }
 
+export interface IRegisterClient {
+    /**
+     * @return OK
+     */
+    post(handle?: string): Observable<string>;
+    /**
+     * @return OK
+     */
+    put(id: string, deviceUpdate: DeviceRegistration): Observable<any>;
+    /**
+     * @return OK
+     */
+    delete(id: string): Observable<any>;
+}
+
 @Injectable()
-export class RegisterClient extends BaseClient {
+export class RegisterClient extends BaseClient implements IRegisterClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -3881,14 +4192,21 @@ export class RegisterClient extends BaseClient {
     }
 }
 
+export interface ISearchEnginesClient {
+    /**
+     * @return OK
+     */
+    getSearchModel(id: string): Observable<SearchModelGetResponse>;
+}
+
 @Injectable()
-export class SearchEnginesClient extends BaseClient {
+export class SearchEnginesClient extends BaseClient implements ISearchEnginesClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
@@ -3954,14 +4272,21 @@ export class SearchEnginesClient extends BaseClient {
     }
 }
 
+export interface IVersionClient {
+    /**
+     * @return OK
+     */
+    get(): Observable<VersionInfo>;
+}
+
 @Injectable()
-export class VersionClient extends BaseClient {
+export class VersionClient extends BaseClient implements IVersionClient {
     private http: Http = null; 
     private baseUrl: string | undefined = undefined; 
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        super();
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
         this.http = http; 
         this.baseUrl = baseUrl ? baseUrl : "http://api.apartmentapps.com"; 
     }
