@@ -9,7 +9,7 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject, Optional, OpaqueToken } from '@angular/core';
 import { Http, Headers, Response, RequestOptionsArgs } from '@angular/http';
-
+import {BaseClient} from './baseclient';
 export const API_BASE_URL = new OpaqueToken('API_BASE_URL');
 
 export interface IAccountClient {
