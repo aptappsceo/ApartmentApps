@@ -5,13 +5,34 @@ import { Http, Headers, Response, RequestOptionsArgs,RequestOptions } from '@ang
 import {Encode} from "../../utils/url-encoder";
 
 @Injectable()
-export class BaseClient {
-    constructor() {
+export class UserService {
+    public constructor(@Inject(UserContext) private userContext:UserContext, @Inject(AuthClient) private authClient:AuthClient) {
 
     }
-    transformOptions(options) {
+    public Authenticate(username:string,password:string) {
         
     }
+
+}
+
+@Injectable()
+export class UserContext {
+    public UserToken: string;
+
+}
+
+@Injectable()
+export class BaseClient {
+    constructor(private userContext : UserContext) {
+
+    }
+    transformOptions(options: RequestOptionsArgs) {
+     
+        options.headers.append("Authorization", "Bearer ");
+
+        return Promise.resolve(options);
+    }
+    
 }
 
 
@@ -20,7 +41,7 @@ import {AppConfig} from "../../appconfig";
 @Injectable()
 export class AuthClient {
 
-  constructor(public http : Http, public appConfig : AppConfig ){
+  constructor(public http : Http){
     console.log('from auth client')
     console.log(http);
   }
@@ -34,7 +55,8 @@ export class AuthClient {
         password : password,
         grant_type : 'password'
       };
-      return this.http.post(this.appConfig.authEndpoint, Encode(payload), options);
+      
+      return this.http.post('http://api.apartmentapps.com/Token', Encode(payload), options);
 
   }
 
