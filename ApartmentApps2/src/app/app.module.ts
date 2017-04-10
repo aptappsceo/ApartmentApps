@@ -1,3 +1,4 @@
+import { AuthClient, UserContext, UserService } from './aaservice-module/baseclient';
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -5,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 import { AAServiceModule } from './aaservice-module/aaservice.module';
+import { LoginModule } from './login/login.module';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
 /*
@@ -18,7 +20,7 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InteralStateType } from './app.service';
 import { AppConfig } from './app.config';
 import { ErrorComponent } from './error/error.component';
-import { CreateWorkOrderComponent } from './maintenance/create-work-order/create-work-order.component';
+
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -48,12 +50,16 @@ type StoreType = {
     FormsModule,
     HttpModule,
     MaintenanceModule,
-    AAServiceModule,
+    AAServiceModule.forRoot(),
+    LoginModule,
     RouterModule.forRoot(ROUTES, { useHash: true })
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    AuthClient,
+    UserContext,
+    UserService
   ]
 })
 export class AppModule {

@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation, Inject } from '@angular/core';
 import {AccountClient } from './../aaservice-module/aaclient';
+import { UserService } from '../aaservice-module/baseclient';
 
 @Component({
   selector: 'login',
@@ -11,10 +12,15 @@ import {AccountClient } from './../aaservice-module/aaclient';
   }
 })
 export class Login {
-  constructor(@Inject(AccountClient) accountClient:AccountClient) {
-
+  public username:string;
+  public password:string;
+  constructor(@Inject(UserService) private userService:UserService) {
+    
   }
   public login() {
-
+    this.userService.Authenticate(this.username,this.password)
+    .then((v)=>{
+        console.log('done');
+    });
   }
 }

@@ -4,16 +4,7 @@ import { Injectable, Inject, Optional, OpaqueToken } from '@angular/core';
 import { Http, Headers, Response, RequestOptionsArgs,RequestOptions } from '@angular/http';
 import {Encode} from "../../utils/url-encoder";
 
-@Injectable()
-export class UserService {
-    public constructor(@Inject(UserContext) private userContext:UserContext, @Inject(AuthClient) private authClient:AuthClient) {
 
-    }
-    public Authenticate(username:string,password:string) {
-        
-    }
-
-}
 
 @Injectable()
 export class UserContext {
@@ -60,5 +51,21 @@ export class AuthClient {
 
   }
 
+
+}
+@Injectable()
+export class UserService {
+    //
+    public constructor( @Inject(UserContext) userContext:UserContext, @Inject(AuthClient) private authClient:AuthClient) {
+
+    }
+    public Authenticate(username:string,password:string) : Promise<any> {
+        return new Promise((ok,err)=>{
+            this.authClient.authenticate(username, password).subscribe((res)=>{
+                console.log("Login Response", res);
+                ok(res);
+            });
+        });
+    }
 
 }
