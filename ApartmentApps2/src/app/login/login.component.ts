@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, Inject } from '@angular/core';
 import {AccountClient } from './../aaservice-module/aaclient';
 import { UserService } from '../aaservice-module/baseclient';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'login',
@@ -18,9 +19,11 @@ export class Login {
     
   }
   public login() {
-    this.userService.Authenticate(this.username,this.password)
+    this.userService.Login(this.username,this.password)
     .then((v)=>{
-        console.log('done');
+       
+        console.log(v);
+        
     });
   }
 }
