@@ -1,4 +1,7 @@
 # Sing Dashboard App (3.2.0 Seed version) with Angular 2.0 Final Release support
+> Common commands
+open -a Google\ Chrome --args --disable-web-security --user-data-dir
+npm run server:dev:hmr
 
 
 > An Angular 2 application featuring [Angular 2](https://angular.io)
