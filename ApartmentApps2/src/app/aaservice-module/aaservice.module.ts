@@ -1,7 +1,9 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccountClient, MaitenanceClient, MessagingClient, API_BASE_URL } from './aaclient';
-import { AuthClient, UserContext, UserService } from './baseclient';
+import { UserContext } from './usercontext';
+import { AuthClient} from './baseclient';
+import { UserService } from './user.service';
 
 @NgModule({
   imports: [

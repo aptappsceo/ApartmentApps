@@ -4,14 +4,8 @@ import { Injectable, Inject, Optional, OpaqueToken } from '@angular/core';
 import { Http, Headers, Response, RequestOptionsArgs,RequestOptions } from '@angular/http';
 import {Encode} from "../../utils/url-encoder";
 //import {AppConfig} from "../../appconfig";
-import { AccountClient } from './aaclient';
-
-
-@Injectable()
-export class UserContext {
-    public UserToken: string;
-
-}
+import { UserContext } from './usercontext';
+import { IAccountClient, AccountClient } from './aaclient';
 
 @Injectable()
 export class BaseClient {
@@ -20,7 +14,7 @@ export class BaseClient {
     }
     transformOptions(options: RequestOptionsArgs) {
      console.log('options hit');
-        options.headers.append("Authorization", "Bearer ");
+        options.headers.append("Authorization", "Bearer " + this.userContext.UserToken);
 
         return Promise.resolve(options);
     }
@@ -52,49 +46,5 @@ export class AuthClient {
 
   }
 
-
-}
-@Injectable()
-export class UserService {
-    //
-    public constructor( @Inject(UserContext)public userContext:UserContext
-    , @Inject(AuthClient) private authClient:AuthClient
-    , @Inject(AccountClient) private accountClient:AccountClient
-    ) {
-
-
-    }
-    public Authenticate(username:string,password:string) : Promise<any> {
-        return new Promise((ok,err)=>{
-            this.authClient.authenticate(username, password)
-                .subscribe((res:any)=>{
-                     var result = JSON.parse(res._body);
-                     console.log("RESULT" ,result);
-                     if (result.error == "invalid_grant") {
-                         err(result.error_description);
-                     } else {
-                                this.userContext.UserToken = result.access_token;
-                        ok(res);
-                     }
-                    console.log("Login Response", res);
-                    
-                },(x)=>{
-                    err(x);
-                });
-        });
-    }
-    public Login(username:string,password:string) : Promise<any> {
-        return this.Authenticate(username,password)
-            .then((v)=>{
-                // return new Promise((ok,err)=>{
-                //     this.accountClient.getUserInfo("portal", null)
-                //         .subscribe(x=>{
-                //             console.log(x);
-                //             ok(x);
-                //          });
-                // });
-                
-            },(v)=>{ console.log(v); });
-    }
 
 }

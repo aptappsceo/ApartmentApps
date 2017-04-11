@@ -1,4 +1,3 @@
-import { AuthClient, UserContext, UserService } from './aaservice-module/baseclient';
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -57,9 +56,7 @@ type StoreType = {
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    AuthClient,
-    UserContext,
-    UserService
+   
   ]
 })
 export class AppModule {

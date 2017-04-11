@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, Inject } from '@angular/core';
-import {AccountClient } from './../aaservice-module/aaclient';
-import { UserService } from '../aaservice-module/baseclient';
+
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../aaservice-module/user.service';
 
 @Component({
   selector: 'login',
