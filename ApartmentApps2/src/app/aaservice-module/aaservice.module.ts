@@ -25,7 +25,7 @@ export class AAServiceModule {
         AccountClient,
         UserService,
 
-        { provide: 'http://api.apartmentapps.com', useValue: API_BASE_URL }
+        { provide: API_BASE_URL, useValue:  'http://devservices.apartmentapps.com' }
       ]
     };
   }

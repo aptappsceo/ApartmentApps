@@ -2,7 +2,12 @@
 > Common commands
 open -a Google\ Chrome --args --disable-web-security --user-data-dir
 npm run server:dev:hmr
-
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew update
+brew install openssl
+mkdir -p /usr/local/lib
+ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
+ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
 
 > An Angular 2 application featuring [Angular 2](https://angular.io)
  ([Router](https://angular.io/docs/js/latest/api/router/), [Forms](https://angular.io/docs/js/latest/api/forms/),
