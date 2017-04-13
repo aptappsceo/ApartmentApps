@@ -86,6 +86,12 @@ namespace ApartmentApps.Data.Repository
         {
             return GetAll().GetEnumerator();
         }
+
+        public Expression Expression => GetAll().Expression;
+
+        public Type ElementType => GetAll().ElementType;
+
+        public IQueryProvider Provider => GetAll().Provider;
     }
 
   

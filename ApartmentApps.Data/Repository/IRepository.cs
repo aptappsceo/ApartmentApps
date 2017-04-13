@@ -152,7 +152,7 @@ namespace ApartmentApps.Data.Repository
         }
   
     }
-    public interface IRepository<T> : IEnumerable<T>
+    public interface IRepository<T> : IQueryable<T>
     {
         void Add(T entity);
         void Remove(T entity);

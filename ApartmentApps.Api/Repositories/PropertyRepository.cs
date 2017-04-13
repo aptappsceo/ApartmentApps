@@ -24,6 +24,11 @@ namespace ApartmentApps.Api
 
     public class PropertyRepository<TEntity> : IRepository<TEntity> where TEntity : class, IPropertyEntity
     {
+        public Expression Expression => GetAll().Expression;
+
+        public Type ElementType => GetAll().ElementType;
+
+        public IQueryProvider Provider => GetAll().Provider;
         private readonly IModuleHelper _moduleHelper;
 
         public PropertyRepository(IModuleHelper moduleHelper, Func<IQueryable<TEntity>, IDbSet<TEntity>> includes, DbContext context, IUserContext userContext)

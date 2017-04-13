@@ -20,15 +20,17 @@ namespace ApartmentApps.Api
     public class IncidentReportFormModel : BaseViewModel
     {
         private readonly IRepository<Unit> _unitRepo;
+        private readonly IRepository<ApplicationUser> _userRepo;
 
         public IncidentReportFormModel()
         {
         }
 
         [Inject]
-        public IncidentReportFormModel(IRepository<Unit> unitRepo)
+        public IncidentReportFormModel(IRepository<Unit> unitRepo, IRepository<ApplicationUser> userRepo)
         {
             _unitRepo = unitRepo;
+            _userRepo = userRepo;
         }
 
         //[DataType()]
@@ -39,10 +41,21 @@ namespace ApartmentApps.Api
         {
             get
             {
-                return
-                    _unitRepo
-                        .ToArray()
-                        .Select(p => new FormPropertySelectItem(p.Id.ToString(), p.Name, UnitId == p.Id));
+                var items =
+                   _unitRepo.ToArray();
+                        var users = _userRepo;
+                        return items.Select(p =>
+                        {
+                            if (!string.IsNullOrEmpty(p.CalculatedTitle))
+                                return new FormPropertySelectItem(p.Id.ToString(), p.CalculatedTitle, UnitId == p.Id);
+
+                            var name = $"[{ p.Building.Name }] {p.Name}";
+                            var user = users.GetAll().FirstOrDefault(x => !x.Archived && x.UnitId == p.Id);
+                            if (user != null)
+                                name += $" ({user.FirstName} {user.LastName})";
+
+                            return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
+                        }).OrderByAlphaNumeric(p => p.Value);
 
 
             }
@@ -128,9 +141,9 @@ namespace ApartmentApps.Api
 
         }
     }
-    public class IncidentsService : StandardCrudService<IncidentReport> ,IIncidentsService
+    public class IncidentsService : StandardCrudService<IncidentReport>, IIncidentsService
     {
-        public IncidentsService(IModuleHelper moduleHelper,IRepository<IncidentReport> repository, IBlobStorageService blobStorageService, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper, IKernel kernel) : base(kernel, repository)
+        public IncidentsService(IModuleHelper moduleHelper, IRepository<IncidentReport> repository, IBlobStorageService blobStorageService, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper, IKernel kernel) : base(kernel, repository)
         {
             _moduleHelper = moduleHelper;
             _blobStorageService = blobStorageService;
@@ -157,7 +170,7 @@ namespace ApartmentApps.Api
         }
         public DbQuery Complete()
         {
-            return CreateQuery("Complete", new ConditionItem("IncidentReport.StatusId", "Equal", "Complete"), new ConditionItem("IncidentReport.CompletionDate","DateWithinThisMonth"));
+            return CreateQuery("Complete", new ConditionItem("IncidentReport.StatusId", "Equal", "Complete"), new ConditionItem("IncidentReport.CompletionDate", "DateWithinThisMonth"));
         }
         public int SubmitIncidentReport(ApplicationUser user, string comments, IncidentType incidentReportTypeId, List<byte[]> images, int? unitId = null)
         {
@@ -172,28 +185,28 @@ namespace ApartmentApps.Api
                 GroupId = Guid.NewGuid(),
                 UnitId = unitId ?? user.UnitId
             };
-           
+
 
             Context.IncidentReports.Add(incidentReport);
             if (images != null)
-            foreach (var image in images)
-            {
-                var imageKey = $"{Guid.NewGuid()}.{user.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
-                var filename = _blobStorageService.UploadPhoto(image, imageKey);
-                Context.ImageReferences.Add(new ImageReference()
+                foreach (var image in images)
                 {
-                    GroupId = incidentReport.GroupId,
-                    Url = filename,
-                    ThumbnailUrl = filename
-                });
-            }
-          
+                    var imageKey = $"{Guid.NewGuid()}.{user.UserName.Replace('@', '_').Replace('.', '_')}".ToLowerInvariant();
+                    var filename = _blobStorageService.UploadPhoto(image, imageKey);
+                    Context.ImageReferences.Add(new ImageReference()
+                    {
+                        GroupId = incidentReport.GroupId,
+                        Url = filename,
+                        ThumbnailUrl = filename
+                    });
+                }
+
             Context.SaveChanges();
 
             Checkin(user, incidentReport.Id, incidentReport.Comments, incidentReport.StatusId, null,
               incidentReport.GroupId);
             _moduleHelper.SignalToEnabled<IIncidentReportSubmissionEvent>(_ => _.IncidentReportSubmited(incidentReport));
-            
+
 
             return incidentReport.Id;
 
@@ -235,7 +248,7 @@ namespace ApartmentApps.Api
                 incidentReport.CompletionDate = officer.TimeZone.Now();
             }
             Context.SaveChanges();
-            _moduleHelper.SignalToEnabled<IIncidentReportCheckinEvent>( _ => _.IncidentReportCheckin(checkin, incidentReport));
+            _moduleHelper.SignalToEnabled<IIncidentReportCheckinEvent>(_ => _.IncidentReportCheckin(checkin, incidentReport));
             return true;
 
         }
@@ -254,6 +267,6 @@ namespace ApartmentApps.Api
             return Checkin(user, incidentReportId, comments, "Complete", photos);
         }
 
-      
+
     }
 }

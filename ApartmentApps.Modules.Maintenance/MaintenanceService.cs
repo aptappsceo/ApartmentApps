@@ -73,15 +73,18 @@ namespace ApartmentApps.Api
             get
             {
                 var items =
-                    _unitRepo.ToArray();
+                     _unitRepo.ToArray();
                 var users = _userRepo;
                 return items.Select(p =>
                 {
+                    if (!string.IsNullOrEmpty(p.CalculatedTitle))
+                        return new FormPropertySelectItem(p.Id.ToString(), p.CalculatedTitle, UnitId == p.Id);
+
                     var name = $"[{ p.Building.Name }] {p.Name}";
-                    var user = users.FirstOrDefault(x=>!x.Archived && x.UnitId == p.Id);
+                    var user = users.GetAll().FirstOrDefault(x => !x.Archived && x.UnitId == p.Id);
                     if (user != null)
                         name += $" ({user.FirstName} {user.LastName})";
-                    
+
                     return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
                 }).OrderByAlphaNumeric(p => p.Value);
 
