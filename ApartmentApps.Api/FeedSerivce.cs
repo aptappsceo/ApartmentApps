@@ -24,16 +24,16 @@ namespace ApartmentApps.Api
 
         private IEnumerable<FeedItemBindingModel> FeedItemBindingModels()
         {
-            foreach (var item in _context.CourtesyOfficerCheckins.OrderByDescending(p => p.CreatedOn).Take(10).Cast<IFeedItem>()
+            foreach (var item in _context.CourtesyOfficerCheckins.OrderByDescending(p => p.CreatedOn).Take(10).ToArray()
                 )
             {
                 yield return ToFeedItemBindingModel(item);
             }
-            foreach (var item in _context.IncidentReportCheckins.OrderByDescending(p => p.CreatedOn).Take(10).Cast<IFeedItem>())
+            foreach (var item in _context.IncidentReportCheckins.OrderByDescending(p => p.CreatedOn).Take(10).ToArray())
             {
                 yield return ToFeedItemBindingModel(item);
             }
-            foreach (var item in _context.MaintenanceRequestCheckins.OrderByDescending(p => p.Date).Take(10).Cast<IFeedItem>())
+            foreach (var item in _context.MaintenanceRequestCheckins.OrderByDescending(p => p.Date).Take(10).ToArray())
             {
                 yield return ToFeedItemBindingModel(item);
             }
