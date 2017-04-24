@@ -5,6 +5,7 @@ using ApartmentApps.Api;
 using ApartmentApps.API.Service.Models;
 using Microsoft.Owin;
 using Owin;
+using Microsoft.Owin.Security.OAuth;
 
 [assembly: OwinStartup(typeof(ApartmentApps.API.Service.Startup))]
 
@@ -19,8 +20,10 @@ namespace ApartmentApps.API.Service
             //UnityConfig.RegisterComponents();
             
             ConfigureAuth(app);
-                
+            app.MapSignalR();
             //app.
         }
     }
+
+  
 }

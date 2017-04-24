@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C3722C9B-9DC3-4912-9E4A-333A3E16FAAF}"
 	ProjectSection(SolutionItems) = preProject
@@ -45,6 +45,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentApps.Modules.Inspections", "ApartmentApps.Modules.Inspections\ApartmentApps.Modules.Inspections.csproj", "{11EBF4C6-4475-47DD-9008-0DE0607DD723}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentApps.Modules.Prospect", "ApartmentApps.Modules.Prospect\ApartmentApps.Modules.Prospect.csproj", "{4B09DC69-8A16-4029-B5DA-0E494451F9BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{BC7D3E97-5FFD-4625-AB45-BE76FCF7633D}"
 EndProject
 Global
 	GlobalSection(Performance) = preSolution
@@ -641,5 +643,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

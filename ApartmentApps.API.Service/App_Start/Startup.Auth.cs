@@ -11,10 +11,25 @@ using Owin;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.Data;
+using System.Threading.Tasks;
 //using Microsoft.Owin.Cors;
 
 namespace ApartmentApps.API.Service
 {
+    public class QueryStringOAuthBearerProvider : OAuthBearerAuthenticationProvider
+    {
+        public override Task RequestToken(OAuthRequestTokenContext context)
+        {
+            var value = context.Request.Query.Get("access_token");
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                context.Token = value;
+            }
+            return base.RequestToken(context);
+            //return Task.FromResult<object>(null);
+        }
+    }
     public partial class Startup
     {
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
@@ -48,7 +63,13 @@ namespace ApartmentApps.API.Service
             };
 
             // Enable the application to use bearer tokens to authenticate users
-            app.UseOAuthBearerTokens(OAuthOptions);
+            //app.UseOAuthBearerTokens(OAuthOptions);
+            app.UseOAuthAuthorizationServer(OAuthOptions);
+
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions()
+            {
+                 Provider = new QueryStringOAuthBearerProvider()
+            });
         }
     }
 }

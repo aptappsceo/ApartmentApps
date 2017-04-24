@@ -25,16 +25,17 @@ namespace ApartmentApps.Api
 
 
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
-{
-    public override void OnException(HttpActionExecutedContext context)
     {
-        var exception = context.Exception as ApiException;
-        if (exception != null) {
-            context.Response = context.Request.CreateErrorResponse(exception.StatusCode, exception.Message);
-            context.Exception = exception;
+        public override void OnException(HttpActionExecutedContext context)
+        {
+            var exception = context.Exception as ApiException;
+            if (exception != null)
+            {
+                context.Response = context.Request.CreateErrorResponse(exception.StatusCode, exception.Message);
+                context.Exception = exception;
+            }
         }
     }
-}
 
     public class ApiException : Exception
     {
@@ -45,8 +46,8 @@ namespace ApartmentApps.Api
             StatusCode = statusCode;
         }
     }
- public class MaintenanceRequestEditModel : BaseViewModel
-   
+    public class MaintenanceRequestEditModel : BaseViewModel
+
     {
         private readonly IRepository<Unit> _unitRepo;
         private readonly IRepository<ApplicationUser> _userRepo;
@@ -54,7 +55,7 @@ namespace ApartmentApps.Api
 
 
         //[DataType()]
-        [DisplayName("Unit"), DisplayForRoles(Roles="Admin,PropertyAdmin,Maintenance")]
+        [DisplayName("Unit"), DisplayForRoles(Roles = "Admin,PropertyAdmin,Maintenance")]
         public int UnitId { get; set; }
 
         public MaintenanceRequestEditModel()
@@ -128,7 +129,7 @@ namespace ApartmentApps.Api
         YesFree
     }
 
-    public class MaintenanceRequestEditMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestEditModel> 
+    public class MaintenanceRequestEditMapper : BaseMapper<MaitenanceRequest, MaintenanceRequestEditModel>
     {
         public MaintenanceRequestEditMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
@@ -152,7 +153,7 @@ namespace ApartmentApps.Api
             viewModel.MaitenanceRequestTypeId = maitenanceRequest.MaitenanceRequestTypeId;
             viewModel.PermissionToEnter = maitenanceRequest.PermissionToEnter;
             viewModel.UnitId = maitenanceRequest.UnitId ?? 0;
-            viewModel.PetStatus = (PetStatus) maitenanceRequest.PetStatus;
+            viewModel.PetStatus = (PetStatus)maitenanceRequest.PetStatus;
             viewModel.Comments = maitenanceRequest.Message;
         }
     }
@@ -164,7 +165,7 @@ namespace ApartmentApps.Api
 
         public override void ToModel(MaintenanceRequestIndexBindingModel viewModel, MaitenanceRequest model)
         {
-           
+
         }
 
         public override void ToViewModel(MaitenanceRequest model, MaintenanceRequestIndexBindingModel viewModel)
@@ -269,24 +270,24 @@ namespace ApartmentApps.Api
 
             viewModel.Checkins = model.Checkins.Select(p => p.ToMaintenanceCheckinBindingModel(BlobStorageService));
             viewModel.Description = model.Description;
-          
+
             viewModel.AssignLink = new ActionLinkModel()
             {
                 Allowed = UserContext.IsInRole("MaintenanceSupervisor"),
                 Action = "AssignRequest",
                 Controller = "MaitenanceRequests",
                 Label = "Assign Maintenance Request",
-                Parameters = new  { id= model.Id }
+                Parameters = new { id = model.Id }
             };
 
- 
+
         }
 
     }
-    
-    public class MaintenanceService : StandardCrudService<MaitenanceRequest> ,IMaintenanceService
+
+    public class MaintenanceService : StandardCrudService<MaitenanceRequest>, IMaintenanceService
     {
- 
+
         public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
         public ConfigProvider<MaintenanceConfig> Config { get; }
         public PropertyContext Context { get; set; }
@@ -306,7 +307,7 @@ namespace ApartmentApps.Api
 
         public IEnumerable<TViewModel> GetAppointments<TViewModel>()
         {
-            var tz = _userContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(15,0,0,0));
+            var tz = _userContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(15, 0, 0, 0));
             var mapper = _kernel.Get<IMapper<MaitenanceRequest, TViewModel>>();
             return
                 Context.MaitenanceRequests.Where(p => p.ScheduleDate != null).ToArray()
@@ -351,7 +352,7 @@ namespace ApartmentApps.Api
                 PermissionToEnter = permissionToEnter,
                 PetStatus = petStatus,
                 UserId = _userContext.UserId,
-                User =  _userContext.CurrentUser,
+                User = _userContext.CurrentUser,
                 Message = comments,
                 Emergency = emergrency,
                 UnitId = unitId,
@@ -360,7 +361,7 @@ namespace ApartmentApps.Api
                 SubmissionDate = _userContext.CurrentUser.TimeZone.Now(),
                 GroupId = Guid.NewGuid()
             };
-        
+
             if (maitenanceRequest.UnitId == 0)
             {
                 if (_userContext.CurrentUser?.UnitId != null)
@@ -371,7 +372,7 @@ namespace ApartmentApps.Api
 
             Context.MaitenanceRequests.Add(maitenanceRequest);
 
-            
+
 
             if (images != null)
                 foreach (var image in images)
@@ -391,8 +392,8 @@ namespace ApartmentApps.Api
             Checkin(_userContext.CurrentUser, maitenanceRequest.Id, maitenanceRequest.Message,
                 maitenanceRequest.StatusId, null, maitenanceRequest.GroupId);
 
-            _moduleHelper.SignalToEnabled<IMaintenanceSubmissionEvent>( _ => _.MaintenanceRequestSubmited(maitenanceRequest));
-            
+            _moduleHelper.SignalToEnabled<IMaintenanceSubmissionEvent>(_ => _.MaintenanceRequestSubmited(maitenanceRequest));
+
             return maitenanceRequest.Id;
 
         }
@@ -400,7 +401,7 @@ namespace ApartmentApps.Api
         public override void Remove(string id)
         {
             var intId = Convert.ToInt32(id);
-            RemoveAllWith<MaintenanceRequestCheckin>(x=>x.MaitenanceRequestId == intId);
+            RemoveAllWith<MaintenanceRequestCheckin>(x => x.MaitenanceRequestId == intId);
             base.Remove(id);
         }
 
@@ -414,7 +415,7 @@ namespace ApartmentApps.Api
                 set.Save();
             }
         }
-        
+
         public IEnumerable<TViewModel> GetAllUnassigned<TViewModel>()
         {
             return Repository.Where(p => p.WorkerAssignedId == null).ToArray().Select(Map<TViewModel>().ToViewModel);
@@ -426,7 +427,7 @@ namespace ApartmentApps.Api
             request.WorkerAssignedId = userId;
             Repository.Save();
             _moduleHelper.SignalToEnabled<IMaintenanceRequestAssignedEvent>(_ => _.MaintenanceRequestAssigned(request));
-             
+
         }
         public bool PauseRequest(ApplicationUser worker, int requestId, string comments, List<byte[]> images)
         {
@@ -442,7 +443,7 @@ namespace ApartmentApps.Api
                 Comments = comments,
                 StatusId = status,
                 WorkerId = worker.Id,
-               
+
                 Date = worker.TimeZone.Now(),
                 GroupId = groupId ?? Guid.NewGuid()
             };
@@ -468,7 +469,7 @@ namespace ApartmentApps.Api
                 request.CompletionDate = worker.TimeZone.Now();
             }
             Context.SaveChanges();
-            _moduleHelper.SignalToEnabled<IMaintenanceRequestCheckinEvent>( _ => _.MaintenanceRequestCheckin(checkin, request));
+            _moduleHelper.SignalToEnabled<IMaintenanceRequestCheckinEvent>(_ => _.MaintenanceRequestCheckin(checkin, request));
 
             return true;
 
@@ -493,9 +494,9 @@ namespace ApartmentApps.Api
             mr.ScheduleDate = scheduleDate;
             Context.SaveChanges();
             Checkin(currentUser, id,
-                $"Schedule date set to {scheduleDate.ToString("g",CultureInfo.GetCultureInfo("en-US"))}", "Scheduled", null);
+                $"Schedule date set to {scheduleDate.ToString("g", CultureInfo.GetCultureInfo("en-US"))}", "Scheduled", null);
         }
-        
+
         public override bool DefaultOrderByDesc => true;
     }
 
