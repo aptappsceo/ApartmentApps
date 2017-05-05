@@ -48,9 +48,10 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 return this.Content(HttpStatusCode.BadRequest, $"Location {locationId} not found.");
                 ///return this.BadRequest("Location not found.");
             }
-            var distanceToCheckin = DistanceCalcs.DistanceInFeet(location.Latitude, location.Longitude, latitude, longitude);
-            if (distanceToCheckin < 100)
-            {
+            // Disabling distance to checkin
+            //var distanceToCheckin = DistanceCalcs.DistanceInFeet(location.Latitude, location.Longitude, latitude, longitude);
+            //if (distanceToCheckin < 100)
+            //{
                 Context.CourtesyOfficerCheckins.Add(new CourtesyOfficerCheckin()
                 {
                     CourtesyOfficerLocationId = locationId,
@@ -61,7 +62,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 });
                 Context.SaveChanges();
                 return Ok();
-            }
+            //}
 
             return this.Content(HttpStatusCode.BadRequest, $"You must be within 100 ft. You are currently {distanceToCheckin} ft.");
             return this.BadRequest($"You must be within 100 ft. You are currently {distanceToCheckin} ft.");
