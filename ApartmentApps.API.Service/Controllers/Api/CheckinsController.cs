@@ -64,8 +64,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 return Ok();
             //}
 
-            return this.Content(HttpStatusCode.BadRequest, $"You must be within 100 ft. You are currently {distanceToCheckin} ft.");
-            return this.BadRequest($"You must be within 100 ft. You are currently {distanceToCheckin} ft.");
+            //return this.Content(HttpStatusCode.BadRequest, $"You must be within 100 ft. You are currently {distanceToCheckin} ft.");
+            //return this.BadRequest($"You must be within 100 ft. You are currently {distanceToCheckin} ft.");
         }
         public class DistanceCalcs
         {
