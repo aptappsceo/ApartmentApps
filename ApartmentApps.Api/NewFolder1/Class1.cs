@@ -46,6 +46,8 @@ namespace ApartmentApps.Api.NewFolder1
         [DataType("Ignore")]
         [JsonIgnore]
         public virtual ApplicationUser User { get; set; }
+
+        public DateTime? ScheduleDate { get; set; }
     }
 
     public class EmailQueuer 
@@ -57,7 +59,7 @@ namespace ApartmentApps.Api.NewFolder1
             _emailQueueItems = emailQueueItems;
         }
 
-        public void QueueEmail<TData>(TData data) where TData : EmailData
+        public void QueueEmail<TData>(TData data, DateTime? scheduleDate = null) where TData : EmailData
         {
             if (data == null) throw new ArgumentNullException(nameof(data),"data can't be null");
             _emailQueueItems.Add(new EmailQueueItem()
@@ -66,6 +68,7 @@ namespace ApartmentApps.Api.NewFolder1
                 From = data.FromEmail,
                 UserId = data.User.Id,
                 Subject = data.Subject,
+                ScheduleDate = scheduleDate,
                 BodyData = JsonConvert.SerializeObject(data),
                 BodyType = data.GetType().AssemblyQualifiedName
             });

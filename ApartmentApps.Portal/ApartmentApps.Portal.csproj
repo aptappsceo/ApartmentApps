@@ -156,6 +156,12 @@
       <HintPath>..\packages\RazorEngine.3.9.3\lib\net45\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="StaticMap.Core, Version=2.0.0.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StaticMap.Core.2.0.0\lib\net40\StaticMap.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="StaticMap.Google, Version=2.0.0.22, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StaticMap.Google.2.0.0\lib\net40\StaticMap.Google.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Chart.WPF, Version=14.2460.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>3rdParty\4.5\Syncfusion.Chart.WPF.dll</HintPath>
@@ -499,6 +505,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\EasyReportController.cs" />
+    <Compile Include="Controllers\EmailPreviewController.cs" />
     <Compile Include="Controllers\FormModelHelpers.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdentityUserRoleController.cs" />

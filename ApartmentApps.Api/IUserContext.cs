@@ -5,7 +5,7 @@ using ApartmentApps.Data;
 
 namespace ApartmentApps.Api
 {
-    public interface IUserContext
+    public interface IUserContext : ITimeZone
     {
         bool IsInRole(string roleName);
         string UserId { get; }

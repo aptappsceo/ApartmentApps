@@ -1,5 +1,7 @@
 ﻿@using ApartmentApps.Api.BindingModels
 @using Jmelosegui.Mvc.GoogleMap
+@using StaticMap.Core.Model
+@using StaticMap.Google
 @using Size = System.Drawing.Size
 @model System.Collections.Generic.IEnumerable<ApartmentApps.Api.BindingModels.CourtesyCheckinBindingModel>
 
@@ -17,6 +19,7 @@
     Html.GoogleMap()
         .Name("map")
         .Height(500)
+        .ApiKey("AIzaSyDjBsoydtvTc55SZZsqlJZQMstPtyIs3z8")
         .Markers(m =>
         {
             foreach (var item in Model)
@@ -31,8 +34,41 @@
 
         ).FitToMarkersBounds(true)
 
-            )
-        </div>
+                      )
+                
+                @{
+                    var first = Model.First();
+                    var pt = new Point(first.Latitude, first.Longitude);
+                    var staticMap = new GoogleStaticMapUrlBuilder("https://maps.googleapis.com/maps/api/staticmap")
+                        .SetCenter(pt);
+                    foreach (var item in Model)
+                    {
+                        staticMap.AddMarker(new StaticMap.Core.Model.Marker(new Point(item.Latitude, item.Longitude))
+                        {
+                            DrawColor = item.Complete ? "#00ff00" : "#cccccc",
+                        });
+                    }
+                    
+                    staticMap.SetZoom(16);
+                    //staticMap.Height = 500;
+                    //staticMap.Width = 400;
+                    //foreach (var item in Model)
+                    //{
+                    //    staticMap.Markers.Add(new StaticMap.Marker()
+                    //    {
+                    //        Lat = item.Latitude,
+                    //        Lng = item.Longitude,
+                    //        Color = item.Complete ? StaticMap.mColor.Green : StaticMap.mColor.Gray,
+                    //        Character = item.Label
+                    //    });    
+                    //}
+
+                }
+                <input value="@staticMap.Build(500,500)&key=AIzaSyDjBsoydtvTc55SZZsqlJZQMstPtyIs3z8"/>
+                @staticMap.Build(500,500)
+                @*@staticMap.Render()*@
+                <img src="@staticMap.Build(500,500)&key=AIzaSyDjBsoydtvTc55SZZsqlJZQMstPtyIs3z8"/>
+            </div>
     </div>
     </div>
     <div class="col-md-4">

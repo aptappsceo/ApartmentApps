@@ -12,5 +12,9 @@ namespace ApartmentApps.Api
         {
             return TimeZoneInfo.ConvertTime(DateTime.UtcNow, zone);
         }
+        public static DateTime Today(this TimeZoneInfo zone)
+        {
+            return TimeZoneInfo.ConvertTime(DateTime.Today, zone);
+        }
     }
 }

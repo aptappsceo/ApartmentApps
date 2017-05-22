@@ -1,4 +1,5 @@
-﻿using ApartmentApps.Api;
+﻿using System;
+using ApartmentApps.Api;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Data;
 using Ninject;
@@ -44,8 +45,11 @@ namespace ApartmentApps.Jobs
 
         public ApplicationUser CurrentUser
         {
-            get { return _currentUser ?? (_currentUser = _dbContext.Users.Find(UserId)); }
-            set { _currentUser = value; }
+            get => _currentUser ?? (_currentUser = _dbContext.Users.Find(UserId));
+            set => _currentUser = value;
         }
+
+        public DateTime Now => CurrentUser.Property.TimeZone.Now();
+        public DateTime Today => new DateTime(Now.Year,Now.Month,Now.Day);
     }
 }

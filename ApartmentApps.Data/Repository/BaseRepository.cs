@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 
 namespace ApartmentApps.Data.Repository
 {
+ 
     public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly DbContext _dbContext;

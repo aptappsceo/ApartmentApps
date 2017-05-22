@@ -113,7 +113,8 @@ namespace ApartmentApps.Portal.App_Start
         private readonly ApplicationDbContext _db;
         private ApplicationUser _user;
         private IKernel _kernel;
-
+        public DateTime Now => CurrentUser.Property.TimeZone.Now();
+        public DateTime Today => new DateTime(Now.Year, Now.Month, Now.Day);
         public WebUserContext(ApplicationDbContext context, IKernel kernel)
         {
             _kernel = kernel;

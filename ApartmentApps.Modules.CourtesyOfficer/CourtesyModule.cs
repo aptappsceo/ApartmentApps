@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using ApartmentApps.Api.NewFolder1;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
@@ -7,11 +10,20 @@ using Ninject;
 
 namespace ApartmentApps.Api.Modules
 {
-    public class CourtesyModule : Module<CourtesyConfig>, IMenuItemProvider, IAdminConfigurable, IFillActions
+ 
+    public class CourtesyModule : Module<CourtesyConfig>, IMenuItemProvider, IAdminConfigurable, IFillActions, IWebJob
     {
         public string SettingsController => "CourtesyConfig";
         public CourtesyModule(IRepository<CourtesyConfig> configRepo, IUserContext userContext, IKernel kernel) : base(kernel, configRepo, userContext)
         {
+        }
+
+        protected override CourtesyConfig CreateDefaultConfig()
+        {
+
+            var def =  base.CreateDefaultConfig();
+            
+            return def;
         }
 
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
@@ -49,6 +61,36 @@ namespace ApartmentApps.Api.Modules
                 });
             }
             
+        }
+
+        public void Execute(ILogger logger)
+        {
+            // Schedule the all morning emails.
+            SendEmail();
+        }
+
+        public void SendEmail(DateTime? d = null)
+        {
+            EmailQueuer queuer = Kernel.Get<EmailQueuer>();
+            UserService service = Kernel.Get<UserService>();
+            var courtesyOfficerService = Kernel.Get<CourtesyOfficerService>();
+            var propertyAdmins = service.GetUsersInRole<UserBindingModel>("PropertyAdmin");
+            var date = UserContext.Today;
+            date = date.Add(new TimeSpan(1, 8, 0, 0, 0));
+            date = d ?? date;
+            foreach (var propertyAdmin in propertyAdmins)
+            {
+                var email = propertyAdmin.Email;
+                queuer.QueueEmail(new DailyOfficerReport()
+                {
+                    ToEmail = email,
+                    User = propertyAdmin,
+                    FromEmail = "info@apartmentapps.com",
+                    Subject = $"Daily officer report for {UserContext.CurrentUser.Property.Name}",
+                    Checkins = courtesyOfficerService.ForDay(UserContext.CurrentUser.TimeZone.Today()
+                        .Subtract(new TimeSpan(1, 0, 0, 0)))
+                }, date);
+            }
         }
     }
 }

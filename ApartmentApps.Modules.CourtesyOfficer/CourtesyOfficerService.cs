@@ -6,15 +6,35 @@ using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.NewFolder1;
 using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
+using Frameworx.GMap;
 using Ninject;
 
 namespace ApartmentApps.Api
 {
+    public class DailyOfficerReport : EmailData
+    {
+        public IEnumerable<CourtesyCheckinBindingModel> Checkins { get; set; }
+
+        //public StaticMap GoogleMap
+        //{
+        //    get
+        //    {
+        //        var map = new StaticMap();
+        //        map.Markers.Add(new StaticMap.Marker()
+        //        {
+                    
+        //        });
+        //        map.
+        //    }
+        //}
+
+    }
     public class CourtesyCheckinMapper : BaseMapper<CourtesyOfficerCheckin, CourtesyCheckinViewModel>
     {
         public CourtesyCheckinMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
@@ -53,6 +73,15 @@ namespace ApartmentApps.Api
 
         public IUserContext UserContext { get; set; }
         public IRepository<CourtesyOfficerLocation> Locations { get; set; }
+
+
+        public DailyOfficerReport GetDailyReport()
+        {
+            return new DailyOfficerReport()
+            {
+                Checkins = ForDay(UserContext.CurrentUser.TimeZone.Now().Subtract(new TimeSpan(1,0,0,0,0)))
+            };
+        }
 
         public IEnumerable<CourtesyCheckinBindingModel> ForDay(DateTime? date)
         {

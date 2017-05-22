@@ -1,0 +1,13 @@
+﻿@using RazorEngine
+@inherits RazorEngine.Templating.TemplateBase<ApartmentApps.Api.DailyOfficerReport>
+    @{
+        var completed = Model.Checkins.Where(p => p.Complete).ToArray();
+        var count = completed.Length;
+    }
+<h3>Good Morning!</h3>
+<p>There were @count courtesy officer checkins yesterday.</p>
+
+@foreach (var checkin in completed)
+{
+    <h4>@checkin.Label</h4>
+}

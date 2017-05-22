@@ -10,7 +10,6 @@ using System.Web.Script.Serialization;
 using System.Web.Mvc;
 using System.IO;
 using System.Data;
-using System.Data.SqlServerCe;
 using ApartmentApps.Data;
 using Korzh.EasyQuery.Db;
 using Korzh.EasyQuery.Services;

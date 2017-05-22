@@ -3,6 +3,7 @@
   &lt;Assembly Path="D:\ApartmentApps\Projects\ResidentAppCross\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Invert\ApartmentApps\packages\Xamarin.Android.Support.v7.AppCompat.23.2.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Invert\ApartmentApps\packages\MvvmCross.Droid.Shared.4.1.4\lib\MonoAndroid\MvvmCross.Droid.Shared.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Projects\AA\ApartmentApps.Portal\Bin\StaticMap.Google.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:Boolean x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Housekeeping/Bookmarks/NumberedBookmarks/=Bookmark9/Coords/@EntryValue">(Doc Ln 207 Col 45)</s:String>

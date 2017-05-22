@@ -97,6 +97,8 @@ namespace ApartmentApps.API.Service.App_Start
 
     public class WebUserContext : IUserContext
     {
+        public DateTime Now => CurrentUser.Property.TimeZone.Now();
+        public DateTime Today => new DateTime(Now.Year, Now.Month, Now.Day);
         private readonly ApplicationDbContext _db;
         private ApplicationUser _user;
         private IKernel _kernel;
