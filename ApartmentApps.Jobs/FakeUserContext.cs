@@ -45,8 +45,8 @@ namespace ApartmentApps.Jobs
 
         public ApplicationUser CurrentUser
         {
-            get => _currentUser ?? (_currentUser = _dbContext.Users.Find(UserId));
-            set => _currentUser = value;
+            get { return _currentUser ?? (_currentUser = _dbContext.Users.Find(UserId)); }
+            set { _currentUser = value; }
         }
 
         public DateTime Now => CurrentUser.Property.TimeZone.Now();
