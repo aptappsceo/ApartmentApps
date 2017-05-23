@@ -42,7 +42,7 @@ export class AuthClient {
         grant_type : 'password'
       };
       console.log("logging in", payload);
-      return this.http.post('http://api.apartmentapps.com/Token', Encode(payload), options);
+      return this.http.post('http://devservices.localhost.com/Token', Encode(payload), options);
 
   }
 
