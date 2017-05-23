@@ -1,5 +1,7 @@
-import { Component, EventEmitter, OnInit, ElementRef, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, ElementRef, Output, Inject } from '@angular/core';
 import { AppConfig } from '../../app.config';
+import {UserContext} from '../../aaservice-module/usercontext';
+
 declare let jQuery: any;
 
 @Component({
@@ -12,11 +14,14 @@ export class Navbar implements OnInit {
   $el: any;
   config: any;
 
-  constructor(el: ElementRef, config: AppConfig) {
+  constructor(el: ElementRef, config: AppConfig, @Inject(UserContext) public userContext:UserContext) {
     this.$el = jQuery(el.nativeElement);
     this.config = config.getConfig();
+  
   }
-
+  public get userInfo(): string {
+    return this.userContext.UserInfo.fullName;
+  }
   toggleSidebar(state): void {
     this.toggleSidebarEvent.emit(state);
   }
@@ -26,6 +31,7 @@ export class Navbar implements OnInit {
   }
 
   ngOnInit(): void {
+      console.log("USER CONTEXT", this.userContext);
     setTimeout(() => {
       let $chatNotification = jQuery('#chat-notification');
       $chatNotification.removeClass('hide').addClass('animated fadeIn')

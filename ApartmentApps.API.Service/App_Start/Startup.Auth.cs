@@ -42,8 +42,10 @@ namespace ApartmentApps.API.Service
         public void ConfigureAuth(IAppBuilder app)
         {
 
-           // app.UseCors(CorsOptions.AllowAll);
+            // app.UseCors(CorsOptions.AllowAll);
+#if DEBUG
             app.UseCors(CorsOptions.AllowAll);
+#endif
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);

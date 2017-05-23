@@ -42,6 +42,7 @@ export class UserService {
                     this.accountClient.getUserInfo("portal", null)
                         .subscribe(x=>{
                             console.log(x);
+                            this.userContext.UserInfo = x;
                             ok(x);
                          });
                 });
