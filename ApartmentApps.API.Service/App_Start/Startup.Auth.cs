@@ -43,9 +43,9 @@ namespace ApartmentApps.API.Service
         {
 
             // app.UseCors(CorsOptions.AllowAll);
-#if DEBUG
+//#if DEBUG
             app.UseCors(CorsOptions.AllowAll);
-#endif
+//#endif
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
