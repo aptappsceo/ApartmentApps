@@ -27,6 +27,7 @@ using IniParser.Parser;
 using Ninject;
 using Ninject.Planning.Bindings;
 using Authentication = ApartmentApps.Payments.Forte.Forte.Client.Authentication;
+using ExecuteSocketQueryParams = ApartmentApps.Payments.Forte.PaymentGateway.ExecuteSocketQueryParams;
 
 namespace ApartmentApps.Api.Modules
 {

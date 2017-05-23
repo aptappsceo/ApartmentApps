@@ -102,7 +102,7 @@ namespace ApartmentApps.Jobs
             var emailService = kernel.Get<IEmailService>();
             var alertsConfigItems = kernel.Get<UserAlertsConfigProvider>();
             var date = item.TimeZone.Now();
-            var emailItems = emailQueue.GetAll().Where(x => !x.Error && x.PropertyId == item.Id && x.ScheduleDate <= date).ToArray();
+            var emailItems = emailQueue.GetAll().Where(x => !x.Error && x.PropertyId == item.Id && ( x.ScheduleDate == null || x.ScheduleDate <= date)).ToArray();
             foreach (var emailItem in emailItems)
             {
                 var config = alertsConfigItems.ConfigForUser(emailItem.UserId);

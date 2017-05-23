@@ -1,13 +1,31 @@
 ﻿@using RazorEngine
 @inherits RazorEngine.Templating.TemplateBase<ApartmentApps.Api.DailyOfficerReport>
-    @{
-        var completed = Model.Checkins.Where(p => p.Complete).ToArray();
-        var count = completed.Length;
-    }
-<h3>Good Morning!</h3>
+@{
+    Layout = "_Layout";
+}
+@{
+    var completed = Model.Checkins.Where(p => p.Complete).ToArray();
+    var count = completed.Length;
+}
 <p>There were @count courtesy officer checkins yesterday.</p>
-
-@foreach (var checkin in completed)
+@if (count > 0)
 {
-    <h4>@checkin.Label</h4>
+<table>
+    <tr>
+        <td><img src="@Model.StaticMapUrl" /></td>
+        <td><table>
+            <tr>
+                <th>Location</th>
+                <th>Checkin Time</th>
+            </tr>
+            @foreach (var item in completed)
+            {
+                <tr>
+                    <td>@item.Label</td>
+                    <td>@item.Date</td>
+                </tr>
+            }
+        </table></td>
+    </tr>
+</table>
 }

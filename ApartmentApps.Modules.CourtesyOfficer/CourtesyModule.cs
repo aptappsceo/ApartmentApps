@@ -81,14 +81,20 @@ namespace ApartmentApps.Api.Modules
             foreach (var propertyAdmin in propertyAdmins)
             {
                 var email = propertyAdmin.Email;
+#if DEBUG
+                if (email != "micahosborne@gmail.com") continue;
+#endif
                 queuer.QueueEmail(new DailyOfficerReport()
                 {
                     ToEmail = email,
                     User = propertyAdmin,
                     FromEmail = "info@apartmentapps.com",
                     Subject = $"Daily officer report for {UserContext.CurrentUser.Property.Name}",
-                    Checkins = courtesyOfficerService.ForDay(UserContext.CurrentUser.TimeZone.Today()
-                        .Subtract(new TimeSpan(1, 0, 0, 0)))
+#if DEBUG
+                    Checkins = courtesyOfficerService.ForRange(UserContext.Today.Subtract(new TimeSpan(90,0,0,0)),UserContext.Now)
+#else
+                    Checkins = courtesyOfficerService.ForDay(UserContext.CurrentUser.TimeZone.Today().Subtract(new TimeSpan(1, 0, 0, 0)))
+#endif    
                 }, date);
             }
         }
