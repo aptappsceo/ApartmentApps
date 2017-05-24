@@ -58,7 +58,8 @@ namespace ApartmentApps.Jobs
                     Email = "micahosborne@gmail.com",
                     Name = "Jobs"
                 };
-
+                userContext.CurrentUser.PropertyId = item.Id;
+                context.SaveChanges();
                 kernel.Bind<IUserContext>().ToMethod(p => userContext);
                 kernel.Bind<ILogger>().To<ConsoleLogger>();
 #if DEBUG
