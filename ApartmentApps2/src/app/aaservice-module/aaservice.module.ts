@@ -11,7 +11,7 @@ import { UserService } from './user.service';
   ],
   declarations: [],
   providers: [
-    
+    UserContext
   ]
 })
 export class AAServiceModule {

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, ElementRef, Output, Inject } from '@angular/core';
 import { AppConfig } from '../../app.config';
 import {UserContext} from '../../aaservice-module/usercontext';
+import { UserInfoViewModel } from "app/aaservice-module/aaclient";
 
 declare let jQuery: any;
 
@@ -19,8 +20,8 @@ export class Navbar implements OnInit {
     this.config = config.getConfig();
   
   }
-  public get userInfo(): string {
-    return this.userContext.UserInfo.fullName;
+  public get userInfo(): UserInfoViewModel {
+    return this.userContext.UserInfo;
   }
   toggleSidebar(state): void {
     this.toggleSidebarEvent.emit(state);

@@ -45,18 +45,19 @@ type StoreType = {
     
   ],
   imports: [ // import Angular's modules
+      AAServiceModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,
     MaintenanceModule,
-    AAServiceModule.forRoot(),
+
     LoginModule,
     RouterModule.forRoot(ROUTES, { useHash: true })
-  ],
+  ], 
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
-   
+    
   ]
 })
 export class AppModule {
@@ -93,7 +94,7 @@ export class AppModule {
 
   hmrAfterDestroy(store: StoreType) {
     // display new elements
-    store.disposeOldHosts();
+    store.disposeOldHosts(); 
     delete store.disposeOldHosts;
   }
 

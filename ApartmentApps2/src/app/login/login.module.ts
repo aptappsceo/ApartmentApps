@@ -23,6 +23,7 @@ export const routes = [
     CommonModule,
     FormsModule,
     RouterModule.forChild(routes),
+    AAServiceModule.forRoot()
   ]
 })
 export class LoginModule {

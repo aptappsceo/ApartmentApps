@@ -23,8 +23,8 @@ import {AAServiceModule} from '../aaservice-module/aaservice.module';
     TooltipModule.forRoot(),
     ROUTES,
     FormsModule,
-    MaintenanceModule,
-    AAServiceModule.forRoot()
+    MaintenanceModule
+     
     ],
   declarations: [
     Layout,

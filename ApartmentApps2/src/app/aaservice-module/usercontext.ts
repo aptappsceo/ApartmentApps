@@ -5,5 +5,8 @@ import {UserInfoViewModel} from './aaclient'
 export class UserContext {
     public UserToken: string;
     public UserInfo: UserInfoViewModel = new UserInfoViewModel();
+    constructor() {
+        console.log("CREATED INSTANCE");
+    }
 }
  
