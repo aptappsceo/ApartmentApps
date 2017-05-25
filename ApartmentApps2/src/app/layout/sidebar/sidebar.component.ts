@@ -1,3 +1,5 @@
+import { UserInfoViewModel } from '../../aaservice-module/aaclient';
+import { UserService } from '../../aaservice-module/user.service';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
@@ -15,7 +17,7 @@ export class Sidebar implements OnInit {
   router: Router;
   location: Location;
 
-  constructor(config: AppConfig, el: ElementRef, router: Router, location: Location) {
+  constructor(config: AppConfig, el: ElementRef, router: Router, location: Location,private userService:UserService) {
     this.$el = jQuery(el.nativeElement);
     this.config = config.getConfig();
     this.router = router;
@@ -55,8 +57,9 @@ export class Sidebar implements OnInit {
   ngAfterViewInit(): void {
     this.changeActiveNavigationItem(this.location);
   }
-
+  userInfo: UserInfoViewModel;
   ngOnInit(): void {
+    this.userService.RequestUserInfo().then(x=>{this.userInfo = x; });
     jQuery(window).on('sn:resize', this.initSidebarScroll.bind(this));
     this.initSidebarScroll();
 

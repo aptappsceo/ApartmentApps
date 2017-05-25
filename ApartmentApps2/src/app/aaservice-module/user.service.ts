@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject, Optional, OpaqueToken } from '@angular/core';
 import { UserContext } from './usercontext';
 import { AuthClient } from './baseclient';
-import { AccountClient } from './aaclient';
+import { AccountClient, UserInfoViewModel } from './aaclient';
 
 
 @Injectable()
@@ -49,5 +49,23 @@ export class UserService {
                 
             },(v)=>{ console.log(v); });
     }
+
+    public RequestUserInfo() : Promise<UserInfoViewModel> {
+        //if (this.userContext.UserToken == null || this.userContext.)
+        return new Promise<UserInfoViewModel>((ok,err)=>{
+            if (this.userContext.UserInfo.email) {
+                this.accountClient.getUserInfo("portal", null)
+                        .subscribe(x=>{
+                            console.log(x);
+                            this.userContext.UserInfo = x;
+                            ok(x);
+                         });
+            } else {
+                ok(this.userContext.UserInfo);
+            }
+        });
+     
+    }
+    
 
 }

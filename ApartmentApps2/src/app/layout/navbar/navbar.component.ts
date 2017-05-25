@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, ElementRef, Output, Inject } from '@an
 import { AppConfig } from '../../app.config';
 import {UserContext} from '../../aaservice-module/usercontext';
 import { UserInfoViewModel } from "app/aaservice-module/aaclient";
+import { UserService } from '../../aaservice-module/user.service';
+import { ModuleInfo } from '../../aaservice-module/aaclient';
 
 declare let jQuery: any;
 
@@ -14,15 +16,13 @@ export class Navbar implements OnInit {
   @Output() toggleChatEvent: EventEmitter<any> = new EventEmitter();
   $el: any;
   config: any;
-
-  constructor(el: ElementRef, config: AppConfig, @Inject(UserContext) public userContext:UserContext) {
+  moduleInfo : ModuleInfo = new ModuleInfo();
+  constructor(private userService:UserService,el: ElementRef, config: AppConfig) {
     this.$el = jQuery(el.nativeElement);
     this.config = config.getConfig();
   
   }
-  public get userInfo(): UserInfoViewModel {
-    return this.userContext.UserInfo;
-  }
+
   toggleSidebar(state): void {
     this.toggleSidebarEvent.emit(state);
   }
@@ -32,7 +32,9 @@ export class Navbar implements OnInit {
   }
 
   ngOnInit(): void {
-      console.log("USER CONTEXT", this.userContext);
+    this.userService.RequestUserInfo()
+      .then(x=>{this.userInfo = x.propertyConfig.moduleInfo;});
+
     setTimeout(() => {
       let $chatNotification = jQuery('#chat-notification');
       $chatNotification.removeClass('hide').addClass('animated fadeIn')

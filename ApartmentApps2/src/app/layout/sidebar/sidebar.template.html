@@ -28,6 +28,18 @@
         Dashboard
       </a>
     </li>
+    
+        <li *ngIf="userInfo.">
+      <a [routerLink]=" ['another-page'] ">
+      <span class="icon">
+          <i class="fa fa-tree"></i>
+      </span>
+        Another Page
+      <span class="badge badge-danger">
+          9
+      </span>
+      </a>
+    </li>
     <li>
       <a [routerLink]=" ['another-page'] ">
       <span class="icon">
