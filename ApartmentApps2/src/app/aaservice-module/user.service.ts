@@ -35,28 +35,27 @@ export class UserService {
                 });
         });
     }
-    public Login(username:string,password:string) : Promise<any> {
-        return this.Authenticate(username,password)
+    public Login(username:string,password:string) : Promise<UserInfoViewModel> {
+        return new Promise((resolve,reject)=>{
+            this.Authenticate(username,password)
             .then((v)=>{
-                return new Promise((ok,err)=>{
-                    this.accountClient.getUserInfo("portal", null)
-                        .subscribe(x=>{
-                            console.log(x);
-                            this.userContext.UserInfo = x;
-                            ok(x);
-                         });
-                });
-                
-            },(v)=>{ console.log(v); });
+                return this.RequestUserInfo().then((x)=>{ resolve(x); });
+            });  
+        });
+         
     }
-
+    public Logout() : Promise<any> {
+        this.userContext.UserToken = null;
+        return Promise.resolve(true);
+    }
     public RequestUserInfo() : Promise<UserInfoViewModel> {
         //if (this.userContext.UserToken == null || this.userContext.)
         return new Promise<UserInfoViewModel>((ok,err)=>{
-            if (this.userContext.UserInfo.email) {
+            console.log("User Token", this.userContext.UserToken);
+            if (this.userContext.UserInfo == null) {
                 this.accountClient.getUserInfo("portal", null)
                         .subscribe(x=>{
-                            console.log(x);
+                            console.log("SDF",x);
                             this.userContext.UserInfo = x;
                             ok(x);
                          });

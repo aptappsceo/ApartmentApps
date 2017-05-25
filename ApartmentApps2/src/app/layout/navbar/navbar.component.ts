@@ -4,6 +4,7 @@ import { UserContext } from '../../aaservice-module/usercontext';
 import { UserInfoViewModel } from 'app/aaservice-module/aaclient';
 import { UserService } from '../../aaservice-module/user.service';
 import { ModuleInfo } from '../../aaservice-module/aaclient';
+import { Router } from '@angular/router';
 
 declare let jQuery: any;
 
@@ -12,13 +13,13 @@ declare let jQuery: any;
   templateUrl: './navbar.template.html'
 })
 export class Navbar implements OnInit {
-  public userInfo: ModuleInfo = new ModuleInfo();
+  public userInfo: UserInfoViewModel = new UserInfoViewModel();
   @Output() toggleSidebarEvent: EventEmitter<any> = new EventEmitter();
   @Output() toggleChatEvent: EventEmitter<any> = new EventEmitter();
   $el: any;
   config: any;
   moduleInfo: ModuleInfo = new ModuleInfo();
-  constructor(private userService: UserService, el: ElementRef, config: AppConfig) {
+  constructor(private userService: UserService, el: ElementRef, config: AppConfig,private router: Router) {
     this.$el = jQuery(el.nativeElement);
     this.config = config.getConfig();
 
@@ -32,10 +33,14 @@ export class Navbar implements OnInit {
     this.toggleChatEvent.emit(null);
   }
 
-
+  logout(): void {
+    this.userService.Logout().then(x=>{
+      this.router.navigate(['/']);
+    });
+  }
   ngOnInit(): void {
     this.userService.RequestUserInfo()
-      .then(x => { this.userInfo = x.propertyConfig.moduleInfo; });
+      .then(x => { this.userInfo = x; });
 
     setTimeout(() => {
       let $chatNotification = jQuery('#chat-notification');
