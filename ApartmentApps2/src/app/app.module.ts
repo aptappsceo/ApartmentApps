@@ -19,6 +19,7 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InteralStateType } from './app.service';
 import { AppConfig } from './app.config';
 import { ErrorComponent } from './error/error.component';
+import { AACoreModule } from "app/aacore/aacore.module";
 
 
 // Application wide providers
@@ -41,23 +42,27 @@ type StoreType = {
   bootstrap: [ App ],
   declarations: [
     App,
-    ErrorComponent,
-    
+
+    ErrorComponent
+
   ],
   imports: [ // import Angular's modules
       AAServiceModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,
+
+
+    LoginModule, // This should come before any module with pages!!!!!!
+    AACoreModule,
     MaintenanceModule,
 
-    LoginModule,
     RouterModule.forRoot(ROUTES, { useHash: true })
-  ], 
+  ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    
+
   ]
 })
 export class AppModule {
@@ -96,7 +101,7 @@ export class AppModule {
 
   hmrAfterDestroy(store: StoreType) {
     // display new elements
-    store.disposeOldHosts(); 
+    store.disposeOldHosts();
     delete store.disposeOldHosts;
   }
 
