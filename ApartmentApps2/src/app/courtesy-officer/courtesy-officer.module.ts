@@ -8,13 +8,14 @@ import { IncidentReportsPageComponent }
 import { CheckinsPageComponent } from './checkins-page/checkins-page.component';
 import { CheckinsListComponent } from './checkins-list/checkins-list.component';
 import { RouterModule } from "@angular/router";
+import { WidgetsModule } from '../widgets/widgets.module';
 export const routes = [
   { path: 'checkins', component: CheckinsPageComponent },
   { path: 'incidents', component: IncidentReportsPageComponent },
 ];
 @NgModule({
   imports: [
-    CommonModule, RouterModule.forChild(routes)
+    CommonModule, RouterModule.forChild(routes), WidgetsModule
   ],
   declarations: [
     IncidentReportFormComponent,

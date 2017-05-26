@@ -1,3 +1,4 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { UserInfoViewModel } from '../../aaservice-module/aaclient';
 import { UserService } from '../../aaservice-module/user.service';
 import { Component, OnInit, ElementRef } from '@angular/core';
@@ -58,6 +59,18 @@ export class Sidebar implements OnInit {
     this.changeActiveNavigationItem(this.location);
   }
   userInfo: UserInfoViewModel;
+  isInAnyRoles(roles:any[]): boolean {
+    if (this.userInfo == null) return false;
+    for (var i = 0;i< roles.length;i++) {
+        if (this.userInfo.roles.indexOf(roles[i]) > -1)
+          return true;
+    }
+    return false;
+  }
+  isInRole(role:string) : boolean {
+    if (this.userInfo == null) return false;
+    return this.userInfo.roles.indexOf(role) > -1;
+  }
   ngOnInit(): void {
     this.userService.RequestUserInfo().then(x=>{this.userInfo = x; });
     jQuery(window).on('sn:resize', this.initSidebarScroll.bind(this));
