@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccountClient, MaitenanceClient, MessagingClient, API_BASE_URL } from './aaclient';
+import { AccountClient, MaitenanceClient, MessagingClient, API_BASE_URL, CourtesyClient } from './aaclient';
 import { UserContext } from './usercontext';
 import { AuthClient} from './baseclient';
 import { UserService } from './user.service';
@@ -24,7 +24,8 @@ export class AAServiceModule {
         UserContext,
         AccountClient,
         UserService,
-
+        CourtesyClient,
+        //OfficerClient,
         { provide: API_BASE_URL, useValue:  'http://devservices.apartmentapps.com' }
       ]
     };

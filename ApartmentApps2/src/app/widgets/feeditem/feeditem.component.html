@@ -1,4 +1,4 @@
-   <section widget class="widget">
+   <section *ngIf="userInfo != null" widget class="widget">
       <div class="widget-controls">
         <a href="#"><i class="fa fa-refresh"></i></a>
         <a href="#" data-widgster="close"><i class="glyphicon glyphicon-remove"></i></a>
@@ -6,20 +6,26 @@
       <div class="widget-body">
         <div class="post-user mt-n-xs">
           <span class="thumb pull-left mr">
-            <img class="rounded-circle" src="assets/img/people/a2.jpg" alt="...">
+            <img class="rounded-circle" src="{{userInfo.imageThumbnailUrl}}" alt="{{userInfo.fullName}}">
           </span>
-          <h6 class="mb-xs mt-xs">Jess <span class="fw-semi-bold">@jessica</span></h6>
-          <p class="fs-mini text-muted"><time>25 mins</time> &nbsp; <i class="fa fa-map-marker"></i> &nbsp; near Amsterdam</p>
+          <h6 class="mb-xs mt-xs">{{userInfo.firstName}} <span class="fw-semi-bold">{{userInfo.lastName}}</span></h6>
+          <p class="fs-mini text-muted"><time>{{timeAgo}}</time> &nbsp; <i class="fa fa-map-marker"></i>{{userInfo.buildingName}} {{userInfo.unitName}}</p>
         </div>
-        <div class="widget-middle-overflow windget-padding-md clearfix bg-danger text-white">
-          <h3 class="mt-lg mb-lg">Sing - <span class="fw-semi-bold">Next Generation</span> Admin Dashboard
-            Template</h3>
+        <div *ngIf='images != null && images.length > 0' class="widget-middle-overflow windget-padding-md clearfix bg-danger text-white">
+          <!-- Put scroller here -->
+          <ng-content></ng-content>
           <ul class="tags text-white pull-right">
-            <li><a href="#">design</a></li>
+              <li *ngFor='let tag of tags'>
+                <a href="#">{{tag}}</a>
+              </li>
           </ul>
         </div>
-        <p class="text-light fs-mini mt-sm">Lots of cool stuff is happening around you. Just calm down for a sec and listen. Colors, sounds,
-          thoughts, ideas. </p>
+
+        <p *ngIf='bodyText != null' class="text-light fs-mini mt-sm">{{bodyText}}</p>
+
+        <ng-content *ngIf='bodyText == null'>
+
+        </ng-content>
       </div>
       <footer class="bg-body-light">
         <ul class="post-links">

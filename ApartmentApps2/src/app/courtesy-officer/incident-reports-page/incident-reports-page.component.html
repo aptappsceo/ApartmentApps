@@ -1,3 +1,16 @@
-<p>
-  incident-reports-page works!
-</p>
+<app-title [title]="'Courtesy Officer'" [subTitle]="'Incident Reports'"></app-title>
+<div class='row'>
+  <div class='col-md-8'>
+<div *ngIf="incidents != null">
+  <div *ngFor="let incident of incidents">
+    <app-feeditem [userInfo]="incident.reportedBy" [bodyText]="incident.comments"></app-feeditem>
+  </div>
+</div>
+    </div>
+    <div class='col-md-4'>
+        <div class='widget'>
+
+          </div>
+    </div>
+</div>
+
