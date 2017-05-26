@@ -6,7 +6,8 @@ const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'dashboard', loadChildren: '../dashboard/dashboard.module#DashboardModule' },
     { path: 'another-page', loadChildren: '../another/another.module#AnotherModule' },
-     { path: 'corporations', loadChildren: '../aacore/aacore.module#AACoreModule' },
+    { path: 'admin', loadChildren: '../aacore/aacore.module#AACoreModule' },
+    { path: 'officer', loadChildren: '../courtesy-officer/courtesy-officer.module#CourtesyOfficerModule' }
   ]}
 ];
 

@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
 using System.Web.Security;
 using ApartmentApps.Api;
-using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Modules;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -23,9 +23,12 @@ using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Providers;
 using ApartmentApps.API.Service.Results;
 using ApartmentApps.Data;
+using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Data.Repository;
+using ApartmentApps.Modules.Maintenance;
 using ApartmentApps.Modules.Prospect;
 using Ninject;
+using ModelExtensions = ApartmentApps.Api.BindingModels.ModelExtensions;
 
 namespace ApartmentApps.API.Service.Controllers
 {
@@ -608,5 +611,31 @@ namespace ApartmentApps.API.Service.Controllers
         #endregion
     }
 
+    [Authorize]
+    [RoutePrefix("api/Properties")]
+    public class PropertiesController : ApartmentAppsApiController
+    {
+        public PropertiesController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        {
+        }
 
+       // [Route("MaintenanceRequestType", Name = nameof(MaintenanceRequestType))]
+
+        [HttpGet]
+        [ResponseType(typeof(QueryResult<LookupBindingModel>))]
+        public IHttpActionResult Get(string query = null)
+        {
+            //var Kernel.Get<CorporationsService>();
+            //if (string.IsNullOrEmpty(query))
+            //{
+            //    return Ok(_maintenanceRequestTypes.Query().Get<LookupBindingModel>());
+            //}
+            //else
+            //{
+            //    return Ok(_maintenanceRequestTypes.Query()
+            //        .Search<MaintenanceRequestTypesSearchEngine>((eng, set) => eng.CommonSearch(set, query))
+            //        .Get<LookupBindingModel>());
+            //}
+        }
+    }
 }

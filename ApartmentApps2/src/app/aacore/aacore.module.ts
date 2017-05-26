@@ -4,16 +4,23 @@ import { CorporationsListComponent } from "./corporations/corporations-list/corp
 import { CorporationsFormComponent } from "./corporations/corporations-form/corporations-form.component";
 import { RouterModule } from '@angular/router';
 import { CorporationsPageComponent } from './corporations/corporations-page/corporations-page.component';
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
 
 export const corproutes = [
-  { path: '', component: CorporationsPageComponent, pathMatch: 'full' }
+  { path: 'corporations', component: CorporationsPageComponent},
+  { path: 'userprofile', component: UserProfileComponent },
 ];
 
 @NgModule({
   imports: [
       CommonModule, RouterModule.forChild(corproutes)
   ],
-  declarations: [CorporationsListComponent, CorporationsFormComponent, CorporationsPageComponent],
+  declarations: [
+    CorporationsListComponent,
+    CorporationsFormComponent,
+    CorporationsPageComponent,
+    UserProfileComponent
+    ],
   providers: [
 
   ]

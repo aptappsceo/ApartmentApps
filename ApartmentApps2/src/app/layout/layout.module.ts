@@ -16,7 +16,7 @@ import { SearchPipe } from './pipes/search.pipe';
 import { NotificationLoad } from './notifications/notifications-load.directive';
 import { Notifications } from './notifications/notifications.component';
 import { MaintenanceModule } from '../maintenance/maintenance.module';
-import {AAServiceModule} from '../aaservice-module/aaservice.module';
+import { AAServiceModule } from '../aaservice-module/aaservice.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +24,7 @@ import {AAServiceModule} from '../aaservice-module/aaservice.module';
     ROUTES,
     FormsModule,
     MaintenanceModule
-     
+
     ],
   declarations: [
     Layout,
