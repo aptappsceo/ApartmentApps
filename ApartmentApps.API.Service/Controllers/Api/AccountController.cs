@@ -618,7 +618,7 @@ namespace ApartmentApps.API.Service.Controllers
         public PropertiesController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
         }
-
+         
        // [Route("MaintenanceRequestType", Name = nameof(MaintenanceRequestType))]
 
         //[HttpGet]
