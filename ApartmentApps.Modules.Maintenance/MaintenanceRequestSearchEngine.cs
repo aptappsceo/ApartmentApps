@@ -58,7 +58,7 @@ namespace ApartmentApps.Modules.Maintenance
 
     public class MaintenanceRequestSearchEngine : SearchEngine<MaitenanceRequest>
     {
-
+        
         [Filter(nameof(SearchByType),"Search by type", EditorTypes.SelectMultiple, false, DataSource = nameof(MaitenanceRequestType))]
         public IQueryable<MaitenanceRequest> SearchByType(IQueryable<MaitenanceRequest> set, List<int> keys)
         {

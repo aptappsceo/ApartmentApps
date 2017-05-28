@@ -3,8 +3,20 @@
   <div class='col-md-8'>
 <div *ngIf="incidents != null">
   <div *ngFor="let incident of incidents">
-    <app-feeditem [userInfo]="incident.reportedBy" [bodyText]="incident.comments"></app-feeditem>
+    <app-feeditem [userInfo]="incident.submissionBy" [bodyText]="incident.comments" [comments]="mapComments(incident)" ></app-feeditem>
   </div>
+      <pagination
+
+                class="pagination-sm"
+                [(ngModel)]="page"
+                [totalItems]="500"
+                [itemsPerPage]="3"
+                [maxSize]="20"
+                [boundaryLinks]="true"
+                [rotate]="false"
+                (pageChanged)="onChangeTable(config, $event)"
+                (numPages)="numPages = $event">
+    </pagination>
 </div>
     </div>
     <div class='col-md-4'>

@@ -34,9 +34,10 @@ namespace ApartmentApps.Data.DataSheet
 
         public void Preload()
         {
+            if (SearchEngines.Count > 0) return;
             var typeDef = typeof(ISearchEngine<>);
 
-            foreach (var searchAssembly in ApplicationDbContext.SearchAssemblies)
+            foreach (var searchAssembly in ApplicationDbContext.SearchAssemblies.Distinct())
             {
                 foreach (var type in searchAssembly.GetTypes().Where(t => !t.IsAbstract && !t.IsGenericType))
                 {
@@ -51,9 +52,10 @@ namespace ApartmentApps.Data.DataSheet
                         var model = ExtractModel(type);
                         model.SearchEngineType = type;
                         if (string.IsNullOrEmpty(model.Id)) model.Id = entityType.Name; //if no engine id provided, cache by model name (becomes kind of DefaultSearchEngine for given Entity)
+                        if (SearchEngines.ContainsKey(model.Id)) continue;
                         SearchEngines.Add(model.Id, model);
-                        _kernel.Bind(saIface).To(type);
-                        _kernel.Bind(type).ToSelf();
+                        //_kernel.Bind(saIface).To(type);
+                       // _kernel.Bind(type).ToSelf();
                     }
                 }
             }

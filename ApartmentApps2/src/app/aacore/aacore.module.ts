@@ -5,6 +5,7 @@ import { CorporationsFormComponent } from "./corporations/corporations-form/corp
 import { RouterModule } from '@angular/router';
 import { CorporationsPageComponent } from './corporations/corporations-page/corporations-page.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { PaginationModule } from "ng2-bootstrap";
 
 export const corproutes = [
   { path: 'corporations', component: CorporationsPageComponent},
@@ -13,7 +14,7 @@ export const corproutes = [
 
 @NgModule({
   imports: [
-      CommonModule, RouterModule.forChild(corproutes)
+      CommonModule, RouterModule.forChild(corproutes), PaginationModule.forRoot(),
   ],
   declarations: [
     CorporationsListComponent,

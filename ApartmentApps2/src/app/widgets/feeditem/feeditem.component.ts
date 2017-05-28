@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserInfoViewModel, UserBindingModel } from 'app/aaservice-module/aaclient';
+import { CommentItem } from "app/widgets/comment-item/comment-item.component";
 
 @Component({
   selector: 'app-feeditem',
@@ -13,10 +14,15 @@ export class FeedItemComponent implements OnInit {
   @Input() timeAgo: string;
   @Input() images: string[];
   @Input() bodyText: string;
+  @Input() actionLinks: any[];
+  @Input() comments: CommentItem[];
 
   constructor() { }
 
   ngOnInit() {
   }
+
+}
+export class FeedItemActionLink {
 
 }

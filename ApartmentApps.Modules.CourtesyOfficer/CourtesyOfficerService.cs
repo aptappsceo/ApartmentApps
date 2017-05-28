@@ -11,6 +11,7 @@ using ApartmentApps.Api.NewFolder1;
 using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
+using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
 using Frameworx.GMap;
@@ -143,6 +144,7 @@ namespace ApartmentApps.Api
 
         }
     }
+    
     public class CourtesyOfficerService : StandardCrudService<CourtesyOfficerCheckin>
     {
         public CourtesyOfficerService(IRepository<CourtesyOfficerCheckin> repository, IUserContext userContext, IRepository<CourtesyOfficerLocation> locations, IKernel kernel) : base(kernel,repository)

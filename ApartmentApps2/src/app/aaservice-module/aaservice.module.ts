@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccountClient, MaitenanceClient, MessagingClient, API_BASE_URL, CourtesyClient } from './aaclient';
+import { AccountClient, MaitenanceClient, MessagingClient, API_BASE_URL, CourtesyClient, SearchEnginesClient } from './aaclient';
 import { UserContext } from './usercontext';
 import { AuthClient} from './baseclient';
 import { UserService } from './user.service';
@@ -16,17 +16,19 @@ import { UserService } from './user.service';
 })
 export class AAServiceModule {
 
-  static forRoot() : ModuleWithProviders {
+  static forRoot(): ModuleWithProviders {
     return {
       ngModule: AAServiceModule,
       providers: [
+        { provide: API_BASE_URL, useValue:  'http://devservices.localhost.com' },
         AuthClient,
         UserContext,
         AccountClient,
         UserService,
         CourtesyClient,
+        SearchEnginesClient,
         //OfficerClient,
-        { provide: API_BASE_URL, useValue:  'http://devservices.apartmentapps.com' }
+
       ]
     };
   }

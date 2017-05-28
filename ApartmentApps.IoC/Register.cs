@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.DataSheets;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.NewFolder1;
 using ApartmentApps.Api.Services;
@@ -80,7 +81,7 @@ namespace ApartmentApps.IoC
         {
             kernel.Bind<IMapper<TData,TViewModel>>().To<TMapper>().InRequestScope();
         }
-        public static void RegisterMappable<TModel, TViewModel,TService, TDefaultMapper>(this IKernel kernel) where TModel : IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel> where TDefaultMapper : IMapper<TModel, TViewModel>
+        public static void RegisterMappable<TModel, TViewModel,TService, TDefaultMapper>(this IKernel kernel) where TModel : class, IBaseEntity, new() where TViewModel : BaseViewModel, new() where TService : StandardCrudService<TModel> where TDefaultMapper : IMapper<TModel, TViewModel>
         {
 
            kernel.Bind<IMapper<TModel,TViewModel>>().To<TDefaultMapper>().InRequestScope();
@@ -125,26 +126,36 @@ namespace ApartmentApps.IoC
                     {
                         kernel.Bind(typeof(IRepository<>).MakeGenericType(entityType))
                            .To(typeof(PropertyRepository<>).MakeGenericType(entityType));
+
+                      
                     }
                     else if (typeof (PropertyEntity).IsAssignableFrom(entityType))
                     {
                         kernel.Bind(typeof (IRepository<>).MakeGenericType(entityType))
-                            .To(typeof (PropertyRepository<>).MakeGenericType(entityType));
+                            .To(typeof (PropertyRepository<>).MakeGenericType(entityType)).InRequestScope();
+                        kernel.Bind(typeof(IDataSheet<>).MakeGenericType(entityType))
+                            .To(typeof(BasePropertyDataSheet<>).MakeGenericType(entityType)).InRequestScope();
                     }
                     else if (typeof(UserEntity).IsAssignableFrom(entityType))
                     {
                         kernel.Bind(typeof(IRepository<>).MakeGenericType(entityType))
-                            .To(typeof(UserRepository<>).MakeGenericType(entityType));
+                            .To(typeof(UserRepository<>).MakeGenericType(entityType)).InRequestScope();
                     }
                     else
                     {
                         kernel.Bind(typeof(IRepository<>).MakeGenericType(entityType))
-                              .To(typeof(BaseRepository<>).MakeGenericType(entityType));
+                              .To(typeof(BaseRepository<>).MakeGenericType(entityType)).InRequestScope();
+
+                        kernel.Bind(typeof(IDataSheet<>).MakeGenericType(entityType))
+                            .To(typeof(BaseDataSheet<>).MakeGenericType(entityType)).InRequestScope();
 
                     }
                 }
 
             }
+
+            kernel.Bind<IDataSheet<IncidentReport>>().To<IncidentsDataSheet>().InRequestScope();
+            
             kernel.Bind<IRazorEngineService>().ToMethod(x => AlertsModule.CreateRazorService()).InSingletonScope();
             kernel.Bind<IModuleHelper, ModuleHelper>().To<ModuleHelper>().InRequestScope();
             kernel.Bind<IConfigProvider, ConfigProvider<UserAlertsConfig>>().To<UserAlertsConfigProvider>().InRequestScope();
@@ -273,7 +284,7 @@ namespace ApartmentApps.IoC
             kernel.Bind<IDataSheet<MaitenanceRequestType>>().To<MaintenanceRequestTypeDataSheet>().InRequestScope();
             kernel.Bind<IDataSheet<ApplicationUser>>().To<UserDataSheet>().InRequestScope();
 
-            kernel.Bind<ISearchCompiler>().To<SearchCompiler>().InSingletonScope();
+            kernel.Bind<ISearchCompiler>().To<SearchCompiler>().InRequestScope();
 #if JOBS
             kernel.Bind<IBackgroundScheduler>().To<DefaultBackgroundScheduler>().InRequestScope();
 #endif

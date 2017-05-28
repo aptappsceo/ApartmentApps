@@ -4,11 +4,15 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
+using System.Web.Http.Description;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.Data;
+using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.CourtesyOfficer;
 using ApartmentApps.Modules.Inspections;
@@ -26,7 +30,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
         {
             _inspectionsService = inspectionsService;
         }
-        
+
+
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("List")]
         public IEnumerable<InspectionViewModel> Get()
@@ -73,6 +78,13 @@ namespace ApartmentApps.API.Service.Controllers.Api
             BlobStorageService = blobStorageService;
         }
 
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("fetch")]
+        [ResponseType(typeof(QueryResult<IncidentReportViewModel>))]
+        public async Task<IHttpActionResult> Fetch(Query query)
+        {
+            return Ok(IncidentsService.Query<IncidentReportViewModel>(query));
+        }
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("List")]

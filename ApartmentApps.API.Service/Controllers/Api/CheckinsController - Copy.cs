@@ -79,7 +79,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
             {
                 return _linker.GetUri<LookupsController>(c => c.Users(""));
             }
-            return null;
+            return new Uri("http://nothing");
         }
     }
 }

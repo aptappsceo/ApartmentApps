@@ -13,10 +13,12 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.Services;
 using ApartmentApps.Data;
+using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Data.Repository;
 using Korzh.EasyQuery;
 using Korzh.EasyQuery.Db;
 using Ninject;
+using Query = ApartmentApps.Data.DataSheet.Query;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -97,7 +99,7 @@ namespace ApartmentApps.Portal.Controllers
 
         public string DisplayName { get; set; }
     }
-    public abstract class StandardCrudService<TModel> : IService where TModel : IBaseEntity, new()
+    public abstract class StandardCrudService<TModel> : IService where TModel : class, IBaseEntity, new()
     {
         protected readonly IKernel _kernel;
         private IRepository<ServiceQuery> _queries;
@@ -136,6 +138,14 @@ namespace ApartmentApps.Portal.Controllers
 
             return query;
         }
+
+        public QueryResult<TViewModel> Query<TViewModel>(Query query) where TViewModel : class
+        {
+            var dataSheet = this._kernel.Get<IDataSheet<TModel>>();
+            //var mapper = this._kernel.Get<IMapper<TModel, TViewModel>>();
+            return dataSheet.Query(query).Get<TViewModel>();
+        }
+
         [IgnoreQuery]
         public DbQuery CreateQuery(string queryName = null, params ConditionItem[] conditions)
         {
@@ -422,7 +432,7 @@ namespace ApartmentApps.Portal.Controllers
             using (var writer = new StringWriter(stringBuilder))
             {
                 var xmlWriter = new XmlTextWriter(writer);
-                query.SaveToXmlWriter(xmlWriter,Query.RWOptions.All);
+                query.SaveToXmlWriter(xmlWriter,Korzh.EasyQuery.Query.RWOptions.All);
             }
             return stringBuilder.ToString();
         }

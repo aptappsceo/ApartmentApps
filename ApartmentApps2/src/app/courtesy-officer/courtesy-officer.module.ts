@@ -9,15 +9,19 @@ import { CheckinsPageComponent } from './checkins-page/checkins-page.component';
 import { CheckinsListComponent } from './checkins-list/checkins-list.component';
 import { RouterModule } from "@angular/router";
 import { WidgetsModule } from '../widgets/widgets.module';
+import { PaginationModule } from 'ng2-bootstrap';
+import { FormsModule } from "@angular/forms";
 export const routes = [
   { path: 'checkins', component: CheckinsPageComponent },
   { path: 'incidents', component: IncidentReportsPageComponent },
 ];
 @NgModule({
   imports: [
-    CommonModule, RouterModule.forChild(routes), WidgetsModule
+    CommonModule, RouterModule.forChild(routes),FormsModule,
+     PaginationModule.forRoot(), WidgetsModule
   ],
   declarations: [
+
     IncidentReportFormComponent,
     IncidentReportsListComponent,
     IncidentReportsPageComponent,

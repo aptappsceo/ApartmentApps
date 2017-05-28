@@ -621,21 +621,21 @@ namespace ApartmentApps.API.Service.Controllers
 
        // [Route("MaintenanceRequestType", Name = nameof(MaintenanceRequestType))]
 
-        [HttpGet]
-        [ResponseType(typeof(QueryResult<LookupBindingModel>))]
-        public IHttpActionResult Get(string query = null)
-        {
-            //var Kernel.Get<CorporationsService>();
-            //if (string.IsNullOrEmpty(query))
-            //{
-            //    return Ok(_maintenanceRequestTypes.Query().Get<LookupBindingModel>());
-            //}
-            //else
-            //{
-            //    return Ok(_maintenanceRequestTypes.Query()
-            //        .Search<MaintenanceRequestTypesSearchEngine>((eng, set) => eng.CommonSearch(set, query))
-            //        .Get<LookupBindingModel>());
-            //}
-        }
+        //[HttpGet]
+        //[ResponseType(typeof(QueryResult<LookupBindingModel>))]
+        //public IHttpActionResult Get(string query = null)
+        //{
+        //    //var Kernel.Get<CorporationsService>();
+        //    //if (string.IsNullOrEmpty(query))
+        //    //{
+        //    //    return Ok(_maintenanceRequestTypes.Query().Get<LookupBindingModel>());
+        //    //}
+        //    //else
+        //    //{
+        //    //    return Ok(_maintenanceRequestTypes.Query()
+        //    //        .Search<MaintenanceRequestTypesSearchEngine>((eng, set) => eng.CommonSearch(set, query))
+        //    //        .Get<LookupBindingModel>());
+        //    //}
+        //}
     }
 }

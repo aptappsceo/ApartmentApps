@@ -4,10 +4,12 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.DataSheets;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
+using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
 using ApartmentApps.Modules.CourtesyOfficer;
@@ -139,6 +141,29 @@ namespace ApartmentApps.Api
             //viewModel.LatestCheckin = x.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
             viewModel.Id = model.Id.ToString();
 
+        }
+    }
+
+    public class IncidentsDataSheet : BasePropertyDataSheet<IncidentReport>
+    {
+        public IncidentsDataSheet(IUserContext userContext, ApplicationDbContext dbContext, IKernel kernel, ISearchCompiler searchCompiler) : base(userContext, dbContext, kernel, searchCompiler)
+        {
+        }
+
+        protected override IQueryable<IncidentReport> DefaultOrderFilter(IQueryable<IncidentReport> set, Query query = null)
+        {
+
+            return set.OrderBy(p => p.CreatedOn);
+            //return base.DefaultOrderFilter(set, query);
+        }
+    }
+    public class CourtesyOfficerSearchEngine : SearchEngine<IncidentReport>
+    {
+        
+        [Filter(nameof(SearchByType), "Search by type", EditorTypes.SelectMultiple, false, DataSource = nameof(IncidentReportStatus))]
+        public IQueryable<IncidentReport> SearchByType(IQueryable<IncidentReport> set, string key)
+        {
+            return set.Where(item => item.StatusId == key);
         }
     }
     public class IncidentsService : StandardCrudService<IncidentReport>, IIncidentsService

@@ -1,11 +1,11 @@
-import 'rxjs/Rx'; 
+import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject, Optional, OpaqueToken } from '@angular/core';
 import { Http, Headers, Response, RequestOptionsArgs,RequestOptions } from '@angular/http';
 import {Encode} from "../../utils/url-encoder";
 //import {AppConfig} from "../../appconfig";
 import { UserContext } from './usercontext';
-import { IAccountClient, AccountClient } from './aaclient';
+import { IAccountClient, AccountClient, API_BASE_URL } from './aaclient';
 
 @Injectable()
 export class BaseClient {
@@ -18,7 +18,7 @@ export class BaseClient {
 
         return Promise.resolve(options);
     }
-    
+
 }
 
 
@@ -27,7 +27,7 @@ export class BaseClient {
 @Injectable()
 export class AuthClient {
 
-  constructor(public http : Http){
+  constructor(public http : Http) { //, @Inject(API_BASE_URL) private baseUrl?: string){
     console.log('from auth client')
     console.log(http);
   }
@@ -42,7 +42,7 @@ export class AuthClient {
         grant_type : 'password'
       };
       console.log("logging in", payload);
-      return this.http.post('http://devservices.apartmentapps.com/Token', Encode(payload), options);
+      return this.http.post( 'http://devservices.localhost.com/Token', Encode(payload), options);
 
   }
 

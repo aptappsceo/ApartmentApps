@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Portal.Controllers;
 using Korzh.EasyQuery.Db;
 
@@ -23,5 +24,6 @@ namespace ApartmentApps.Api
         void LoadQuery(IServiceQueryVariableProvider provider, DbQuery query, string queryId);
         void SaveQuery(DbQuery query, string queryId);
         void LoadModel(DbModel model, string modelName);
+        QueryResult<TViewModel> Query<TViewModel>(Query query) where TViewModel : class;
     }
 }
