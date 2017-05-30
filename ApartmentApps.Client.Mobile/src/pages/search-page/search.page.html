@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    [(ngModel)]="query"
+    color="primary"
+    [showCancelButton]="false"
+    (ionInput)="onSearchbarInput($event)">
+  </ion-searchbar>
+  <ion-list [virtualScroll]="filteredItems">
+    <ion-item (click)="onSelect(item)" *virtualItem="let item" tappable>
+      <p>{{ item.value }}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

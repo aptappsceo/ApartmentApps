@@ -13,6 +13,11 @@
         </div>
         <div *ngIf='images != null && images.length > 0' class="widget-middle-overflow windget-padding-md clearfix bg-danger text-white">
           <!-- Put scroller here -->
+          <carousel>
+               <slide *ngFor="let image of images">
+                  <img src="{{image}}" alt="" height="300">
+               </slide>
+       </carousel>
           <ng-content></ng-content>
           <ul class="tags text-white pull-right">
               <li *ngFor='let tag of tags'>

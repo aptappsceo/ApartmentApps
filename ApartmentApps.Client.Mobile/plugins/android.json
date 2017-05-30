@@ -1,0 +1,46 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.apartmentappsclientmobile749857"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.apartmentappsclientmobile749857"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.apartmentappsclientmobile749857"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.apartmentappsclientmobile749857"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.apartmentappsclientmobile749857"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.apartmentappsclientmobile749857"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.apartmentapps.android"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.apartmentapps.android"
+        },
+        "cordova-plugin-request-location-accuracy": {
+            "PACKAGE_NAME": "com.apartmentapps.android"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.apartmentapps.android"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.apartmentapps.android"
+        }
+    }
+}

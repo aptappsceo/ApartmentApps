@@ -1,0 +1,130 @@
+<ion-header>
+  <ion-navbar color="main">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Maintenance Request</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="model">
+  <ion-card>
+    <ion-card-content>
+
+      <ion-item no-left-padding item-no-inner-padding-right>
+        <ion-avatar item-left="">
+          <img [attr.src]="model.user.imageThumbnailUrl">
+        </ion-avatar>
+        <span>
+          <strong>{{ model.user.fullName }}</strong> <br/>
+          <small muted>{{ model.buildingName }}</small>
+        </span>
+        <ion-buttons item-right>
+          <button ion-button small icon-only clear>
+            <ion-icon name="call" color="secondary"></ion-icon>
+          </button>
+          <button ion-button small icon-only clear>
+            <ion-icon name="mail" color="secondary"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-item>
+
+
+      <div top-margin>
+        <p marker-muted style="padding-left:8px">
+          {{ model.message }}
+        </p>
+      </div>
+
+      <div top-margin>
+        <ion-badge item-right small color="trinary">{{ model.name }}</ion-badge>
+        <ion-badge item-right small color="trinary">{{ model.permissionToEnter ? 'Entrance allowed' : 'Entrance not allowed' }}</ion-badge>
+        <ion-badge item-right small color="trinary">{{ model.petStatus | petstatus }}</ion-badge>
+      </div>
+
+
+      <ion-grid *ngIf="model && model.photos && model.photos.length > 0">
+        <ion-row *ngFor="let row of model.photos | groups:2">
+          <ion-col *ngFor="let res of row" width-50>
+            <img [attr.src]="res" tappable (click)="viewResource(res)">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div top-margin>
+        <ion-row>
+          <ion-col>
+            Request Status:
+          </ion-col>
+          <ion-col text-right>
+            <ion-badge item-right small [color]="model.status.toLowerCase()">{{ model.status }}</ion-badge>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Last review:
+          </ion-col>
+          <ion-col text-right>
+            22/12/2016 06:00 PM
+          </ion-col>
+        </ion-row>
+      </div>
+
+
+
+
+      <ion-item no-lines hidden="true">
+        <ion-datetime #scheduler
+                       text-center
+                       (ionChange)="scheduled($event)"
+                       (ionCancel)="scheduleCancelled($event)"
+                       displayFormat="YY-MMM-DDThh:mmA"
+                        min="2017"
+                        max="2020"
+                        [(ngModel)]="scheduleDate">
+        </ion-datetime>
+      </ion-item>
+
+    </ion-card-content>
+
+
+
+  </ion-card>
+
+
+    <ion-card *ngFor="let checkin of checkins">
+
+
+
+    </ion-card>
+
+
+  </div>
+
+
+
+
+</ion-content>
+
+<ion-fab right bottom *ngIf="model && (model.canStart || model.canComplete || model.canSchedule || model.canPause)">
+  <button ion-fab color="primary"><ion-icon name="arrow-dropup"></ion-icon></button>
+  <ion-fab-list side="top">
+    <button ion-fab color="primary" (click)="start()" *ngIf="model.canStart">
+      <ion-icon name="play"></ion-icon>
+      <ion-label>Start</ion-label>
+    </button>
+    <button ion-fab color="primary" (click)="pause()" *ngIf="model.canPause">
+      <ion-icon name="pause"></ion-icon>
+      <ion-label>Pause</ion-label>
+    </button>
+    <button ion-fab color="primary" *ngIf="model.canComplete">
+      <ion-icon name="checkmark"></ion-icon>
+      <ion-label>Complete</ion-label>
+    </button>
+    <button ion-fab color="primary" (click)="schedule()" *ngIf="model.canSchedule">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Schedule</ion-label>
+    </button>
+  </ion-fab-list>
+</ion-fab>

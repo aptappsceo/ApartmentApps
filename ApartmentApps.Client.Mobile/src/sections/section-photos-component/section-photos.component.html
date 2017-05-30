@@ -1,0 +1,21 @@
+<section-placeholder-component *ngIf="!isActive" title="Photos" actionTitle="Attach..." (activate)="onActivate()"></section-placeholder-component>
+
+<template [ngIf]="isActive">
+  <ion-item no-lines>
+    <ion-icon name="images" item-left></ion-icon>
+    {{ sectionTitle }}
+    <button ion-button (click)="openResourceSelection()" item-right outline rounded>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-item>
+</template>
+
+<template [ngIf]="isActive">
+  <ion-grid>
+    <ion-row *ngFor="let row of resources | groups:2">
+      <ion-col *ngFor="let res of row" width-50>
+        <img [attr.src]="res" tappable (click)="modifyResource(res)">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</template>

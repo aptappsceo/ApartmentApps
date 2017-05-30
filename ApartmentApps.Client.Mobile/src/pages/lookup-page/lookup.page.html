@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar color="main">
+    <ion-buttons end>
+      <button *ngIf="allowMultiple" ion-button clear (click)="closeClicked()" >
+        Apply
+      </button>
+    </ion-buttons>
+
+    <!--<ion-title></ion-title>-->
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    [(ngModel)]="query"
+    color="primary"
+    placeholder="Search..."
+    [showCancelButton]="false"
+    (ionInput)="onSearchbarInput($event)">
+  </ion-searchbar>
+  <ion-list >
+    <ion-item  *ngFor="let item of filteredItems" (click)="onSelect(item)" tappable>
+
+      <div *ngIf="item">
+        <p>{{ item.title }}</p>
+        <p *ngIf="item.textPrimary">{{ item.textPrimary }}</p>
+        <p *ngIf="item.textSecondary">{{ item.textSecondary }}</p>
+      </div>
+
+      <ion-icon small color="primary" item-right *ngIf="allowMultiple && item.selected" name="checkmark"></ion-icon>
+
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only outline (click)="closeClicked()" >
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Photo</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <img [attr.src]="resource" style="width: 100%; height: 100%;">
+</ion-content>
+

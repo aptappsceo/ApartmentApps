@@ -1,0 +1,6 @@
+<section-placeholder-component *ngIf="!isActive" [title]="placeholderTitle" [icon]="placeholderIcon" [actionTitle]="placeholderActionTitle" (activate)="onActivate()"></section-placeholder-component>
+
+<ion-item no-lines *ngIf="isActive">
+  <ion-label stacked>{{ sectionTitle }}</ion-label>
+  <ion-textarea #textArea (blur)="onBlur()" [(ngModel)]="value" rows="4"></ion-textarea>
+</ion-item>

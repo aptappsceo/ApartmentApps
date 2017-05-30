@@ -1,0 +1,13 @@
+<section-placeholder-component *ngIf="!isActive" [title]="placeholderTitle" [icon]="placeholderIcon" [actionTitle]="placeholderActionTitle" (activate)="onActivate()"></section-placeholder-component>
+
+<ion-item no-lines *ngIf="isActive">
+  <button (click)="openLookupPage()" ion-button outline item-right>
+    {{ buttonTitle }}
+  </button>
+
+  {{ sectionTitle }}
+  <div *ngIf="selectedItem">
+    <p>{{ selectedItem.value }}</p>
+
+  </div>
+</ion-item>

@@ -1,0 +1,70 @@
+
+
+<ion-menu side="right" type="overlay" [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Search</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <search-panel [model]="query.search" (update)="onSearchUpdate()"></search-panel>
+  </ion-content>
+</ion-menu>
+
+<ion-header>
+  <ion-navbar color="main">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons right>
+      <button ion-button icon-only clear (click)="openSearch()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Maintenance Request</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content #content>
+
+  <ion-list *ngIf="model">
+    <div *ngFor="let request of model" >
+      <ion-card *ngIf="request">
+        <ion-card-content>
+
+            <!-- HEADER -->
+            <strong>{{ request.title }}</strong>
+            <ion-badge small style="position:absolute; right: 20px;" [color]="request.statusId.toLowerCase()"><small>{{ request.statusId }}</small></ion-badge>
+            <br/>
+            <small>{{ request.buildingName }} / {{request.unitName}} [{{ request.submissionBy.fullName }}]</small>
+            <!-- HEADER END -->
+
+            <!-- BODY -->
+            <div top-margin>
+              <p marker-muted style="padding-left:8px">
+                {{ request.comments }}
+              </p>
+            </div>
+            <!-- BODY END -->
+            <!-- FOOTER -->
+
+            <button ion-button clear small muted><small>#{{ request.id }}</small></button>
+            <button (click)="openDetails(request.id)" ion-button clear small style="position:absolute; right: 20px;"><small>Details...</small></button>
+            <!-- END FOOTER -->
+
+        </ion-card-content>
+      </ion-card>
+      <div style="height:8px"></div>
+    </div>
+  </ion-list>
+
+
+  <ion-infinite-scroll (ionInfinite)="fetchMoreItems($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
+

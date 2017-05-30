@@ -1,0 +1,23 @@
+<ion-content>
+  <div style="text-align: center; margin-top:48px">
+    <ion-icon name="home" style="font-size:60px"></ion-icon>
+    <h2>Apartment Apps</h2>
+  </div>
+  <form [formGroup]="model">
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input type="text" formControlName="username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-item style="text-align: center;">
+      <button ion-button color="primary" block large (click)="authenticate(model.value)">Log In</button>
+      <small>Forgot your password?</small>
+      <button ion-button block outline>Recover Password</button>
+      <small>New Here?</small>
+      <button ion-button block outline>Create Account</button>
+    </ion-item>
+  </form>
+</ion-content>

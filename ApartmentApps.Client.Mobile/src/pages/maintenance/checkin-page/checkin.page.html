@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ title }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="model" >
+
+    <section-textarea-component
+      placeholderTitle="Comments"
+      placeholderActionTitle="Add..."
+      placeholderIcon="create"
+      sectionTitle="Comments"
+      formControlName="comments"
+    ></section-textarea-component>
+
+
+    <section-photos-component
+      sectionTitle="Photos"
+      formControlName="photos"
+    ></section-photos-component>
+
+
+    <button ion-button block (click)="submit()">
+      {{ actionTitle  }}
+    </button>
+
+  </form>
+
+</ion-content>

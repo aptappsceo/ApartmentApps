@@ -1,0 +1,7 @@
+<ion-item no-lines>
+  <ion-label>
+    <p>{{ sectionTitle }}</p>
+    <small style="overflow: visible; white-space: normal;" *ngIf="sectionDescription">{{ sectionDescription}}</small>
+  </ion-label>
+  <ion-toggle [(ngModel)]="value"></ion-toggle>
+</ion-item>

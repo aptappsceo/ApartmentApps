@@ -1,0 +1,20 @@
+<!--
+<ion-item style="text-align: center;" no-lines>
+  <div style="width: 100%">
+    <div>
+      <span>{{ title }}</span>
+    </div>
+    <div style="width: 100%">
+      <button (click)="touch()" ion-fab mini center color="secondary"><ion-icon [name]="icon"></ion-icon></button>
+    </div>
+    <div>
+      <small>{{ subtitle }}</small>
+    </div>
+  </div>
+</ion-item>
+-->
+
+<ion-item no-lines>
+  <ion-label> {{ title }} </ion-label>
+  <button ion-button item-right outline (click)="touch()">{{ actionTitle }}</button>
+</ion-item>

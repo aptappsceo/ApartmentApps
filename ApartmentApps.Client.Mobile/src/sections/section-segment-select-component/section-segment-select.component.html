@@ -1,0 +1,5 @@
+<ion-segment color="primary" [(ngModel)]="value">
+  <ion-segment-button *ngFor="let option of options" [value]="option">
+    {{ option.text }}
+  </ion-segment-button>
+</ion-segment>

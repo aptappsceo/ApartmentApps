@@ -3,7 +3,7 @@
   <div class='col-md-8'>
 <div *ngIf="incidents != null">
   <div *ngFor="let incident of incidents">
-    <app-feeditem [userInfo]="incident.submissionBy" [bodyText]="incident.comments" [comments]="mapComments(incident)" ></app-feeditem>
+    <app-feeditem [userInfo]="incident.submissionBy" [bodyText]="incident.comments" [comments]="mapComments(incident)" [images]="this.getImages(incident)" ></app-feeditem>
   </div>
       <pagination
 

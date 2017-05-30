@@ -17,7 +17,7 @@ export class IncidentReportsPageComponent implements OnInit {
    private officerClient: CourtesyClient ) {
      this.query.navigation = new Navigation();
      this.query.navigation.skip = 0;
-     this.query.navigation.take = 3;
+     this.query.navigation.take = 20;
 
      this.query.search = new Search();
      this.query.search.engineId = this.engineId;
@@ -38,18 +38,26 @@ onChangeTable(config, $event) {
 
          this.officerClient.fetch(this.query).subscribe( x => {
            this.incidents = x.result;
-           console.log("fetch", x.result);
+           console.log('fetch', x.result);
          });
   }
   ngOnInit() {
     this.reloadData();
   }
-
+  getImages(incident: IncidentReportViewModel): string[] {
+    let result = [];
+    for (let i = 0 ; i < incident.checkins.length; i++) {
+      for (let x = 0; x < incident.checkins[i].photos.length; x++ ) {
+        result.push(incident.checkins[i].photos[i].url);
+      }
+    }
+    return result;
+  }
   mapComments(incident: IncidentReportViewModel): CommentItem[] {
     let cmt = new CommentItem();
 
     cmt.comment = incident.latestCheckin.comments;
-     cmt.time = incident.latestCheckin.date.toDateString();
+    cmt.time = incident.latestCheckin.date.toDateString();
     cmt.userInfo = incident.latestCheckin.officer;
     return [ cmt ];
   }

@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>+ Maintenance Request</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="model" >
+
+    <section-select-component
+      placeholderTitle="Problem type"
+      placeholderActionTitle="Select..."
+      placeholderIcon="list"
+      sectionTitle="Problem type"
+      buttonTitle="Change"
+      [localOptions]="requestTypes"
+      formControlName="type"
+    ></section-select-component>
+
+    <section-select-component
+      placeholderTitle="Unit"
+      placeholderActionTitle="Select..."
+      placeholderIcon="home"
+      sectionTitle="Unit"
+      buttonTitle="Change"
+      [localOptions]="units"
+      formControlName="unit"
+    ></section-select-component>
+
+    <section-textarea-component
+      placeholderTitle="Comments"
+      placeholderActionTitle="Add..."
+      placeholderIcon="create"
+      sectionTitle="Comments"
+      formControlName="comments"
+    ></section-textarea-component>
+
+    <section-photos-component
+      sectionTitle="Photos"
+      formControlName="photos"
+    ></section-photos-component>
+
+    <section-switch-component
+      sectionTitle="Permission to enter"
+      sectionDescription="Do you give permission for maintenance staff to enter when you are not home."
+      formControlName="permissionToEnter"
+    ></section-switch-component>
+
+    <section-switch-component
+      sectionTitle="Is Emergency?"
+      formControlName="isEmergency"
+    ></section-switch-component>
+
+    <section-segment-select-component
+      sectionTitle="Pet Status"
+      [options]="petOptions"
+      formControlName="petStatus"
+    ></section-segment-select-component>
+
+    <button ion-button block (click)="submit()">
+      Submit
+    </button>
+
+ <!--
+
+    <ion-stupid-divider-component></ion-stupid-divider-component>
+
+    <ion-section-textarea-component
+      activatorTitle="Шаг №2: Добавить описание"
+      activatorIcon="create"
+      sectionTitle="Описание проблемы"
+      formControlName="comments"
+    ></ion-section-textarea-component>
+
+    <ion-stupid-divider-component></ion-stupid-divider-component>
+
+
+    <ion-section-resources-component
+      activatorTitle="Шаг №3: Прикрепить фото"
+      activatorIcon="images"
+      sectionTitle="Фотографии"
+      activatorSubtitle="Это не обязательно"
+      formControlName="resources"
+    >
+    </ion-section-resources-component>
+
+    <ion-stupid-divider-component></ion-stupid-divider-component>
+
+    <ion-item no-lines>
+      <button (click)="submit(model.value)" ion-button large block>Отослать заявку</button>
+    </ion-item>
+  -->
+
+  </form>
+
+</ion-content>

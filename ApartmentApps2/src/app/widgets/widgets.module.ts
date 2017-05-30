@@ -4,10 +4,11 @@ import { FeedItemComponent } from './feeditem/feeditem.component';
 import { TitleComponent } from './title/title.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentItemComponent } from './comment-item/comment-item.component';
+import { CarouselModule } from 'ng2-bootstrap';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule, CarouselModule.forRoot()
   ],
   declarations: [FeedItemComponent, TitleComponent, CommentsComponent, CommentItemComponent],
   exports: [FeedItemComponent, TitleComponent]

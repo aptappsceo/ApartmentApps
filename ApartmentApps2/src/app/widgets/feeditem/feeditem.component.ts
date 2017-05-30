@@ -9,7 +9,7 @@ import { CommentItem } from "app/widgets/comment-item/comment-item.component";
 })
 export class FeedItemComponent implements OnInit {
   @Input() userInfo: UserBindingModel;
-  @Input() imageUrl: string;
+  @Input() images: string[];
   @Input() tags: any;
   @Input() timeAgo: string;
   @Input() images: string[];
