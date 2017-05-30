@@ -1,6 +1,12 @@
 <div class="widget">
 
   <h6 class='fw-semi-bold'>{{this.model.title}}</h6>
+  <div [ngSwitch]='model.editorType'>
+    <div *ngSwitchCase="'SelectMultiple'">
+      <input type="text" [(ngModel)]="value" (onChange)='valueChanged()'></div>
+    </div>
+
+  </div>
   {{model.description}}
   {{model.editorType}}
   {{model.dataSource}}

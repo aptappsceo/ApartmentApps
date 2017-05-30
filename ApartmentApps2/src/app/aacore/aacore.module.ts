@@ -7,6 +7,7 @@ import { CorporationsPageComponent } from './corporations/corporations-page/corp
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { PaginationModule } from "ng2-bootstrap";
 import { SearchPanelComponent } from 'app/aacore/search-panel/search-panel.component';
+import { TagInputModule } from 'ngx-tag-input';
 
 export const corproutes = [
   { path: 'corporations', component: CorporationsPageComponent},
@@ -15,7 +16,7 @@ export const corproutes = [
 
 @NgModule({
   imports: [
-      CommonModule, RouterModule.forChild(corproutes), PaginationModule.forRoot(),
+      CommonModule, RouterModule.forChild(corproutes), PaginationModule.forRoot(), TagInputModule
   ],
   declarations: [
     CorporationsListComponent,
