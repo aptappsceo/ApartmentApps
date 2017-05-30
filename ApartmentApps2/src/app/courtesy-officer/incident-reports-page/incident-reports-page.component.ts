@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CourtesyClient, IncidentIndexBindingModel, Query, SearchEnginesClient, IncidentReportViewModel, Navigation, Search, FilterData } from 'app/aaservice-module/aaclient';
+import { CourtesyClient, IncidentIndexBindingModel, Query, SearchEnginesClient, IncidentReportViewModel, Navigation, Search, FilterData, ClientSearchModel } from 'app/aaservice-module/aaclient';
 import { CommentItem } from "app/widgets/comment-item/comment-item.component";
 
 
@@ -9,6 +9,7 @@ import { CommentItem } from "app/widgets/comment-item/comment-item.component";
   styleUrls: ['./incident-reports-page.component.css']
 })
 export class IncidentReportsPageComponent implements OnInit {
+  searchModel: ClientSearchModel;
   incidents: IncidentReportViewModel[];
   query: Query = new Query() ;
   engineId: string = 'IncidentReport';
@@ -34,7 +35,11 @@ onChangeTable(config, $event) {
 }
   reloadData() {
      this.searchEngine.getSearchModel(this.engineId)
-          .subscribe(x => { console.log('Search Engine', x); });
+          .subscribe(x => {
+              this.searchModel = x.model;
+
+            console.log('Search Engine', x);
+          });
 
          this.officerClient.fetch(this.query).subscribe( x => {
            this.incidents = x.result;

@@ -11,6 +11,7 @@ import { RouterModule } from "@angular/router";
 import { WidgetsModule } from '../widgets/widgets.module';
 import { PaginationModule } from 'ng2-bootstrap';
 import { FormsModule } from "@angular/forms";
+import { AACoreModule } from "app/aacore/aacore.module";
 export const routes = [
   { path: 'checkins', component: CheckinsPageComponent },
   { path: 'incidents', component: IncidentReportsPageComponent },
@@ -18,7 +19,7 @@ export const routes = [
 @NgModule({
   imports: [
     CommonModule, RouterModule.forChild(routes),FormsModule,
-     PaginationModule.forRoot(), WidgetsModule
+     PaginationModule.forRoot(), WidgetsModule, AACoreModule
   ],
   declarations: [
 

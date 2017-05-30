@@ -19,10 +19,10 @@
     </pagination>
 </div>
     </div>
-    <div class='col-md-4'>
-        <div class='widget'>
+    <div class='col-md-4' *ngIf="this.searchModel != null">
+      <app-search-panel  *ngFor="let filter of this.searchModel.filters" [model]="filter">
 
-          </div>
+      </app-search-panel>
     </div>
 </div>
 
