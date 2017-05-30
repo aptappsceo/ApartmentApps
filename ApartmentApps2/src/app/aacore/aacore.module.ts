@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { CorporationsPageComponent } from './corporations/corporations-page/corporations-page.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { PaginationModule } from "ng2-bootstrap";
+import { SearchPanelComponent } from "app/aacore/search-panel/search-panel.component";
 
 export const corproutes = [
   { path: 'corporations', component: CorporationsPageComponent},
@@ -20,7 +21,8 @@ export const corproutes = [
     CorporationsListComponent,
     CorporationsFormComponent,
     CorporationsPageComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    SearchPanelComponent
     ],
   providers: [
 
