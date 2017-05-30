@@ -20,7 +20,7 @@
 </div>
     </div>
     <div class='col-md-4' *ngIf="this.searchModel != null">
-      <app-search-panel  *ngFor="let filter of this.searchModel.filters" [model]="filter">
+      <app-search-panel  *ngFor="let filter of this.searchModel.filters" [model]="filter" (updated)="filtersUpdate()">
 
       </app-search-panel>
     </div>

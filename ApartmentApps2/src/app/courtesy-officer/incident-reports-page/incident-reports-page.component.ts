@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CourtesyClient, IncidentIndexBindingModel, Query, SearchEnginesClient, IncidentReportViewModel, Navigation, Search, FilterData, ClientSearchModel } from 'app/aaservice-module/aaclient';
 import { CommentItem } from "app/widgets/comment-item/comment-item.component";
+import { SearchPanelComponent } from '../../aacore/search-panel/search-panel.component';
 
 
 @Component({
@@ -9,6 +10,7 @@ import { CommentItem } from "app/widgets/comment-item/comment-item.component";
   styleUrls: ['./incident-reports-page.component.css']
 })
 export class IncidentReportsPageComponent implements OnInit {
+  @ViewChildren(SearchPanelComponent) searchComponents: QueryList<SearchPanelComponent>;
   searchModel: ClientSearchModel;
   incidents: IncidentReportViewModel[];
   query: Query = new Query() ;
@@ -18,7 +20,7 @@ export class IncidentReportsPageComponent implements OnInit {
    private officerClient: CourtesyClient ) {
      this.query.navigation = new Navigation();
      this.query.navigation.skip = 0;
-     this.query.navigation.take = 20;
+     this.query.navigation.take = 5;
 
      this.query.search = new Search();
      this.query.search.engineId = this.engineId;
@@ -33,21 +35,27 @@ onChangeTable(config, $event) {
   console.log(config, $event, this.query.navigation);
   this.reloadData();
 }
+filtersUpdate() {
+  this.reloadData();
+}
   reloadData() {
+    let items = this.searchComponents.map(x=>x.filterData);
+    console.log("ITEMS", items);
+    this.query.search.filters = items;
+    this.officerClient.fetch(this.query).subscribe( x => {
+      this.incidents = x.result;
+      console.log('fetch', x.result);
+    });
+  }
+  ngOnInit() {
      this.searchEngine.getSearchModel(this.engineId)
           .subscribe(x => {
               this.searchModel = x.model;
-
-            console.log('Search Engine', x);
+               this.reloadData();
+                console.log('Search Engine', x);
           });
-
-         this.officerClient.fetch(this.query).subscribe( x => {
-           this.incidents = x.result;
-           console.log('fetch', x.result);
-         });
-  }
-  ngOnInit() {
-    this.reloadData();
+          
+   
   }
   getImages(incident: IncidentReportViewModel): string[] {
     let result = [];

@@ -3,7 +3,8 @@
   <h6 class='fw-semi-bold'>{{this.model.title}}</h6>
   <div [ngSwitch]='model.editorType'>
     <div *ngSwitchCase="'SelectMultiple'">
-      <input type="text" [(ngModel)]="value" (onChange)='valueChanged()'></div>
+      <input type="text" [(ngModel)]="value" (ngModelChange)='valueChanged()' />
+  
     </div>
 
   </div>
