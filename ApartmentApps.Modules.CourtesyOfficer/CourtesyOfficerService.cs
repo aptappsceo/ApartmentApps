@@ -144,7 +144,43 @@ namespace ApartmentApps.Api
 
         }
     }
-    
+
+    public class IncidentStatusLookupMapper : BaseMapper<IncidentReportStatus, LookupBindingModel>
+    {
+        public IncidentStatusLookupMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
+        {
+        }
+
+        public override void ToModel(LookupBindingModel viewModel, IncidentReportStatus model)
+        {
+            
+        }
+
+        public override void ToViewModel(IncidentReportStatus model, LookupBindingModel viewModel)
+        {
+            viewModel.Title = model.Name;
+            viewModel.Id = model.Name;
+           
+        }
+    }
+    public class IncidentStatusesSearchEngine : SearchEngine<IncidentReportStatus>
+    {
+
+        [Filter(nameof(CommonSearch), "Search")]
+        public IQueryable<IncidentReportStatus> CommonSearch(IQueryable<IncidentReportStatus> set, string key)
+        {
+            var tokenize = Tokenize(key);
+            if (tokenize.Length > 0)
+            {
+                return set.Where(item => tokenize.Any(token => item.Name.Contains(token)));
+            }
+            else
+            {
+                return set;
+            }
+        }
+
+    }
     public class CourtesyOfficerService : StandardCrudService<CourtesyOfficerCheckin>
     {
         public CourtesyOfficerService(IRepository<CourtesyOfficerCheckin> repository, IUserContext userContext, IRepository<CourtesyOfficerLocation> locations, IKernel kernel) : base(kernel,repository)

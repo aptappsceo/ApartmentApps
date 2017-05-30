@@ -86,6 +86,27 @@ namespace ApartmentApps.API.Service.Controllers.Api
             return Ok(IncidentsService.Query<IncidentReportViewModel>(query));
         }
 
+
+
+        [Route("IncidentStatuses", Name = nameof(IncidentStatuses))]
+        [HttpGet]
+        [ResponseType(typeof(QueryResult<LookupBindingModel>))]
+        public IHttpActionResult IncidentStatuses(string query = null)
+        {
+            var incidentTypes = Kernel.Get<IDataSheet<IncidentReportStatus>>();
+
+            if (string.IsNullOrEmpty(query))
+            {
+                return Ok(incidentTypes.Query().Get<LookupBindingModel>());
+            }
+            else
+            {
+                return Ok(incidentTypes.Query()
+                    .Search<IncidentStatusesSearchEngine>((eng, set) => eng.CommonSearch(set, query))
+                    .Get<LookupBindingModel>());
+            }
+        }
+
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("List")]
         public IEnumerable<IncidentIndexBindingModel> ListRequests()
