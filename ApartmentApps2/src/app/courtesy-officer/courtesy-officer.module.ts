@@ -9,7 +9,7 @@ import { CheckinsPageComponent } from './checkins-page/checkins-page.component';
 import { CheckinsListComponent } from './checkins-list/checkins-list.component';
 import { RouterModule } from "@angular/router";
 import { WidgetsModule } from '../widgets/widgets.module';
-import { PaginationModule } from 'ng2-bootstrap';
+import { PaginationModule } from 'ngx-bootstrap';
 import { FormsModule } from "@angular/forms";
 import { AACoreModule } from "app/aacore/aacore.module";
 export const routes = [

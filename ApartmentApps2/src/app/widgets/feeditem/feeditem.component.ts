@@ -12,7 +12,6 @@ export class FeedItemComponent implements OnInit {
   @Input() images: string[];
   @Input() tags: any;
   @Input() timeAgo: string;
-  @Input() images: string[];
   @Input() bodyText: string;
   @Input() actionLinks: any[];
   @Input() comments: CommentItem[];

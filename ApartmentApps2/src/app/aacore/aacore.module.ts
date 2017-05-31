@@ -5,9 +5,9 @@ import { CorporationsFormComponent } from "./corporations/corporations-form/corp
 import { RouterModule } from '@angular/router';
 import { CorporationsPageComponent } from './corporations/corporations-page/corporations-page.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
-import { PaginationModule } from "ng2-bootstrap";
+import { PaginationModule } from "ngx-bootstrap";
 import { SearchPanelComponent } from 'app/aacore/search-panel/search-panel.component';
-//import { TagInputModule } from 'ngx-tag-input';
+import { TagInputModule } from 'ngx-tag-input';
 import { FormsModule } from '@angular/forms';
 
 export const corproutes = [
@@ -17,7 +17,7 @@ export const corproutes = [
 
 @NgModule({
   imports: [
-      CommonModule, FormsModule, RouterModule.forChild(corproutes), PaginationModule.forRoot()//, TagInputModule
+      CommonModule, FormsModule, RouterModule.forChild(corproutes), PaginationModule.forRoot(), TagInputModule
   ],
   declarations: [
     CorporationsListComponent,
@@ -26,7 +26,7 @@ export const corproutes = [
     UserProfileComponent,
     SearchPanelComponent
     ],
-    exports [
+    exports: [
       SearchPanelComponent
     ],
   providers: [
