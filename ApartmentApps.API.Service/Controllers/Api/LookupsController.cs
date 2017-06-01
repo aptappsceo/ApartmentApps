@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ApartmentApps.Api;
+using ApartmentApps.Api.Services;
 using ApartmentApps.API.Service.Models.VMS;
 using ApartmentApps.Data;
 using ApartmentApps.Data.DataSheet;
@@ -36,6 +37,15 @@ namespace ApartmentApps.API.Service.Controllers
         private readonly IDataSheet<MaitenanceRequestType> _maintenanceRequestTypes;
         private readonly IDataSheet<Unit> _units;
         private readonly IDataSheet<ApplicationUser> _users;
+
+        [Route("GetLookups", Name = nameof(GetLookups))]
+        [HttpGet]
+        [ResponseType(typeof(QueryResult<LookupBindingModel>))]
+        public IHttpActionResult GetLookups(string type, string search)
+        {
+            var lookupService = Kernel.Get<LookupService>();
+            return Ok(lookupService.GetLookups(Type.GetType(type), search));
+        }
 
         [Route("MaintenanceRequestType", Name = nameof(MaintenanceRequestType))]
         [HttpGet]

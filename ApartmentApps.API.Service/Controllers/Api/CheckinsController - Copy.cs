@@ -47,6 +47,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                     {
                         Id = _.Id,
                         DataSource = ConvertDataSource(_.DataSource).ToString(),
+                        DataSourceType = _.DataSourceType.AssemblyQualifiedName,
                         DefaultActive = _.DefaultActive,
                         EditorType = _.EditorType,
                         Description = _.Description,
@@ -78,6 +79,10 @@ namespace ApartmentApps.API.Service.Controllers.Api
             else if (argDataSource == nameof(ApplicationUser))
             {
                 return _linker.GetUri<LookupsController>(c => c.Users(""));
+            }
+            else if (argDataSource == nameof(IncidentReportStatus))
+            {
+                return _linker.GetUri<CourtesyController>(c => c.IncidentStatuses(""));
             }
             return new Uri("http://nothing");
         }

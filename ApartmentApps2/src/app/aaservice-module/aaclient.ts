@@ -9,8 +9,8 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject, Optional, OpaqueToken } from '@angular/core';
 import { Http, Headers, Response, RequestOptionsArgs } from '@angular/http';
-import { UserContext } from "app/aaservice-module/usercontext";
 import { BaseClient } from "app/aaservice-module/baseclient";
+import { UserContext } from "app/aaservice-module/usercontext";
 
 export const API_BASE_URL = new OpaqueToken('API_BASE_URL');
 
@@ -1288,6 +1288,10 @@ export interface ICourtesyClient {
     /**
      * @return OK
      */
+    incidentStatuses(query?: string): Observable<QueryResultOfLookupBindingModel>;
+    /**
+     * @return OK
+     */
     listRequests(): Observable<IncidentIndexBindingModel[]>;
     /**
      * @return OK
@@ -1369,6 +1373,57 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
             let result200: QueryResultOfIncidentReportViewModel | null = null;
             let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
             result200 = resultData200 ? QueryResultOfIncidentReportViewModel.fromJS(resultData200) : new QueryResultOfIncidentReportViewModel();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    incidentStatuses(query?: string): Observable<QueryResultOfLookupBindingModel> {
+        let url_ = this.baseUrl + "/api/Courtesy/IncidentStatuses?";
+        if (query !== undefined)
+            url_ += "query=" + encodeURIComponent("" + query) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processIncidentStatuses(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processIncidentStatuses(response));
+                } catch (e) {
+                    return <Observable<QueryResultOfLookupBindingModel>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<QueryResultOfLookupBindingModel>><any>Observable.throw(response);
+        });
+    }
+
+    protected processIncidentStatuses(response: Response): QueryResultOfLookupBindingModel {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: QueryResultOfLookupBindingModel | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? QueryResultOfLookupBindingModel.fromJS(resultData200) : new QueryResultOfLookupBindingModel();
             return result200;
         } else if (status !== 200 && status !== 204) {
             this.throwException("An unexpected server error occurred.", status, responseText);
@@ -1994,6 +2049,10 @@ export interface ILookupsClient {
     /**
      * @return OK
      */
+    getLookups(type: string, search: string): Observable<QueryResultOfLookupBindingModel>;
+    /**
+     * @return OK
+     */
     maintenanceRequestType(query?: string): Observable<QueryResultOfLookupBindingModel>;
     /**
      * @return OK
@@ -2023,6 +2082,63 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
         super(configuration);
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+    }
+
+    /**
+     * @return OK
+     */
+    getLookups(type: string, search: string): Observable<QueryResultOfLookupBindingModel> {
+        let url_ = this.baseUrl + "/api/Lookups/GetLookups?";
+        if (type === undefined || type === null)
+            throw new Error("The parameter 'type' must be defined and cannot be null.");
+        else
+            url_ += "type=" + encodeURIComponent("" + type) + "&";
+        if (search === undefined || search === null)
+            throw new Error("The parameter 'search' must be defined and cannot be null.");
+        else
+            url_ += "search=" + encodeURIComponent("" + search) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processGetLookups(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processGetLookups(response));
+                } catch (e) {
+                    return <Observable<QueryResultOfLookupBindingModel>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<QueryResultOfLookupBindingModel>><any>Observable.throw(response);
+        });
+    }
+
+    protected processGetLookups(response: Response): QueryResultOfLookupBindingModel {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: QueryResultOfLookupBindingModel | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? QueryResultOfLookupBindingModel.fromJS(resultData200) : new QueryResultOfLookupBindingModel();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
     }
 
     /**
@@ -5851,6 +5967,90 @@ export class ImageReference {
     }
 }
 
+export class QueryResultOfLookupBindingModel {
+    total: number | null | undefined;
+    result: LookupBindingModel[] | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.total = data["Total"] !== undefined ? data["Total"] : undefined;
+            if (data["Result"] && data["Result"].constructor === Array) {
+                this.result = [];
+                for (let item of data["Result"])
+                    this.result.push(LookupBindingModel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): QueryResultOfLookupBindingModel {
+        return new QueryResultOfLookupBindingModel(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["Total"] = this.total !== undefined ? this.total : undefined;
+        if (this.result && this.result.constructor === Array) {
+            data["Result"] = [];
+            for (let item of this.result)
+                data["Result"].push(item.toJS());
+        }
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new QueryResultOfLookupBindingModel(JSON.parse(json));
+    }
+}
+
+export class LookupBindingModel {
+    id: string | null | undefined;
+    title: string | null | undefined;
+    textPrimary: string | null | undefined;
+    textSecondary: string | null | undefined;
+    imageUrl: string | null | undefined;
+    selected: boolean | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.id = data["Id"] !== undefined ? data["Id"] : undefined;
+            this.title = data["Title"] !== undefined ? data["Title"] : undefined;
+            this.textPrimary = data["TextPrimary"] !== undefined ? data["TextPrimary"] : undefined;
+            this.textSecondary = data["TextSecondary"] !== undefined ? data["TextSecondary"] : undefined;
+            this.imageUrl = data["ImageUrl"] !== undefined ? data["ImageUrl"] : undefined;
+            this.selected = data["Selected"] !== undefined ? data["Selected"] : undefined;
+        }
+    }
+
+    static fromJS(data: any): LookupBindingModel {
+        return new LookupBindingModel(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["Id"] = this.id !== undefined ? this.id : undefined;
+        data["Title"] = this.title !== undefined ? this.title : undefined;
+        data["TextPrimary"] = this.textPrimary !== undefined ? this.textPrimary : undefined;
+        data["TextSecondary"] = this.textSecondary !== undefined ? this.textSecondary : undefined;
+        data["ImageUrl"] = this.imageUrl !== undefined ? this.imageUrl : undefined;
+        data["Selected"] = this.selected !== undefined ? this.selected : undefined;
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new LookupBindingModel(JSON.parse(json));
+    }
+}
+
 export class IncidentIndexBindingModel {
     title: string | null | undefined;
     comments: string | null | undefined;
@@ -6233,90 +6433,6 @@ export class InspectionAnswerViewModel {
     clone() {
         const json = this.toJSON();
         return new InspectionAnswerViewModel(JSON.parse(json));
-    }
-}
-
-export class QueryResultOfLookupBindingModel {
-    total: number | null | undefined;
-    result: LookupBindingModel[] | null | undefined;
-
-    constructor(data?: any) {
-        if (data !== undefined) {
-            this.total = data["Total"] !== undefined ? data["Total"] : undefined;
-            if (data["Result"] && data["Result"].constructor === Array) {
-                this.result = [];
-                for (let item of data["Result"])
-                    this.result.push(LookupBindingModel.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): QueryResultOfLookupBindingModel {
-        return new QueryResultOfLookupBindingModel(data);
-    }
-
-    toJS(data?: any) {
-        data = data === undefined ? {} : data;
-        data["Total"] = this.total !== undefined ? this.total : undefined;
-        if (this.result && this.result.constructor === Array) {
-            data["Result"] = [];
-            for (let item of this.result)
-                data["Result"].push(item.toJS());
-        }
-        return data;
-    }
-
-    toJSON() {
-        return JSON.stringify(this.toJS());
-    }
-
-    clone() {
-        const json = this.toJSON();
-        return new QueryResultOfLookupBindingModel(JSON.parse(json));
-    }
-}
-
-export class LookupBindingModel {
-    id: string | null | undefined;
-    title: string | null | undefined;
-    textPrimary: string | null | undefined;
-    textSecondary: string | null | undefined;
-    imageUrl: string | null | undefined;
-    selected: boolean | null | undefined;
-
-    constructor(data?: any) {
-        if (data !== undefined) {
-            this.id = data["Id"] !== undefined ? data["Id"] : undefined;
-            this.title = data["Title"] !== undefined ? data["Title"] : undefined;
-            this.textPrimary = data["TextPrimary"] !== undefined ? data["TextPrimary"] : undefined;
-            this.textSecondary = data["TextSecondary"] !== undefined ? data["TextSecondary"] : undefined;
-            this.imageUrl = data["ImageUrl"] !== undefined ? data["ImageUrl"] : undefined;
-            this.selected = data["Selected"] !== undefined ? data["Selected"] : undefined;
-        }
-    }
-
-    static fromJS(data: any): LookupBindingModel {
-        return new LookupBindingModel(data);
-    }
-
-    toJS(data?: any) {
-        data = data === undefined ? {} : data;
-        data["Id"] = this.id !== undefined ? this.id : undefined;
-        data["Title"] = this.title !== undefined ? this.title : undefined;
-        data["TextPrimary"] = this.textPrimary !== undefined ? this.textPrimary : undefined;
-        data["TextSecondary"] = this.textSecondary !== undefined ? this.textSecondary : undefined;
-        data["ImageUrl"] = this.imageUrl !== undefined ? this.imageUrl : undefined;
-        data["Selected"] = this.selected !== undefined ? this.selected : undefined;
-        return data;
-    }
-
-    toJSON() {
-        return JSON.stringify(this.toJS());
-    }
-
-    clone() {
-        const json = this.toJSON();
-        return new LookupBindingModel(JSON.parse(json));
     }
 }
 
@@ -8499,6 +8615,7 @@ export class ClientSearchFilterModel {
     dataSource: string | null | undefined;
     editorType: string | null | undefined;
     defaultActive: boolean | null | undefined;
+    dataSourceType: string | null | undefined;
 
     constructor(data?: any) {
         if (data !== undefined) {
@@ -8508,6 +8625,7 @@ export class ClientSearchFilterModel {
             this.dataSource = data["DataSource"] !== undefined ? data["DataSource"] : undefined;
             this.editorType = data["EditorType"] !== undefined ? data["EditorType"] : undefined;
             this.defaultActive = data["DefaultActive"] !== undefined ? data["DefaultActive"] : undefined;
+            this.dataSourceType = data["DataSourceType"] !== undefined ? data["DataSourceType"] : undefined;
         }
     }
 
@@ -8523,6 +8641,7 @@ export class ClientSearchFilterModel {
         data["DataSource"] = this.dataSource !== undefined ? this.dataSource : undefined;
         data["EditorType"] = this.editorType !== undefined ? this.editorType : undefined;
         data["DefaultActive"] = this.defaultActive !== undefined ? this.defaultActive : undefined;
+        data["DataSourceType"] = this.dataSourceType !== undefined ? this.dataSourceType : undefined;
         return data;
     }
 

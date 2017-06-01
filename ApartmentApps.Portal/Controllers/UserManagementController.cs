@@ -169,6 +169,19 @@ namespace ApartmentApps.Portal.Controllers
                 }
             });
 
+            alertsModule.SendEmail(new ActionEmailData()
+            {
+                FromEmail = "auto@apartmentapps.com",
+                ToEmail = "micahosborne@gmail.com",
+                Message = $"Username: {user.UserName} {Environment.NewLine}Password: {newPassword}{Environment.NewLine}It is highly recommended that you change your password once you log-in!",
+                User = userMapper.ToViewModel(user),
+                Subject = "Here is your account information.",
+                Links = new Dictionary<string, string>()
+                {
+                    { "Login Now", "http://portal.apartmentapps.com/Account/Login" }
+                }
+            });
+
             Success("Success! This user has been sent an email with a new password!");
             return RedirectToAction("Index");
         }

@@ -155,6 +155,7 @@ namespace ApartmentApps.IoC
             }
 
             kernel.Bind<IDataSheet<IncidentReport>>().To<IncidentsDataSheet>().InRequestScope();
+            kernel.Bind<IDataSheet<IncidentReportStatus>>().To<BaseDataSheet<IncidentReportStatus>>().InRequestScope();
             
             kernel.Bind<IRazorEngineService>().ToMethod(x => AlertsModule.CreateRazorService()).InSingletonScope();
             kernel.Bind<IModuleHelper, ModuleHelper>().To<ModuleHelper>().InRequestScope();
@@ -268,6 +269,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterMapper<MaitenanceRequestType, LookupBindingModel, MaintenanceRequestTypeLookupMapper>();
             kernel.RegisterMapper<MaintenanceRequestStatus, LookupBindingModel, MaintenanceRequestStatusLookupMapper>();
             kernel.RegisterMapper<Unit, LookupBindingModel, UnitLookupMapper>();
+            kernel.RegisterMapper<IncidentReportStatus, LookupBindingModel, IncidentStatusLookupMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
 
             //kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();
