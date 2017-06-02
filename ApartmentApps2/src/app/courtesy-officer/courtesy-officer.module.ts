@@ -9,9 +9,10 @@ import { CheckinsPageComponent } from './checkins-page/checkins-page.component';
 import { CheckinsListComponent } from './checkins-list/checkins-list.component';
 import { RouterModule } from "@angular/router";
 import { WidgetsModule } from '../widgets/widgets.module';
-import { PaginationModule } from 'ngx-bootstrap';
+import { PaginationModule, ModalModule } from 'ngx-bootstrap';
 import { FormsModule } from "@angular/forms";
 import { AACoreModule } from "app/aacore/aacore.module";
+import { Select2Module } from "ng2-select2";
 export const routes = [
   { path: 'checkins', component: CheckinsPageComponent },
   { path: 'incidents', component: IncidentReportsPageComponent },
@@ -19,7 +20,7 @@ export const routes = [
 @NgModule({
   imports: [
     CommonModule, RouterModule.forChild(routes),FormsModule,
-     PaginationModule.forRoot(), WidgetsModule, AACoreModule
+     PaginationModule.forRoot(), WidgetsModule, AACoreModule, Select2Module, ModalModule.forRoot()
   ],
   declarations: [
 

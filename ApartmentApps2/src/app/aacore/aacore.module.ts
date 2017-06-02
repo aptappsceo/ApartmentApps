@@ -10,6 +10,7 @@ import { SearchPanelComponent } from 'app/aacore/search-panel/search-panel.compo
 //import { TagInputModule } from 'ngx-tag-input';
 import { FormsModule } from '@angular/forms';
 import {Select2Module} from 'ng2-select2';
+import { SearchPageComponent } from "app/aacore/search-page-component";
 require('../../assets/select2.full.min.js');
 
 export const corproutes = [
@@ -19,7 +20,10 @@ export const corproutes = [
 
 @NgModule({
   imports: [
-      CommonModule, FormsModule, RouterModule.forChild(corproutes), PaginationModule.forRoot(),
+      CommonModule,
+      FormsModule,
+      RouterModule.forChild(corproutes),
+      PaginationModule.forRoot(),
       Select2Module //, TagInputModule
   ],
   declarations: [
@@ -28,10 +32,10 @@ export const corproutes = [
     CorporationsPageComponent,
     UserProfileComponent,
     SearchPanelComponent,
-
     ],
     exports: [
-      SearchPanelComponent
+      SearchPanelComponent,
+      //SearchPageComponent
     ],
   providers: [
 
