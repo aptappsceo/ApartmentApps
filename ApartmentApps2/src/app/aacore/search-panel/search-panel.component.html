@@ -3,11 +3,11 @@
   <h6 class='fw-semi-bold'>{{this.model.title}}</h6>
   <div [ngSwitch]='model.editorType'>
     <div *ngSwitchCase="'SelectMultiple'">
-      <input type="text" [(ngModel)]="value" (ngModelChange)='valueChanged()' />
-      <div *ngIf="items != null">      
-        <select2 [data]='items'          
-       
-       
+      <!--<input type="text" [(ngModel)]="value" (ngModelChange)='valueChanged()' />-->
+      <div *ngIf="items != null">
+        <select2 [data]='items'
+          [width]='250'
+          [options]="{ multiple: true }"
          (valueChanged)="changed($event)"></select2>
       </div>
 
