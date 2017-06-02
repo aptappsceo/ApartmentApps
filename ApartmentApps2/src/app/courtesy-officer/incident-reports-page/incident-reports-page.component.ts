@@ -55,8 +55,7 @@ filtersUpdate() {
           .subscribe(x => {
               this.searchModel = x.model;
                this.reloadData();
-               this.lookupsClient.getLookups(x.model.filters[0].dataSourceType, '').subscribe(y=> { console.log("LOOKUPS" , y); });
-                console.log('Search Engine', x);
+              
           });
 
 

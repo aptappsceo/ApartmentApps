@@ -4,7 +4,13 @@
   <div [ngSwitch]='model.editorType'>
     <div *ngSwitchCase="'SelectMultiple'">
       <input type="text" [(ngModel)]="value" (ngModelChange)='valueChanged()' />
-  
+      <div *ngIf="items != null">      
+        <select2 [data]='items'          
+       
+       
+         (valueChanged)="changed($event)"></select2>
+      </div>
+
     </div>
 
   </div>

@@ -9,6 +9,8 @@ import { PaginationModule } from "ngx-bootstrap";
 import { SearchPanelComponent } from 'app/aacore/search-panel/search-panel.component';
 //import { TagInputModule } from 'ngx-tag-input';
 import { FormsModule } from '@angular/forms';
+import {Select2Module} from 'ng2-select2';
+require('../../assets/select2.full.min.js');
 
 export const corproutes = [
   { path: 'corporations', component: CorporationsPageComponent},
@@ -17,14 +19,16 @@ export const corproutes = [
 
 @NgModule({
   imports: [
-      CommonModule, FormsModule, RouterModule.forChild(corproutes), PaginationModule.forRoot()//, TagInputModule
+      CommonModule, FormsModule, RouterModule.forChild(corproutes), PaginationModule.forRoot(),
+      Select2Module //, TagInputModule
   ],
   declarations: [
     CorporationsListComponent,
     CorporationsFormComponent,
     CorporationsPageComponent,
     UserProfileComponent,
-    SearchPanelComponent
+    SearchPanelComponent,
+
     ],
     exports: [
       SearchPanelComponent
