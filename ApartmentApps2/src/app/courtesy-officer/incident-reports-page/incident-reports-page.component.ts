@@ -1,5 +1,5 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { CourtesyClient, IncidentIndexBindingModel, Query, SearchEnginesClient, IncidentReportViewModel, Navigation, Search, FilterData, ClientSearchModel } from 'app/aaservice-module/aaclient';
+import { CourtesyClient, IncidentIndexBindingModel, Query, SearchEnginesClient, IncidentReportViewModel, Navigation, Search, FilterData, ClientSearchModel, LookupsClient } from 'app/aaservice-module/aaclient';
 import { CommentItem } from "app/widgets/comment-item/comment-item.component";
 import { SearchPanelComponent } from '../../aacore/search-panel/search-panel.component';
 
@@ -10,6 +10,7 @@ import { SearchPanelComponent } from '../../aacore/search-panel/search-panel.com
   styleUrls: ['./incident-reports-page.component.css']
 })
 export class IncidentReportsPageComponent implements OnInit {
+  totalRecords: number;
   @ViewChildren(SearchPanelComponent) searchComponents: QueryList<SearchPanelComponent>;
   searchModel: ClientSearchModel;
   incidents: IncidentReportViewModel[];
@@ -17,7 +18,7 @@ export class IncidentReportsPageComponent implements OnInit {
   engineId: string = 'IncidentReport';
     page: Number = 1;
   constructor( private searchEngine: SearchEnginesClient,
-   private officerClient: CourtesyClient ) {
+   private officerClient: CourtesyClient, private lookupsClient: LookupsClient ) {
      this.query.navigation = new Navigation();
      this.query.navigation.skip = 0;
      this.query.navigation.take = 5;
@@ -40,22 +41,25 @@ filtersUpdate() {
 }
   reloadData() {
     let items = this.searchComponents.map(x=>x.filterData);
-    console.log("ITEMS", items);
+    console.log('ITEMS', items);
     this.query.search.filters = items;
     this.officerClient.fetch(this.query).subscribe( x => {
       this.incidents = x.result;
+      this.totalRecords = x.total;
       console.log('fetch', x.result);
     });
   }
   ngOnInit() {
+
      this.searchEngine.getSearchModel(this.engineId)
           .subscribe(x => {
               this.searchModel = x.model;
                this.reloadData();
+               this.lookupsClient.getLookups(x.model.filters[0].dataSourceType, '').subscribe(y=> { console.log("LOOKUPS" , y); });
                 console.log('Search Engine', x);
           });
-          
-   
+
+
   }
   getImages(incident: IncidentReportViewModel): string[] {
     let result = [];

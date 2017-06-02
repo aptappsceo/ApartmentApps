@@ -1,5 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Data;
+using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Portal.Controllers;
+using Ninject;
 
 namespace ApartmentApps.Api.Services
 {
@@ -11,7 +17,45 @@ namespace ApartmentApps.Api.Services
         void ToViewModel(TModel model, TViewModel viewMOdel);
         TViewModel ToViewModel(TModel model);
     }
+    public class LookupService
+    {
+        private readonly IKernel _kernel;
 
+        public LookupService(IKernel kernel)
+        {
+            _kernel = kernel;
+        }
+
+        public QueryResult<LookupBindingModel> GetLookups(Type type, string search)
+        {
+            var datasheetType = typeof(IDataSheet<>).MakeGenericType(type);
+            var datasheet = this._kernel.Get(datasheetType);
+            var queryMethod = datasheetType.GetMethod("Query");
+            var obj = queryMethod.Invoke(datasheet, new[] {search});
+            var get = obj.GetType().GetMethods().First(p=>p.ContainsGenericParameters && p.Name == "Get").MakeGenericMethod(typeof(LookupBindingModel));
+            return ((QueryResult<LookupBindingModel>) get.Invoke (obj, null));
+        }
+    }
+    public class LookupMapper<TModel> : BaseMapper<TModel, LookupBindingModel> where TModel :  new()
+    {
+        public Func<TModel, string> ValueSelector { get; set; }
+        public Func<TModel, string> LabelSelector { get; set; }
+
+        public LookupMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
+        {
+        }
+
+        public override void ToModel(LookupBindingModel viewModel, TModel model)
+        {
+
+        }
+
+        public override void ToViewModel(TModel model, LookupBindingModel viewModel)
+        {
+            viewModel.Title = LabelSelector(model);
+            viewModel.Id = ValueSelector(model);
+        }
+    }
     public abstract class BaseMapper<TModel, TViewModel> : IMapper<TModel, TViewModel> where TModel : new() where TViewModel : new()
     {
         private readonly IModuleHelper _moduleHelper;

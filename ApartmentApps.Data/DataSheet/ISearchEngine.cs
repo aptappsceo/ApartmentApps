@@ -91,6 +91,7 @@ namespace ApartmentApps.Data.DataSheet
                     Title = attribute.Title,
                     ArgumentType = argumentType,
                     DataSource = attribute.DataSource,
+                    DataSourceType = attribute.DataSourceType,
                     Description = attribute.Description,
                     EditorType = attribute.EditorType
                 });
@@ -245,6 +246,7 @@ namespace ApartmentApps.Data.DataSheet
         public string Title { get; set; }
         public string Description { get; set; }
         public string DataSource { get; set; }
+        public Type DataSourceType { get; set; }
         public string EditorType { get; set; }
         public bool DefaultActive { get; set; }
         public Type ArgumentType { get; set; }
@@ -256,6 +258,7 @@ namespace ApartmentApps.Data.DataSheet
         public string Title { get; set; }
         public string Description { get; set; }
         public string DataSource { get; set; }
+        public Type DataSourceType { get; set; }
         public string EditorType { get; set; }
         public bool DefaultActive { get; set; }
 

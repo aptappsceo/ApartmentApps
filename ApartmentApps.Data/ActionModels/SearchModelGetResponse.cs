@@ -25,6 +25,7 @@ namespace ApartmentApps.Data.ActionModels
         public string DataSource { get; set; }
         public string EditorType { get; set; }
         public bool DefaultActive { get; set; }
+        public string DataSourceType { get; set; }
     }
 
 }

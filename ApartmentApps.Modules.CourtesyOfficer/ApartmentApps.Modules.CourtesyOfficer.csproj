@@ -85,22 +85,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ModelExtensions.cs" />
     <Compile Include="CourtesyCheckinBindingModel.cs" />
+    <Compile Include="CourtesyCheckinMapper.cs" />
     <Compile Include="CourtesyCheckinViewModel.cs" />
     <Compile Include="CourtesyConfig.cs" />
     <Compile Include="CourtesyModule.cs" />
+    <Compile Include="CourtesyOfficerSearchEngine.cs" />
     <Compile Include="CourtesyOfficerService.cs" />
+    <Compile Include="DailyOfficerReport.cs" />
+    <Compile Include="GeoCoordinate.cs" />
     <Compile Include="IIncidentReportCheckinEvent.cs" />
     <Compile Include="IIncidentReportSubmissionEvent.cs" />
     <Compile Include="IIncidentsService.cs" />
     <Compile Include="IncidentCheckinBindingModel.cs" />
     <Compile Include="IncidentIndexBindingModel.cs" />
     <Compile Include="IncidentReportBindingModel.cs" />
+    <Compile Include="IncidentReportFormMapper.cs" />
+    <Compile Include="IncidentReportFormModel.cs" />
+    <Compile Include="IncidentReportMapper.cs" />
     <Compile Include="IncidentReportRepository.cs" />
     <Compile Include="IncidentReportViewModel.cs" />
+    <Compile Include="IncidentsDataSheet.cs" />
     <Compile Include="IncidentService.cs" />
     <Compile Include="IncidentsService.cs" />
+    <Compile Include="IncidentStatusesSearchEngine.cs" />
+    <Compile Include="IncidentStatusLookupMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

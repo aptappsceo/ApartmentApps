@@ -1,171 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using ApartmentApps.Api.BindingModels;
-using ApartmentApps.Api.DataSheets;
 using ApartmentApps.Api.Modules;
 using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
-using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Data.Repository;
-using ApartmentApps.Forms;
-using ApartmentApps.Modules.CourtesyOfficer;
 using ApartmentApps.Portal.Controllers;
 using Korzh.EasyQuery.Db;
 using Ninject;
 
 namespace ApartmentApps.Api
 {
-    public class IncidentReportFormModel : BaseViewModel
-    {
-        private readonly IRepository<Unit> _unitRepo;
-        private readonly IRepository<ApplicationUser> _userRepo;
-
-        public IncidentReportFormModel()
-        {
-        }
-
-        [Inject]
-        public IncidentReportFormModel(IRepository<Unit> unitRepo, IRepository<ApplicationUser> userRepo)
-        {
-            _unitRepo = unitRepo;
-            _userRepo = userRepo;
-        }
-
-        //[DataType()]
-        [DisplayName("Unit")]
-        public int UnitId { get; set; }
-
-        public IEnumerable<FormPropertySelectItem> UnitId_Items
-        {
-            get
-            {
-                var items =
-                   _unitRepo.ToArray();
-                        var users = _userRepo;
-                        return items.Select(p =>
-                        {
-                            if (!string.IsNullOrEmpty(p.CalculatedTitle))
-                                return new FormPropertySelectItem(p.Id.ToString(), p.CalculatedTitle, UnitId == p.Id);
-
-                            var name = $"[{ p.Building.Name }] {p.Name}";
-                            var user = users.GetAll().FirstOrDefault(x => !x.Archived && x.UnitId == p.Id);
-                            if (user != null)
-                                name += $" ({user.FirstName} {user.LastName})";
-
-                            return new FormPropertySelectItem(p.Id.ToString(), name, UnitId == p.Id);
-                        }).OrderByAlphaNumeric(p => p.Value);
-
-
-            }
-        }
-
-
-        [DisplayName("Type")]
-        [Required]
-        public IncidentType ReportType { get; set; }
-
-        [DataType(DataType.MultilineText)]
-        public string Comments { get; set; }
-
-    }
-    public class IncidentReportFormMapper : BaseMapper<IncidentReport, IncidentReportFormModel>
-    {
-        private readonly IBlobStorageService _blobStorageService;
-        public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
-
-        public IncidentReportFormMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
-            IBlobStorageService blobStorageService, IUserContext userContext, IModuleHelper helper) : base(userContext, helper)
-        {
-            _blobStorageService = blobStorageService;
-            UserMapper = userMapper;
-        }
-
-        public override void ToModel(IncidentReportFormModel viewModel, IncidentReport model)
-        {
-            model.Comments = viewModel.Comments;
-            model.IncidentType = viewModel.ReportType;
-            model.UnitId = viewModel.UnitId;
-        }
-
-        public override void ToViewModel(IncidentReport model, IncidentReportFormModel viewModel)
-        {
-            viewModel.Comments = model.Comments;
-            viewModel.ReportType = model.IncidentType;
-            viewModel.UnitId = model.UnitId ?? 0;
-            viewModel.Id = model.Id.ToString();
-
-        }
-    }
-    public class IncidentReportMapper : BaseMapper<IncidentReport, IncidentReportViewModel>
-    {
-        private readonly IBlobStorageService _blobStorageService;
-        public IMapper<ApplicationUser, UserBindingModel> UserMapper { get; set; }
-
-        public IncidentReportMapper(IMapper<ApplicationUser, UserBindingModel> userMapper,
-            IBlobStorageService blobStorageService, IUserContext userContext, IModuleHelper helper) : base(userContext, helper)
-        {
-            _blobStorageService = blobStorageService;
-            UserMapper = userMapper;
-        }
-
-        public override void ToModel(IncidentReportViewModel viewModel, IncidentReport model)
-        {
-            model.Comments = viewModel.Comments;
-            model.StatusId = viewModel.StatusId;
-        }
-
-        public override void ToViewModel(IncidentReport model, IncidentReportViewModel viewModel)
-        {
-            viewModel.Title = model.IncidentType.ToString();
-            viewModel.RequestDate = model.CreatedOn;
-            viewModel.Comments = model.Comments;
-            viewModel.SubmissionBy = UserMapper.ToViewModel(model.User);
-            viewModel.StatusId = model.StatusId;
-            viewModel.Id = model.Id.ToString();
-            viewModel.UnitName = model.Unit?.Name;
-            viewModel.BuildingName = model.Unit?.Building?.Name;
-
-            viewModel.LatestCheckin = model.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
-            viewModel.Checkins = model.Checkins.Select(p => p.ToIncidentCheckinBindingModel(_blobStorageService));
-            //viewModel.Title = x.IncidentType.ToString();
-            //viewModel.Comments = x.Comments;
-            //viewModel.UnitName = x.Unit?.Name;
-            //viewModel.BuildingName = x.Unit?.Building?.Name;
-            //viewModel.RequestDate = x.CreatedOn;
-            //viewModel.SubmissionBy = _userMapper.ToViewModel(x.User);// x.User.ToUserBindingModel(BlobStorageService);
-            //viewModel.StatusId = x.StatusId;
-            //viewModel.LatestCheckin = x.LatestCheckin?.ToIncidentCheckinBindingModel(_blobStorageService);
-            viewModel.Id = model.Id.ToString();
-
-        }
-    }
-
-    public class IncidentsDataSheet : BasePropertyDataSheet<IncidentReport>
-    {
-        public IncidentsDataSheet(IUserContext userContext, ApplicationDbContext dbContext, IKernel kernel, ISearchCompiler searchCompiler) : base(userContext, dbContext, kernel, searchCompiler)
-        {
-        }
-
-        protected override IQueryable<IncidentReport> DefaultOrderFilter(IQueryable<IncidentReport> set, Query query = null)
-        {
-
-            return set.OrderBy(p => p.CreatedOn);
-            //return base.DefaultOrderFilter(set, query);
-        }
-    }
-    public class CourtesyOfficerSearchEngine : SearchEngine<IncidentReport>
-    {
-        
-        [Filter(nameof(SearchByType), "Search by type", EditorTypes.SelectMultiple, false, DataSource = nameof(IncidentReportStatus))]
-        public IQueryable<IncidentReport> SearchByType(IQueryable<IncidentReport> set, string key)
-        {
-            return set.Where(item => item.StatusId == key);
-        }
-    }
     public class IncidentsService : StandardCrudService<IncidentReport>, IIncidentsService
     {
         public IncidentsService(IModuleHelper moduleHelper, IRepository<IncidentReport> repository, IBlobStorageService blobStorageService, PropertyContext context, IMapper<ApplicationUser, UserBindingModel> userMapper, IKernel kernel) : base(kernel, repository)

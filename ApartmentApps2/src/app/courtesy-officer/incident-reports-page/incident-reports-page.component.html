@@ -9,8 +9,8 @@
 
                 class="pagination-sm"
                 [(ngModel)]="page"
-                [totalItems]="500"
-                [itemsPerPage]="3"
+                [totalItems]="totalRecords"
+                [itemsPerPage]="this.query.navigation.take"
                 [maxSize]="20"
                 [boundaryLinks]="true"
                 [rotate]="false"
