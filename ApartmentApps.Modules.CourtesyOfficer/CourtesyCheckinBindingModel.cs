@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ApartmentApps.Api.ViewModels;
 
 namespace ApartmentApps.Api.BindingModels
 {
@@ -12,5 +13,6 @@ namespace ApartmentApps.Api.BindingModels
         public int Id { get; set; }
         public bool Complete { get; set; }
         public DateTime? Date { get; set; }
+        public UserBindingModel Officer { get; set; }
     }
 }

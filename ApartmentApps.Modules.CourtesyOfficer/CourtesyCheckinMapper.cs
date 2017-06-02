@@ -18,7 +18,7 @@ namespace ApartmentApps.Api
 
         public override void ToViewModel(CourtesyOfficerCheckin p, CourtesyCheckinViewModel viewModel)
         {
-
+            
             //viewModel.Latitude = p.Latitude;
             //viewModel.Longitude = p.Longitude;
             //viewModel.Label = p.Label;
