@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CourtesyClient, IncidentReportModel, IncidentReportModelIncidentReportTypeId } from "app/aaservice-module/aaclient";
 
 @Component({
   selector: 'app-incident-report-form',
@@ -6,30 +7,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./incident-report-form.component.css']
 })
 export class IncidentReportFormComponent implements OnInit {
+//   string: string, search, tel, url, email, password, color, date, date-time, time, textarea, select, file, radio, richtext
+// number: number, integer, range
+// integer: integer, range
+// boolean: boolean, checkbox
   mySchema = {
     'properties': {
-      'email': {
+      'comments': {
         'type': 'string',
-        'description': 'email',
-        'format': 'email'
-      },
-      'password': {
-        'type': 'string',
-        'description': 'Password'
-      },
-      'rememberMe': {
-        'type': 'boolean',
-        'default': false,
-        'description': 'Remember me'
+        'widget': 'textarea',
+        'description': 'Describe the incident that has occured.'
       }
     },
-    'required': ['email','password','rememberMe']
+    'required': ['comments']
   };
-  myModel = {email: 'john.doe@example.com'};
+  myModel = {comments: ''};
 
-  constructor() { }
+   constructor(private officerClient: CourtesyClient) {
 
+   }
+   Save() {
+     let ir = new IncidentReportModel();
+     ir.incidentReportTypeId = 1;
+     ir.comments = this.myModel.comments;
+
+     this.officerClient.submitIncidentReport(ir);
+   }
   ngOnInit() {
+
   }
 
 }

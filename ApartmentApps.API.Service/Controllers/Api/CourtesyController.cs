@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.ViewModels;
@@ -16,17 +17,80 @@ using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.CourtesyOfficer;
 using ApartmentApps.Modules.Inspections;
+using ApartmentApps.Portal.Controllers;
 using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
+    public class ServiceController<TService, TBindingModel> : ApartmentAppsApiController where TService : class, IBaseEntity, new() where TBindingModel : BaseViewModel, new()
+    {
+        private readonly StandardCrudService<TService> _service;
+
+        public ServiceController(StandardCrudService<TService> service, IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        {
+            _service = service;
+        }
+
+        public async Task<IHttpActionResult> Fetch(Query query)
+        {
+            var result = _service.Query<TBindingModel>(query);
+            return Ok(result);
+        }
+
+        public async Task<IHttpActionResult> Entry(string id)
+        {
+            try
+            {
+                var item = _service.Find<TBindingModel>(id);
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return new ExceptionResult(ex, this);
+            }
+            
+        }
+
+        public async Task<IHttpActionResult> Delete(string id)
+        {
+            try
+            {
+                _service.Remove(id);
+            }
+            catch (Exception ex)
+            {
+                return new ExceptionResult(ex, this);
+            }
+            return Ok();
+        }
+
+        public async Task<IHttpActionResult> Save(TBindingModel entry)
+        {
+            try
+            {
+                _service.Save(entry);
+            }
+            catch (Exception ex)
+            {
+                return new ExceptionResult(ex, this);
+            }
+            return Ok(entry);
+        }
+
+
+    }
+
     [System.Web.Http.RoutePrefix("api/Inspections")]
     [System.Web.Http.Authorize]
     public class InspectionsController : ApartmentAppsApiController
     {
         private readonly InspectionsService _inspectionsService;
 
-        public InspectionsController(IKernel kernel, InspectionsService inspectionsService,PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        public InspectionsController(IKernel kernel, InspectionsService inspectionsService, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             _inspectionsService = inspectionsService;
         }
@@ -36,7 +100,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         [System.Web.Http.Route("List")]
         public IEnumerable<InspectionViewModel> Get()
         {
-            
+
             var propertyId = this.CurrentUser.PropertyId;
 
             return _inspectionsService.GetAllForUser<InspectionViewModel>(this.CurrentUser.Id);
@@ -72,7 +136,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public IBlobStorageService BlobStorageService { get; set; }
         public IIncidentsService IncidentsService { get; set; }
 
-        public CourtesyController(IKernel kernel, IIncidentsService incidentsService, IBlobStorageService blobStorageService,PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        public CourtesyController(IKernel kernel, IIncidentsService incidentsService, IBlobStorageService blobStorageService, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
             IncidentsService = incidentsService;
             BlobStorageService = blobStorageService;
@@ -137,7 +201,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         {
 
 
-            var result =  Context.IncidentReports.Find(id);
+            var result = Context.IncidentReports.Find(id);
             //var userId = CurrentUser.UserName;
             //var user = Db.Users.FirstOrDefault(p => p.UserName == userId);
             var photos = Context.ImageReferences.Where(r => r.GroupId == result.GroupId).ToList();
@@ -177,7 +241,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 incidentReport.UnitId = unitId;
                 Context.SaveChanges();
             }
-            
+
         }
 
 
