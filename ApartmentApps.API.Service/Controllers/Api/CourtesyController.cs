@@ -23,7 +23,14 @@ using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
-    public class ServiceController<TService, TBindingModel, TFormBindingModel> : ApartmentAppsApiController where TService : IService, IBaseEntity, new() where TBindingModel : BaseViewModel, IBaseEntity, new() where TFormBindingModel :  BaseViewModel, new()
+    public class PropertyController : ServiceController<PropertyService, PropertyBindingModel, PropertyBindingModel>
+    {
+        
+    }
+    public class ServiceController<TService, TBindingModel, TFormBindingModel> : ApartmentAppsApiController 
+        where TService : IService 
+        where TBindingModel : BaseViewModel, new() 
+        where TFormBindingModel :  BaseViewModel, new()
     {
 
         readonly string templateFolder;
@@ -193,7 +200,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
     [System.Web.Http.RoutePrefix("api/Courtesy")]
     [System.Web.Http.Authorize]
-    public class CourtesyController : ApartmentAppsApiController
+    public class CourtesyController : ServiceController<IncidentsService, IncidentReportViewModel, IncidentReportFormModel>
     {
 
         public IBlobStorageService BlobStorageService { get; set; }

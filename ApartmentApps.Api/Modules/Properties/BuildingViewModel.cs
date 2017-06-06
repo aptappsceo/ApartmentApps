@@ -44,11 +44,11 @@ namespace ApartmentApps.Api.ViewModels
         }
     }
 
-    public class PropertyService : StandardCrudService<Property>
-    {
-        public PropertyService(IKernel kernel, IRepository<Property> repository) : base(kernel, repository)
-        {
+    //public class PropertyService : StandardCrudService<Property>
+    //{
+    //    public PropertyService(IKernel kernel, IRepository<Property> repository) : base(kernel, repository)
+    //    {
             
-        }
-    }
+    //    }
+    //}
 }

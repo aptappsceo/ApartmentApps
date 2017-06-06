@@ -27,6 +27,8 @@ namespace ApartmentApps.Api
         private readonly IModuleHelper _moduleHelper;
         private IBlobStorageService _blobStorageService;
 
+   
+
         public DbQuery Reported()
         {
             return CreateQuery("Reported", new ConditionItem("IncidentReport.StatusId", "Equal", "Reported"));
