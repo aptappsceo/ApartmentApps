@@ -36,7 +36,9 @@ filtersUpdate() {
   this.reloadData();
 }
   reloadData() {
-    let items = this.searchComponents.map(x=>x.filterData);
+    let items = this.searchComponents
+      .filter((x, i) => x.value != null && x.active)
+      .map(x => x.filterData);
     console.log('ITEMS', items);
     this.query.search.filters = items;
     this.officerClient.fetch(this.query).subscribe( x => {
@@ -46,15 +48,12 @@ filtersUpdate() {
     });
   }
   ngOnInit() {
-
      this.searchEngine.getSearchModel(this.engineId)
           .subscribe(x => {
               this.searchModel = x.model;
                this.reloadData();
 
           });
-
-
   }
   getImages(incident: IncidentReportViewModel): string[] {
     let result = [];
@@ -66,11 +65,14 @@ filtersUpdate() {
     return result;
   }
   mapComments(incident: IncidentReportViewModel): CommentItem[] {
-    let cmt = new CommentItem();
+    return incident.checkins.map(x=>{
+      let cmt = new CommentItem();
 
-    cmt.comment = incident.latestCheckin.comments;
-    cmt.time = incident.latestCheckin.date.toDateString();
-    cmt.userInfo = incident.latestCheckin.officer;
-    return [ cmt ];
+      cmt.comment = x.comments;
+      cmt.time = x.date.toDateString();
+      cmt.userInfo = x.officer;
+      return cmt;
+    });
+
   }
 }

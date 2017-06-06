@@ -1,6 +1,4 @@
-<div class="widget">
 
-  <h6 class='fw-semi-bold'>{{this.model.title}}</h6>
   <div [ngSwitch]='model.editorType'>
     <div *ngSwitchCase="'SelectMultiple'">
       <!--<input type="text" [(ngModel)]="value" (ngModelChange)='valueChanged()' />-->
@@ -12,9 +10,18 @@
       </div>
 
     </div>
+        <div *ngSwitchCase="'CheckboxList'">
+      <!--<input type="text" [(ngModel)]="value" (ngModelChange)='valueChanged()' />-->
+      <div *ngIf="items != null">
+        <div *ngFor="let item of items">
+
+          <input type="checkbox" (change)="checkboxListItemChanged($event, item)" />
+          <label>{{item.text}}</label>
+        </div>
+
+
+      </div>
+
+    </div>
 
   </div>
-  {{model.description}}
-  {{model.editorType}}
-  {{model.dataSource}}
-</div>

@@ -20,6 +20,7 @@ import { AppState, InteralStateType } from './app.service';
 import { AppConfig } from './app.config';
 import { ErrorComponent } from './error/error.component';
 import { AACoreModule } from "app/aacore/aacore.module";
+import { WidgetRegistry, DefaultWidgetRegistry } from 'angular2-schema-form';
 
 
 // Application wide providers
@@ -62,7 +63,7 @@ type StoreType = {
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
-
+    {provide: WidgetRegistry, useClass: DefaultWidgetRegistry}
   ]
 })
 export class AppModule {

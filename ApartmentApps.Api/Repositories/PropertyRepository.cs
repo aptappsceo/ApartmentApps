@@ -12,16 +12,6 @@ using System.Text;
 
 namespace ApartmentApps.Api
 {
-    public interface IEntityAdded<TEntityType>
-    {
-        void EntityAdded(TEntityType entity);
-    }
-
-    public interface IEntityRemoved<TEntityType>
-    {
-        void EntityRemoved(TEntityType entity);
-    }
-
     public class PropertyRepository<TEntity> : IRepository<TEntity> where TEntity : class, IPropertyEntity
     {
         public Expression Expression => GetAll().Expression;
@@ -152,16 +142,6 @@ namespace ApartmentApps.Api
             if (predicate == null) return GetAll();
             return GetAll().Where(predicate);
         }
-    }
-
-    [Persistant]
-    public class ServiceQuery : PropertyEntity
-    {
-        public int Index { get; set; }
-        public string Name { get; set; }
-        public string QueryId { get; set; }
-        public string QueryJson { get; set; }
-        public string Service { get; set; }
     }
 
     public class UserRepository<TEntity> : PropertyRepository<TEntity> where TEntity : class, IUserEntity

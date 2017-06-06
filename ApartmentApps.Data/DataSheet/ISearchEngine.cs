@@ -277,6 +277,7 @@ namespace ApartmentApps.Data.DataSheet
         public const string TextField = nameof(TextField);
         public const string Select = nameof(Select);
         public const string SelectMultiple= nameof(SelectMultiple);
+        public const string CheckboxList = nameof(CheckboxList);
         public const string Typeahead = nameof(Typeahead);
         public const string TypeaheadMultiple = nameof(TypeaheadMultiple);
         public const string Date = nameof(Date);

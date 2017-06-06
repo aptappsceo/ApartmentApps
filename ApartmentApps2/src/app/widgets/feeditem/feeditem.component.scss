@@ -19,7 +19,7 @@
   display: none;
   background-color : #fff;
   border: 1px solid #ccc;
-  border-radius: $border-radius; 
+  border-radius: $border-radius;
   font-size: $font-size-sm;
   color: $text-color;
 }
@@ -292,13 +292,14 @@
 /***********************************/
 
 .post-comments{
+  margin-top: 20px;
   font-size: $font-size-sm;
   padding-left: 0;
   @include clearfix();
 
-  .post-links + &{
-    margin-top: $line-height-computed / 2;
-  }
+  // .post-links + &{
+  //   margin-top: $line-height-computed / 2;
+  // }
 
   > li {
     padding: 10px;
@@ -333,10 +334,10 @@
     font-size: 11px;
   }
 
-  .widget > footer &{
-    margin-left: -$widget-padding-horizontal;
-    margin-right: -$widget-padding-horizontal;
-  }
+  // .widget > footer &{
+  //   margin-left: -$widget-padding-horizontal;
+  //   margin-right: -$widget-padding-horizontal;
+  // }
 }
 
 /***********************************/

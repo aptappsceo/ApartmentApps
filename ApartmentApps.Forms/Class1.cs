@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Korzh.EasyQuery.Services;
+using Newtonsoft.Json;
 
 namespace ApartmentApps.Forms
 {
@@ -113,7 +114,7 @@ namespace ApartmentApps.Forms
     public class FormPropertyModel
     {
         private DataTypeAttribute _dataType;
-
+        [JsonIgnore]
         public PropertyInfo PropertyInfo { get; set; }
         public string Name { get; set; }
 
@@ -124,7 +125,7 @@ namespace ApartmentApps.Forms
         public FormPropertySelectItem[] Choices { get; set; }
 
         public bool Required { get; set; }
-
+        [JsonIgnore]
         public Type SystemType { get; set; }
 
         public bool IsList => typeof (IList).IsAssignableFrom(SystemType);

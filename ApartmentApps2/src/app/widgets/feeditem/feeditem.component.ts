@@ -13,7 +13,7 @@ export class FeedItemComponent implements OnInit {
   @Input() tags: any;
   @Input() timeAgo: string;
   @Input() bodyText: string;
-  @Input() actionLinks: any[];
+  @Input() actionLinks: FeedItemActionLink[];
   @Input() comments: CommentItem[];
 
   constructor() { }
@@ -23,5 +23,6 @@ export class FeedItemComponent implements OnInit {
 
 }
 export class FeedItemActionLink {
-
+    label: string;
+    // (message: string): void;
 }

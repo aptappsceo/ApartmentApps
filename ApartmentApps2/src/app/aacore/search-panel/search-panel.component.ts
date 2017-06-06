@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ClientSearchFilterModel, FilterData } from "app/aaservice-module/aaclient";
-import { LookupsClient } from '../../aaservice-module/aaclient';
+import { LookupsClient, LookupBindingModel } from '../../aaservice-module/aaclient';
 import { Select2OptionData } from "ng2-select2";
 
 @Component({
@@ -11,12 +11,28 @@ import { Select2OptionData } from "ng2-select2";
 export class SearchPanelComponent implements OnInit {
   @Input() public model: ClientSearchFilterModel;
   @Input() public value: any;
-  @Input() public active: boolean;
+   public get active(): boolean {
+     return this.value != null && this.value.length > 0;
+   }
   @Output() public updated: EventEmitter<FilterData> = new EventEmitter<FilterData>();
   public items: Select2OptionData[];
   constructor(private lookupsClient: LookupsClient) {
 
 
+  }
+  checkboxListItemChanged($event, item: LookupBindingModel) {
+    console.log($event);
+    console.log(item);
+    if (this.value == null)
+      this.value = [];
+
+    let index = this.value.indexOf(item.id);
+    if (index > -1) {
+      this.value.splice(index, 1);
+    } else {
+      this.value.push(item.id);
+    }
+    this.valueChanged();
   }
   changed(e) {
     console.log(e);

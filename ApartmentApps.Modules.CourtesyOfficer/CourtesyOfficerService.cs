@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Services;
+using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Portal.Controllers;
@@ -15,8 +17,11 @@ namespace ApartmentApps.Api
 {
     public class CourtesyOfficerService : StandardCrudService<CourtesyOfficerCheckin>
     {
-        public CourtesyOfficerService(IRepository<CourtesyOfficerCheckin> repository, IUserContext userContext, IRepository<CourtesyOfficerLocation> locations, IKernel kernel) : base(kernel,repository)
+        private readonly IMapper<ApplicationUser, UserBindingModel> _userMapper;
+
+        public CourtesyOfficerService(IMapper<ApplicationUser, UserBindingModel> userMapper, IRepository<CourtesyOfficerCheckin> repository, IUserContext userContext, IRepository<CourtesyOfficerLocation> locations, IKernel kernel) : base(kernel,repository)
         {
+            _userMapper = userMapper;
             UserContext = userContext;
             Locations = locations;
         }
@@ -74,7 +79,7 @@ namespace ApartmentApps.Api
             }
         }
 
-        private static CourtesyCheckinBindingModel ToCourtesyCheckinBindingModel(CourtesyOfficerLocation p,
+        private CourtesyCheckinBindingModel ToCourtesyCheckinBindingModel(CourtesyOfficerLocation p,
             CourtesyOfficerCheckin item)
         {
             return new CourtesyCheckinBindingModel
@@ -85,6 +90,7 @@ namespace ApartmentApps.Api
                 Id = p.Id,
                 Date = item?.CreatedOn,
                 Complete = item != null,
+                Officer = _userMapper.ToViewModel(item.Officer),
                 AcceptableCheckinCodes = new List<string>()
                 {
                     $"http://apartmentapps.com?location={p.LocationId}",
