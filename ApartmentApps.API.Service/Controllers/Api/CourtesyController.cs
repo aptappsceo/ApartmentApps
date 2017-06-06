@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
@@ -18,48 +18,108 @@ using ApartmentApps.Data.Repository;
 using ApartmentApps.Modules.CourtesyOfficer;
 using ApartmentApps.Modules.Inspections;
 using ApartmentApps.Portal.Controllers;
+using ExporterObjects;
 using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
-    public class ServiceController<TService, TBindingModel> : ApartmentAppsApiController where TService : class, IBaseEntity, new() where TBindingModel : BaseViewModel, new()
+    public class ServiceController<TService, TBindingModel, TFormBindingModel> : ApartmentAppsApiController where TService : IService, IBaseEntity, new() where TBindingModel : BaseViewModel, IBaseEntity, new() where TFormBindingModel :  BaseViewModel, new()
     {
-        private readonly StandardCrudService<TService> _service;
 
-        public ServiceController(StandardCrudService<TService> service, IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        readonly string templateFolder;
+     
+        protected byte[] ToExcel<T>(IEnumerable<T> list)
         {
-            _service = service;
+            return this.To(list, ExportToFormat.Excel2007);
+        }
+        protected byte[] ToPdf<T>(IEnumerable<T> list)
+        {
+            return this.To(list, ExportToFormat.PDFtextSharpXML);
         }
 
-        public async Task<IHttpActionResult> Fetch(Query query)
+        protected byte[] To<T>(IEnumerable<T> list, ExportToFormat exportToFormat)
         {
-            var result = _service.Query<TBindingModel>(query);
-            return Ok(result);
+            var exportList = new ExportList<T>();
+
+            var tmpFileName = Path.Combine(templateFolder, Guid.NewGuid().ToString() + ".xlsx");
+            exportList.PathTemplateFolder = templateFolder;
+
+            exportList.ExportTo(list, exportToFormat, tmpFileName);
+
+            using (var ms = new MemoryStream(System.IO.File.ReadAllBytes(tmpFileName)))
+            {
+                try
+                {
+                    return ms.ToArray();
+                }
+                finally
+                {
+                    System.IO.File.Delete(tmpFileName);
+                }
+            }
+        }
+        public ServiceController( IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        {
+    
+        }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("fetch")]
+        public async Task<QueryResult<TBindingModel>> Fetch(Query query)
+        {
+            var result = Kernel.Get<TService>().Query<TBindingModel>(query);
+            return result;
         }
 
-        public async Task<IHttpActionResult> Entry(string id)
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("pdf")]
+        public async Task<IHttpActionResult> ToPDF(Query query)
+        {
+            query.Navigation = null;
+
+            var result = Kernel.Get<TService>().Query<TBindingModel>(query);
+            ToExcel(result.Result);
+            return new FileResult(ToPdf(result.Result),"pdf","application/pdf");
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("excel")]
+        public async Task<IHttpActionResult> ToExcel(Query query)
+        {
+            query.Navigation = null;
+
+            var result = Kernel.Get<TService>().Query<TBindingModel>(query);
+            ToExcel(result.Result);
+            return new FileResult(ToPdf(result.Result), "xlsx", "application/excel");
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("entry")]
+        public async Task<TFormBindingModel> Entry(string id)
         {
             try
             {
-                var item = _service.Find<TBindingModel>(id);
+                var item = Kernel.Get<TService>().Find<TFormBindingModel>(id);
                 if (item == null)
                 {
-                    return NotFound();
+                    return null;
                 }
-                return Ok(item);
+                return item;
             }
             catch (Exception ex)
             {
-                return new ExceptionResult(ex, this);
+                return null;
+                //return new ExceptionResult(ex, this);
             }
             
         }
 
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("delete")]
         public async Task<IHttpActionResult> Delete(string id)
         {
             try
             {
-                _service.Remove(id);
+                Kernel.Get<TService>().Remove(id);
             }
             catch (Exception ex)
             {
@@ -68,11 +128,14 @@ namespace ApartmentApps.API.Service.Controllers.Api
             return Ok();
         }
 
-        public async Task<IHttpActionResult> Save(TBindingModel entry)
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("save")]
+        public async Task<IHttpActionResult> Save(TFormBindingModel entry)
         {
             try
             {
-                _service.Save(entry);
+             
+                Kernel.Get<TService>().Save(entry);
             }
             catch (Exception ex)
             {
