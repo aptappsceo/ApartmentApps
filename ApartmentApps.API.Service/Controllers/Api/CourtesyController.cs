@@ -23,12 +23,6 @@ using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
-    public class PropertyController : ServiceController<PropertyService, PropertyFormBindingModel, PropertyFormBindingModel>
-    {
-        public PropertyController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
-        {
-        }
-    }
     public class ServiceController<TService, TBindingModel, TFormBindingModel> : ApartmentAppsApiController 
         where TService : IService 
         where TBindingModel : BaseViewModel, new() 
@@ -81,7 +75,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("pdf")]
-        public async Task<IHttpActionResult> ToPDF(Query query)
+        public virtual async Task<IHttpActionResult> ToPDF(Query query)
         {
             query.Navigation = null;
 
@@ -92,7 +86,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("excel")]
-        public async Task<IHttpActionResult> ToExcel(Query query)
+        public virtual IHttpActionResult ToExcel(Query query)
         {
             query.Navigation = null;
 
@@ -103,7 +97,8 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("entry")]
-        public async Task<TFormBindingModel> Entry(string id)
+
+        public virtual TFormBindingModel Entry(string id)
         {
             try
             {
@@ -119,12 +114,12 @@ namespace ApartmentApps.API.Service.Controllers.Api
                 return null;
                 //return new ExceptionResult(ex, this);
             }
-            
+
         }
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("delete")]
-        public async Task<IHttpActionResult> Delete(string id)
+        public virtual async Task<IHttpActionResult> Delete(string id)
         {
             try
             {
@@ -139,7 +134,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("save")]
-        public async Task<IHttpActionResult> Save(TFormBindingModel entry)
+        public virtual async Task<IHttpActionResult> Save(TFormBindingModel entry)
         {
             try
             {
@@ -214,13 +209,13 @@ namespace ApartmentApps.API.Service.Controllers.Api
             BlobStorageService = blobStorageService;
         }
 
-        [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("fetch")]
-        [ResponseType(typeof(QueryResult<IncidentReportViewModel>))]
-        public async Task<IHttpActionResult> Fetch(Query query)
-        {
-            return Ok(IncidentsService.Query<IncidentReportViewModel>(query));
-        }
+        //[System.Web.Http.HttpPost]
+        //[System.Web.Http.Route("fetch")]
+        //[ResponseType(typeof(QueryResult<IncidentReportViewModel>))]
+        //public async Task<IHttpActionResult> Fetch(Query query)
+        //{
+        //    return Ok(IncidentsService.Query<IncidentReportViewModel>(query));
+        //}
 
 
 

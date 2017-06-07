@@ -323,6 +323,7 @@
     <Compile Include="Controllers\Api\MessagingController.cs" />
     <Compile Include="Controllers\Api\NotifiationsController.cs" />
     <Compile Include="Controllers\Api\PaymentsController.cs" />
+    <Compile Include="Controllers\Api\PropertyController.cs" />
     <Compile Include="Controllers\Api\ProspectController.cs" />
     <Compile Include="Controllers\Api\RegisterController.cs" />
     <Compile Include="Controllers\Api\LookupsController.cs" />
