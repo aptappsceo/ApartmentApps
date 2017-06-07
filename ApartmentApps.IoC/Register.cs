@@ -254,7 +254,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterMappable<Invoice, PaymentRequestInvoiceViewModel, InvoicesService, PaymentsRequestsInvoiceMapper>();
             kernel.RegisterMappable<IncidentReport, IncidentReportViewModel, IncidentsService, IncidentReportMapper>();
             kernel.RegisterMappable<CourtesyOfficerCheckin, CourtesyCheckinViewModel, CourtesyOfficerService, CourtesyCheckinMapper>();
-            kernel.RegisterMappable<Property, PropertyBindingModel, PropertyService, PropertyMapper>();
+            kernel.RegisterMappable<Property, PropertyFormBindingModel, PropertyService, PropertyMapper>();
             kernel.RegisterMappable<ProspectApplication, ProspectApplicationBindingModel, ProspectService,ProspectApplicationMapper>();
             kernel.RegisterMapper<Unit,UnitFormModel,UnitFormMapper>();
             kernel.RegisterMapper<Message,MessageFormViewModel,MessageFormMapper>();

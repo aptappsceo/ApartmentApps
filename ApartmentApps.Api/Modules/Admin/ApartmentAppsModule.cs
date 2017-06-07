@@ -226,7 +226,7 @@ namespace ApartmentApps.Api.Modules
                     IsDialog = true
                 });
             }
-            var propertyViewModel = viewModel as PropertyBindingModel;
+            var propertyViewModel = viewModel as PropertyFormBindingModel;
             if (propertyViewModel != null)
             {
 

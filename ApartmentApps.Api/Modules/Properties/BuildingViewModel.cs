@@ -16,31 +16,32 @@ namespace ApartmentApps.Api.ViewModels
     }
 
 
-    public class PropertyBindingModel : BaseViewModel
+    public class PropertyIndexBindingModel : BaseViewModel
     {
         public int PropertyCount { get; set; }
         public string Corporation { get; set; }
         public int CorporationId { get; set; }
+        public PropertyState Status { get; set; }
     }
-    public class PropertyMapper : BaseMapper<Property, PropertyBindingModel>
+    public class PropertyIndexMapper : BaseMapper<Property, PropertyIndexBindingModel>
     {
-        public PropertyMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
+        public PropertyIndexMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
         {
         }
 
-        public override void ToModel(PropertyBindingModel viewModel, Property model)
+        public override void ToModel(PropertyIndexBindingModel viewModel, Property model)
         {
-            
-            model.Name = viewModel.Name;
+            model.Name = viewModel.Title;
             model.CorporationId = viewModel.CorporationId;
         }
 
-        public override void ToViewModel(Property model, PropertyBindingModel viewModel)
+        public override void ToViewModel(Property model, PropertyIndexBindingModel viewModel)
         {
             viewModel.Title = model.Name;
             viewModel.Id = model.Id.ToString();
             viewModel.Corporation = model.Corporation.Name;
             viewModel.CorporationId = model.CorporationId;
+            viewModel.Status = model.State;
         }
     }
 

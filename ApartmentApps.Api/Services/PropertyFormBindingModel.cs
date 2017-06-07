@@ -8,18 +8,18 @@ using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
-    public class PropertyBindingModel : BaseViewModel
+    public class PropertyFormBindingModel : BaseViewModel
     {
         private readonly IRepository<Corporation> _corporationRepository;
         public string Name { get; set; }
         [DisplayName("Corporation"), SelectFrom("CorporationId_Items")]
         public int CorporationId { get; set; }
 
-        public PropertyBindingModel()
+        public PropertyFormBindingModel()
         {
         }
         [Inject]
-        public PropertyBindingModel(IRepository<Corporation> corporationRepository)
+        public PropertyFormBindingModel(IRepository<Corporation> corporationRepository)
         {
             _corporationRepository = corporationRepository;
         }

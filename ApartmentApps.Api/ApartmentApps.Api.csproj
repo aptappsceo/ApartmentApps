@@ -207,6 +207,7 @@
     <Compile Include="Modules\Analytics\AnalyticsConfig.cs" />
     <Compile Include="Modules\Analytics\AnalyticsItem.cs" />
     <Compile Include="Modules\Analytics\AnalyticsModule.cs" />
+    <Compile Include="Modules\Corporations\CorporationsService.cs" />
     <Compile Include="Modules\Properties\CompanySettingsConfig.cs" />
     <Compile Include="Modules\Properties\CompanySettingsModule.cs" />
     <Compile Include="Components\ComponentViewModel.cs" />
@@ -326,7 +327,7 @@
     <Compile Include="Services\NotificationViewModel.cs" />
     <Compile Include="Services\PageSectionViewModel.cs" />
     <Compile Include="Services\PageViewModel.cs" />
-    <Compile Include="Services\PropertyBindingModel.cs" />
+    <Compile Include="Services\PropertyFormBindingModel.cs" />
     <Compile Include="Services\PropertyMapper.cs" />
     <Compile Include="Services\PropertySearchModel.cs" />
     <Compile Include="Services\PropertyService.cs" />
@@ -387,9 +388,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modules\Corporations\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">

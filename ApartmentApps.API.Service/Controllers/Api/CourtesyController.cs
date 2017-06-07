@@ -23,9 +23,11 @@ using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
 {
-    public class PropertyController : ServiceController<PropertyService, PropertyBindingModel, PropertyBindingModel>
+    public class PropertyController : ServiceController<PropertyService, PropertyFormBindingModel, PropertyFormBindingModel>
     {
-        
+        public PropertyController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        {
+        }
     }
     public class ServiceController<TService, TBindingModel, TFormBindingModel> : ApartmentAppsApiController 
         where TService : IService 

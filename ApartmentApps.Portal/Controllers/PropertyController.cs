@@ -50,7 +50,7 @@ namespace ApartmentApps.Portal.Controllers
 
     [RoutePrefix("Property")]
     [Authorize(Roles = "Admin")]
-    public class PropertyController : AutoGridController<PropertyService, PropertyBindingModel>
+    public class PropertyController : AutoGridController<PropertyService, PropertyFormBindingModel>
     {
         public EntrataModule Entrata { get; set; }
         public IUnitImporter Importer { get; set; }
@@ -111,7 +111,7 @@ namespace ApartmentApps.Portal.Controllers
         public ActionResult CreateLabelCSV(int propertyId)
         {
             var sb = new StringBuilder();
-            var property = Service.Find<PropertyBindingModel>(propertyId.ToString());
+            var property = Service.Find<PropertyFormBindingModel>(propertyId.ToString());
             var units = Kernel.Get<BaseRepository<Unit>>().GetAll().Where(x => x.PropertyId == propertyId).ToArray();
             foreach (var unit in units)
             {
