@@ -23,6 +23,9 @@ namespace ApartmentApps.Api.ViewModels
         public int CorporationId { get; set; }
         public PropertyState Status { get; set; }
     }
+
+    
+
     public class PropertyIndexMapper : BaseMapper<Property, PropertyIndexBindingModel>
     {
         public PropertyIndexMapper(IUserContext userContext, IModuleHelper moduleHelper) : base(userContext, moduleHelper)
@@ -33,6 +36,7 @@ namespace ApartmentApps.Api.ViewModels
         {
             model.Name = viewModel.Title;
             model.CorporationId = viewModel.CorporationId;
+            model.State = viewModel.Status;
         }
 
         public override void ToViewModel(Property model, PropertyIndexBindingModel viewModel)

@@ -269,6 +269,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterMapper<MaitenanceRequestType, LookupBindingModel, MaintenanceRequestTypeLookupMapper>();
             kernel.RegisterMapper<MaintenanceRequestStatus, LookupBindingModel, MaintenanceRequestStatusLookupMapper>();
             kernel.RegisterMapper<Unit, LookupBindingModel, UnitLookupMapper>();
+            kernel.RegisterMapper<Property, PropertyIndexBindingModel, PropertyIndexMapper>();
             kernel.RegisterMapper<IncidentReportStatus, LookupBindingModel, IncidentStatusLookupMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
 
