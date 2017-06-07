@@ -116,6 +116,7 @@
     "skycons": "https://github.com/darkskyapp/skycons.git#7095ecf5f653dbcadbddb0d317b42e65fe091eae"
   },
   "devDependencies": {
+    "@angular/cli": "^1.1.0",
     "@angular/compiler-cli": "2.4.1",
     "@types/hammerjs": "2.0.33",
     "@types/node": "6.0.38",

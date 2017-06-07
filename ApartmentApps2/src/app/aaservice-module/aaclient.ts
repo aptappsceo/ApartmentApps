@@ -5,10 +5,12 @@
 // </auto-generated>
 //----------------------
 
-import 'rxjs/Rx'; 
+import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject, Optional, OpaqueToken } from '@angular/core';
 import { Http, Headers, Response, RequestOptionsArgs } from '@angular/http';
+import { BaseClient } from "app/aaservice-module/baseclient";
+import { UserContext } from "app/aaservice-module/usercontext";
 
 export const API_BASE_URL = new OpaqueToken('API_BASE_URL');
 
@@ -65,14 +67,14 @@ export interface IAccountClient {
 
 @Injectable()
 export class AccountClient extends BaseClient implements IAccountClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -83,12 +85,12 @@ export class AccountClient extends BaseClient implements IAccountClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(image);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -111,7 +113,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processSetProfilePicture(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -127,18 +129,18 @@ export class AccountClient extends BaseClient implements IAccountClient {
     getUserInfo(devicePlatform?: string, devicePushToken?: string): Observable<UserInfoViewModel> {
         let url_ = this.baseUrl + "/api/Account/UserInfo?";
         if (devicePlatform !== undefined)
-            url_ += "devicePlatform=" + encodeURIComponent("" + devicePlatform) + "&"; 
+            url_ += "devicePlatform=" + encodeURIComponent("" + devicePlatform) + "&";
         if (devicePushToken !== undefined)
-            url_ += "devicePushToken=" + encodeURIComponent("" + devicePushToken) + "&"; 
+            url_ += "devicePushToken=" + encodeURIComponent("" + devicePushToken) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -161,7 +163,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processGetUserInfo(response: Response): UserInfoViewModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: UserInfoViewModel | null = null;
@@ -182,12 +184,12 @@ export class AccountClient extends BaseClient implements IAccountClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -210,7 +212,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processLogout(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -237,18 +239,18 @@ export class AccountClient extends BaseClient implements IAccountClient {
         if (returnUrl === undefined || returnUrl === null)
             throw new Error("The parameter 'returnUrl' must be defined and cannot be null.");
         else
-            url_ += "returnUrl=" + encodeURIComponent("" + returnUrl) + "&"; 
+            url_ += "returnUrl=" + encodeURIComponent("" + returnUrl) + "&";
         if (generateState !== undefined)
-            url_ += "generateState=" + encodeURIComponent("" + generateState) + "&"; 
+            url_ += "generateState=" + encodeURIComponent("" + generateState) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -271,7 +273,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processGetManageInfo(response: Response): ManageInfoViewModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: ManageInfoViewModel | null = null;
@@ -292,12 +294,12 @@ export class AccountClient extends BaseClient implements IAccountClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(model ? model.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -320,7 +322,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processChangePassword(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -347,12 +349,12 @@ export class AccountClient extends BaseClient implements IAccountClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(model ? model.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -375,7 +377,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processSetPassword(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -402,12 +404,12 @@ export class AccountClient extends BaseClient implements IAccountClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(model ? model.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -430,7 +432,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processAddExternalLogin(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -457,12 +459,12 @@ export class AccountClient extends BaseClient implements IAccountClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(model ? model.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -485,7 +487,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processRemoveLogin(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -512,18 +514,18 @@ export class AccountClient extends BaseClient implements IAccountClient {
         if (provider === undefined || provider === null)
             throw new Error("The parameter 'provider' must be defined and cannot be null.");
         else
-            url_ += "provider=" + encodeURIComponent("" + provider) + "&"; 
+            url_ += "provider=" + encodeURIComponent("" + provider) + "&";
         if (error !== undefined)
-            url_ += "error=" + encodeURIComponent("" + error) + "&"; 
+            url_ += "error=" + encodeURIComponent("" + error) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -546,7 +548,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processGetExternalLogin(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -573,18 +575,18 @@ export class AccountClient extends BaseClient implements IAccountClient {
         if (returnUrl === undefined || returnUrl === null)
             throw new Error("The parameter 'returnUrl' must be defined and cannot be null.");
         else
-            url_ += "returnUrl=" + encodeURIComponent("" + returnUrl) + "&"; 
+            url_ += "returnUrl=" + encodeURIComponent("" + returnUrl) + "&";
         if (generateState !== undefined)
-            url_ += "generateState=" + encodeURIComponent("" + generateState) + "&"; 
+            url_ += "generateState=" + encodeURIComponent("" + generateState) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -607,7 +609,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processGetExternalLogins(response: Response): ExternalLoginViewModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: ExternalLoginViewModel[] | null = null;
@@ -632,12 +634,12 @@ export class AccountClient extends BaseClient implements IAccountClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(model ? model.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -660,7 +662,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processRegisterFromPhone(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -687,12 +689,12 @@ export class AccountClient extends BaseClient implements IAccountClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(model ? model.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -715,7 +717,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
 
     protected processRegisterExternal(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -759,14 +761,14 @@ export interface IAlertsClient {
 
 @Injectable()
 export class AlertsClient extends BaseClient implements IAlertsClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -777,12 +779,12 @@ export class AlertsClient extends BaseClient implements IAlertsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -805,7 +807,7 @@ export class AlertsClient extends BaseClient implements IAlertsClient {
 
     protected processGet(response: Response): AlertBindingModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: AlertBindingModel[] | null = null;
@@ -830,16 +832,16 @@ export class AlertsClient extends BaseClient implements IAlertsClient {
         if (alertId === undefined || alertId === null)
             throw new Error("The parameter 'alertId' must be defined and cannot be null.");
         else
-            url_ += "alertId=" + encodeURIComponent("" + alertId) + "&"; 
+            url_ += "alertId=" + encodeURIComponent("" + alertId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -862,7 +864,7 @@ export class AlertsClient extends BaseClient implements IAlertsClient {
 
     protected processPost(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -880,12 +882,12 @@ export class AlertsClient extends BaseClient implements IAlertsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "head",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -908,7 +910,7 @@ export class AlertsClient extends BaseClient implements IAlertsClient {
 
     protected processGetCount(response: Response): AlertsCountBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: AlertsCountBindingModel | null = null;
@@ -942,14 +944,14 @@ export interface ICheckinsClient {
 
 @Injectable()
 export class CheckinsClient extends BaseClient implements ICheckinsClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -960,12 +962,12 @@ export class CheckinsClient extends BaseClient implements ICheckinsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -988,7 +990,7 @@ export class CheckinsClient extends BaseClient implements ICheckinsClient {
 
     protected processGet(response: Response): CourtesyCheckinBindingModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: CourtesyCheckinBindingModel[] | null = null;
@@ -1013,20 +1015,20 @@ export class CheckinsClient extends BaseClient implements ICheckinsClient {
         if (locationId === undefined || locationId === null)
             throw new Error("The parameter 'locationId' must be defined and cannot be null.");
         else
-            url_ += "locationId=" + encodeURIComponent("" + locationId) + "&"; 
+            url_ += "locationId=" + encodeURIComponent("" + locationId) + "&";
         if (latitude !== undefined)
-            url_ += "latitude=" + encodeURIComponent("" + latitude) + "&"; 
+            url_ += "latitude=" + encodeURIComponent("" + latitude) + "&";
         if (longitude !== undefined)
-            url_ += "longitude=" + encodeURIComponent("" + longitude) + "&"; 
+            url_ += "longitude=" + encodeURIComponent("" + longitude) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1049,7 +1051,7 @@ export class CheckinsClient extends BaseClient implements ICheckinsClient {
 
     protected processPost(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -1093,14 +1095,14 @@ export interface IConfigureClient {
 
 @Injectable()
 export class ConfigureClient extends BaseClient implements IConfigureClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -1111,26 +1113,26 @@ export class ConfigureClient extends BaseClient implements IConfigureClient {
         if (qrCode === undefined || qrCode === null)
             throw new Error("The parameter 'qrCode' must be defined and cannot be null.");
         else
-            url_ += "qrCode=" + encodeURIComponent("" + qrCode) + "&"; 
+            url_ += "qrCode=" + encodeURIComponent("" + qrCode) + "&";
         if (latitude === undefined || latitude === null)
             throw new Error("The parameter 'latitude' must be defined and cannot be null.");
         else
-            url_ += "latitude=" + encodeURIComponent("" + latitude) + "&"; 
+            url_ += "latitude=" + encodeURIComponent("" + latitude) + "&";
         if (longitude === undefined || longitude === null)
             throw new Error("The parameter 'longitude' must be defined and cannot be null.");
         else
-            url_ += "longitude=" + encodeURIComponent("" + longitude) + "&"; 
+            url_ += "longitude=" + encodeURIComponent("" + longitude) + "&";
         if (label !== undefined)
-            url_ += "label=" + encodeURIComponent("" + label) + "&"; 
+            url_ += "label=" + encodeURIComponent("" + label) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1153,7 +1155,7 @@ export class ConfigureClient extends BaseClient implements IConfigureClient {
 
     protected processAddLocation(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -1171,12 +1173,12 @@ export class ConfigureClient extends BaseClient implements IConfigureClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1199,7 +1201,7 @@ export class ConfigureClient extends BaseClient implements IConfigureClient {
 
     protected processGetLocations(response: Response): LocationBindingModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: LocationBindingModel[] | null = null;
@@ -1224,20 +1226,20 @@ export class ConfigureClient extends BaseClient implements IConfigureClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         if (type === undefined || type === null)
             throw new Error("The parameter 'type' must be defined and cannot be null.");
         else
-            url_ += "type=" + encodeURIComponent("" + type) + "&"; 
+            url_ += "type=" + encodeURIComponent("" + type) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1260,7 +1262,7 @@ export class ConfigureClient extends BaseClient implements IConfigureClient {
 
     protected processDeleteLocation(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -1315,14 +1317,14 @@ export interface ICourtesyClient {
 
 @Injectable()
 export class CourtesyClient extends BaseClient implements ICourtesyClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -1331,16 +1333,16 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
     incidentStatuses(query?: string): Observable<QueryResultOfLookupBindingModel> {
         let url_ = this.baseUrl + "/api/Courtesy/IncidentStatuses?";
         if (query !== undefined)
-            url_ += "query=" + encodeURIComponent("" + query) + "&"; 
+            url_ += "query=" + encodeURIComponent("" + query) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1363,7 +1365,7 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
 
     protected processIncidentStatuses(response: Response): QueryResultOfLookupBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: QueryResultOfLookupBindingModel | null = null;
@@ -1384,12 +1386,12 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1412,7 +1414,7 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
 
     protected processListRequests(response: Response): IncidentIndexBindingModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: IncidentIndexBindingModel[] | null = null;
@@ -1437,16 +1439,16 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1469,7 +1471,7 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
 
     protected processGet(response: Response): IncidentReportBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: IncidentReportBindingModel | null = null;
@@ -1490,20 +1492,20 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         if (unitId === undefined || unitId === null)
             throw new Error("The parameter 'unitId' must be defined and cannot be null.");
         else
-            url_ += "unitId=" + encodeURIComponent("" + unitId) + "&"; 
+            url_ += "unitId=" + encodeURIComponent("" + unitId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1526,7 +1528,7 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
 
     protected processAssignUnitToIncidentReport(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -1544,12 +1546,12 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request ? request.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1572,7 +1574,7 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
 
     protected processSubmitIncidentReport(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -1590,20 +1592,20 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         if (comments === undefined || comments === null)
             throw new Error("The parameter 'comments' must be defined and cannot be null.");
         else
-            url_ += "comments=" + encodeURIComponent("" + comments) + "&"; 
+            url_ += "comments=" + encodeURIComponent("" + comments) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(images);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1626,7 +1628,7 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
 
     protected processOpenIncidentReport(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -1644,20 +1646,20 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         if (comments === undefined || comments === null)
             throw new Error("The parameter 'comments' must be defined and cannot be null.");
         else
-            url_ += "comments=" + encodeURIComponent("" + comments) + "&"; 
+            url_ += "comments=" + encodeURIComponent("" + comments) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(images);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1680,7 +1682,7 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
 
     protected processPauseIncidentReport(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -1698,20 +1700,20 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         if (comments === undefined || comments === null)
             throw new Error("The parameter 'comments' must be defined and cannot be null.");
         else
-            url_ += "comments=" + encodeURIComponent("" + comments) + "&"; 
+            url_ += "comments=" + encodeURIComponent("" + comments) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(images);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1734,7 +1736,7 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
 
     protected processCloseIncidentReport(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -1773,14 +1775,14 @@ export interface IInspectionsClient {
 
 @Injectable()
 export class InspectionsClient extends BaseClient implements IInspectionsClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -1791,12 +1793,12 @@ export class InspectionsClient extends BaseClient implements IInspectionsClient 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1819,7 +1821,7 @@ export class InspectionsClient extends BaseClient implements IInspectionsClient 
 
     protected processGet(response: Response): InspectionViewModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: InspectionViewModel[] | null = null;
@@ -1844,16 +1846,16 @@ export class InspectionsClient extends BaseClient implements IInspectionsClient 
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1876,7 +1878,7 @@ export class InspectionsClient extends BaseClient implements IInspectionsClient 
 
     protected processStartInspection(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -1894,16 +1896,16 @@ export class InspectionsClient extends BaseClient implements IInspectionsClient 
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1926,7 +1928,7 @@ export class InspectionsClient extends BaseClient implements IInspectionsClient 
 
     protected processPauseInspection(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -1944,12 +1946,12 @@ export class InspectionsClient extends BaseClient implements IInspectionsClient 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(finishInspectionViewModel ? finishInspectionViewModel.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -1972,7 +1974,7 @@ export class InspectionsClient extends BaseClient implements IInspectionsClient 
 
     protected processFinishInspection(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -2019,14 +2021,14 @@ export interface ILookupsClient {
 
 @Injectable()
 export class LookupsClient extends BaseClient implements ILookupsClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -2037,20 +2039,20 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
         if (type === undefined || type === null)
             throw new Error("The parameter 'type' must be defined and cannot be null.");
         else
-            url_ += "type=" + encodeURIComponent("" + type) + "&"; 
+            url_ += "type=" + encodeURIComponent("" + type) + "&";
         if (search === undefined || search === null)
             throw new Error("The parameter 'search' must be defined and cannot be null.");
         else
-            url_ += "search=" + encodeURIComponent("" + search) + "&"; 
+            url_ += "search=" + encodeURIComponent("" + search) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2073,7 +2075,7 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
 
     protected processGetLookups(response: Response): QueryResultOfLookupBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: QueryResultOfLookupBindingModel | null = null;
@@ -2092,16 +2094,16 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
     maintenanceRequestType(query?: string): Observable<QueryResultOfLookupBindingModel> {
         let url_ = this.baseUrl + "/api/Lookups/MaintenanceRequestType?";
         if (query !== undefined)
-            url_ += "query=" + encodeURIComponent("" + query) + "&"; 
+            url_ += "query=" + encodeURIComponent("" + query) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2124,7 +2126,7 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
 
     protected processMaintenanceRequestType(response: Response): QueryResultOfLookupBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: QueryResultOfLookupBindingModel | null = null;
@@ -2143,16 +2145,16 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
     maintenanceRequestStatus(query?: string): Observable<QueryResultOfLookupBindingModel> {
         let url_ = this.baseUrl + "/api/Lookups/MaintenanceRequestStatus?";
         if (query !== undefined)
-            url_ += "query=" + encodeURIComponent("" + query) + "&"; 
+            url_ += "query=" + encodeURIComponent("" + query) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2175,7 +2177,7 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
 
     protected processMaintenanceRequestStatus(response: Response): QueryResultOfLookupBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: QueryResultOfLookupBindingModel | null = null;
@@ -2194,16 +2196,16 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
     lookupUnits(query?: string): Observable<QueryResultOfLookupBindingModel> {
         let url_ = this.baseUrl + "/api/Lookups/LookupUnits?";
         if (query !== undefined)
-            url_ += "query=" + encodeURIComponent("" + query) + "&"; 
+            url_ += "query=" + encodeURIComponent("" + query) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2226,7 +2228,7 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
 
     protected processLookupUnits(response: Response): QueryResultOfLookupBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: QueryResultOfLookupBindingModel | null = null;
@@ -2245,16 +2247,16 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
     users(query?: string): Observable<QueryResultOfLookupBindingModel> {
         let url_ = this.baseUrl + "/api/Lookups/Users?";
         if (query !== undefined)
-            url_ += "query=" + encodeURIComponent("" + query) + "&"; 
+            url_ += "query=" + encodeURIComponent("" + query) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2277,7 +2279,7 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
 
     protected processUsers(response: Response): QueryResultOfLookupBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: QueryResultOfLookupBindingModel | null = null;
@@ -2298,12 +2300,12 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2326,7 +2328,7 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
 
     protected processGetUnits(response: Response): LookupPairModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: LookupPairModel[] | null = null;
@@ -2400,14 +2402,14 @@ export interface IMaitenanceClient {
 
 @Injectable()
 export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -2418,12 +2420,12 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2446,7 +2448,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processListRequests(response: Response): MaintenanceIndexBindingModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: MaintenanceIndexBindingModel[] | null = null;
@@ -2471,16 +2473,16 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2503,7 +2505,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processGet(response: Response): MaintenanceBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: MaintenanceBindingModel | null = null;
@@ -2524,12 +2526,12 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(query ? query.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2552,7 +2554,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processFetch(response: Response): QueryResultOfMaintenanceRequestViewModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: QueryResultOfMaintenanceRequestViewModel | null = null;
@@ -2573,20 +2575,20 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         if (scheduleDate === undefined || scheduleDate === null)
             throw new Error("The parameter 'scheduleDate' must be defined and cannot be null.");
         else
-            url_ += "scheduleDate=" + encodeURIComponent("" + scheduleDate.toJSON()) + "&"; 
+            url_ += "scheduleDate=" + encodeURIComponent("" + scheduleDate.toJSON()) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2609,7 +2611,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processScheduleRequest(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -2627,12 +2629,12 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request ? request.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2655,7 +2657,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processSubmitRequest(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -2673,20 +2675,20 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         if (comments === undefined || comments === null)
             throw new Error("The parameter 'comments' must be defined and cannot be null.");
         else
-            url_ += "comments=" + encodeURIComponent("" + comments) + "&"; 
+            url_ += "comments=" + encodeURIComponent("" + comments) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(images);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2709,7 +2711,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processCompleteRequest(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -2727,20 +2729,20 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         if (comments === undefined || comments === null)
             throw new Error("The parameter 'comments' must be defined and cannot be null.");
         else
-            url_ += "comments=" + encodeURIComponent("" + comments) + "&"; 
+            url_ += "comments=" + encodeURIComponent("" + comments) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(images);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2763,7 +2765,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processPauseRequest(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -2781,20 +2783,20 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         if (comments === undefined || comments === null)
             throw new Error("The parameter 'comments' must be defined and cannot be null.");
         else
-            url_ += "comments=" + encodeURIComponent("" + comments) + "&"; 
+            url_ += "comments=" + encodeURIComponent("" + comments) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(images);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2817,7 +2819,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processStartRequest(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -2835,12 +2837,12 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2863,7 +2865,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processGetMaitenanceRequestTypes(response: Response): LookupPairModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: LookupPairModel[] | null = null;
@@ -2888,16 +2890,16 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         if (workerId === undefined || workerId === null)
             throw new Error("The parameter 'workerId' must be defined and cannot be null.");
         else
-            url_ += "workerId=" + encodeURIComponent("" + workerId) + "&"; 
+            url_ += "workerId=" + encodeURIComponent("" + workerId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2920,7 +2922,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processGetWorkOrders(response: Response): MaitenanceRequest[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: MaitenanceRequest[] | null = null;
@@ -2945,16 +2947,16 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
         if (workerId === undefined || workerId === null)
             throw new Error("The parameter 'workerId' must be defined and cannot be null.");
         else
-            url_ += "workerId=" + encodeURIComponent("" + workerId) + "&"; 
+            url_ += "workerId=" + encodeURIComponent("" + workerId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -2977,7 +2979,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
 
     protected processGetByResident(response: Response): MaitenanceRequest[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: MaitenanceRequest[] | null = null;
@@ -3011,14 +3013,14 @@ export interface IMessagingClient {
 
 @Injectable()
 export class MessagingClient extends BaseClient implements IMessagingClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -3028,16 +3030,16 @@ export class MessagingClient extends BaseClient implements IMessagingClient {
         let url_ = this.baseUrl + "/api/Messaging/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3060,7 +3062,7 @@ export class MessagingClient extends BaseClient implements IMessagingClient {
 
     protected processGetMessage(response: Response): AlertBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: AlertBindingModel | null = null;
@@ -3090,14 +3092,14 @@ export interface INotifiationsClient {
 
 @Injectable()
 export class NotifiationsClient extends BaseClient implements INotifiationsClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -3108,20 +3110,20 @@ export class NotifiationsClient extends BaseClient implements INotifiationsClien
         if (pns === undefined || pns === null)
             throw new Error("The parameter 'pns' must be defined and cannot be null.");
         else
-            url_ += "pns=" + encodeURIComponent("" + pns) + "&"; 
+            url_ += "pns=" + encodeURIComponent("" + pns) + "&";
         if (to_tag === undefined || to_tag === null)
             throw new Error("The parameter 'to_tag' must be defined and cannot be null.");
         else
-            url_ += "to_tag=" + encodeURIComponent("" + to_tag) + "&"; 
+            url_ += "to_tag=" + encodeURIComponent("" + to_tag) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(message);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3144,7 +3146,7 @@ export class NotifiationsClient extends BaseClient implements INotifiationsClien
 
     protected processPost(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -3208,14 +3210,14 @@ export interface IPaymentsClient {
 
 @Injectable()
 export class PaymentsClient extends BaseClient implements IPaymentsClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -3226,12 +3228,12 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(addCreditCard ? addCreditCard.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3254,7 +3256,7 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
 
     protected processAddCreditCard(response: Response): AddCreditCardResult {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: AddCreditCardResult | null = null;
@@ -3275,12 +3277,12 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(addBankAccount ? addBankAccount.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3303,7 +3305,7 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
 
     protected processAddBankAccount(response: Response): AddBankAccountResult {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: AddBankAccountResult | null = null;
@@ -3324,12 +3326,12 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3352,7 +3354,7 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
 
     protected processGetPaymentOptions(response: Response): PaymentOptionBindingModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: PaymentOptionBindingModel[] | null = null;
@@ -3377,12 +3379,12 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3405,7 +3407,7 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
 
     protected processGetPaymentHistory(response: Response): any[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any[] | null = null;
@@ -3430,12 +3432,12 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3458,7 +3460,7 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
 
     protected processGetRentSummary(response: Response): PaymentListBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: PaymentListBindingModel | null = null;
@@ -3479,16 +3481,16 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
         if (paymentOptionId === undefined || paymentOptionId === null)
             throw new Error("The parameter 'paymentOptionId' must be defined and cannot be null.");
         else
-            url_ += "paymentOptionId=" + encodeURIComponent("" + paymentOptionId) + "&"; 
+            url_ += "paymentOptionId=" + encodeURIComponent("" + paymentOptionId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3511,7 +3513,7 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
 
     protected processGetPaymentSummary(response: Response): PaymentListBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: PaymentListBindingModel | null = null;
@@ -3532,12 +3534,12 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(makePaymentBindingModel ? makePaymentBindingModel.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3560,7 +3562,7 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
 
     protected processMakePayment(response: Response): MakePaymentResult {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: MakePaymentResult | null = null;
@@ -3581,12 +3583,12 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3609,7 +3611,7 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
 
     protected processUpdateForteState(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -3681,14 +3683,14 @@ export interface IPropertyClient {
 
 @Injectable()
 export class PropertyClient extends BaseClient implements IPropertyClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -3699,16 +3701,16 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3731,7 +3733,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
 
     protected processEntry(response: Response): PropertyIndexBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: PropertyIndexBindingModel | null = null;
@@ -3752,16 +3754,16 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3784,7 +3786,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
 
     protected processDelete(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -3811,12 +3813,12 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(entry ? entry.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3839,7 +3841,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
 
     protected processSave(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -3866,12 +3868,12 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(entry ? entry.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3894,7 +3896,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
 
     protected processSave2(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -3921,12 +3923,12 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(query ? query.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -3949,7 +3951,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
 
     protected processToExcel(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -3976,12 +3978,12 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(query ? query.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4004,7 +4006,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
 
     protected processToExcel2(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -4031,12 +4033,12 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(query ? query.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4059,7 +4061,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
 
     protected processToPDF(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -4086,12 +4088,12 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(query ? query.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4114,7 +4116,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
 
     protected processToPDF2(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -4141,16 +4143,16 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4173,7 +4175,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
 
     protected processActivate(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -4200,12 +4202,12 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(query ? query.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4228,7 +4230,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
 
     protected processFetch(response: Response): QueryResultOfPropertyIndexBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: QueryResultOfPropertyIndexBindingModel | null = null;
@@ -4286,14 +4288,14 @@ export interface IProspectClient {
 
 @Injectable()
 export class ProspectClient extends BaseClient implements IProspectClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -4304,12 +4306,12 @@ export class ProspectClient extends BaseClient implements IProspectClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(vm ? vm.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4332,7 +4334,7 @@ export class ProspectClient extends BaseClient implements IProspectClient {
 
     protected processSubmitApplicant(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -4359,12 +4361,12 @@ export class ProspectClient extends BaseClient implements IProspectClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(base64Image);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4387,7 +4389,7 @@ export class ProspectClient extends BaseClient implements IProspectClient {
 
     protected processScanId(response: Response): ScanIdResult {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: ScanIdResult | null = null;
@@ -4408,12 +4410,12 @@ export class ProspectClient extends BaseClient implements IProspectClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(text);
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4436,7 +4438,7 @@ export class ProspectClient extends BaseClient implements IProspectClient {
 
     protected processScanIdByText(response: Response): ScanIdResult {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: ScanIdResult | null = null;
@@ -4457,12 +4459,12 @@ export class ProspectClient extends BaseClient implements IProspectClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4485,7 +4487,7 @@ export class ProspectClient extends BaseClient implements IProspectClient {
 
     protected processGetDesiredPropertyTypes(response: Response): LookupPairModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: LookupPairModel[] | null = null;
@@ -4510,12 +4512,12 @@ export class ProspectClient extends BaseClient implements IProspectClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4538,7 +4540,7 @@ export class ProspectClient extends BaseClient implements IProspectClient {
 
     protected processGetHowdYouHereAboutUsItems(response: Response): LookupPairModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: LookupPairModel[] | null = null;
@@ -4563,12 +4565,12 @@ export class ProspectClient extends BaseClient implements IProspectClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4591,7 +4593,7 @@ export class ProspectClient extends BaseClient implements IProspectClient {
 
     protected processGetProspectApplications(response: Response): ProspectApplicationBindingModel[] {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: ProspectApplicationBindingModel[] | null = null;
@@ -4616,16 +4618,16 @@ export class ProspectClient extends BaseClient implements IProspectClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4648,7 +4650,7 @@ export class ProspectClient extends BaseClient implements IProspectClient {
 
     protected processGetProspectApplication(response: Response): ProspectApplicationBindingModel {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: ProspectApplicationBindingModel | null = null;
@@ -4669,16 +4671,16 @@ export class ProspectClient extends BaseClient implements IProspectClient {
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4701,7 +4703,7 @@ export class ProspectClient extends BaseClient implements IProspectClient {
 
     protected processDelete(response: Response): void {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 204) {
             return null;
@@ -4736,14 +4738,14 @@ export interface IRegisterClient {
 
 @Injectable()
 export class RegisterClient extends BaseClient implements IRegisterClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -4752,16 +4754,16 @@ export class RegisterClient extends BaseClient implements IRegisterClient {
     post(handle?: string): Observable<string> {
         let url_ = this.baseUrl + "/api/Register?";
         if (handle !== undefined)
-            url_ += "handle=" + encodeURIComponent("" + handle) + "&"; 
+            url_ += "handle=" + encodeURIComponent("" + handle) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "post",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4784,7 +4786,7 @@ export class RegisterClient extends BaseClient implements IRegisterClient {
 
     protected processPost(response: Response): string {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: string | null = null;
@@ -4804,16 +4806,16 @@ export class RegisterClient extends BaseClient implements IRegisterClient {
         let url_ = this.baseUrl + "/api/Register/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(deviceUpdate ? deviceUpdate.toJS() : null);
-        
+
         let options_ = {
             body: content_,
             method: "put",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4836,7 +4838,7 @@ export class RegisterClient extends BaseClient implements IRegisterClient {
 
     protected processPut(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -4862,16 +4864,16 @@ export class RegisterClient extends BaseClient implements IRegisterClient {
         let url_ = this.baseUrl + "/api/Register/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "delete",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4894,7 +4896,7 @@ export class RegisterClient extends BaseClient implements IRegisterClient {
 
     protected processDelete(response: Response): any {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: any | null = null;
@@ -4930,14 +4932,14 @@ export interface ISearchEnginesClient {
 
 @Injectable()
 export class SearchEnginesClient extends BaseClient implements ISearchEnginesClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -4948,16 +4950,16 @@ export class SearchEnginesClient extends BaseClient implements ISearchEnginesCli
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -4980,7 +4982,7 @@ export class SearchEnginesClient extends BaseClient implements ISearchEnginesCli
 
     protected processGetSearchModel(response: Response): SearchModelGetResponse {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: SearchModelGetResponse | null = null;
@@ -5010,14 +5012,14 @@ export interface IVersionClient {
 
 @Injectable()
 export class VersionClient extends BaseClient implements IVersionClient {
-    private http: Http = null; 
-    private baseUrl: string | undefined = undefined; 
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
-        this.http = http; 
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com"; 
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -5028,12 +5030,12 @@ export class VersionClient extends BaseClient implements IVersionClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = "";
-        
+
         let options_ = {
             body: content_,
             method: "get",
             headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8", 
+                "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
             })
         };
@@ -5056,7 +5058,7 @@ export class VersionClient extends BaseClient implements IVersionClient {
 
     protected processGet(response: Response): VersionInfo {
         const responseText = response.text();
-        const status = response.status; 
+        const status = response.status;
 
         if (status === 200) {
             let result200: VersionInfo | null = null;
@@ -5128,7 +5130,7 @@ export class UserInfoViewModel {
         data["LastName"] = this.lastName !== undefined ? this.lastName : undefined;
         data["FullName"] = this.fullName !== undefined ? this.fullName : undefined;
         data["PropertyConfig"] = this.propertyConfig ? this.propertyConfig.toJS() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5157,7 +5159,7 @@ export class PropertyConfig {
     toJS(data?: any) {
         data = data === undefined ? {} : data;
         data["ModuleInfo"] = this.moduleInfo ? this.moduleInfo.toJS() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5201,7 +5203,7 @@ export class ModuleInfo {
         data["MaintenanceConfig"] = this.maintenanceConfig ? this.maintenanceConfig.toJS() : undefined;
         data["ProspectConfig"] = this.prospectConfig ? this.prospectConfig.toJS() : undefined;
         data["CompanySettingsConfig"] = this.companySettingsConfig ? this.companySettingsConfig.toJS() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5275,7 +5277,7 @@ export class PaymentsConfig {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5328,7 +5330,7 @@ export class MessagingConfig {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5366,7 +5368,7 @@ export class CourtesyConfig {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5419,7 +5421,7 @@ export class MaintenanceConfig {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5457,7 +5459,7 @@ export class ProspectModuleConfig {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5498,7 +5500,7 @@ export class CompanySettingsConfig {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5552,7 +5554,7 @@ export class ManageInfoViewModel {
             for (let item of this.externalLoginProviders)
                 data["ExternalLoginProviders"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5584,7 +5586,7 @@ export class UserLoginInfoViewModel {
         data = data === undefined ? {} : data;
         data["LoginProvider"] = this.loginProvider !== undefined ? this.loginProvider : undefined;
         data["ProviderKey"] = this.providerKey !== undefined ? this.providerKey : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5619,7 +5621,7 @@ export class ExternalLoginViewModel {
         data["Name"] = this.name !== undefined ? this.name : undefined;
         data["Url"] = this.url !== undefined ? this.url : undefined;
         data["State"] = this.state !== undefined ? this.state : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5654,7 +5656,7 @@ export class ChangePasswordBindingModel {
         data["OldPassword"] = this.oldPassword !== undefined ? this.oldPassword : undefined;
         data["NewPassword"] = this.newPassword !== undefined ? this.newPassword : undefined;
         data["ConfirmPassword"] = this.confirmPassword !== undefined ? this.confirmPassword : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5686,7 +5688,7 @@ export class SetPasswordBindingModel {
         data = data === undefined ? {} : data;
         data["NewPassword"] = this.newPassword !== undefined ? this.newPassword : undefined;
         data["ConfirmPassword"] = this.confirmPassword !== undefined ? this.confirmPassword : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5715,7 +5717,7 @@ export class AddExternalLoginBindingModel {
     toJS(data?: any) {
         data = data === undefined ? {} : data;
         data["ExternalAccessToken"] = this.externalAccessToken !== undefined ? this.externalAccessToken : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5747,7 +5749,7 @@ export class RemoveLoginBindingModel {
         data = data === undefined ? {} : data;
         data["LoginProvider"] = this.loginProvider !== undefined ? this.loginProvider : undefined;
         data["ProviderKey"] = this.providerKey !== undefined ? this.providerKey : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5791,7 +5793,7 @@ export class RegisterFromPhoneBindingModel {
         data["PhoneNumber"] = this.phoneNumber !== undefined ? this.phoneNumber : undefined;
         data["FirstName"] = this.firstName !== undefined ? this.firstName : undefined;
         data["LastName"] = this.lastName !== undefined ? this.lastName : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5820,7 +5822,7 @@ export class RegisterExternalBindingModel {
     toJS(data?: any) {
         data = data === undefined ? {} : data;
         data["Email"] = this.email !== undefined ? this.email : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5867,7 +5869,7 @@ export class AlertBindingModel {
         data["RelatedId"] = this.relatedId !== undefined ? this.relatedId : undefined;
         data["HasRead"] = this.hasRead !== undefined ? this.hasRead : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5896,7 +5898,7 @@ export class AlertsCountBindingModel {
     toJS(data?: any) {
         data = data === undefined ? {} : data;
         data["TotalUnread"] = this.totalUnread !== undefined ? this.totalUnread : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -5954,7 +5956,7 @@ export class CourtesyCheckinBindingModel {
         data["Complete"] = this.complete !== undefined ? this.complete : undefined;
         data["Date"] = this.date ? this.date.toISOString() : undefined;
         data["Officer"] = this.officer ? this.officer.toJS() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6050,7 +6052,7 @@ export class UserBindingModel {
             for (let item of this.actionLinks)
                 data["ActionLinks"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6118,7 +6120,7 @@ export class ActionLinkModel {
         data["Allowed"] = this.allowed !== undefined ? this.allowed : undefined;
         data["Index"] = this.index !== undefined ? this.index : undefined;
         data["Icon"] = this.icon !== undefined ? this.icon : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6159,7 +6161,7 @@ export class LocationBindingModel {
         data["Longitude"] = this.longitude !== undefined ? this.longitude : undefined;
         data["Type"] = this.type !== undefined ? this.type : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6199,7 +6201,7 @@ export class QueryResultOfLookupBindingModel {
             for (let item of this.result)
                 data["Result"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6243,7 +6245,7 @@ export class LookupBindingModel {
         data["TextSecondary"] = this.textSecondary !== undefined ? this.textSecondary : undefined;
         data["ImageUrl"] = this.imageUrl !== undefined ? this.imageUrl : undefined;
         data["Selected"] = this.selected !== undefined ? this.selected : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6310,7 +6312,7 @@ export class IncidentIndexBindingModel {
             for (let item of this.actionLinks)
                 data["ActionLinks"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6359,7 +6361,7 @@ export class IncidentCheckinBindingModel {
                 data["Photos"].push(item.toJS());
         }
         data["Officer"] = this.officer ? this.officer.toJS() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6400,7 +6402,7 @@ export class ImageReference {
         data["ThumbnailUrl"] = this.thumbnailUrl !== undefined ? this.thumbnailUrl : undefined;
         data["Name"] = this.name !== undefined ? this.name : undefined;
         data["GroupId"] = this.groupId !== undefined ? this.groupId : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6481,7 +6483,7 @@ export class IncidentReportBindingModel {
         data["RequesterPhoneNumber"] = this.requesterPhoneNumber !== undefined ? this.requesterPhoneNumber : undefined;
         data["UnitId"] = this.unitId !== undefined ? this.unitId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6524,7 +6526,7 @@ export class IncidentReportModel {
             for (let item of this.images)
                 data["Images"].push(item);
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6597,7 +6599,7 @@ export class InspectionViewModel {
             for (let item of this.actionLinks)
                 data["ActionLinks"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6640,7 +6642,7 @@ export class FinishInspectionViewModel {
                 data["Answers"].push(item.toJS());
         }
         data["Status"] = this.status !== undefined ? this.status : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6686,7 +6688,7 @@ export class InspectionCategoryAnswerViewModel {
                 data["Answers"].push(item.toJS());
         }
         data["Status"] = this.status !== undefined ? this.status : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6718,7 +6720,7 @@ export class InspectionAnswerViewModel {
         data = data === undefined ? {} : data;
         data["QuestionId"] = this.questionId !== undefined ? this.questionId : undefined;
         data["Value"] = this.value !== undefined ? this.value : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6750,7 +6752,7 @@ export class LookupPairModel {
         data = data === undefined ? {} : data;
         data["Key"] = this.key !== undefined ? this.key : undefined;
         data["Value"] = this.value !== undefined ? this.value : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6814,7 +6816,7 @@ export class MaintenanceIndexBindingModel {
             for (let item of this.actionLinks)
                 data["ActionLinks"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6863,7 +6865,7 @@ export class MaintenanceCheckinBindingModel {
                 data["Photos"].push(item.toJS());
         }
         data["Worker"] = this.worker ? this.worker.toJS() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -6967,7 +6969,7 @@ export class MaintenanceBindingModel {
         data["CanPause"] = this.canPause !== undefined ? this.canPause : undefined;
         data["CanSchedule"] = this.canSchedule !== undefined ? this.canSchedule : undefined;
         data["CanStart"] = this.canStart !== undefined ? this.canStart : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7014,7 +7016,7 @@ export class Query {
             }
         }
         data["Search"] = this.search ? this.search.toJS() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7046,7 +7048,7 @@ export class Navigation {
         data = data === undefined ? {} : data;
         data["Skip"] = this.skip !== undefined ? this.skip : undefined;
         data["Take"] = this.take !== undefined ? this.take : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7086,7 +7088,7 @@ export class Search {
             for (let item of this.filters)
                 data["Filters"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7118,7 +7120,7 @@ export class FilterData {
         data = data === undefined ? {} : data;
         data["FilterId"] = this.filterId !== undefined ? this.filterId : undefined;
         data["JsonValue"] = this.jsonValue !== undefined ? this.jsonValue : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7158,7 +7160,7 @@ export class QueryResultOfMaintenanceRequestViewModel {
             for (let item of this.result)
                 data["Result"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7292,7 +7294,7 @@ export class MaintenanceRequestViewModel {
             for (let item of this.actionLinks)
                 data["ActionLinks"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7347,7 +7349,7 @@ export class MaitenanceRequestModel {
             for (let item of this.images)
                 data["Images"].push(item);
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7477,7 +7479,7 @@ export class MaitenanceRequest {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7684,7 +7686,7 @@ export class ApplicationUser {
                 data["Logins"].push(item.toJS());
         }
         data["UserName"] = this.userName !== undefined ? this.userName : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7759,7 +7761,7 @@ export class Unit {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7791,7 +7793,7 @@ export class MaitenanceRequestType {
         data = data === undefined ? {} : data;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["Name"] = this.name !== undefined ? this.name : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7874,7 +7876,7 @@ export class MaintenanceRequestCheckin {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -7903,7 +7905,7 @@ export class MaintenanceRequestStatus {
     toJS(data?: any) {
         data = data === undefined ? {} : data;
         data["Name"] = this.name !== undefined ? this.name : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8009,7 +8011,7 @@ export class Property {
                 data["Users"].push(item.toJS());
         }
         data["State"] = this.state !== undefined ? this.state : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8068,7 +8070,7 @@ export class UserAlert {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8100,7 +8102,7 @@ export class IdentityUserRole {
         data = data === undefined ? {} : data;
         data["UserId"] = this.userId !== undefined ? this.userId : undefined;
         data["RoleId"] = this.roleId !== undefined ? this.roleId : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8138,7 +8140,7 @@ export class IdentityUserClaim {
         data["UserId"] = this.userId !== undefined ? this.userId : undefined;
         data["ClaimType"] = this.claimType !== undefined ? this.claimType : undefined;
         data["ClaimValue"] = this.claimValue !== undefined ? this.claimValue : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8173,7 +8175,7 @@ export class IdentityUserLogin {
         data["LoginProvider"] = this.loginProvider !== undefined ? this.loginProvider : undefined;
         data["ProviderKey"] = this.providerKey !== undefined ? this.providerKey : undefined;
         data["UserId"] = this.userId !== undefined ? this.userId : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8225,7 +8227,7 @@ export class Building {
         data["PropertyId"] = this.propertyId !== undefined ? this.propertyId : undefined;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["CreateDate"] = this.createDate ? this.createDate.toISOString() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8271,7 +8273,7 @@ export class Corporation {
             for (let item of this.properties)
                 data["Properties"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8312,7 +8314,7 @@ export class PropertyAddon {
         data["Property"] = this.property ? this.property.toJS() : undefined;
         data["PropertyIntegrationTypeId"] = this.propertyIntegrationTypeId !== undefined ? this.propertyIntegrationTypeId : undefined;
         data["AddonType"] = this.addonType ? this.addonType.toJS() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8344,7 +8346,7 @@ export class PropertyAddonType {
         data = data === undefined ? {} : data;
         data["Id"] = this.id !== undefined ? this.id : undefined;
         data["Name"] = this.name !== undefined ? this.name : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8405,7 +8407,7 @@ export class AddCreditCardBindingModel {
             for (let item of this.users)
                 data["Users"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8448,7 +8450,7 @@ export class UserLookupBindingModel {
             for (let item of this.actionLinks)
                 data["ActionLinks"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8480,7 +8482,7 @@ export class AddCreditCardResult {
         data = data === undefined ? {} : data;
         data["ErrorMessage"] = this.errorMessage !== undefined ? this.errorMessage : undefined;
         data["PaymentOptionId"] = this.paymentOptionId !== undefined ? this.paymentOptionId : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8535,7 +8537,7 @@ export class AddBankAccountBindingModel {
             for (let item of this.users)
                 data["Users"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8567,7 +8569,7 @@ export class AddBankAccountResult {
         data = data === undefined ? {} : data;
         data["ErrorMessage"] = this.errorMessage !== undefined ? this.errorMessage : undefined;
         data["PaymentOptionId"] = this.paymentOptionId !== undefined ? this.paymentOptionId : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8619,7 +8621,7 @@ export class PaymentOptionBindingModel {
             for (let item of this.actionLinks)
                 data["ActionLinks"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8659,7 +8661,7 @@ export class PaymentListBindingModel {
                 data["Items"].push(item.toJS());
         }
         data["IsEmpty"] = this.isEmpty !== undefined ? this.isEmpty : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8694,7 +8696,7 @@ export class PaymentLineBindingModel {
         data["Title"] = this.title !== undefined ? this.title : undefined;
         data["Price"] = this.price !== undefined ? this.price : undefined;
         data["Format"] = this.format !== undefined ? this.format : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8726,7 +8728,7 @@ export class MakePaymentBindingModel {
         data = data === undefined ? {} : data;
         data["PaymentOptionId"] = this.paymentOptionId !== undefined ? this.paymentOptionId : undefined;
         data["UserId"] = this.userId !== undefined ? this.userId : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8755,7 +8757,7 @@ export class MakePaymentResult {
     toJS(data?: any) {
         data = data === undefined ? {} : data;
         data["ErrorMessage"] = this.errorMessage !== undefined ? this.errorMessage : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8810,7 +8812,7 @@ export class PropertyIndexBindingModel {
             for (let item of this.actionLinks)
                 data["ActionLinks"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8850,7 +8852,7 @@ export class QueryResultOfPropertyIndexBindingModel {
             for (let item of this.result)
                 data["Result"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -8929,7 +8931,7 @@ export class ProspectApplicationBindingModel {
             for (let item of this.actionLinks)
                 data["ActionLinks"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -9027,7 +9029,7 @@ export class ScanIdResult {
         data["Race"] = this.race !== undefined ? this.race : undefined;
         data["VehicleClassCode"] = this.vehicleClassCode !== undefined ? this.vehicleClassCode : undefined;
         data["VehicleClassCodeDescription"] = this.vehicleClassCodeDescription !== undefined ? this.vehicleClassCodeDescription : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -9070,7 +9072,7 @@ export class DeviceRegistration {
             for (let item of this.tags)
                 data["Tags"].push(item);
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -9099,7 +9101,7 @@ export class SearchModelGetResponse {
     toJS(data?: any) {
         data = data === undefined ? {} : data;
         data["Model"] = this.model ? this.model.toJS() : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -9139,7 +9141,7 @@ export class ClientSearchModel {
             for (let item of this.filters)
                 data["Filters"].push(item.toJS());
         }
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -9186,7 +9188,7 @@ export class ClientSearchFilterModel {
         data["EditorType"] = this.editorType !== undefined ? this.editorType : undefined;
         data["DefaultActive"] = this.defaultActive !== undefined ? this.defaultActive : undefined;
         data["DataSourceType"] = this.dataSourceType !== undefined ? this.dataSourceType : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -9227,7 +9229,7 @@ export class VersionInfo {
         data["Version"] = this.version !== undefined ? this.version : undefined;
         data["IPhoneBuildNumber"] = this.iPhoneBuildNumber !== undefined ? this.iPhoneBuildNumber : undefined;
         data["AndroidBuildNumber"] = this.androidBuildNumber !== undefined ? this.androidBuildNumber : undefined;
-        return data; 
+        return data;
     }
 
     toJSON() {
@@ -9241,98 +9243,98 @@ export class VersionInfo {
 }
 
 export enum IncidentReportModelIncidentReportTypeId {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
 }
 
 export enum InspectionViewModelStatus {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
 }
 
 export enum FinishInspectionViewModelStatus {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
 }
 
 export enum InspectionCategoryAnswerViewModelStatus {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
 }
 
 export enum MaitenanceRequestType2 {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
 }
 
 export enum MaitenanceRequestSubmittedVia {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
-    _4 = 4, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+    _4 = 4,
 }
 
 export enum MaintenanceRequestCheckinType {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
 }
 
 export enum PropertyState {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
-    _4 = 4, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+    _4 = 4,
 }
 
 export enum AddCreditCardBindingModelCardType {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
-    _4 = 4, 
-    _5 = 5, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+    _4 = 4,
+    _5 = 5,
 }
 
 export enum PaymentOptionBindingModelType {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
-    _4 = 4, 
-    _5 = 5, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+    _4 = 4,
+    _5 = 5,
 }
 
 export enum PaymentLineBindingModelFormat {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
 }
 
 export enum PropertyIndexBindingModelStatus {
-    _0 = 0, 
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
-    _4 = 4, 
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+    _4 = 4,
 }
 
 export class SwaggerException extends Error {
     message: string;
-    status: number; 
-    response: string; 
-    result: any; 
+    status: number;
+    response: string;
+    result: any;
 
     constructor(message: string, status: number, response: string, result: any) {
         super();

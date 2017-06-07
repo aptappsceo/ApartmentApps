@@ -11,10 +11,14 @@ import { SearchPanelComponent } from 'app/aacore/search-panel/search-panel.compo
 import { FormsModule } from '@angular/forms';
 import {Select2Module} from 'ng2-select2';
 import { SearchPageComponent } from "app/aacore/search-page-component";
+import { PropertiesFormComponent } from './properties/properties-form/properties-form.component';
+import { PropertiesListComponent } from './properties/properties-list/properties-list.component';
+import { PropertiesPageComponent } from './properties/properties-page/properties-page.component';
 require('../../assets/select2.full.min.js');
 
 export const corproutes = [
   { path: 'corporations', component: CorporationsPageComponent},
+  { path: 'properties', component: PropertiesPageComponent},
   { path: 'userprofile', component: UserProfileComponent },
 ];
 
@@ -24,7 +28,7 @@ export const corproutes = [
       FormsModule,
       RouterModule.forChild(corproutes),
       PaginationModule.forRoot(),
-      Select2Module //, TagInputModule
+      Select2Module
   ],
   declarations: [
     CorporationsListComponent,
@@ -32,6 +36,9 @@ export const corproutes = [
     CorporationsPageComponent,
     UserProfileComponent,
     SearchPanelComponent,
+    PropertiesFormComponent,
+    PropertiesListComponent,
+    PropertiesPageComponent,
     ],
     exports: [
       SearchPanelComponent,
