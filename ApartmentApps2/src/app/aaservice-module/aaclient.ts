@@ -74,7 +74,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -768,7 +768,7 @@ export class AlertsClient extends BaseClient implements IAlertsClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -951,7 +951,7 @@ export class CheckinsClient extends BaseClient implements ICheckinsClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -1102,7 +1102,7 @@ export class ConfigureClient extends BaseClient implements IConfigureClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -1280,7 +1280,628 @@ export class ConfigureClient extends BaseClient implements IConfigureClient {
     }
 }
 
+export interface ICorporationClient {
+    /**
+     * @return OK
+     */
+    entry(id: string): Observable<CorporationIndexBindingModel>;
+    /**
+     * @return OK
+     */
+    delete(id: string): Observable<any>;
+    /**
+     * @return OK
+     */
+    save(entry: CorporationIndexBindingModel): Observable<any>;
+    /**
+     * @return OK
+     */
+    save2(entry: CorporationIndexBindingModel): Observable<any>;
+    /**
+     * @return OK
+     */
+    toExcel(query: Query): Observable<any>;
+    /**
+     * @return OK
+     */
+    toExcel2(query: Query): Observable<any>;
+    /**
+     * @return OK
+     */
+    toPDF(query: Query): Observable<any>;
+    /**
+     * @return OK
+     */
+    toPDF2(query: Query): Observable<any>;
+    /**
+     * @return OK
+     */
+    activate(id: string): Observable<any>;
+    /**
+     * @return OK
+     */
+    fetch(query: Query): Observable<QueryResultOfCorporationIndexBindingModel>;
+}
+
+@Injectable()
+export class CorporationClient extends BaseClient implements ICorporationClient {
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+    }
+
+    /**
+     * @return OK
+     */
+    entry(id: string): Observable<CorporationIndexBindingModel> {
+        let url_ = this.baseUrl + "/api/Corporation/entry?";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processEntry(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processEntry(response));
+                } catch (e) {
+                    return <Observable<CorporationIndexBindingModel>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<CorporationIndexBindingModel>><any>Observable.throw(response);
+        });
+    }
+
+    protected processEntry(response: Response): CorporationIndexBindingModel {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: CorporationIndexBindingModel | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? CorporationIndexBindingModel.fromJS(resultData200) : new CorporationIndexBindingModel();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    delete(id: string): Observable<any> {
+        let url_ = this.baseUrl + "/api/Corporation/delete?";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processDelete(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processDelete(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processDelete(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    save(entry: CorporationIndexBindingModel): Observable<any> {
+        let url_ = this.baseUrl + "/api/Corporation/save";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(entry ? entry.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processSave(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processSave(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processSave(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    save2(entry: CorporationIndexBindingModel): Observable<any> {
+        let url_ = this.baseUrl + "/api/Corporation/save";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(entry ? entry.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processSave2(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processSave2(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processSave2(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    toExcel(query: Query): Observable<any> {
+        let url_ = this.baseUrl + "/api/Corporation/excel";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query ? query.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processToExcel(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processToExcel(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processToExcel(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    toExcel2(query: Query): Observable<any> {
+        let url_ = this.baseUrl + "/api/Corporation/excel";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query ? query.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processToExcel2(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processToExcel2(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processToExcel2(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    toPDF(query: Query): Observable<any> {
+        let url_ = this.baseUrl + "/api/Corporation/pdf";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query ? query.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processToPDF(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processToPDF(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processToPDF(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    toPDF2(query: Query): Observable<any> {
+        let url_ = this.baseUrl + "/api/Corporation/pdf";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query ? query.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processToPDF2(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processToPDF2(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processToPDF2(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    activate(id: string): Observable<any> {
+        let url_ = this.baseUrl + "/api/Corporation/activate?";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processActivate(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processActivate(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processActivate(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    fetch(query: Query): Observable<QueryResultOfCorporationIndexBindingModel> {
+        let url_ = this.baseUrl + "/api/Corporation";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query ? query.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processFetch(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processFetch(response));
+                } catch (e) {
+                    return <Observable<QueryResultOfCorporationIndexBindingModel>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<QueryResultOfCorporationIndexBindingModel>><any>Observable.throw(response);
+        });
+    }
+
+    protected processFetch(response: Response): QueryResultOfCorporationIndexBindingModel {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: QueryResultOfCorporationIndexBindingModel | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? QueryResultOfCorporationIndexBindingModel.fromJS(resultData200) : new QueryResultOfCorporationIndexBindingModel();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    protected throwException(message: string, status: number, response: string, result?: any): any {
+        if(result !== null && result !== undefined)
+            throw result;
+        else
+            throw new SwaggerException(message, status, response, null);
+    }
+}
+
 export interface ICourtesyClient {
+    /**
+     * @return OK
+     */
+    fetch(query: Query): Observable<QueryResultOfIncidentReportViewModel>;
+    /**
+     * @return OK
+     */
+    fetch2(query: Query): Observable<QueryResultOfIncidentReportViewModel>;
     /**
      * @return OK
      */
@@ -1324,7 +1945,105 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+    }
+
+    /**
+     * @return OK
+     */
+    fetch(query: Query): Observable<QueryResultOfIncidentReportViewModel> {
+        let url_ = this.baseUrl + "/api/Courtesy/fetch";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query ? query.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processFetch(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processFetch(response));
+                } catch (e) {
+                    return <Observable<QueryResultOfIncidentReportViewModel>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<QueryResultOfIncidentReportViewModel>><any>Observable.throw(response);
+        });
+    }
+
+    protected processFetch(response: Response): QueryResultOfIncidentReportViewModel {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: QueryResultOfIncidentReportViewModel | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? QueryResultOfIncidentReportViewModel.fromJS(resultData200) : new QueryResultOfIncidentReportViewModel();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    fetch2(query: Query): Observable<QueryResultOfIncidentReportViewModel> {
+        let url_ = this.baseUrl + "/api/Courtesy/fetch";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query ? query.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processFetch2(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processFetch2(response));
+                } catch (e) {
+                    return <Observable<QueryResultOfIncidentReportViewModel>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<QueryResultOfIncidentReportViewModel>><any>Observable.throw(response);
+        });
+    }
+
+    protected processFetch2(response: Response): QueryResultOfIncidentReportViewModel {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: QueryResultOfIncidentReportViewModel | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? QueryResultOfIncidentReportViewModel.fromJS(resultData200) : new QueryResultOfIncidentReportViewModel();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
     }
 
     /**
@@ -1782,7 +2501,7 @@ export class InspectionsClient extends BaseClient implements IInspectionsClient 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -2028,7 +2747,7 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -2409,7 +3128,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -3020,7 +3739,7 @@ export class MessagingClient extends BaseClient implements IMessagingClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -3099,7 +3818,7 @@ export class NotifiationsClient extends BaseClient implements INotifiationsClien
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -3217,7 +3936,7 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -3690,7 +4409,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -4295,7 +5014,7 @@ export class ProspectClient extends BaseClient implements IProspectClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -4745,7 +5464,7 @@ export class RegisterClient extends BaseClient implements IRegisterClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -4939,7 +5658,7 @@ export class SearchEnginesClient extends BaseClient implements ISearchEnginesCli
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -5019,7 +5738,7 @@ export class VersionClient extends BaseClient implements IVersionClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
     }
 
     /**
@@ -6174,6 +6893,448 @@ export class LocationBindingModel {
     }
 }
 
+export class CorporationIndexBindingModel {
+    propertyCount: number | null | undefined;
+    id: string | null | undefined;
+    title: string | null | undefined;
+    actionLinks: ActionLinkModel[] | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.propertyCount = data["PropertyCount"] !== undefined ? data["PropertyCount"] : undefined;
+            this.id = data["Id"] !== undefined ? data["Id"] : undefined;
+            this.title = data["Title"] !== undefined ? data["Title"] : undefined;
+            if (data["ActionLinks"] && data["ActionLinks"].constructor === Array) {
+                this.actionLinks = [];
+                for (let item of data["ActionLinks"])
+                    this.actionLinks.push(ActionLinkModel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): CorporationIndexBindingModel {
+        return new CorporationIndexBindingModel(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["PropertyCount"] = this.propertyCount !== undefined ? this.propertyCount : undefined;
+        data["Id"] = this.id !== undefined ? this.id : undefined;
+        data["Title"] = this.title !== undefined ? this.title : undefined;
+        if (this.actionLinks && this.actionLinks.constructor === Array) {
+            data["ActionLinks"] = [];
+            for (let item of this.actionLinks)
+                data["ActionLinks"].push(item.toJS());
+        }
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new CorporationIndexBindingModel(JSON.parse(json));
+    }
+}
+
+export class Query {
+    navigation: Navigation | null | undefined;
+    order: any | null | undefined;
+    search: Search | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.navigation = data["Navigation"] ? Navigation.fromJS(data["Navigation"]) : undefined;
+            if (data["Order"]) {
+                this.order = {};
+                for (let key in data["Order"]) {
+                    if (data["Order"].hasOwnProperty(key))
+                        this.order[key] = data["Order"][key] !== undefined ? data["Order"][key] : undefined;
+                }
+            }
+            this.search = data["Search"] ? Search.fromJS(data["Search"]) : undefined;
+        }
+    }
+
+    static fromJS(data: any): Query {
+        return new Query(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["Navigation"] = this.navigation ? this.navigation.toJS() : undefined;
+        if (this.order) {
+            data["Order"] = {};
+            for (let key in this.order) {
+                if (this.order.hasOwnProperty(key))
+                    data["Order"][key] = this.order[key] !== undefined ? this.order[key] : undefined;
+            }
+        }
+        data["Search"] = this.search ? this.search.toJS() : undefined;
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new Query(JSON.parse(json));
+    }
+}
+
+export class Navigation {
+    skip: number | null | undefined;
+    take: number | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.skip = data["Skip"] !== undefined ? data["Skip"] : undefined;
+            this.take = data["Take"] !== undefined ? data["Take"] : undefined;
+        }
+    }
+
+    static fromJS(data: any): Navigation {
+        return new Navigation(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["Skip"] = this.skip !== undefined ? this.skip : undefined;
+        data["Take"] = this.take !== undefined ? this.take : undefined;
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new Navigation(JSON.parse(json));
+    }
+}
+
+export class Search {
+    engineId: string | null | undefined;
+    filters: FilterData[] | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.engineId = data["EngineId"] !== undefined ? data["EngineId"] : undefined;
+            if (data["Filters"] && data["Filters"].constructor === Array) {
+                this.filters = [];
+                for (let item of data["Filters"])
+                    this.filters.push(FilterData.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): Search {
+        return new Search(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["EngineId"] = this.engineId !== undefined ? this.engineId : undefined;
+        if (this.filters && this.filters.constructor === Array) {
+            data["Filters"] = [];
+            for (let item of this.filters)
+                data["Filters"].push(item.toJS());
+        }
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new Search(JSON.parse(json));
+    }
+}
+
+export class FilterData {
+    filterId: string | null | undefined;
+    jsonValue: string | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.filterId = data["FilterId"] !== undefined ? data["FilterId"] : undefined;
+            this.jsonValue = data["JsonValue"] !== undefined ? data["JsonValue"] : undefined;
+        }
+    }
+
+    static fromJS(data: any): FilterData {
+        return new FilterData(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["FilterId"] = this.filterId !== undefined ? this.filterId : undefined;
+        data["JsonValue"] = this.jsonValue !== undefined ? this.jsonValue : undefined;
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new FilterData(JSON.parse(json));
+    }
+}
+
+export class QueryResultOfCorporationIndexBindingModel {
+    total: number | null | undefined;
+    result: CorporationIndexBindingModel[] | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.total = data["Total"] !== undefined ? data["Total"] : undefined;
+            if (data["Result"] && data["Result"].constructor === Array) {
+                this.result = [];
+                for (let item of data["Result"])
+                    this.result.push(CorporationIndexBindingModel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): QueryResultOfCorporationIndexBindingModel {
+        return new QueryResultOfCorporationIndexBindingModel(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["Total"] = this.total !== undefined ? this.total : undefined;
+        if (this.result && this.result.constructor === Array) {
+            data["Result"] = [];
+            for (let item of this.result)
+                data["Result"].push(item.toJS());
+        }
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new QueryResultOfCorporationIndexBindingModel(JSON.parse(json));
+    }
+}
+
+export class QueryResultOfIncidentReportViewModel {
+    total: number | null | undefined;
+    result: IncidentReportViewModel[] | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.total = data["Total"] !== undefined ? data["Total"] : undefined;
+            if (data["Result"] && data["Result"].constructor === Array) {
+                this.result = [];
+                for (let item of data["Result"])
+                    this.result.push(IncidentReportViewModel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): QueryResultOfIncidentReportViewModel {
+        return new QueryResultOfIncidentReportViewModel(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["Total"] = this.total !== undefined ? this.total : undefined;
+        if (this.result && this.result.constructor === Array) {
+            data["Result"] = [];
+            for (let item of this.result)
+                data["Result"].push(item.toJS());
+        }
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new QueryResultOfIncidentReportViewModel(JSON.parse(json));
+    }
+}
+
+export class IncidentReportViewModel {
+    title: string | null | undefined;
+    requestDate: Date | null | undefined;
+    comments: string | null | undefined;
+    submissionBy: UserBindingModel | null | undefined;
+    statusId: string | null | undefined;
+    unitName: string | null | undefined;
+    buildingName: string | null | undefined;
+    latestCheckin: IncidentCheckinBindingModel | null | undefined;
+    checkins: IncidentCheckinBindingModel[] | null | undefined;
+    id: string | null | undefined;
+    actionLinks: ActionLinkModel[] | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.title = data["Title"] !== undefined ? data["Title"] : undefined;
+            this.requestDate = data["RequestDate"] ? new Date(data["RequestDate"].toString()) : undefined;
+            this.comments = data["Comments"] !== undefined ? data["Comments"] : undefined;
+            this.submissionBy = data["SubmissionBy"] ? UserBindingModel.fromJS(data["SubmissionBy"]) : undefined;
+            this.statusId = data["StatusId"] !== undefined ? data["StatusId"] : undefined;
+            this.unitName = data["UnitName"] !== undefined ? data["UnitName"] : undefined;
+            this.buildingName = data["BuildingName"] !== undefined ? data["BuildingName"] : undefined;
+            this.latestCheckin = data["LatestCheckin"] ? IncidentCheckinBindingModel.fromJS(data["LatestCheckin"]) : undefined;
+            if (data["Checkins"] && data["Checkins"].constructor === Array) {
+                this.checkins = [];
+                for (let item of data["Checkins"])
+                    this.checkins.push(IncidentCheckinBindingModel.fromJS(item));
+            }
+            this.id = data["Id"] !== undefined ? data["Id"] : undefined;
+            if (data["ActionLinks"] && data["ActionLinks"].constructor === Array) {
+                this.actionLinks = [];
+                for (let item of data["ActionLinks"])
+                    this.actionLinks.push(ActionLinkModel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): IncidentReportViewModel {
+        return new IncidentReportViewModel(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["Title"] = this.title !== undefined ? this.title : undefined;
+        data["RequestDate"] = this.requestDate ? this.requestDate.toISOString() : undefined;
+        data["Comments"] = this.comments !== undefined ? this.comments : undefined;
+        data["SubmissionBy"] = this.submissionBy ? this.submissionBy.toJS() : undefined;
+        data["StatusId"] = this.statusId !== undefined ? this.statusId : undefined;
+        data["UnitName"] = this.unitName !== undefined ? this.unitName : undefined;
+        data["BuildingName"] = this.buildingName !== undefined ? this.buildingName : undefined;
+        data["LatestCheckin"] = this.latestCheckin ? this.latestCheckin.toJS() : undefined;
+        if (this.checkins && this.checkins.constructor === Array) {
+            data["Checkins"] = [];
+            for (let item of this.checkins)
+                data["Checkins"].push(item.toJS());
+        }
+        data["Id"] = this.id !== undefined ? this.id : undefined;
+        if (this.actionLinks && this.actionLinks.constructor === Array) {
+            data["ActionLinks"] = [];
+            for (let item of this.actionLinks)
+                data["ActionLinks"].push(item.toJS());
+        }
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new IncidentReportViewModel(JSON.parse(json));
+    }
+}
+
+export class IncidentCheckinBindingModel {
+    statusId: string | null | undefined;
+    date: Date | null | undefined;
+    comments: string | null | undefined;
+    photos: ImageReference[] | null | undefined;
+    officer: UserBindingModel | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.statusId = data["StatusId"] !== undefined ? data["StatusId"] : undefined;
+            this.date = data["Date"] ? new Date(data["Date"].toString()) : undefined;
+            this.comments = data["Comments"] !== undefined ? data["Comments"] : undefined;
+            if (data["Photos"] && data["Photos"].constructor === Array) {
+                this.photos = [];
+                for (let item of data["Photos"])
+                    this.photos.push(ImageReference.fromJS(item));
+            }
+            this.officer = data["Officer"] ? UserBindingModel.fromJS(data["Officer"]) : undefined;
+        }
+    }
+
+    static fromJS(data: any): IncidentCheckinBindingModel {
+        return new IncidentCheckinBindingModel(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["StatusId"] = this.statusId !== undefined ? this.statusId : undefined;
+        data["Date"] = this.date ? this.date.toISOString() : undefined;
+        data["Comments"] = this.comments !== undefined ? this.comments : undefined;
+        if (this.photos && this.photos.constructor === Array) {
+            data["Photos"] = [];
+            for (let item of this.photos)
+                data["Photos"].push(item.toJS());
+        }
+        data["Officer"] = this.officer ? this.officer.toJS() : undefined;
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new IncidentCheckinBindingModel(JSON.parse(json));
+    }
+}
+
+export class ImageReference {
+    id: number | null | undefined;
+    url: string | null | undefined;
+    thumbnailUrl: string | null | undefined;
+    name: string | null | undefined;
+    groupId: string | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.id = data["Id"] !== undefined ? data["Id"] : undefined;
+            this.url = data["Url"] !== undefined ? data["Url"] : undefined;
+            this.thumbnailUrl = data["ThumbnailUrl"] !== undefined ? data["ThumbnailUrl"] : undefined;
+            this.name = data["Name"] !== undefined ? data["Name"] : undefined;
+            this.groupId = data["GroupId"] !== undefined ? data["GroupId"] : undefined;
+        }
+    }
+
+    static fromJS(data: any): ImageReference {
+        return new ImageReference(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["Id"] = this.id !== undefined ? this.id : undefined;
+        data["Url"] = this.url !== undefined ? this.url : undefined;
+        data["ThumbnailUrl"] = this.thumbnailUrl !== undefined ? this.thumbnailUrl : undefined;
+        data["Name"] = this.name !== undefined ? this.name : undefined;
+        data["GroupId"] = this.groupId !== undefined ? this.groupId : undefined;
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new ImageReference(JSON.parse(json));
+    }
+}
+
 export class QueryResultOfLookupBindingModel {
     total: number | null | undefined;
     result: LookupBindingModel[] | null | undefined;
@@ -6322,96 +7483,6 @@ export class IncidentIndexBindingModel {
     clone() {
         const json = this.toJSON();
         return new IncidentIndexBindingModel(JSON.parse(json));
-    }
-}
-
-export class IncidentCheckinBindingModel {
-    statusId: string | null | undefined;
-    date: Date | null | undefined;
-    comments: string | null | undefined;
-    photos: ImageReference[] | null | undefined;
-    officer: UserBindingModel | null | undefined;
-
-    constructor(data?: any) {
-        if (data !== undefined) {
-            this.statusId = data["StatusId"] !== undefined ? data["StatusId"] : undefined;
-            this.date = data["Date"] ? new Date(data["Date"].toString()) : undefined;
-            this.comments = data["Comments"] !== undefined ? data["Comments"] : undefined;
-            if (data["Photos"] && data["Photos"].constructor === Array) {
-                this.photos = [];
-                for (let item of data["Photos"])
-                    this.photos.push(ImageReference.fromJS(item));
-            }
-            this.officer = data["Officer"] ? UserBindingModel.fromJS(data["Officer"]) : undefined;
-        }
-    }
-
-    static fromJS(data: any): IncidentCheckinBindingModel {
-        return new IncidentCheckinBindingModel(data);
-    }
-
-    toJS(data?: any) {
-        data = data === undefined ? {} : data;
-        data["StatusId"] = this.statusId !== undefined ? this.statusId : undefined;
-        data["Date"] = this.date ? this.date.toISOString() : undefined;
-        data["Comments"] = this.comments !== undefined ? this.comments : undefined;
-        if (this.photos && this.photos.constructor === Array) {
-            data["Photos"] = [];
-            for (let item of this.photos)
-                data["Photos"].push(item.toJS());
-        }
-        data["Officer"] = this.officer ? this.officer.toJS() : undefined;
-        return data;
-    }
-
-    toJSON() {
-        return JSON.stringify(this.toJS());
-    }
-
-    clone() {
-        const json = this.toJSON();
-        return new IncidentCheckinBindingModel(JSON.parse(json));
-    }
-}
-
-export class ImageReference {
-    id: number | null | undefined;
-    url: string | null | undefined;
-    thumbnailUrl: string | null | undefined;
-    name: string | null | undefined;
-    groupId: string | null | undefined;
-
-    constructor(data?: any) {
-        if (data !== undefined) {
-            this.id = data["Id"] !== undefined ? data["Id"] : undefined;
-            this.url = data["Url"] !== undefined ? data["Url"] : undefined;
-            this.thumbnailUrl = data["ThumbnailUrl"] !== undefined ? data["ThumbnailUrl"] : undefined;
-            this.name = data["Name"] !== undefined ? data["Name"] : undefined;
-            this.groupId = data["GroupId"] !== undefined ? data["GroupId"] : undefined;
-        }
-    }
-
-    static fromJS(data: any): ImageReference {
-        return new ImageReference(data);
-    }
-
-    toJS(data?: any) {
-        data = data === undefined ? {} : data;
-        data["Id"] = this.id !== undefined ? this.id : undefined;
-        data["Url"] = this.url !== undefined ? this.url : undefined;
-        data["ThumbnailUrl"] = this.thumbnailUrl !== undefined ? this.thumbnailUrl : undefined;
-        data["Name"] = this.name !== undefined ? this.name : undefined;
-        data["GroupId"] = this.groupId !== undefined ? this.groupId : undefined;
-        return data;
-    }
-
-    toJSON() {
-        return JSON.stringify(this.toJS());
-    }
-
-    clone() {
-        const json = this.toJSON();
-        return new ImageReference(JSON.parse(json));
     }
 }
 
@@ -6979,157 +8050,6 @@ export class MaintenanceBindingModel {
     clone() {
         const json = this.toJSON();
         return new MaintenanceBindingModel(JSON.parse(json));
-    }
-}
-
-export class Query {
-    navigation: Navigation | null | undefined;
-    order: any | null | undefined;
-    search: Search | null | undefined;
-
-    constructor(data?: any) {
-        if (data !== undefined) {
-            this.navigation = data["Navigation"] ? Navigation.fromJS(data["Navigation"]) : undefined;
-            if (data["Order"]) {
-                this.order = {};
-                for (let key in data["Order"]) {
-                    if (data["Order"].hasOwnProperty(key))
-                        this.order[key] = data["Order"][key] !== undefined ? data["Order"][key] : undefined;
-                }
-            }
-            this.search = data["Search"] ? Search.fromJS(data["Search"]) : undefined;
-        }
-    }
-
-    static fromJS(data: any): Query {
-        return new Query(data);
-    }
-
-    toJS(data?: any) {
-        data = data === undefined ? {} : data;
-        data["Navigation"] = this.navigation ? this.navigation.toJS() : undefined;
-        if (this.order) {
-            data["Order"] = {};
-            for (let key in this.order) {
-                if (this.order.hasOwnProperty(key))
-                    data["Order"][key] = this.order[key] !== undefined ? this.order[key] : undefined;
-            }
-        }
-        data["Search"] = this.search ? this.search.toJS() : undefined;
-        return data;
-    }
-
-    toJSON() {
-        return JSON.stringify(this.toJS());
-    }
-
-    clone() {
-        const json = this.toJSON();
-        return new Query(JSON.parse(json));
-    }
-}
-
-export class Navigation {
-    skip: number | null | undefined;
-    take: number | null | undefined;
-
-    constructor(data?: any) {
-        if (data !== undefined) {
-            this.skip = data["Skip"] !== undefined ? data["Skip"] : undefined;
-            this.take = data["Take"] !== undefined ? data["Take"] : undefined;
-        }
-    }
-
-    static fromJS(data: any): Navigation {
-        return new Navigation(data);
-    }
-
-    toJS(data?: any) {
-        data = data === undefined ? {} : data;
-        data["Skip"] = this.skip !== undefined ? this.skip : undefined;
-        data["Take"] = this.take !== undefined ? this.take : undefined;
-        return data;
-    }
-
-    toJSON() {
-        return JSON.stringify(this.toJS());
-    }
-
-    clone() {
-        const json = this.toJSON();
-        return new Navigation(JSON.parse(json));
-    }
-}
-
-export class Search {
-    engineId: string | null | undefined;
-    filters: FilterData[] | null | undefined;
-
-    constructor(data?: any) {
-        if (data !== undefined) {
-            this.engineId = data["EngineId"] !== undefined ? data["EngineId"] : undefined;
-            if (data["Filters"] && data["Filters"].constructor === Array) {
-                this.filters = [];
-                for (let item of data["Filters"])
-                    this.filters.push(FilterData.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): Search {
-        return new Search(data);
-    }
-
-    toJS(data?: any) {
-        data = data === undefined ? {} : data;
-        data["EngineId"] = this.engineId !== undefined ? this.engineId : undefined;
-        if (this.filters && this.filters.constructor === Array) {
-            data["Filters"] = [];
-            for (let item of this.filters)
-                data["Filters"].push(item.toJS());
-        }
-        return data;
-    }
-
-    toJSON() {
-        return JSON.stringify(this.toJS());
-    }
-
-    clone() {
-        const json = this.toJSON();
-        return new Search(JSON.parse(json));
-    }
-}
-
-export class FilterData {
-    filterId: string | null | undefined;
-    jsonValue: string | null | undefined;
-
-    constructor(data?: any) {
-        if (data !== undefined) {
-            this.filterId = data["FilterId"] !== undefined ? data["FilterId"] : undefined;
-            this.jsonValue = data["JsonValue"] !== undefined ? data["JsonValue"] : undefined;
-        }
-    }
-
-    static fromJS(data: any): FilterData {
-        return new FilterData(data);
-    }
-
-    toJS(data?: any) {
-        data = data === undefined ? {} : data;
-        data["FilterId"] = this.filterId !== undefined ? this.filterId : undefined;
-        data["JsonValue"] = this.jsonValue !== undefined ? this.jsonValue : undefined;
-        return data;
-    }
-
-    toJSON() {
-        return JSON.stringify(this.toJS());
-    }
-
-    clone() {
-        const json = this.toJSON();
-        return new FilterData(JSON.parse(json));
     }
 }
 

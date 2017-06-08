@@ -14,10 +14,12 @@ import { FormsModule } from '@angular/forms';
 import { AACoreModule } from 'app/aacore/aacore.module';
 import { Select2Module } from 'ng2-select2';
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'angular2-schema-form';
+import { IncidentDetailsPageComponent } from './incident-details-page/incident-details-page.component';
 
 export const routes = [
   { path: 'checkins', component: CheckinsPageComponent },
   { path: 'incidents', component: IncidentReportsPageComponent },
+  { path: 'incident/:id', component: IncidentReportsPageComponent },
 ];
 @NgModule({
   imports: [
@@ -32,7 +34,8 @@ export const routes = [
     IncidentReportsListComponent,
     IncidentReportsPageComponent,
     CheckinsPageComponent,
-    CheckinsListComponent
+    CheckinsListComponent,
+    IncidentDetailsPageComponent
     ]
 })
 export class CourtesyOfficerModule {
