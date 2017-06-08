@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ApartmentApps.Api;
 using ApartmentApps.Api.DataSheets;
@@ -21,6 +22,15 @@ namespace ApartmentApps.Portal.Controllers
 
             return set.OrderBy(p => p.Name);
             //return base.DefaultOrderFilter(set, query);
+        }
+    }
+    public class PropertySearchEngine : SearchEngine<Corporation>
+    {
+
+        [Filter(nameof(SearchByStatus), "Search By Status", EditorTypes.CheckboxList, false, DataSource = nameof(Property), DataSourceType = typeof(PropertyState))]
+        public IQueryable<Property> SearchByStatus(IQueryable<Property> set, List<PropertyState> key)
+        {
+            return set.Where(item => key.Contains(item.State));
         }
     }
     public class PropertyService : StandardCrudService<Property>

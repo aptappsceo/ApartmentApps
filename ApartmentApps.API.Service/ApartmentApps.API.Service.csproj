@@ -317,6 +317,7 @@
     <Compile Include="Controllers\Api\CheckinsController - Copy.cs" />
     <Compile Include="Controllers\Api\CheckinsController.cs" />
     <Compile Include="Controllers\Api\ConfigureController.cs" />
+    <Compile Include="Controllers\Api\CorporationController.cs" />
     <Compile Include="Controllers\Api\CourtesyController.cs" />
     <Compile Include="Controllers\Api\FileResult.cs" />
     <Compile Include="Controllers\Api\MaitenanceController.cs" />

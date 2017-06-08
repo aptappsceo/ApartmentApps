@@ -95,7 +95,8 @@ namespace ApartmentApps.Data.DataSheet
                     Description = attribute.Description,
                     EditorType = attribute.EditorType
                 };
-                if (searchEngineFilterModel.DataSourceType.IsEnum)
+                
+                if (searchEngineFilterModel.DataSourceType != null && searchEngineFilterModel.DataSourceType.IsEnum)
                 {
                     searchEngineFilterModel.Lookups = new List<LookupBindingModel>();
                     foreach (var item in (Enum.GetNames(searchEngineFilterModel.DataSourceType)))
