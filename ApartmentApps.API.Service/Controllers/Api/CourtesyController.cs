@@ -67,7 +67,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("fetch")]
-        public async Task<QueryResult<TBindingModel>> Fetch(Query query)
+        public virtual async Task<QueryResult<TBindingModel>> Fetch(Query query)
         {
             var result = Kernel.Get<TService>().Query<TBindingModel>(query);
             return result;
@@ -216,7 +216,13 @@ namespace ApartmentApps.API.Service.Controllers.Api
         //{
         //    return Ok(IncidentsService.Query<IncidentReportViewModel>(query));
         //}
-
+        [Route("fetch", Name = nameof(Fetch))]
+        [HttpGet]
+        [ResponseType(typeof(QueryResult<IncidentReportViewModel>))]
+        public override Task<QueryResult<IncidentReportViewModel>> Fetch(Query query)
+        {
+            return base.Fetch(query);
+        }
 
 
         [Route("IncidentStatuses", Name = nameof(IncidentStatuses))]

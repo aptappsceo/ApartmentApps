@@ -13,6 +13,7 @@ using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
+
     public class CorporationsController : AAController
     {
     
