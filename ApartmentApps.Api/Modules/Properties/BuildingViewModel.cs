@@ -43,7 +43,7 @@ namespace ApartmentApps.Api.ViewModels
         {
             viewModel.Title = model.Name;
             viewModel.Id = model.Id.ToString();
-            viewModel.Corporation = model.Corporation.Name;
+            viewModel.Corporation = model.Corporation?.Name;
             viewModel.CorporationId = model.CorporationId;
             viewModel.Status = model.State;
         }

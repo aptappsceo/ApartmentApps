@@ -32,7 +32,7 @@ namespace ApartmentApps.Data
         public int CorporationId { get; set; }
 
         [ForeignKey("CorporationId")]
-        public Corporation Corporation { get; set; }
+        public virtual Corporation Corporation { get; set; }
 
         public virtual ICollection<PropertyAddon> PropertyAddons { get; set; }
 
