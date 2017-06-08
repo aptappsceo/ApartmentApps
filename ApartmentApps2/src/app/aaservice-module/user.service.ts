@@ -1,4 +1,4 @@
-import 'rxjs/Rx'; 
+import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject, Optional, OpaqueToken } from '@angular/core';
 import { UserContext } from './usercontext';
@@ -29,33 +29,32 @@ export class UserService {
                         ok(res);
                      }
                     console.log("Login Response", res);
-                    
+
                 },(x)=>{
                     err(x);
                 });
         });
     }
-    public Login(username:string,password:string) : Promise<UserInfoViewModel> {
-        return new Promise((resolve,reject)=>{
-            this.Authenticate(username,password)
-            .then((v)=>{
-                return this.RequestUserInfo().then((x)=>{ resolve(x); });
-            });  
+    public Login(username: string, password: string) : Promise<UserInfoViewModel> {
+        return new Promise((resolve, reject) => {
+            this.Authenticate(username, password)
+            .then((v) => {
+                return this.RequestUserInfo().then((x) => { resolve(x); });
+            });
         });
-         
     }
-    public Logout() : Promise<any> {
+    public Logout(): Promise<any> {
         this.userContext.UserToken = null;
         return Promise.resolve(true);
     }
-    public RequestUserInfo() : Promise<UserInfoViewModel> {
-        //if (this.userContext.UserToken == null || this.userContext.)
-        return new Promise<UserInfoViewModel>((ok,err)=>{
-            console.log("User Token", this.userContext.UserToken);
+    public RequestUserInfo(): Promise<UserInfoViewModel> {
+        // if (this.userContext.UserToken == null || this.userContext.)
+        return new Promise<UserInfoViewModel>((ok, err) => {
+            console.log('User Token', this.userContext.UserToken);
             if (this.userContext.UserInfo == null) {
-                this.accountClient.getUserInfo("portal", null)
-                        .subscribe(x=>{
-                            console.log("SDF",x);
+                this.accountClient.getUserInfo('portal', null)
+                        .subscribe(x => {
+                            console.log('SDF', x);
                             this.userContext.UserInfo = x;
                             ok(x);
                          });
@@ -63,8 +62,6 @@ export class UserService {
                 ok(this.userContext.UserInfo);
             }
         });
-     
     }
-    
 
 }

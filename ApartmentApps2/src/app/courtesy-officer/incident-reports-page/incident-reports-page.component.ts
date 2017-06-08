@@ -65,7 +65,7 @@ filtersUpdate() {
     return result;
   }
   mapComments(incident: IncidentReportViewModel): CommentItem[] {
-    return incident.checkins.map(x=>{
+    return incident.checkins.map(x => {
       let cmt = new CommentItem();
 
       cmt.comment = x.comments;

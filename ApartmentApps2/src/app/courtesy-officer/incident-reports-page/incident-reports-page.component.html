@@ -14,14 +14,16 @@
     </div>-->
         <div class="btn-group ">
           <button class="btn btn-success btn-small" (click)="lgModal.show()"><i class="glyphicon glyphicon-plus"></i> Create Incident Report</button>
-          <button class="btn btn-secondary btn-small" (click)="lgModal.show()"><i class="fa fa-file-excel-o"></i> Export To Excel</button>
-          <button class="btn btn-secondary btn-small" (click)="lgModal.show()"><i class="fa fa-file-pdf-o"></i> Export To PDF</button>
+          <!--<button class="btn btn-secondary btn-small" (click)="lgModal.show()"><i class="fa fa-file-excel-o"></i> Export To Excel</button>
+          <button class="btn btn-secondary btn-small" (click)="lgModal.show()"><i class="fa fa-file-pdf-o"></i> Export To PDF</button>-->
       </div>
 
 
     <div class="btn-group ml-auto">
-      <button class="btn btn-gray active" type="button"><i class="fa fa-th-list"></i></button>
-      <button class="btn btn-gray" type="button"><i class="fa fa-th-large"></i></button>
+       <button class="btn btn-gray" (click)="lgModal.show()"><i class="fa fa-file-excel-o"></i></button>
+          <button class="btn btn-gray" (click)="lgModal.show()"><i class="fa fa-file-pdf-o"></i></button>
+      <!--<button class="btn btn-gray" type="button"><i class="fa fa-th-list"></i></button>
+      <button class="btn btn-gray" type="button"><i class="fa fa-th-large"></i></button>-->
     </div>
   </div>
 </div>

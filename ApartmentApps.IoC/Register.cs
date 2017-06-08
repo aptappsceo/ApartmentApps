@@ -12,6 +12,7 @@ using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
 using ApartmentApps.Api.DataSheets;
 using ApartmentApps.Api.Modules;
+using ApartmentApps.Api.Modules.Corporations;
 using ApartmentApps.Api.NewFolder1;
 using ApartmentApps.Api.Services;
 using ApartmentApps.Api.ViewModels;
@@ -157,6 +158,7 @@ namespace ApartmentApps.IoC
             kernel.Bind<IDataSheet<IncidentReport>>().To<IncidentsDataSheet>().InRequestScope();
             kernel.Bind<IDataSheet<IncidentReportStatus>>().To<BaseDataSheet<IncidentReportStatus>>().InRequestScope();
             kernel.Bind<IDataSheet<Property>>().To<PropertyDataSheet>().InRequestScope();
+            kernel.Bind<IDataSheet<Corporation>>().To<CorporationDataSheet>().InRequestScope();
             
             kernel.Bind<IRazorEngineService>().ToMethod(x => AlertsModule.CreateRazorService()).InSingletonScope();
             kernel.Bind<IModuleHelper, ModuleHelper>().To<ModuleHelper>().InRequestScope();
@@ -272,6 +274,7 @@ namespace ApartmentApps.IoC
             kernel.RegisterMapper<Unit, LookupBindingModel, UnitLookupMapper>();
             kernel.RegisterMapper<Property, PropertyIndexBindingModel, PropertyIndexMapper>();
             kernel.RegisterMapper<IncidentReportStatus, LookupBindingModel, IncidentStatusLookupMapper>();
+            kernel.RegisterMapper<Corporation, CorporationIndexBindingModel, CorporationIndexMapper>();
            // kernel.RegisterMapper<Property,PropertyBindingModel,PropertyMapper>();
 
             //kernel.Bind<IServiceFor<NotificationViewModel>>().To<NotificationService>().InRequestScope();

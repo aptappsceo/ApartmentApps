@@ -83,7 +83,7 @@ namespace ApartmentApps.Data.DataSheet
                 Type argumentType = null;
                 var parameters = methodInfo.GetParameters().ToArray();
                 if (parameters.Length > 1) argumentType = parameters[1].ParameterType;
-                filtersCache.Add(attribute.Id, new SearchEngineFilterModel() //get all methods and cache the data
+                var searchEngineFilterModel = new SearchEngineFilterModel() //get all methods and cache the data
                 {
                     Id = attribute.Id,
                     MethodInfo = methodInfo,
@@ -94,7 +94,21 @@ namespace ApartmentApps.Data.DataSheet
                     DataSourceType = attribute.DataSourceType,
                     Description = attribute.Description,
                     EditorType = attribute.EditorType
-                });
+                };
+                if (searchEngineFilterModel.DataSourceType.IsEnum)
+                {
+                    searchEngineFilterModel.Lookups = new List<LookupBindingModel>();
+                    foreach (var item in (Enum.GetNames(searchEngineFilterModel.DataSourceType)))
+                    {
+                        searchEngineFilterModel.Lookups.Add(new LookupBindingModel()
+                        {
+                            Id = item,
+                            Title = item,
+                            TextPrimary = item
+                        });
+                    }
+                }
+                filtersCache.Add(attribute.Id, searchEngineFilterModel);
             }
 
             return model;
@@ -250,6 +264,7 @@ namespace ApartmentApps.Data.DataSheet
         public string EditorType { get; set; }
         public bool DefaultActive { get; set; }
         public Type ArgumentType { get; set; }
+        public List<LookupBindingModel> Lookups { get; set; }
     }
 
     public class FilterAttribute : Attribute

@@ -14,6 +14,7 @@ import { SearchPageComponent } from "app/aacore/search-page-component";
 import { PropertiesFormComponent } from './properties/properties-form/properties-form.component';
 import { PropertiesListComponent } from './properties/properties-list/properties-list.component';
 import { PropertiesPageComponent } from './properties/properties-page/properties-page.component';
+import { WidgetsModule } from "app/widgets/widgets.module";
 require('../../assets/select2.full.min.js');
 
 export const corproutes = [
@@ -28,7 +29,8 @@ export const corproutes = [
       FormsModule,
       RouterModule.forChild(corproutes),
       PaginationModule.forRoot(),
-      Select2Module
+      Select2Module,
+      WidgetsModule,
   ],
   declarations: [
     CorporationsListComponent,
