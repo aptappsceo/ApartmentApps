@@ -156,6 +156,7 @@ namespace ApartmentApps.IoC
 
             kernel.Bind<IDataSheet<IncidentReport>>().To<IncidentsDataSheet>().InRequestScope();
             kernel.Bind<IDataSheet<IncidentReportStatus>>().To<BaseDataSheet<IncidentReportStatus>>().InRequestScope();
+            kernel.Bind<IDataSheet<Property>>().To<PropertyDataSheet>().InRequestScope();
             
             kernel.Bind<IRazorEngineService>().ToMethod(x => AlertsModule.CreateRazorService()).InSingletonScope();
             kernel.Bind<IModuleHelper, ModuleHelper>().To<ModuleHelper>().InRequestScope();

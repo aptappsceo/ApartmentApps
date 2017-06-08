@@ -1,12 +1,28 @@
 using System;
 using System.Linq;
+using ApartmentApps.Api;
+using ApartmentApps.Api.DataSheets;
 using ApartmentApps.Data;
+using ApartmentApps.Data.DataSheet;
 using ApartmentApps.Data.Repository;
 using Korzh.EasyQuery.Db;
 using Ninject;
 
 namespace ApartmentApps.Portal.Controllers
 {
+    public class PropertyDataSheet : BaseDataSheet<Property>
+    {
+        public PropertyDataSheet(IUserContext userContext, ApplicationDbContext dbContext, IKernel kernel, ISearchCompiler searchCompiler) : base(userContext, dbContext, kernel, searchCompiler)
+        {
+            
+        }
+        protected override IQueryable<Property> DefaultOrderFilter(IQueryable<Property> set, Query query = null)
+        {
+
+            return set.OrderBy(p => p.Name);
+            //return base.DefaultOrderFilter(set, query);
+        }
+    }
     public class PropertyService : StandardCrudService<Property>
     {
         public PropertyService(IKernel kernel, IRepository<Property> repository) : base(kernel, repository)
