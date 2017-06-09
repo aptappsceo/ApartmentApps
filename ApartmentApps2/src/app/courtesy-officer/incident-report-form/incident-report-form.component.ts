@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourtesyClient, IncidentReportModel, IncidentReportModelIncidentReportTypeId } from "app/aaservice-module/aaclient";
+import { NotificationsService } from "angular2-notifications";
 
 @Component({
   selector: 'app-incident-report-form',
@@ -23,7 +24,7 @@ export class IncidentReportFormComponent implements OnInit {
   };
   myModel = {comments: ''};
 
-   constructor(private officerClient: CourtesyClient) {
+   constructor(private officerClient: CourtesyClient, private notificationService: NotificationsService) {
 
    }
    Save() {
@@ -32,6 +33,7 @@ export class IncidentReportFormComponent implements OnInit {
      ir.comments = this.myModel.comments;
 
      this.officerClient.submitIncidentReport(ir);
+     this.notificationService.success('Success!', 'Your incident report has been submitted.');
    }
   ngOnInit() {
 

@@ -53,7 +53,6 @@ export class SearchPanelComponent implements OnInit {
   ngOnInit() {
 
     if (this.model.dataSourceType != null) {
-      console.log("LOOKING UP STUFF");
         this.lookupsClient
           .getLookups(this.model.dataSourceType, '')
           .subscribe(y=> {
@@ -63,7 +62,6 @@ export class SearchPanelComponent implements OnInit {
                   text: x.title
                 };
             });
-            console.log("LOOKUP ITEMS", result);
             this.items = result;
           });
     }

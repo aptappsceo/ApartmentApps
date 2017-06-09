@@ -54,10 +54,6 @@ filtersUpdate() {
           .subscribe(x => {
               this.searchModel = x.model;
                this.reloadData();
-              this.notify.create('Test', {body: 'something'}).subscribe(
-            res => console.log(res),
-            err => console.log(err)
-        )
           });
   }
   getImages(incident: IncidentReportViewModel): string[] {

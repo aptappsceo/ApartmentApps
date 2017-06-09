@@ -1,9 +1,12 @@
 <app-title [title]="'Properties'" [subTitle]="'Administration'"></app-title>
+<app-modal [title]='"Add New Property"' (ok)="$event.hide()" #edit>
+  <app-properties-form></app-properties-form>
+</app-modal>
 <div class="clearfix">
   <div class="btn-toolbar">
 
         <div class="btn-group ">
-          <button class="btn btn-success btn-small" (click)="lgModal.show()"><i class="glyphicon glyphicon-plus"></i> Add Property</button>
+          <button class="btn btn-success btn-small" (click)="edit.show()"><i class="glyphicon glyphicon-plus"></i> Add Property</button>
           <!--<button class="btn btn-secondary btn-small" (click)="lgModal.show()"><i class="fa fa-file-excel-o"></i> Export To Excel</button>
           <button class="btn btn-secondary btn-small" (click)="lgModal.show()"><i class="fa fa-file-pdf-o"></i> Export To PDF</button>-->
       </div>

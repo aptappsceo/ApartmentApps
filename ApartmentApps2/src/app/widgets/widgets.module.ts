@@ -4,13 +4,14 @@ import { FeedItemComponent } from './feeditem/feeditem.component';
 import { TitleComponent } from './title/title.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentItemComponent } from './comment-item/comment-item.component';
-import { CarouselModule } from 'ngx-bootstrap';
+import { CarouselModule, ModalModule } from 'ngx-bootstrap';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   imports: [
-    CommonModule, CarouselModule.forRoot()
+    CommonModule, CarouselModule.forRoot(), ModalModule.forRoot(),
   ],
-  declarations: [FeedItemComponent, TitleComponent, CommentsComponent, CommentItemComponent],
-  exports: [FeedItemComponent, TitleComponent]
+  declarations: [FeedItemComponent, TitleComponent, CommentsComponent, CommentItemComponent, ModalComponent],
+  exports: [FeedItemComponent, TitleComponent, ModalComponent]
 })
 export class WidgetsModule { }

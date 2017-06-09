@@ -53,12 +53,12 @@
   <div class='col-md-8'>
 <div *ngIf="incidents != null">
   <div *ngFor="let incident of incidents">
-    <app-feeditem [userInfo]="incident.submissionBy" [bodyText]="incident.comments" [comments]="mapComments(incident)" [images]="this.getImages(incident)" ></app-feeditem>
+    <app-feeditem [actionLinks]="[{label: 'Test'}]" [userInfo]="incident.submissionBy" [bodyText]="incident.comments" [comments]="mapComments(incident)" [images]="this.getImages(incident)" ></app-feeditem>
   </div>
   <div class="btn-toolbar">
   <div class="btn-group">
 
-   <   <a data-toggle="dropdown" class="btn dropdown-toggle btn-default">
+     <a data-toggle="dropdown" class="btn dropdown-toggle btn-default">
         Results Per Page <span class="caret"></span>
       </a>
       <ul class="dropdown-menu">
