@@ -17,10 +17,15 @@ import { NotificationLoad } from './notifications/notifications-load.directive';
 import { Notifications } from './notifications/notifications.component';
 import { MaintenanceModule } from '../maintenance/maintenance.module';
 import { AAServiceModule } from '../aaservice-module/aaservice.module';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   imports: [
     CommonModule,
     TooltipModule.forRoot(),
+
+     SimpleNotificationsModule.forRoot(),
     ROUTES,
     FormsModule,
     MaintenanceModule

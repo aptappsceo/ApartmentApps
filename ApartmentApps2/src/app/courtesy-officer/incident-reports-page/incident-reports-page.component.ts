@@ -49,12 +49,15 @@ filtersUpdate() {
     });
   }
   ngOnInit() {
-    this.notify.alert('Yo',"here is the content");
+
      this.searchEngine.getSearchModel(this.engineId)
           .subscribe(x => {
               this.searchModel = x.model;
                this.reloadData();
-
+              this.notify.create('Test', {body: 'something'}).subscribe(
+            res => console.log(res),
+            err => console.log(err)
+        )
           });
   }
   getImages(incident: IncidentReportViewModel): string[] {

@@ -22,7 +22,8 @@ import { ErrorComponent } from './error/error.component';
 import { AACoreModule } from "app/aacore/aacore.module";
 import { WidgetRegistry, DefaultWidgetRegistry } from 'angular2-schema-form';
 import { SimpleNotificationsModule } from 'angular2-notifications';
-
+import '../../node_modules/angular2-notifications/dist/index.js';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -52,6 +53,7 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
+       BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),
     LoginModule, // This should come before any module with pages!!!!!!
     AACoreModule,
