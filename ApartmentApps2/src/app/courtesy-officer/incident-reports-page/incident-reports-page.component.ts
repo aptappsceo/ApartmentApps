@@ -1,3 +1,4 @@
+import { NotificationsService } from 'angular2-notifications';
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CourtesyClient, IncidentIndexBindingModel, Query, SearchEnginesClient, IncidentReportViewModel, Navigation, Search, FilterData, ClientSearchModel, LookupsClient } from 'app/aaservice-module/aaclient';
 import { CommentItem } from "app/widgets/comment-item/comment-item.component";
@@ -18,7 +19,7 @@ export class IncidentReportsPageComponent implements OnInit {
   engineId: string = 'IncidentReport';
   page: Number = 1;
   constructor( private searchEngine: SearchEnginesClient,
-  private officerClient: CourtesyClient, private lookupsClient: LookupsClient ) {
+  private officerClient: CourtesyClient, private lookupsClient: LookupsClient, private notify: NotificationsService) {
     this.query.navigation = new Navigation();
     this.query.navigation.skip = 0;
     this.query.navigation.take = 5;
@@ -48,6 +49,7 @@ filtersUpdate() {
     });
   }
   ngOnInit() {
+    this.notify.alert('Yo',"here is the content");
      this.searchEngine.getSearchModel(this.engineId)
           .subscribe(x => {
               this.searchModel = x.model;

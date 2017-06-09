@@ -21,7 +21,7 @@ import { AppConfig } from './app.config';
 import { ErrorComponent } from './error/error.component';
 import { AACoreModule } from "app/aacore/aacore.module";
 import { WidgetRegistry, DefaultWidgetRegistry } from 'angular2-schema-form';
-
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -52,8 +52,7 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
-
-
+    SimpleNotificationsModule.forRoot(),
     LoginModule, // This should come before any module with pages!!!!!!
     AACoreModule,
     MaintenanceModule,
