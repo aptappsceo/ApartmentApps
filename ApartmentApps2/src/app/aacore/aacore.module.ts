@@ -15,6 +15,7 @@ import { PropertiesFormComponent } from './properties/properties-form/properties
 import { PropertiesListComponent } from './properties/properties-list/properties-list.component';
 import { PropertiesPageComponent } from './properties/properties-page/properties-page.component';
 import { WidgetsModule } from "app/widgets/widgets.module";
+import { BasePageComponent } from './base-page/base-page.component';
 require('../../assets/select2.full.min.js');
 
 export const corproutes = [
@@ -41,6 +42,7 @@ export const corproutes = [
     PropertiesFormComponent,
     PropertiesListComponent,
     PropertiesPageComponent,
+    BasePageComponent,
     ],
     exports: [
       SearchPanelComponent,

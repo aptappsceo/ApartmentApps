@@ -19,7 +19,7 @@ import { IncidentDetailsPageComponent } from './incident-details-page/incident-d
 export const routes = [
   { path: 'checkins', component: CheckinsPageComponent },
   { path: 'incidents', component: IncidentReportsPageComponent },
-  { path: 'incident/:id', component: IncidentReportsPageComponent },
+  { path: 'incident/:id', component: IncidentDetailsPageComponent },
 ];
 @NgModule({
   imports: [

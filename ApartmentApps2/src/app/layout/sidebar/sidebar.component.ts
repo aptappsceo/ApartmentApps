@@ -60,6 +60,7 @@ export class Sidebar implements OnInit {
   }
   userInfo: UserInfoViewModel;
   isInAnyRoles(roles:any[]): boolean {
+
     if (this.userInfo == null) return false;
     for (var i = 0;i< roles.length;i++) {
         if (this.userInfo.roles.indexOf(roles[i]) > -1)

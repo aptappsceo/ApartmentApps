@@ -45,6 +45,7 @@ namespace ApartmentApps.API.Service.Models
     public class PropertyConfig
     {
         public ModuleInfo ModuleInfo { get; set; }
+        public string Name { get; set; }
     }
 
    

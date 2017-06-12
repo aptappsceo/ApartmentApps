@@ -1,4 +1,5 @@
 <app-title [title]="'Courtesy Officer'" [subTitle]="'Incident Reports'"></app-title>
+
 <div class="clearfix">
   <div class="btn-toolbar">
     <!--<div class="btn-group">
@@ -13,7 +14,7 @@
       </ul>
     </div>-->
         <div class="btn-group ">
-          <button class="btn btn-success btn-small" (click)="lgModal.show()"><i class="glyphicon glyphicon-plus"></i> Create Incident Report</button>
+          <button class="btn btn-success btn-small" (click)="addIncident.show()"><i class="glyphicon glyphicon-plus"></i> Create Incident Report</button>
           <!--<button class="btn btn-secondary btn-small" (click)="lgModal.show()"><i class="fa fa-file-excel-o"></i> Export To Excel</button>
           <button class="btn btn-secondary btn-small" (click)="lgModal.show()"><i class="fa fa-file-pdf-o"></i> Export To PDF</button>-->
       </div>
@@ -27,45 +28,30 @@
     </div>
   </div>
 </div>
-<div class='row'>
 
 
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Large modal</h4>
-        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <app-incident-report-form></app-incident-report-form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+<app-modal title="Add New Incident" #addIncident (ok)="incidentForm.Save()">
+    <app-incident-report-form (complete)="reloadData()" #incidentForm></app-incident-report-form>
+</app-modal>
+
+
 <div class='row'>
   <div class='col-md-8'>
 <div *ngIf="incidents != null">
   <div *ngFor="let incident of incidents">
-    <app-feeditem [actionLinks]="[{label: 'Test'}]" [userInfo]="incident.submissionBy" [bodyText]="incident.comments" [comments]="mapComments(incident)" [images]="this.getImages(incident)" ></app-feeditem>
+    <app-feeditem [actionLinks]="getActionLinks(incident)" [userInfo]="incident.submissionBy" [bodyText]="incident.comments"  [images]="this.getImages(incident)" ></app-feeditem>
   </div>
   <div class="btn-toolbar">
   <div class="btn-group">
 
      <a data-toggle="dropdown" class="btn dropdown-toggle btn-default">
-        Results Per Page <span class="caret"></span>
+        Results Per Page: {{query.navigation.take}} <span class="caret"></span>
       </a>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">5</a></li>
-        <li><a class="dropdown-item" href="#">10</a></li>
-        <li><a class="dropdown-item" href="#">20</a></li>
-      </ul>>
+        <li><a class="dropdown-item"  (click)="query.navigation.take = 5">5</a></li>
+        <li><a class="dropdown-item"  (click)="query.navigation.take = 10">10</a></li>
+        <li><a class="dropdown-item"  (click)="query.navigation.take = 20">20</a></li>
+      </ul>
 
     </div>
 

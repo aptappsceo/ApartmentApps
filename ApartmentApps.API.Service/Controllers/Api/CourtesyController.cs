@@ -217,7 +217,7 @@ namespace ApartmentApps.API.Service.Controllers.Api
         //    return Ok(IncidentsService.Query<IncidentReportViewModel>(query));
         //}
         [Route("fetch", Name = nameof(Fetch))]
-        [HttpGet]
+        [HttpPost]
         [ResponseType(typeof(QueryResult<IncidentReportViewModel>))]
         public override Task<QueryResult<IncidentReportViewModel>> Fetch(Query query)
         {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CourtesyClient, IncidentReportModel, IncidentReportModelIncidentReportTypeId } from "app/aaservice-module/aaclient";
 import { NotificationsService } from "angular2-notifications";
 
@@ -12,6 +12,7 @@ export class IncidentReportFormComponent implements OnInit {
 // number: number, integer, range
 // integer: integer, range
 // boolean: boolean, checkbox
+  @Output() public complete: EventEmitter<any> = new EventEmitter<any>();
   mySchema = {
     'properties': {
       'comments': {
@@ -22,18 +23,23 @@ export class IncidentReportFormComponent implements OnInit {
     },
     'required': ['comments']
   };
-  myModel = {comments: ''};
+  myModel = {comments: 'fdsasdfasdfasdf'};
 
    constructor(private officerClient: CourtesyClient, private notificationService: NotificationsService) {
 
+   }
+   changed(stuff) {
+     this.myModel = stuff;
    }
    Save() {
      let ir = new IncidentReportModel();
      ir.incidentReportTypeId = 1;
      ir.comments = this.myModel.comments;
-
-     this.officerClient.submitIncidentReport(ir);
-     this.notificationService.success('Success!', 'Your incident report has been submitted.');
+    //console.log("model", this.myModel);
+      this.officerClient.submitIncidentReport(ir).subscribe(x => {
+          this.notificationService.success('Success!', 'Your incident report has been submitted.');
+          this.complete.emit(null);
+      });
    }
   ngOnInit() {
 

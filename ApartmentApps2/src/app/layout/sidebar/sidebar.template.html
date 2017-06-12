@@ -51,7 +51,7 @@
         Dashboard
       </a>
     </li>-->
-    <li>
+    <li *ngIf='this.userInfo != null && this.userInfo.propertyConfig.moduleInfo.courtesyConfig.enabled'>
       <a class="collapsed" data-target="#sidebar-levels" data-toggle="collapse" data-parent="#sidebar">
           <span class="icon">
             <i class="fa fa-user"></i>

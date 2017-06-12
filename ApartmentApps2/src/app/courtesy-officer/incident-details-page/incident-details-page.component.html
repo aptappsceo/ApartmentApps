@@ -1,3 +1,15 @@
-<p>
-  {{model.comments}}
-</p>
+<app-title title="Incident Reports" subTitle="Details"></app-title>
+<ul class="timeline" *ngIf="model != null">
+  <li *ngFor="let checkin of model.checkins; let i = index;" [ngClass]="{'on-left': i % 2}">
+     <time class="event-time" datetime="2014-05-19 03:04">
+      <span class="date">today</span>
+      <span class="time">9:41 <span class="fw-semi-bold">am</span></span>
+    </time>
+    <span class="event-icon event-icon-primary">
+        <i class="glyphicon glyphicon-start"></i>
+    </span>
+    <section class="event">
+      <app-feeditem  [userInfo]="checkin.officer" [bodyText]="checkin.comments"  [images]="this.getImages(checkin)" ></app-feeditem>
+    </section>
+  </li>
+</ul>

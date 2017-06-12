@@ -74,7 +74,7 @@ export class AccountClient extends BaseClient implements IAccountClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -768,7 +768,7 @@ export class AlertsClient extends BaseClient implements IAlertsClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -951,7 +951,7 @@ export class CheckinsClient extends BaseClient implements ICheckinsClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -1102,7 +1102,7 @@ export class ConfigureClient extends BaseClient implements IConfigureClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -1332,7 +1332,7 @@ export class CorporationClient extends BaseClient implements ICorporationClient 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -1901,10 +1901,6 @@ export interface ICourtesyClient {
     /**
      * @return OK
      */
-    fetch2(query: Query): Observable<QueryResultOfIncidentReportViewModel>;
-    /**
-     * @return OK
-     */
     incidentStatuses(query?: string): Observable<QueryResultOfLookupBindingModel>;
     /**
      * @return OK
@@ -1945,7 +1941,7 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -1959,7 +1955,7 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
 
         let options_ = {
             body: content_,
-            method: "get",
+            method: "post",
             headers: new Headers({
                 "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
@@ -1983,55 +1979,6 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
     }
 
     protected processFetch(response: Response): QueryResultOfIncidentReportViewModel {
-        const responseText = response.text();
-        const status = response.status;
-
-        if (status === 200) {
-            let result200: QueryResultOfIncidentReportViewModel | null = null;
-            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
-            result200 = resultData200 ? QueryResultOfIncidentReportViewModel.fromJS(resultData200) : new QueryResultOfIncidentReportViewModel();
-            return result200;
-        } else if (status !== 200 && status !== 204) {
-            this.throwException("An unexpected server error occurred.", status, responseText);
-        }
-        return null;
-    }
-
-    /**
-     * @return OK
-     */
-    fetch2(query: Query): Observable<QueryResultOfIncidentReportViewModel> {
-        let url_ = this.baseUrl + "/api/Courtesy/fetch";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(query ? query.toJS() : null);
-
-        let options_ = {
-            body: content_,
-            method: "post",
-            headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8",
-                "Accept": "application/json; charset=UTF-8"
-            })
-        };
-
-        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
-            return this.http.request(url_, transformedOptions_);
-        }).map((response) => {
-            return this.processFetch2(response);
-        }).catch((response: any) => {
-            if (response instanceof Response) {
-                try {
-                    return Observable.of(this.processFetch2(response));
-                } catch (e) {
-                    return <Observable<QueryResultOfIncidentReportViewModel>><any>Observable.throw(e);
-                }
-            } else
-                return <Observable<QueryResultOfIncidentReportViewModel>><any>Observable.throw(response);
-        });
-    }
-
-    protected processFetch2(response: Response): QueryResultOfIncidentReportViewModel {
         const responseText = response.text();
         const status = response.status;
 
@@ -2501,7 +2448,7 @@ export class InspectionsClient extends BaseClient implements IInspectionsClient 
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -2747,7 +2694,7 @@ export class LookupsClient extends BaseClient implements ILookupsClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -3128,7 +3075,7 @@ export class MaitenanceClient extends BaseClient implements IMaitenanceClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -3739,7 +3686,7 @@ export class MessagingClient extends BaseClient implements IMessagingClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -3818,7 +3765,7 @@ export class NotifiationsClient extends BaseClient implements INotifiationsClien
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -3936,7 +3883,7 @@ export class PaymentsClient extends BaseClient implements IPaymentsClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -4409,7 +4356,7 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -5014,7 +4961,7 @@ export class ProspectClient extends BaseClient implements IProspectClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -5464,7 +5411,7 @@ export class RegisterClient extends BaseClient implements IRegisterClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -5658,7 +5605,7 @@ export class SearchEnginesClient extends BaseClient implements ISearchEnginesCli
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -5738,7 +5685,7 @@ export class VersionClient extends BaseClient implements IVersionClient {
     constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super(configuration);
         this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "http://devservices.apartmentapps.com";
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
     }
 
     /**
@@ -5864,10 +5811,12 @@ export class UserInfoViewModel {
 
 export class PropertyConfig {
     moduleInfo: ModuleInfo | null | undefined;
+    name: string | null | undefined;
 
     constructor(data?: any) {
         if (data !== undefined) {
             this.moduleInfo = data["ModuleInfo"] ? ModuleInfo.fromJS(data["ModuleInfo"]) : undefined;
+            this.name = data["Name"] !== undefined ? data["Name"] : undefined;
         }
     }
 
@@ -5878,6 +5827,7 @@ export class PropertyConfig {
     toJS(data?: any) {
         data = data === undefined ? {} : data;
         data["ModuleInfo"] = this.moduleInfo ? this.moduleInfo.toJS() : undefined;
+        data["Name"] = this.name !== undefined ? this.name : undefined;
         return data;
     }
 

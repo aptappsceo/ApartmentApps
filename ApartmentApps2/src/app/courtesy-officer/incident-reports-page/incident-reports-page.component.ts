@@ -3,6 +3,8 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CourtesyClient, IncidentIndexBindingModel, Query, SearchEnginesClient, IncidentReportViewModel, Navigation, Search, FilterData, ClientSearchModel, LookupsClient } from 'app/aaservice-module/aaclient';
 import { CommentItem } from "app/widgets/comment-item/comment-item.component";
 import { SearchPanelComponent } from '../../aacore/search-panel/search-panel.component';
+import { FeedItemActionLink } from "app/widgets/feeditem/feeditem.component";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -19,7 +21,7 @@ export class IncidentReportsPageComponent implements OnInit {
   engineId: string = 'IncidentReport';
   page: Number = 1;
   constructor( private searchEngine: SearchEnginesClient,
-  private officerClient: CourtesyClient, private lookupsClient: LookupsClient, private notify: NotificationsService) {
+  private officerClient: CourtesyClient, private lookupsClient: LookupsClient, private notify: NotificationsService, private router: Router) {
     this.query.navigation = new Navigation();
     this.query.navigation.skip = 0;
     this.query.navigation.take = 5;
@@ -64,6 +66,12 @@ filtersUpdate() {
       }
     }
     return result;
+  }
+    getActionLinks(incident: IncidentReportViewModel): FeedItemActionLink[] {
+      return [
+        new FeedItemActionLink("Details", () => { this.router.navigate(['app', 'officer', 'incident', incident.id]);  })
+      ];
+
   }
   mapComments(incident: IncidentReportViewModel): CommentItem[] {
     return incident.checkins.map(x => {

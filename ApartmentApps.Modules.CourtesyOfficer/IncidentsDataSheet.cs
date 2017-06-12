@@ -15,7 +15,7 @@ namespace ApartmentApps.Api
         protected override IQueryable<IncidentReport> DefaultOrderFilter(IQueryable<IncidentReport> set, Query query = null)
         {
 
-            return set.OrderBy(p => p.CreatedOn);
+            return set.OrderByDescending(p => p.CreatedOn);
             //return base.DefaultOrderFilter(set, query);
         }
     }

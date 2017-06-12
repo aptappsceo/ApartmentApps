@@ -16,6 +16,13 @@ namespace ApartmentApps.API.Service.Controllers.Api
         {
         }
 
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("fetch")]
+        public override Task<QueryResult<CorporationIndexBindingModel>> Fetch(Query query)
+        {
+            return base.Fetch(query);
+        }
+
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("entry")]
         public override CorporationIndexBindingModel Entry(string id)

@@ -16,6 +16,12 @@ namespace ApartmentApps.API.Service.Controllers.Api
         public PropertyController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
         }
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("fetch")]
+        public override Task<QueryResult<PropertyIndexBindingModel>> Fetch(Query query)
+        {
+            return base.Fetch(query);
+        }
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("entry")]

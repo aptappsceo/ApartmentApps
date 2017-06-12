@@ -24,5 +24,10 @@ export class FeedItemComponent implements OnInit {
 }
 export class FeedItemActionLink {
     label: string;
+    click: any;
+    constructor(title: string, click: any) {
+      this.label = title;
+      this.click = click;
+    }
     // (message: string): void;
 }

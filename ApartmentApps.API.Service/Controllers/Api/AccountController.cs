@@ -138,6 +138,7 @@ namespace ApartmentApps.API.Service.Controllers
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
                 PropertyConfig = new PropertyConfig()
                 {
+                    Name = UserContext.CurrentUser.Property.Name,
                     ModuleInfo = new ModuleInfo()
                     {
                         PaymentsConfig = _kernel.Get<Module<PaymentsConfig>>().Config,
