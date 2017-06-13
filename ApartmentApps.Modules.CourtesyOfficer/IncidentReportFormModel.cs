@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using ApartmentApps.Api.Schema;
 using ApartmentApps.Data;
 using ApartmentApps.Data.Repository;
 using ApartmentApps.Forms;
@@ -27,9 +28,9 @@ namespace ApartmentApps.Api
         }
 
         //[DataType()]
-        [DisplayName("Unit")]
+        [DisplayName("Unit"), RemoteSelect(SelectType = typeof(Unit))]
         public int UnitId { get; set; }
-
+       
         public IEnumerable<FormPropertySelectItem> UnitId_Items
         {
             get
@@ -59,7 +60,7 @@ namespace ApartmentApps.Api
         [Required]
         public IncidentType ReportType { get; set; }
 
-        [DataType(DataType.MultilineText)]
+        [DataType(DataType.MultilineText), Widget("textarea")]
         public string Comments { get; set; }
 
     }

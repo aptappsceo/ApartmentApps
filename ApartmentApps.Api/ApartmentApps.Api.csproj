@@ -245,6 +245,7 @@
     <Compile Include="Interface\IUserConfigurable.cs" />
     <Compile Include="Modules\Analytics\LineChartViewModel.cs" />
     <Compile Include="Base\ModelExtensions.cs" />
+    <Compile Include="Schema\Class1.cs" />
     <Compile Include="Storage\BlobStorageService.cs" />
     <Compile Include="Notifications\EmailService.cs" />
     <Compile Include="Modules\Entrata\EntrataConfig.cs" />

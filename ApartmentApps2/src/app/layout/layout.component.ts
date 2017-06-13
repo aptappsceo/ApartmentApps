@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppConfig } from '../app.config';
+import { WidgetFactory } from 'angular2-schema-form/dist/widgetfactory';
 
 declare let jQuery: any;
 declare let Hammer: any;

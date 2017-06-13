@@ -16,6 +16,9 @@ import { PropertiesListComponent } from './properties/properties-list/properties
 import { PropertiesPageComponent } from './properties/properties-page/properties-page.component';
 import { WidgetsModule } from "app/widgets/widgets.module";
 import { BasePageComponent } from './base-page/base-page.component';
+import { SfRemoteSelectComponent } from './sf-remote-select/sf-remote-select.component';
+import { WidgetFactory } from "angular2-schema-form/dist/widgetfactory";
+import { DefaultWidgetRegistry, WidgetRegistry } from "angular2-schema-form/dist";
 require('../../assets/select2.full.min.js');
 
 export const corproutes = [
@@ -23,6 +26,13 @@ export const corproutes = [
   { path: 'properties', component: PropertiesPageComponent},
   { path: 'userprofile', component: UserProfileComponent },
 ];
+export class MyWidgetRegistry extends DefaultWidgetRegistry {
+  constructor() {
+    super();
+
+    this.register('select-remote',  SfRemoteSelectComponent);
+  }
+}
 
 @NgModule({
   imports: [
@@ -43,13 +53,17 @@ export const corproutes = [
     PropertiesListComponent,
     PropertiesPageComponent,
     BasePageComponent,
+    SfRemoteSelectComponent,
     ],
     exports: [
       SearchPanelComponent,
       //SearchPageComponent
     ],
+    entryComponents: [
+      SfRemoteSelectComponent
+    ],
   providers: [
-
+    {provide: WidgetRegistry, useClass: MyWidgetRegistry}
   ]
 })
 export class AACoreModule {
