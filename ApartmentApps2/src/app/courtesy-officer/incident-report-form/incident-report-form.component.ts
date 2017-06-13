@@ -13,16 +13,7 @@ export class IncidentReportFormComponent implements OnInit {
 // integer: integer, range
 // boolean: boolean, checkbox
   @Output() public complete: EventEmitter<any> = new EventEmitter<any>();
-  mySchema = {
-    'properties': {
-      'comments': {
-        'type': 'string',
-        'widget': 'textarea',
-        'description': 'Describe the incident that has occured.'
-      }
-    },
-    'required': ['comments']
-  };
+  mySchema: any;
   myModel = {comments: 'fdsasdfasdfasdf'};
 
    constructor(private officerClient: CourtesyClient, private notificationService: NotificationsService) {
@@ -42,7 +33,11 @@ export class IncidentReportFormComponent implements OnInit {
       });
    }
   ngOnInit() {
-
+    this.officerClient.schema()
+      .subscribe(x =>{
+        this.mySchema = x;
+        console.log('SCHEMA', x);
+      });
   }
 
 }

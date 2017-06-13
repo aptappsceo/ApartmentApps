@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
 using ApartmentApps.Api;
 using ApartmentApps.Api.BindingModels;
+using ApartmentApps.Api.Schema;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.API.Service.Models;
 using ApartmentApps.API.Service.Models.VMS;
@@ -19,6 +26,8 @@ using ApartmentApps.Modules.CourtesyOfficer;
 using ApartmentApps.Modules.Inspections;
 using ApartmentApps.Portal.Controllers;
 using ExporterObjects;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Ninject;
 
 namespace ApartmentApps.API.Service.Controllers.Api
@@ -147,8 +156,98 @@ namespace ApartmentApps.API.Service.Controllers.Api
             }
             return Ok(entry);
         }
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("schema")]
+        public virtual HttpResponseMessage Schema()
+        {
+            var type = typeof(TFormBindingModel);
+            var jObject = new JObject();
+            var jProperties = (JObject) (jObject["properties"] = new JObject());
+            var jRequired = (JArray) (jObject["required"] = new JArray());
+            foreach (var property in type.GetProperties(BindingFlags.Default | BindingFlags.Public | BindingFlags.NonPublic |
+                                                        BindingFlags.Instance))
+            {
+                if (property.Name.EndsWith("_Items") || property.Name == "ActionLinks") continue;
+                if (property.Name == ("Id") || property.Name == "Title") continue;
+                var jProperty = (JObject)(jProperties[property.Name] = new JObject());
+                jProperty["name"] = property.Name;
+                jProperty["type"] = MapType(property.PropertyType);
+                if (property.IsDefined(typeof(DisplayNameAttribute)))
+                {
+                    var att = property.GetCustomAttributes<DisplayNameAttribute>().First();
+                    jProperty["title"] = att.DisplayName;
+                }
+                else
+                {
+                    jProperty["title"] = property.Name;
+                }
+            
+                jProperty["widget"] = MapWidgetType(property);
+                if (property.PropertyType.IsEnum)
+                {
+                    var enumNames = Enum.GetNames(property.PropertyType);
+                    var enumValues = Enum.GetValues(property.PropertyType).Cast<int>().ToArray();
+                    var oneOf = (JArray)(jProperty["oneOf"] = new JArray());
+                    for (var i = 0; i < enumNames.Length; i++)
+                    {
+                        var jItem = new JObject();
+                        var jEnum = (JArray)(jItem["enum"] = new JArray());
+                        jEnum.Add(enumValues[i].ToString());
+                        jItem["description"] = enumNames[i].ToString();
+                        oneOf.Add(jItem);
+                    }
+                }
+                if (property.IsDefined(typeof(RemoteSelectAttribute)))
+                {
+                    var att = property.GetCustomAttributes<RemoteSelectAttribute>().First();
+                    jProperty["remote"] = att.SelectType.AssemblyQualifiedName;
+                    jProperty["remote_filter"] = att.Filter;
+                    jProperty["widget"] = "select-remote";
+                    jProperty["type"] = "string";
+                }
+                if (property.IsDefined(typeof(RequiredAttribute)))
+                {
+                    jRequired.Add(property.Name);
+                }
+            }
+            var response = this.Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(jObject.ToString(Formatting.Indented), Encoding.UTF8, "application/json");
+            return response;
+            //return Ok(jObject.ToString(Formatting.Indented));
+        }
 
+        private string MapWidgetType(PropertyInfo property)
+        {
+            //string: string, search, tel, url, email, password, color, date, date-time, time, textarea, select, file, radio, richtext
+            //number: number, integer, range
+            //integer: integer, range
+            //boolean: boolean, checkbox
+            if (property.IsDefined(typeof(WidgetAttribute)))
+            {
+                return property.GetCustomAttributes<WidgetAttribute>().First().WidgetName;
+            }
+            if (property.PropertyType.IsEnum)
+            {
+                return "radio";
+            }
+            return MapType(property.PropertyType);
+        }
 
+        private string MapType(Type type)
+        {
+            if (type == typeof(DateTime))
+                return "date-time";
+            if (type == typeof(string))
+                return "string";
+            if (type == typeof(bool))
+                return "boolean";
+            if (type == typeof(int))
+                return "integer";
+            if ( type == typeof(float) || type== typeof(double) || type== typeof(decimal) || type == typeof(long) || type == typeof(short))
+                return "number";
+
+            return "string";
+        }
     }
 
     [System.Web.Http.RoutePrefix("api/Inspections")]
@@ -199,6 +298,12 @@ namespace ApartmentApps.API.Service.Controllers.Api
     [System.Web.Http.Authorize]
     public class CourtesyController : ServiceController<IncidentsService, IncidentReportViewModel, IncidentReportFormModel>
     {
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("schema")]
+        public override HttpResponseMessage Schema()
+        {
+            return base.Schema();
+        }
 
         public IBlobStorageService BlobStorageService { get; set; }
         public IIncidentsService IncidentsService { get; set; }

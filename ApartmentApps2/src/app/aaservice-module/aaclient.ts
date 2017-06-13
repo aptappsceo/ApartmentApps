@@ -1284,6 +1284,10 @@ export interface ICorporationClient {
     /**
      * @return OK
      */
+    fetch(query: Query): Observable<QueryResultOfCorporationIndexBindingModel>;
+    /**
+     * @return OK
+     */
     entry(id: string): Observable<CorporationIndexBindingModel>;
     /**
      * @return OK
@@ -1320,7 +1324,7 @@ export interface ICorporationClient {
     /**
      * @return OK
      */
-    fetch(query: Query): Observable<QueryResultOfCorporationIndexBindingModel>;
+    schema(): Observable<any>;
 }
 
 @Injectable()
@@ -1333,6 +1337,55 @@ export class CorporationClient extends BaseClient implements ICorporationClient 
         super(configuration);
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+    }
+
+    /**
+     * @return OK
+     */
+    fetch(query: Query): Observable<QueryResultOfCorporationIndexBindingModel> {
+        let url_ = this.baseUrl + "/api/Corporation/fetch";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query ? query.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processFetch(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processFetch(response));
+                } catch (e) {
+                    return <Observable<QueryResultOfCorporationIndexBindingModel>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<QueryResultOfCorporationIndexBindingModel>><any>Observable.throw(response);
+        });
+    }
+
+    protected processFetch(response: Response): QueryResultOfCorporationIndexBindingModel {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: QueryResultOfCorporationIndexBindingModel | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? QueryResultOfCorporationIndexBindingModel.fromJS(resultData200) : new QueryResultOfCorporationIndexBindingModel();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
     }
 
     /**
@@ -1839,15 +1892,15 @@ export class CorporationClient extends BaseClient implements ICorporationClient 
     /**
      * @return OK
      */
-    fetch(query: Query): Observable<QueryResultOfCorporationIndexBindingModel> {
+    schema(): Observable<any> {
         let url_ = this.baseUrl + "/api/Corporation";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(query ? query.toJS() : null);
+        const content_ = "";
 
         let options_ = {
             body: content_,
-            method: "post",
+            method: "get",
             headers: new Headers({
                 "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
@@ -1857,27 +1910,33 @@ export class CorporationClient extends BaseClient implements ICorporationClient 
         return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
             return this.http.request(url_, transformedOptions_);
         }).map((response) => {
-            return this.processFetch(response);
+            return this.processSchema(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
                 try {
-                    return Observable.of(this.processFetch(response));
+                    return Observable.of(this.processSchema(response));
                 } catch (e) {
-                    return <Observable<QueryResultOfCorporationIndexBindingModel>><any>Observable.throw(e);
+                    return <Observable<any>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<QueryResultOfCorporationIndexBindingModel>><any>Observable.throw(response);
+                return <Observable<any>><any>Observable.throw(response);
         });
     }
 
-    protected processFetch(response: Response): QueryResultOfCorporationIndexBindingModel {
+    protected processSchema(response: Response): any {
         const responseText = response.text();
         const status = response.status;
 
         if (status === 200) {
-            let result200: QueryResultOfCorporationIndexBindingModel | null = null;
+            let result200: any | null = null;
             let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
-            result200 = resultData200 ? QueryResultOfCorporationIndexBindingModel.fromJS(resultData200) : new QueryResultOfCorporationIndexBindingModel();
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
             return result200;
         } else if (status !== 200 && status !== 204) {
             this.throwException("An unexpected server error occurred.", status, responseText);
@@ -1894,6 +1953,10 @@ export class CorporationClient extends BaseClient implements ICorporationClient 
 }
 
 export interface ICourtesyClient {
+    /**
+     * @return OK
+     */
+    schema(): Observable<any>;
     /**
      * @return OK
      */
@@ -1942,6 +2005,61 @@ export class CourtesyClient extends BaseClient implements ICourtesyClient {
         super(configuration);
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+    }
+
+    /**
+     * @return OK
+     */
+    schema(): Observable<any> {
+        let url_ = this.baseUrl + "/api/Courtesy/schema";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processSchema(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processSchema(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processSchema(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
     }
 
     /**
@@ -4308,6 +4426,10 @@ export interface IPropertyClient {
     /**
      * @return OK
      */
+    fetch(query: Query): Observable<QueryResultOfPropertyIndexBindingModel>;
+    /**
+     * @return OK
+     */
     entry(id: string): Observable<PropertyIndexBindingModel>;
     /**
      * @return OK
@@ -4344,7 +4466,7 @@ export interface IPropertyClient {
     /**
      * @return OK
      */
-    fetch(query: Query): Observable<QueryResultOfPropertyIndexBindingModel>;
+    schema(): Observable<any>;
 }
 
 @Injectable()
@@ -4357,6 +4479,55 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         super(configuration);
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+    }
+
+    /**
+     * @return OK
+     */
+    fetch(query: Query): Observable<QueryResultOfPropertyIndexBindingModel> {
+        let url_ = this.baseUrl + "/api/Property/fetch";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query ? query.toJS() : null);
+
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processFetch(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processFetch(response));
+                } catch (e) {
+                    return <Observable<QueryResultOfPropertyIndexBindingModel>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<QueryResultOfPropertyIndexBindingModel>><any>Observable.throw(response);
+        });
+    }
+
+    protected processFetch(response: Response): QueryResultOfPropertyIndexBindingModel {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: QueryResultOfPropertyIndexBindingModel | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? QueryResultOfPropertyIndexBindingModel.fromJS(resultData200) : new QueryResultOfPropertyIndexBindingModel();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
     }
 
     /**
@@ -4863,15 +5034,15 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
     /**
      * @return OK
      */
-    fetch(query: Query): Observable<QueryResultOfPropertyIndexBindingModel> {
+    schema(): Observable<any> {
         let url_ = this.baseUrl + "/api/Property";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(query ? query.toJS() : null);
+        const content_ = "";
 
         let options_ = {
             body: content_,
-            method: "post",
+            method: "get",
             headers: new Headers({
                 "Content-Type": "application/json; charset=UTF-8",
                 "Accept": "application/json; charset=UTF-8"
@@ -4881,27 +5052,33 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
             return this.http.request(url_, transformedOptions_);
         }).map((response) => {
-            return this.processFetch(response);
+            return this.processSchema(response);
         }).catch((response: any) => {
             if (response instanceof Response) {
                 try {
-                    return Observable.of(this.processFetch(response));
+                    return Observable.of(this.processSchema(response));
                 } catch (e) {
-                    return <Observable<QueryResultOfPropertyIndexBindingModel>><any>Observable.throw(e);
+                    return <Observable<any>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<QueryResultOfPropertyIndexBindingModel>><any>Observable.throw(response);
+                return <Observable<any>><any>Observable.throw(response);
         });
     }
 
-    protected processFetch(response: Response): QueryResultOfPropertyIndexBindingModel {
+    protected processSchema(response: Response): any {
         const responseText = response.text();
         const status = response.status;
 
         if (status === 200) {
-            let result200: QueryResultOfPropertyIndexBindingModel | null = null;
+            let result200: any | null = null;
             let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
-            result200 = resultData200 ? QueryResultOfPropertyIndexBindingModel.fromJS(resultData200) : new QueryResultOfPropertyIndexBindingModel();
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
             return result200;
         } else if (status !== 200 && status !== 204) {
             this.throwException("An unexpected server error occurred.", status, responseText);
@@ -6843,52 +7020,6 @@ export class LocationBindingModel {
     }
 }
 
-export class CorporationIndexBindingModel {
-    propertyCount: number | null | undefined;
-    id: string | null | undefined;
-    title: string | null | undefined;
-    actionLinks: ActionLinkModel[] | null | undefined;
-
-    constructor(data?: any) {
-        if (data !== undefined) {
-            this.propertyCount = data["PropertyCount"] !== undefined ? data["PropertyCount"] : undefined;
-            this.id = data["Id"] !== undefined ? data["Id"] : undefined;
-            this.title = data["Title"] !== undefined ? data["Title"] : undefined;
-            if (data["ActionLinks"] && data["ActionLinks"].constructor === Array) {
-                this.actionLinks = [];
-                for (let item of data["ActionLinks"])
-                    this.actionLinks.push(ActionLinkModel.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): CorporationIndexBindingModel {
-        return new CorporationIndexBindingModel(data);
-    }
-
-    toJS(data?: any) {
-        data = data === undefined ? {} : data;
-        data["PropertyCount"] = this.propertyCount !== undefined ? this.propertyCount : undefined;
-        data["Id"] = this.id !== undefined ? this.id : undefined;
-        data["Title"] = this.title !== undefined ? this.title : undefined;
-        if (this.actionLinks && this.actionLinks.constructor === Array) {
-            data["ActionLinks"] = [];
-            for (let item of this.actionLinks)
-                data["ActionLinks"].push(item.toJS());
-        }
-        return data;
-    }
-
-    toJSON() {
-        return JSON.stringify(this.toJS());
-    }
-
-    clone() {
-        const json = this.toJSON();
-        return new CorporationIndexBindingModel(JSON.parse(json));
-    }
-}
-
 export class Query {
     navigation: Navigation | null | undefined;
     order: any | null | undefined;
@@ -7077,6 +7208,52 @@ export class QueryResultOfCorporationIndexBindingModel {
     clone() {
         const json = this.toJSON();
         return new QueryResultOfCorporationIndexBindingModel(JSON.parse(json));
+    }
+}
+
+export class CorporationIndexBindingModel {
+    propertyCount: number | null | undefined;
+    id: string | null | undefined;
+    title: string | null | undefined;
+    actionLinks: ActionLinkModel[] | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.propertyCount = data["PropertyCount"] !== undefined ? data["PropertyCount"] : undefined;
+            this.id = data["Id"] !== undefined ? data["Id"] : undefined;
+            this.title = data["Title"] !== undefined ? data["Title"] : undefined;
+            if (data["ActionLinks"] && data["ActionLinks"].constructor === Array) {
+                this.actionLinks = [];
+                for (let item of data["ActionLinks"])
+                    this.actionLinks.push(ActionLinkModel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): CorporationIndexBindingModel {
+        return new CorporationIndexBindingModel(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["PropertyCount"] = this.propertyCount !== undefined ? this.propertyCount : undefined;
+        data["Id"] = this.id !== undefined ? this.id : undefined;
+        data["Title"] = this.title !== undefined ? this.title : undefined;
+        if (this.actionLinks && this.actionLinks.constructor === Array) {
+            data["ActionLinks"] = [];
+            for (let item of this.actionLinks)
+                data["ActionLinks"].push(item.toJS());
+        }
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new CorporationIndexBindingModel(JSON.parse(json));
     }
 }
 
@@ -9640,6 +9817,46 @@ export class MakePaymentResult {
     }
 }
 
+export class QueryResultOfPropertyIndexBindingModel {
+    total: number | null | undefined;
+    result: PropertyIndexBindingModel[] | null | undefined;
+
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.total = data["Total"] !== undefined ? data["Total"] : undefined;
+            if (data["Result"] && data["Result"].constructor === Array) {
+                this.result = [];
+                for (let item of data["Result"])
+                    this.result.push(PropertyIndexBindingModel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): QueryResultOfPropertyIndexBindingModel {
+        return new QueryResultOfPropertyIndexBindingModel(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["Total"] = this.total !== undefined ? this.total : undefined;
+        if (this.result && this.result.constructor === Array) {
+            data["Result"] = [];
+            for (let item of this.result)
+                data["Result"].push(item.toJS());
+        }
+        return data;
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new QueryResultOfPropertyIndexBindingModel(JSON.parse(json));
+    }
+}
+
 export class PropertyIndexBindingModel {
     propertyCount: number | null | undefined;
     corporation: string | null | undefined;
@@ -9692,46 +9909,6 @@ export class PropertyIndexBindingModel {
     clone() {
         const json = this.toJSON();
         return new PropertyIndexBindingModel(JSON.parse(json));
-    }
-}
-
-export class QueryResultOfPropertyIndexBindingModel {
-    total: number | null | undefined;
-    result: PropertyIndexBindingModel[] | null | undefined;
-
-    constructor(data?: any) {
-        if (data !== undefined) {
-            this.total = data["Total"] !== undefined ? data["Total"] : undefined;
-            if (data["Result"] && data["Result"].constructor === Array) {
-                this.result = [];
-                for (let item of data["Result"])
-                    this.result.push(PropertyIndexBindingModel.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): QueryResultOfPropertyIndexBindingModel {
-        return new QueryResultOfPropertyIndexBindingModel(data);
-    }
-
-    toJS(data?: any) {
-        data = data === undefined ? {} : data;
-        data["Total"] = this.total !== undefined ? this.total : undefined;
-        if (this.result && this.result.constructor === Array) {
-            data["Result"] = [];
-            for (let item of this.result)
-                data["Result"].push(item.toJS());
-        }
-        return data;
-    }
-
-    toJSON() {
-        return JSON.stringify(this.toJS());
-    }
-
-    clone() {
-        const json = this.toJSON();
-        return new QueryResultOfPropertyIndexBindingModel(JSON.parse(json));
     }
 }
 
