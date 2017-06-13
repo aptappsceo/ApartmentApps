@@ -8,14 +8,14 @@ import { SearchPanelComponent } from "app/aacore/search-panel/search-panel.compo
   styleUrls: ['./base-page.component.css']
 })
 export class BasePageComponent implements OnInit {
-  totalRecords: any;
-  @Input() searchEngineId: string;
+   totalRecords: any;
+   @Input() searchEngineId: string;
    query: Query = new Query();
    items: any[];
    page: Number = 1;
    searchModel: ClientSearchModel;
    @Output() fetchData: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChildren(SearchPanelComponent) searchComponents: QueryList<SearchPanelComponent>;
+   @ViewChildren(SearchPanelComponent) searchComponents: QueryList<SearchPanelComponent>;
 
    constructor(private searchEngine: SearchEnginesClient) {
       this.query.navigation = new Navigation();
@@ -47,6 +47,7 @@ export class BasePageComponent implements OnInit {
             callback:  x => {
                 this.items = x.result;
                 this.totalRecords = x.total;
+                console.log("ITEMS", this.items);
               }
           }
         );
@@ -60,6 +61,7 @@ export class BasePageComponent implements OnInit {
                 this.query.search.engineId = this.searchEngineId;
                });
     }
+    this.reloadData();
   }
 
 }
