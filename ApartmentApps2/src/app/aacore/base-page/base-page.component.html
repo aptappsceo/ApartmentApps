@@ -1,3 +1,48 @@
-<p>
-  base-page works!
-</p>
+<div class='row'>
+  <div class='col-md-8'>
+<div *ngIf="items != null">
+  <ng-content></ng-content>
+  <div class="btn-toolbar">
+  <div class="btn-group">
+     <a data-toggle="dropdown" class="btn dropdown-toggle btn-default">
+        Results Per Page: {{query.navigation.take}} <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item"  (click)="query.navigation.take = 5; reloadData();">5</a></li>
+        <li><a class="dropdown-item"  (click)="query.navigation.take = 10; reloadData();">10</a></li>
+        <li><a class="dropdown-item"  (click)="query.navigation.take = 20; reloadData();">20</a></li>
+      </ul>
+
+    </div>
+
+      <div class="btn-group ml-auto">
+          <pagination
+            class="pagination-sm"
+            [(ngModel)]="page"
+            [totalItems]="totalRecords"
+            [itemsPerPage]="this.query.navigation.take"
+            [maxSize]="20"
+            [boundaryLinks]="true"
+            [rotate]="false"
+            (pageChanged)="onChangeTable(config, $event)"
+            (numPages)="numPages = $event">
+
+  </pagination>
+    </div>
+  </div>
+
+
+</div>
+    </div>
+    <div class='col-md-4' *ngIf="this.searchModel != null">
+      <accordion>
+  <accordion-group *ngFor="let filter of this.searchModel.filters" heading="{{this.filter.title}}">
+       <app-search-panel   [model]="filter" (updated)="filtersUpdate()">
+
+      </app-search-panel>
+  </accordion-group>
+</accordion>
+
+    </div>
+</div>
+

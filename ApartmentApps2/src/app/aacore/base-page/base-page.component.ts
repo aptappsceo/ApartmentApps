@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList, EventEmitter, Output } from '@angular/core';
 import { SearchEnginesClient, Query, ClientSearchModel, Search, Navigation } from "app/aaservice-module/aaclient";
 import { SearchPanelComponent } from "app/aacore/search-panel/search-panel.component";
 
@@ -7,13 +7,14 @@ import { SearchPanelComponent } from "app/aacore/search-panel/search-panel.compo
   templateUrl: './base-page.component.html',
   styleUrls: ['./base-page.component.css']
 })
-export class BasePageComponent<TItem> implements OnInit {
+export class BasePageComponent implements OnInit {
   totalRecords: any;
   @Input() searchEngineId: string;
    query: Query = new Query();
-   items: TItem[];
+   items: any[];
    page: Number = 1;
    searchModel: ClientSearchModel;
+   @Output() fetchData: EventEmitter<any> = new EventEmitter<any>();
   @ViewChildren(SearchPanelComponent) searchComponents: QueryList<SearchPanelComponent>;
 
    constructor(private searchEngine: SearchEnginesClient) {
@@ -28,9 +29,9 @@ export class BasePageComponent<TItem> implements OnInit {
       this.reloadData();
     }
 
-    fetchData(callback: any): void {
+    // fetchData(callback: any): void {
 
-    }
+    // }
 
     reloadData() {
       if (this.searchEngineId != null) {
@@ -41,10 +42,14 @@ export class BasePageComponent<TItem> implements OnInit {
       }
 
 
-    fetchData( x => {
-      this.items = x.result;
-      this.totalRecords = x.total;
-    });
+    this.fetchData.emit( {
+            query: this.query,
+            callback:  x => {
+                this.items = x.result;
+                this.totalRecords = x.total;
+              }
+          }
+        );
   }
   ngOnInit() {
     if (this.searchEngineId != null) {
