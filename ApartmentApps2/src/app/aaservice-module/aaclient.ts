@@ -1284,6 +1284,10 @@ export interface ICorporationClient {
     /**
      * @return OK
      */
+    schema(): Observable<any>;
+    /**
+     * @return OK
+     */
     fetch(query: Query): Observable<QueryResultOfCorporationIndexBindingModel>;
     /**
      * @return OK
@@ -1321,10 +1325,6 @@ export interface ICorporationClient {
      * @return OK
      */
     activate(id: string): Observable<any>;
-    /**
-     * @return OK
-     */
-    schema(): Observable<any>;
 }
 
 @Injectable()
@@ -1337,6 +1337,61 @@ export class CorporationClient extends BaseClient implements ICorporationClient 
         super(configuration);
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+    }
+
+    /**
+     * @return OK
+     */
+    schema(): Observable<any> {
+        let url_ = this.baseUrl + "/api/Corporation/schema";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processSchema(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processSchema(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processSchema(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
     }
 
     /**
@@ -1869,61 +1924,6 @@ export class CorporationClient extends BaseClient implements ICorporationClient 
     }
 
     protected processActivate(response: Response): any {
-        const responseText = response.text();
-        const status = response.status;
-
-        if (status === 200) {
-            let result200: any | null = null;
-            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
-            if (resultData200) {
-                result200 = {};
-                for (let key in resultData200) {
-                    if (resultData200.hasOwnProperty(key))
-                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
-                }
-            }
-            return result200;
-        } else if (status !== 200 && status !== 204) {
-            this.throwException("An unexpected server error occurred.", status, responseText);
-        }
-        return null;
-    }
-
-    /**
-     * @return OK
-     */
-    schema(): Observable<any> {
-        let url_ = this.baseUrl + "/api/Corporation";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = "";
-
-        let options_ = {
-            body: content_,
-            method: "get",
-            headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8",
-                "Accept": "application/json; charset=UTF-8"
-            })
-        };
-
-        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
-            return this.http.request(url_, transformedOptions_);
-        }).map((response) => {
-            return this.processSchema(response);
-        }).catch((response: any) => {
-            if (response instanceof Response) {
-                try {
-                    return Observable.of(this.processSchema(response));
-                } catch (e) {
-                    return <Observable<any>><any>Observable.throw(e);
-                }
-            } else
-                return <Observable<any>><any>Observable.throw(response);
-        });
-    }
-
-    protected processSchema(response: Response): any {
         const responseText = response.text();
         const status = response.status;
 
@@ -3867,6 +3867,212 @@ export class MessagingClient extends BaseClient implements IMessagingClient {
     }
 }
 
+export interface IModulesClient {
+    /**
+     * @return OK
+     */
+    saveConfig(moduleName: string, configJson: string): Observable<any>;
+    /**
+     * @return OK
+     */
+    getConfig(moduleName: string): Observable<any>;
+    /**
+     * @return OK
+     */
+    moduleSchemas(): Observable<any[]>;
+}
+
+@Injectable()
+export class ModulesClient extends BaseClient implements IModulesClient {
+    private http: Http = null;
+    private baseUrl: string | undefined = undefined;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(UserContext) configuration: UserContext, @Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        super(configuration);
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+    }
+
+    /**
+     * @return OK
+     */
+    saveConfig(moduleName: string, configJson: string): Observable<any> {
+        let url_ = this.baseUrl + "/api/Modules/SaveConfig?";
+        if (moduleName === undefined || moduleName === null)
+            throw new Error("The parameter 'moduleName' must be defined and cannot be null.");
+        else
+            url_ += "moduleName=" + encodeURIComponent("" + moduleName) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(configJson);
+
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processSaveConfig(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processSaveConfig(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processSaveConfig(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    getConfig(moduleName: string): Observable<any> {
+        let url_ = this.baseUrl + "/api/Modules/GetConfig?";
+        if (moduleName === undefined || moduleName === null)
+            throw new Error("The parameter 'moduleName' must be defined and cannot be null.");
+        else
+            url_ += "moduleName=" + encodeURIComponent("" + moduleName) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processGetConfig(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processGetConfig(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processGetConfig(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    /**
+     * @return OK
+     */
+    moduleSchemas(): Observable<any[]> {
+        let url_ = this.baseUrl + "/api/Modules/ModuleSchemas";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processModuleSchemas(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processModuleSchemas(response));
+                } catch (e) {
+                    return <Observable<any[]>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any[]>><any>Observable.throw(response);
+        });
+    }
+
+    protected processModuleSchemas(response: Response): any[] {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any[] | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(item);
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    protected throwException(message: string, status: number, response: string, result?: any): any {
+        if(result !== null && result !== undefined)
+            throw result;
+        else
+            throw new SwaggerException(message, status, response, null);
+    }
+}
+
 export interface INotifiationsClient {
     /**
      * @return OK
@@ -4426,6 +4632,10 @@ export interface IPropertyClient {
     /**
      * @return OK
      */
+    schema(): Observable<any>;
+    /**
+     * @return OK
+     */
     fetch(query: Query): Observable<QueryResultOfPropertyIndexBindingModel>;
     /**
      * @return OK
@@ -4463,10 +4673,6 @@ export interface IPropertyClient {
      * @return OK
      */
     activate(id: string): Observable<any>;
-    /**
-     * @return OK
-     */
-    schema(): Observable<any>;
 }
 
 @Injectable()
@@ -4479,6 +4685,61 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
         super(configuration);
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "http://devservices.localhost.com";
+    }
+
+    /**
+     * @return OK
+     */
+    schema(): Observable<any> {
+        let url_ = this.baseUrl + "/api/Property/schema";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = "";
+
+        let options_ = {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
+            return this.http.request(url_, transformedOptions_);
+        }).map((response) => {
+            return this.processSchema(response);
+        }).catch((response: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processSchema(response));
+                } catch (e) {
+                    return <Observable<any>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<any>><any>Observable.throw(response);
+        });
+    }
+
+    protected processSchema(response: Response): any {
+        const responseText = response.text();
+        const status = response.status;
+
+        if (status === 200) {
+            let result200: any | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            if (resultData200) {
+                result200 = {};
+                for (let key in resultData200) {
+                    if (resultData200.hasOwnProperty(key))
+                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
+                }
+            }
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
     }
 
     /**
@@ -5011,61 +5272,6 @@ export class PropertyClient extends BaseClient implements IPropertyClient {
     }
 
     protected processActivate(response: Response): any {
-        const responseText = response.text();
-        const status = response.status;
-
-        if (status === 200) {
-            let result200: any | null = null;
-            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
-            if (resultData200) {
-                result200 = {};
-                for (let key in resultData200) {
-                    if (resultData200.hasOwnProperty(key))
-                        result200[key] = resultData200[key] !== undefined ? resultData200[key] : {};
-                }
-            }
-            return result200;
-        } else if (status !== 200 && status !== 204) {
-            this.throwException("An unexpected server error occurred.", status, responseText);
-        }
-        return null;
-    }
-
-    /**
-     * @return OK
-     */
-    schema(): Observable<any> {
-        let url_ = this.baseUrl + "/api/Property";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = "";
-
-        let options_ = {
-            body: content_,
-            method: "get",
-            headers: new Headers({
-                "Content-Type": "application/json; charset=UTF-8",
-                "Accept": "application/json; charset=UTF-8"
-            })
-        };
-
-        return Observable.fromPromise(this.transformOptions(options_)).flatMap(transformedOptions_ => {
-            return this.http.request(url_, transformedOptions_);
-        }).map((response) => {
-            return this.processSchema(response);
-        }).catch((response: any) => {
-            if (response instanceof Response) {
-                try {
-                    return Observable.of(this.processSchema(response));
-                } catch (e) {
-                    return <Observable<any>><any>Observable.throw(e);
-                }
-            } else
-                return <Observable<any>><any>Observable.throw(response);
-        });
-    }
-
-    protected processSchema(response: Response): any {
         const responseText = response.text();
         const status = response.status;
 

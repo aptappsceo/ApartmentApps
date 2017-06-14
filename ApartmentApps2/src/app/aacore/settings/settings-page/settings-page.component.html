@@ -1,0 +1,6 @@
+  <tabset [vertical]="true" *ngIf="schemas != null" type="pills">
+    <tab  *ngFor="let schema of schemas" heading="{{schema.name}}">
+       <app-settings-form [schema]='schema.schema' [moduleName]='schema.name' #settingsForm ></app-settings-form>
+       <button (click)="settingsForm.save()">Save Settings</button>
+    </tab>
+  </tabset>
