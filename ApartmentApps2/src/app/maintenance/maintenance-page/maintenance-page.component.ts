@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MaitenanceClient } from 'app/aaservice-module/aaclient';
 
 @Component({
   selector: 'app-maintenance-page',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MaintenancePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private client: MaitenanceClient) { }
 
   ngOnInit() {
-  }
 
+  }
+  fetch(evt: any) {
+    this.client.fetch(evt.query).subscribe(evt.callback);
+  }
 }

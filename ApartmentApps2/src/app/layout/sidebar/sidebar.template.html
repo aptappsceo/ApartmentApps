@@ -62,7 +62,19 @@
       <ul id="sidebar-levels" class="collapse">
         <li *ngIf="isInAnyRoles(['PropertyAdmin','Officer'])"><a [routerLink]="['officer','incidents']">Incident Reports</a></li>
         <li *ngIf="isInRole('PropertyAdmin')"><a [routerLink]="['officer','checkins']">Checkins</a></li>
-        <li *ngIf="isInRole('Admin')"><a [routerLink]="['officer','checkins']">Settings</a></li>
+      </ul>
+    </li>
+        <li *ngIf='this.userInfo != null && this.userInfo.propertyConfig.moduleInfo.maintenanceConfig.enabled'>
+      <a class="collapsed" data-target="#sidebar-levels" data-toggle="collapse" data-parent="#sidebar">
+          <span class="icon">
+            <i class="fa fa-user"></i>
+          </span>
+        Courtesy Officer
+        <i class="toggle fa fa-angle-down"></i>
+      </a>
+      <ul id="sidebar-levels" class="collapse">
+        <li *ngIf="isInAnyRoles(['PropertyAdmin','Maintenance'])"><a [routerLink]="['maintenance','workorders']">Work Orders</a></li>
+        <!--<li *ngIf="isInRole('PropertyAdmin')"><a [routerLink]="['officer','checkins']">Checkins</a></li>-->
       </ul>
     </li>
         <!--<li >

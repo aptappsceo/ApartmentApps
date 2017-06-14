@@ -7,7 +7,8 @@ const routes: Routes = [
     { path: 'dashboard', loadChildren: '../dashboard/dashboard.module#DashboardModule' },
     { path: 'another-page', loadChildren: '../another/another.module#AnotherModule' },
     { path: 'admin', loadChildren: '../aacore/aacore.module#AACoreModule' },
-    { path: 'officer', loadChildren: '../courtesy-officer/courtesy-officer.module#CourtesyOfficerModule' }
+    { path: 'officer', loadChildren: '../courtesy-officer/courtesy-officer.module#CourtesyOfficerModule' },
+    { path: 'maintenance', loadChildren: '../maintenance/maintenance.module#MaintenanceModule' },
   ]}
 ];
 

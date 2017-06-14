@@ -47,7 +47,7 @@ export class BasePageComponent implements OnInit {
             callback:  x => {
                 this.items = x.result;
                 this.totalRecords = x.total;
-                console.log("ITEMS", this.items);
+                console.log('ITEMS', this.items);
               }
           }
         );
