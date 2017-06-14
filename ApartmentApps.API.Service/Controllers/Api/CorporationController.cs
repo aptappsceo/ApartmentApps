@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using ApartmentApps.Api;
@@ -14,6 +15,13 @@ namespace ApartmentApps.API.Service.Controllers.Api
     {
         public CorporationController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
         {
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("schema")]
+        public override HttpResponseMessage Schema()
+        {
+            return base.Schema();
         }
 
         [System.Web.Http.HttpPost]

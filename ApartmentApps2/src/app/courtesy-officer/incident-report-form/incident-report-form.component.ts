@@ -19,9 +19,6 @@ export class IncidentReportFormComponent implements OnInit {
    constructor(private officerClient: CourtesyClient, private notificationService: NotificationsService) {
 
    }
-   changed(stuff) {
-     this.myModel = stuff;
-   }
    Save() {
      let ir = new IncidentReportModel();
      ir.incidentReportTypeId = 1;

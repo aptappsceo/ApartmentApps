@@ -1,7 +1,9 @@
-
+<div class="widget form-group">
+<label [attr.for]="id" class="horizontal control-label">{{ schema.title }}</label>
  <select2 [data]='items'
           [width]='250'
           [options]="{ multiple: false }"
        [attr.readonly]="schema.readOnly?true:null"
     [attr.id]="id"
     [attr.disabled]="schema.readOnly?true:null"></select2>
+</div>

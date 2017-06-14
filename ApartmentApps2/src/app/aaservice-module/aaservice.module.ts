@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccountClient, MaitenanceClient, MessagingClient, API_BASE_URL, CourtesyClient, SearchEnginesClient, LookupsClient, PropertyClient } from './aaclient';
+import { AccountClient, MaitenanceClient, MessagingClient, API_BASE_URL, CourtesyClient, SearchEnginesClient, LookupsClient, PropertyClient, CorporationClient, ModulesClient } from './aaclient';
 import { UserContext } from './usercontext';
 import { AuthClient} from './baseclient';
 import { UserService } from './user.service';
@@ -28,7 +28,10 @@ export class AAServiceModule {
         CourtesyClient,
         SearchEnginesClient,
         LookupsClient,
-        PropertyClient
+        PropertyClient,
+        CorporationClient,
+        MaitenanceClient,
+        ModulesClient
         //OfficerClient,
 
       ]
