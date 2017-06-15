@@ -38,8 +38,17 @@
 <div class='row'>
   <div class='col-md-8'>
 <div *ngIf="incidents != null">
-  <div *ngFor="let incident of incidents">
-    <app-feeditem [actionLinks]="getActionLinks(incident)" [userInfo]="incident.submissionBy" [bodyText]="incident.comments"  [images]="this.getImages(incident)" ></app-feeditem>
+  <div >
+    <div class="row">
+          <div class="col-md-12" *ngFor="let incident of incidents">
+            <app-feeditem [actionLinks]="getActionLinks(incident)" [userInfo]="incident.submissionBy" [images]="this.getImages(incident)">
+                    <div><b>Status: </b>{{incident.statusId}}</div>
+                    <div><b>Type: </b>{{incident.title}}</div>
+                    <p>{{incident.comments}}</p>
+                </app-feeditem>
+          </div>
+      </div>
+
   </div>
   <div class="btn-toolbar">
   <div class="btn-group">
@@ -77,7 +86,7 @@
     <div class='col-md-4' *ngIf="this.searchModel != null">
       <accordion>
   <accordion-group *ngFor="let filter of this.searchModel.filters" heading="{{this.filter.title}}">
-       <app-search-panel   [model]="filter" (updated)="filtersUpdate()">
+       <app-search-panel [model]="filter" (updated)="filtersUpdate()">
 
       </app-search-panel>
   </accordion-group>

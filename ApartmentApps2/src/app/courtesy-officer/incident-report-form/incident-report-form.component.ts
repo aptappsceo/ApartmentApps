@@ -23,11 +23,11 @@ export class IncidentReportFormComponent implements OnInit {
      let ir = new IncidentReportModel();
      ir.incidentReportTypeId = 1;
      ir.comments = this.myModel.comments;
-    //console.log("model", this.myModel);
-      this.officerClient.submitIncidentReport(ir).subscribe(x => {
-          this.notificationService.success('Success!', 'Your incident report has been submitted.');
-          this.complete.emit(null);
-      });
+      console.log('MODEL', this.myModel);
+      // this.officerClient.submitIncidentReport(ir).subscribe(x => {
+      //     this.notificationService.success('Success!', 'Your incident report has been submitted.');
+      //     this.complete.emit(null);
+      // });
    }
   ngOnInit() {
     this.officerClient.schema()

@@ -43,6 +43,17 @@
       </span>-->
       </a>
     </li>
+      <li *ngIf="isInRole('Admin')">
+    <a [routerLink]=" ['admin', 'settings'] ">
+      <span class="icon">
+          <i class="fa fa-cogs"></i>
+      </span>
+        Property Settings
+      <!--<span class="badge badge-danger">
+          9
+      </span>-->
+      </a>
+    </li>
     <!--<li *ngIf="isInRole('Admin')">
       <a [routerLink]=" ['dashboard'] ">
       <span class="icon">
@@ -67,7 +78,7 @@
         <li *ngIf='this.userInfo != null && this.userInfo.propertyConfig.moduleInfo.maintenanceConfig.enabled'>
       <a class="collapsed" data-target="#sidebar-levels2" data-toggle="collapse" data-parent="#sidebar">
           <span class="icon">
-            <i class="fa fa-user"></i>
+            <i class="fa fa-wrench"></i>
           </span>
         Maintenance
         <i class="toggle fa fa-angle-down"></i>
