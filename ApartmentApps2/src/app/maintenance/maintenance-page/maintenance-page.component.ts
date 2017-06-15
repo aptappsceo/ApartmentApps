@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MaitenanceClient } from 'app/aaservice-module/aaclient';
+import { MaitenanceClient, MaintenanceRequestViewModel } from 'app/aaservice-module/aaclient';
 
 @Component({
   selector: 'app-maintenance-page',
@@ -12,6 +12,15 @@ export class MaintenancePageComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+    getImages(incident: MaintenanceRequestViewModel): string[] {
+    let result = [];
+    for (let i = 0 ; i < incident.checkins.length; i++) {
+      for (let x = 0; x < incident.checkins[i].photos.length; x++ ) {
+        result.push(incident.checkins[i].photos[i].url);
+      }
+    }
+    return result;
   }
   fetch(evt: any) {
     this.client.fetch(evt.query).subscribe(evt.callback);

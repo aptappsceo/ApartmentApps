@@ -5,6 +5,8 @@ import { MaintenancePageComponent } from './maintenance-page/maintenance-page.co
 import { MaintenanceFormComponent } from './maintenance-form/maintenance-form.component';
 import { MaintenanceDetailsPageComponent } from './maintenance-details-page/maintenance-details-page.component';
 import { RouterModule } from '@angular/router';
+import { WidgetsModule } from "app/widgets/widgets.module";
+import { AACoreModule } from "app/aacore/aacore.module";
 export const routes = [
   // { path: 'checkins', component: MaintenanceFormComponent },
   { path: 'workorders', component: MaintenancePageComponent },
@@ -14,6 +16,8 @@ export const routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    WidgetsModule,
+    AACoreModule
   ],
   exports: [
     CreateWorkOrderComponent

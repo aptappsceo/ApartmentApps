@@ -67,7 +67,7 @@ filtersUpdate() {
     }
     return result;
   }
-    getActionLinks(incident: IncidentReportViewModel): FeedItemActionLink[] {
+  getActionLinks(incident: IncidentReportViewModel): FeedItemActionLink[] {
       return [
         new FeedItemActionLink("Details", () => { this.router.navigate(['app', 'officer', 'incident', incident.id]);  })
       ];

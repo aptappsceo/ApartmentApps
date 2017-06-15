@@ -65,6 +65,7 @@ export class MyWidgetRegistry extends DefaultWidgetRegistry {
     ],
     exports: [
       SearchPanelComponent,
+      BasePageComponent
       //SearchPageComponent
     ],
     entryComponents: [
