@@ -1,10 +1,12 @@
 import { NotificationsService } from 'angular2-notifications';
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren, ViewChild } from '@angular/core';
 import { CourtesyClient, IncidentIndexBindingModel, Query, SearchEnginesClient, IncidentReportViewModel, Navigation, Search, FilterData, ClientSearchModel, LookupsClient } from 'app/aaservice-module/aaclient';
 import { CommentItem } from 'app/widgets/comment-item/comment-item.component';
 import { SearchPanelComponent } from '../../aacore/search-panel/search-panel.component';
 import { FeedItemActionLink } from 'app/widgets/feeditem/feeditem.component';
 import { Router } from '@angular/router';
+import { ActionUpdateFormComponent } from 'app/widgets/action-update-form/action-update-form.component';
+import { ModalComponent } from "app/widgets/modal/modal.component";
 
 
 @Component({
@@ -14,6 +16,8 @@ import { Router } from '@angular/router';
 })
 export class IncidentReportsPageComponent implements OnInit {
   totalRecords: number;
+  @ViewChild(ActionUpdateFormComponent) actionUpdateForm: ActionUpdateFormComponent;
+  @ViewChild('actionModal') actionModal: ModalComponent;
   @ViewChildren(SearchPanelComponent) searchComponents: QueryList<SearchPanelComponent>;
   searchModel: ClientSearchModel;
   incidents: IncidentReportViewModel[];
@@ -67,10 +71,19 @@ filtersUpdate() {
     }
     return result;
   }
+
   getActionLinks(incident: IncidentReportViewModel): FeedItemActionLink[] {
-      return [
-        new FeedItemActionLink("Details", () => { this.router.navigate(['app', 'officer', 'incident', incident.id]);  })
+      let links = [
+        new FeedItemActionLink('Details', () => { this.router.navigate(['app', 'officer', 'incident', incident.id]);  })
       ];
+      if (incident.statusId === 'Reported' || incident.statusId === 'Paused') {
+          links.push(new FeedItemActionLink('Open', () => { this.actionModal.show(); });
+      }
+      if (incident.statusId === 'Open') {
+          links.push(new FeedItemActionLink('Complete', () => { this.actionModal.show(); });
+      }
+
+      return links;
 
   }
   mapComments(incident: IncidentReportViewModel): CommentItem[] {

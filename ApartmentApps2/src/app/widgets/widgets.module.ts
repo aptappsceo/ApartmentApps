@@ -6,12 +6,15 @@ import { CommentsComponent } from './comments/comments.component';
 import { CommentItemComponent } from './comment-item/comment-item.component';
 import { CarouselModule, ModalModule } from 'ngx-bootstrap';
 import { ModalComponent } from './modal/modal.component';
+import { RouterModule } from '@angular/router';
+import { ActionUpdateFormComponent } from './action-update-form/action-update-form.component';
+import { SchemaFormModule } from 'angular2-schema-form';
 
 @NgModule({
   imports: [
-    CommonModule, CarouselModule.forRoot(), ModalModule.forRoot(),
+    CommonModule, RouterModule, CarouselModule.forRoot(), ModalModule.forRoot(), SchemaFormModule
   ],
-  declarations: [FeedItemComponent, TitleComponent, CommentsComponent, CommentItemComponent, ModalComponent],
-  exports: [FeedItemComponent, TitleComponent, ModalComponent]
+  declarations: [FeedItemComponent, TitleComponent, CommentsComponent, CommentItemComponent, ModalComponent, ActionUpdateFormComponent],
+  exports: [FeedItemComponent, TitleComponent, ModalComponent, ActionUpdateFormComponent]
 })
 export class WidgetsModule { }

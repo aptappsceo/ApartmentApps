@@ -1,5 +1,7 @@
 <app-title [title]="'Courtesy Officer'" [subTitle]="'Incident Reports'"></app-title>
-
+<app-modal #actionModal>
+  <app-action-update-form #actionForm></app-action-update-form>
+</app-modal>
 <div class="clearfix">
   <div class="btn-toolbar">
     <!--<div class="btn-group">
