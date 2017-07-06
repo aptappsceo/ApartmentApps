@@ -263,8 +263,10 @@ namespace ApartmentApps.Api
 
         public void IncidentReportSubmited(IncidentReport incidentReport)
         {
-            if (incidentReport.User.PropertyId != null)
-                SendAlert(incidentReport.User.PropertyId.Value, "Officer", "An incident report has been submitted", incidentReport.Comments, "Incident", incidentReport.Id);
+           
+
+            
+                SendAlert(UserContext.PropertyId, "Officer", "An incident report has been submitted", incidentReport.Comments, "Incident", incidentReport.Id);
         }
 
         public void IncidentReportCheckin(IncidentReportCheckin incidentReportCheckin,
