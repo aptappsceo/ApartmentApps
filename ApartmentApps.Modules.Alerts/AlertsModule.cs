@@ -241,16 +241,17 @@ namespace ApartmentApps.Api
                     SendEmail(email);
                   
 
-                    _pushHandler.SendToUser(item.Id, new NotificationPayload()
-                    {
-                        Action = "View",
-                        DataId = relatedId,
-                        DataType = type,
-                        Message = message,
-                        Title = title
-                    });
+                  
                     // _emailService.SendAsync(new IdentityMessage() { Body = message, Destination = item.Email, Subject = title });
                 }
+                _pushHandler.SendToUser(item.Id, new NotificationPayload()
+                {
+                    Action = "View",
+                    DataId = relatedId,
+                    DataType = type,
+                    Message = message,
+                    Title = title
+                });
 
             }
             Context.SaveChanges();
