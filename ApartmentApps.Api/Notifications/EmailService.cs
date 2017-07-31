@@ -27,7 +27,7 @@ namespace ApartmentApps.Api
         public async Task SendAsync(IdentityMessage message)
         {
 
-            string apiKey = "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";
+            string apiKey = "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";
             var fromEmail = "noreply@apartmentapps.com";
             //var config = _config.Get<MessagingModule>().Config;
 
