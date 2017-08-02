@@ -89,6 +89,7 @@ namespace ApartmentApps.Api.Modules
                     ToEmail = email,
                     User = propertyAdmin,
                     FromEmail = "info@apartmentapps.com",
+                  
                     Subject = $"Daily officer report for {UserContext.CurrentUser.Property.Name}",
 #if DEBUG
                     Checkins = courtesyOfficerService.ForRange(UserContext.Today.Subtract(new TimeSpan(500,0,0,0)),UserContext.Now)

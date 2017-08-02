@@ -15,14 +15,22 @@
         <td><img src="@Model.StaticMapUrl" /></td>
         <td><table>
             <tr>
-                <th>Officer</th>
+                @if (completed.All(x => x.Officer != null))
+                {
+                    <th>Officer</th>
+                }
+              
                 <th>Location</th>
                 <th>Checkin Time</th>
             </tr>
             @foreach (var item in completed)
             {
                 <tr>
-                    <td>@item.Officer.FullName</td>
+                    @if (item.Officer != null)
+                    {
+                        <td>@item.Officer.FullName</td>
+                    }
+                 
                     <td>@item.Label</td>
                     <td>@item.Date</td>
                 </tr>

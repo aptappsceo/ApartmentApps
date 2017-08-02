@@ -74,7 +74,7 @@ namespace ApartmentApps.Api
             foreach (var p in Locations.GetAll().ToArray())
             {
                 var item = last7DaysCheckins.FirstOrDefault(x=>x.CourtesyOfficerLocationId == p.Id);
-               
+               if (item != null)
                     yield return ToCourtesyCheckinBindingModel(p, item);
             }
         }
