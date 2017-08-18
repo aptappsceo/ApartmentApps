@@ -90,7 +90,7 @@ namespace ApartmentApps.Api
                 Id = p.Id,
                 Date = item?.CreatedOn,
                 Complete = item != null,
-                Officer = item.Officer == null ? null : _userMapper.ToViewModel(item.Officer),
+                Officer = item?.Officer == null ? null : _userMapper.ToViewModel(item.Officer),
                 AcceptableCheckinCodes = new List<string>()
                 {
                     $"http://apartmentapps.com?location={p.LocationId}",
