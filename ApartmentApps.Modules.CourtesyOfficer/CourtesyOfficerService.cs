@@ -74,7 +74,7 @@ namespace ApartmentApps.Api
             foreach (var p in Locations.GetAll().ToArray())
             {
                 var item = last7DaysCheckins.FirstOrDefault(x=>x.CourtesyOfficerLocationId == p.Id);
-               if (item != null)
+               if (item != null && p != null)
                     yield return ToCourtesyCheckinBindingModel(p, item);
             }
         }
@@ -90,7 +90,7 @@ namespace ApartmentApps.Api
                 Id = p.Id,
                 Date = item?.CreatedOn,
                 Complete = item != null,
-                Officer = _userMapper.ToViewModel(item.Officer),
+                Officer = item.Officer == null ? null : _userMapper.ToViewModel(item.Officer),
                 AcceptableCheckinCodes = new List<string>()
                 {
                     $"http://apartmentapps.com?location={p.LocationId}",
