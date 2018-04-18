@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>i386</MtouchArch>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>True</MtouchDebug>
     <MtouchProfiling>False</MtouchProfiling>
     <MtouchSdkVersion>10.1</MtouchSdkVersion>
@@ -86,15 +86,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <MtouchArch>ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>True</MtouchProfiling>
-    <CodesignKey>iPhone Developer: Josh Brewer (B5LK3679EV)</CodesignKey>
+    <CodesignKey>iPhone Developer: Xasan Fazilov (PENPQ9SZLJ)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
     <MtouchSdkVersion>10.0</MtouchSdkVersion>
     <MtouchLink>None</MtouchLink>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
-    <CodesignProvision>1b68aea1-aa0a-4224-a1e8-7bd7b63030bf</CodesignProvision>
+    <CodesignProvision>debugWildCard</CodesignProvision>
     <CodesignExtraArgs>
     </CodesignExtraArgs>
     <MtouchI18n>
@@ -111,6 +111,12 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HockeySDK">
+      <HintPath>..\..\Components\hockeyappios-4.1.0.3\lib\ios-unified\HockeySDK.dll</HintPath>
+    </Reference>
+    <Reference Include="HockeySDK.iOSBindings">
+      <HintPath>..\..\Components\hockeyappios-4.1.0.3\lib\ios-unified\HockeySDK.iOSBindings.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -160,12 +166,6 @@
     <Reference Include="MvvmCross.Plugins.Messenger">
       <HintPath>..\..\packages\MvvmCross.Plugin.Messenger.4.3.0\lib\Xamarin.iOS10\MvvmCross.Plugins.Messenger.dll</HintPath>
     </Reference>
-    <Reference Include="HockeySDK">
-      <HintPath>..\..\Components\hockeyappios-4.1.0.3\lib\ios-unified\HockeySDK.dll</HintPath>
-    </Reference>
-    <Reference Include="HockeySDK.iOSBindings">
-      <HintPath>..\..\Components\hockeyappios-4.1.0.3\lib\ios-unified\HockeySDK.iOSBindings.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Azure.NotificationHubs.iOS">
       <HintPath>..\azure-messaging-1.2.5.2\lib\ios-unified\Xamarin.Azure.NotificationHubs.iOS.dll</HintPath>
     </Reference>
@@ -181,168 +181,223 @@
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-60%402x.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-60%403x.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-76.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-76%402x.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small%402x.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small%403x.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small-40.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small-40%402x.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small-40%403x.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Contents.json">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default%402x.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-568h%402x.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Icons.xcassets\HouseIcon.imageset\Contents.json">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Icons.xcassets\HouseIcon.imageset\HouseIcon.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Icons.xcassets\MaintenaceIcon.imageset\Contents.json">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Icons.xcassets\MaintenaceIcon.imageset\MaintenaceIcon.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Icons.xcassets\OfficerIcon.imageset\Contents.json">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Icons.xcassets\OfficerIcon.imageset\OfficerIcon.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Icons.xcassets\PartnersIcon.imageset\Contents.json">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Icons.xcassets\PartnersIcon.imageset\PartnersIcon.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Icons.xcassets\PayIcon.imageset\Contents.json">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Icons.xcassets\PayIcon.imageset\PayIcon.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo29-1.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo29.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo40-1.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo48.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo50.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo55.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo57.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo58-1.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo58-2.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo58.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo72.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo76-1.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo80-1.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo80-2.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo80.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo87-2.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo87.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo88.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo100.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo114.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo120-1.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo120.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo144.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo152.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo172.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo180.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo196.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\IconLogo167.png">
+      <Visible>false</Visible>
       <InProject>false</InProject>
     </ImageAsset>
   </ItemGroup>
@@ -541,14 +596,6 @@
     <XamarinComponentReference Include="hockeyappios">
       <Visible>False</Visible>
       <Version>4.1.0.3</Version>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="sdwebimage">
-      <Version>3.7.5</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="zxing.net.mobile">
-      <Visible>False</Visible>
-      <Version>2.1.12</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>

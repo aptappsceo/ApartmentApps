@@ -22,6 +22,7 @@ using ApartmentApps.Modules.Maintenance;
 using Microsoft.AspNet.Identity;
 using Ninject;
 using RazorEngine.Templating;
+using System.Web;
 
 namespace ApartmentApps.Api
 {
@@ -141,16 +142,18 @@ namespace ApartmentApps.Api
         {
             if (maitenanceRequest.User.PropertyId != null)
             {
+                var viewUrl = $"http://portal.apartmentapps.com/MaitenanceRequests/Details/{maitenanceRequest.Id}";
+#if DEBUG       
+                viewUrl = $"http://localhost:58731/MaitenanceRequests/Details/{maitenanceRequest.Id}";
+#endif
                 var mapper = Kernel.Get<FeedSerivce>();
                 SendAlert(maitenanceRequest.User.PropertyId.Value, "Maintenance", "New maintenance request has been created", maitenanceRequest.Message, "Maintenance", maitenanceRequest.Id,
                     new UpdateEmailData()
                     {
                         FeedItem = mapper.ToFeedItemBindingModel(maitenanceRequest),
-                        Links = new Dictionary<string, string>() { { "View", $"http://portal.apartmentapps.com/MaitenanceRequests/Details/{maitenanceRequest.Id}" } },
+                        Links = new Dictionary<string, string>() { { "View", viewUrl } },
                     });
             }
-
-
         }
 
         public void MaintenanceRequestCheckin(MaintenanceRequestCheckin maitenanceRequest, MaitenanceRequest request)
@@ -165,20 +168,23 @@ namespace ApartmentApps.Api
                     //var vm = mrcm.ToViewModel(maitenanceRequest);
                     var vm = maitenanceRequest.ToMaintenanceCheckinBindingModel(Kernel.Get<IBlobStorageService>());
                     var users = _userRepository.GetAll().Where(p => p.UnitId == unitId && p.Archived == false).ToArray();
+                    var viewUrl = $"http://portal.apartmentapps.com/MaitenanceRequests/Details/{request.Id}";
+#if DEBUG                   
+                    viewUrl = $"http://localhost:58731/MaitenanceRequests/Details/{request.Id}";
+#endif
                     foreach (var item in users)
                     {
                         SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id, new MaintenanceCheckinEmailData()
                         {
                             BindingModel = vm,
-                            Links = new Dictionary<string, string>() { { "View", $"http://portal.apartmentapps.com/MaitenanceRequests/Details/{request.Id}" } },
-
+                            Links = new Dictionary<string, string>() { { "View", viewUrl } },
                         });
                     }
                 }
-          
-
             }
         }
+
+       
 
         public void SendAlert(ApplicationUser user, string title, string message, string type, int relatedId = 0, EmailData email = null, string pushMessage = null)
         {

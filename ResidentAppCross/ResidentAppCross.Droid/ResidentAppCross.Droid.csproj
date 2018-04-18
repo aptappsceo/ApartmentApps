@@ -13,7 +13,7 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidApplication>True</AndroidApplication>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AssemblyName>ResidentAppCross.Droid</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <NuGetPackageImportStamp>
@@ -72,9 +72,26 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AndHUD, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AndHUD.1.2.0\lib\MonoAndroid\AndHUD.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoFitTextView, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoFitTextView.0.2.1.0\lib\MonoAndroid403\AutoFitTextView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="blocke.circleimageview, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\blocke.circleimageview.1.0\lib\MonoAndroid50\blocke.circleimageview.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="GCM.Client">
+      <HintPath>..\..\Components\GCMClient-1.0\lib\android\GCM.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="HockeySDK">
+      <HintPath>..\..\Components\hockeyappandroid-4.1.0.3\lib\android\HockeySDK.dll</HintPath>
+    </Reference>
+    <Reference Include="HockeySDK.AndroidBindings">
+      <HintPath>..\..\Components\hockeyappandroid-4.1.0.3\lib\android\HockeySDK.AndroidBindings.dll</HintPath>
     </Reference>
     <Reference Include="MaterialSpinner, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MaterialSpinner-Xamarin.1.1.1\lib\MonoAndroid\MaterialSpinner.dll</HintPath>
@@ -167,13 +184,13 @@
       <HintPath>..\..\packages\Xamarin.NineOldAndroids.0.0.1\lib\MonoAndroid\NineOldAndroids.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PhotoView">
+      <HintPath>..\..\Components\PhotoView-1.2.4.1\lib\android\PhotoView.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="AutoFitTextView, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\packages\AutoFitTextView.0.2.1.0\lib\MonoAndroid403\AutoFitTextView.dll</HintPath>
-    </Reference>
     <Reference Include="Square.OkHttp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\Square.OkHttp.2.4.0.0\lib\MonoAndroid\Square.OkHttp.dll</HintPath>
     </Reference>
@@ -238,24 +255,9 @@
       <HintPath>..\..\packages\ZXing.Net.Mobile.2.1.47\lib\MonoAndroid403\ZXingNetMobile.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="HockeySDK.AndroidBindings">
-      <HintPath>..\..\Components\hockeyappandroid-4.1.0.3\lib\android\HockeySDK.AndroidBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="HockeySDK">
-      <HintPath>..\..\Components\hockeyappandroid-4.1.0.3\lib\android\HockeySDK.dll</HintPath>
-    </Reference>
-    <Reference Include="PhotoView">
-      <HintPath>..\..\Components\PhotoView-1.2.4.1\lib\android\PhotoView.dll</HintPath>
-    </Reference>
-    <Reference Include="AndHUD">
-      <HintPath>..\..\Components\AndHUD-1.3.1\lib\android\AndHUD.dll</HintPath>
-    </Reference>
     <Reference Include="MvvmCross.Binding.Droid, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MvvmCross.Binding.4.2.3\lib\MonoAndroid\MvvmCross.Binding.Droid.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="GCM.Client">
-      <HintPath>..\..\Components\GCMClient-1.0\lib\android\GCM.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -420,14 +422,6 @@
     <AndroidResource Include="Resources\drawable-hdpi\SecurityIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <XamarinComponentReference Include="AndHUD">
-      <Version>1.3.1</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="AutoFitTextView">
-      <Version>0.2.1.0</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
     <XamarinComponentReference Include="GCMClient">
       <Version>1.0</Version>
       <Visible>False</Visible>

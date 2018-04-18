@@ -26,9 +26,10 @@ public static class Constants
 }
 public class App : MvxApplication
 {
-
+    //localhost server shared with ngrok
+    public static Uri LocalEndpoint = new Uri("http://fd0e2249.ngrok.io/");//new Uri("http://localhost:4412/");
     public static Uri SiniEndpoint = new Uri("http://5.189.103.91.nip.io:54685/");
-    public static Uri DevEndpoint = new Uri("http://devservices.apartmentapps.com/");
+    public static Uri DevEndpoint = LocalEndpoint;//new Uri("http://devservices.apartmentapps.com/");
 	public static Uri TestEndpoint = new Uri("http://testservices.apartmentapps.com/");
     public static Uri ProductionEndpoint = new Uri("https://api.apartmentapps.com/");
 
@@ -36,15 +37,15 @@ public class App : MvxApplication
     {
         Mvx.ConstructAndRegisterSingleton<IImageService, ImageService>();
         Mvx.ConstructAndRegisterSingleton<ILocationService, LocationService>();
-        
+
         //local sini pc endpoint
         // var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://5.189.103.91.nip.io:54685/"));
         //var apartmentAppsApiService = new ApartmentAppsClient(new Uri("http://devservices.apartmentapps.com/"));
-		#if DEBUG
+#if DEBUG        
         var apartmentAppsApiService = new ApartmentAppsClient(DevEndpoint);
-		#else
+#else
 		var apartmentAppsApiService = new ApartmentAppsClient(ProductionEndpoint);
-		#endif
+#endif
 
 
         Mvx.RegisterSingleton<IApartmentAppsAPIService>(apartmentAppsApiService);
@@ -81,7 +82,7 @@ public class App : MvxApplication
         public async Task<bool> LoginAsync(string username, string password)
         {
             
-            var result = await HttpClient.PostAsync(this.BaseUri + "/Token", new FormUrlEncodedContent(new Dictionary<string, string>()
+            var result = await HttpClient.PostAsync(this.BaseUri + "Token", new FormUrlEncodedContent(new Dictionary<string, string>()
             {
                 {"username", username},
                 {"password", password},

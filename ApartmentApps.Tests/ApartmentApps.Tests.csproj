@@ -208,10 +208,6 @@
     <Compile Include="ProspectTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ApartmentApps.API.Service\ApartmentApps.API.Service.csproj">
-      <Project>{d59a4703-66ef-4ae1-ae35-5c2175abea88}</Project>
-      <Name>ApartmentApps.API.Service</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ApartmentApps.Api\ApartmentApps.Api.csproj">
       <Project>{81C38E8C-036A-43FA-92C5-446BBCE6E656}</Project>
       <Name>ApartmentApps.Api</Name>

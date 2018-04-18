@@ -105,3 +105,9 @@ TestResults/micah_DESKTOP-T2KHNRD 2016-12-26 23_22_14/Out/apartmentapps.tests.dl
 .vs/ResidentAppCross/v14/.suo
 ApartmentApps2/src/app/common/Apt Apps signature page.pdf
 ApartmentApps2/.vs/slnx.sqlite
+/.vs/ResidentAppCross Mobile/v14/*.suo
+/.vs/ResidentAppCross Mobile/v15/*.suo
+/.vs/ResidentAppCross Mobile/v15/Server/sqlite3/*.lock
+/.vs/ResidentAppCross Mobile/v15/Server/sqlite3/*.ide
+/.vs/ResidentAppCross-Portal/v14/*.suo
+/.vs/ResidentAppCross-WebService/v14/*.suo

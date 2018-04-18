@@ -66,12 +66,11 @@ namespace ApartmentApps.Portal.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
-        {
+        {           
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
             var user = await UserManager.FindByEmailAsync(model.Email);
 
             if (user == null || user.Archived || (user.Property.State != PropertyState.Active && user.Property.State != PropertyState.TestAccount))
@@ -109,6 +108,43 @@ namespace ApartmentApps.Portal.Controllers
                     return View(model);
             }
         }
+
+
+        //test method to create Accounts without login
+        private async Task<bool> RegTemp(string email, List<string> roles)
+        {
+            var user = new ApplicationUser();
+
+            user.Email = email;
+            user.PropertyId = 5;
+            user.UserName = email;
+            user.UnitId = 8142;
+            user.FirstName = "xasan2006-tester";
+            user.LastName = "xasan2006-tester";
+            user.PhoneNumber = "998902589632";
+            user.Roles.Clear();
+            foreach (var item in roles)
+            {
+                user.Roles.Add(new IdentityUserRole() { RoleId = item, UserId = user.Id });
+            }            
+
+            if (UserManager != null)
+            {
+                var result = await UserManager.CreateAsync(user, "Temp1234!");
+                if (result.Succeeded)
+                {
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                }
+            }
+
+            return true;
+
+        }
+
 
         //
         // GET: /Account/VerifyCode
