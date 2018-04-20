@@ -29,7 +29,7 @@ public class App : MvxApplication
     //localhost server shared with ngrok
     public static Uri LocalEndpoint = new Uri("http://fd0e2249.ngrok.io/");//new Uri("http://localhost:4412/");
     public static Uri SiniEndpoint = new Uri("http://5.189.103.91.nip.io:54685/");
-    public static Uri DevEndpoint = LocalEndpoint;//new Uri("http://devservices.apartmentapps.com/");
+    public static Uri DevEndpoint = new Uri("http://devservices.apartmentapps.com/");
 	public static Uri TestEndpoint = new Uri("http://testservices.apartmentapps.com/");
     public static Uri ProductionEndpoint = new Uri("https://api.apartmentapps.com/");
 
