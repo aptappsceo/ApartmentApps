@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using ApartmentApps.Api.NewFolder1;
 using ApartmentApps.Api.ViewModels;
 using ApartmentApps.Data.Repository;
@@ -78,26 +79,37 @@ namespace ApartmentApps.Api.Modules
             var date = UserContext.Today;
             date = date.Add(new TimeSpan(1, 8, 0, 0, 0));
             date = d ?? date;
+
+#if DEBUG
+            if (propertyAdmins.Count > 0)
+            {
+                var propertyAdmin = propertyAdmins.First();
+                queuer.QueueEmail(new DailyOfficerReport()
+                {
+                    ToEmail = "xasan2006@mail.ru",
+                    User = propertyAdmin,
+                    FromEmail = "info@apartmentapps.com",
+
+                    Subject = $"Daily officer report for {UserContext.CurrentUser.Property.Name}",
+                    Checkins = courtesyOfficerService.ForRange(UserContext.Today.Subtract(new TimeSpan(500, 0, 0, 0)), UserContext.Now)
+
+                });
+            }
+#else
             foreach (var propertyAdmin in propertyAdmins)
             {
                 var email = propertyAdmin.Email;
-#if DEBUG
-                if (email != "micahosborne@gmail.com") continue;
-#endif
                 queuer.QueueEmail(new DailyOfficerReport()
                 {
                     ToEmail = email,
                     User = propertyAdmin,
-                    FromEmail = "info@apartmentapps.com",
-                  
+                    FromEmail = "info@apartmentapps.com",                  
                     Subject = $"Daily officer report for {UserContext.CurrentUser.Property.Name}",
-#if DEBUG
-                    Checkins = courtesyOfficerService.ForRange(UserContext.Today.Subtract(new TimeSpan(500,0,0,0)),UserContext.Now)
-#else
                     Checkins = courtesyOfficerService.ForDay(UserContext.CurrentUser.TimeZone.Today().Subtract(new TimeSpan(1, 0, 0, 0)))
-#endif    
+  
                 }, date);
             }
+#endif
         }
     }
 }

@@ -1316,6 +1316,7 @@
       <LastGenOutput>Template1.txt</LastGenOutput>
     </Content>
     <None Include="Views\Account\FeedBack.cshtml" />
+    <EmbeddedResource Include="Views\MaitenanceRequests\MonthlyReport.cshtml" />
     <Content Include="Views\Shared\FormFactory\_README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

@@ -32,6 +32,7 @@ using Syncfusion.DocIO.DLS;
 using Syncfusion.DocToPDFConverter;
 using Syncfusion.HtmlConverter;
 using Syncfusion.Pdf;
+using RazorEngine.Templating;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -198,6 +199,10 @@ namespace ApartmentApps.Portal.Controllers
     public class MaitenanceRequestsController : AutoGridController
             <MaintenanceService, MaintenanceService, MaintenanceRequestViewModel, MaintenanceRequestEditModel>
     {
+        //public MaitenanceRequestsController(IKernel kernel, PropertyContext context, IUserContext userContext) : base(kernel, context, userContext)
+        //{
+            
+        //}
         private readonly UserService _usersService;
         private PdfDocument _document;
         public IMaintenanceService MaintenanceService { get; set; }
@@ -338,13 +343,17 @@ namespace ApartmentApps.Portal.Controllers
         [HttpPost]
         public ActionResult CreateMonthlyReport(MaintenanceReportModel model)
         {
+#if DEBUG
+            model.StartDate = DateTime.Now.AddYears(-5);
+            model.EndDate = DateTime.Now;
+#endif
             if (UserContext.CurrentUser == null) // hack for caching the current user httpcontext.current is not available in thread
             {
                 return RedirectToAction("MonthlyReport");
             }
             var httpContext = System.Web.HttpContext.Current;
             var result = GetReport(model);
-            Thread thread = new Thread(() => { CreateDocument(result, httpContext); });
+            Thread thread = new Thread(() => { CreateDocument2(result, httpContext); });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();
@@ -392,10 +401,12 @@ namespace ApartmentApps.Portal.Controllers
             //var MaintenanceScheduledToday = Context.MaitenanceRequests.Count(p => p.ScheduleDate > todayStart && p.ScheduleDate < todayEnd && p.StatusId == "Scheduled");
             //var IncidentReportsTotalOutstanding = Context.IncidentReports.Count(x => x.StatusId != "Complete");
 
-            result.WorkOrdersPerEmployee = CheckinsByRange(startDate, endDate).Where(p => p.StatusId == "Complete")
-                .GroupBy(p => p.Worker)
-                .ToArray();
-  
+            var checkInList = CheckinsByRange(startDate, endDate).Where(p => p.StatusId == "Complete");
+                            
+            result.WorkOrdersPerEmployee = checkInList.GroupBy(p => p.Worker).ToArray();
+
+            result.WorkOrdersPerUnit = checkInList.GroupBy(c => c.MaitenanceRequest.Unit.Name).ToArray();
+
             result.within24 = Context.MaitenanceRequests.GetAll()
                 .Count(p => p.CompletionDate != null &&
                             p.SubmissionDate >= StartDate && p.SubmissionDate <= EndDate &&
@@ -461,6 +472,52 @@ namespace ApartmentApps.Portal.Controllers
             //Convert HTML to PDF document
 
             _document = htmlConverter.Convert(htmlText, baseUrl);
+        }
+
+        public void CreateDocument2(MaintenanceReportViewModel model, HttpContext httpContext)
+        {  
+            var razorService = Kernel.Get<IRazorEngineService>();
+            var templateType = model.GetType();
+            var templateName = "MonthlyReport";   
+
+            if (!razorService.IsTemplateCached(templateName, templateType))
+            {
+                razorService.AddTemplate(templateName,
+                    LoadHtmlFile($"ApartmentApps.Portal.Views.MaitenanceRequests.{templateName}.cshtml"));
+            }
+
+            var reportHtml = razorService.RunCompile(templateName, templateType, model);
+            if(!string.IsNullOrEmpty(reportHtml))
+            {
+                //inject css
+                var baseUrl = string.Empty;
+#if DEBUG
+                baseUrl = $"{Request.Url.Scheme}://{Request.Url.Host}:{Request.Url.Port}";                
+#else
+                baseUrl = $"{Request.Url.Scheme}://{Request.Url.Host}";
+#endif
+                reportHtml = reportHtml.Replace("/Content/bootstrap.min.css", baseUrl + "/Content/bootstrap.min.css");
+                reportHtml = reportHtml.Replace("/Content/style.css", baseUrl + "/Content/style.css");
+
+                HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+                var reportMargins = new Syncfusion.Pdf.Graphics.PdfMargins();
+                reportMargins.Top = 60;
+                reportMargins.Left = 50;
+                reportMargins.Right = 50;
+                reportMargins.Bottom = 40;
+                htmlConverter.ConverterSettings.Margin = reportMargins;
+                _document = htmlConverter.Convert(reportHtml, string.Empty);
+            }
+        }
+
+        private static string LoadHtmlFile(string resourceName)
+        {
+            using (Stream stream = typeof(MaitenanceRequestsController).Assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                return result;
+            }
         }
 
         //public override string ExportFileName
@@ -546,6 +603,7 @@ namespace ApartmentApps.Portal.Controllers
     public class MaintenanceReportViewModel
     {
         public IGrouping<ApplicationUser, MaintenanceRequestCheckin>[] WorkOrdersPerEmployee { get; set; }
+        public IGrouping<string, MaintenanceRequestCheckin>[] WorkOrdersPerUnit { get; set; }
         public int within24 { get; set; }
         public int within48 { get; set; }
         public int within72 { get; set; }

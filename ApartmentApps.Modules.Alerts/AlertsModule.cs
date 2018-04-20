@@ -167,19 +167,24 @@ namespace ApartmentApps.Api
                     //var mrcm = Kernel.Get<IMapper<MaintenanceRequestCheckin, MaintenanceCheckinBindingModel>>();
                     //var vm = mrcm.ToViewModel(maitenanceRequest);
                     var vm = maitenanceRequest.ToMaintenanceCheckinBindingModel(Kernel.Get<IBlobStorageService>());
-                    var users = _userRepository.GetAll().Where(p => p.UnitId == unitId && p.Archived == false).ToArray();
+                    var user = _userRepository.Find(request.UserId); //.GetAll().Where(p => p.UnitId == unitId && p.Archived == false).ToArray();
                     var viewUrl = $"http://portal.apartmentapps.com/MaitenanceRequests/Details/{request.Id}";
 #if DEBUG                   
                     viewUrl = $"http://localhost:58731/MaitenanceRequests/Details/{request.Id}";
 #endif
-                    foreach (var item in users)
+                    SendAlert(user, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id, new MaintenanceCheckinEmailData()
                     {
-                        SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id, new MaintenanceCheckinEmailData()
-                        {
-                            BindingModel = vm,
-                            Links = new Dictionary<string, string>() { { "View", viewUrl } },
-                        });
-                    }
+                        BindingModel = vm,
+                        Links = new Dictionary<string, string>() { { "View", viewUrl } },
+                    });
+                    //foreach (var item in users)
+                    //{
+                    //    SendAlert(item, $"Maintenance", "Your maintenance request has been " + request.StatusId, "Maintenance", request.Id, new MaintenanceCheckinEmailData()
+                    //    {
+                    //        BindingModel = vm,
+                    //        Links = new Dictionary<string, string>() { { "View", viewUrl } },
+                    //    });
+                    //}
                 }
             }
         }
