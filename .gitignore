@@ -111,3 +111,5 @@ ApartmentApps2/.vs/slnx.sqlite
 /.vs/ResidentAppCross Mobile/v15/Server/sqlite3/*.ide
 /.vs/ResidentAppCross-Portal/v14/*.suo
 /.vs/ResidentAppCross-WebService/v14/*.suo
+/.vs/ResidentAppCross-Small/v15/Server/sqlite3/db.lock
+/.vs/ResidentAppCross-Small/v15/Server/sqlite3/storage.ide

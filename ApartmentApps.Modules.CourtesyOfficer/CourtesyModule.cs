@@ -29,23 +29,25 @@ namespace ApartmentApps.Api.Modules
 
         public void PopulateMenuItems(List<MenuItemViewModel> menuItems)
         {
-            var menuItem = new MenuItemViewModel("Incidents", "fa-shield");
-            menuItem.Children.Add(new MenuItemViewModel("New Incident", "fa-plus-square", "NewRequest", "IncidentReports"));
+            var incidentMenuItem = new MenuItemViewModel("Incidents", "fa-shield");
+
+            incidentMenuItem.Children.Add(new MenuItemViewModel("New Incident", "fa-plus-square", "NewRequest", "IncidentReports"));
             if (UserContext.IsInRole("PropertyAdmin"))
             {
-                menuItem.Children.Add(new MenuItemViewModel("Incidents", "fa-folder", "Index", "IncidentReports"));
+                incidentMenuItem.Children.Add(new MenuItemViewModel("Incidents", "fa-folder", "Index", "IncidentReports"));                
             }
-            menuItems.Add(menuItem);
-           
+            menuItems.Add(incidentMenuItem);
+
             if (UserContext.IsInRole("PropertyAdmin"))
             {
                 var checkins = new MenuItemViewModel("Checkins", "fa-location-arrow");
                 checkins.Children.Add(new MenuItemViewModel("Today", "fa-clock-o", "Index", "CourtesyOfficer"));
                 checkins.Children.Add(new MenuItemViewModel("Yesterday", "fa-history", "Yesterday", "CourtesyOfficer"));
                 checkins.Children.Add(new MenuItemViewModel("This Week", "fa-history", "ThisWeek", "CourtesyOfficer"));
+                checkins.Children.Add(new MenuItemViewModel("Monthly Report", "fa-area-chart", "CheckinMonthlyReport", "CourtesyOfficer"));
                 menuItems.Add(checkins);
             }
-         
+            
         }
 
         public void FillActions(List<ActionLinkModel> actions, object viewModel)

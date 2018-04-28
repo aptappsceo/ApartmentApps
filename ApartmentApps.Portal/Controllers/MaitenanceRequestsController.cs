@@ -353,7 +353,7 @@ namespace ApartmentApps.Portal.Controllers
             }
             var httpContext = System.Web.HttpContext.Current;
             var result = GetReport(model);
-            Thread thread = new Thread(() => { CreateDocument2(result, httpContext); });
+            Thread thread = new Thread(() => { CreateDocument(result, httpContext); });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();
@@ -437,44 +437,9 @@ namespace ApartmentApps.Portal.Controllers
             result.PropertyName = UserContext.CurrentUser.Property.Name;
             return result;
         }
-        private void CreateDocument(MaintenanceReportViewModel model, HttpContext httpContext)
-        {
-            //Kernel.Get<WebUserContext>().HttpContext = httpContext;
-           
-            HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
-            string htmlText = $"<html><body style='padding: 40px;font-family: Arial, Helvetica, sans-serif;'>" +
-                              $"<div style='text-align: center; font-size: 32px; font-weight: bold'>{model.PropertyName} Monthly Maintenance Report</div>" +
-                              $"<div style='text-align: center; font-size: 20px;'>For {model.StartDate} {model.EndDate}</div>" +
-                              $"<br/><br/><table style='width: 100%'>";
-
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Completed</td><td>{model.completed} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Total Paused</td><td>{model.paused} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24 hours</td><td>{model.within24} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 24-48 hours</td><td>{model.within48} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 48-72 hours</td><td>{model.within72} Work Orders</td></tr> ";
-            htmlText += $"<tr><td style='font-weight: bold; width: 50%;'>Completed Within 72+ hours</td><td>{model.greaterThan72} Work Orders</td></tr> ";
         
 
-
-
-            foreach (var item in model.WorkOrdersPerEmployee)
-            {
-                htmlText += $"<tr><td>{item.Key.FirstName} {item.Key.LastName} Completed</td><td>{item.Count()} Work Orders</td></tr> ";
-            }
-
-
-            htmlText += $"" +
-                              $"</table>" +
-                              $"</body></html>";
-
-            string baseUrl = "";
-
-            //Convert HTML to PDF document
-
-            _document = htmlConverter.Convert(htmlText, baseUrl);
-        }
-
-        public void CreateDocument2(MaintenanceReportViewModel model, HttpContext httpContext)
+        public void CreateDocument(MaintenanceReportViewModel model, HttpContext httpContext)
         {  
             var razorService = Kernel.Get<IRazorEngineService>();
             var templateType = model.GetType();

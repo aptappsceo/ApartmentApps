@@ -112,6 +112,9 @@
     <Compile Include="IncidentStatusesSearchEngine.cs" />
     <Compile Include="IncidentStatusLookupMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\CheckinsFilterModel.cs" />
+    <Compile Include="Report\CheckinReportViewModel.cs" />
+    <Compile Include="Report\MonthlyCheckinsReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApartmentApps.Api\ApartmentApps.Api.csproj">

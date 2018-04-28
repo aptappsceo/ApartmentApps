@@ -1,0 +1,50 @@
+﻿@using RazorEngine
+@inherits RazorEngine.Templating.TemplateBase<ApartmentApps.Modules.CourtesyOfficer.Report.CheckinReportViewModel>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Monthly Officer Checkins Report</title>
+        <link href="/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+        <link href="/Content/style.css")" rel="stylesheet" type="text/css" />
+        <style>
+            .table-striped > tbody > tr:nth-of-type(odd) {
+                background-color: #f9f9f9;
+            }
+
+            td {
+                border-right: 1px solid #e7eaec;
+                border-left: 1px solid #e7eaec;
+            }
+        </style>
+
+    </head>
+
+    <body class="md-skin pace-running">
+        <center><h3>@Model.PropertyName </h3></center>
+        <center><h3>Monthly CheckIns Report: @Model.StartDate.ToString("MM/dd/yyyy") - @Model.EndDate.ToString("MM/dd/yyyy")</h3></center>
+        <center>
+            <table class="table table-striped" style="width:600px;">
+                <tbody style="border-bottom: 1px solid #e7eaec;">
+                    <tr style="background-color:white;">
+                        <td style="font-weight:bold;color:black;">Locations</td>
+                        <td style="font-weight:bold;color:black;">Date/Time</td>
+                    </tr>                    
+                        @foreach (var parentKey in Model.CheckinListPerDate)
+                        {
+                            foreach (var child in parentKey)
+                            {
+                                <tr>
+                                    <td>@child.CourtesyOfficerLocation.Label</td>
+                                    <td>@parentKey.Key.ToString()</td>
+                                </tr>
+                            }
+                        }                                  
+                </tbody>
+            </table>
+        </center>
+    </body>
+</html>

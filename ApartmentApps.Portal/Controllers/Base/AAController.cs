@@ -24,6 +24,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.Provider;
 using Ninject;
 using Syncfusion.JavaScript.DataVisualization.Models;
+using System.IO;
 
 namespace ApartmentApps.Portal.Controllers
 {
@@ -200,6 +201,17 @@ namespace ApartmentApps.Portal.Controllers
         protected ActionResult JsonRedirect(string url)
         {
             return Json(new { redirect = url });
+        }
+
+        protected string LoadHtmlFile(string resourceName)
+        {
+            //var allRessources = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            using (Stream stream = typeof(AAController).Assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                return result;
+            }
         }
     }
 }

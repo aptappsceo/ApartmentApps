@@ -1535,6 +1535,7 @@
     <Content Include="Views\Dashboard\PropertyAdmin.cshtml" />
     <Content Include="Views\Shared\Dashboard\FeedItemsListModel.cshtml" />
     <Content Include="Views\Shared\Dashboard\LineChartViewModel.cshtml" />
+    <EmbeddedResource Include="Views\CourtesyOfficer\CheckinMonthlyReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1715,7 +1716,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61984</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
