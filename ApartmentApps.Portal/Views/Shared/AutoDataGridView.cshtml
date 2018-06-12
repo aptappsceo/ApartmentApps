@@ -1,0 +1,141 @@
+﻿@using ApartmentApps.Api
+@using ApartmentApps.Portal.Controllers
+@model ApartmentApps.Forms.GridModel
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="~/Content/plugins/loading/jquery.mloading.css" rel="stylesheet">
+<style type="text/css" scoped>
+    .stylish-input-group .input-group-addon {
+        background: white !important;
+    }
+
+    .stylish-input-group .form-control {
+        border-right: 0;
+        box-shadow: 0 0 0;
+        border-color: #ccc;
+    }
+
+    .stylish-input-group button {
+        border: 0;
+        background: transparent;
+    }
+
+    mark {
+        background: #f1c40f;
+        color: black;
+    }
+    .btn-success
+    {
+        background-color: white;
+    border-color: #1a7bb9;
+    color: #1a7bb9;
+    }
+    .btn-success:hover 
+    {
+            background-color: #1a7bb9;
+    border-color: #1a7bb9;
+    color: #FFFFFF;
+    }
+</style>
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="~/Content/plugins/loading/jquery.mloading.js"></script>
+<script src="~/Content/plugins/highlight/jquery.mark.min.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        $('#txtSearch').keypress(function (e) {
+            if (e.which == 13) {
+                doSearch(1, false);
+                return false;    //<---- Add this line
+            }
+        });
+    });
+
+    function doSearch()
+    {
+        $("#ResultPanel").mLoading();        
+        searchVal = $('#txtSearch').val();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("Search", Html.Controller())',
+            data: { searchText: searchVal },
+            cache: false,
+            async: true,
+            success: function (data) {
+                completeGridLoadiing(data);
+            }
+        });
+    }
+    var searchVal = "";
+    var orderDesc = false;
+    var orderProp = "";
+    var currentPage = 1;
+    function refreshGrid(page, orderProperty, orderDes) {
+        currentPage = page;
+        orderDesc = orderDes;
+        orderProp = orderProperty;
+        $("#ResultPanel").mLoading();       
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("RefreshGrid", Html.Controller())',
+            data: { pageNumber: page, orderColumn: orderProperty, orderDesc: orderDes },
+            cache: false,
+            async: true,
+            success: function (data) {
+                completeGridLoadiing(data);
+            }
+        });
+    }
+
+    function completeGridLoadiing(data)
+    {
+        $('#ResultPanel').html(data);
+        $("#ResultPanel").mark(searchVal, {
+            "separateWordSearch": false,
+            "diacritics": false
+        });
+        $("#ResultPanel").mLoading('hide');
+    }
+</script>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-12 ">
+        <h2>@Model.Title</h2>
+    </div>
+</div>
+<div class="row wrapper border-bottom white-bg page-heading" style="padding-top: 15px; padding-left: 20px;">
+        <a class="btn btn-success btn-outline btn-s modal-link" href="@Url.Action("Entry")">Add New</a>    
+</div>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div id="imaginary_container">
+                <div class="input-group stylish-input-group">
+                    <input id="txtSearch" type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-addon">                       
+                        <button onclick="doSearch()">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div id="grid" class="col-md-12">
+        <ul class="nav nav-tabs">
+                <li class="active"> <a href="javascript:void">All</a></li>
+        </ul>
+        <br />
+        <div id="ResultPanel">
+            @if(Model.ObjectItems!=null && Model.ObjectItems.Count() > 0)
+            {
+                @Html.Partial("Forms/DataGridPartial", Model);
+            }
+        </div>
+    </div>
+
+</div>

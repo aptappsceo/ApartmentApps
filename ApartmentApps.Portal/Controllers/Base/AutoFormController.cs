@@ -25,14 +25,10 @@ namespace ApartmentApps.Portal.Controllers
             _kernel = kernel;
             _formService = formService;
             _indexService = indexService;
-
         }
-
-
 
         public virtual ActionResult Index()
         {
-
             var array = _indexService.GetAll<TIndexViewModel>().ToArray();
             return AutoIndex<TIndexViewModel>(this.GetType().Name.Replace("Controller", ""));
         }

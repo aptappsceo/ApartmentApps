@@ -495,6 +495,7 @@
     <Compile Include="Controllers\CourtesyOfficerLocationsController.cs" />
     <Compile Include="Controllers\CrudController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\Base\DataGridController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\EasyReportController.cs" />
     <Compile Include="Controllers\EmailPreviewController.cs" />
@@ -1021,6 +1022,8 @@
     <Content Include="Content\plugins\footable\footable.core.css" />
     <Content Include="Content\plugins\fullcalendar\fullcalendar.css" />
     <Content Include="Content\plugins\fullcalendar\fullcalendar.print.css" />
+    <Content Include="Content\plugins\highlight\jquery.mark.es6.min.js" />
+    <Content Include="Content\plugins\highlight\jquery.mark.min.js" />
     <Content Include="Content\plugins\iCheck\custom.css" />
     <Content Include="Content\plugins\ionRangeSlider\ion.rangeSlider.css" />
     <Content Include="Content\plugins\ionRangeSlider\ion.rangeSlider.skinFlat.css" />
@@ -1035,6 +1038,8 @@
     <Content Include="Content\plugins\jsTree\throbber.gif" />
     <Content Include="Content\plugins\ladda\ladda-themeless.min.css" />
     <Content Include="Content\plugins\ladda\ladda.min.css" />
+    <Content Include="Content\plugins\loading\jquery.mloading.css" />
+    <Content Include="Content\plugins\loading\jquery.mloading.js" />
     <Content Include="Content\plugins\morris\morris-0.4.3.min.css" />
     <Content Include="Content\plugins\nouslider\jquery.nouislider.css" />
     <Content Include="Content\plugins\select2\select2.min.css" />
@@ -1213,6 +1218,7 @@
     <Content Include="Content\ej\web\gradient-lime\ej.theme.less" />
     <Content Include="Content\ej\web\gradient-saffron-dark\ej.theme.less" />
     <Content Include="Content\ej\web\gradient-saffron\ej.theme.less" />
+    <Content Include="Content\plugins\loading\jquery.mloading.less" />
     <None Include="Properties\PublishProfiles\Default Settings %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <Content Include="Scripts\canvg.js" />
@@ -1536,6 +1542,8 @@
     <Content Include="Views\Shared\Dashboard\FeedItemsListModel.cshtml" />
     <Content Include="Views\Shared\Dashboard\LineChartViewModel.cshtml" />
     <EmbeddedResource Include="Views\CourtesyOfficer\CheckinMonthlyReport.cshtml" />
+    <Content Include="Views\Shared\AutoDataGridView.cshtml" />
+    <Content Include="Views\Shared\Forms\DataGridPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

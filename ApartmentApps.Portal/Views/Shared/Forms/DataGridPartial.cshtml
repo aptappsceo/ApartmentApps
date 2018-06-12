@@ -1,0 +1,95 @@
+﻿@using ApartmentApps.Portal.Controllers
+@model ApartmentApps.Forms.GridModel
+<style>
+    td{
+        text-align:center;
+    }
+    th{
+        text-align:center;
+    }
+</style>
+<table class="table table-hover table-mail">
+    <thead>
+        <tr>
+            @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
+            {
+                var sortingFunction = $"javascript:refreshGrid(currentPage, '{property.Name}', !orderDesc);";
+                <th class="sorting_asc">
+                    <a href="@sortingFunction">@property.Label</a>
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.ObjectItems)
+        {
+            var vm = item as BaseViewModel;
+            <tr>
+                @foreach (var property in Model.Properties.Where(p => p.Hidden == false))
+                {
+                    <td>@property.PropertyInfo.GetValue(item)</td>
+                }
+               
+                    @if (vm != null)
+                    {
+                        foreach (var x in vm.ActionLinks)
+                        {
+                        <td>    
+                            <a style="padding: 3px 3px" class="@(x.IsDialog ? "modal-link" : "")" href="@Url.Action(x)"><i class="fa fa-fw @x.Icon"></i>@x.Label</a>
+                        </td>
+                        }
+                     }
+                        
+            </tr>
+        }
+
+    </tbody>
+</table>
+@if (Model.PageCount > 0)
+{
+<center>
+    <div>        
+        <ul class="pagination">
+            
+            @{
+
+                var previousFunction = $"javascript:refreshGrid({Math.Min(Model.CurrentPage + 1, Model.PageCount)},orderProp,orderDesc);";
+                var nextFunction = $"javascript:refreshGrid({Math.Min(Model.CurrentPage + 1, Model.PageCount)},orderProp,orderDesc);";
+                var lastFunction = $"javascript:refreshGrid({Model.PageCount},orderProp,orderDesc);";
+            }
+            <li class="paginate_button next">
+                <a href="javascript:refreshGrid(1,orderProp,orderDesc);">First</a>
+            </li>
+            <li class="paginate_button previous" id="editable_previous"><a id="btnPrevious" href="@previousFunction" aria-controls="editable" data-dt-idx="0" tabindex="0">Previous</a></li>
+            
+            @{
+                var firstNumber = Math.Max(1, Model.CurrentPage - 5);
+                var array = Enumerable.Range(firstNumber, 10);
+                var lastNumber = array.Last();
+                if (lastNumber > Model.PageCount)
+                {
+                    lastNumber = Model.PageCount;
+                }
+            }
+
+            @for (var i = firstNumber; i <= lastNumber; i++)
+            {   
+                var numberFunction = $"javascript:refreshGrid({i},orderProp,orderDesc);";
+                
+
+                <li class="paginate_button @(i == Model.CurrentPage ? "active" : "")">
+                    <a href="@numberFunction" style="width:42px;" aria-controls="editable" data-dt-idx="1" tabindex="0">@i</a>
+                </li>
+            }
+            
+            <li class="paginate_button next"><a href="@nextFunction">Next</a></li>
+            <li class="paginate_button next"><a href="@lastFunction">Last</a></li>
+        </ul>
+
+        
+    </div>
+</center>
+}
+

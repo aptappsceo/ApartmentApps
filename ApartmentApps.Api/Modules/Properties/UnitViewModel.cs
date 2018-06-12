@@ -12,7 +12,7 @@ namespace ApartmentApps.Api.ViewModels
         public int BuildingId { get; set; }
         public string SearchAlias { get; set; }
 
-        [AutoformIgnore]
-        public string Title { get; set; }
+        //[AutoformIgnore]
+        //public string Title { get; set; }
     }
 }

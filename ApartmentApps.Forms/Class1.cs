@@ -92,6 +92,7 @@ namespace ApartmentApps.Forms
     }
     public class GridModel
     {
+        public string Title { get; set; }
         public List<PropertyInfo> ActionLinks { get; set; } = new List<PropertyInfo>();
         public List<FormPropertyModel> Properties { get; set; } = new List<FormPropertyModel>();
 

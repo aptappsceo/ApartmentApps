@@ -156,6 +156,9 @@ namespace ApartmentApps.Portal.Controllers
 
         }
 
+        
+
+
         public virtual bool DefaultOrderByDesc => true;
 
         public IEnumerable<TViewModel> GetAll<TViewModel>(IMapper<TModel, TViewModel> mapper)
@@ -501,5 +504,7 @@ namespace ApartmentApps.Portal.Controllers
                 }
             }
         }
+
+        
     }
 }
